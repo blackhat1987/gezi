@@ -470,7 +470,7 @@ void add_one(Map& map, T name)
   }
 }
 
-vector<string> to_vec(const string& input, const string& sep = ",")
+inline vector<string> to_vec(const string& input, const string& sep = ",")
 {
   vector<string> vec;
   boost::split(vec, input, is_any_of(sep));

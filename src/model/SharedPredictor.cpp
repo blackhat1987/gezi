@@ -14,7 +14,7 @@
 #ifndef SHARED_PREDICTOR_CPP_
 #define SHARED_PREDICTOR_CPP_
 
-
+#include "SharedPredictor.h"
 Predictor SharedPredictor::_predictor;
 
 #endif  //----end of SHARED_PREDICTOR_CPP_

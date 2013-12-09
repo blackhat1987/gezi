@@ -143,18 +143,6 @@ double Predictor::predict(string featureStr, int index = 0)
   predict(&feature, index);
 }
 
-Predictor::~Predictor()
-{
-  for (size_t i = 0; i < getModelCnt(); i++)
-  {
-    delete getModel(i);
-    FeatureNormalizer* filter = getNormalizer(i);
-    if (filter)
-    {
-      delete filter;
-    }
-  }
-}
 
 
 /* vim: set expandtab ts=4 sw=4 sts=4 tw=100: */

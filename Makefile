@@ -149,6 +149,7 @@ clean:ccpclean
 	rm -rf src/model/gezi_Predictor.o
 	rm -rf src/model/gezi_RandForestModel.o
 	rm -rf src/model/gezi_Score.o
+	rm -rf src/model/gezi_SharedPredictor.o
 	rm -rf src/model/gezi_SvmModel.o
 
 .PHONY:dist
@@ -177,6 +178,7 @@ libgezi.a:src/gezi_Seg.o \
   src/model/gezi_Predictor.o \
   src/model/gezi_RandForestModel.o \
   src/model/gezi_Score.o \
+  src/model/gezi_SharedPredictor.o \
   src/model/gezi_SvmModel.o
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibgezi.a[0m']"
 	ar crs libgezi.a src/gezi_Seg.o \
@@ -188,6 +190,7 @@ libgezi.a:src/gezi_Seg.o \
   src/model/gezi_Predictor.o \
   src/model/gezi_RandForestModel.o \
   src/model/gezi_Score.o \
+  src/model/gezi_SharedPredictor.o \
   src/model/gezi_SvmModel.o
 	mkdir -p ./output/lib
 	cp -f --link libgezi.a ./output/lib
@@ -210,7 +213,17 @@ src/gezi_SharedSegmentor.o:src/SharedSegmentor.cpp \
 
 src/gezi_conf_util.o:src/conf_util.cpp \
   include/conf_util.h \
-  include/log_util.h
+  include/log_util.h \
+  include/common_util.h \
+  include/hashmap_util.h \
+  include/conf_util.h \
+  include/debug_util.h \
+  include/string_util.h \
+  include/wstring_util.h \
+  include/encoding_convert.h \
+  include/serialize_util.h \
+  include/unordered_map_serialize.h \
+  include/unordered_set_serialize.h
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_conf_util.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/gezi_conf_util.o src/conf_util.cpp
 
@@ -231,6 +244,7 @@ src/model/gezi_LinearModel.o:src/model/LinearModel.cpp \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
+  include/common_util.h \
   include/debug_util.h \
   include/string_util.h \
   include/wstring_util.h \
@@ -239,6 +253,7 @@ src/model/gezi_LinearModel.o:src/model/LinearModel.cpp \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
   include/model/Score.h \
+  include/feature/Feature.h \
   include/log_util.h
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_LinearModel.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/model/gezi_LinearModel.o src/model/LinearModel.cpp
@@ -251,6 +266,7 @@ src/model/gezi_ModelFactory.o:src/model/ModelFactory.cpp \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
+  include/common_util.h \
   include/debug_util.h \
   include/string_util.h \
   include/wstring_util.h \
@@ -259,6 +275,7 @@ src/model/gezi_ModelFactory.o:src/model/ModelFactory.cpp \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
   include/model/Score.h \
+  include/feature/Feature.h \
   include/model/SvmModel.h \
   include/model/ModelFactory.h \
   include/model/RandForestModel.h
@@ -273,6 +290,7 @@ src/model/gezi_Predictor.o:src/model/Predictor.cpp \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
+  include/common_util.h \
   include/debug_util.h \
   include/string_util.h \
   include/wstring_util.h \
@@ -288,7 +306,8 @@ src/model/gezi_Predictor.o:src/model/Predictor.cpp \
   include/model/ModelFactory.h \
   include/log_util.h \
   include/conf_util.h \
-  include/common_util.h
+  include/common_util.h \
+  include/feature/feature_util.h
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_Predictor.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/model/gezi_Predictor.o src/model/Predictor.cpp
 
@@ -300,6 +319,7 @@ src/model/gezi_RandForestModel.o:src/model/RandForestModel.cpp \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
+  include/common_util.h \
   include/debug_util.h \
   include/string_util.h \
   include/wstring_util.h \
@@ -308,6 +328,7 @@ src/model/gezi_RandForestModel.o:src/model/RandForestModel.cpp \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
   include/model/Score.h \
+  include/feature/Feature.h \
   include/log_util.h
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_RandForestModel.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/model/gezi_RandForestModel.o src/model/RandForestModel.cpp
@@ -317,6 +338,29 @@ src/model/gezi_Score.o:src/model/Score.cpp \
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_Score.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/model/gezi_Score.o src/model/Score.cpp
 
+src/model/gezi_SharedPredictor.o:src/model/SharedPredictor.cpp \
+  include/model/SharedPredictor.h \
+  include/model/Predictor.h \
+  include/model/Model.h \
+  include/feature/Feature.h \
+  include/common_util.h \
+  include/hashmap_util.h \
+  include/log_util.h \
+  include/conf_util.h \
+  include/common_util.h \
+  include/debug_util.h \
+  include/string_util.h \
+  include/wstring_util.h \
+  include/encoding_convert.h \
+  include/serialize_util.h \
+  include/unordered_map_serialize.h \
+  include/unordered_set_serialize.h \
+  include/model/Score.h \
+  include/feature/FeatureNormalizer.h \
+  include/feature/Feature.h
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_SharedPredictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/model/gezi_SharedPredictor.o src/model/SharedPredictor.cpp
+
 src/model/gezi_SvmModel.o:src/model/SvmModel.cpp \
   include/model/SvmModel.h \
   include/model/Model.h \
@@ -325,6 +369,7 @@ src/model/gezi_SvmModel.o:src/model/SvmModel.cpp \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
+  include/common_util.h \
   include/debug_util.h \
   include/string_util.h \
   include/wstring_util.h \
