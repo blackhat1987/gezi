@@ -116,6 +116,33 @@ int Predictor::predict(Feature* feature, Score* score, int index = 0)
   return model->predict(feature, score);
 }
 
+double Predictor::predict(Feature* feature, int index = 0)
+{
+  Score score;
+  Model* model = getModel(index);
+  CHECK_NOTNULL(model);
+  FeatureNormalizer * normalizer = getNormalizer(index);
+
+  if (normalizer)
+  {
+    normalizer->normalize(feature);
+  }
+  
+  return model->predict(feature);
+}
+
+double Predictor::predict(Feature& feature, int index = 0)
+{
+  return predict(&feature, index);
+}
+
+#include "feature_util.h"
+double Predictor::predict(string featureStr, int index = 0)
+{
+  Feature feature = gezi::to_feature(featureStr);
+  predict(&feature, index);
+}
+
 Predictor::~Predictor()
 {
   for (size_t i = 0; i < getModelCnt(); i++)
@@ -128,5 +155,6 @@ Predictor::~Predictor()
     }
   }
 }
+
 
 /* vim: set expandtab ts=4 sw=4 sts=4 tw=100: */

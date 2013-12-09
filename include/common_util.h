@@ -67,11 +67,6 @@ using boost::is_any_of;
 using boost::regex;
 using boost::algorithm::split_regex;
 
-namespace gezi
-{
-using boost::algorithm::split;
-}
-
 //TODO 如何直接推导ValueType 下面这种不行 得到的是比如const long long &
 //template<typename Iter, typename Func>
 //std::size_t distinct_count(Iter begin, Iter end, Func func)
@@ -272,7 +267,7 @@ void file_to_set(const std::string& infile, Container& container, int index, con
   {
     boost::trim(line);
     vector<string> vec;
-    gezi::split(vec, line, is_any_of(sep));
+    boost::split(vec, line, is_any_of(sep));
     container.insert(boost::lexical_cast<T>(vec[index]));
   }
 }
@@ -287,7 +282,7 @@ void file_to_vec(const std::string& infile, Container& container, int index, con
   {
     boost::trim(line);
     vector<string> vec;
-    gezi::split(vec, line, is_any_of(sep));
+    boost::split(vec, line, is_any_of(sep));
     container.push_back(boost::lexical_cast<T>(vec[index]));
   }
 }
@@ -473,6 +468,17 @@ void add_one(Map& map, T name)
   {
     map[name]++;
   }
+}
+
+vector<string> to_vec(const string& input, const string& sep = ",")
+{
+  vector<string> vec;
+  boost::split(vec, input, is_any_of(sep));
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+  return std::move(vec);
+#else
+  return vec;
+#endif
 }
 }
 
