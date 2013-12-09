@@ -1,0 +1,69 @@
+#edit-mode: -*- python -*-
+#coding:gbk
+
+#工作路径.
+WORKROOT('../../../../../')
+
+#使用硬链接copy.
+CopyUsingHardLink(True)
+
+#支持32位/64位平台编译
+#ENABLE_MULTI_LIBS(True)
+
+#C预处理器参数.
+CPPFLAGS('-D_GNU_SOURCE -D__STDC_LIMIT_MACROS -DVERSION=\\\"1.9.8.7\\\"')
+#为32位目标编译指定额外的预处理参数
+#CPPFLAGS_32('-D_XOPEN_SOURE=500')
+
+#C编译参数.
+CFLAGS('-g -pipe -W -Wall -fPIC')
+
+#C++编译参数.
+CXXFLAGS('-g -pipe -W -Wall -fPIC')
+
+#IDL编译参数
+IDLFLAGS('--compack')
+
+#UBRPC编译参数
+UBRPCFLAGS('--compack')
+
+#头文件路径.
+INCPATHS('. ./include ./utils ./output ./output/include ./include/feature ./include/model')
+
+#使用库
+#LIBS('./librsc-sender.a')
+
+#链接参数.
+LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -lcurl')
+
+#依赖模块
+#CONFIGS('third-64/openssl@base')
+#CONFIGS('third-64/zlib@base')
+CONFIGS('third-64/boost@base')
+CONFIGS('third-64/gflags@base')
+CONFIGS('third-64/glog@base')
+CONFIGS('com/btest/gtest@base')
+CONFIGS('public/comlog-plugin@base')
+CONFIGS('public/configure@base')
+CONFIGS('lib2-64/wordseg@3.0.12.2')
+CONFIGS('lib2-64/ullib@3.1.40.0')
+CONFIGS('lib2-64/ccode@3.2.3.2')
+CONFIGS('lib2-64/dict@3.1.12.0')
+CONFIGS('lib2-64/others-ex@3.1.14.2')
+CONFIGS('lib2-64/libcrf@2.1.3.0')
+CONFIGS('public/odict@1.1.2.1')
+CONFIGS('lib2-64/postag@2.0.2.0')
+CONFIGS('third-64/libcurl@base')
+
+user_sources=GLOB('./src/*.cpp ./src/feature/*.cpp ./src/model/*.cpp')
+user_headers=''
+
+#可执行文件
+#静态库
+StaticLibrary('gezi',Sources(user_sources),HeaderFiles(user_headers))
+#共享库
+#SharedLibrary('suffix-tree',Sources(user_sources),HeaderFiles(user_headers))
+#子目录
+#Directory('demo')
+
+
