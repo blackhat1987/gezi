@@ -28,7 +28,6 @@
 #include <boost/math/distributions/students_t.hpp>
 
 #include "common_util.h"
-#include "feature/Feature.h"
 //#include <boost/accumulators/accumulators.hpp>
 //#include <boost/accumulators/statistics/stats.hpp>
 //#include <boost/accumulators/statistics/mean.hpp>
