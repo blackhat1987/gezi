@@ -307,6 +307,7 @@ src/model/gezi_Predictor.o:src/model/Predictor.cpp \
   include/log_util.h \
   include/conf_util.h \
   include/common_util.h \
+  include/debug_util.h \
   include/feature/feature_util.h
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_Predictor.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/model/gezi_Predictor.o src/model/Predictor.cpp

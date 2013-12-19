@@ -21,6 +21,7 @@
 #include <string>
 #include "Configure.h"
 #include "log_util.h"
+#include "debug_util.h" //common util 里面已经有debug util了。。 为啥还需要 TODO FIXME
 #include "common_util.h"
 
 namespace gezi
@@ -54,7 +55,7 @@ public:
     int ret = _conf.load(path.c_str(), config_file.c_str());
     if (ret != 0)
     {
-      LOG_WARNING("SharedConf init with %s/%s fail", path.c_str(), config_file.c_str());
+      LOG_TRACE("SharedConf init with %s/%s fail", path.c_str(), config_file.c_str());
     }
     else
     {
@@ -66,9 +67,9 @@ private:
   static comcfg::Configure _conf; //comcfg::Configure SharedConf::conf_; need this on one of your cpp
 };
 
-inline std::string conf_trim(const std::string& input_)
+inline std::string conf_trim(const std::string& input)
 {
-  string input = boost::to_lower_copy(input_);
+  //string input = boost::to_lower_copy(input_);
   if (input.size() > 1)
   {
     if (input[input.size() - 1] == '_')
@@ -93,7 +94,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& key, std::
   }
   catch (...)
   {
-    LOG_WARNING("Using default %s : %s", key.c_str(), val.c_str());
+    LOG_TRACE("Using default %s : %s", key.c_str(), val.c_str());
   }
 }
 
@@ -112,7 +113,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& field, con
   }
   catch (...)
   {
-    LOG_WARNING("Using default %s::%s : %s", field.c_str(), key.c_str(), val.c_str());
+    LOG_TRACE("Using default %s::%s : %s", field.c_str(), key.c_str(), val.c_str());
     set_val(conf, key, val);
   }
 }
@@ -128,7 +129,7 @@ inline std::string get_val(const comcfg::Configure& conf, const std::string& key
   catch (...)
   {
     val = default_val;
-    LOG_WARNING("Using default %s : %s", key.c_str(), val.c_str());
+    LOG_TRACE("Using default %s : %s", key.c_str(), val.c_str());
   }
   return val;
 }
@@ -148,7 +149,7 @@ inline std::string get_val(const comcfg::Configure& conf, const std::string& fie
   catch (...)
   {
     val = default_val;
-    LOG_WARNING("Using default %s::%s : %s", field.c_str(), key.c_str(), val.c_str());
+    LOG_TRACE("Using default %s::%s : %s", field.c_str(), key.c_str(), val.c_str());
     set_val(conf, key, val);
   }
   return val;
@@ -164,7 +165,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& key, int& 
   }
   catch (...)
   {
-    LOG_WARNING("Using default %s : %d", key.c_str(), val);
+    LOG_TRACE("Using default %s : %d", key.c_str(), val);
   }
 }
 
@@ -182,7 +183,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& field, con
   }
   catch (...)
   {
-    LOG_WARNING("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
+    LOG_TRACE("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
     set_val(conf, key, val);
   }
 }
@@ -198,7 +199,7 @@ inline int get_val(const comcfg::Configure& conf, const std::string& key, int de
   catch (...)
   {
     val = default_val;
-    LOG_WARNING("Using default %s : %d", key.c_str(), val);
+    LOG_TRACE("Using default %s : %d", key.c_str(), val);
   }
   return val;
 }
@@ -218,7 +219,7 @@ inline int get_val(const comcfg::Configure& conf, const std::string& field, cons
   catch (...)
   {
     val = default_val;
-    LOG_WARNING("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
+    LOG_TRACE("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
     set_val(conf, key, val);
   }
   return val;
@@ -235,7 +236,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& key, bool&
   }
   catch (...)
   {
-    LOG_WARNING("Using default %s : %d", key.c_str(), val);
+    LOG_TRACE("Using default %s : %d", key.c_str(), val);
   }
 }
 
@@ -253,7 +254,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& field, con
   }
   catch (...)
   {
-    LOG_WARNING("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
+    LOG_TRACE("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
     set_val(conf, key, val);
   }
 }
@@ -269,7 +270,7 @@ inline bool get_val(const comcfg::Configure& conf, const std::string& key, bool 
   catch (...)
   {
     val = default_val;
-    LOG_WARNING("Using default %s : %d", key.c_str(), val);
+    LOG_TRACE("Using default %s : %d", key.c_str(), val);
   }
   return (bool)val;
 }
@@ -289,7 +290,7 @@ inline bool get_val(const comcfg::Configure& conf, const std::string& field, con
   catch (...)
   {
     val = default_val;
-    LOG_WARNING("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
+    LOG_TRACE("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
     set_val(conf, key, val);
   }
   return (bool)val;
@@ -306,7 +307,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& key, long 
   }
   catch (...)
   {
-    LOG_WARNING("Using default %s : %lld", key.c_str(), val);
+    LOG_TRACE("Using default %s : %lld", key.c_str(), val);
   }
 }
 
@@ -324,7 +325,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& field, std
   }
   catch (...)
   {
-    LOG_WARNING("Using default %s::%s : %lld", field.c_str(), key.c_str(), val);
+    LOG_TRACE("Using default %s::%s : %lld", field.c_str(), key.c_str(), val);
     set_val(conf, key, val);
   }
 }
@@ -340,7 +341,7 @@ inline long long get_val(const comcfg::Configure& conf, const std::string& key, 
   catch (...)
   {
     val = default_val;
-    LOG_WARNING("Using default %s : %lld", key.c_str(), val);
+    LOG_TRACE("Using default %s : %lld", key.c_str(), val);
   }
   return val;
 }
@@ -360,7 +361,7 @@ inline long long get_val(const comcfg::Configure& conf, const std::string& field
   catch (...)
   {
     val = default_val;
-    LOG_WARNING("Using default %s::%s : %lld", field.c_str(), key.c_str(), val);
+    LOG_TRACE("Using default %s::%s : %lld", field.c_str(), key.c_str(), val);
     set_val(conf, key, val);
   }
   return val;
@@ -377,7 +378,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& key, doubl
   }
   catch (...)
   {
-    LOG_WARNING("Using default %s : %f", key.c_str(), val);
+    LOG_TRACE("Using default %s : %f", key.c_str(), val);
   }
 }
 //key not const, default_val const double will cause always ????double  WHY?
@@ -396,7 +397,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& field, con
   }
   catch (...)
   {
-    LOG_WARNING("Using default %s::%s : %f", field.c_str(), key.c_str(), val);
+    LOG_TRACE("Using default %s::%s : %f", field.c_str(), key.c_str(), val);
     set_val(conf, key, val);
   }
 }
@@ -412,7 +413,7 @@ inline double get_val(const comcfg::Configure& conf, const std::string& key, dou
   catch (...)
   {
     val = default_val;
-    LOG_WARNING("Using default %s : %f", key.c_str(), val);
+    LOG_TRACE("Using default %s : %f", key.c_str(), val);
   }
   return val;
 }
@@ -433,7 +434,7 @@ inline double get_val(const comcfg::Configure& conf, const std::string& field, c
   catch (...)
   {
     val = default_val;
-    LOG_WARNING("Using default %s::%s : %f", field.c_str(), key.c_str(), val);
+    LOG_TRACE("Using default %s::%s : %f", field.c_str(), key.c_str(), val);
     set_val(conf, key, val);
   }
   return val;

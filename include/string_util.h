@@ -32,6 +32,8 @@ inline bool is_gb2312(unsigned char ch1, unsigned char ch2)
   return (ch1 >= 176) && (ch1 <= 247) && (ch2 >= 161);
 }
 
+//TODO just use ccode
+
 inline bool is_gbk_ch(unsigned char ch1, unsigned char ch2)
 {
   return ( (ch2 >= 64) && (ch2 <= 254) && (ch2 != 127) &&
@@ -173,10 +175,9 @@ inline string filter_str(const string& temp)
   int index = 0;
   for (size_t i = 0; i < temp.size(); i++)
   {
-    unsigned high = (unsigned) (0xff & temp[i]);
-    if (high >= 0x81)
+    if (temp[i] < 0 && i + 1 < temp.size())
     {
-      if ((high > 0xa9 || high >= 0x81 && high <= 0xa0) && i < temp.size() - 1)
+      if (is_gbk_ch((unsigned char) temp[i], (unsigned char) temp[i + 1]))
       {
         out[index] = temp[i];
         out[index + 1] = temp[i + 1];
@@ -184,8 +185,32 @@ inline string filter_str(const string& temp)
       }
       i++;
     }
-    else if (temp[i] >= '0' && temp[i] <= '9' || temp[i] >= 'A' && temp[i] <= 'Z' || temp[i] >= 'a' && temp[i] <= 'z')
+    else if (temp[i] >= '0' && temp[i] <= '9' || temp[i] >= 'A' && temp[i] <= 'Z'
+            || temp[i] >= 'a' && temp[i] <= 'z')
+    {
       out[index++] = temp[i];
+    }
+  }
+  string ret(&out[0]);
+  return ret;
+}
+
+inline string extract_chinese(string& temp)
+{
+  vector<char> out(temp.size() + 1, 0);
+  int index = 0;
+  for (size_t i = 0; i < temp.size(); i++)
+  {
+    if (temp[i] < 0 && i + 1 < temp.size())
+    {
+      if (is_gbk_ch((unsigned char) temp[i], (unsigned char) temp[i + 1]))
+      {
+        out[index] = temp[i];
+        out[index + 1] = temp[i + 1];
+        index += 2;
+      }
+      i++;
+    }
   }
   string ret(&out[0]);
   return ret;
@@ -481,9 +506,9 @@ inline bool is_alpha_only(const string& input)
   return true;
 }
 
-inline string gbk_substr(const string& input, int start_,  size_t len = string::npos)
+inline string gbk_substr(const string& input, int start_, size_t len = string::npos)
 {
-  if (start_ >= (int)input.length())
+  if (start_ >= (int) input.length())
   {
     return "";
   }
@@ -492,7 +517,7 @@ inline string gbk_substr(const string& input, int start_,  size_t len = string::
     start_ = 0;
   }
   int start = 0;
-  while(start < start_)
+  while (start < start_)
   {
     if (input[start] < 0)
     {
@@ -500,15 +525,15 @@ inline string gbk_substr(const string& input, int start_,  size_t len = string::
     }
     start++;
   }
-  
-  if (start == (int)input.length())
+
+  if (start == (int) input.length())
   {
     return "";
   }
-  
+
   int end_ = len == string::npos ? input.length() : std::min(start + len, input.length());
   int end = start;
-  while(end < end_)
+  while (end < end_)
   {
     if (input[end] < 0)
     {
@@ -516,13 +541,48 @@ inline string gbk_substr(const string& input, int start_,  size_t len = string::
     }
     end++;
   }
-  
-  if (end > (int)input.length())
+
+  if (end > (int) input.length())
   { //half chinese we trim it
     end = input.length() - 1;
   }
-  
+
   return input.substr(start, end - start);
+}
+
+inline bool startswith(string input, string part)
+{
+  return input.find(part) == 0;
+}
+
+inline bool endswith(string input, string part)
+{
+  return input.rfind(part) == input.length() - part.length();
+}
+
+inline bool contains(string input, string part)
+{
+  return input.find(part) != string::npos;
+}
+
+//默认输入是中文
+
+inline vector<string> to_cnvec(string line)
+{
+  vector<string> vec;
+  if (line.size() % 2 != 0)
+  {
+    return vec;
+  }
+  for (int i = 0; i < (int) line.size(); i += 2)
+  {
+    vec.push_back(line.substr(i, 2));
+  }
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+  return std::move(vec);
+#else
+  return vec;
+#endif
 }
 }
 

@@ -18,8 +18,7 @@
 #include "com_log.h" 
 #include "ul_log.h"
 
-namespace gezi
-{
+
 #ifdef LOG_FATAL
 #undef LOG_FATAL
 #endif
@@ -57,9 +56,14 @@ namespace gezi
 	com_writelog(COMLOG_NOTICE, "[%s:%d:%s]: " fmt, FILE__, __LINE__, __FUNCTION__, ## arg); \
 } while (0)
 
-#define LOG_NOTICE(log_id, fmt, arg...) do { \
-	com_writelog(COMLOG_NOTICE, "logid[%u]" fmt, log_id, ## arg); \
+//#define LOG_NOTICE(log_id, fmt, arg...) do { \
+//	com_writelog(COMLOG_NOTICE, "logid[%u]" fmt, log_id, ## arg); \
+//} while (0)
+
+#define LOG_NOTICE(fmt, arg...) do { \
+	com_writelog(COMLOG_NOTICE, "[%s:%d:%s]: " fmt,  FILE__, __LINE__, __FUNCTION__, ## arg); \
 } while (0)
+
 
 #define LOG_TRACE(fmt, arg...) do { \
 	com_writelog(COMLOG_TRACE, "[%s:%d:%s]: " fmt,  FILE__, __LINE__, __FUNCTION__, ## arg); \
@@ -82,6 +86,8 @@ namespace gezi
 	com_writelog(type, fmt, ## arg); \
 } while (0)
 
+namespace gezi
+{
 class LogHelper
 {
 public:

@@ -67,7 +67,7 @@ public:
       boost::trim(line);
       if (!line.empty())
       {
-        Pval(line);
+        PVAL(line);
         add(line, icase);
       }
     }
@@ -89,7 +89,7 @@ public:
       wstring wline = str_to_wstr(line);
       if (!wline.empty())
       {
-        Pval(line);
+        PVAL(line);
         add(wline, icase);
       }
     }

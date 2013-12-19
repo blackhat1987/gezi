@@ -22,7 +22,7 @@
 #include "log_util.h"
 #include "conf_util.h"
 #include "common_util.h"
-#include <gflags/gflags.h>
+#include "debug_util.h"
 #include <string.h>
 
 DEFINE_string(model, "", "首个模型地址,如果不为空覆盖conf值");
@@ -38,7 +38,7 @@ int Predictor::init()
 
   for (int i = 0; i < model_cnt; i++)
   {
-    string modelPath, modelInfoPath;
+    string modelDir, modelPath, modelInfoPath;
 
     if (i == 0 && !FLAGS_model_dir.empty())
     {
@@ -48,35 +48,47 @@ int Predictor::init()
     else
     {
       {
-        string name = (format("MODEL_%d_PATH") % i).str();
-        gezi::set_val(gezi::SharedConf::conf(), section, gezi::conf_trim(name), modelPath);
+        string name = (format("model_%d_dir") % i).str();
+        gezi::set_val(gezi::SharedConf::conf(), section, gezi::conf_trim(name), modelDir);
       }
-      if (i == 0 && !FLAGS_model.empty())
+      if (!modelDir.empty())
       {
-        modelPath = FLAGS_model;
+        modelPath = modelDir + "/feature.libsvm.model";
+        modelInfoPath = modelDir + "/feature.libsvm.range";
       }
-      CHECK_NE(modelPath.empty(), true);
+      else
+      {
+        {
+          string name = (format("model_%d_path") % i).str();
+          gezi::set_val(gezi::SharedConf::conf(), section, gezi::conf_trim(name), modelPath);
+        }
+        if (i == 0 && !FLAGS_model.empty())
+        {
+          modelPath = FLAGS_model;
+        }
+        CHECK_NE(modelPath.empty(), true);
 
-      {
-        string name = (format("NORMALIZE_INFO_%d_PATH") % i).str();
-        gezi::set_val(gezi::SharedConf::conf(), section, gezi::conf_trim(name), modelInfoPath);
-      }
-      if (i == 0 && !FLAGS_norm.empty())
-      {
-        modelInfoPath = FLAGS_norm;
+        {
+          string name = (format("normalize_info_%d_path") % i).str();
+          gezi::set_val(gezi::SharedConf::conf(), section, gezi::conf_trim(name), modelInfoPath);
+        }
+        if (i == 0 && !FLAGS_norm.empty())
+        {
+          modelInfoPath = FLAGS_norm;
+        }
       }
     }
 
-    LOG_TRACE("load MODEL_%d_PATH [%s] done!", i, modelPath.c_str());
-    LOG_TRACE("load NORMALIZE_INFO_%d_PATH [%s] done!", i, modelInfoPath.c_str());
+    LOG_TRACE("load model_%d_path [%s] done!", i, modelPath.c_str());
+    LOG_TRACE("load normalize_info_%d_path [%s] done!", i, modelInfoPath.c_str());
 
-    string modelType;
+    string modelType = "SvmModel";
     {
-      string name = (format("MODEL_%d_TYPE") % i).str();
+      string name = (format("model_%d_type") % i).str();
       gezi::set_val(gezi::SharedConf::conf(), section, gezi::conf_trim(name), modelType);
     }
     CHECK_NE(modelType.empty(), true);
-    LOG_TRACE("load MODEL_%d_TYPE [%s] done!", i, modelType.c_str());
+    LOG_TRACE("load model_%d_type [%s] done!", i, modelType.c_str());
 
     FeatureNormalizer* filter = NULL;
 
@@ -121,13 +133,20 @@ double Predictor::predict(Feature* feature, int index = 0)
   Score score;
   Model* model = getModel(index);
   CHECK_NOTNULL(model);
+  //Predictor.cpp:124: undefined reference to `FLAG__namespace_do_not_use_directly_use_DECLARE_int32_instead::FLAGS_v'
+  //比较奇怪 未找到原因 https://code.google.com/p/server1/issues/detail?id=1 可能是链接glog gflags顺序?
+  //但是如果用DLOG(INFO)没有问题 怀疑是bug
+  //  Pval(model->getModelPath());  
+#ifndef NDEBUG
+  model->printInfo();
+#endif
   FeatureNormalizer * normalizer = getNormalizer(index);
 
   if (normalizer)
   {
     normalizer->normalize(feature);
   }
-  
+
   return model->predict(feature);
 }
 
@@ -137,10 +156,11 @@ double Predictor::predict(Feature& feature, int index = 0)
 }
 
 #include "feature_util.h"
+
 double Predictor::predict(string featureStr, int index = 0)
 {
   Feature feature = gezi::to_feature(featureStr);
-  predict(&feature, index);
+  return predict(&feature, index);
 }
 
 

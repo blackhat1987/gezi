@@ -35,6 +35,7 @@ using namespace std;
 typedef long long int64;
 typedef unsigned int uint;
 typedef unsigned long long uint64;
+typedef unsigned char uchar;
 #include <boost/lexical_cast.hpp>
 #define TO_INT boost::lexical_cast<int>
 #define TO_UINT boost::lexical_cast<unsigned int>
@@ -55,6 +56,7 @@ typedef unsigned long long uint64;
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
 	TypeName(const TypeName&); \
 	void operator=(const TypeName&)
+
 #include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
 #include <boost/foreach.hpp>
@@ -62,29 +64,32 @@ typedef unsigned long long uint64;
 using boost::format;
 using boost::is_any_of;
 
+#define FREE(ptr) \
+  {if (ptr) { delete ptr; ptr = NULL;}}
+
+#define FREE2(ptr) \
+  {if (ptr) { delete [] ptr; ptr = NULL;}}
 #include <boost/regex.hpp>
 #include <boost/algorithm/string/regex.hpp>
 using boost::regex;
 using boost::algorithm::split_regex;
 
-//TODO 如何直接推导ValueType 下面这种不行 得到的是比如const long long &
-//template<typename Iter, typename Func>
-//std::size_t distinct_count(Iter begin, Iter end, Func func)
-//{
-//    typedef typename Func::result_type ValueType;
-//    std::tr1::unordered_set<ValueType> vset;
-//    for(Iter it = begin; it != end; ++it)
-//    {
-//        vset.insert(func(*it));
-//    }
-//    return vset.size();
-//}
+#include "statistic_util.h"
+#include "datetime_util.h"
+
 using std::string;
 using boost::format;
+
+namespace gezi
+{
 
 template<typename T>
 std::string join(const std::vector<T>& vec, const std::string& sep = " ")
 {
+  if (vec.empty())
+  {
+    return "";
+  }
   std::stringstream s;
   size_t i = 0;
   for (; i < (int) vec.size() - 1; i++)
@@ -92,6 +97,23 @@ std::string join(const std::vector<T>& vec, const std::string& sep = " ")
     s << vec[i] << sep;
   }
   s << vec[i];
+  return s.str();
+}
+
+template<typename Iter>
+std::string join(Iter begin, Iter end, const std::string& sep = " ")
+{
+  if (begin == end)
+  {
+    return "";
+  }
+  std::stringstream s;
+  Iter it = begin;
+  s << *it;
+  for (; it != end; ++it)
+  {
+    s << sep << *it;
+  }
   return s.str();
 }
 
@@ -118,35 +140,14 @@ std::string get_jason(const std::vector<T>& vec, int len)
   }
   return (format("{%1%}") % join(rvec, ",")).str();
 }
-
+}
 #include <boost/bind.hpp>
-
-template<typename ValueType, typename Iter, typename Func>
-std::size_t distinct_count(Iter begin, Iter end, Func func)
-{
-  std::tr1::unordered_set<ValueType> vset;
-  for (Iter it = begin; it != end; ++it)
-  {
-    vset.insert(func(*it));
-  }
-  return vset.size();
-}
-
-template<typename Iter>
-std::size_t distinct_count(Iter begin, Iter end)
-{
-  typedef typename Iter::value_type ValueType;
-  std::tr1::unordered_set<ValueType> vset;
-  for (Iter it = begin; it != end; ++it)
-  {
-    vset.insert(*it);
-  }
-  return vset.size();
-}
-
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/progress.hpp>
+
+namespace gezi
+{
 
 class MicrosecTimer
 {
@@ -194,14 +195,18 @@ public:
 
   ~AutoTimer()
   {
-    VLOG(3) << setiosflags(ios::left) << setfill(' ') << setw(40)
+    VLOG(2) << setiosflags(ios::left) << setfill(' ') << setw(40)
             << _prefix << " " << _timer.elapsed_ms() << " ms";
   }
 };
-
+}
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
+
+//---------------------------for file save load
+namespace gezi
+{
 
 inline void try_create_dir(const string& dir)
 {
@@ -211,8 +216,6 @@ inline void try_create_dir(const string& dir)
     bfs::create_directories(dir);
   }
 }
-
-//---------------------------for file save load
 
 inline std::string read_file(const std::string& infile)
 {
@@ -242,6 +245,8 @@ bool file_to_set(const std::string& infile, Container& container)
   return true;
 }
 
+//适用于单列文本
+
 template<typename Container>
 bool file_to_vec(const std::string& infile, Container& container)
 {
@@ -254,7 +259,79 @@ bool file_to_vec(const std::string& infile, Container& container)
   std::istream_iterator<T> data_begin(ifs);
   std::istream_iterator<T> data_end;
   std::copy(data_begin, data_end, std::back_inserter(container));
+
+  foreach(T& value, container)
+  {
+    boost::trim(value);
+  }
   return true;
+}
+
+inline vector<string> read_lines(const std::string& infile)
+{
+  vector<string> vec;
+  std::ifstream ifs(infile.c_str());
+  string line;
+  while (getline(ifs, line))
+  {
+    boost::trim(line);
+    vec.push_back(line);
+  }
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+  return std::move(vec);
+#else
+  return vec;
+#endif
+}
+
+inline void read_lines(string infile, vector<string>& vec)
+{
+  std::ifstream ifs(infile.c_str());
+  string line;
+  while (getline(ifs, line))
+  {
+    boost::trim(line);
+    vec.push_back(line);
+  }
+}
+
+template<typename T>
+inline void write_lines(vector<T>& lines, string file)
+{
+  std::ofstream ofs(file.c_str());
+
+  foreach(T line, lines)
+  {
+    ofs << line << endl;
+  }
+}
+
+inline void file_to_set(const std::string& infile, std::set<std::string>& container,
+        int index, const string& sep = "\t ")
+{
+  std::ifstream ifs(infile.c_str());
+  string line;
+  while (getline(ifs, line))
+  {
+    boost::trim(line);
+    vector<string> vec;
+    boost::split(vec, line, is_any_of(sep));
+    container.insert(vec[index]);
+  }
+}
+
+inline void file_to_set(const std::string& infile, unordered_set<std::string>& container,
+        int index, const string& sep = "\t ")
+{
+  std::ifstream ifs(infile.c_str());
+  string line;
+  while (getline(ifs, line))
+  {
+    boost::trim(line);
+    vector<string> vec;
+    boost::split(vec, line, is_any_of(sep));
+    container.insert(vec[index]);
+  }
 }
 
 template<typename Container>
@@ -263,7 +340,7 @@ void file_to_set(const std::string& infile, Container& container, int index, con
   typedef typename Container::value_type T;
   std::ifstream ifs(infile.c_str());
   string line;
-  while (ifs.getline(line))
+  while (getline(ifs, line))
   {
     boost::trim(line);
     vector<string> vec;
@@ -272,18 +349,79 @@ void file_to_set(const std::string& infile, Container& container, int index, con
   }
 }
 
+inline void file_to_vec(const std::string& infile, std::vector<std::string>& container,
+        int index = 0, const string& sep = "\t ")
+{
+  std::ifstream ifs(infile.c_str());
+  string line;
+  while (getline(ifs, line))
+  {
+    boost::trim(line);
+    vector<string> vec;
+    boost::split(vec, line, is_any_of(sep));
+    container.push_back(vec[index]);
+  }
+}
+
 template<typename Container>
-void file_to_vec(const std::string& infile, Container& container, int index, const string& sep = "\t ")
+void file_to_vec(const std::string& infile, Container& container, int index = 0, const string& sep = "\t ")
 {
   typedef typename Container::value_type T;
   std::ifstream ifs(infile.c_str());
   string line;
-  while (ifs.getline(line))
+  while (getline(ifs, line))
   {
     boost::trim(line);
     vector<string> vec;
     boost::split(vec, line, is_any_of(sep));
     container.push_back(boost::lexical_cast<T>(vec[index]));
+  }
+}
+//TODO better method...
+
+inline void file_to_map(const std::string& infile, std::map<std::string, std::string>& container,
+        const string& sep = "\t ", int key_idx = 0, int value_idx = 1)
+{
+  std::ifstream ifs(infile.c_str());
+  string line;
+  while (getline(ifs, line))
+  {
+    boost::trim(line);
+    vector<string> vec;
+    boost::split(vec, line, is_any_of(sep));
+    container[vec[key_idx]] = vec[value_idx];
+  }
+}
+
+inline void file_to_map(const std::string& infile, unordered_map<std::string, std::string>& container,
+        const string& sep = "\t ", int key_idx = 0, int value_idx = 1)
+{
+  std::ifstream ifs(infile.c_str());
+  string line;
+  while (getline(ifs, line))
+  {
+    boost::trim(line);
+    vector<string> vec;
+    boost::split(vec, line, is_any_of(sep));
+    container[vec[key_idx]] = vec[value_idx];
+  }
+}
+
+template<typename Container>
+void file_to_map(const std::string& infile, Container& container, const string& sep = "\t ",
+        int key_idx = 0, int value_idx = 1)
+{
+  //  typedef typename Container::key_type T;
+  typedef typename Container::value_type U;
+  std::ifstream ifs(infile.c_str());
+  string line;
+  while (getline(ifs, line))
+  {
+    boost::trim(line);
+    vector<string> vec;
+    boost::split(vec, line, is_any_of(sep));
+    //    container[boost::lexical_cast<T>(vec[key_idx])] = boost::lexical_cast<U>(vec[value_idx]);
+    container[vec[key_idx]] = boost::lexical_cast<U>(vec[value_idx]);
   }
 }
 
@@ -453,33 +591,93 @@ public:
 private:
   std::ofstream _ofs;
 };
-
-namespace gezi
+namespace ufo
 {
 
-template<typename Map, typename T>
-void add_one(Map& map, T name)
-{
-  if (!map.count(name))
-  {
-    map[name] = 1;
-  }
-  else
-  {
-    map[name]++;
-  }
-}
-
-inline vector<string> to_vec(const string& input, const string& sep = ",")
+inline vector<string> split(string line, string pattern = "\t ")
 {
   vector<string> vec;
-  boost::split(vec, input, is_any_of(sep));
+  boost::split(vec, line, is_any_of(pattern));
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
   return std::move(vec);
 #else
   return vec;
 #endif
 }
+}
+
+template<typename Map, typename T>
+void add_one(Map& map, T name, int count = 1)
+{
+  if (!map.count(name))
+  {
+    map[name] = count;
+  }
+  else
+  {
+    map[name] += count;
+  }
+}
+
+inline vector<string> to_vec(const string& input_, const string& sep = ",")
+{
+  vector<string> vec;
+  string input = boost::trim_copy(input_);
+  boost::split(vec, input, is_any_of(sep));
+
+  foreach(string str, vec)
+  {
+    boost::trim(str);
+  }
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+  return std::move(vec);
+#else
+  return vec;
+#endif
+}
+
+template<typename T>
+inline void to_vec(const string& input_, vector<T>& ovec, const string& sep = ",")
+{
+  vector<string> vec;
+  string input = boost::trim_copy(input_);
+  boost::split(vec, input, is_any_of(sep));
+
+  foreach(string str, vec)
+  {
+    boost::trim(str);
+    ovec.push_back(boost::lexical_cast<T>(str));
+  }
+}
+
+template<typename T>
+void convert(const vector<string>&ivec, vector<T>& ovec)
+{
+
+  foreach(const string item, ivec)
+  {
+    PVAL(item);
+    ovec.push_back(boost::lexical_cast<T>(item));
+  }
+}
+
+inline bool contains(map<string, vector<string> > * history, string name)
+{
+  return history && history->count(name) && (*history)[name].size() > 0;
+}
+
+inline int length(map<string, vector<string> > * history, string name)
+{
+  if (!history || !history->count(name))
+  {
+    return -1;
+  }
+
+  return (*history)[name].size();
+}
+
+static const int kOneDay = 86400; //24 * 60 * 60
+static const int kOneHour = 3600;
 }
 
 #endif  //----end of COMMON_UTIL_H_

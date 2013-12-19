@@ -3,9 +3,9 @@
  * Copyright (c) 2012 Baidu.com, Inc. All Rights Reserved
  * 
  **************************************************************************/
- 
- 
- 
+
+
+
 /**
  * @file ModelFactory.cpp
  * @author weizheng(com@baidu.com)
@@ -22,22 +22,26 @@
 
 Model* ModelFactory::createModel(const char* modelType, const char* modelPath, const char* infoPath)
 {
-    if(!strcmp(modelType, "LinearModel"))
-    {
-        Model* model = new LinearModel(modelPath, infoPath);
-        return model;
-    }
-    if(!strcmp(modelType, "SvmModel"))
-    {
-        Model* model = new SvmModel(modelPath, infoPath);
-        return model;
-    }
-    if(!strcmp(modelType, "RandForestModel"))
-    {
-        Model* model = new RandForestModel(modelPath, infoPath);
-        return model;
-    }
+  Model* model;
+  if (!strcmp(modelType, "LinearModel"))
+  {
+    model = new LinearModel(modelPath, infoPath);
+  }
+  else if (!strcmp(modelType, "SvmModel"))
+  {
+    model = new SvmModel(modelPath, infoPath);
+  }
+  else if (!strcmp(modelType, "RandForestModel"))
+  {
+    model = new RandForestModel(modelPath, infoPath);
+  }
+  else
+  {
     return NULL;
+  }
+  model->setModelType(modelType);
+  model->setModelPath(modelPath);
+  return model;
 }
 
 

@@ -299,7 +299,7 @@ SvmModel::SvmModel(const char* path, const char *infoPath)
     LOG_FATAL("svm model: failed to load model from path[%s]", path);
     exit(-1);
   }
-
+  LOG_TRACE("svm model: finish loading model from path[%s]", path);
 }
 
 int SvmModel::init()
@@ -766,9 +766,9 @@ int SvmModel::predict(Feature *ftr, Score *scr)
   double *prob_estimates = NULL;
   double predict_label;
 
-  vector<fnode_t> fvector = ftr->nodes();
+  vector<fnode_t> fvector = ftr->cnodes();
   fvector.push_back(fnode_t(-1, 0));
-  svm_node *x = &(ftr->nodes()[0]);
+  svm_node *x = &(fvector[0]);
 
   if (svm_type == C_SVC || svm_type == NU_SVC)
   {
@@ -779,7 +779,6 @@ int SvmModel::predict(Feature *ftr, Score *scr)
       scr->addItem(prob_estimates[j]);
     }
   }
-
   else if (svm_type == NU_SVR || svm_type == EPSILON_SVR)
   {
     double prob = svm_get_svr_probability(model);
@@ -787,7 +786,6 @@ int SvmModel::predict(Feature *ftr, Score *scr)
     scr->addItem(predict_label);
     scr->addItem(prob);
   }
-
   else if (svm_type == ONE_CLASS)
   {
     double predict_value = svm_predict(model, x);
@@ -807,8 +805,7 @@ void SvmModel::finalize()
 {
   svm_model *model = &model_;
   svm_destroy_param(&(model->param));
-  svm_free_and_destroy_model(&model);
-
+  svm_free_model_content(model);
 }
 
 void svm_free_model_content(svm_model* model_ptr)
@@ -846,15 +843,6 @@ void svm_free_model_content(svm_model* model_ptr)
   model_ptr->nSV = NULL;
 }
 
-void svm_free_and_destroy_model(svm_model** model_ptr_ptr)
-{
-  if (model_ptr_ptr != NULL && *model_ptr_ptr != NULL)
-  {
-    svm_free_model_content(*model_ptr_ptr);
-    Free(*model_ptr_ptr);
-    *model_ptr_ptr = NULL;
-  }
-}
 
 void svm_destroy_param(svm_parameter* param)
 {

@@ -1,7 +1,7 @@
 /** 
  *  ==============================================================================
  * 
- *          \file   statistic_help.h
+ *          \file   statistic_util.h
  *
  *        \author   chenghuige  
  *          
@@ -26,11 +26,14 @@
 //#include <boost/bind.hpp>
 
 #include <boost/math/distributions/students_t.hpp>
+
+#include "common_util.h"
+#include "feature/Feature.h"
 //#include <boost/accumulators/accumulators.hpp>
 //#include <boost/accumulators/statistics/stats.hpp>
 //#include <boost/accumulators/statistics/mean.hpp>
 //#include <boost/accumulators/statistics/moment.hpp>
-namespace sta
+namespace gezi
 {
 typedef double ValType;
 //namespace ba = boost::accumulators;
@@ -77,8 +80,6 @@ struct sd_op
     return init + cur * cur;
   }
 };
-
-
 
 /**
  *  注意vec的大小如果是1就会/0 返回结果NAN 注意如果 int/int /0会core 而浮点 则是nan
@@ -144,7 +145,6 @@ ValType var(const Container& vec, ValType mean, int n)
   return sum / (ValType) (n - 1);
 }
 
-
 template<typename Container>
 ValType var_(const Container& vec)
 {
@@ -175,7 +175,7 @@ ValType sd(Iter start, Iter end)
 
 //----------为了假设检验,t检验
 //TODO设计成t检验类，考虑以后扩展到其它检验类？ 考虑student_t 作为类的变量?
-namespace student_t_help
+namespace student_t
 {
 
 /**
@@ -240,7 +240,7 @@ inline std::pair<ValType, ValType> get_bound2(const std::pair<ValType, ValType>&
 }
 
 }//-----end of namespace student_t_help
-namespace sth = student_t_help;
+namespace sth = student_t;
 
 namespace x2
 {
@@ -313,6 +313,218 @@ public:
   TestModel& dist;
 };
 
-} //----end of namespace sta
+//----------------桶计数 比如2个桶 [0,0.5) 0 [0.5,1) 1
 
+inline int bin_index(double value, int bin_num, double min = 0, double max = 1.0)
+{
+  if (value <= min)
+  {
+    return 0;
+  }
+  if (value >= max)
+  {
+    return bin_num - 1;
+  }
+  double span = (max - min) / bin_num;
+  int bin_index = (value - min) / span;
+  return bin_index;
+}
+
+inline int bin_index(double value, const vector<double>& thres)
+{
+  int i = 0;
+  for (; i < (int) thres.size(); i++)
+  {
+    if (value < thres[i])
+    {
+      return i;
+    }
+  }
+  return i;
+}
+
+inline vector<int> bin_counts(const vector<double>& values, int bin_num,
+        double min = 0, double max = 1.0)
+{
+  vector<int> bins(bin_num, 0);
+
+  foreach(double value, values)
+  {
+    int bin_index_ = bin_index(value, bin_num, min, max);
+    bins[bin_index_]++;
+  }
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+  return std::move(bins);
+#else
+  return bins;
+#endif
+}
+
+inline vector<double> bin_values(const vector<double>& values, int bin_num,
+        double min = 0, double max = 1.0)
+{
+  vector<double> bin_values(bin_num, 0);
+  vector<int> bins = bin_counts(values, bin_num, min, max);
+  int count = values.size();
+  for (int i = 0; i < bin_num; i++)
+  {
+    bin_values[i] = (double) bins[i] / count;
+  }
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+  return std::move(bin_values);
+#else
+  return bin_values;
+#endif
+}
+
+//例如thes 0.3,0.5,0.7  就是 ..,0.3) [0.3,0.5)[0.5,0.7) [0.7,...  4个桶
+
+inline vector<int> bin_counts(const vector<double>& values, const vector<double>& thres)
+{
+  int bin_num = thres.size() + 1;
+  vector<int> bins(bin_num, 0);
+
+  foreach(double value, values)
+  {
+    int bin_index_ = bin_index(value, thres);
+    bins[bin_index_]++;
+  }
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+  return std::move(bins);
+#else
+  return bins;
+#endif
+}
+
+inline vector<double> bin_values(const vector<double>& values, const vector<double>& thres)
+{
+  int bin_num = thres.size() + 1;
+  vector<double> bin_values(bin_num, 0);
+  vector<int> bins = bin_counts(values, thres);
+  int count = values.size();
+  for (int i = 0; i < bin_num; i++)
+  {
+    bin_values[i] = (double) bins[i] / count;
+  }
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+  return std::move(bin_values);
+#else
+  return bin_values;
+#endif
+}
+
+//TODO verify
+
+inline double discretize(double value, double from, double to, int bins, bool norm = true)
+{
+  double step = (to - from) / bins;
+  double res;
+  if (value <= from)
+  {
+    res = from;
+
+  }
+  else if (value >= to)
+  {
+    res = to - step;
+  }
+  else
+  {
+    res = from + floor((value - from) / step) * step;
+
+  }
+  if (norm)
+  {
+    res = (res - from) / (to - from - step);
+  }
+  return res;
+}
+template<typename Iter>
+inline double information(Iter begin, Iter end) 
+{
+  typedef typename Iter::value_type KeyType;
+  std::tr1::unordered_map<KeyType, int> m;
+  for (Iter it = begin; it != end; ++it) 
+  {
+    add_one(m, *it);
+  }
+  typedef std::pair<const KeyType, int> Pair; 
+  double res = 0;
+  int total = end - begin;
+  foreach(Pair& item, m) 
+  {
+    double prob = item.second / (double)total;
+    res += -prob * log(prob);
+  }
+  return res;
+}
+
+template<typename T>
+inline double information(vector<T>& vec)
+{
+  return information(vec.begin(), vec.end());
+}
+
+//TODO 如何直接推导ValueType 下面这种不行 得到的是比如const long long &
+//template<typename Iter, typename Func>
+//std::size_t distinct_count(Iter begin, Iter end, Func func)
+//{
+//    typedef typename Func::result_type ValueType;
+//    std::tr1::unordered_set<ValueType> vset;
+//    for(Iter it = begin; it != end; ++it)
+//    {
+//        vset.insert(func(*it));
+//    }
+//    return vset.size();
+//}
+
+template<typename ValueType, typename Iter, typename Func>
+std::size_t distinct_count(Iter begin, Iter end, Func func)
+{
+  std::tr1::unordered_set<ValueType> vset;
+  for (Iter it = begin; it != end; ++it)
+  {
+    vset.insert(func(*it));
+  }
+  return vset.size();
+}
+
+template<typename Iter, typename Func>
+std::size_t distinct_count(Iter begin, Iter end, Func func)
+{
+  typedef typename Iter::value_type ValueType;
+  std::tr1::unordered_set<ValueType> vset;
+  for (Iter it = begin; it != end; ++it)
+  {
+    vset.insert(func(*it));
+  }
+  return vset.size();
+}
+
+template<typename Iter>
+std::size_t distinct_count(Iter begin, Iter end)
+{
+  typedef typename Iter::value_type ValueType;
+  std::tr1::unordered_set<ValueType> vset;
+  for (Iter it = begin; it != end; ++it)
+  {
+    vset.insert(*it);
+  }
+  return vset.size();
+}
+
+template<typename Container>
+std::size_t distinct_count(Container& vec)
+{
+  distinct_count(vec.begin(), vec.end());
+}
+
+template<typename Container, typename Func>
+std::size_t distinct_count(Container& vec, Func func)
+{
+  return distinct_count(vec.begin(), vec.end(), func);
+}
+
+} //----end of namespace sta
+namespace sta = gezi; //TODO temply now since I use many sta:: right now
 #endif  //----end of STATISTIC_UTIL_H_
