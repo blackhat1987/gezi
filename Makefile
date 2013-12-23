@@ -4,11 +4,13 @@ ifeq ($(shell uname -m),x86_64)
 CC=gcc
 CXX=g++
 CXXFLAGS=-g \
+  -O3 \
   -pipe \
   -W \
   -Wall \
   -fPIC
 CFLAGS=-g \
+  -O3 \
   -pipe \
   -W \
   -Wall \
@@ -114,7 +116,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=14cece1abaee48da7620e521505e66c9  COMAKE
+COMAKE_MD5=7fb5d3430f8f684ccd99d1a804f0d591  COMAKE
 
 
 .PHONY:all
@@ -214,16 +216,18 @@ src/gezi_SharedSegmentor.o:src/SharedSegmentor.cpp \
 src/gezi_conf_util.o:src/conf_util.cpp \
   include/conf_util.h \
   include/log_util.h \
+  include/debug_util.h \
   include/common_util.h \
   include/hashmap_util.h \
   include/conf_util.h \
-  include/debug_util.h \
   include/string_util.h \
   include/wstring_util.h \
   include/encoding_convert.h \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
-  include/unordered_set_serialize.h
+  include/unordered_set_serialize.h \
+  include/statistic_util.h \
+  include/datetime_util.h
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_conf_util.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/gezi_conf_util.o src/conf_util.cpp
 
@@ -244,14 +248,16 @@ src/model/gezi_LinearModel.o:src/model/LinearModel.cpp \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
-  include/common_util.h \
   include/debug_util.h \
+  include/common_util.h \
   include/string_util.h \
   include/wstring_util.h \
   include/encoding_convert.h \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
+  include/statistic_util.h \
+  include/datetime_util.h \
   include/model/Score.h \
   include/feature/Feature.h \
   include/log_util.h
@@ -266,14 +272,16 @@ src/model/gezi_ModelFactory.o:src/model/ModelFactory.cpp \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
-  include/common_util.h \
   include/debug_util.h \
+  include/common_util.h \
   include/string_util.h \
   include/wstring_util.h \
   include/encoding_convert.h \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
+  include/statistic_util.h \
+  include/datetime_util.h \
   include/model/Score.h \
   include/feature/Feature.h \
   include/model/SvmModel.h \
@@ -290,14 +298,16 @@ src/model/gezi_Predictor.o:src/model/Predictor.cpp \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
-  include/common_util.h \
   include/debug_util.h \
+  include/common_util.h \
   include/string_util.h \
   include/wstring_util.h \
   include/encoding_convert.h \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
+  include/statistic_util.h \
+  include/datetime_util.h \
   include/model/Score.h \
   include/feature/FeatureNormalizer.h \
   include/feature/Feature.h \
@@ -320,14 +330,16 @@ src/model/gezi_RandForestModel.o:src/model/RandForestModel.cpp \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
-  include/common_util.h \
   include/debug_util.h \
+  include/common_util.h \
   include/string_util.h \
   include/wstring_util.h \
   include/encoding_convert.h \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
+  include/statistic_util.h \
+  include/datetime_util.h \
   include/model/Score.h \
   include/feature/Feature.h \
   include/log_util.h
@@ -348,14 +360,16 @@ src/model/gezi_SharedPredictor.o:src/model/SharedPredictor.cpp \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
-  include/common_util.h \
   include/debug_util.h \
+  include/common_util.h \
   include/string_util.h \
   include/wstring_util.h \
   include/encoding_convert.h \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
+  include/statistic_util.h \
+  include/datetime_util.h \
   include/model/Score.h \
   include/feature/FeatureNormalizer.h \
   include/feature/Feature.h
@@ -370,14 +384,16 @@ src/model/gezi_SvmModel.o:src/model/SvmModel.cpp \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
-  include/common_util.h \
   include/debug_util.h \
+  include/common_util.h \
   include/string_util.h \
   include/wstring_util.h \
   include/encoding_convert.h \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
+  include/statistic_util.h \
+  include/datetime_util.h \
   include/model/Score.h
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_SvmModel.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/model/gezi_SvmModel.o src/model/SvmModel.cpp

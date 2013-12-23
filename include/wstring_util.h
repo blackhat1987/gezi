@@ -39,6 +39,11 @@ inline wstring str_to_wstr(const string& src)
   return str_to_wstr(src.c_str(), src.length());
 }
 
+inline wstring to_wstr(const string& src)
+{
+  return str_to_wstr(src);
+}
+
 /**
  * @brief 将宽字符串转化为string 
  *
@@ -64,6 +69,10 @@ inline string wstr_to_str(const wstring& src)
   return wstr_to_str(src.c_str(), src.length());
 }
 
+inline string to_str(const wstring& src)
+{
+  return wstr_to_str(src);
+}
 
 inline wstring wstr_replace_all(const wstring& tstr,const wstring& old_value,const wstring& new_value)
 {

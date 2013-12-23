@@ -22,6 +22,9 @@
 
 #include "wstring_util.h"
 #include "encoding_convert.h"
+#include "common_util.h"
+
+#include "reg_util.h"
 
 namespace gezi
 {
@@ -584,6 +587,7 @@ inline vector<string> to_cnvec(string line)
   return vec;
 #endif
 }
+
 }
 
 #endif  //----end of STRING_UTIL_H_

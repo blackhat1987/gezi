@@ -123,7 +123,7 @@ template<typename Container>
 ValType var(const Container& vec, ValType mean)
 {
   ValType sum = 0.0;
-  int n = vec.size();
+  size_t n = vec.size();
   for (size_t i = 0; i < n; i++)
   {
     sum += std::pow(vec[i] - mean, 2);
@@ -515,7 +515,7 @@ std::size_t distinct_count(Iter begin, Iter end)
 template<typename Container>
 std::size_t distinct_count(Container& vec)
 {
-  distinct_count(vec.begin(), vec.end());
+  return distinct_count(vec.begin(), vec.end());
 }
 
 template<typename Container, typename Func>

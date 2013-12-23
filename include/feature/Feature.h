@@ -56,6 +56,10 @@ public:
     return _names.size();
   }
 
+  inline bool empty() const
+  {
+    return _names.empty();
+  }
   /**
    * 返回非零的特征数量
    *

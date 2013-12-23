@@ -22,6 +22,15 @@ class FeatureExtractorMgr
 {
 public:
 
+  virtual ~FeatureExtractorMgr()
+  {
+
+    foreach(FeatureExtractor* feature, _extractors)
+    {
+      FREE(feature);
+    }
+  }
+
   void add(FeatureExtractor* extractor)
   {
     _extractors.push_back(extractor);
@@ -32,13 +41,16 @@ public:
 #ifndef NDEBUG
     int i = 0;
 #endif
+
     foreach(FeatureExtractor* extractor, _extractors)
     {
 #ifndef NDEBUG
       AutoTimer timer(STRING(i) + " " + extractor->name());
       i++;
 #endif 
+      //      VLOG(4) << STRING(i) << " " << extractor->name() << " begin";
       extractor->process(feature);
+      //      VLOG(4) << STRING(i) << " " << extractor->name() << " end";
     }
     feature->finalize();
   }
@@ -46,6 +58,11 @@ public:
   FeatureExtractor* extractor()
   {
     return _extractors.back();
+  }
+
+  vector<FeatureExtractor*>& extractors()
+  {
+    return _extractors;
   }
 private:
   vector<FeatureExtractor*> _extractors;

@@ -36,6 +36,8 @@ int Predictor::init()
   SCONF(model_cnt);
   CHECK_GE(model_cnt, 1);
 
+  Pval(FLAGS_model_dir);
+  Pval(model_cnt);
   for (int i = 0; i < model_cnt; i++)
   {
     string modelDir, modelPath, modelInfoPath;
@@ -79,8 +81,8 @@ int Predictor::init()
       }
     }
 
-    LOG_TRACE("load model_%d_path [%s] done!", i, modelPath.c_str());
-    LOG_TRACE("load normalize_info_%d_path [%s] done!", i, modelInfoPath.c_str());
+    LOG(INFO) << format("load model_%d_path [%s] done!") % i % modelPath;
+    LOG(INFO) << format("load normalize_info_%d_path [%s] done!") % i % modelInfoPath;
 
     string modelType = "SvmModel";
     {
@@ -88,7 +90,7 @@ int Predictor::init()
       gezi::set_val(gezi::SharedConf::conf(), section, gezi::conf_trim(name), modelType);
     }
     CHECK_NE(modelType.empty(), true);
-    LOG_TRACE("load model_%d_type [%s] done!", i, modelType.c_str());
+    LOG(INFO) << format("load model_%d_type [%s] done!") % i % modelType;
 
     FeatureNormalizer* filter = NULL;
 
@@ -100,14 +102,14 @@ int Predictor::init()
     }
 
     addNormalizer(i, filter);
-    LOG_TRACE("add filter for model type[%s], model infopath[%s] done!", modelType.c_str(), modelInfoPath.c_str());
+    LOG(INFO) << format("add filter for model type[%s], model infopath[%s] done!") % modelType % modelInfoPath;
 
     Model* model = ModelFactory::createModel(modelType.c_str(), modelPath.c_str(), modelInfoPath.c_str());
     CHECK_NOTNULL(model);
     model->setModelId(i);
 
     addModel(i, model);
-    LOG_TRACE("add model for model type[%s], model path[%s] done!", modelType.c_str(), modelPath.c_str());
+    LOG(INFO) << format("add model for model type[%s], model path[%s] done!") % modelType % modelPath;
   }
 
   return 0;
