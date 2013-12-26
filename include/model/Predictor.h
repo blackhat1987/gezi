@@ -34,10 +34,7 @@ public:
     {
       delete getModel(i);
       FeatureNormalizer* filter = getNormalizer(i);
-      if (filter)
-      {
-        delete filter;
-      }
+      FREE(filter);
     }
   }
 

@@ -69,6 +69,11 @@ inline string gbk_to_utf8(const string & src)
   return rs;
 }
 
+inline string gbk2utf8(const string& src) 
+{
+  return gbk_to_utf8(src);
+}
+
 inline string utf8_to_gbk(char* src)
 {
   int outlen = strlen(src) * 2 + 1;
@@ -101,6 +106,11 @@ inline string utf8_to_gbk(const string & src)
   string rs = outbuf;
   delete [] outbuf;
   return rs;
+}
+
+inline string utf82gbk(const string& src) 
+{
+  return utf8_to_gbk(src);
 }
 }
 #endif	/* ENCODING_CONVERT_H_ */

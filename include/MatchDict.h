@@ -47,13 +47,15 @@ public:
    
    int search(string text, dm_pack_t* result)
    {
-     return dm_search(dict_, result, text.c_str(), text.length(), DM_OUT_FMM, DM_CHARSET_GB18030);
+     //return dm_search(dict_, result, text.c_str(), text.length(), DM_OUT_FMM, DM_CHARSET_GB18030);
+     return dm_search(dict_, result, text.c_str(), text.length(), DM_OUT_FMM);
    }
    
    //同上 只是改为返回匹配到的结果数目 如果查找失败返回0 成功的话返回匹配数目>=0
    int search_count(string text, dm_pack_t* result)
    {
-     int ret = dm_search(dict_, result, text.c_str(), text.length(), DM_OUT_FMM, DM_CHARSET_GB18030);
+     //int ret = dm_search(dict_, result, text.c_str(), text.length(), DM_OUT_FMM, DM_CHARSET_GB18030);
+     int ret = dm_search(dict_, result, text.c_str(), text.length(), DM_OUT_FMM);
      int count = 0;
      if (ret == 0)
      {

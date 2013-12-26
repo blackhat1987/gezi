@@ -74,6 +74,16 @@ inline string to_str(const wstring& src)
   return wstr_to_str(src);
 }
 
+inline string wstr2str(const wstring& src) 
+{
+  return wstr_to_str(src);
+}
+
+inline wstring str2wstr(const string& src) 
+{
+  return str_to_wstr(src);
+}
+//can use boost instead
 inline wstring wstr_replace_all(const wstring& tstr,const wstring& old_value,const wstring& new_value)
 {
     wstring str = tstr;
