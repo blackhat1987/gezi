@@ -1,0 +1,7 @@
+URL	((([a-z0-9\+_\-\*\^]{2,20})[\.¡£µã]){2,5}([a-z]+[a-z0-9]*)(\/([\w0-9\_\-]+))*([\.µã¡£][\w]{3,5})?)|([a-z0-9]+[\.µã¡£][a-z0-9]{2,4}\/[a-z0-9]{3})
+HOST	[a-zA-Z0-9\-\_]{3,}\.(com|cn|tk|biz|org|edu|net|tw|us|info|gov)
+BAD_HOST	[a-zA-Z0-9\-\_]{3,}\.(tk|biz|info)
+MAIL	[a-zA-Z0-9]+@[a-zA-Z0-9\-\_]{2,}\.(com|cn|tk|biz|org|edu|net|tw|us|info|gov)
+AT	class=\"at\">@.{2,20}<\/a>
+VIDEO	<embed[^>]*>
+PICTURE	<img class="BDE_Image" src="(.+?)"
