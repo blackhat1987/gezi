@@ -112,6 +112,19 @@ inline string utf82gbk(const string& src)
 {
   return utf8_to_gbk(src);
 }
+
+inline string to_gbk(const string& src)
+{
+  return utf8_to_gbk(src);
 }
+
+inline string to_utf8(const string& src)
+{
+  return gbk_to_utf8(src);
+}
+
+}
+
+
 #endif	/* ENCODING_CONVERT_H_ */
 
