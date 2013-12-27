@@ -13,7 +13,7 @@
 namespace gezi
 {
 
-inline string gbk_to_utf8(const string & src, int flags = UCONV_INVCHAR_REPLACE)
+inline string gbk_to_utf8(const string & src, int flags = UCONV_INVCHAR_IGNORE)
 {
   int outlen = src.length()* 3 + 1;
   char* outbuf = new char[outlen];
@@ -30,7 +30,7 @@ inline string gbk_to_utf8(const string & src, int flags = UCONV_INVCHAR_REPLACE)
   return rs;
 }
 
-inline string utf8_to_gbk(const string & src, int flags = UCONV_INVCHAR_REPLACE)
+inline string utf8_to_gbk(const string & src, int flags = UCONV_INVCHAR_IGNORE)
 {
   int outlen = src.length()* 2 + 1;
   char* outbuf = new char[outlen];
@@ -47,22 +47,22 @@ inline string utf8_to_gbk(const string & src, int flags = UCONV_INVCHAR_REPLACE)
   return rs;
 }
 
-inline string gbk2utf8(const string& src, int flags = UCONV_INVCHAR_REPLACE)
+inline string gbk2utf8(const string& src, int flags = UCONV_INVCHAR_IGNORE)
 {
   return gbk_to_utf8(src, flags);
 }
 
-inline string utf82gbk(const string& src, int flags = UCONV_INVCHAR_REPLACE)
+inline string utf82gbk(const string& src, int flags = UCONV_INVCHAR_IGNORE)
 {
   return utf8_to_gbk(src, flags);
 }
 
-inline string to_gbk(const string& src, int flags = UCONV_INVCHAR_REPLACE)
+inline string to_gbk(const string& src, int flags = UCONV_INVCHAR_IGNORE)
 {
   return utf8_to_gbk(src, flags);
 }
 
-inline string to_utf8(const string& src, int flags = UCONV_INVCHAR_REPLACE)
+inline string to_utf8(const string& src, int flags = UCONV_INVCHAR_IGNORE)
 {
   return gbk_to_utf8(src, flags);
 }
