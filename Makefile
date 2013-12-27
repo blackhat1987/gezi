@@ -81,6 +81,10 @@ DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../public/spreg/include \
   -I../../../../../public/spreg/output \
   -I../../../../../public/spreg/output/include \
+  -I../../../../../public/uconv \
+  -I../../../../../public/uconv/include \
+  -I../../../../../public/uconv/output \
+  -I../../../../../public/uconv/output/include \
   -I../../../../../quality/autotest/reportlib/cpp \
   -I../../../../../quality/autotest/reportlib/cpp/include \
   -I../../../../../quality/autotest/reportlib/cpp/output \
@@ -104,7 +108,11 @@ DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../third-64/pcre \
   -I../../../../../third-64/pcre/include \
   -I../../../../../third-64/pcre/output \
-  -I../../../../../third-64/pcre/output/include
+  -I../../../../../third-64/pcre/output/include \
+  -I../../../../../third-64/tcmalloc \
+  -I../../../../../third-64/tcmalloc/include \
+  -I../../../../../third-64/tcmalloc/output \
+  -I../../../../../third-64/tcmalloc/output/include
 
 #============ CCP vars ============
 CCHECK=@ccheck.py
@@ -116,7 +124,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=7fb5d3430f8f684ccd99d1a804f0d591  COMAKE
+COMAKE_MD5=43477057fdfcc9b0689c6e07ac70379b  COMAKE
 
 
 .PHONY:all
@@ -223,6 +231,7 @@ src/gezi_conf_util.o:src/conf_util.cpp \
   include/string_util.h \
   include/wstring_util.h \
   include/encoding_convert.h \
+  include/reg_util.h \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
@@ -253,6 +262,7 @@ src/model/gezi_LinearModel.o:src/model/LinearModel.cpp \
   include/string_util.h \
   include/wstring_util.h \
   include/encoding_convert.h \
+  include/reg_util.h \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
@@ -277,6 +287,7 @@ src/model/gezi_ModelFactory.o:src/model/ModelFactory.cpp \
   include/string_util.h \
   include/wstring_util.h \
   include/encoding_convert.h \
+  include/reg_util.h \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
@@ -303,6 +314,7 @@ src/model/gezi_Predictor.o:src/model/Predictor.cpp \
   include/string_util.h \
   include/wstring_util.h \
   include/encoding_convert.h \
+  include/reg_util.h \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
@@ -335,6 +347,7 @@ src/model/gezi_RandForestModel.o:src/model/RandForestModel.cpp \
   include/string_util.h \
   include/wstring_util.h \
   include/encoding_convert.h \
+  include/reg_util.h \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
@@ -365,6 +378,7 @@ src/model/gezi_SharedPredictor.o:src/model/SharedPredictor.cpp \
   include/string_util.h \
   include/wstring_util.h \
   include/encoding_convert.h \
+  include/reg_util.h \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
@@ -389,6 +403,7 @@ src/model/gezi_SvmModel.o:src/model/SvmModel.cpp \
   include/string_util.h \
   include/wstring_util.h \
   include/encoding_convert.h \
+  include/reg_util.h \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
