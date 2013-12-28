@@ -844,7 +844,13 @@ Reader::getFormattedErrorMessages() const
     formattedMessage += "* " + getLocationLineAndColumn(error.token_.start_) + "\n";
     formattedMessage += "  " + error.message_ + "\n";
     if (error.extra_)
-      formattedMessage += "See " + getLocationLineAndColumn(error.extra_) + " for detail.\n";
+    {
+      int end = getLocationLineAndColumn(error.extra_);
+      end = end + 5 < document_.length() ? end + 5 : document_.length();
+      int start = end - 30 >= 0 ? end - 30 : 0;
+      formattedMessage += "Location: " + getLocationLineAndColumn(error.extra_) + " ["
+              + to_gbk(document_.substr(start, end - start)) + "] .\n";
+    }
   }
   return formattedMessage;
 }
