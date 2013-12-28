@@ -183,6 +183,8 @@ private:
   boost::posix_time::ptime _start_time;
 };
 
+typedef MicrosecTimer Timer;
+
 class AutoTimer
 {
 public:
