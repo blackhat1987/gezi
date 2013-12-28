@@ -48,6 +48,7 @@ namespace Json {
        */
       bool parse( const std::string &document, 
                   Value &root,
+                  bool isGBK = true,
                   bool collectComments = true );
 
       /** \brief Read a Value from a <a HREF="http://www.json.org">JSON</a> document.

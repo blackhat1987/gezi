@@ -8,12 +8,14 @@
 #ifndef ENCODING_CONVERT_H_
 #define	ENCODING_CONVERT_H_
 
+#include <string>
+#include "log_util.h"
 #include "uconv.h"
 
 namespace gezi
 {
 
-inline string gbk_to_utf8(const string & src, int flags = UCONV_INVCHAR_IGNORE)
+inline std::string gbk_to_utf8(const std::string & src, int flags = UCONV_INVCHAR_IGNORE)
 {
   int outlen = src.length()* 3 + 1;
   char* outbuf = new char[outlen];
@@ -25,12 +27,12 @@ inline string gbk_to_utf8(const string & src, int flags = UCONV_INVCHAR_IGNORE)
     return "";
   }
 
-  string rs = outbuf;
+  std::string rs = outbuf;
   delete [] outbuf;
   return rs;
 }
 
-inline string utf8_to_gbk(const string & src, int flags = UCONV_INVCHAR_IGNORE)
+inline std::string utf8_to_gbk(const std::string & src, int flags = UCONV_INVCHAR_IGNORE)
 {
   int outlen = src.length()* 2 + 1;
   char* outbuf = new char[outlen];
@@ -42,27 +44,27 @@ inline string utf8_to_gbk(const string & src, int flags = UCONV_INVCHAR_IGNORE)
     return "";
   }
 
-  string rs = outbuf;
+  std::string rs = outbuf;
   delete [] outbuf;
   return rs;
 }
 
-inline string gbk2utf8(const string& src, int flags = UCONV_INVCHAR_IGNORE)
+inline std::string gbk2utf8(const std::string& src, int flags = UCONV_INVCHAR_IGNORE)
 {
   return gbk_to_utf8(src, flags);
 }
 
-inline string utf82gbk(const string& src, int flags = UCONV_INVCHAR_IGNORE)
+inline std::string utf82gbk(const std::string& src, int flags = UCONV_INVCHAR_IGNORE)
 {
   return utf8_to_gbk(src, flags);
 }
 
-inline string to_gbk(const string& src, int flags = UCONV_INVCHAR_IGNORE)
+inline std::string to_gbk(const std::string& src, int flags = UCONV_INVCHAR_IGNORE)
 {
   return utf8_to_gbk(src, flags);
 }
 
-inline string to_utf8(const string& src, int flags = UCONV_INVCHAR_IGNORE)
+inline std::string to_utf8(const std::string& src, int flags = UCONV_INVCHAR_IGNORE)
 {
   return gbk_to_utf8(src, flags);
 }

@@ -259,7 +259,7 @@ namespace Json {
       int compare( const Value &other ) const;
 
       const char *asCString() const;
-      std::string asString(const std::string& defaultStr = "null") const;
+      std::string asString(bool isGBK = true, const std::string& defaultStr = "null") const;
 # ifdef JSON_USE_CPPTL
       CppTL::ConstString asConstString() const;
 # endif
