@@ -843,9 +843,9 @@ Reader::getFormattedErrorMessages() const
     const ErrorInfo &error = *itError;
     formattedMessage += "* " + getLocationLineAndColumn(error.token_.start_) + "\n";
     {
-      int end = error.token_.start_- document_.c_str();
-      end = end + 5 < document_.length() ? end + 5 : document_.length();
-      int start = end - 30 >= 0 ? end - 30 : 0;
+      int pos = error.token_.start_ - document_.c_str();
+      int end = pos + 5 <= document_.length() ? pos + 5 : document_.length();
+      int start = pos - 30 >= 0 ? pos - 30 : 0;
       formattedMessage += " [" + gezi::to_gbk(document_.substr(start, end - start)) + "] \n";
     }
     formattedMessage += "  " + error.message_ + "\n";
@@ -853,9 +853,9 @@ Reader::getFormattedErrorMessages() const
     {
       formattedMessage += "See " + getLocationLineAndColumn(error.extra_) + "\n";
       {
-        int end = error.extra_ - document_.c_str();
-        end = end + 5 < document_.length() ? end + 5 : document_.length();
-        int start = end - 30 >= 0 ? end - 30 : 0;
+        int pos = error.token_.start_ - document_.c_str();
+        int end = pos + 5 <= document_.length() ? pos + 5 : document_.length();
+        int start = pos - 30 >= 0 ? pos - 30 : 0;
         formattedMessage += " [" + gezi::to_gbk(document_.substr(start, end - start)) + "] \n";
       }
     }
