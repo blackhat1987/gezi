@@ -211,7 +211,7 @@ public:
     }
   }
 
-  const double valueAt(int index)
+  const double valueAt(int index) const
   {
     int idx = (index + _values.size()) % _values.size();
     return _values[idx];
