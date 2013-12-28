@@ -38,10 +38,10 @@ LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -lcurl')
 
 #依赖模块
 ImportConfigsFrom('../')
+#CONFIGS('third-64/json-cpp@base')
 
-user_sources=GLOB('../src/*.cpp ../src/feature/*.cpp ../src/model/*.cpp')
-user_headers=''
-
+srcs=GLOB('../src/*.cpp ../src/feature/*.cpp ../src/model/*.cpp')
+src=''
 #可执行文件
 #静态库
 #StaticLibrary('gezi',Sources(user_sources),HeaderFiles(user_headers))
@@ -49,7 +49,6 @@ user_headers=''
 #SharedLibrary('suffix-tree',Sources(user_sources),HeaderFiles(user_headers))
 #子目录
 #Directory('demo')
-srcs = ""
 
 Application('test_bins',Sources('test_bins.cc'))
 Application('test_datetime',Sources('test_datetime.cc'))
@@ -57,3 +56,4 @@ Application('test_content_filter',Sources('test_content_filter.cc'))
 Application('test_regex',Sources('test_regex.cc',srcs))
 Application('test_regex2',Sources('test_regex2.cc', srcs))
 Application('test_encode',Sources('test_encode.cc', srcs))
+Application('test_json',Sources('test_json.cc', srcs, GLOB('../src/json/*.cpp')))

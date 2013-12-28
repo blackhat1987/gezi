@@ -38,6 +38,7 @@ typedef unsigned int uint;
 typedef unsigned long long uint64;
 typedef unsigned char uchar;
 #include <boost/lexical_cast.hpp>
+
 #define TO_INT boost::lexical_cast<int>
 #define TO_UINT boost::lexical_cast<unsigned int>
 #define TO_INT64 boost::lexical_cast<long long>

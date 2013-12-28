@@ -122,11 +122,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=03701588dc1a27ec316bdc3c7567ea14  COMAKE
+COMAKE_MD5=4ac4a67f170e56b01e25ae53749e187b  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check test_bins test_datetime test_content_filter test_regex test_regex2 test_encode 
+all:comake2_makefile_check test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -158,12 +158,62 @@ clean:ccpclean
 	rm -rf ./output/bin/test_regex2
 	rm -rf test_encode
 	rm -rf ./output/bin/test_encode
+	rm -rf test_json
+	rm -rf ./output/bin/test_json
 	rm -rf test_bins_test_bins.o
 	rm -rf test_datetime_test_datetime.o
 	rm -rf test_content_filter_test_content_filter.o
 	rm -rf test_regex_test_regex.o
+	rm -rf ../src/test_regex_Seg.o
+	rm -rf ../src/test_regex_SharedSegmentor.o
+	rm -rf ../src/test_regex_conf_util.o
+	rm -rf ../src/test_regex_word_seg.o
+	rm -rf ../src/model/test_regex_LinearModel.o
+	rm -rf ../src/model/test_regex_ModelFactory.o
+	rm -rf ../src/model/test_regex_Predictor.o
+	rm -rf ../src/model/test_regex_RandForestModel.o
+	rm -rf ../src/model/test_regex_Score.o
+	rm -rf ../src/model/test_regex_SharedPredictor.o
+	rm -rf ../src/model/test_regex_SvmModel.o
 	rm -rf test_regex2_test_regex2.o
+	rm -rf ../src/test_regex2_Seg.o
+	rm -rf ../src/test_regex2_SharedSegmentor.o
+	rm -rf ../src/test_regex2_conf_util.o
+	rm -rf ../src/test_regex2_word_seg.o
+	rm -rf ../src/model/test_regex2_LinearModel.o
+	rm -rf ../src/model/test_regex2_ModelFactory.o
+	rm -rf ../src/model/test_regex2_Predictor.o
+	rm -rf ../src/model/test_regex2_RandForestModel.o
+	rm -rf ../src/model/test_regex2_Score.o
+	rm -rf ../src/model/test_regex2_SharedPredictor.o
+	rm -rf ../src/model/test_regex2_SvmModel.o
 	rm -rf test_encode_test_encode.o
+	rm -rf ../src/test_encode_Seg.o
+	rm -rf ../src/test_encode_SharedSegmentor.o
+	rm -rf ../src/test_encode_conf_util.o
+	rm -rf ../src/test_encode_word_seg.o
+	rm -rf ../src/model/test_encode_LinearModel.o
+	rm -rf ../src/model/test_encode_ModelFactory.o
+	rm -rf ../src/model/test_encode_Predictor.o
+	rm -rf ../src/model/test_encode_RandForestModel.o
+	rm -rf ../src/model/test_encode_Score.o
+	rm -rf ../src/model/test_encode_SharedPredictor.o
+	rm -rf ../src/model/test_encode_SvmModel.o
+	rm -rf test_json_test_json.o
+	rm -rf ../src/test_json_Seg.o
+	rm -rf ../src/test_json_SharedSegmentor.o
+	rm -rf ../src/test_json_conf_util.o
+	rm -rf ../src/test_json_word_seg.o
+	rm -rf ../src/model/test_json_LinearModel.o
+	rm -rf ../src/model/test_json_ModelFactory.o
+	rm -rf ../src/model/test_json_Predictor.o
+	rm -rf ../src/model/test_json_RandForestModel.o
+	rm -rf ../src/model/test_json_Score.o
+	rm -rf ../src/model/test_json_SharedPredictor.o
+	rm -rf ../src/model/test_json_SvmModel.o
+	rm -rf ../src/json/test_json_json_reader.o
+	rm -rf ../src/json/test_json_json_value.o
+	rm -rf ../src/json/test_json_json_writer.o
 
 .PHONY:dist
 dist:
@@ -419,9 +469,31 @@ test_content_filter:test_content_filter_test_content_filter.o
 	mkdir -p ./output/bin
 	cp -f --link test_content_filter ./output/bin
 
-test_regex:test_regex_test_regex.o
+test_regex:test_regex_test_regex.o \
+  ../src/test_regex_Seg.o \
+  ../src/test_regex_SharedSegmentor.o \
+  ../src/test_regex_conf_util.o \
+  ../src/test_regex_word_seg.o \
+  ../src/model/test_regex_LinearModel.o \
+  ../src/model/test_regex_ModelFactory.o \
+  ../src/model/test_regex_Predictor.o \
+  ../src/model/test_regex_RandForestModel.o \
+  ../src/model/test_regex_Score.o \
+  ../src/model/test_regex_SharedPredictor.o \
+  ../src/model/test_regex_SvmModel.o
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_regex[0m']"
-	$(CXX) test_regex_test_regex.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+	$(CXX) test_regex_test_regex.o \
+  ../src/test_regex_Seg.o \
+  ../src/test_regex_SharedSegmentor.o \
+  ../src/test_regex_conf_util.o \
+  ../src/test_regex_word_seg.o \
+  ../src/model/test_regex_LinearModel.o \
+  ../src/model/test_regex_ModelFactory.o \
+  ../src/model/test_regex_Predictor.o \
+  ../src/model/test_regex_RandForestModel.o \
+  ../src/model/test_regex_Score.o \
+  ../src/model/test_regex_SharedPredictor.o \
+  ../src/model/test_regex_SvmModel.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -498,9 +570,31 @@ test_regex:test_regex_test_regex.o
 	mkdir -p ./output/bin
 	cp -f --link test_regex ./output/bin
 
-test_regex2:test_regex2_test_regex2.o
+test_regex2:test_regex2_test_regex2.o \
+  ../src/test_regex2_Seg.o \
+  ../src/test_regex2_SharedSegmentor.o \
+  ../src/test_regex2_conf_util.o \
+  ../src/test_regex2_word_seg.o \
+  ../src/model/test_regex2_LinearModel.o \
+  ../src/model/test_regex2_ModelFactory.o \
+  ../src/model/test_regex2_Predictor.o \
+  ../src/model/test_regex2_RandForestModel.o \
+  ../src/model/test_regex2_Score.o \
+  ../src/model/test_regex2_SharedPredictor.o \
+  ../src/model/test_regex2_SvmModel.o
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_regex2[0m']"
-	$(CXX) test_regex2_test_regex2.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+	$(CXX) test_regex2_test_regex2.o \
+  ../src/test_regex2_Seg.o \
+  ../src/test_regex2_SharedSegmentor.o \
+  ../src/test_regex2_conf_util.o \
+  ../src/test_regex2_word_seg.o \
+  ../src/model/test_regex2_LinearModel.o \
+  ../src/model/test_regex2_ModelFactory.o \
+  ../src/model/test_regex2_Predictor.o \
+  ../src/model/test_regex2_RandForestModel.o \
+  ../src/model/test_regex2_Score.o \
+  ../src/model/test_regex2_SharedPredictor.o \
+  ../src/model/test_regex2_SvmModel.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -577,9 +671,31 @@ test_regex2:test_regex2_test_regex2.o
 	mkdir -p ./output/bin
 	cp -f --link test_regex2 ./output/bin
 
-test_encode:test_encode_test_encode.o
+test_encode:test_encode_test_encode.o \
+  ../src/test_encode_Seg.o \
+  ../src/test_encode_SharedSegmentor.o \
+  ../src/test_encode_conf_util.o \
+  ../src/test_encode_word_seg.o \
+  ../src/model/test_encode_LinearModel.o \
+  ../src/model/test_encode_ModelFactory.o \
+  ../src/model/test_encode_Predictor.o \
+  ../src/model/test_encode_RandForestModel.o \
+  ../src/model/test_encode_Score.o \
+  ../src/model/test_encode_SharedPredictor.o \
+  ../src/model/test_encode_SvmModel.o
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_encode[0m']"
-	$(CXX) test_encode_test_encode.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+	$(CXX) test_encode_test_encode.o \
+  ../src/test_encode_Seg.o \
+  ../src/test_encode_SharedSegmentor.o \
+  ../src/test_encode_conf_util.o \
+  ../src/test_encode_word_seg.o \
+  ../src/model/test_encode_LinearModel.o \
+  ../src/model/test_encode_ModelFactory.o \
+  ../src/model/test_encode_Predictor.o \
+  ../src/model/test_encode_RandForestModel.o \
+  ../src/model/test_encode_Score.o \
+  ../src/model/test_encode_SharedPredictor.o \
+  ../src/model/test_encode_SvmModel.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -656,6 +772,113 @@ test_encode:test_encode_test_encode.o
 	mkdir -p ./output/bin
 	cp -f --link test_encode ./output/bin
 
+test_json:test_json_test_json.o \
+  ../src/test_json_Seg.o \
+  ../src/test_json_SharedSegmentor.o \
+  ../src/test_json_conf_util.o \
+  ../src/test_json_word_seg.o \
+  ../src/model/test_json_LinearModel.o \
+  ../src/model/test_json_ModelFactory.o \
+  ../src/model/test_json_Predictor.o \
+  ../src/model/test_json_RandForestModel.o \
+  ../src/model/test_json_Score.o \
+  ../src/model/test_json_SharedPredictor.o \
+  ../src/model/test_json_SvmModel.o \
+  ../src/json/test_json_json_reader.o \
+  ../src/json/test_json_json_value.o \
+  ../src/json/test_json_json_writer.o
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_json[0m']"
+	$(CXX) test_json_test_json.o \
+  ../src/test_json_Seg.o \
+  ../src/test_json_SharedSegmentor.o \
+  ../src/test_json_conf_util.o \
+  ../src/test_json_word_seg.o \
+  ../src/model/test_json_LinearModel.o \
+  ../src/model/test_json_ModelFactory.o \
+  ../src/model/test_json_Predictor.o \
+  ../src/model/test_json_RandForestModel.o \
+  ../src/model/test_json_Score.o \
+  ../src/model/test_json_SharedPredictor.o \
+  ../src/model/test_json_SvmModel.o \
+  ../src/json/test_json_json_reader.o \
+  ../src/json/test_json_json_value.o \
+  ../src/json/test_json_json_writer.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -lcrypto \
+  -lrt \
+  -lssl \
+  -lldap \
+  -lcurl -Xlinker "-)" -o test_json
+	mkdir -p ./output/bin
+	cp -f --link test_json ./output/bin
+
 test_bins_test_bins.o:test_bins.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_bins_test_bins.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_bins_test_bins.o test_bins.cc
@@ -672,13 +895,205 @@ test_regex_test_regex.o:test_regex.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_regex_test_regex.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_regex_test_regex.o test_regex.cc
 
+../src/test_regex_Seg.o:../src/Seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex_Seg.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex_Seg.o ../src/Seg.cpp
+
+../src/test_regex_SharedSegmentor.o:../src/SharedSegmentor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex_SharedSegmentor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex_SharedSegmentor.o ../src/SharedSegmentor.cpp
+
+../src/test_regex_conf_util.o:../src/conf_util.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex_conf_util.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex_conf_util.o ../src/conf_util.cpp
+
+../src/test_regex_word_seg.o:../src/word_seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex_word_seg.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex_word_seg.o ../src/word_seg.cpp
+
+../src/model/test_regex_LinearModel.o:../src/model/LinearModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_regex_LinearModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_regex_LinearModel.o ../src/model/LinearModel.cpp
+
+../src/model/test_regex_ModelFactory.o:../src/model/ModelFactory.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_regex_ModelFactory.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_regex_ModelFactory.o ../src/model/ModelFactory.cpp
+
+../src/model/test_regex_Predictor.o:../src/model/Predictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_regex_Predictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_regex_Predictor.o ../src/model/Predictor.cpp
+
+../src/model/test_regex_RandForestModel.o:../src/model/RandForestModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_regex_RandForestModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_regex_RandForestModel.o ../src/model/RandForestModel.cpp
+
+../src/model/test_regex_Score.o:../src/model/Score.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_regex_Score.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_regex_Score.o ../src/model/Score.cpp
+
+../src/model/test_regex_SharedPredictor.o:../src/model/SharedPredictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_regex_SharedPredictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_regex_SharedPredictor.o ../src/model/SharedPredictor.cpp
+
+../src/model/test_regex_SvmModel.o:../src/model/SvmModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_regex_SvmModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_regex_SvmModel.o ../src/model/SvmModel.cpp
+
 test_regex2_test_regex2.o:test_regex2.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_regex2_test_regex2.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_regex2_test_regex2.o test_regex2.cc
 
+../src/test_regex2_Seg.o:../src/Seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex2_Seg.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex2_Seg.o ../src/Seg.cpp
+
+../src/test_regex2_SharedSegmentor.o:../src/SharedSegmentor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex2_SharedSegmentor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex2_SharedSegmentor.o ../src/SharedSegmentor.cpp
+
+../src/test_regex2_conf_util.o:../src/conf_util.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex2_conf_util.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex2_conf_util.o ../src/conf_util.cpp
+
+../src/test_regex2_word_seg.o:../src/word_seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex2_word_seg.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex2_word_seg.o ../src/word_seg.cpp
+
+../src/model/test_regex2_LinearModel.o:../src/model/LinearModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_regex2_LinearModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_regex2_LinearModel.o ../src/model/LinearModel.cpp
+
+../src/model/test_regex2_ModelFactory.o:../src/model/ModelFactory.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_regex2_ModelFactory.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_regex2_ModelFactory.o ../src/model/ModelFactory.cpp
+
+../src/model/test_regex2_Predictor.o:../src/model/Predictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_regex2_Predictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_regex2_Predictor.o ../src/model/Predictor.cpp
+
+../src/model/test_regex2_RandForestModel.o:../src/model/RandForestModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_regex2_RandForestModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_regex2_RandForestModel.o ../src/model/RandForestModel.cpp
+
+../src/model/test_regex2_Score.o:../src/model/Score.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_regex2_Score.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_regex2_Score.o ../src/model/Score.cpp
+
+../src/model/test_regex2_SharedPredictor.o:../src/model/SharedPredictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_regex2_SharedPredictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_regex2_SharedPredictor.o ../src/model/SharedPredictor.cpp
+
+../src/model/test_regex2_SvmModel.o:../src/model/SvmModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_regex2_SvmModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_regex2_SvmModel.o ../src/model/SvmModel.cpp
+
 test_encode_test_encode.o:test_encode.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_encode_test_encode.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_encode_test_encode.o test_encode.cc
+
+../src/test_encode_Seg.o:../src/Seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_encode_Seg.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_encode_Seg.o ../src/Seg.cpp
+
+../src/test_encode_SharedSegmentor.o:../src/SharedSegmentor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_encode_SharedSegmentor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_encode_SharedSegmentor.o ../src/SharedSegmentor.cpp
+
+../src/test_encode_conf_util.o:../src/conf_util.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_encode_conf_util.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_encode_conf_util.o ../src/conf_util.cpp
+
+../src/test_encode_word_seg.o:../src/word_seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_encode_word_seg.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_encode_word_seg.o ../src/word_seg.cpp
+
+../src/model/test_encode_LinearModel.o:../src/model/LinearModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_encode_LinearModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_encode_LinearModel.o ../src/model/LinearModel.cpp
+
+../src/model/test_encode_ModelFactory.o:../src/model/ModelFactory.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_encode_ModelFactory.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_encode_ModelFactory.o ../src/model/ModelFactory.cpp
+
+../src/model/test_encode_Predictor.o:../src/model/Predictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_encode_Predictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_encode_Predictor.o ../src/model/Predictor.cpp
+
+../src/model/test_encode_RandForestModel.o:../src/model/RandForestModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_encode_RandForestModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_encode_RandForestModel.o ../src/model/RandForestModel.cpp
+
+../src/model/test_encode_Score.o:../src/model/Score.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_encode_Score.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_encode_Score.o ../src/model/Score.cpp
+
+../src/model/test_encode_SharedPredictor.o:../src/model/SharedPredictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_encode_SharedPredictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_encode_SharedPredictor.o ../src/model/SharedPredictor.cpp
+
+../src/model/test_encode_SvmModel.o:../src/model/SvmModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_encode_SvmModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_encode_SvmModel.o ../src/model/SvmModel.cpp
+
+test_json_test_json.o:test_json.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_json_test_json.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_json_test_json.o test_json.cc
+
+../src/test_json_Seg.o:../src/Seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_json_Seg.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_json_Seg.o ../src/Seg.cpp
+
+../src/test_json_SharedSegmentor.o:../src/SharedSegmentor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_json_SharedSegmentor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_json_SharedSegmentor.o ../src/SharedSegmentor.cpp
+
+../src/test_json_conf_util.o:../src/conf_util.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_json_conf_util.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_json_conf_util.o ../src/conf_util.cpp
+
+../src/test_json_word_seg.o:../src/word_seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_json_word_seg.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_json_word_seg.o ../src/word_seg.cpp
+
+../src/model/test_json_LinearModel.o:../src/model/LinearModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_json_LinearModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_json_LinearModel.o ../src/model/LinearModel.cpp
+
+../src/model/test_json_ModelFactory.o:../src/model/ModelFactory.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_json_ModelFactory.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_json_ModelFactory.o ../src/model/ModelFactory.cpp
+
+../src/model/test_json_Predictor.o:../src/model/Predictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_json_Predictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_json_Predictor.o ../src/model/Predictor.cpp
+
+../src/model/test_json_RandForestModel.o:../src/model/RandForestModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_json_RandForestModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_json_RandForestModel.o ../src/model/RandForestModel.cpp
+
+../src/model/test_json_Score.o:../src/model/Score.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_json_Score.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_json_Score.o ../src/model/Score.cpp
+
+../src/model/test_json_SharedPredictor.o:../src/model/SharedPredictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_json_SharedPredictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_json_SharedPredictor.o ../src/model/SharedPredictor.cpp
+
+../src/model/test_json_SvmModel.o:../src/model/SvmModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_json_SvmModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_json_SvmModel.o ../src/model/SvmModel.cpp
+
+../src/json/test_json_json_reader.o:../src/json/json_reader.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_json_json_reader.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_json_json_reader.o ../src/json/json_reader.cpp
+
+../src/json/test_json_json_value.o:../src/json/json_value.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_json_json_value.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_json_json_value.o ../src/json/json_value.cpp
+
+../src/json/test_json_json_writer.o:../src/json/json_writer.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_json_json_writer.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_json_json_writer.o ../src/json/json_writer.cpp
 
 endif #ifeq ($(shell uname -m),x86_64)
 
