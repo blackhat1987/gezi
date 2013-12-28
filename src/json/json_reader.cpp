@@ -847,7 +847,7 @@ Reader::getFormattedErrorMessages() const
       int start = pos - 100 >= 0 ? pos - 100 : 0;
       int end = pos + 100 <= document_.length() ? pos + 100 : document_.length();
       formattedMessage += " [" + gezi::to_gbk(document_.substr(start, pos - start)) + "\n" 
-              + gezi::to_gbk(document_.substr(pos, end - pos)) "] \n";
+              + gezi::to_gbk(document_.substr(pos, end - pos)) + "] \n";
     }
     formattedMessage += "  " + error.message_ + "\n";
     if (error.extra_)
@@ -858,7 +858,7 @@ Reader::getFormattedErrorMessages() const
       int start = pos - 100 >= 0 ? pos - 100 : 0;
       int end = pos + 100 <= document_.length() ? pos + 100 : document_.length();
       formattedMessage += " [" + gezi::to_gbk(document_.substr(start, pos - start)) + "\n" 
-              + gezi::to_gbk(document_.substr(pos, end - pos)) "] \n";
+              + gezi::to_gbk(document_.substr(pos, end - pos)) + "] \n";
       }
     }
   }
