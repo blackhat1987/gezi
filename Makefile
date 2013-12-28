@@ -124,7 +124,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=43477057fdfcc9b0689c6e07ac70379b  COMAKE
+COMAKE_MD5=b53330a66897c84ff33b2cd5ee397ee3  COMAKE
 
 
 .PHONY:all
@@ -161,6 +161,9 @@ clean:ccpclean
 	rm -rf src/model/gezi_Score.o
 	rm -rf src/model/gezi_SharedPredictor.o
 	rm -rf src/model/gezi_SvmModel.o
+	rm -rf src/json/gezi_json_reader.o
+	rm -rf src/json/gezi_json_value.o
+	rm -rf src/json/gezi_json_writer.o
 
 .PHONY:dist
 dist:
@@ -189,7 +192,10 @@ libgezi.a:src/gezi_Seg.o \
   src/model/gezi_RandForestModel.o \
   src/model/gezi_Score.o \
   src/model/gezi_SharedPredictor.o \
-  src/model/gezi_SvmModel.o
+  src/model/gezi_SvmModel.o \
+  src/json/gezi_json_reader.o \
+  src/json/gezi_json_value.o \
+  src/json/gezi_json_writer.o
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibgezi.a[0m']"
 	ar crs libgezi.a src/gezi_Seg.o \
   src/gezi_SharedSegmentor.o \
@@ -201,7 +207,10 @@ libgezi.a:src/gezi_Seg.o \
   src/model/gezi_RandForestModel.o \
   src/model/gezi_Score.o \
   src/model/gezi_SharedPredictor.o \
-  src/model/gezi_SvmModel.o
+  src/model/gezi_SvmModel.o \
+  src/json/gezi_json_reader.o \
+  src/json/gezi_json_value.o \
+  src/json/gezi_json_writer.o
 	mkdir -p ./output/lib
 	cp -f --link libgezi.a ./output/lib
 
@@ -412,6 +421,52 @@ src/model/gezi_SvmModel.o:src/model/SvmModel.cpp \
   include/model/Score.h
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_SvmModel.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/model/gezi_SvmModel.o src/model/SvmModel.cpp
+
+src/json/gezi_json_reader.o:src/json/json_reader.cpp \
+  include/json/reader.h \
+  include/json/features.h \
+  include/json/forwards.h \
+  include/json/config.h \
+  include/json/value.h \
+  include/json/value.h \
+  src/json/json_tool.h
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_reader.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/json/gezi_json_reader.o src/json/json_reader.cpp
+
+src/json/gezi_json_value.o:src/json/json_value.cpp \
+  include/common_util.h \
+  include/hashmap_util.h \
+  include/log_util.h \
+  include/conf_util.h \
+  include/debug_util.h \
+  include/common_util.h \
+  include/string_util.h \
+  include/wstring_util.h \
+  include/encoding_convert.h \
+  include/reg_util.h \
+  include/serialize_util.h \
+  include/unordered_map_serialize.h \
+  include/unordered_set_serialize.h \
+  include/statistic_util.h \
+  include/datetime_util.h \
+  include/json/value.h \
+  include/json/forwards.h \
+  include/json/config.h \
+  include/json/writer.h \
+  include/json/value.h \
+  src/json/json_batchallocator.h \
+  src/json/json_valueiterator.inl
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_value.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/json/gezi_json_value.o src/json/json_value.cpp
+
+src/json/gezi_json_writer.o:src/json/json_writer.cpp \
+  include/json/writer.h \
+  include/json/value.h \
+  include/json/forwards.h \
+  include/json/config.h \
+  src/json/json_tool.h
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_writer.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/json/gezi_json_writer.o src/json/json_writer.cpp
 
 endif #ifeq ($(shell uname -m),x86_64)
 
