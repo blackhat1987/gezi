@@ -205,7 +205,7 @@ inline void print_seg_result(const SegHandle& handle)
     Pval(handle.nresult);
     for (int i = 0; i < handle.nresult; i++)
     {
-      VLOG(2) << setiosflags(ios::left) << setfill(' ') << setw(4) << i <<
+      VLOG(3) << setiosflags(ios::left) << setfill(' ') << setw(4) << i <<
               handle.tokens[i].buffer << " " << handle.tokens[i].length;
     }
 }

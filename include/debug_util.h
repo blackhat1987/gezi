@@ -19,7 +19,7 @@
 #ifdef SIMPLE_DEBUG
 #define LOG(INFO) cout
 #define DLOG(INFO) cout
-#define VLOG(4) cout
+#define VLOG(5) cout
 #else
 #include <glog/logging.h>
 #include <gflags/gflags.h>
@@ -32,10 +32,10 @@ using namespace std;
   VLOG(u) << #s <<" --- [" << s << "]"
 
 #define PVAL(s)\
-      VLOG(3) << #s <<" --- [" << s << "]"
+      VLOG(4) << #s <<" --- [" << s << "]"
 
 #define PVAL_(u, s)\
-      VLOG(3) << u << " " << #s <<" --- [" << s << "]"
+      VLOG(4) << u << " " << #s <<" --- [" << s << "]"
 
 #define Pval(s)\
       DLOG(INFO) << #s <<" --- [" << s << "]"
@@ -43,13 +43,13 @@ using namespace std;
       DLOG(INFO)  << u << " " << #s <<" --- [" << s << "]"
 
 #define PVAL2(a, b)\
-      VLOG(3) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "]"
+      VLOG(4) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "]"
 
 #define Pval2(a, b)\
       DLOG(INFO) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "]"
 
 #define PVAL3(a, b, c)\
-      VLOG(3) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "]"
+      VLOG(4) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "]"
 
 #define Pval3(a, b, c)\
       DLOG(INFO) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "]"
@@ -112,9 +112,9 @@ void PVec(const T&vec, std::ostream& out = std::cout, const string& sep = "\n", 
   typedef typename T::const_iterator Iter;
   for (Iter iter = vec.begin(); iter != vec.end(); ++iter)
   {
-    VLOG(4) << *iter << sep;
+    VLOG(5) << *iter << sep;
   }
-  VLOG(4) << last;
+  VLOG(5) << last;
 }
 
 template<typename Iter>
@@ -122,16 +122,16 @@ void PRange(Iter begin, Iter end, std::ostream& out = std::cout, const string& s
 {
   for (; begin != end; ++begin)
   {
-    VLOG(4) << *begin << sep;
+    VLOG(5) << *begin << sep;
   }
-  VLOG(4) << last;
+  VLOG(5) << last;
 }
 
 #define PVEC(v)\
-        VLOG(4) << #v <<" --- " << v.size();\
+        VLOG(5) << #v <<" --- " << v.size();\
         for (int i = 0; i < v.size(); i++)\
         {\
-            VLOG(4) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << v[i] << "\n";\
+            VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << v[i] << "\n";\
         }
 
 #define Pvec(v)\
@@ -143,7 +143,7 @@ void PRange(Iter begin, Iter end, std::ostream& out = std::cout, const string& s
 
 
 #define PRANGE(s, e)\
-        VLOG(4) << #s <<" ---";\
+        VLOG(5) << #s <<" ---";\
         PRange(s, e)
 
 template<typename T>
@@ -159,10 +159,10 @@ void WPvec(const T&vec, std::wostream& out = std::wcout, const wstring& end = L"
 }
 
 #define PrintVec(vec, arg1) \
-    VLOG(4) << #vec <<" --- " << vec.size();\
+    VLOG(5) << #vec <<" --- " << vec.size();\
     for (size_t i = 0; i < vec.size(); i++) \
     {  \
-        VLOG(4) << setiosflags(ios::left) << setfill(' ') << setw(4) << i << vec[i].arg1; \
+        VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(4) << i << vec[i].arg1; \
     }
 /**
  * 该函数可以打印数据类型为简单类型
@@ -174,21 +174,21 @@ void WPvec(const T&vec, std::wostream& out = std::wcout, const wstring& end = L"
 #define PrintVecTopN(vec, arg1, n) \
     for (size_t i = 0; i < n; i++) \
     {  \
-        VLOG(4) << setiosflags(ios::left) << setfill(' ') << setw(10) << vec[i].arg1; \
+        VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << vec[i].arg1; \
     }
 
 #define PrintVec2TopN(vec, arg1, arg2, n) \
     for (size_t i = 0; i < n; i++) \
     {  \
-        VLOG(4) << setiosflags(ios::left) << setfill(' ') << setw(10) << vec[i].arg1 << " " \
+        VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << vec[i].arg1 << " " \
                 << vec[i].arg2; \
     }
 
 #define PrintVec2(vec, arg1, arg2) \
-    VLOG(4) << #vec <<" --- " << vec.size();\
+    VLOG(5) << #vec <<" --- " << vec.size();\
     for (size_t i = 0; i < vec.size(); i++) \
     {  \
-        VLOG(4) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1 << " " \
+        VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1 << " " \
                 << vec[i].arg2; \
     }
 
@@ -214,18 +214,18 @@ void WPvec(const T&vec, std::wostream& out = std::wcout, const wstring& end = L"
     out##file.close()
 
 #define PrintVec3(vec, arg1, arg2, arg3) \
-    VLOG(4) << #vec <<" --- " << vec.size();\
+    VLOG(5) << #vec <<" --- " << vec.size();\
     for (size_t i = 0; i < vec.size(); i++) \
     {  \
-        VLOG(4) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1 << " " \
+        VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1 << " " \
                 << vec[i].arg2 << " " << vec[i].arg3; \
     }
 
 #define PrintVec4(vec, arg1, arg2, arg3, arg4) \
-    VLOG(4) << #vec <<" --- " << vec.size();\
+    VLOG(5) << #vec <<" --- " << vec.size();\
     for (size_t i = 0; i < vec.size(); i++) \
     {  \
-        VLOG(4) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1 << " " \
+        VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1 << " " \
                 << vec[i].arg2 << " " << vec[i].arg3 << " " << vec[i].arg4; \
     }
 
