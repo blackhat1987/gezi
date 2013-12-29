@@ -103,12 +103,12 @@ void write_arff_header(const Feature& feature, _Stream& ofs, string relation, st
 }
 
 template<typename _Stream>
-void write_tlc_header(const Feature& feature, _Stream& ofs, string name = "name")
+void write_csv_header(const Feature& feature, _Stream& ofs, string name = "name")
 {
   ofs << "#" << name << "\t" << "label";
   foreach(string fname, feature.cnames())
   {
-    ofs << "\t" << fname;
+    ofs < "\t" << fname;
   }
   ofs << endl;
 }
