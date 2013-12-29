@@ -29,7 +29,7 @@
 using namespace std;
 
 #define VPVAL(s, u)\
-  VLOG(u) << << #s <<" --- [" << s << "]"
+  VLOG(u) << #s <<" --- [" << s << "]"
 
 #define PVAL(s)\
       VLOG(3) << #s <<" --- [" << s << "]"
