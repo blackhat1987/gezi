@@ -41,7 +41,7 @@ ImportConfigsFrom('../')
 #CONFIGS('third-64/json-cpp@base')
 
 srcs=GLOB('../src/*.cpp ../src/feature/*.cpp ../src/model/*.cpp')
-src=''
+srcs=''
 #可执行文件
 #静态库
 #StaticLibrary('gezi',Sources(user_sources),HeaderFiles(user_headers))
@@ -57,3 +57,4 @@ Application('test_regex',Sources('test_regex.cc',srcs))
 Application('test_regex2',Sources('test_regex2.cc', srcs))
 Application('test_encode',Sources('test_encode.cc', srcs))
 Application('test_json',Sources('test_json.cc', srcs, GLOB('../src/json/*.cpp')))
+Application('test_escape',Sources('test_escape.cc', srcs))

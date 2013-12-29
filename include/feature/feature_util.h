@@ -148,11 +148,12 @@ inline void write_libsvm(const Feature& feature, const string& label, std::ostre
   ofs << feature.cnodes()[i].index << ":" << feature.cnodes()[i].value << endl;
 }
 
+//TODO write_tlc tlc支持的稀疏格式
 //tlc也能使用稀疏表示 考虑到目前大部分应用特征不会太多<500 目前只输出dense format 方便使用excell
 //tlc dense 采用标准输出 第一列是名字比如pid 第二列是label 例如下面 另外输出的是原始特征 未经过normalize
 //# 	label	JaccardSimilarity	CTR_s10_Query	CTR_s100_Query	CTR_s1000_Query	LogitCTR_s10_Query	LogitCTR_s100_Query	LogitCTR_s1000_Query	impressions_Query	clicks_Query
 //_lottery|acute leukemia	0	0	0.013693014	0.013704492	0.013818185	-4.277081865	-4.276232328	-4.267855249	103347	1415
-inline void write_tlc(const Feature& feature, const string& uid, const string& label, ofstream& ofs)
+inline void write_csv(const Feature& feature, const string& uid, const string& label, ofstream& ofs)
 {
   ofs << "_" << uid << "\t" << label; 
   foreach(double value, feature.cvalues())
