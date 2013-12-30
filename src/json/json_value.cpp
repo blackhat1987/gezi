@@ -644,8 +644,6 @@ Value::asCString() const
 std::string
 Value::asString(bool isGBK, const std::string& defaultStr) const
 {
-  LOG(WARNING) << "Type is not convertible to string";
-  throw ("Type is not convertible to string");
   switch (type_) {
     case nullValue:
       return defaultStr;
