@@ -762,6 +762,13 @@ inline int length(map<string, vector<string> > * history, string name)
 
 static const int kOneDay = 86400; //24 * 60 * 60
 static const int kOneHour = 3600;
+
+//TODO 看上去只输出第一句 没有输出后面的stack 信息
+inline void write_failure(const char* data, int size)
+{
+  string s(data, size);
+  LOG(FATAL) << s;
+}
 }
 
 #define BOOST_THREAD_DONT_USE_CHRONO

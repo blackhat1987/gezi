@@ -644,6 +644,8 @@ Value::asCString() const
 std::string
 Value::asString(bool isGBK, const std::string& defaultStr) const
 {
+  LOG(WARNING) << "Type is not convertible to string";
+  throw ("Type is not convertible to string");
   switch (type_) {
     case nullValue:
       return defaultStr;
@@ -662,7 +664,9 @@ Value::asString(bool isGBK, const std::string& defaultStr) const
       return STRING(value_.real_);
     case arrayValue:
     case objectValue:
-      JSON_FAIL_MESSAGE("Type is not convertible to string");
+      //JSON_FAIL_MESSAGE("Type is not convertible to string");
+      LOG(WARNING) << "Type is not convertible to string";
+      throw (1);
     default:
       JSON_ASSERT_UNREACHABLE;
   }
@@ -685,20 +689,32 @@ Value::asInt() const
     case nullValue:
       return 0;
     case intValue:
-      JSON_ASSERT_MESSAGE(value_.int_ >= minInt && value_.int_ <= maxInt, "unsigned integer out of signed int range");
+      //JSON_ASSERT_MESSAGE(value_.int_ >= minInt && value_.int_ <= maxInt, "unsigned integer out of signed int range");
+      if (!(value_.int_ >= minInt && value_.int_ <= maxInt))
+      {
+        LOG(WARNING) << "unsigned integer out of signed int range";
+        throw (1);
+      }
       return Int(value_.int_);
     case uintValue:
-      JSON_ASSERT_MESSAGE(value_.uint_ <= UInt(maxInt), "unsigned integer out of signed int range");
+      //JSON_ASSERT_MESSAGE(value_.uint_ <= UInt(maxInt), "unsigned integer out of signed int range");
+      if (!(value_.uint_ <= UInt(maxInt)))
+      {
+        LOG(WARNING) << "unsigned integer out of signed int range";
+        throw (1);
+      }
       return Int(value_.uint_);
     case realValue:
-      JSON_ASSERT_MESSAGE(value_.real_ >= minInt && value_.real_ <= maxInt, "Real out of signed integer range");
+      //JSON_ASSERT_MESSAGE(value_.real_ >= minInt && value_.real_ <= maxInt, "Real out of signed integer range");
       return Int(value_.real_);
     case booleanValue:
       return value_.bool_ ? 1 : 0;
     case stringValue:
     case arrayValue:
     case objectValue:
-      JSON_FAIL_MESSAGE("Type is not convertible to int");
+      LOG(WARNING) << "Type is not convertible to int";
+      throw (1);
+      //JSON_FAIL_MESSAGE("Type is not convertible to int");
     default:
       JSON_ASSERT_UNREACHABLE;
   }
@@ -712,21 +728,43 @@ Value::asUInt() const
     case nullValue:
       return 0;
     case intValue:
-      JSON_ASSERT_MESSAGE(value_.int_ >= 0, "Negative integer can not be converted to unsigned integer");
-      JSON_ASSERT_MESSAGE(value_.int_ <= maxUInt, "signed integer out of UInt range");
+      //      JSON_ASSERT_MESSAGE(value_.int_ >= 0, "Negative integer can not be converted to unsigned integer");
+      if (!(value_.int_ >= 0))
+      {
+        LOG(WARNING) << "Negative integer can not be converted to unsigned integer";
+        throw (1);
+      }
+      //JSON_ASSERT_MESSAGE(value_.int_ <= maxUInt, "signed integer out of UInt range");
+      if (!(value_.int_ <= maxUInt))
+      {
+        LOG(WARNING) << "signed integer out of UInt range";
+        throw (1);
+      }
       return UInt(value_.int_);
     case uintValue:
-      JSON_ASSERT_MESSAGE(value_.uint_ <= maxUInt, "unsigned integer out of UInt range");
+      //JSON_ASSERT_MESSAGE(value_.uint_ <= maxUInt, "unsigned integer out of UInt range");
+      if (!(value_.uint_ <= maxUInt))
+      {
+        LOG(WARNING) << "unsigned integer out of UInt range";
+        throw (1);
+      }
       return UInt(value_.uint_);
     case realValue:
-      JSON_ASSERT_MESSAGE(value_.real_ >= 0 && value_.real_ <= maxUInt, "Real out of unsigned integer range");
+      //      JSON_ASSERT_MESSAGE(value_.real_ >= 0 && value_.real_ <= maxUInt, "Real out of unsigned integer range");
+      if (!(value_.real_ >= 0 && value_.real_ <= maxUInt))
+      {
+        LOG(WARNING) << "Real out of unsigned integer range";
+        throw (1);
+      }
       return UInt(value_.real_);
     case booleanValue:
       return value_.bool_ ? 1 : 0;
     case stringValue:
     case arrayValue:
     case objectValue:
-      JSON_FAIL_MESSAGE("Type is not convertible to uint");
+      LOG(WARNING) << "Type is not convertible to uint";
+      throw (1);
+      //      JSON_FAIL_MESSAGE("Type is not convertible to uint");
     default:
       JSON_ASSERT_UNREACHABLE;
   }
@@ -745,17 +783,29 @@ Value::asInt64() const
     case intValue:
       return value_.int_;
     case uintValue:
-      JSON_ASSERT_MESSAGE(value_.uint_ <= UInt64(maxInt64), "unsigned integer out of Int64 range");
+      //      JSON_ASSERT_MESSAGE(value_.uint_ <= UInt64(maxInt64), "unsigned integer out of Int64 range");
+      if (!(value_.uint_ <= UInt64(maxInt64)))
+      {
+        LOG(WARNING) << "unsigned integer out of Int64 range";
+        throw (1);
+      }
       return value_.uint_;
     case realValue:
-      JSON_ASSERT_MESSAGE(value_.real_ >= minInt64 && value_.real_ <= maxInt64, "Real out of Int64 range");
+      //      JSON_ASSERT_MESSAGE(value_.real_ >= minInt64 && value_.real_ <= maxInt64, "Real out of Int64 range");
+      if (!(value_.real_ >= minInt64 && value_.real_ <= maxInt64))
+      {
+        LOG(WARNING) << "Real out of Int64 range";
+        throw (1);
+      }
       return Int(value_.real_);
     case booleanValue:
       return value_.bool_ ? 1 : 0;
     case stringValue:
     case arrayValue:
     case objectValue:
-      JSON_FAIL_MESSAGE("Type is not convertible to Int64");
+      LOG(WARNING) << "Type is not convertible to Int64";
+      throw (1);
+      //      JSON_FAIL_MESSAGE("Type is not convertible to Int64");
     default:
       JSON_ASSERT_UNREACHABLE;
   }
@@ -769,19 +819,31 @@ Value::asUInt64() const
     case nullValue:
       return 0;
     case intValue:
-      JSON_ASSERT_MESSAGE(value_.int_ >= 0, "Negative integer can not be converted to UInt64");
+      //      JSON_ASSERT_MESSAGE(value_.int_ >= 0, "Negative integer can not be converted to UInt64");
+      if (!(value_.int_ >= 0))
+      {
+        LOG(WARNING) << "Negative integer can not be converted to UInt64";
+        throw (1);
+      }
       return value_.int_;
     case uintValue:
       return value_.uint_;
     case realValue:
-      JSON_ASSERT_MESSAGE(value_.real_ >= 0 && value_.real_ <= maxUInt64, "Real out of UInt64 range");
+      //      JSON_ASSERT_MESSAGE(value_.real_ >= 0 && value_.real_ <= maxUInt64, "Real out of UInt64 range");
+      if (!(value_.real_ >= 0 && value_.real_ <= maxUInt64))
+      {
+        LOG(WARNING) << "Real out of UInt64 range";
+        throw (1);
+      }
       return UInt(value_.real_);
     case booleanValue:
       return value_.bool_ ? 1 : 0;
     case stringValue:
     case arrayValue:
     case objectValue:
-      JSON_FAIL_MESSAGE("Type is not convertible to UInt64");
+      //      JSON_FAIL_MESSAGE("Type is not convertible to UInt64");
+      LOG(WARNING) << "Type is not convertible to UInt64";
+      throw (1);
     default:
       JSON_ASSERT_UNREACHABLE;
   }
@@ -830,7 +892,9 @@ Value::asDouble() const
     case stringValue:
     case arrayValue:
     case objectValue:
-      JSON_FAIL_MESSAGE("Type is not convertible to double");
+      //      JSON_FAIL_MESSAGE("Type is not convertible to double");
+      LOG(WARNING) << "Type is not convertible to double";
+      throw (1);
     default:
       JSON_ASSERT_UNREACHABLE;
   }
@@ -858,7 +922,9 @@ Value::asFloat() const
     case stringValue:
     case arrayValue:
     case objectValue:
-      JSON_FAIL_MESSAGE("Type is not convertible to float");
+      //      JSON_FAIL_MESSAGE("Type is not convertible to float");
+      LOG(WARNING) << "Type is not convertible to float";
+      throw (1);
     default:
       JSON_ASSERT_UNREACHABLE;
   }
@@ -1017,7 +1083,12 @@ Value::clear()
 void
 Value::resize(ArrayIndex newSize)
 {
-  JSON_ASSERT(type_ == nullValue || type_ == arrayValue);
+  //  JSON_ASSERT(type_ == nullValue || type_ == arrayValue);
+  if (!(type_ == nullValue || type_ == arrayValue))
+  {
+    LOG(WARNING) << "resize: JSON_ASSERT(type_ == nullValue || type_ == arrayValue)";
+    throw (1);
+  }
   if (type_ == nullValue)
     * this = Value(arrayValue);
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
@@ -1042,7 +1113,12 @@ Value::resize(ArrayIndex newSize)
 
 Value &
 Value::operator[](ArrayIndex index) {
-  JSON_ASSERT(type_ == nullValue || type_ == arrayValue);
+  //  JSON_ASSERT(type_ == nullValue || type_ == arrayValue);
+  if (!(type_ == nullValue || type_ == arrayValue))
+  {
+    LOG(WARNING) << "operator[]: JSON_ASSERT(type_ == nullValue || type_ == arrayValue)";
+    throw (1);
+  }
   if (type_ == nullValue)
     * this = Value(arrayValue);
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
@@ -1069,7 +1145,12 @@ Value::operator[](int index) {
 
 const Value &
 Value::operator[](ArrayIndex index) const {
-  JSON_ASSERT(type_ == nullValue || type_ == arrayValue);
+  //  JSON_ASSERT(type_ == nullValue || type_ == arrayValue);
+  if (!(type_ == nullValue || type_ == arrayValue))
+  {
+    LOG(WARNING) << "const operator[]: JSON_ASSERT(type_ == nullValue || type_ == arrayValue)";
+    throw (1);
+  }
   if (type_ == nullValue)
     return null;
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
@@ -1087,7 +1168,12 @@ Value::operator[](ArrayIndex index) const {
 
 const Value &
 Value::operator[](int index) const {
-  JSON_ASSERT(index >= 0);
+  //  JSON_ASSERT(index >= 0);
+  if (index < 0)
+  {
+    LOG(WARNING) << "JSON_ASSERT(index >= 0)";
+    throw (1);
+  }
   return (*this)[ ArrayIndex(index) ];
 }
 
@@ -1101,7 +1187,12 @@ Value &
 Value::resolveReference(const char *key,
         bool isStatic)
 {
-  JSON_ASSERT(type_ == nullValue || type_ == objectValue);
+  //JSON_ASSERT(type_ == nullValue || type_ == objectValue);
+  if (!(type_ == nullValue || type_ == objectValue))
+  {
+    LOG(WARNING) << "resolveReference: JSON_ASSERT(type_ == nullValue || type_ == objectValue)";
+    throw (1);
+  }
   if (type_ == nullValue)
     * this = Value(objectValue);
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
@@ -1138,7 +1229,12 @@ Value::isValidIndex(ArrayIndex index) const
 
 const Value &
 Value::operator[](const char *key) const {
-  JSON_ASSERT(type_ == nullValue || type_ == objectValue);
+  //JSON_ASSERT(type_ == nullValue || type_ == objectValue);
+  if (!(type_ == nullValue || type_ == objectValue))
+  {
+    LOG(WARNING) << "[]char: JSON_ASSERT(type_ == nullValue || type_ == objectValue)";
+    throw(1);
+  }
   if (type_ == nullValue)
     return null;
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
@@ -1205,10 +1301,16 @@ Value::get(const std::string &key,
   return get(key.c_str(), defaultValue);
 }
 
+//TODO glogÊÇ·ñÖ§³ÖLOG_IF(WARNING, ...) << throw(1);  test
 Value
 Value::removeMember(const char* key)
 {
-  JSON_ASSERT(type_ == nullValue || type_ == objectValue);
+//  JSON_ASSERT(type_ == nullValue || type_ == objectValue);
+  if (!(type_ == nullValue || type_ == objectValue))
+  {
+    LOG(WARNING) << "removeMember: JSON_ASSERT(type_ == nullValue || type_ == objectValue)";
+    throw(1);
+  }
   if (type_ == nullValue)
     return null;
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
