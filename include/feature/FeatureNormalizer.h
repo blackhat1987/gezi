@@ -13,11 +13,30 @@ namespace gezi
 class FeatureNormalizer
 {
 public:
-  static const int max_feature_num = 102400;
+  //libsvm use 1 as the first index, while tlc or others use 0
 
-  FeatureNormalizer()
+  FeatureNormalizer(int startIndex = 1, bool useTruncate = false, int maxFeatureNum = 102400)
+  : _startIndex(startIndex), _useTruncate(useTruncate)
   {
-    _pairs.resize(max_feature_num + 1);
+    _pairs.resize(maxFeatureNum + 1);
+  }
+
+  FeatureNormalizer& startIndex(int startIndex_)
+  {
+    _startIndex = startIndex_;
+    return *this;
+  }
+
+  FeatureNormalizer& useTruncate(bool useTruncate_)
+  {
+    _useTruncate = useTruncate_;
+    return *this;
+  }
+
+  FeatureNormalizer& maxFeatureNum(int maxFeatureNum_)
+  {
+    _pairs.resize(maxFeatureNum_ + 1);
+    return *this;
   }
 
   struct Pair
@@ -38,12 +57,14 @@ public:
     double upper;
   };
 
+  //当前是完全参照libsvm 3.17的输出文件格式
+
   bool open(const char* file)
   {
     vector<string> lines = read_lines(file);
     if (lines.empty())
     {
-      LOG_WARNING("Could not open the file %s", file);
+      LOG(WARNING) << "Could not open the file " << file;
       return false;
     }
 
@@ -77,34 +98,68 @@ public:
 
   //TODO 专门提出MinMax Guass Bining Normalizer 同时支持 incl 和 excl
   //可以考虑在添加特征的时候 就做normalize 接近0的不 add  <=> Normalize(value) 或者这里整体norm 之后再去掉0的
-  int normalize(Feature* feature)
+  //TODO 注意当前的设计都是Feature保留有sparse 和 dense 双重value
+
+  void norm(int index, double value, vector<Feature::Node>& result)
   {
-    vector<Feature::Node>& nodes = feature->nodes();
-    foreach(Feature::Node& node, nodes)
+    if (_pairs[index].upper == _pairs[index].lower)
+    { //如果相同 该特征在训练数据中未出现 或者所有训练数据中这个特征值都一样 scale文件中没有它的范围 这种特征在线忽略掉
+      return;
+    }
+    if (_useTruncate)
     {
-      if (node.value < _pairs[node.index].lower)
+      //注意下面的处理是截断处理不是完全线性scale 和libsvm以及tlc里面处理不同 可能测试集合结果略有不同
+      if (value <= _pairs[index].lower)
       {
-        node.value = _lower;
+        value = _pairs[index].lower;
       }
-      else if (node.value > _pairs[node.index].upper)
+      else if (value >= _pairs[index].upper)
       {
-        node.value = _upper;
+        value = _pairs[index].upper;
       }
       else
       {
-        node.value = _lower +
-                (_upper - _lower) * (node.value - _pairs[node.index].lower) /
-                (_pairs[node.index].upper - _pairs[node.index].lower);
+        value = _lower + (_upper - _lower) * (value - _pairs[index].lower) /
+                (_pairs[index].upper - _pairs[index].lower);
       }
     }
-    return 0;
+    else
+    { //当前采用不截断处理 保持和libsvm,tlc一致 TODO 实验下单个特征过大值对结果影响
+      value = _lower + (_upper - _lower) * (value - _pairs[index].lower) /
+              (_pairs[index].upper - _pairs[index].lower);
+    }
+    if (value != 0)
+    {
+      result.push_back(Feature::Node(index, value));
+    }
   }
 
+  int normalize(Feature* feature)
+  {
+    vector<Feature::Node>& nodes = feature->nodes();
+    vector<Feature::Node> temp;
+    int idx = _startIndex;
+
+    foreach(Feature::Node& node, nodes)
+    {
+      for (int i = idx; i < node.index; i++)
+      {
+        norm(i, 0, temp);
+      }
+      norm(node.index, node.value, temp);
+      idx = node.index + 1;
+    }
+    nodes.swap(temp);
+    return 0;
+  }
+  
 private:
   int _featureNum;
   vector<Pair> _pairs; //每个特征的上下界
   double _lower; //要归一化到的 下界
   double _upper;
+  int _startIndex;
+  bool _useTruncate;
 };
 
 }

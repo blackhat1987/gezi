@@ -9,6 +9,9 @@ using std::make_pair;
 namespace gezi
 {
 
+//这个特征是在线用的 所以默认稀疏，dense表示都存在，包含所有name信息，实际应该是叫做：特征向量 表示
+//离线特征需要再设计(如是否稀疏表示，名字仅仅存在Instances，Instance仅仅数据) TODO
+
 class Feature
 {
 public:
@@ -25,13 +28,21 @@ public:
     {
 
     }
+
+    Node(int index_)
+    : index(index_)
+    {
+
+    }
     int index;
     double value;
   };
+  typedef vector<Node>::iterator Iter;
+  typedef vector<Node>::const_iterator ConstIter;
+  //保留一个zero_thre但是实际不用也ok 稀疏使用判断==0 libsvm和tlc都是用的判断==0,虽然有一定浮点误差，为了结果一致仍然判断==0
+  //Feature feature(-1) 可以用来表示一个完全dense表示,values,nodes都dense
 
-  //如果不用稀疏模式 可以设置 Feature feature(-1);
-
-  Feature(double zero_thre = 0.0000001)
+  Feature(double zero_thre = 0.0)
   : _zero_thre(zero_thre)
   {
     int len = 100;
@@ -60,6 +71,7 @@ public:
   {
     return _names.empty();
   }
+
   /**
    * 返回非零的特征数量
    *
@@ -171,43 +183,38 @@ public:
     _idx = 0;
   }
 
-  //  void set(int index, double value)
-  //  {
-  //    if (_nodes.size() < 10)
-  //    {
-  //
-  //      foreach(Node& node, _nodes)
-  //      {
-  //        if (node.index == index)
-  //        {
-  //          node.value = value;
-  //          break;
-  //        }
-  //      }
-  //    }
-  //    else
-  //    {
-  //      typedef vector<Node>::iterator Iter;
-  //      Iter it = std::lower_bound(_nodes.begin(), _nodes.end(),
-  //              boost::bind(&Node::index, _1) < boost::bind(&Node::index, _2));
-  //      //      Iter it; //sort can as below but lower_bound can not ..
-  //      //      std::sort(_nodes.begin(), _nodes.end(),
-  //      //              boost::bind(&Node::index, _1) < boost::bind(&Node::index, _2));
-  //
-  //      if (it != _nodes.end() && it->index == index)
-  //      {
-  //        it->value = value;
-  //      }
-  //    }
-  //  }
-
-  const double operator[](int index) const {
-    for (int i = 0; i < (int) _nodes.size(); i++)
+  //设置稀疏index, value 
+  void set(int index, double value)
+  {
+    Iter iter = std::lower_bound(_nodes.begin(), _nodes.end(), Node(index),
+            boost::bind(&Node::index, _1) < boost::bind(&Node::index, _2));
+    if (iter != _nodes.end() && iter->index == index)
     {
-      if (_nodes[i].index == index)
-      {
-        return _nodes[i].value;
-      }
+      iter->value = value;
+    }
+  }
+
+  //获取稀疏value
+  const double value(int index) const
+  {
+    ConstIter iter = std::lower_bound(_nodes.begin(), _nodes.end(), Node(index),
+            boost::bind(&Node::index, _1) < boost::bind(&Node::index, _2));
+    if (iter != _nodes.end() && iter->index == index)
+      return iter->value;
+    else
+      return 0.0;
+  }
+
+
+  //获取value 首先尝试dense 
+  const double operator[](int index) const {
+    if (!_values.empty())
+    {
+      return _values[index];
+    }
+    else
+    { //没有dense表示的情况下 目前在demo等地方 比如输入一个稀疏表示向量的string转特征时候 不生成dense value调用下面部分
+      return value(index + 1);
     }
   }
 
@@ -282,6 +289,12 @@ public:
   static double defaultMax()
   {
     return 1.0;
+  }
+
+  friend inline ostream & operator <<(ostream & os, Feature& fe)
+  {
+    os << fe.str();
+    return os;
   }
 
 private:

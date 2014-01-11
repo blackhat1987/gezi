@@ -19,7 +19,15 @@
 
 namespace gezi
 {
-
+inline void write_template(const Feature& feature, string outfile)
+{
+  ofstream ofs(outfile.c_str());
+  int len = feature.cnames().size();
+  for (int i = 0; i < len; i++)
+  {
+    ofs << "#define " << feature.cnames()[i] << " fv[" << i << "]" << endl;
+  }
+}
 template<typename _Stream>
 void debug_print(const Feature& feature, _Stream& out)
 {
@@ -50,7 +58,7 @@ void debug_print(const Feature& feature, _Stream& out,
     for (int j = 0; j < name_counts[i]; j++)
     {
       double val = feature.cvalues()[idx];
-      double normed_val = feature[idx + 1];
+      double normed_val = feature.value(idx + 1);
       out << format("%-3d %-3d %-25s : [%f:%f] : [NormalMean %f] : [SpamMean %f] : [NormalVar %f] : [SpamVar %f]\n")
               % (idx + 1) % (j + 1) % feature.cnames()[idx] % val % normed_val
               % normal_vec[idx].first % spam_vec[idx].first
@@ -103,9 +111,13 @@ void write_arff_header(const Feature& feature, _Stream& ofs, string relation, st
 }
 
 template<typename _Stream>
-void write_csv_header(const Feature& feature, _Stream& ofs, string name = "name")
+void write_table_header(const Feature& feature, _Stream& ofs, string name = "")
 {
-  ofs << "#" << name << "\t" << "label";
+  if (!name.empty())
+    ofs << "#" << name << "\t" << "label";
+  else
+    ofs << "label";
+
   foreach(string fname, feature.cnames())
   {
     ofs << "\t" << fname;
@@ -116,9 +128,10 @@ void write_csv_header(const Feature& feature, _Stream& ofs, string name = "name"
 template<typename _Stream>
 void write_header(const Feature& feature, _Stream& ofs)
 {
+
   foreach(string name, feature.cnames())
   {
-    ofs << name << endl;
+    ofs << name << "," << endl;
   }
 }
 
@@ -153,9 +166,14 @@ inline void write_libsvm(const Feature& feature, const string& label, std::ostre
 //tlc dense 采用标准输出 第一列是名字比如pid 第二列是label 例如下面 另外输出的是原始特征 未经过normalize
 //# 	label	JaccardSimilarity	CTR_s10_Query	CTR_s100_Query	CTR_s1000_Query	LogitCTR_s10_Query	LogitCTR_s100_Query	LogitCTR_s1000_Query	impressions_Query	clicks_Query
 //_lottery|acute leukemia	0	0	0.013693014	0.013704492	0.013818185	-4.277081865	-4.276232328	-4.267855249	103347	1415
-inline void write_csv(const Feature& feature, const string& uid, const string& label, ofstream& ofs)
+
+inline void write_table(const Feature& feature, const string& label, ofstream& ofs, const string& name = "")
 {
-  ofs << "_" << uid << "\t" << label; 
+  if (!name.empty())
+    ofs << "_" << name << "\t" << label;
+  else
+    ofs << label;
+
   foreach(double value, feature.cvalues())
   {
     ofs << "\t" << value;
