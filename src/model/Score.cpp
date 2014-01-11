@@ -14,47 +14,47 @@
 
 Score::~Score()
 {
-  if (NULL != items_)
+  if (NULL != _items)
   {
-    delete[] items_;
+    delete[] _items;
   }
 }
 
 Score::Score()
 {
-  nitem_ = 0;
-  size_ = 100;
-  items_ = new double[size_];
+  _nitem = 0;
+  _size = 100;
+  _items = new double[_size];
 }
 
 void Score::addItem(double item)
 {
-  if (nitem_ == size_)
+  if (_nitem == _size)
   {
-    double *newbuf = new double[nitem_ + 100];
-    memcpy(newbuf, items_, sizeof (double) * nitem_);
-    delete[] items_;
-    items_ = newbuf;
-    size_ += 100;
+    double *newbuf = new double[_nitem + 100];
+    memcpy(newbuf, _items, sizeof (double) * _nitem);
+    delete[] _items;
+    _items = newbuf;
+    _size += 100;
   }
 
-  items_[nitem_] = item;
-  nitem_++;
+  _items[_nitem] = item;
+  _nitem++;
 }
 
 double Score::itemAtIndex(int n)
 {
-  if (n >= nitem_)
+  if (n >= _nitem)
   {
-    return items_[nitem_ - 1];
+    return _items[_nitem - 1];
   }
 
-  return items_[n];
+  return _items[n];
 }
 
 int Score::getItemNum()
 {
-  return nitem_;
+  return _nitem;
 }
 
 

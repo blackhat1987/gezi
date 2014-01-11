@@ -39,6 +39,35 @@ typedef unsigned long long uint64;
 typedef unsigned char uchar;
 #include <boost/lexical_cast.hpp>
 
+namespace gezi
+{
+  template<typename T, typename U>
+  T lexical_cast(U input)
+  {
+    T result;
+    stringstream s;
+    s << input;
+    s >> result;
+    return result; 
+  }
+}
+
+//#define TO_INT boost::lexical_cast<int>
+//#define TO_UINT boost::lexical_cast<unsigned int>
+//#define TO_INT64 boost::lexical_cast<long long>
+//#define TO_UINT64 boost::lexical_cast<unsigned long long>
+//#define TO_BOOL boost::lexical_cast<bool>
+//#define TO_FLOAT boost::lexical_cast<float>
+//#define TO_DOUBLE boost::lexical_cast<double>
+//#define TO_STRING boost::lexical_cast<std::string>
+//#define INT boost::lexical_cast<int>
+//#define UINT boost::lexical_cast<unsigned int>
+//#define INT64 boost::lexical_cast<long long>
+//#define UINT64 boost::lexical_cast<unsigned long long>
+//#define BOOL boost::lexical_cast<bool>
+//#define FLOAT boost::lexical_cast<float>
+//#define DOUBLE boost::lexical_cast<double>
+//#define STRING boost::lexical_cast<std::string>
 #define TO_INT boost::lexical_cast<int>
 #define TO_UINT boost::lexical_cast<unsigned int>
 #define TO_INT64 boost::lexical_cast<long long>
@@ -47,14 +76,15 @@ typedef unsigned char uchar;
 #define TO_FLOAT boost::lexical_cast<float>
 #define TO_DOUBLE boost::lexical_cast<double>
 #define TO_STRING boost::lexical_cast<std::string>
-#define INT boost::lexical_cast<int>
-#define UINT boost::lexical_cast<unsigned int>
-#define INT64 boost::lexical_cast<long long>
-#define UINT64 boost::lexical_cast<unsigned long long>
-#define BOOL boost::lexical_cast<bool>
-#define FLOAT boost::lexical_cast<float>
-#define DOUBLE boost::lexical_cast<double>
-#define STRING boost::lexical_cast<std::string>
+#define INT gezi::lexical_cast<int>
+#define UINT gezi::lexical_cast<unsigned int>
+#define INT64 gezi::lexical_cast<long long>
+#define UINT64 gezi::lexical_cast<unsigned long long>
+#define BOOL gezi::lexical_cast<bool>
+#define FLOAT gezi::lexical_cast<float>
+#define DOUBLE gezi::lexical_cast<double>
+#define STRING gezi::lexical_cast<std::string>
+#define STR gezi::lexical_cast<std::string>
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
 	TypeName(const TypeName&); \
 	void operator=(const TypeName&)
@@ -773,6 +803,6 @@ inline void write_failure(const char* data, int size)
 
 #define BOOST_THREAD_DONT_USE_CHRONO
 #include <boost/thread.hpp>
-#include <boost/range/algorithm/remove_if.hpp>
+
 namespace gz = gezi;
 #endif  //----end of COMMON_UTIL_H_

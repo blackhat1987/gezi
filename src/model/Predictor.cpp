@@ -28,6 +28,7 @@
 DEFINE_string(model, "", "首个模型地址,如果不为空覆盖conf值");
 DEFINE_string(norm, "", "首个模型文件地址,如果不为空覆盖conf值");
 DEFINE_string(model_dir, "", "首个模型dir 如果不为空则下面的 model，norm覆盖掉conf值");
+DEFINE_string(model_type, "libsvm", "模型类型");
 
 int Predictor::init()
 {
@@ -44,8 +45,8 @@ int Predictor::init()
 
     if (i == 0 && !FLAGS_model_dir.empty())
     {
-      modelPath = FLAGS_model_dir + "/feature.libsvm.model";
-      modelInfoPath = FLAGS_model_dir + "/feature.libsvm.range";
+      modelPath = (format("%s/feature.%s.model") % FLAGS_model_dir % FLAGS_model_type).str();
+      modelInfoPath = (format("%s/feature.%s.range") % FLAGS_model_dir % FLAGS_model_type).str();
     }
     else
     {
@@ -55,8 +56,8 @@ int Predictor::init()
       }
       if (!modelDir.empty())
       {
-        modelPath = modelDir + "/feature.libsvm.model";
-        modelInfoPath = modelDir + "/feature.libsvm.range";
+        modelPath = (format("%s/feature.%s.model") % modelDir % FLAGS_model_type).str();
+        modelInfoPath = (format("%s/feature.%s.range") % modelDir % FLAGS_model_type).str();
       }
       else
       {
@@ -84,7 +85,13 @@ int Predictor::init()
     LOG(INFO) << format("load model_%d_path [%s] done!") % i % modelPath;
     LOG(INFO) << format("load normalize_info_%d_path [%s] done!") % i % modelInfoPath;
 
-    string modelType = "SvmModel";
+    string modelType = "LibSvm";
+    if (i == 0 && !FLAGS_model_type.empty())
+    {
+      LOG(INFO) << "Using FLAGS_model_type " << FLAGS_model_type;
+      modelType = FLAGS_model_type;
+    }
+    else
     {
       string name = (format("model_%d_type") % i).str();
       gezi::set_val(gezi::SharedConf::conf(), section, gezi::conf_trim(name), modelType);
@@ -96,19 +103,28 @@ int Predictor::init()
 
     if (!modelInfoPath.empty())
     {
+
       filter = new FeatureNormalizer();
 
-      CHECK_EQ(filter->open(modelInfoPath.c_str()), true);
+      if (!filter->open(modelInfoPath.c_str()))
+      {
+        LOG(WARNING) << "normalize file not open " << modelInfoPath;
+      }
     }
 
-    addNormalizer(i, filter);
+    addNormalizer(filter);
     LOG(INFO) << format("add filter for model type[%s], model infopath[%s] done!") % modelType % modelInfoPath;
 
     Model* model = ModelFactory::createModel(modelType.c_str(), modelPath.c_str(), modelInfoPath.c_str());
-    CHECK_NOTNULL(model);
-    model->setModelId(i);
 
-    addModel(i, model);
+    if (model == NULL)
+    {
+      LOG(WARNING) << "could not create model from model factory you need to add your specific model manualy";
+      return -1;
+    }
+
+    model->setModelId(i);
+    addModel(model);
     LOG(INFO) << format("add model for model type[%s], model path[%s] done!") % modelType % modelPath;
   }
 
@@ -116,7 +132,7 @@ int Predictor::init()
 
 }
 
-int Predictor::predict(Feature* feature, Score* score, int index = 0)
+int Predictor::predict(Feature* feature, Score* score, int index)
 {
   Model* model = getModel(index);
   CHECK_NOTNULL(model);
@@ -124,15 +140,15 @@ int Predictor::predict(Feature* feature, Score* score, int index = 0)
 
   if (normalizer)
   {
+
     normalizer->normalize(feature);
   }
 
   return model->predict(feature, score);
 }
 
-double Predictor::predict(Feature* feature, int index = 0)
+double Predictor::predict(Feature* feature, int index, int inner_index)
 {
-  Score score;
   Model* model = getModel(index);
   CHECK_NOTNULL(model);
   //Predictor.cpp:124: undefined reference to `FLAG__namespace_do_not_use_directly_use_DECLARE_int32_instead::FLAGS_v'
@@ -148,23 +164,89 @@ double Predictor::predict(Feature* feature, int index = 0)
   {
     normalizer->normalize(feature);
   }
-
-  return model->predict(feature);
+  PVAL(*feature);
+  return model->predict(feature, inner_index);
 }
 
-double Predictor::predict(Feature& feature, int index = 0)
+double Predictor::predict(Feature& feature, int index, int inner_index)
 {
-  return predict(&feature, index);
+
+  return predict(&feature, index, inner_index);
+}
+
+void Predictor::predict(Feature* feature, vector<Score>* result)
+{
+  int modelNum = _modelList.size();
+  (*result).resize(modelNum);
+  for (int i = 0; i < modelNum; i++)
+  {
+    predict(feature, &(*result)[i], i);
+  }
+}
+
+//use this one!
+
+void Predictor::predict(Feature& feature, vector<double>& result, int index)
+{
+  if (index >= _modelList.size())
+  {
+    LOG(WARNING) << "index too big: " << index << " model num: " << _modelList.size();
+    return;
+  }
+  if (index < 0)
+  {
+    int modelNum = _modelList.size();
+    PVAL(modelNum);
+    for (int i = 0; i < modelNum; i++)
+    {
+      PVAL(_modelList[i]->type());
+      Feature fe = feature;
+      FeatureNormalizer * normalizer = getNormalizer(i);
+      if (normalizer)
+      {
+        normalizer->normalize(&fe);
+      }
+      _modelList[i]->predict(fe, result);
+    }
+  }
+  else
+  {
+    FeatureNormalizer * normalizer = getNormalizer(index);
+    if (normalizer)
+    {
+      normalizer->normalize(&feature);
+    }
+    PVAL(_modelList[index]->type());
+    _modelList[index]->predict(feature, result);
+  }
+}
+
+void Predictor::predict(Feature& feature, vector<vector<double> >& result)
+{
+  int modelNum = _modelList.size();
+  for (int i = 0; i < modelNum; i++)
+  {
+    vector<double> vec;
+    _modelList[i]->predict(feature, vec);
+    result.push_back(vec);
+  }
 }
 
 #include "feature_util.h"
 
-double Predictor::predict(string featureStr, int index = 0)
+double Predictor::predict(string featureStr, int index, int inner_index)
 {
   Feature feature = gezi::to_feature(featureStr);
-  return predict(&feature, index);
+  return predict(&feature, index, inner_index);
 }
 
+void Predictor::predict(string featureStr, vector<Score>& result)
+{
+  Feature feature = gezi::to_feature(featureStr);
+  int modelNum = _modelList.size();
+  result.resize(modelNum);
 
+  predict(&feature, &result);
+}
 
 /* vim: set expandtab ts=4 sw=4 sts=4 tw=100: */

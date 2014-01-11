@@ -25,11 +25,9 @@ public:
     return &_predictor;
   }
 
-  static void init()
+  static int init()
   {
-    int ret = _predictor.init();
-    Pval(ret);
-    CHECK_EQ(ret, 0);
+    return _predictor.init();
   }
 private:
   static Predictor _predictor; 

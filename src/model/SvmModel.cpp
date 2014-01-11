@@ -296,10 +296,10 @@ SvmModel::SvmModel(const char* path, const char *infoPath)
   init();
   if (load(path) < 0)
   {
-    LOG_FATAL("svm model: failed to load model from path[%s]", path);
+    LOG(FATAL) << "svm model: failed to load model from path: " << path;
     exit(-1);
   }
-  LOG_TRACE("svm model: finish loading model from path[%s]", path);
+  LOG(INFO) << "svm model: finish loading model from path: " << path;
 }
 
 int SvmModel::init()
@@ -799,6 +799,49 @@ int SvmModel::predict(Feature *ftr, Score *scr)
   Free(prob_estimates);
 
   return 0;
+}
+
+void SvmModel::predict(Feature& ft, vector<double>& result)
+{
+  Feature* ftr = &ft;
+  svm_model *model = &model_;
+  int svm_type = model->param.svm_type;
+  int nr_class = model->nr_class;
+  double *prob_estimates = NULL;
+  double predict_label;
+
+  vector<fnode_t> fvector = ftr->cnodes();
+  fvector.push_back(fnode_t(-1, 0));
+  svm_node *x = &(fvector[0]);
+
+  if (svm_type == C_SVC || svm_type == NU_SVC)
+  {
+    prob_estimates = (double *) malloc(nr_class * sizeof (double));
+    predict_label = svm_predict_probability(model, x, prob_estimates);
+    for (int j = 0; j < nr_class; j++)
+    {
+      result.push_back(prob_estimates[j]);
+    }
+    PVEC(result);
+  }
+  else if (svm_type == NU_SVR || svm_type == EPSILON_SVR)
+  {
+    double prob = svm_get_svr_probability(model);
+    predict_label = svm_predict(model, x);
+    result.push_back(predict_label);
+    result.push_back(prob);
+  }
+  else if (svm_type == ONE_CLASS)
+  {
+    double predict_value = svm_predict(model, x);
+    LOG_DEBUG("svm model: one class predict value=%lf", predict_value);
+    double prob = 1 - (predict_value - model->one_class_lower_bound) / (model->one_class_upper_bound - model->one_class_lower_bound);
+    prob = max(0., prob);
+    prob = min(1., prob);
+    result.push_back(prob);
+  }
+
+  Free(prob_estimates);
 }
 
 void SvmModel::finalize()

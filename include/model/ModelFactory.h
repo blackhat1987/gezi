@@ -3,9 +3,9 @@
  * Copyright (c) 2012 Baidu.com, Inc. All Rights Reserved
  * 
  **************************************************************************/
- 
- 
- 
+
+
+
 /**
  * @file ../include/ModelFactory.h
  * @author weizheng(com@baidu.com)
@@ -20,12 +20,17 @@
 
 
 #include "Model.h"
+#include <string>
 
 class ModelFactory
 {
 public:
-    static Model* createModel(const char* modelType, const char* modelPath, const char* infoPath);
+  static Model* createModel(const char* modelType, const char* modelPath, const char* infoPath);
 
+  static Model* createModel(const std::string& modelType, const std::string& modelPath, const string& infoPath)
+  {
+    return createModel(modelType.c_str(), modelPath.c_str(), infoPath.c_str());
+  }
 };
 
 

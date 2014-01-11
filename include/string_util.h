@@ -19,6 +19,7 @@
 #include "log_util.h"
 #include "chinese.h"
 #include <boost/algorithm/string.hpp>
+#include <boost/range/algorithm/remove_if.hpp>
 
 #include "wstring_util.h"
 #include "encoding_convert.h"
@@ -173,7 +174,6 @@ inline string extract_suspect_symb(const string& temp)
  */
 inline string filter_str(const string& temp)
 {
-  //char out[temp.size() + 1];
   vector<char> out(temp.size() + 1, 0);
   int index = 0;
   for (size_t i = 0; i < temp.size(); i++)
@@ -566,6 +566,18 @@ inline bool endswith(string input, string part)
 inline bool contains(string input, string part)
 {
   return input.find(part) != string::npos;
+}
+
+inline string max(string input, int length)
+{
+  return input.length() <= length ? input : input.substr(0, length);
+}
+
+//去掉一些特定的char 更复杂的比如去掉多个string 使用reg_remove
+inline string erase(string content, string chars)
+{
+  content.erase(boost::remove_if(content, boost::is_any_of(chars)), content.end());
+  return content;
 }
 
 //默认输入是中文

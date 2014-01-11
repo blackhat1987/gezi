@@ -40,16 +40,20 @@ public:
     
     inline double& operator[](int index)
     {
-      return items_[index];
+      return _items[index];
     }
 
+    inline double value(int index = 0)
+    {
+      return _items[index];
+    }
 public:
     virtual ~Score();
 
 private:
-    double *items_;
-    int nitem_;
-    int size_;
+    double *_items;
+    int _nitem;
+    int _size;
 };
 
 #endif

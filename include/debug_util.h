@@ -34,12 +34,12 @@ using namespace std;
 #define PVAL(s)\
       VLOG(4) << #s <<" --- [" << s << "]"
 
-#define PVAL_(u, s)\
+#define PVAL_(s, u)\
       VLOG(4) << u << " " << #s <<" --- [" << s << "]"
 
 #define Pval(s)\
       DLOG(INFO) << #s <<" --- [" << s << "]"
-#define Pval_(u, s)\
+#define Pval_(s, u)\
       DLOG(INFO)  << u << " " << #s <<" --- [" << s << "]"
 
 #define PVAL2(a, b)\

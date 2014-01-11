@@ -306,7 +306,8 @@ src/model/gezi_ModelFactory.o:src/model/ModelFactory.cpp \
   include/feature/Feature.h \
   include/model/SvmModel.h \
   include/model/ModelFactory.h \
-  include/model/RandForestModel.h
+  include/model/RandForestModel.h \
+  include/model/FastRankModel.h
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_ModelFactory.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/model/gezi_ModelFactory.o src/model/ModelFactory.cpp
 
@@ -429,7 +430,9 @@ src/json/gezi_json_reader.o:src/json/json_reader.cpp \
   include/json/config.h \
   include/json/value.h \
   include/json/value.h \
-  src/json/json_tool.h
+  src/json/json_tool.h \
+  include/encoding_convert.h \
+  include/log_util.h
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_reader.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/json/gezi_json_reader.o src/json/json_reader.cpp
 
@@ -449,6 +452,7 @@ src/json/gezi_json_value.o:src/json/json_value.cpp \
   include/unordered_set_serialize.h \
   include/statistic_util.h \
   include/datetime_util.h \
+  include/encoding_convert.h \
   include/json/value.h \
   include/json/forwards.h \
   include/json/config.h \

@@ -18,22 +18,27 @@
 #include "SvmModel.h"
 #include "ModelFactory.h"
 #include "RandForestModel.h"
+#include "FastRankModel.h"
 #include <string.h>
 
 Model* ModelFactory::createModel(const char* modelType, const char* modelPath, const char* infoPath)
 {
   Model* model;
-  if (!strcmp(modelType, "LinearModel"))
+  if (!strcasecmp(modelType, "Linear"))
   {
     model = new LinearModel(modelPath, infoPath);
   }
-  else if (!strcmp(modelType, "SvmModel"))
-  {
+  else if (!strcasecmp(modelType, "Svm") || !strcasecmp(modelType, "LibSvm"))
+  { //注意TODO  包括非libsvm形式的LinerSvm KernelSvm 可能
     model = new SvmModel(modelPath, infoPath);
   }
-  else if (!strcmp(modelType, "RandForestModel"))
+  else if (!strcasecmp(modelType, "RandForest") || !strcasecmp(modelType, "RandomForest"))
   {
     model = new RandForestModel(modelPath, infoPath);
+  }
+  else if (!strcasecmp(modelType, "FastRank"))
+  {
+    model = new FastRankModel();
   }
   else
   {

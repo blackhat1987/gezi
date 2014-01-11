@@ -24,9 +24,12 @@
 #include <vector>
 using gezi::FeatureNormalizer;
 
+//对model的进一步封装 支持多个model统一管理打分
 class Predictor
 {
 public:
+  typedef vector<Model*> ModelList;
+  typedef vector<FeatureNormalizer*> NormalizerList;
 
   virtual ~Predictor()
   {
@@ -38,70 +41,81 @@ public:
     }
   }
 
-  int predict(Feature *, Score *, int index);
+  //index model的索引位置, inner_index score内部索引位置
+  int predict(Feature *, Score *, int index = 0);
 
-  double predict(Feature*, int index);
+  double predict(Feature*, int index = 0, int inner_index = 0);
 
-  double predict(Feature&, int index);
+  double predict(Feature&, int index = 0, int inner_index = 0);
 
-  double predict(string featureStr, int index);
+  double predict(string featureStr, int index = 0, int inner_index = 0);
+
+  void predict(Feature*, vector<Score>* result);
+  
+  //use this one! -1 表示使用所有model逐个打分, = 0表示使用第一个model打分
+  void predict(Feature&, vector<double>& result, int index = 0);
+  
+  void predict(Feature&, vector<vector<double> >& result);
+  
+  void predict(string featureStr, vector<Score>& result);
 
   virtual int init();
 
   virtual size_t getModelCnt() const
   {
-    return modelList_.size();
+    return _modelList.size();
   }
 
   Model* model()
   {
-    return modelList_[0].second;
+    return _modelList[0];
   }
 
   virtual Model* getModel(int index) const
   {
-    for (int i = 0; i < (int) modelList_.size(); i++)
-    {
-      if (modelList_[i].first == index)
-      {
-        return modelList_[i].second;
-      }
-    }
-    return NULL;
+    return _modelList[index];
   }
 
   FeatureNormalizer* normalizer()
   {
-    return filterList_[0].second;
+    return _filterList[0];
   }
 
   virtual FeatureNormalizer* getNormalizer(int index) const
   {
-    for (int i = 0; i < (int) filterList_.size(); i++)
-    {
-      if (filterList_[i].first == index)
-      {
-        return filterList_[i].second;
-      }
-    }
-    return NULL;
+    return _filterList[index];
+  }
+
+  inline ModelList& modelList()
+  {
+    return _modelList;
+  }
+
+  inline NormalizerList& filterList()
+  {
+    return _filterList;
+  }
+
+  void addModel(Model* model)
+  {
+    _modelList.push_back(model);
+  }
+
+  void addNormalizer(FeatureNormalizer* filter)
+  {
+    _filterList.push_back(filter);
+  }
+  
+  inline int modelNum()
+  {
+    return _modelList.size();
   }
 
 private:
+  
+  ModelList _modelList;
 
-  void addModel(int id, Model* model)
-  {
-    modelList_.push_back(make_pair(id, model));
-  }
-
-  void addNormalizer(int id, FeatureNormalizer* filter)
-  {
-    filterList_.push_back(make_pair(id, filter));
-  }
-
-  vector< pair<int, Model*> > modelList_;
-
-  vector< pair<int, FeatureNormalizer*> > filterList_;
+  NormalizerList _filterList;
 };
 
 

@@ -58,7 +58,7 @@ public:
     ifstream ifs(file);
     if (!ifs.is_open())
     {
-      LOG_WARNING("RegexSearcher init file fail: %s", file);
+      LOG(WARNING) << "RegexSearcher init file fail: " << file;
       return false;
     }
     string line;
@@ -79,7 +79,7 @@ public:
     ifstream ifs(file);
     if (!ifs.is_open())
     {
-      LOG_WARNING("RegexSearcher init wstring file fail: %s", file);
+      LOG(WARNING) << "RegexSearcher init wstring file fail: " << file;
       return false;
     }
     string line;
@@ -93,7 +93,6 @@ public:
         add(wline, icase);
       }
     }
-    LOG_INFO("Finish init2 for wregex");
     return true;
   }
 
@@ -126,7 +125,7 @@ public:
     {
       if (boost::regex_search(src, reg_list_[i]))
       {
-        DLOG(INFO) << (format("%s find with %dth reg %s") % src % i % reg_list_[i].str()).str();
+        VLOG(3) << (format("%s find with %dth reg %s") % src % i % reg_list_[i].str()).str();
         return true;
       }
     }

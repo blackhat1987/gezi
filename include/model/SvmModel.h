@@ -98,6 +98,7 @@ public:
   virtual int load(const char*);
   virtual int init();
   virtual int predict(Feature *, Score *);
+  virtual void predict(Feature&, vector<double>&);
   virtual void finalize();
 
 private:
