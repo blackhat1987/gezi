@@ -45,7 +45,7 @@ public:
   Feature(double zero_thre = 0.0)
   : _zero_thre(zero_thre)
   {
-    int len = 100;
+    int len = 1000;
     _nodes.reserve(len);
     _values.reserve(len);
     _name_counts.reserve(len);
@@ -56,6 +56,11 @@ public:
   virtual ~Feature()
   {
 
+  }
+
+  inline int size() const
+  {
+      return _values.size();
   }
 
   /** 

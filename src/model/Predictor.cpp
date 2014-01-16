@@ -28,10 +28,11 @@
 DEFINE_string(model, "", "首个模型地址,如果不为空覆盖conf值");
 DEFINE_string(norm, "", "首个模型文件地址,如果不为空覆盖conf值");
 DEFINE_string(model_dir, "", "首个模型dir 如果不为空则下面的 model，norm覆盖掉conf值");
-DEFINE_string(model_type, "libsvm", "模型类型");
+DEFINE_string(model_type, "", "模型类型");
 
 int Predictor::init()
 {
+  int ret = 0;
   string section = "Predictor";
   int model_cnt = 1;
   SCONF(model_cnt);
@@ -43,10 +44,24 @@ int Predictor::init()
   {
     string modelDir, modelPath, modelInfoPath;
 
+    string modelType = "libsvm";
+    if (i == 0 && !FLAGS_model_type.empty())
+    {
+      LOG(INFO) << "Using FLAGS_model_type " << FLAGS_model_type;
+      modelType = FLAGS_model_type;
+    }
+    else
+    {
+      string name = (format("model_%d_type") % i).str();
+      gezi::set_val(gezi::SharedConf::conf(), section, gezi::conf_trim(name), modelType);
+    }
+    CHECK_NE(modelType.empty(), true);
+    LOG(INFO) << format("load model_%d_type [%s] done!") % i % modelType;
+
     if (i == 0 && !FLAGS_model_dir.empty())
     {
-      modelPath = (format("%s/feature.%s.model") % FLAGS_model_dir % FLAGS_model_type).str();
-      modelInfoPath = (format("%s/feature.%s.range") % FLAGS_model_dir % FLAGS_model_type).str();
+      modelPath = (format("%s/feature.%s.model") % FLAGS_model_dir % modelType).str();
+      modelInfoPath = (format("%s/feature.%s.range") % FLAGS_model_dir % modelType).str();
     }
     else
     {
@@ -56,8 +71,8 @@ int Predictor::init()
       }
       if (!modelDir.empty())
       {
-        modelPath = (format("%s/feature.%s.model") % modelDir % FLAGS_model_type).str();
-        modelInfoPath = (format("%s/feature.%s.range") % modelDir % FLAGS_model_type).str();
+        modelPath = (format("%s/feature.%s.model") % modelDir % modelType).str();
+        modelInfoPath = (format("%s/feature.%s.range") % modelDir % modelType).str();
       }
       else
       {
@@ -69,7 +84,10 @@ int Predictor::init()
         {
           modelPath = FLAGS_model;
         }
-        CHECK_NE(modelPath.empty(), true);
+        if (modelPath.empty())
+        {
+          LOG(WARNING) << "no model path, make sure you are using a model without model data";
+        }
 
         {
           string name = (format("normalize_info_%d_path") % i).str();
@@ -84,20 +102,6 @@ int Predictor::init()
 
     LOG(INFO) << format("load model_%d_path [%s] done!") % i % modelPath;
     LOG(INFO) << format("load normalize_info_%d_path [%s] done!") % i % modelInfoPath;
-
-    string modelType = "LibSvm";
-    if (i == 0 && !FLAGS_model_type.empty())
-    {
-      LOG(INFO) << "Using FLAGS_model_type " << FLAGS_model_type;
-      modelType = FLAGS_model_type;
-    }
-    else
-    {
-      string name = (format("model_%d_type") % i).str();
-      gezi::set_val(gezi::SharedConf::conf(), section, gezi::conf_trim(name), modelType);
-    }
-    CHECK_NE(modelType.empty(), true);
-    LOG(INFO) << format("load model_%d_type [%s] done!") % i % modelType;
 
     FeatureNormalizer* filter = NULL;
 
@@ -120,15 +124,17 @@ int Predictor::init()
     if (model == NULL)
     {
       LOG(WARNING) << "could not create model from model factory you need to add your specific model manualy";
-      return -1;
+      ret = -1;
     }
-
-    model->setModelId(i);
-    addModel(model);
-    LOG(INFO) << format("add model for model type[%s], model path[%s] done!") % modelType % modelPath;
+    else
+    {
+      model->setModelId(i);
+      addModel(model);
+      LOG(INFO) << format("add model for model type[%s], model path[%s] done!") % modelType % modelPath;
+    }
   }
 
-  return 0;
+  return ret;
 
 }
 
@@ -188,7 +194,7 @@ void Predictor::predict(Feature* feature, vector<Score>* result)
 
 void Predictor::predict(Feature& feature, vector<double>& result, int index)
 {
-  if (index >= _modelList.size())
+  if (index >= (int) _modelList.size())
   {
     LOG(WARNING) << "index too big: " << index << " model num: " << _modelList.size();
     return;
@@ -237,7 +243,9 @@ void Predictor::predict(Feature& feature, vector<vector<double> >& result)
 double Predictor::predict(string featureStr, int index, int inner_index)
 {
   Feature feature = gezi::to_feature(featureStr);
-  return predict(&feature, index, inner_index);
+  vector<double> result;
+  predict(feature, result, index);
+  return result[inner_index];
 }
 
 void Predictor::predict(string featureStr, vector<Score>& result)
@@ -247,6 +255,12 @@ void Predictor::predict(string featureStr, vector<Score>& result)
   result.resize(modelNum);
 
   predict(&feature, &result);
+}
+
+void Predictor::predict(string featureStr, vector<double>& result)
+{
+  Feature feature = gezi::to_feature(featureStr);
+  predict(feature, result, -1);
 }
 
 /* vim: set expandtab ts=4 sw=4 sts=4 tw=100: */

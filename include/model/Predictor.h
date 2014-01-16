@@ -25,6 +25,7 @@
 using gezi::FeatureNormalizer;
 
 //对model的进一步封装 支持多个model统一管理打分
+
 class Predictor
 {
 public:
@@ -51,13 +52,15 @@ public:
   double predict(string featureStr, int index = 0, int inner_index = 0);
 
   void predict(Feature*, vector<Score>* result);
-  
+
   //use this one! -1 表示使用所有model逐个打分, = 0表示使用第一个model打分
   void predict(Feature&, vector<double>& result, int index = 0);
-  
+
   void predict(Feature&, vector<vector<double> >& result);
-  
+
   void predict(string featureStr, vector<Score>& result);
+
+  void predict(string featureStr, vector<double>& result);
 
   virtual int init();
 
@@ -101,9 +104,39 @@ public:
     _modelList.push_back(model);
   }
 
+  void add(Model* model)
+  {
+    _modelList.push_back(model);
+  }
+
+  void insertModel(Model* model)
+  {
+    _modelList.insert(_modelList.begin(), model);
+  }
+
+  void insert(Model* model)
+  {
+    _modelList.insert(_modelList.begin(), model);
+  }
+
   void addNormalizer(FeatureNormalizer* filter)
   {
     _filterList.push_back(filter);
+  }
+  
+  void add(FeatureNormalizer* filter)
+  {
+    _filterList.push_back(filter);
+  }
+
+  void insertNormalizer(FeatureNormalizer* filter)
+  {
+    _filterList.insert(_filterList.begin(), filter);
+  }
+
+  void insert(FeatureNormalizer* filter)
+  {
+    _filterList.insert(_filterList.begin(), filter);
   }
   
   inline int modelNum()
@@ -112,7 +145,7 @@ public:
   }
 
 private:
-  
+
   ModelList _modelList;
 
   NormalizerList _filterList;

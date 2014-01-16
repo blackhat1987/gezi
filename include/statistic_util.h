@@ -70,6 +70,22 @@ ValType mean(const Container& vec, int n)
   return std::accumulate(vec.begin(), vec.end(), 0.0) / (ValType) n;
 }
 
+namespace ufo
+{
+
+template<typename Container>
+ValType min(const Container& vec)
+{
+  return *(std::min_element(vec.begin(), vec.end()));
+}
+
+template<typename Container>
+ValType max(const Container& vec)
+{
+  return *(std::max_element(vec.begin(), vec.end()));
+}
+}
+
 struct sd_op
 {
 
@@ -438,21 +454,23 @@ inline double discretize(double value, double from, double to, int bins, bool no
   }
   return res;
 }
+
 template<typename Iter>
-inline double information(Iter begin, Iter end) 
+inline double information(Iter begin, Iter end)
 {
   typedef typename Iter::value_type KeyType;
   std::tr1::unordered_map<KeyType, int> m;
-  for (Iter it = begin; it != end; ++it) 
+  for (Iter it = begin; it != end; ++it)
   {
     add_one(m, *it);
   }
-  typedef std::pair<const KeyType, int> Pair; 
+  typedef std::pair<const KeyType, int> Pair;
   double res = 0;
   int total = end - begin;
-  foreach(Pair& item, m) 
+
+  foreach(Pair& item, m)
   {
-    double prob = item.second / (double)total;
+    double prob = item.second / (double) total;
     res += -prob * log(prob);
   }
   return res;

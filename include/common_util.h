@@ -41,33 +41,18 @@ typedef unsigned char uchar;
 
 namespace gezi
 {
-  template<typename T, typename U>
-  T lexical_cast(U input)
-  {
-    T result;
-    stringstream s;
-    s << input;
-    s >> result;
-    return result; 
-  }
+
+template<typename T, typename U>
+T lexical_cast(U input)
+{
+  T result;
+  stringstream s;
+  s << input;
+  s >> result;
+  return result;
+}
 }
 
-//#define TO_INT boost::lexical_cast<int>
-//#define TO_UINT boost::lexical_cast<unsigned int>
-//#define TO_INT64 boost::lexical_cast<long long>
-//#define TO_UINT64 boost::lexical_cast<unsigned long long>
-//#define TO_BOOL boost::lexical_cast<bool>
-//#define TO_FLOAT boost::lexical_cast<float>
-//#define TO_DOUBLE boost::lexical_cast<double>
-//#define TO_STRING boost::lexical_cast<std::string>
-//#define INT boost::lexical_cast<int>
-//#define UINT boost::lexical_cast<unsigned int>
-//#define INT64 boost::lexical_cast<long long>
-//#define UINT64 boost::lexical_cast<unsigned long long>
-//#define BOOL boost::lexical_cast<bool>
-//#define FLOAT boost::lexical_cast<float>
-//#define DOUBLE boost::lexical_cast<double>
-//#define STRING boost::lexical_cast<std::string>
 #define TO_INT boost::lexical_cast<int>
 #define TO_UINT boost::lexical_cast<unsigned int>
 #define TO_INT64 boost::lexical_cast<long long>
@@ -76,15 +61,35 @@ namespace gezi
 #define TO_FLOAT boost::lexical_cast<float>
 #define TO_DOUBLE boost::lexical_cast<double>
 #define TO_STRING boost::lexical_cast<std::string>
-#define INT gezi::lexical_cast<int>
-#define UINT gezi::lexical_cast<unsigned int>
-#define INT64 gezi::lexical_cast<long long>
-#define UINT64 gezi::lexical_cast<unsigned long long>
-#define BOOL gezi::lexical_cast<bool>
-#define FLOAT gezi::lexical_cast<float>
-#define DOUBLE gezi::lexical_cast<double>
-#define STRING gezi::lexical_cast<std::string>
-#define STR gezi::lexical_cast<std::string>
+#define INT boost::lexical_cast<int>
+#define UINT boost::lexical_cast<unsigned int>
+#define INT64 boost::lexical_cast<long long>
+#define UINT64 boost::lexical_cast<unsigned long long>
+#define BOOL boost::lexical_cast<bool>
+#define FLOAT boost::lexical_cast<float>
+#define DOUBLE boost::lexical_cast<double>
+#define STRING boost::lexical_cast<std::string>
+#define STR boost::lexical_cast<std::string>
+
+//gezi lexical_cast 可以比如 1.0 转成int 1, 包括模板里面可以 string -> string转换 方便模板统一处理
+//但是并不安全所以不再提供define 需要直接使用 不安全的情况如 vec[0] --- [Instance] UINT64(vec[0]) --- [18619200]
+//#define TO_INT boost::lexical_cast<int>
+//#define TO_UINT boost::lexical_cast<unsigned int>
+//#define TO_INT64 boost::lexical_cast<long long>
+//#define TO_UINT64 boost::lexical_cast<unsigned long long>
+//#define TO_BOOL boost::lexical_cast<bool>
+//#define TO_FLOAT boost::lexical_cast<float>
+//#define TO_DOUBLE boost::lexical_cast<double>
+//#define TO_STRING boost::lexical_cast<std::string>
+//#define INT gezi::lexical_cast<int>
+//#define UINT gezi::lexical_cast<unsigned int>
+//#define INT64 gezi::lexical_cast<long long>
+//#define UINT64 gezi::lexical_cast<unsigned long long>
+//#define BOOL gezi::lexical_cast<bool>
+//#define FLOAT gezi::lexical_cast<float>
+//#define DOUBLE gezi::lexical_cast<double>
+//#define STRING gezi::lexical_cast<std::string>
+//#define STR gezi::lexical_cast<std::string>
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
 	TypeName(const TypeName&); \
 	void operator=(const TypeName&)
@@ -95,6 +100,8 @@ namespace gezi
 #define foreach BOOST_FOREACH
 using boost::format;
 using boost::is_any_of;
+#include <boost/any.hpp>   
+using boost::any_cast;
 
 #define FREE(ptr) \
   {if (ptr) { delete ptr; ptr = NULL;}}
@@ -510,6 +517,23 @@ void read_map(const std::string& infile, Container& container, const string& sep
   }
 }
 
+inline unordered_map<string, int> to_identifer_map(string infile, int start = 0)
+{
+  unordered_map<string, int> m;
+  std::ifstream ifs(infile.c_str());
+  string line;
+  while (getline(ifs, line))
+  {
+    boost::trim(line);
+    m[line] = start++;
+  }
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+  return std::move(m);
+#else
+  return m;
+#endif
+}
+
 template<typename Map>
 void write_map(const Map& m, const std::string& ofile, const std::string& sep = "\t")
 {
@@ -750,6 +774,7 @@ inline vector<string> split(const string& input_, const string& sep = "\t ")
 #endif
 }
 
+//TODO FIXME 貌似比如 "1, 2, 3"这样还是处理不了会抛异常 按说trim了
 template<typename T>
 inline void to_vec(const string& input_, vector<T>& ovec, const string& sep = ",")
 {
@@ -792,8 +817,10 @@ inline int length(map<string, vector<string> > * history, string name)
 
 static const int kOneDay = 86400; //24 * 60 * 60
 static const int kOneHour = 3600;
+static const int kOneMinute = 60;
 
 //TODO 看上去只输出第一句 没有输出后面的stack 信息
+
 inline void write_failure(const char* data, int size)
 {
   string s(data, size);
