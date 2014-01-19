@@ -28,7 +28,7 @@ IDLFLAGS('--compack')
 UBRPCFLAGS('--compack')
 
 #头文件路径.
-INCPATHS('. ../include ../utils ../output ../output/include ../include/feature ../include/model')
+INCPATHS('. ../include ../utils ../output ../output/include ../include/feature ../include/model ../include/numeric')
 
 #使用库
 #LIBS('./librsc-sender.a')
@@ -60,3 +60,5 @@ Application('test_json',Sources('test_json.cc', srcs, GLOB('../src/json/*.cpp'))
 Application('test_escape',Sources('test_escape.cc', srcs))
 #Application('test_other',Sources('test_other.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')))
 Application('test_other',Sources('test_other.cc',srcs))
+#Application('test_feature_selector',Sources('test_feature_selector.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')))
+Application('test_feature_selector',Sources('test_feature_selector.cc',srcs))

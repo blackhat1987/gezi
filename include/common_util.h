@@ -13,30 +13,25 @@
 
 #ifndef COMMON_UTIL_H_
 #define COMMON_UTIL_H_
-#include <string>
-#include <vector>
-#include <fstream>
-#include <sstream>
+
 #include <stdlib.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
-#include <sstream>
-#include <algorithm>
 #include <gtest/gtest.h> 
 #include <glog/logging.h>
 #include <gflags/gflags.h>
+
+#include "common_def.h"
+
 #include "hashmap_util.h"
 #include "log_util.h"
 #include "conf_util.h"
 #include "debug_util.h"
 #include "string_util.h"
 #include "serialize_util.h"
+#include "Matrix.h"
+#include "sort_util.h"
 
-using namespace std;
-typedef long long int64;
-typedef unsigned int uint;
-typedef unsigned long long uint64;
-typedef unsigned char uchar;
 #include <boost/lexical_cast.hpp>
 
 namespace gezi
@@ -112,6 +107,10 @@ using boost::any_cast;
 #include <boost/algorithm/string/regex.hpp>
 using boost::regex;
 using boost::algorithm::split_regex;
+
+#include <boost/function.hpp>
+using boost::function;
+
 
 #include "statistic_util.h"
 #include "datetime_util.h"

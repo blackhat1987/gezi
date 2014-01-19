@@ -4,13 +4,11 @@ ifeq ($(shell uname -m),x86_64)
 CC=gcc
 CXX=g++
 CXXFLAGS=-g \
-  -O3 \
   -pipe \
   -W \
   -Wall \
   -fPIC
 CFLAGS=-g \
-  -O3 \
   -pipe \
   -W \
   -Wall \
@@ -24,7 +22,8 @@ INCPATH=-I. \
   -I./output \
   -I./output/include \
   -I./include/feature \
-  -I./include/model
+  -I./include/model \
+  -I./include/numeric
 DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../com/btest/gtest/include \
   -I../../../../../com/btest/gtest/output \
@@ -124,7 +123,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=b53330a66897c84ff33b2cd5ee397ee3  COMAKE
+COMAKE_MD5=73a27cb8fb1707671ec7c2046fc6f21b  COMAKE
 
 
 .PHONY:all
@@ -235,6 +234,7 @@ src/gezi_conf_util.o:src/conf_util.cpp \
   include/log_util.h \
   include/debug_util.h \
   include/common_util.h \
+  include/common_def.h \
   include/hashmap_util.h \
   include/conf_util.h \
   include/string_util.h \
@@ -244,6 +244,8 @@ src/gezi_conf_util.o:src/conf_util.cpp \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
+  include/Matrix.h \
+  include/sort_util.h \
   include/statistic_util.h \
   include/datetime_util.h
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_conf_util.o[0m']"
@@ -263,6 +265,7 @@ src/model/gezi_LinearModel.o:src/model/LinearModel.cpp \
   include/model/Model.h \
   include/feature/Feature.h \
   include/common_util.h \
+  include/common_def.h \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
@@ -275,6 +278,8 @@ src/model/gezi_LinearModel.o:src/model/LinearModel.cpp \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
+  include/Matrix.h \
+  include/sort_util.h \
   include/statistic_util.h \
   include/datetime_util.h \
   include/model/Score.h \
@@ -288,6 +293,7 @@ src/model/gezi_ModelFactory.o:src/model/ModelFactory.cpp \
   include/model/Model.h \
   include/feature/Feature.h \
   include/common_util.h \
+  include/common_def.h \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
@@ -300,6 +306,8 @@ src/model/gezi_ModelFactory.o:src/model/ModelFactory.cpp \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
+  include/Matrix.h \
+  include/sort_util.h \
   include/statistic_util.h \
   include/datetime_util.h \
   include/model/Score.h \
@@ -316,6 +324,7 @@ src/model/gezi_Predictor.o:src/model/Predictor.cpp \
   include/model/Model.h \
   include/feature/Feature.h \
   include/common_util.h \
+  include/common_def.h \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
@@ -328,6 +337,8 @@ src/model/gezi_Predictor.o:src/model/Predictor.cpp \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
+  include/Matrix.h \
+  include/sort_util.h \
   include/statistic_util.h \
   include/datetime_util.h \
   include/model/Score.h \
@@ -349,6 +360,7 @@ src/model/gezi_RandForestModel.o:src/model/RandForestModel.cpp \
   include/model/Model.h \
   include/feature/Feature.h \
   include/common_util.h \
+  include/common_def.h \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
@@ -361,6 +373,8 @@ src/model/gezi_RandForestModel.o:src/model/RandForestModel.cpp \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
+  include/Matrix.h \
+  include/sort_util.h \
   include/statistic_util.h \
   include/datetime_util.h \
   include/model/Score.h \
@@ -380,6 +394,7 @@ src/model/gezi_SharedPredictor.o:src/model/SharedPredictor.cpp \
   include/model/Model.h \
   include/feature/Feature.h \
   include/common_util.h \
+  include/common_def.h \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
@@ -392,6 +407,8 @@ src/model/gezi_SharedPredictor.o:src/model/SharedPredictor.cpp \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
+  include/Matrix.h \
+  include/sort_util.h \
   include/statistic_util.h \
   include/datetime_util.h \
   include/model/Score.h \
@@ -405,6 +422,7 @@ src/model/gezi_SvmModel.o:src/model/SvmModel.cpp \
   include/model/Model.h \
   include/feature/Feature.h \
   include/common_util.h \
+  include/common_def.h \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
@@ -417,6 +435,8 @@ src/model/gezi_SvmModel.o:src/model/SvmModel.cpp \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
+  include/Matrix.h \
+  include/sort_util.h \
   include/statistic_util.h \
   include/datetime_util.h \
   include/model/Score.h
@@ -438,6 +458,7 @@ src/json/gezi_json_reader.o:src/json/json_reader.cpp \
 
 src/json/gezi_json_value.o:src/json/json_value.cpp \
   include/common_util.h \
+  include/common_def.h \
   include/hashmap_util.h \
   include/log_util.h \
   include/conf_util.h \
@@ -450,6 +471,8 @@ src/json/gezi_json_value.o:src/json/json_value.cpp \
   include/serialize_util.h \
   include/unordered_map_serialize.h \
   include/unordered_set_serialize.h \
+  include/Matrix.h \
+  include/sort_util.h \
   include/statistic_util.h \
   include/datetime_util.h \
   include/encoding_convert.h \

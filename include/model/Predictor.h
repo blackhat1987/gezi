@@ -25,7 +25,7 @@
 using gezi::FeatureNormalizer;
 
 //对model的进一步封装 支持多个model统一管理打分
-
+DECLARE_string(model_type);
 class Predictor
 {
 public:

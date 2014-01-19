@@ -206,6 +206,33 @@ inline void addVar(Feature* fe, const vector<T>& vec,
   double var = vec.size() > 1 ? sta::var(vec) : 0;
   fe->add(var, var_name);
 }
+
+template<typename T>
+inline void addMeanVar(Feature* fe, T begin, T end,
+        const string mean_name = "", const string var_name = "")
+{
+  
+  double mean = end > begin ? sta::mean(begin, end) : 0;
+  fe->add(mean, mean_name);
+  double var = end - begin > 1 ? sta::var(begin, end, mean) : 0;
+  fe->add(var, var_name);
+}
+
+template<typename T>
+inline void addMean(Feature* fe, T begin, T end,
+        const string mean_name = "")
+{
+  double mean = end > begin ? sta::mean(begin, end) : 0;
+  fe->add(mean, mean_name);
+}
+
+template<typename T>
+inline void addVar(Feature* fe, T begin, T end,
+        const string var_name = "")
+{
+  double var = end - begin > 1 ? sta::var(begin, end) : 0;
+  fe->add(var, var_name);
+}
 } //----end of namespace gezi
 
 #endif  //----end of FEATURE_UTIL_H_

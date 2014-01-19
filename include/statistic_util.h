@@ -126,6 +126,15 @@ ValType var(Iter start, Iter end)
   ValType y = std::accumulate(start, end, 0.0, sd_op()) / (ValType) (n - 1);
   return y - (x * n / ValType(n - 1));
 }
+
+template<typename Iter>
+ValType var(Iter start, Iter end, ValType mean)
+{
+  int n = end - start;
+  ValType x = std::pow(mean, 2);
+  ValType y = std::accumulate(start, end, 0.0, sd_op()) / (ValType) (n - 1);
+  return y - (x * n / ValType(n - 1));
+}
 //struct sd_op_
 //{
 //    template<typename T1, typename T2 >

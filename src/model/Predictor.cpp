@@ -113,6 +113,7 @@ int Predictor::init()
       if (!filter->open(modelInfoPath.c_str()))
       {
         LOG(WARNING) << "normalize file not open " << modelInfoPath;
+        FREE(filter);
       }
     }
 

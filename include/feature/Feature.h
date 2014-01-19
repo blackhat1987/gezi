@@ -42,8 +42,8 @@ public:
   //保留一个zero_thre但是实际不用也ok 稀疏使用判断==0 libsvm和tlc都是用的判断==0,虽然有一定浮点误差，为了结果一致仍然判断==0
   //Feature feature(-1) 可以用来表示一个完全dense表示,values,nodes都dense
 
-  Feature(double zero_thre = 0.0)
-  : _zero_thre(zero_thre)
+  Feature(bool use_section_name = true, double zero_thre = 0.0)
+  : _use_section_name(use_section_name), _zero_thre(zero_thre)
   {
     int len = 1000;
     _nodes.reserve(len);
@@ -60,7 +60,7 @@ public:
 
   inline int size() const
   {
-      return _values.size();
+    return _values.size();
   }
 
   /** 
@@ -110,11 +110,11 @@ public:
   /**
    * 增加特征, 注意feature Node index 是1开始 和libsvm保持一致
    */
-  void add(double value, string name, bool use_section = false)
+  void add(double value, string name)
   {
-    if (use_section)
+    if (_use_section_name)
     {
-      name = (format("%s::%s") % _section_names.back() % name).str();
+      name = (format("%s_%s") % _section_names.back() % name).str();
     }
     _names.push_back(name);
     _idx++;
@@ -130,7 +130,7 @@ public:
   void add(double value)
   {
     string name = (format("%s%d") % _section_names.back() % _idx).str();
-    add(value, name, false);
+    add(value, name);
   }
 
   void add(double* values, int len, const string& name = "")
@@ -189,6 +189,7 @@ public:
   }
 
   //设置稀疏index, value 
+
   void set(int index, double value)
   {
     Iter iter = std::lower_bound(_nodes.begin(), _nodes.end(), Node(index),
@@ -200,6 +201,7 @@ public:
   }
 
   //获取稀疏value
+
   const double value(int index) const
   {
     ConstIter iter = std::lower_bound(_nodes.begin(), _nodes.end(), Node(index),
@@ -224,6 +226,12 @@ public:
   }
 
   const double valueAt(int index) const
+  {
+    int idx = (index + _values.size()) % _values.size();
+    return _values[idx];
+  }
+
+  const double at(int index) const
   {
     int idx = (index + _values.size()) % _values.size();
     return _values[idx];
@@ -305,6 +313,7 @@ public:
 private:
   vector<Node> _nodes;
   double _zero_thre;
+  bool _use_section_name;
 
   vector<string> _names;
   vector<string> _section_names;
