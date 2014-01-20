@@ -21,11 +21,11 @@
 namespace gezi
 {
 
-enum ScoreStrategy
-{
-  MAX,
-  AVG
-};
+//Two options for an aggregate score across classes:
+//Weighted average:
+//?^2 (???????)=∑_(?∈???????)?〖?(?)  ?^2 (???????,?) 〗
+//Highest score among any class:
+//?^2 (???????)=max┬(?∈???????)?〖   ?^2 (???????,?)〗
 
 class FeatureSelector : public Identifer
 {
@@ -33,7 +33,7 @@ public:
   typedef boost::function<Float(int, int, int, uint64) > Func;
 
   FeatureSelector()
-  : _numLabels(2), _type(CHI), _strategy(MAX)
+  : _numLabels(2), _method(collocation::CHI), _strategy(MAX)
   {
     init();
     initFunc();
@@ -60,11 +60,45 @@ public:
     }
   }
 
+  enum Strategy
+  {
+    MAX,
+    AVG
+  };
+
   void initFunc()
   {
-    if (_type == CHI)
+    using namespace collocation;
+    switch (_method)
     {
-      _func = ChiSquareFunc();
+      case CHI:
+        VLOG(3) << "Chi Square";
+        _func = chi_square;
+        break;
+      case IG:
+        VLOG(3) << "Informaion Gain";
+        _func = information_gain;
+        break;
+      case MI:
+        VLOG(3) << "Mutual Info";
+        _func = mutual_info;
+        break;
+      case MI2:
+        VLOG(3) << "Mutual Info method2";
+        _func = mutual_info2;
+        break;
+      case PMI:
+        VLOG(3) << "Point Mutual Info";
+        _func = point_mutual_info;
+        break;
+      case ECE:
+        VLOG(3) << "Expected Cross Entropy";
+        _func = cross_entropy;
+        break;
+      default:
+        VLOG(3) << "Chi Square";
+        _func = chi_square;
+        break;
     }
   }
 
@@ -81,24 +115,24 @@ public:
     return _numLabels;
   }
 
-  inline FeatureSelector& type(CoMeasureType type)
+  inline FeatureSelector& method(collocation::Method method)
   {
-    _type = type;
+    _method = method;
     clear();
     initFunc();
     return *this;
   }
 
-  inline FeatureSelector& strategy(ScoreStrategy strategy)
+  inline FeatureSelector& strategy(Strategy strategy)
   {
     _strategy = strategy;
     clear();
     return *this;
   }
 
-  inline int type()
+  inline int method()
   {
-    return _type;
+    return _method;
   }
 
   inline int strategy()
@@ -158,7 +192,7 @@ public:
     {
       for (int labelIdx = 0; labelIdx < _numLabels; labelIdx++)
       {
-        double score = _func(_counts[labelIdx][f], _featureCounts[f], _classCounts[labelIdx], _numInstances);
+        double score = _func(_counts[labelIdx][f], _classCounts[labelIdx], _featureCounts[f], _numInstances);
         _scores[labelIdx][f] = score;
         if (_strategy == MAX)
         {
@@ -247,8 +281,8 @@ private:
   int _numFeatures;
   int64 _numInstances;
   Func _func;
-  CoMeasureType _type;
-  ScoreStrategy _strategy;
+  collocation::Method _method;
+  Strategy _strategy;
 
   DMat _scores; //记录各个特征打分
   IMat _ranks; //记录特征打分排序索引

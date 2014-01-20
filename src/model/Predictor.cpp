@@ -209,6 +209,7 @@ void Predictor::predict(Feature& feature, vector<double>& result, int index)
       PVAL(_modelList[i]->type());
       Feature fe = feature;
       FeatureNormalizer * normalizer = getNormalizer(i);
+      PVAL(normalizer);
       if (normalizer)
       {
         normalizer->normalize(&fe);

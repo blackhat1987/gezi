@@ -27,6 +27,19 @@ DEFINE_int32(num, 1, "");
 DEFINE_string(i, "", "input file");
 DEFINE_string(o, "result.txt", "output file");
 
+void run(FeatureSelector& fs)
+{
+  fs.calc();
+  Pval(fs.strategy());
+  fs.save(cout, -1, 0);
+  fs.save(cout, -1, 1);
+  fs.save(cout, -1, -1);
+
+  fs = fs.strategy(FeatureSelector::AVG);
+  fs.calc();
+  fs.save(cout, -1, -1);
+}
+
 void run()
 {
   FeatureSelector fs;
@@ -37,21 +50,13 @@ void run()
   fs.add("文思海辉\t的\t食堂\t很差劲", 0);
   fs.add("文思海辉\t太远", 1);
   fs.add("很差劲", 1);
-
-  fs.calc();
-
-  Pval(fs.type());
-  Pval(fs.strategy());
-  //  fs.save("./test.data/feature-select/" + FLAGS_o, -1, 0);
-  //  fs.save("./test.data/feature-select/" + FLAGS_o, -1, 1);
-  //  fs.save("./test.data/feature-select/" + FLAGS_o, -1, -1);
-  fs.save(cout, -1, 0);
-  fs.save(cout, -1, 1);
-  fs.save(cout, -1, -1);
-  
-  fs = fs.strategy(AVG);
-  fs.calc();
-  fs.save(cout, -1, -1);
+  using namespace collocation;
+  run(fs.method(CHI));
+  run(fs.method(IG));
+  run(fs.method(MI));
+  run(fs.method(MI2));
+  run(fs.method(PMI));
+  run(fs.method(ECE));
 }
 
 int main(int argc, char *argv[])

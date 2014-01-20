@@ -38,20 +38,27 @@ namespace gezi
 //The model defines the selectional preference strength of a predicate as: ? 
 //SR(p) = D(er(clp)[I Pr(c)) = E pr(clp)log Pr(clp) Pr(c) " 
 //注意在文本分类里面提到的交叉熵特征选择最后还乘了pr(v) measures_of_rule_quality_for_feature_selection_in_text_categorization.pdf
-enum CoMeasureType
+namespace collocation
+{
+
+enum Method
 {
   FREQ, //DF
   IDF,
   CHI, //chi square
   IG, //information gain(信息增益) 
   MI, //mutual info
+  MI2, //the same as mutual info
   PMI, //point mutual info 
   ECE, //expected cross entropy 
   EMI, //expected mutual info
   T_TEST,
   LIR, //likely hood tio
 };
+
+}
 //typedef double Float;
+
 struct ChiSquareFunc
 {
   /**
@@ -142,11 +149,40 @@ struct PointMutualInfoFunc
   }
 };
 
-inline Float mutual_info(int a, int n1, int n2, uint64 n)
+inline Float point_mutual_info(int a, int n1, int n2, uint64 n)
 {
   if (!a)
     return std::numeric_limits<int>::min();
   return log(Float(n / n1) * (Float(a) / n2));
+}
+
+//计算信息增益 这个是按照多个class 累加的需要 一次只计算一个class 的贡献  所以这个只有AVG模式才是最终的IG结果
+//n1 代表class出现次数, n2 代表 feature出现次数
+
+inline Float information_gain(int a, int n1, int n2, uint64 n)
+{
+//  Float cratio = n1 / (double) n;
+//  return -log()
+  return 0;
+}
+
+//计算互信息（2class 信息增益) 这个是按照两个class 一次计算综合2个的互信息
+
+inline Float mutual_info(int a, int n1, int n2, uint64 n)
+{
+  return 0;
+}
+
+//计算互信息 方式2 应该和上面的结果相同 just for test 只按上面就好 
+
+inline Float mutual_info2(int a, int n1, int n2, uint64 n)
+{
+  return 0;
+}
+
+inline Float cross_entropy(int a, int n1, int n2, uint64 n)
+{
+  return 0;
 }
 
 struct DiscountedMutualInfoFunc
@@ -257,6 +293,5 @@ struct LogEChiSquareFunc
             * (n / Float(a10 + a11)) / (a00 + a01);
   }
 };
-
 }
 #endif  //----end of COLLOCATION_H_
