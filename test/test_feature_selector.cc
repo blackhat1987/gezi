@@ -29,34 +29,65 @@ DEFINE_string(o, "result.txt", "output file");
 
 void run(FeatureSelector& fs)
 {
+  LOG(INFO) << "MAX";
+  fs = fs.strategy(FeatureSelector::MAX);
   fs.calc();
-  Pval(fs.strategy());
   fs.save(cout, -1, 0);
   fs.save(cout, -1, 1);
   fs.save(cout, -1, -1);
 
+  LOG(INFO) << "AVG";
   fs = fs.strategy(FeatureSelector::AVG);
+  fs.calc();
+  fs.save(cout, -1, -1);
+
+  LOG(INFO) << "SUM";
+  fs = fs.strategy(FeatureSelector::SUM);
   fs.calc();
   fs.save(cout, -1, -1);
 }
 
 void run()
 {
-  FeatureSelector fs;
-  fs.add("我\t在\t百度大厦", 0);
-  fs.add("我\t在\t文思海辉", 1);
-  fs.add("健身房\t在\t百度大厦", 0);
-  fs.add("健身房\t不在\t文思海辉", 1);
-  fs.add("文思海辉\t的\t食堂\t很差劲", 0);
-  fs.add("文思海辉\t太远", 1);
-  fs.add("很差劲", 1);
   using namespace collocation;
+  Pval((0 * log(0)));
+  FeatureSelector fs;
+  //  fs.add("我\t在\t百度大厦", 0);
+  //  fs.add("我\t在\t文思海辉", 1);
+  //  fs.add("健身房\t在\t百度大厦", 0);
+  //  fs.add("健身房\t不在\t文思海辉", 1);
+  //  fs.add("文思海辉\t的\t食堂\t很差劲", 0);
+  //  fs.add("文思海辉\t太远", 1);
+  //  fs.add("很差劲", 1);
+  //  
+  //  run(fs.method(CHI));
+  //  run(fs.method(IG));
+  //  run(fs.method(MI));
+  //  run(fs.method(MI2));
+  //  run(fs.method(PMI));
+  //  run(fs.method(ECE));
+
+  fs.clear();
+  fs.add("食堂\t百度大厦", 0);
+  fs.add("美女\t百度大厦", 0);
+  fs.add("食堂\t文思海辉", 1);
+  fs.add("班车\t文思海辉", 1);
+
+  Pvec(fs._classCounts);
+  Pvec(fs._featureCounts);
+
+  foreach(vector<int>& vec, fs._counts)
+  {
+    Pvec(vec);
+  }
+
   run(fs.method(CHI));
   run(fs.method(IG));
   run(fs.method(MI));
   run(fs.method(MI2));
   run(fs.method(PMI));
   run(fs.method(ECE));
+
 }
 
 int main(int argc, char *argv[])

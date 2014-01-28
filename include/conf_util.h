@@ -50,16 +50,16 @@ public:
     return &_conf;
   }
 
-  static bool init(const string& path = "./conf", const string& config_file = "strategy.conf")
+  static bool init(const string& config_file = "strategy.conf", const string& dir = "./conf")
   {
-    int ret = _conf.load(path.c_str(), config_file.c_str());
+    int ret = _conf.load(dir.c_str(), config_file.c_str());
     if (ret != 0)
     {
-      LOG_TRACE("SharedConf init with %s/%s fail", path.c_str(), config_file.c_str());
+      LOG_TRACE("SharedConf init with %s/%s fail", dir.c_str(), config_file.c_str());
     }
     else
     {
-      LOG_TRACE("SharedConf init ok %s/%s", path.c_str(), config_file.c_str());
+      LOG_TRACE("SharedConf init ok %s/%s", dir.c_str(), config_file.c_str());
     }
     return ret == 0;
   }
@@ -139,7 +139,7 @@ inline std::string get_val(const comcfg::Configure& conf, const std::string& fie
   std::string val;
   if (field.empty())
   {
-    return get_val(conf, key, val);
+    return get_val(conf, key, default_val);
   }
   try
   {
@@ -209,7 +209,7 @@ inline int get_val(const comcfg::Configure& conf, const std::string& field, cons
   int val;
   if (field.empty())
   {
-    return get_val(conf, key, val);
+    return get_val(conf, key, default_val);
   }
   try
   {
@@ -259,42 +259,42 @@ inline void set_val(const comcfg::Configure& conf, const std::string& field, con
   }
 }
 
-inline bool get_val(const comcfg::Configure& conf, const std::string& key, bool default_val)
-{
-  int val;
-  try
-  {
-    val = conf[key.c_str()].to_int32();
-    LOG_TRACE("Get config %s : %d", key.c_str(), val);
-  }
-  catch (...)
-  {
-    val = default_val;
-    LOG_TRACE("Using default %s : %d", key.c_str(), val);
-  }
-  return (bool)val;
-}
-
-inline bool get_val(const comcfg::Configure& conf, const std::string& field, const std::string& key, bool default_val)
-{
-  int val;
-  if (field.empty())
-  {
-    return get_val(conf, key, val);
-  }
-  try
-  {
-    val = conf[field.c_str()][key.c_str()].to_int32();
-    LOG_TRACE("Get config %s::%s : %d", field.c_str(), key.c_str(), val);
-  }
-  catch (...)
-  {
-    val = default_val;
-    LOG_TRACE("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
-    set_val(conf, key, val);
-  }
-  return (bool)val;
-}
+//inline bool get_val(const comcfg::Configure& conf, const std::string& key, bool default_val)
+//{
+//  int val;
+//  try
+//  {
+//    val = conf[key.c_str()].to_int32();
+//    LOG_TRACE("Get config %s : %d", key.c_str(), val);
+//  }
+//  catch (...)
+//  {
+//    val = default_val;
+//    LOG_TRACE("Using default %s : %d", key.c_str(), val);
+//  }
+//  return (bool)val;
+//}
+//
+//inline bool get_val(const comcfg::Configure& conf, const std::string& field, const std::string& key, bool default_val)
+//{
+//  int val;
+//  if (field.empty())
+//  {
+//    return get_val(conf, key, val);
+//  }
+//  try
+//  {
+//    val = conf[field.c_str()][key.c_str()].to_int32();
+//    LOG_TRACE("Get config %s::%s : %d", field.c_str(), key.c_str(), val);
+//  }
+//  catch (...)
+//  {
+//    val = default_val;
+//    LOG_TRACE("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
+//    set_val(conf, key, val);
+//  }
+//  return (bool)val;
+//}
 
 ///int64
 
@@ -351,7 +351,7 @@ inline long long get_val(const comcfg::Configure& conf, const std::string& field
   long long val;
   if (field.empty())
   {
-    return get_val(conf, key, val);
+    return get_val(conf, key, default_val);
   }
   try
   {
@@ -424,7 +424,7 @@ inline double get_val(const comcfg::Configure& conf, const std::string& field, c
   double val;
   if (field.empty())
   {
-    return get_val(conf, key, val);
+    return get_val(conf, key, default_val);
   }
   try
   {
@@ -482,18 +482,19 @@ inline void get_val(const comcfg::Configure& conf, char* dest,
 #define CONF2(s,default_value)\
   s = gezi::get_val(conf, section, gezi::conf_trim(#s), default_value)
 #define CONF2_CLASS(root,s,default_value)\
-  s = gezi::get_val(conf, section, gezi::conf_trim(#s), default_value)
+  root.s = gezi::get_val(conf, section, gezi::conf_trim(#s), default_value)
 
-#define CONF_SIMPLE(s)\
-  gezi::set_val(conf, section, gezi::conf_trim(#s), s)
-#define CONF_SIMPLE_MEMBER(root,s)\
-  gezi::set_val(conf, section, gezi::conf_trim(#s), root.s)
+#define PCONF(s, field)\
+  gezi::set_val(conf, field, gezi::conf_trim(#s), s)
 
-#define CONF_SIMPLE_GET(s,default_value)\
-  s = gezi::get_val(conf, section, gezi::conf_trim(#s), default_value)
-#define CONF_SIMPLE_GET_MEMBER(root,s,default_value))\
-  s = gezi::get_val(conf, section, gezi::conf_trim(#s), default_value)
+#define PCONF_CLASS(root,s, field)\
+  gezi::set_val(conf, field, gezi::conf_trim(#s), root.s)
 
+#define PCONF2(s,field, default_value)\
+  s = gezi::get_val(conf, field, gezi::conf_trim(#s), default_value)
+
+#define PCONF2_CLASS(root, s,field, default_value)\
+  root.s = gezi::get_val(conf, field, gezi::conf_trim(#s), default_value)
 
 #define CONF_TRY_VAL(s)\
     gezi::set_val(conf, gezi::conf_trim(#s),s)
@@ -511,12 +512,12 @@ inline void get_val(const comcfg::Configure& conf, char* dest,
 #define CONF_GET_PROP(s,field,default_value)\
     s = gezi::get_val(conf, field, gezi::conf_trim(#s), default_value)
 
-
 #define CONF_GET_MEMBER_VAL(root, s,default_value)\
     root.s = gezi::get_val(conf, gezi::conf_trim(#s),default_value)
 #define CONF_GET_MEMBER_PROP(root, s,field,default_value)\
     root.s = gezi::get_val(conf, field, gezi::conf_trim(#s), default_value)
 
+//-----------with root used 
 #define CONF_STRCPY_VAL(root, s,default_value)\
     std::string VAL_STRCPY_##s##result = gezi::get_val(conf, gezi::conf_trim(#s),default_value);\
     strncpy(root, VAL_STRCPY_##s##result.c_str(), VAL_STRCPY_##s##result.length());\

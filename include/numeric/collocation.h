@@ -29,7 +29,7 @@ namespace gezi
 //期望交叉熵与信息增益很相似,不同之处在于,期望交叉熵只考虑特征在文本中发生的情况,而信息增益同时考虑了特征在文本中发生与不发生两种情况
 //H(p,q) = -sum(p(x)log(q(x))
 //这里说是期望交叉熵 个人觉得其实是期望相对熵的概念ERE(KL) http://wenku.baidu.com/view/742037946bec0975f465e261.html
-//和mi的区别 mi 度量p(x)p(y)与p(x,y)的分布相似性(kl)，而这里试图直接度量p(c),p(c|v)的分布相似性(kl)
+//和mi的区别 mi 度量p(c)p(v)与p(c,v)的分布相似性(kl)，而这里试图直接度量p(c),p(c|v)的分布相似性(kl)
 //语音语言处理 20.4 WSD word sense disambiguation 词的多义识别 selectional preference
 //D:\baiduyun\ml\特征选择SelectionalPreference.pdf
 //Information theory provides an appropriate way 
@@ -43,8 +43,6 @@ namespace collocation
 
 enum Method
 {
-  FREQ, //DF
-  IDF,
   CHI, //chi square
   IG, //information gain(信息增益) 
   MI, //mutual info
@@ -54,6 +52,8 @@ enum Method
   EMI, //expected mutual info
   T_TEST,
   LIR, //likely hood tio
+  FREQ, //DF
+  IDF,
 };
 
 }
@@ -110,7 +110,7 @@ struct ChiSquareFunc
   }
 };
 
-//how about when a is 0
+//最后采用AVG或者 MAX模式  TODO AVG 采用 *p(f) ? 当前是 p(c)
 
 inline Float chi_square(int a, int n1, int n2, uint64 total)
 {
@@ -156,33 +156,85 @@ inline Float point_mutual_info(int a, int n1, int n2, uint64 n)
   return log(Float(n / n1) * (Float(a) / n2));
 }
 
-//计算信息增益 这个是按照多个class 累加的需要 一次只计算一个class 的贡献  所以这个只有AVG模式才是最终的IG结果
-//n1 代表class出现次数, n2 代表 feature出现次数
+//计算信息增益 这个是按照多个class 累加的需要 一次只计算一个class 的贡献  所以这个只有SUM模式才是最终的IG结果
+//n1 代表feature出现次数, n2 代表 class出现次数
+//??(?,?)=?(?)??(?│?)??(?|??) 
+//?∑_(?∈?)?〖?(?)  log??(?) 〗?(?∑_(?∈?)?〖?(?,?)  log?〖?(?│?)〗 〗)?(?∑_(?∈?)?〖?(??,?)  log?〖?(?│??)〗 〗)
+//?∑_(?∈?)?(?_?/?_?   log?(?_?/?_? )??_(?,?)/?_?   log?(?_(?,?)/?_? )?(?_???_(?,?))/?_?   log?((?_???_(?,?))/(?_???_? )) ) 
+//http://www.cnblogs.com/rocketfan/p/3350450.html
 
-inline Float information_gain(int a, int n1, int n2, uint64 n)
+inline Float information_gain(int nfc, int nf, int nc, uint64 n)
 {
-//  Float cratio = n1 / (double) n;
-//  return -log()
-  return 0;
+  Float classRatio = nc / (Float) n;
+  int nfc2 = nc - nfc;
+  Float p1 = nfc == 0 ? 0 : (nfc / (Float) n) * log(nfc / (Float) nf);
+  Float p2 = nfc2 == 0 ? 0 : (nfc2 / (Float) n) * log(nfc2 / (Float) (n - nf));
+  return -classRatio * log(classRatio) + p1 + p2;
 }
 
 //计算互信息（2class 信息增益) 这个是按照两个class 一次计算综合2个的互信息
+//如果是2 class 的情况 那么计算的 两个class 数值应该一样  而且都等于上面SUM模式得到的IG
 
-inline Float mutual_info(int a, int n1, int n2, uint64 n)
+inline Float mutual_info(int nfc, int nf, int nc, uint64 n)
 {
-  return 0;
+  Float val;
+  Float classRatio = nc / (Float) n;
+  int nfc2 = nc - nfc;
+  Float p1 = nfc == 0 ? 0 : (nfc / (Float) n) * log(nfc / (Float) nf);
+  Float p2 = nfc2 == 0 ? 0 : (nfc2 / (Float) n) * log(nfc2 / (Float) (n - nf));
+  val = -classRatio * log(classRatio) + p1 + p2;
+
+  classRatio = 1 - classRatio;
+  nc = n - nc;
+  nfc = nf - nfc;
+  nfc2 = nc - nfc;
+  p1 = nfc == 0 ? 0 : (nfc / (Float) n) * log(nfc / (Float) nf);
+  p2 = nfc2 == 0 ? 0 : (nfc2 / (Float) n) * log(nfc2 / (Float) (n - nf));
+  return val - classRatio * log(classRatio) + p1 + p2;
 }
 
 //计算互信息 方式2 应该和上面的结果相同 just for test 只按上面就好 
+//http://www.cnblogs.com/rocketfan/p/3350450.html
 
-inline Float mutual_info2(int a, int n1, int n2, uint64 n)
+inline Float mutual_info2(int nfc, int nf, int nc, uint64 n)
 {
-  return 0;
+  Float val = 0;
+  //this feature | this class
+  if (nfc)
+    val += ((Float) nfc / n) * log((n / (Float) nf) * (nfc / (Float) nc));
+  Float nf2 = n - nf;
+  Float nc2 = n - nc;
+  //not this feature | this class
+  Float nf2c = nc - nfc;
+  if (nf2c)
+  {
+    val += ((Float) nf2c / n) * log((n / (Float) nf2) * (nf2c / (Float) nc));
+  }
+  //this feature | not this class
+  Float nfc2 = nf - nfc;
+  if (nfc2)
+  {
+    val += ((Float) nfc2 / n) * log((n / (Float) nf) * (nfc2 / (Float) nc2));
+  }
+  //not this feature | not this class
+  Float nf2c2 = n - nf - nc + nfc;
+  if (nf2c2)
+  {
+    val += ((Float) nf2c2 / n) * log((n / (Float) nf2) * (nf2c2 / (Float) nc2));
+  }
+  return val; //不在最后/n一次 而是前面都/n 是担心数值过大
 }
 
-inline Float cross_entropy(int a, int n1, int n2, uint64 n)
+//TODO need * p(f) ? or as now * p(c) in AVG mode?
+//p(c|f) * log(p(c|f)/p(c)
+
+inline Float cross_entropy(int nfc, int nf, int nc, uint64 n)
 {
-  return 0;
+  if (!nfc)
+    return 0;
+  Float pf_c = nfc / (Float) nf;
+  Float pc = nc / (Float) n;
+  return pf_c * log(pf_c / pc);
 }
 
 struct DiscountedMutualInfoFunc

@@ -33,7 +33,7 @@ public:
   typedef boost::function<Float(int, int, int, uint64) > Func;
 
   FeatureSelector()
-  : _numLabels(2), _method(collocation::CHI), _strategy(MAX)
+  : _numLabels(2), _method(collocation::CHI), _strategy(MAX), _minSupport(0)
   {
     init();
     initFunc();
@@ -63,7 +63,8 @@ public:
   enum Strategy
   {
     MAX,
-    AVG
+    AVG,
+    SUM
   };
 
   void initFunc()
@@ -102,12 +103,22 @@ public:
     }
   }
 
-  void clear()
+  void clearScore()
   {
     _ranks.clear();
     _ranks.resize(_numLabels + 1);
     _scores.clear();
     _scores.resize(_numLabels + 1);
+  }
+
+  void clear()
+  {
+    clearScore();
+    _counts.clear();
+    _featureCounts.clear();
+    _classCounts.clear();
+    _classPriors.clear();
+    init();
   }
 
   inline int labelNum()
@@ -118,7 +129,7 @@ public:
   inline FeatureSelector& method(collocation::Method method)
   {
     _method = method;
-    clear();
+    clearScore();
     initFunc();
     return *this;
   }
@@ -126,8 +137,19 @@ public:
   inline FeatureSelector& strategy(Strategy strategy)
   {
     _strategy = strategy;
-    clear();
+    clearScore();
     return *this;
+  }
+
+  inline FeatureSelector& minSupport(int minSupport)
+  {
+    _minSupport = minSupport;
+    return *this;
+  }
+
+  inline int minSupport()
+  {
+    return _minSupport;
   }
 
   inline int method()
@@ -155,14 +177,15 @@ public:
       int idx = Identifer::add(word, isnew);
       if (isnew)
       {
-        _featureCounts.push_back(1);
-        _counts[labelIdx].push_back(1);
+        _featureCounts.push_back(0);
+
+        foreach(vector<int>& vec, _counts)
+        {
+          vec.push_back(0);
+        }
       }
-      else
-      {
-        _featureCounts[idx] += 1;
-        _counts[labelIdx][idx] += 1;
-      }
+      _featureCounts[idx] += 1;
+      _counts[labelIdx][idx] += 1;
     }
     _classCounts[labelIdx] += 1;
   }
@@ -192,18 +215,24 @@ public:
     {
       for (int labelIdx = 0; labelIdx < _numLabels; labelIdx++)
       {
-        double score = _func(_counts[labelIdx][f], _classCounts[labelIdx], _featureCounts[f], _numInstances);
+        double score = _func(_counts[labelIdx][f], _featureCounts[f], _classCounts[labelIdx], _numInstances);
         _scores[labelIdx][f] = score;
-        if (_strategy == MAX)
+        switch (_strategy)
         {
-          if (score > scores[f])
-          {
-            scores[f] = score;
-          }
-        }
-        else if (_strategy == AVG)
-        {
-          scores[f] += _classPriors[labelIdx] * score;
+          case MAX:
+            if (score > scores[f])
+            {
+              Pval(score);
+              Pval(scores[f]);
+              scores[f] = score;
+            }
+            break;
+          case AVG:
+            scores[f] += _classPriors[labelIdx] * score;
+            break;
+          case SUM:
+            scores[f] += score;
+            break;
         }
       }
     }
@@ -228,7 +257,10 @@ public:
     for (int i = 0; i < maxFeatureNum; i++)
     {
       int index = _ranks[idx][i];
-      os << _index[index] << "\t" << _scores[idx][index] << endl;
+      if (_featureCounts[index] >= _minSupport)
+      {
+        os << _index[index] << "\t" << _scores[idx][index] << endl;
+      }
     }
   }
 
@@ -253,7 +285,7 @@ private:
 
     foreach(vector<double>& vec, _scores)
     {
-      vec.resize(_numFeatures); //特征数目
+      vec.resize(_numFeatures, 0); //特征数目
     }
   }
 
@@ -283,6 +315,7 @@ private:
   Func _func;
   collocation::Method _method;
   Strategy _strategy;
+  int _minSupport; //feature至少出现多少次才认为有意义
 
   DMat _scores; //记录各个特征打分
   IMat _ranks; //记录特征打分排序索引
