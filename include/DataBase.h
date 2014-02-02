@@ -35,7 +35,6 @@ class DataBase
 protected:
   MyclientServerConf* _client_conf;
   MyclientPool* _pool;
-  MysqlConnection* _p_conn;
   std::string _sql;
   int _db_num; ///分成几个分库
   int _dbsource_num; ///几个数据源，比如两个IP 相同的库，确保安全
@@ -43,7 +42,7 @@ protected:
 public:
 
   DataBase()
-  : _p_conn(NULL), _db_num(1), _client_conf(NULL), _pool(NULL)
+  :_db_num(1), _client_conf(NULL), _pool(NULL)
   {
   }
 
@@ -59,11 +58,11 @@ public:
 
   void logOff()
   {
-    if (_p_conn)
-    {
-      _pool->putBackConnection(_p_conn);
-      _p_conn = NULL;
-    }
+	if (_pool)
+	{
+	  _pool->destroy();
+	  delete _pool;
+	}
   }
 
   void init(const std::string& config_file, const std::string& section = "",
@@ -97,47 +96,52 @@ public:
     return _db_num;
   }
 
-  int execute(MyclientRes& res, bool need_reconnect = false)
+  //所有execute 返回<0表示失败 >=0表示成功并且返回row count, 如果是非读操作res = NULL, store = false
+  inline int execute(MyclientRes& res, bool store = true)
   {
-    if (_p_conn)
-    {
-      _pool->putBackConnection(_p_conn, need_reconnect);
-      _p_conn = NULL;
-    }
-    int err = 0;
-    _p_conn = _pool->fetchConnection(MYCLIENT_AVERAGE_HOST_TYPE, &err, 0);
-    if (_p_conn == NULL)
-    {
-      LOG(WARNING) << "fetch fail";
-      return -1;
-    }
-    res.free();
-    return _p_conn->query(_sql.c_str(), &res, true);
+	return execute(_sql, &res, store);
   }
 
-  int execute(const std::string& _sql, MyclientRes& res, bool need_reconnect = false)
+  inline int execute(MyclientRes* res, bool store = true)
   {
-    if (_p_conn)
-    {
-      _pool->putBackConnection(_p_conn, need_reconnect);
-      _p_conn = NULL;
-    }
-    int err = 0;
-    _p_conn = _pool->fetchConnection(MYCLIENT_AVERAGE_HOST_TYPE, &err, 0);
-    if (_p_conn == NULL)
-    {
-      LOG(WARNING) << "fetch fail";
-      return -1;
-    }
-    res.free();
-    return _p_conn->query(_sql.c_str(), &res, true);
+	return execute(_sql, res, store);
   }
-
-  void perror()
+    
+  int execute(const std::string& sql, MyclientRes& res, bool store = true)
   {
-    unsigned int err = _p_conn->getLastMysqlErrorno();
+	return execute(sql, &res, store);
+  }
+  
+  int execute(const std::string& sql, MyclientRes* res, bool store = true)
+  {
+	int err = 0;
+    MysqlConnection* p_conn = _pool->fetchConnection(MYCLIENT_AVERAGE_HOST_TYPE, &err, 0);
+    while (p_conn == NULL)
+    {
+      LOG(WARNING) << "fetch fail: " << _pool->getError(err);
+      p_conn = _pool->fetchConnection(MYCLIENT_AVERAGE_HOST_TYPE, &err, 0);
+    }
+    res->free();
+    int ret = p_conn->query(sql.c_str(), res, store);
+	if (ret < 0 && p_conn->getMysqlErrno() != ER_NO_SUCH_TABLE)
+	{
+		_pool->putBackConnection(p_conn, true); //需要重连
+		p_conn = _pool->fetchConnection(MYCLIENT_AVERAGE_HOST_TYPE, &err, 0);
+		ret = p_conn->query(sql.c_str(), res, store);
+		if (ret < 0)
+		{
+		  perror(p_conn);
+		} 
+	}
+	_pool->putBackConnection(p_conn);
+	return ret;
+  }
+  
+  void perror(MysqlConnection* p_conn)
+  {
+    unsigned int err = p_conn->getLastMysqlErrorno();
     LOG(WARNING) << "getMysqlError ok!,err:" << err;
-    LOG(WARNING) << _p_conn->getError(err);
+    LOG(WARNING) << p_conn->getError(err);
   }
 
   /**读取所有配置信息 TODO有冗余*/
@@ -172,13 +176,13 @@ public:
     string dbname;
     //先设置成默认配置
     for (int i = 0; i < _dbsource_num; i++)
-    {
+    {      
       CONF2_CLASS(_client_conf[i], port, 3306);
       CONF2_CLASS(_client_conf[i], read_timeout, 2000);
       CONF2_CLASS(_client_conf[i], write_timeout, 2000);
       CONF2_CLASS(_client_conf[i], connect_timeout, 2000);
       CONF2_CLASS(_client_conf[i], min_connection, 3);
-      CONF2_CLASS(_client_conf[i], max_connection, 5);
+      CONF2_CLASS(_client_conf[i], max_connection, 1024);
       CONF_STRCPY_VAL(_client_conf[i].ip, ip, "");
       CONF_STRCPY_VAL(_client_conf[i].username, username, "");
       CONF_STRCPY_VAL(_client_conf[i].password, password, "");
@@ -222,11 +226,17 @@ public:
       strncpy(_client_conf[i].tag, MYCLIENT_AVERAGE_HOST_TYPE, strlen(MYCLIENT_AVERAGE_HOST_TYPE));
       _client_conf[i].tag[strlen(MYCLIENT_AVERAGE_HOST_TYPE)] = '\0';
     }
+    PVAL(_client_conf[0].max_connection);
   }
 
   void initDB()
   {
-    _pool = new MyclientPool();
+	MyclientPoolConf conn_pool_conf;
+    conn_pool_conf.monitor_reconnection_time = 5;   //后台线程每隔5秒去检测连接的连通性
+    conn_pool_conf.sqlBufSize= 1024;                
+    conn_pool_conf.failHandler= NULL;       //do nothing
+        
+    _pool = new MyclientPool(&conn_pool_conf);
     CHECK_NOTNULL(_pool);
     int ret = 0;
     ret = _pool->init();
@@ -234,13 +244,6 @@ public:
     if (ret != 0)
     { //偶尔会fail但是其实不检测继续执行也没事。。。 myclient bug
       LOG(WARNING) << format("error in add server:%d, connect db fail!") % ret;
-    }
-    int err = 0;
-    _p_conn = _pool->fetchConnection(MYCLIENT_AVERAGE_HOST_TYPE, &err, 0);
-    if (!_p_conn)
-    {
-      LOG(WARNING) << "pool fectch connection fail with erro no: " << err;
-      throw 1;
     }
   }
 };
@@ -263,44 +266,19 @@ public:
     return _res;
   }
 
-  int execute(bool need_reconnect = false)
+  //所有execute 返回<0表示失败 >=0表示成功并且返回row count
+
+  inline int execute()
   {
-    if (_p_conn)
-    {
-      _pool->putBackConnection(_p_conn, need_reconnect);
-      _p_conn = NULL;
-    }
-    int err = 0;
-    _p_conn = _pool->fetchConnection(MYCLIENT_AVERAGE_HOST_TYPE, &err, 0);
-    if (_p_conn == NULL)
-    {
-      LOG(WARNING) << "fetch fail";
-      return -1;
-    }
-    _res.free();
-    return _p_conn->query(_sql.c_str(), &_res, true);
+	return DataBase::execute(_res);
   }
 
   /**
    * 执行和配置文件原始读入的sql不同的命令
-   * TODO FIXME 都putBackConnection
    */
-  int execute(const std::string & _sql, bool need_reconnect = false)
+  inline int execute(const std::string & sql)
   {//理论上不需要每次putBack,但是为了安全。。。 因为网络可能存在不稳定，瞬间断，如果执行失败可以尝试再次execute(sql, true)
-    if (_p_conn)
-    {
-      _pool->putBackConnection(_p_conn, need_reconnect);
-      _p_conn = NULL;
-    }
-    int err = 0;
-    _p_conn = _pool->fetchConnection(MYCLIENT_AVERAGE_HOST_TYPE, &err, 0);
-    if (_p_conn == NULL)
-    {
-      LOG(WARNING) << "fetch fail";
-      return -1;
-    }
-    _res.free();
-    return _p_conn->query(_sql.c_str(), &_res, true);
+	return DataBase::execute(sql, _res);
   }
 
   template<typename _Func>

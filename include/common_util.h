@@ -745,7 +745,7 @@ inline vector<string> to_vec(const string& input_, const string& sep = ",")
   string input = boost::trim_copy(input_);
   boost::split(vec, input, is_any_of(sep));
 
-  foreach(string str, vec)
+  foreach(string& str, vec)
   {
     boost::trim(str);
   }
