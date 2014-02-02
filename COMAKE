@@ -66,7 +66,6 @@ user_headers=''
 #¾²Ì¬¿â
 StaticLibrary('gezi',Sources(user_sources),HeaderFiles(user_headers))
 #¹²Ïí¿â
-#SharedLibrary('suffix-tree',Sources(user_sources),HeaderFiles(user_headers))
 #×ÓÄ¿Â¼
 #Directory('demo')
 
