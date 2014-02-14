@@ -179,7 +179,15 @@ std::string get_jason(const std::vector<T>& vec, int len)
   return (format("{%1%}") % join(rvec, ",")).str();
 }
 }
+
+//boost bind定义了golobal的_1.._9
+#define BOOST_BIND_PLACEHOLDERS_HPP_INCLUDED
 #include <boost/bind.hpp>
+#include <boost/lambda/lambda.hpp>
+using namespace boost::lambda;
+//#include <boost/spirit/include/phoenix_core.hpp>  
+//using namespace boost::phoenix;
+//using namespace boost::phoenix::arg_names;
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/progress.hpp>

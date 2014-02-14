@@ -1,18 +1,34 @@
 #COMAKE2 edit-mode: -*- Makefile -*-
 ####################64Bit Mode####################
 ifeq ($(shell uname -m),x86_64)
-CC=gcc
-CXX=g++
+CC=../../../../../ps/se/toolchain/gcc_only_4.8.2/bin/g++
+CXX=../../../../../ps/se/toolchain/gcc_only_4.8.2/bin/g++
 CXXFLAGS=-g \
+  -O0 \
   -pipe \
   -W \
   -Wall \
-  -fPIC
+  -fPIC \
+  -DHAVE_NETINET_IN_H \
+  -Wno-unused-parameter \
+  -std=c++11 \
+  -fpermissive \
+  -Wno-write-strings \
+  -Wno-literal-suffix \
+  -Wno-unused-local-typedefs
 CFLAGS=-g \
+  -O0 \
   -pipe \
   -W \
   -Wall \
-  -fPIC
+  -fPIC \
+  -DHAVE_NETINET_IN_H \
+  -Wno-unused-parameter \
+  -std=c++11 \
+  -fpermissive \
+  -Wno-write-strings \
+  -Wno-literal-suffix \
+  -Wno-unused-local-typedefs
 CPPFLAGS=-D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\"
@@ -104,6 +120,10 @@ DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../third-64/libcurl/include \
   -I../../../../../third-64/libcurl/output \
   -I../../../../../third-64/libcurl/output/include \
+  -I../../../../../third-64/openssl \
+  -I../../../../../third-64/openssl/include \
+  -I../../../../../third-64/openssl/output \
+  -I../../../../../third-64/openssl/output/include \
   -I../../../../../third-64/pcre \
   -I../../../../../third-64/pcre/include \
   -I../../../../../third-64/pcre/output \
@@ -111,7 +131,11 @@ DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../third-64/tcmalloc \
   -I../../../../../third-64/tcmalloc/include \
   -I../../../../../third-64/tcmalloc/output \
-  -I../../../../../third-64/tcmalloc/output/include
+  -I../../../../../third-64/tcmalloc/output/include \
+  -I../../../../../third-64/zlib \
+  -I../../../../../third-64/zlib/include \
+  -I../../../../../third-64/zlib/output \
+  -I../../../../../third-64/zlib/output/include
 
 #============ CCP vars ============
 CCHECK=@ccheck.py
@@ -123,7 +147,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=dfa3019b6ebedfd49c45a8b4caf752c1  COMAKE
+COMAKE_MD5=44f2e488d521aff3a1c1457ffac1356e  COMAKE
 
 
 .PHONY:all
@@ -349,7 +373,6 @@ src/model/gezi_Predictor.o:src/model/Predictor.cpp \
   include/model/ModelFactory.h \
   include/log_util.h \
   include/conf_util.h \
-  include/common_util.h \
   include/debug_util.h \
   include/feature/feature_util.h
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_Predictor.o[0m']"
