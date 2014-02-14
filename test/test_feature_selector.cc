@@ -72,10 +72,11 @@ void run()
   fs.add("美女\t百度大厦", 0);
   fs.add("食堂\t文思海辉", 1);
   fs.add("班车\t文思海辉", 1);
+  
 
   Pvec(fs._classCounts);
   Pvec(fs._featureCounts);
-
+  
   foreach(vector<int>& vec, fs._counts)
   {
     Pvec(vec);
