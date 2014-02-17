@@ -20,7 +20,7 @@ using namespace gezi;
 
 DEFINE_int32(level, 0, "min log level");
 DEFINE_string(type, "simple", "");
-DEFINE_bool(perf, false, "");
+DEFINE_bool(perf, false, ""); 
 DEFINE_int32(num, 1, "");
 DEFINE_string(i, "", "input file");
 DEFINE_string(o, "", "output file");
@@ -33,7 +33,20 @@ struct Node
 
 	Node(int i, int j)
 	{
-		index = i;
+		index = i; vector<int> vec = { 1, 2, 3, 4 };
+		Pval(*(find_if(vec.begin(), vec.end(), (_1 % 2 == 0))));
+		Pvec(vec);
+
+		//----------------boost foreach 和 c++11 foreach
+
+		foreach(auto item, vec)
+		{
+			Pval(item);
+		}
+		for (auto item : vec)
+		{
+			Pval(item);
+		}
 		value = j;
 	}
 
@@ -48,45 +61,31 @@ struct Node
 	}
 };
 
-void run()
+TEST(sort, func)
+{
+	//---------------各种排序方法
+	vector<Node> vec = { Node(), Node(4, -1), Node(2, 2) };
+	Pval(vec.size());
+	PrintVec2(vec, index, value);
+	std::sort(vec.begin(), vec.end());
+	PrintVec2(vec, index, value);
+	//write one functor outiside
+	std::sort(vec.begin(), vec.end(), gezi::CmpNodeValue());
+	PrintVec2(vec, index, value);
+	//boost bind
+	sort(vec.begin(), vec.end(), boost::bind(&Node::value, _1) < boost::bind(&Node::value, _2));
+	PrintVec2(vec, index, value);
+	//c++11
+	sort(vec.begin(), vec.end(), [](const Node&l, const Node & r)
+	{
+		return l.value < r.value;
+	});
+	PrintVec2(vec, index, value);
+}
+
+TEST(lambda, func)
 {
 	vector<int> vec = { 1, 2, 3, 4 };
-	Pval(*(find_if(vec.begin(), vec.end(), (_1 % 2 == 0))));
-	Pvec(vec);
-
-	//----------------boost foreach 和 c++11 foreach
-
-	foreach(auto item, vec)
-	{
-		Pval(item);
-	}
-	for (auto item : vec)
-	{
-		Pval(item);
-	}
-
-	//---------------各种排序方法
-	{
-		vector<Node> vec = { Node(), Node(4, -1), Node(2, 2) };
-		Pval(vec.size());
-		PrintVec2(vec, index, value);
-		std::sort(vec.begin(), vec.end());
-		PrintVec2(vec, index, value);
-		//write one functor outiside
-		std::sort(vec.begin(), vec.end(), gezi::CmpNodeValue());
-		PrintVec2(vec, index, value);
-		//boost bind
-		sort(vec.begin(), vec.end(), boost::bind(&Node::value, _1) < boost::bind(&Node::value, _2));
-		PrintVec2(vec, index, value);
-		//c++11
-		sort(vec.begin(), vec.end(), [](const Node&l, const Node & r)
-		{
-			return l.value < r.value;
-		});
-		PrintVec2(vec, index, value);
-	}
-
-	Pval(vec.size());
 	//----------c++ 11 lambda
 	//很奇怪的是cout 并不显示。。。 @TODO
 	for_each(vec.begin(), vec.end(), [](int item)
@@ -114,14 +113,37 @@ void run()
 	Pvec(vec);
 }
 
+TEST(find_if, func)
+{
+	vector<int> vec = { 1, 2, 3, 4 };
+	Pval(*(find_if(vec.begin(), vec.end(), (_1 % 2 == 0))));
+}
+
+
+TEST(foreach, func)
+{
+	//----------------boost foreach 和 c++11 foreach
+	vector<int> vec = { 1, 2, 3, 4 };
+	foreach(auto item, vec)
+	{
+		Pval(item);
+	}
+	for (auto item : vec)
+	{
+		Pval(item);
+	}
+}
+
 int main(int argc, char *argv[])
 {
+	testing::InitGoogleTest(&argc, argv);
 	google::InitGoogleLogging(argv[0]);
 	google::InstallFailureSignalHandler();
 	int s = google::ParseCommandLineFlags(&argc, &argv, false);
 	if (FLAGS_log_dir.empty())
 		FLAGS_logtostderr = true;
 	FLAGS_minloglevel = FLAGS_level;
-	run();
-	return 0;
+
+	boost::progress_timer timer;
+	return RUN_ALL_TESTS();
 }

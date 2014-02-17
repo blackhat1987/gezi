@@ -116,6 +116,7 @@ using boost::function;
 #include "datetime_util.h"
 
 using std::string;
+using std::vector;
 using boost::format;
 
 namespace gezi
@@ -180,11 +181,12 @@ std::string get_jason(const std::vector<T>& vec, int len)
 }
 }
 
-//boost bind定义了golobal的_1.._9
+//boost bind定义了golobal的_1.._9 所以这里通过define去掉,避免和boost::lambda里面的冲突
 #define BOOST_BIND_PLACEHOLDERS_HPP_INCLUDED
 #include <boost/bind.hpp>
 #include <boost/lambda/lambda.hpp>
 using namespace boost::lambda;
+using boost::bind;
 //#include <boost/spirit/include/phoenix_core.hpp>  
 //using namespace boost::phoenix;
 //using namespace boost::phoenix::arg_names;

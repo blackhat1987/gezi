@@ -58,7 +58,7 @@ class Allocator
 >
 inline void save(
 Archive & ar,
-const std::tr1::unordered_set<
+const std::unordered_set<
 Key, HashFcn, EqualKey, Allocator
 > &t,
 const unsigned int file_version
@@ -66,7 +66,7 @@ const unsigned int file_version
 {
     boost::serialization::stl::save_hash_collection<
             Archive,
-            std::tr1::unordered_set<
+            std::unordered_set<
             Key, HashFcn, EqualKey, Allocator
             >
             >(ar, t);
@@ -80,7 +80,7 @@ class Allocator
 >
 inline void load(
 Archive & ar,
-std::tr1::unordered_set<
+std::unordered_set<
 Key, HashFcn, EqualKey, Allocator
 > &t,
 const unsigned int file_version
@@ -88,12 +88,12 @@ const unsigned int file_version
 {
     boost::serialization::stl::load_hash_collection_unordered_set<
             Archive,
-            std::tr1::unordered_set<
+            std::unordered_set<
             Key, HashFcn, EqualKey, Allocator
             >,
             boost::serialization::stl::archive_input_set<
             Archive,
-            std::tr1::unordered_set<
+            std::unordered_set<
             Key, HashFcn, EqualKey, Allocator
             >
             >
@@ -111,7 +111,7 @@ class Allocator
 >
 inline void serialize(
 Archive & ar,
-std::tr1::unordered_set<
+std::unordered_set<
 Key, HashFcn, EqualKey, Allocator
 > &t,
 const unsigned int file_version

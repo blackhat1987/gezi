@@ -21,7 +21,7 @@ using namespace gezi;
 
 DEFINE_string(type, "simple", "");
 
-TEST(, func)
+TEST(print, func)
 {
 #pragma omp parallel
 	{
@@ -37,6 +37,5 @@ int main(int argc, char *argv[])
 	google::InstallFailureSignalHandler();
 	int s = google::ParseCommandLineFlags(&argc, &argv, false);
 	boost::progress_timer timer;
-
 	return RUN_ALL_TESTS();
 }
