@@ -122,3 +122,5 @@ Application('test_feature_selector',Sources('test_feature_selector.cc',srcs))
 Application('openmp_hello',Sources('openmp/hello.cc'), OutputPath('./bin'))
 Application('openmp_test',Sources('openmp/test.cc', srcs), OutputPath('./bin'))
 
+Application('test_exception',Sources('test_exception.cc'), OutputPath('./bin'))
+Application('test_map_util',Sources('test_map_util.cc'), OutputPath('./bin'))

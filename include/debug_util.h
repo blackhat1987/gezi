@@ -24,6 +24,7 @@
 #include <glog/logging.h>
 #include <gflags/gflags.h>
 #endif
+
 //namespace debug_help
 //{
 using namespace std;

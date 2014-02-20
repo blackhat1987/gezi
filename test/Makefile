@@ -149,11 +149,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=10e1da1c8ff7db16d9fa7575f9199d35  COMAKE
+COMAKE_MD5=7aa04a5170b76cca9015a8cc80066f6c  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check .copy-so test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test 
+all:comake2_makefile_check .copy-so test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -201,6 +201,10 @@ clean:ccpclean
 	rm -rf ./bin/openmp_hello
 	rm -rf openmp_test
 	rm -rf ./bin/openmp_test
+	rm -rf test_exception
+	rm -rf ./bin/test_exception
+	rm -rf test_map_util
+	rm -rf ./bin/test_map_util
 	rm -rf test_lambda_test_lambda.o
 	rm -rf test_bins_test_bins.o
 	rm -rf test_datetime_test_datetime.o
@@ -326,6 +330,8 @@ clean:ccpclean
 	rm -rf ../src/json/openmp_test_json_reader.o
 	rm -rf ../src/json/openmp_test_json_value.o
 	rm -rf ../src/json/openmp_test_json_writer.o
+	rm -rf test_exception_test_exception.o
+	rm -rf test_map_util_test_map_util.o
 
 .PHONY:dist
 dist:
@@ -1625,6 +1631,168 @@ openmp_test:openmp/openmp_test_test.o \
 	mkdir -p ./bin
 	cp -f --link openmp_test ./bin
 
+test_exception:test_exception_test_exception.o
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_exception[0m']"
+	$(CXX) test_exception_test_exception.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
+  ../../../../../../third-64/openssl/lib/libcrypto.a \
+  ../../../../../../third-64/openssl/lib/libssl.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
+  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  -lrt \
+  -ldl \
+  -rdynamic \
+  -lgomp -Xlinker "-)" -o test_exception
+	mkdir -p ./bin
+	cp -f --link test_exception ./bin
+
+test_map_util:test_map_util_test_map_util.o
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_map_util[0m']"
+	$(CXX) test_map_util_test_map_util.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
+  ../../../../../../third-64/openssl/lib/libcrypto.a \
+  ../../../../../../third-64/openssl/lib/libssl.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
+  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  -lrt \
+  -ldl \
+  -rdynamic \
+  -lgomp -Xlinker "-)" -o test_map_util
+	mkdir -p ./bin
+	cp -f --link test_map_util ./bin
+
 test_lambda_test_lambda.o:test_lambda.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_lambda_test_lambda.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_lambda_test_lambda.o test_lambda.cc
@@ -2124,6 +2292,14 @@ openmp/openmp_test_test.o:openmp/test.cc
 ../src/json/openmp_test_json_writer.o:../src/json/json_writer.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/openmp_test_json_writer.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/openmp_test_json_writer.o ../src/json/json_writer.cpp
+
+test_exception_test_exception.o:test_exception.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_exception_test_exception.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_exception_test_exception.o test_exception.cc
+
+test_map_util_test_map_util.o:test_map_util.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_map_util_test_map_util.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_map_util_test_map_util.o test_map_util.cc
 
 endif #ifeq ($(shell uname -m),x86_64)
 

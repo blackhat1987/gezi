@@ -1,21 +1,3 @@
-/***************************************************************************
- * 
- * Copyright (c) 2012 Baidu.com, Inc. All Rights Reserved
- * 
- **************************************************************************/
-
-
-
-/**
- * @file Predictor.h
- * @author weizheng(com@baidu.com)
- * @date 2012/03/31 19:57:50
- * @brief 
- *  
- **/
-
-
-
 #ifndef  __PREDICTOR_H_
 #define  __PREDICTOR_H_
 

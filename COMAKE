@@ -110,7 +110,7 @@ CONFIGS('lib2-64/others-ex@3.1.14.2')
 CONFIGS('lib2-64/libcrf@2.1.3.0')
 CONFIGS('public/odict@1.1.2.1')
 CONFIGS('lib2-64/postag@2.0.2.0')
-CONFIGS('third-64/libcurl@base')
+#CONFIGS('third-64/libcurl@base')
 CONFIGS('public/uconv@1.1.3.0')
 #CONFIGS('public/myclient@1.0.8.0')
 #CONFIGS('third-64/mysql@5.0.51.2')
@@ -124,7 +124,7 @@ headers=''
 
 #可执行文件
 #静态库
-StaticLibrary('gezi',Sources(srcs),HeaderFiles(headers))
+StaticLibrary('gezi',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),HeaderFiles(headers))
 #共享库
 #子目录
 #Directory('demo')

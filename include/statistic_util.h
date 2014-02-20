@@ -27,6 +27,7 @@
 
 #include <boost/math/distributions/students_t.hpp>
 
+#include "hashmap_util.h"
 #include "common_util.h"
 //#include <boost/accumulators/accumulators.hpp>
 //#include <boost/accumulators/statistics/stats.hpp>
@@ -377,7 +378,7 @@ namespace gezi
 			int bin_index_ = bin_index(value, bin_num, min, max);
 			bins[bin_index_]++;
 		}
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if __GNUC__ > 3
 		return std::move(bins);
 #else
 		return bins;
@@ -394,7 +395,7 @@ namespace gezi
 		{
 			bin_values[i] = (double)bins[i] / count;
 		}
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if __GNUC__ > 3
 		return std::move(bin_values);
 #else
 		return bin_values;
@@ -413,7 +414,7 @@ namespace gezi
 			int bin_index_ = bin_index(value, thres);
 			bins[bin_index_]++;
 		}
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if __GNUC__ > 3
 		return std::move(bins);
 #else
 		return bins;
@@ -430,7 +431,7 @@ namespace gezi
 		{
 			bin_values[i] = (double)bins[i] / count;
 		}
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if __GNUC__ > 3
 		return std::move(bin_values);
 #else
 		return bin_values;
@@ -496,7 +497,7 @@ namespace gezi
 	//std::size_t distinct_count(Iter begin, Iter end, Func func)
 	//{
 	//    typedef typename Func::result_type ValueType;
-	//    std::set<ValueType> vset;
+	//    unordered_set<ValueType> vset;
 	//    for(Iter it = begin; it != end; ++it)
 	//    {
 	//        vset.insert(func(*it));
@@ -504,10 +505,11 @@ namespace gezi
 	//    return vset.size();
 	//}
 
+	//如果数据量少 unordered_set比set要慢
 	template<typename ValueType, typename Iter, typename Func>
 	std::size_t distinct_count(Iter begin, Iter end, Func func)
 	{
-		std::set<ValueType> vset;
+		unordered_set<ValueType> vset;
 		for (Iter it = begin; it != end; ++it)
 		{
 			vset.insert(func(*it));
@@ -527,13 +529,26 @@ namespace gezi
 		return distinct_count(vec.begin(), vec.end());
 	}
 
+	template<typename Iter>
+	std::size_t distinct_count(Iter begin, Iter end)
+	{
+		typedef typename Iter::value_type ValueType;
+		unordered_set<ValueType> vset;
+		for (Iter it = begin; it != end; ++it)
+		{
+			vset.insert(*it);
+		}
+		return vset.size();
+	}
+
 #if __GNUC__ > 3
+	
 	template<typename Iter, typename Func>
 	std::size_t distinct_count(Iter begin, Iter end, Func func)
 	{
 		auto a = func(*begin);
 		typedef decltype(a) ValueType;
-		std::set<ValueType> vset;
+		unordered_set<ValueType> vset;
 		for (Iter it = begin; it != end; ++it)
 		{
 			vset.insert(func(*it));
@@ -541,18 +556,6 @@ namespace gezi
 		return vset.size();
 	}
 
-	template<typename Iter>
-	std::size_t distinct_count(Iter begin, Iter end)
-	{
-		auto a = func(*begin);
-		typedef decltype(a) ValueType;
-		std::set<ValueType> vset;
-		for (Iter it = begin; it != end; ++it)
-		{
-			vset.insert(*it);
-		}
-		return vset.size();
-	}
 	template<typename Container, typename Func>
 	std::size_t distinct_count(Container& vec, Func func)
 	{

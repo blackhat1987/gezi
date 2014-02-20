@@ -48,7 +48,7 @@ public:
       ret = processor_list_[i]->process(ret);
     }
 
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if __GNUC__ > 3
     return std::move(ret);
 #else
     return ret;
@@ -70,7 +70,7 @@ public:
       }
     }
 
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if __GNUC__ > 3
     return std::move(ret);
 #else
     return ret;

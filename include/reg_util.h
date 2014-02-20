@@ -120,7 +120,7 @@ inline vector<string> reg_split(const string& input, const string& pattern)
   vector<string> vec;
   boost::regex reg(pattern);
   split_regex(vec, input, reg);
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if __GNUC__ > 3
   return std::move(vec);
 #else
   return vec;
@@ -132,7 +132,7 @@ inline vector<wstring> reg_split(const wstring& input, const wstring& pattern)
   vector<wstring> vec;
   boost::wregex reg(pattern);
   boost::split_regex(vec, input, reg);
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if __GNUC__ > 3
   return std::move(vec);
 #else
   return vec;
@@ -146,7 +146,7 @@ inline vector<string> reg_search(const string& content, boost::regex& reg, int i
 {
   vector<string> result;
   gezi::reg_search(content, reg, result, index);
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if __GNUC__ > 3
   return std::move(result);
 #else
   return result;
@@ -158,7 +158,7 @@ inline vector<string> reg_search(const string& content, const string& pattern, i
   vector<string> result;
   boost::regex reg(pattern);
   gezi::reg_search(content, reg, result, index);
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if __GNUC__ > 3
   return std::move(result);
 #else
   return result;
@@ -169,7 +169,7 @@ inline vector<wstring> reg_search(const wstring& content, boost::wregex& reg, in
 {
   vector<wstring> result;
   gezi::reg_search(content, reg, result, index);
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if __GNUC__ > 3
   return std::move(result);
 #else
   return result;
@@ -181,7 +181,7 @@ inline vector<wstring> wreg_search(const wstring& content, const wstring& patter
   vector<wstring> result;
   boost::wregex reg(pattern);
   gezi::reg_search(content, reg, result, index);
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if __GNUC__ > 3
   return std::move(result);
 #else
   return result;

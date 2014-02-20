@@ -423,7 +423,7 @@ inline vector<String> cut_wstring(const String & s, int unit, int max_len = 0)
   {
     ret.push_back(s.substr(max(0, i * unit - max_len), unit + max_len));
   }
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if __GNUC__ > 3
   return std::move(ret);
 #else
   return ret;
@@ -484,7 +484,7 @@ inline string str_replace_all(const string& tstr, const string& old_value, const
 //      }
 //    }
 //  }
-//#ifdef __GXX_EXPERIMENTAL_CXX0X__
+//#if __GNUC__ > 3
 //  return std::move(vec);
 //#else
 //  return vec;
@@ -593,7 +593,7 @@ inline vector<string> to_cnvec(string line)
   {
     vec.push_back(line.substr(i, 2));
   }
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#if __GNUC__ > 3
   return std::move(vec);
 #else
   return vec;
