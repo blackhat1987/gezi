@@ -19,6 +19,7 @@
 
 namespace gezi
 {
+
 	inline void write_template(const Feature& feature, string outfile)
 	{
 		ofstream ofs(outfile.c_str());
@@ -27,6 +28,10 @@ namespace gezi
 		{
 			ofs << "#define " << feature.cnames()[i] << " fv[" << i << "]" << endl;
 		}
+	}
+	inline void write_def(const Feature& feature, string outfile)
+	{
+		write_template(feature, outfile);
 	}
 	template<typename _Stream>
 	void debug_print(const Feature& feature, _Stream& out)
@@ -113,18 +118,12 @@ namespace gezi
 	template<typename _Stream>
 	void write_table_header(const Feature& feature, _Stream& ofs, string name = "", string label = "label")
 	{
+		ofs << "#";
 		if (!name.empty())
 		{
-			ofs << "#" << name;
-			if (!label.empty())
-			{
-				ofs << "\t" << label;
-			}
+			ofs << name << "\t";
 		}
-		else
-		{
-			ofs << label;
-		}
+		ofs << label;
 
 		foreach(string fname, feature.cnames())
 		{
@@ -140,9 +139,8 @@ namespace gezi
 		if (!name.empty())
 		{
 			ofs << "\t" << name;
-		} 
-		
-		
+		}
+
 		foreach(string fname, feature.cnames())
 		{
 			ofs << "\t" << fname;
@@ -151,13 +149,18 @@ namespace gezi
 	}
 
 
-	template<typename _Stream>
-	void write_header(const Feature& feature, _Stream& ofs)
+	inline void write_header(const Feature& feature, std::ostream& ofs)
 	{
 		foreach(string name, feature.cnames())
 		{
 			ofs << name << "," << endl;
 		}
+	}
+
+	inline void write_header(const Feature& feature, const string& file)
+	{
+		ofstream ofs(file.c_str());
+		write_header(feature, ofs);
 	}
 
 	inline void write_arff(const Feature& feature, const string& uid, const string& type, std::ostream& ofs)

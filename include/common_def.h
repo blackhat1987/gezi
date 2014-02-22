@@ -15,6 +15,14 @@
 #define COMMON_DEF_H_
 #include <string>
 #include <vector>
+#if __GNUC__ > 3
+#include <array>
+#else
+#include <boost/array.hpp>
+namespace std {
+	using boost::array;
+}
+#endif
 #include <fstream>
 #include <sstream>
 #include <sstream>
@@ -31,14 +39,6 @@ typedef unsigned long long uint64;
 typedef unsigned char uchar;
 
 typedef double Float;
-
-//using std::string;
-//using std::vector;
-//using std::set;
-//using std::map;
-//using std::ifstream;
-//using std::ofstream;
-using namespace std;
 
 #include <boost/foreach.hpp>
 #define foreach BOOST_FOREACH
@@ -67,5 +67,14 @@ using boost::bind;
 
 #define BOOST_THREAD_DONT_USE_CHRONO
 #include <boost/thread.hpp>
+
+//using std::string;
+//using std::vector;
+//using std::set;
+//using std::map;
+//using std::ifstream;
+//using std::ofstream;
+using std::array;
+using namespace std;
 
 #endif  //----end of COMMON_DEF_H_

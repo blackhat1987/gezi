@@ -465,14 +465,19 @@ inline void get_val(const comcfg::Configure& conf, char* dest,
 
 #define SCONF2(s,default_value)\
   s = gezi::get_val(gezi::SharedConf::conf(), section, gezi::conf_trim(#s), default_value)
+#define SCONF_(s,default_value)\
+	gezi::get_val(gezi::SharedConf::conf(), section, gezi::conf_trim(#s), default_value)
 #define SCONF2_CLASS(root,s,default_value)\
-  s = gezi::get_val(gezi::SharedConf::conf(), section, gezi::conf_trim(#s), default_value)
+  root.s = gezi::get_val(gezi::SharedConf::conf(), section, gezi::conf_trim(#s), default_value)
 
 #define PSCONF(s, field)\
   gezi::set_val(gezi::SharedConf::conf(), field, gezi::conf_trim(#s), s)
 
 #define PSCONF2(s,field, default_value)\
   s = gezi::get_val(gezi::SharedConf::conf(), field, gezi::conf_trim(#s), default_value)
+
+#define PSCONF_(s,field, default_value)\
+	gezi::get_val(gezi::SharedConf::conf(), field, gezi::conf_trim(#s), default_value)
 
 #define CONF(s)\
   gezi::set_val(conf, section, gezi::conf_trim(#s), s)
