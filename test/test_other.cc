@@ -41,8 +41,16 @@ void write_a(const string& s)
 	cout << "string" << endl;
 }
 
+struct Node
+{
+	int a;
+	int b;
+};
 void run()
 {
+	vector<Node> vec;
+	Pval(distinct_count(vec, [](const Node& a) { return a.a; }));
+
 	write_a("abc");
 	ofstream ofs("abc");
 	write_a(ofs);
