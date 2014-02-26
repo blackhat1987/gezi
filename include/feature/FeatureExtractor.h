@@ -14,6 +14,7 @@
 #ifndef FEATURE_EXTRACTOR_H_
 #define FEATURE_EXTRACTOR_H_
 #include "Feature.h"
+#include "feature/feature_util.h"
 namespace gezi
 {
 
@@ -74,7 +75,7 @@ public:
   {
     _feature->add(value, name);
   }
-
+	
   inline void add(vector<double>& values, const string& name = "")
   {
     _feature->add(values, name);

@@ -7,6 +7,7 @@
 #include "stdlib.h"
 #include <math.h>
 #include <string.h>
+
 namespace gezi
 {
 
@@ -163,4 +164,5 @@ private:
 };
 
 }
+
 #endif

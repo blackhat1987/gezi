@@ -108,6 +108,16 @@ public:
     return res;
   }
 
+	string get(const string& url)
+	{
+		string result;
+		get(url, result);
+		return result;
+	}
+	CURLcode get(const string& url, string& resStr)
+	{
+		return get(url.c_str(), resStr);
+	}
   CURLcode get(const char* url, string&resStr)
   {
     //		MicrosecTimer timer;

@@ -8,7 +8,7 @@
  *          \date   2011-05-04
  *  
  *  \Description:  接口传递符合mcpack规则，修改query server传string的方法
- *                 TODO using ub_server?
+ *                 单线程server 仅仅用于demo使用 其实是 DemoServer
  *  ==============================================================================
  */
 

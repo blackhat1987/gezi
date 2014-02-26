@@ -14,6 +14,7 @@
 
 #define private public
 #define protected public
+#include "convert_type.h"
 #include "common_util.h"
 #include "feature/Feature.h"
 #include "feature/feature_util.h"

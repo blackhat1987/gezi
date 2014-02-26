@@ -15,6 +15,7 @@
 #define COMMON_DEF_H_
 #include <string>
 #include <vector>
+#include <map>
 #if __GNUC__ > 3
 #include <array>
 #else
@@ -46,6 +47,7 @@ using boost::format;
 using boost::is_any_of;
 #include <boost/any.hpp>   
 using boost::any_cast;
+typedef std::map<std::string, boost::any> AnyMap;
 
 #include <boost/regex.hpp>
 #include <boost/algorithm/string/regex.hpp>
@@ -60,7 +62,7 @@ using boost::function;
 #include <boost/bind.hpp>
 #include <boost/lambda/lambda.hpp>
 using namespace boost::lambda;
-using boost::bind;
+//using boost::bind;
 //#include <boost/spirit/include/phoenix_core.hpp>  
 //using namespace boost::phoenix;
 //using namespace boost::phoenix::arg_names;

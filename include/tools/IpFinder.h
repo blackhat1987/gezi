@@ -21,15 +21,18 @@ namespace gezi {
 	{
 	public:
 		IpFinder()
+			:m_fpIpDataFile(NULL)
 		{
 		}
 		IpFinder(const char* pszFileName)
+			:m_fpIpDataFile(NULL)
 		{
 			this->Open(pszFileName);
 		}
 		~IpFinder()
 		{
-			fclose(m_fpIpDataFile);
+			if (m_fpIpDataFile)
+				fclose(m_fpIpDataFile);
 		}
 		const static int INDEX_LENGTH = 7;        // 一个索引包含4字节的起始IP和3字节的IP记录偏移，共7字节
 		const static int IP_LENGTH = 4;
@@ -59,6 +62,10 @@ namespace gezi {
 			this->GetAddressByIp(this->IpString2IpValue(pszIp), strCountry, strLocation);
 		}
 
+		inline void GetAddressByIp(const std::string& ip, std::string& strCountry, std::string& strLocation)
+		{
+			GetAddressByIp(ip.c_str(), strCountry, strLocation);
+		}
 		//通过指定的偏移量来获取ip记录中的国家名和地区名，偏移量可由索引获取
 		//ulOffset为Ip记录偏移量
 		void GetAddressByOffset(unsigned long ulOffset, std::string& strCountry, std::string& strLocation) const

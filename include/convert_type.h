@@ -14,19 +14,10 @@
 #ifndef CONVERT_TYPE_H_
 #define CONVERT_TYPE_H_
 
+#include <sstream>
+#include <string>
 #include <boost/lexical_cast.hpp>
-namespace gezi
-{
-	template<typename T, typename U>
-	T lexical_cast(U input)
-	{
-		T result;
-		stringstream s;
-		s << input;
-		s >> result;
-		return result;
-	}
-}
+
 #define TO_INT boost::lexical_cast<int>
 #define TO_UINT boost::lexical_cast<unsigned int>
 #define TO_INT64 boost::lexical_cast<long long>
@@ -39,12 +30,28 @@ namespace gezi
 #define UINT boost::lexical_cast<unsigned int>
 #define INT64 boost::lexical_cast<long long>
 #define UINT64 boost::lexical_cast<unsigned long long>
+#undef BOOL
 #define BOOL boost::lexical_cast<bool>
+#undef FLOAT
 #define FLOAT boost::lexical_cast<float>
+#undef  DOUBLE	
 #define DOUBLE boost::lexical_cast<double>
+#undef  STRING
 #define STRING boost::lexical_cast<std::string>
 #define STR boost::lexical_cast<std::string>
 
+//namespace gezi
+//{
+//	template<typename T, typename U>
+//	T lexical_cast(U input)
+//	{
+//		T result;
+//		std::stringstream s;
+//		s << input;
+//		s >> result;
+//		return result;
+//	}
+//}
 //gezi lexical_cast 可以比如 1.0 转成int 1, 包括模板里面可以 string -> string转换 方便模板统一处理
 //但是并不安全所以不再提供define 需要直接使用 不安全的情况如 vec[0] --- [Instance] UINT64(vec[0]) --- [18619200]
 //#define TO_INT boost::lexical_cast<int>

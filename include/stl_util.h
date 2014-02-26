@@ -15,8 +15,9 @@
 #define STL_UTIL_H_
 
 #include "common_def.h"
-#include "convert_type.h"
 #include "map_util.h"
+#include <boost/lexical_cast.hpp>
+#define TO_STRING boost::lexical_cast<std::string>
 namespace gezi {
 	template<typename T>
 	std::string join(const std::vector<T>& vec, const std::string& sep = " ")
@@ -139,4 +140,5 @@ namespace gezi {
 	
 }  //----end of namespace gezi
 
+#undef TO_STRING
 #endif  //----end of STL_UTIL_H_

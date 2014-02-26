@@ -116,7 +116,7 @@ namespace gezi
 	}
 
 	template<typename _Stream>
-	void write_table_header(const Feature& feature, _Stream& ofs, string name = "", string label = "label")
+	void write_table_header(const Feature& feature, _Stream& ofs, string name = "id", string label = "label")
 	{
 		ofs << "#";
 		if (!name.empty())

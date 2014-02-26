@@ -2,10 +2,10 @@
 #define _FEATURE_H_
 
 #include "common_util.h"
-
 using std::vector;
 using std::pair;
 using std::make_pair;
+
 namespace gezi
 {
 
@@ -326,4 +326,5 @@ private:
 
 typedef Feature::Node fnode_t;
 }
-#endif
+
+#endif //end of _FEATURE_H_

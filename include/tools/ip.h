@@ -7,7 +7,9 @@
  *
  *          \date   2014-02-22 20:24:34.765822
  *
- *  \Description:
+ *  \Description:  注意贴吧ip数据的存储格式uint 4个int的存储和普通正常存储正好相反
+ *                 因此不能直接调用IpFinder.GetAddressByIp(uint ...) 否则结果不对
+ *                 可以调用 IpFinder.GetAddressByIp（to_ipstr(uint) ...)
  *  ==============================================================================
  */
 
@@ -16,8 +18,10 @@
 
 #include "common_def.h"
 #include <string>
+#include "tools/IpFinder.h"
 namespace gezi
 {
+	//下面都按照贴吧格式ip数据处理
 	//贴吧ip数据 转换成可读的string格式 类似 1577234 -> 192.168.32.78
 	inline string to_ipstr(uint64 ipl)
 	{
@@ -41,6 +45,14 @@ namespace gezi
 #else
 		return vec;
 #endif  
+	}
+
+	inline string get_address(IpFinder& ipFinder, uint64 ipl)
+	{
+		string country, location;
+		ipFinder.GetAddressByIp(to_ipstr(ipl), country, location);
+		string result = country.size() < 4 ? country : country.substr(0, 4);
+		return result;
 	}
 }
 

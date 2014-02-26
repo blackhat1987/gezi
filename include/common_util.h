@@ -39,7 +39,10 @@
 #include "file_util.h"
 #include "stl_util.h"
 #include "linq.h"
+
+#ifndef NO_GEZI_CONVERT
 #include "convert_type.h"
+#endif
 
 #include "Exception.h"
 
