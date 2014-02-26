@@ -546,6 +546,8 @@ namespace gezi
 	template<typename Iter, typename Func>
 	std::size_t distinct_count(Iter begin, Iter end, Func func)
 	{
+		if (begin == end)
+			return 0;
 		auto a = func(*begin);
 		typedef decltype(a) ValueType;
 		unordered_set<ValueType> vset;
