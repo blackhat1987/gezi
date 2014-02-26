@@ -96,7 +96,7 @@ LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -lcurl -ldl -rdynamic', GCC_LDFLAG
 CONFIGS('ps/se/toolchain@base')
 CONFIGS('third-64/openssl@base')
 CONFIGS('third-64/zlib@base')
-CONFIGS('third-64/boost@1.53.0.300')
+CONFIGS('third-64/boost@base')
 CONFIGS('third-64/gflags@base')
 CONFIGS('third-64/glog@base')
 CONFIGS('com/btest/gtest@base')
