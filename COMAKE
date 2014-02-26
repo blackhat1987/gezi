@@ -93,6 +93,7 @@ if GCC_HIGH  == 1:
 LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -lcurl -ldl -rdynamic', GCC_LDFLAGS)
 
 #ÒÀÀµÄ£¿é
+CONFIGS('ps/se/toolchain@base')
 CONFIGS('third-64/openssl@base')
 CONFIGS('third-64/zlib@base')
 CONFIGS('third-64/boost@base')
