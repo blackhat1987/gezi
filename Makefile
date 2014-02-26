@@ -1,8 +1,8 @@
 #COMAKE2 edit-mode: -*- Makefile -*-
 ####################64Bit Mode####################
 ifeq ($(shell uname -m),x86_64)
-CC=../../../../../ps/se/toolchain/gcc_only_4.8.2/bin/g++
-CXX=../../../../../ps/se/toolchain/gcc_only_4.8.2/bin/g++
+CC=g++
+CXX=g++
 CXXFLAGS=-g \
   -O0 \
   -pipe \
@@ -10,12 +10,7 @@ CXXFLAGS=-g \
   -Wall \
   -fPIC \
   -DHAVE_NETINET_IN_H \
-  -Wno-unused-parameter \
-  -std=c++11 \
-  -fpermissive \
-  -Wno-write-strings \
-  -Wno-literal-suffix \
-  -Wno-unused-local-typedefs
+  -Wno-unused-parameter
 CFLAGS=-g \
   -O0 \
   -pipe \
@@ -23,12 +18,7 @@ CFLAGS=-g \
   -Wall \
   -fPIC \
   -DHAVE_NETINET_IN_H \
-  -Wno-unused-parameter \
-  -std=c++11 \
-  -fpermissive \
-  -Wno-write-strings \
-  -Wno-literal-suffix \
-  -Wno-unused-local-typedefs
+  -Wno-unused-parameter
 CPPFLAGS=-D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\"
@@ -143,7 +133,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=490c062edc30f487e4acc55221602b77  COMAKE
+COMAKE_MD5=a574f539c38369a0c40bc8d700297fd5  COMAKE
 
 
 .PHONY:all

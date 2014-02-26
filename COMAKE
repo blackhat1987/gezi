@@ -10,7 +10,7 @@ RELATIVE_PATH='./'
 GCC_LOCAL=0
 print 'GCC_LOCAL: %d'%GCC_LOCAL 
 #是否使用高版本gcc 可以直接使用生成的bin文件 如./main 
-GCC_HIGH=1
+GCC_HIGH=0
 print 'GCC_HIGH: %d'%GCC_HIGH
 #是否使用高版本动态链接库，即是否使用高版本libc 如果启用 可以使用openmp 但是需要设置LD_LIBRARY_PATH sh ./run.sh ./main
 GCC_DYNAMIC=0
