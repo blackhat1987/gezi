@@ -191,6 +191,15 @@ void Predictor::predict(Feature* feature, vector<Score>* result)
   }
 }
 
+double Predictor::Predict(Feature& feature)
+{
+	FeatureNormalizer * normalizer = getNormalizer(0);
+	if (normalizer)
+	{
+		normalizer->normalize(&feature);
+	}
+	return _modelList[0]->Predict(feature);
+}
 //use this one!
 
 void Predictor::predict(Feature& feature, vector<double>& result, int index)

@@ -24,6 +24,8 @@ public:
     }
   }
 
+	//最简单接口 只是处理下normalize 使用第一个model 给出默认打分
+	double Predict(Feature&);
   //index model的索引位置, inner_index score内部索引位置
   int predict(Feature *, Score *, int index = 0);
 

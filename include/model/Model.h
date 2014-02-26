@@ -80,6 +80,12 @@ public:
 
   }
 
+	//最简单接口
+	virtual double Predict(Feature& feature)
+	{
+		return 0;
+	}
+
   /** 
    * 清理接口
    * 

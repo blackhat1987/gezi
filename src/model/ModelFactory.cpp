@@ -18,7 +18,7 @@
 #include "SvmModel.h"
 #include "ModelFactory.h"
 #include "RandForestModel.h"
-#include "FastRankModel.h"
+#include "BinaryFastRankModel.h"
 #include <string.h>
 
 Model* ModelFactory::createModel(const char* modelType, const char* modelPath, const char* infoPath)
@@ -36,9 +36,9 @@ Model* ModelFactory::createModel(const char* modelType, const char* modelPath, c
   {
     model = new RandForestModel(modelPath, infoPath);
   }
-  else if (!strcasecmp(modelType, "FastRank"))
+  else if (!strcasecmp(modelType, "BinaryFastRank"))
   {
-    model = new FastRankModel();
+    model = new BinaryFastRankModel();
   }
   else
   {
