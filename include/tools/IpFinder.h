@@ -15,7 +15,10 @@
 
 #ifndef TOOLS_IPFINDER_H_
 #define TOOLS_IPFINDER_H_
+
+#include <string.h>
 #include <string>
+
 namespace gezi {
 	class IpFinder
 	{
@@ -62,7 +65,7 @@ namespace gezi {
 			this->GetAddressByIp(this->IpString2IpValue(pszIp), strCountry, strLocation);
 		}
 
-		inline void GetAddressByIp(const std::string& ip, std::string& strCountry, std::string& strLocation)
+		inline void GetAddressByIp(const std::string& ip, std::string& strCountry, std::string& strLocation) const
 		{
 			GetAddressByIp(ip.c_str(), strCountry, strLocation);
 		}
