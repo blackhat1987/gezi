@@ -15,11 +15,12 @@
  **/
 #ifndef  __INCLUDE_CURLUTIL_H_
 #define  __INCLUDE_CURLUTIL_H_
-#include "ub.h"
 #include <string>
-#include "curl/curl.h"
-#include "common_util.h"
 #include <iostream>
+#include <curl/curl.h> //gcc3 has curl
+
+#include "common_util.h"
+
 using namespace std;
 
 class CurlUtil
