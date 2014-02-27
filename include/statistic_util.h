@@ -523,12 +523,7 @@ namespace gezi
 		return distinct_count<ValueType>(vec.begin(), vec.end(), func);
 	}
 
-	template<typename Container>
-	std::size_t distinct_count(Container& vec)
-	{
-		return distinct_count(vec.begin(), vec.end());
-	}
-
+	
 	template<typename Iter>
 	std::size_t distinct_count(Iter begin, Iter end)
 	{
@@ -540,6 +535,13 @@ namespace gezi
 		}
 		return vset.size();
 	}
+
+	template<typename Container>
+	std::size_t distinct_count(Container& vec)
+	{
+		return distinct_count(vec.begin(), vec.end());
+	}
+
 
 #if __GNUC__ > 3
 	
