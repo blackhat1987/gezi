@@ -1,24 +1,9 @@
-/***************************************************************************
- * 
- * Copyright (c) 2012 Baidu.com, Inc. All Rights Reserved
- * 
- **************************************************************************/
-
-
-
-/**
- * @file ModelFactory.cpp
- * @author weizheng(com@baidu.com)
- * @date 2012/05/22 22:29:03
- * @brief 
- *  
- **/
 
 #include "LinearModel.h"
 #include "SvmModel.h"
 #include "ModelFactory.h"
 #include "RandForestModel.h"
-#include "BinaryFastRankModel.h"
+//#include "BinaryFastRankModel.h" //@TODO 目前fastrank 使用引入代码而不是数据的方式 暂时这样
 #include <string.h>
 
 Model* ModelFactory::createModel(const char* modelType, const char* modelPath, const char* infoPath)
@@ -36,10 +21,10 @@ Model* ModelFactory::createModel(const char* modelType, const char* modelPath, c
   {
     model = new RandForestModel(modelPath, infoPath);
   }
-  else if (!strcasecmp(modelType, "BinaryFastRank"))
+  /*else if (!strcasecmp(modelType, "BinaryFastRank"))
   {
     model = new BinaryFastRankModel();
-  }
+  }*/
   else
   {
     return NULL;

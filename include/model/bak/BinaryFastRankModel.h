@@ -27,12 +27,11 @@ public:
 	{
 
 	}
-	//virtual int predict(Feature*, Score*);
-	//virtual void predict(Feature&, vector<double>&);
-	virtual double predict(Feature&);
+
+	virtual double Predict(Feature& feature);
+
 protected:
 private:
-
 };
 
 #endif  //----end of BINARY_FAST_RANK_MODEL_H_
