@@ -78,7 +78,7 @@ public:
 
   CURLcode post(const char* url, char* data, string& resStr)
   {
-    MicrosecTimer timer;
+    gezi::Timer timer;
     Chunk chunk;
     chunk.memory = (char*) malloc(1);
     chunk.size = 0;
