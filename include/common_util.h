@@ -37,8 +37,10 @@
 #include "time_util.h"
 
 #include "file_util.h"
-#include "stl_util.h"
+
 #include "linq.h"
+#include "stl_util.h"
+
 
 #ifndef NO_GEZI_CONVERT
 #include "convert_type.h"

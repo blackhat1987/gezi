@@ -17,12 +17,16 @@
 #include "common_def.h"
 namespace gezi {
 	//-----------------map util
-	inline bool contains(map<string, vector<string> > * history, string name)
+
+	//like map<string, vector<string> >
+	template<typename Map>
+	inline bool contains(Map* history, string name)
 	{
 		return history && history->count(name) && (*history)[name].size() > 0;
 	}
 
-	inline int length(map<string, vector<string> > * history, string name)
+	template<typename Map>
+	inline int length(Map* history, string name)
 	{
 		if (!history || !history->count(name))
 		{
@@ -30,6 +34,18 @@ namespace gezi {
 		}
 
 		return (*history)[name].size();
+	}
+
+	template<typename Map>
+	inline bool contains(Map& history, string name)
+	{
+		return contains(&history, name);
+	}
+
+	template<typename Map>
+	inline int length(Map& history, string name)
+	{
+		return length(&history, name);
 	}
 
 	template<typename Map, typename T>
