@@ -9,8 +9,13 @@
 
 import sys,os
 
+print '''#inlcude "../include/python_util.h"'''
 for line in open(sys.argv[1]):
 	if(line.find('undefined call policies') < 0):
-		print line
+		print line,
 	else:
-		print '            , bp::return_internal_reference<>())'
+		result = '            , bp::return_internal_reference<>())'
+		if (line.find(';') >= 0):
+			result += ';'
+		print result
+

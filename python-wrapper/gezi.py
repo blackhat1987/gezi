@@ -4,11 +4,11 @@ from pyplusplus import module_builder
 
 mb = module_builder.module_builder_t(
         gccxml_path='~/.jumbo/bin/gccxml',
-        files=['../include/word_seg.h',
-					'../include/log_util.h',
-					'../include/Matrix.h',
-					'../include/numeric/collocation.h',
-					'../include/feature/FeatureSelector.h',
+        files=['./include/word_seg.h',
+					'./include/log_util.h',
+					'./include/Matrix.h',
+					'./include/numeric/collocation.h',
+					'./include/feature/FeatureSelector.h',
 					],
         include_paths=[ '/home/users/chenghuige/rsc/lib2-64/wordseg', 
         '/home/users/chenghuige/rsc/lib2-64/postag/include',

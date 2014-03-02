@@ -25,3 +25,7 @@ s = '速去欧阳丹丹吧拿吧'
 print segment(s)
 
 print segment('速去郭美美吧拿')
+
+l = []
+segment('速去郭美美吧拿',l)
+print l[0]
