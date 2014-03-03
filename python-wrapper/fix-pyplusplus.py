@@ -9,10 +9,20 @@
 
 import sys,os
 
-print '''#inlcude "../include/python_util.h"'''
+print '''#include "../include/python_util.h"'''
 for line in open(sys.argv[1]):
 	if(line.find('undefined call policies') < 0):
 		print line,
+		if (line.find('BOOST_PYTHON_MODULE') >= 0):
+			print '''UseStrVec;
+			UseIntVec;
+			UseFloatVec;
+			UseDoubleVec;
+			UseStrStrMap;
+			UseStrIntMap;
+			UseStrFloatMap;
+			UseStrDoubleMap;
+			'''
 	else:
 		result = '            , bp::return_internal_reference<>())'
 		if (line.find(';') >= 0):

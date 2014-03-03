@@ -129,10 +129,11 @@ void sort(ValueVec& valueVec, IndexVec& indexVec, Func func)
 {
   func.valueVec = &valueVec;
   int len = valueVec.size();
-  for (int left = 0; left < len; left++)
-  {
-    indexVec.push_back(left);
-  }
+	indexVec.resize(len);
+	for (size_t i = 0; i < len; i++)
+	{
+		indexVec[i] = i;
+	}
   std::sort(indexVec.begin(), indexVec.end(), func);
 }
 
@@ -149,10 +150,11 @@ void sort(ValueVec& valueVec, IndexVec& indexVec, int maxLen, Func func)
 {
   func.valueVec = &valueVec;
   int len = valueVec.size();
-  for (int left = 0; left < len; left++)
-  {
-    indexVec.push_back(left);
-  }
+	indexVec.resize(len);
+	for (size_t i = 0; i < len; i++)
+	{
+		indexVec[i] = i;
+	}
   if (len <= maxLen)
   {
     std::sort(indexVec.begin(), indexVec.end(), func);

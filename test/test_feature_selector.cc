@@ -84,6 +84,7 @@ void run()
 
   run(fs.method(CHI));
   run(fs.method(IG));
+	fs.save("temp.txt");
   run(fs.method(MI));
   run(fs.method(MI2));
   run(fs.method(PMI));

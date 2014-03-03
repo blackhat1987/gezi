@@ -26,6 +26,6 @@ print segment(s)
 
 print segment('速去郭美美吧拿')
 
-l = []
+l = StrVec()
 segment('速去郭美美吧拿',l)
 print l[0]

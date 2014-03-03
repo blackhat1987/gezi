@@ -91,7 +91,6 @@ namespace gezi
 class LogHelper
 {
 public:
-
   LogHelper(int log_level = 16)
   { //设置16是打印debug的 8一般OK 没有debug,有trace warning
     com_device_t dev[1];

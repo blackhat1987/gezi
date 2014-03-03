@@ -73,7 +73,7 @@ public:
       pgconf = scw_load_conf(dict_path);
       CHECK_NOTNULL(pgconf);
 
-      pwdict_ = scw_load_worddict(data));
+      pwdict_ = scw_load_worddict(data);
       CHECK_NOTNULL(pwdict_);
     }
 

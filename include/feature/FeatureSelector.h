@@ -8,6 +8,7 @@
  *          \date   2014-01-19 10:46:46.156630
  *
  *  \Description:   实际是文本类(词,模式)特征的选取，利用特征词(模式）是否出现在某个类别中
+ *								  @TODO 写一个通用的hadoop streaming版本
  *  ==============================================================================
  */
 
@@ -16,7 +17,7 @@
 
 #include "Matrix.h"
 #include "Identifer.h"
-#include "collocation.h"
+#include "numeric/collocation.h"
 #include "sort_util.h"
 namespace gezi
 {
@@ -33,26 +34,19 @@ public:
   typedef boost::function<Float(int, int, int, uint64) > Func;
 
   FeatureSelector()
-  : _numLabels(2), _method(collocation::CHI), _strategy(MAX), _minSupport(0)
+  : _labelNum(2), _method(collocation::CHI), _strategy(MAX), _minSupport(0)
   {
     init();
     initFunc();
   }
 
-  inline FeatureSelector& labelNum(int labelNum)
-  {
-    _numLabels = labelNum;
-    init();
-    return *this;
-  }
-
   void init()
   {
-    _classCounts.resize(_numLabels, 0);
-    _classPriors.resize(_numLabels, 0);
-    _counts.resize(_numLabels);
-    _scores.resize(_numLabels + 1); //最后的行是特征对所有类的一个总的评价值
-    _ranks.resize(_numLabels + 1);
+    _classCounts.resize(_labelNum, 0);
+    _classPriors.resize(_labelNum, 0);
+    _counts.resize(_labelNum);
+    _scores.resize(_labelNum + 1); //最后的行是特征对所有类的一个总的评价值
+    _ranks.resize(_labelNum + 1);
 
     foreach(vector<int>& vec, _counts)
     {
@@ -106,9 +100,9 @@ public:
   void clearScore()
   {
     _ranks.clear();
-    _ranks.resize(_numLabels + 1);
+    _ranks.resize(_labelNum + 1);
     _scores.clear();
-    _scores.resize(_numLabels + 1);
+    _scores.resize(_labelNum + 1);
   }
 
   void clear()
@@ -123,28 +117,7 @@ public:
 
   inline int labelNum()
   {
-    return _numLabels;
-  }
-
-  inline FeatureSelector& method(collocation::Method method)
-  {
-    _method = method;
-    clearScore();
-    initFunc();
-    return *this;
-  }
-
-  inline FeatureSelector& strategy(Strategy strategy)
-  {
-    _strategy = strategy;
-    clearScore();
-    return *this;
-  }
-
-  inline FeatureSelector& minSupport(int minSupport)
-  {
-    _minSupport = minSupport;
-    return *this;
+    return _labelNum;
   }
 
   inline int minSupport()
@@ -162,33 +135,40 @@ public:
     return _strategy;
   }
 
-  void add(const vector<string>& words, int label)
-  {
-    unordered_set<string> wordSet(words.begin(), words.end());
-    add(wordSet, label);
-  }
+	
+	inline FeatureSelector& labelNum(int labelNum)
+	{
+		_labelNum = labelNum;
+		init();
+		return *this;
+	}
 
-  void add(const unordered_set<string>& words, int labelIdx)
-  {
+	inline FeatureSelector& method(collocation::Method method)
+	{
+		_method = method;
+		clearScore();
+		initFunc();
+		return *this;
+	}
 
-    foreach(const string& word, words)
-    {
-      bool isnew = false;
-      int idx = Identifer::add(word, isnew);
-      if (isnew)
-      {
-        _featureCounts.push_back(0);
+	inline FeatureSelector& strategy(Strategy strategy)
+	{
+		_strategy = strategy;
+		clearScore();
+		return *this;
+	}
 
-        foreach(vector<int>& vec, _counts)
-        {
-          vec.push_back(0);
-        }
-      }
-      _featureCounts[idx] += 1;
-      _counts[labelIdx][idx] += 1;
-    }
-    _classCounts[labelIdx] += 1;
-  }
+	inline FeatureSelector& minSupport(int minSupport)
+	{
+		_minSupport = minSupport;
+		return *this;
+	}
+
+	void add(const vector<string>& words, int label)
+	{
+		set<string> wordSet(words.begin(), words.end());
+		add(wordSet, label);
+	}
 
   void add(string doc, int label, string sep = "\t")
   {
@@ -204,18 +184,18 @@ public:
     finalize();
     if (_strategy == AVG)
     {
-      for (int labelIdx = 0; labelIdx < _numLabels; labelIdx++)
+      for (int labelIdx = 0; labelIdx < _labelNum; labelIdx++)
       {
-        _classPriors[labelIdx] = (double) _classCounts[labelIdx] / _numInstances;
+        _classPriors[labelIdx] = (double) _classCounts[labelIdx] / _instanceNum;
       }
     }
     PVEC(_classPriors);
     vector<double>& scores = _scores.back();
-    for (int f = 0; f < _numFeatures; f++)
+    for (int f = 0; f < _featureNum; f++)
     {
-      for (int labelIdx = 0; labelIdx < _numLabels; labelIdx++)
+      for (int labelIdx = 0; labelIdx < _labelNum; labelIdx++)
       {
-        double score = _func(_counts[labelIdx][f], _featureCounts[f], _classCounts[labelIdx], _numInstances);
+        double score = _func(_counts[labelIdx][f], _featureCounts[f], _classCounts[labelIdx], _instanceNum);
         _scores[labelIdx][f] = score;
         switch (_strategy)
         {
@@ -245,13 +225,18 @@ public:
     save(ofs, maxFeatureNum, idx);
   }
 
+	void show(int maxFeatureNum = 1024, int idx = -1)
+	{
+		save(std::cout, maxFeatureNum, idx);
+	}
+
   void save(ostream& os, int maxFeatureNum, int idx)
   {
     if (idx == -1)
-      idx = _numLabels;
+      idx = _labelNum;
     PVAL(idx);
-    if (maxFeatureNum == -1 || maxFeatureNum > _numFeatures)
-      maxFeatureNum = _numFeatures;
+    if (maxFeatureNum == -1 || maxFeatureNum > _featureNum)
+      maxFeatureNum = _featureNum;
     PVAL(maxFeatureNum);
     rank(idx, maxFeatureNum);
     for (int i = 0; i < maxFeatureNum; i++)
@@ -264,36 +249,57 @@ public:
     }
   }
 
-  inline int numFeatures()
+  inline int featureNum()
   {
-    return _numFeatures;
+    return _featureNum;
   }
 
-  inline int64 numInstances()
+  inline int64 instanceNum()
   {
-    return _numInstances;
+    return _instanceNum;
   }
 
 private:
 
+	void add(const set<string>& words, int labelIdx)
+	{
+		foreach(const string& word, words)
+		{
+			bool isnew = false;
+			int idx = Identifer::add(word, isnew);
+			if (isnew)
+			{
+				_featureCounts.push_back(0);
+
+				foreach(vector<int>& vec, _counts)
+				{
+					vec.push_back(0);
+				}
+			}
+			_featureCounts[idx] += 1;
+			_counts[labelIdx][idx] += 1;
+		}
+		_classCounts[labelIdx] += 1;
+	}
+
   void finalize()
   {
-    _numFeatures = this->size();
-    PVAL(_numFeatures);
-    _numInstances = std::accumulate(_classCounts.begin(), _classCounts.end(), int64(0));
-    PVAL(_numInstances);
+    _featureNum = this->size();
+    PVAL(_featureNum);
+    _instanceNum = std::accumulate(_classCounts.begin(), _classCounts.end(), int64(0));
+    PVAL(_instanceNum);
 
     foreach(vector<double>& vec, _scores)
     {
-      vec.resize(_numFeatures, 0); //特征数目
+      vec.resize(_featureNum, 0); //特征数目
     }
   }
 
   void rank(int maxFeatureNum)
   {
-    if (maxFeatureNum > _numFeatures)
-      maxFeatureNum = _numFeatures;
-    for (int i = 0; i <= _numLabels; i++)
+    if (maxFeatureNum > _featureNum)
+      maxFeatureNum = _featureNum;
+    for (int i = 0; i <= _labelNum; i++)
     {
       gezi::sort(_scores[i], _ranks[i], maxFeatureNum);
     }
@@ -309,9 +315,9 @@ private:
   vector<int> _featureCounts;
   vector<int> _classCounts;
   vector<double> _classPriors;
-  int _numLabels;
-  int _numFeatures;
-  int64 _numInstances;
+  int _labelNum;
+  int _featureNum;
+  int64 _instanceNum;
   Func _func;
   collocation::Method _method;
   Strategy _strategy;

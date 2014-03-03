@@ -21,4 +21,5 @@ fs.add("班车\t文思海辉", 1);
 fs.method(IG)
 fs.strategy(FeatureSelector.SUM)
 fs.calc()
-fs.show() 
+fs.show()
+fs.save('temp.txt')

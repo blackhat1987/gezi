@@ -9,6 +9,7 @@ mb = module_builder.module_builder_t(
 					'./include/Matrix.h',
 					'./include/numeric/collocation.h',
 					'./include/feature/FeatureSelector.h',
+					'./include/tools/content_process.h',
 					],
         include_paths=[ '/home/users/chenghuige/rsc/lib2-64/wordseg', 
         '/home/users/chenghuige/rsc/lib2-64/postag/include',
