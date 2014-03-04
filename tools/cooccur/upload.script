@@ -1,0 +1,9 @@
+set mapred.job.name=chenghuige.upload.coocur; 
+set mapred.job.map.capacity=6000; 
+set mapred.job.reduce.capacity=500; 
+set hive.map.aggr=true; 
+set hive.auto.convert.join=true; 
+USE queryPlatform;
+DROP class_word
+CREATE  class_word(class int, words );
+LOAD DATA LOCAL INPATH './test.txt' OVERWIRTE INTO TABLE class_word;
