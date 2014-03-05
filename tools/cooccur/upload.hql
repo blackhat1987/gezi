@@ -16,9 +16,14 @@ INSERT OVERWRITE LOCAL DIRECTORY './result' SELECT * FROM class_words;
 ADD FILE gen-coocur-classword.py;
 DROP TABLE classwords_coocur;
 CREATE TABLE classwords_coocur AS 
-		SELECT TRANSFORM(class, words) 
-			USING 'python gen-coocur-classword.py' 
-			AS (class1, word1, count1) 
-			FROM class_words; 
+	SELECT class, word, sum(count) AS count
+		FROM
+		(
+			SELECT TRANSFORM(class, words) 
+				USING 'python gen-coocur-classword.py' 
+				AS (class, word, count) 
+				FROM class_words
+		) T
+		GROUP BY class, word;
 
 INSERT OVERWRITE LOCAL DIRECTORY './result2' SELECT * FROM classwords_coocur;
