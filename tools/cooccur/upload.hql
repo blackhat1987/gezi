@@ -8,10 +8,10 @@ set hive.exec.mode.local.auto.inputbytes.max=16000000000;
 set hive.exec.mode.local.auto.tasks.max=12; 
 
 USE queryPlatform;
--- DROP TABLE class_words;
--- CREATE TABLE class_words(class STRING, words STRING);
--- LOAD DATA LOCAL INPATH './test.txt' OVERWRITE INTO TABLE class_words;
--- INSERT OVERWRITE LOCAL DIRECTORY './result' SELECT * FROM class_words;
+DROP TABLE class_words;
+CREATE TABLE class_words(class STRING, words STRING);
+LOAD DATA LOCAL INPATH './test.txt' OVERWRITE INTO TABLE class_words;
+INSERT OVERWRITE LOCAL DIRECTORY './result' SELECT * FROM class_words;
 
 ADD FILE gen-coocur-classword.py;
 DROP TABLE classwords_coocur;
