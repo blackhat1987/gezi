@@ -8,22 +8,8 @@ set hive.exec.mode.local.auto.inputbytes.max=16000000000;
 set hive.exec.mode.local.auto.tasks.max=12; 
 
 USE queryPlatform;
-DROP TABLE class_words;
-CREATE TABLE class_words(class STRING, words STRING);
-LOAD DATA LOCAL INPATH './test.txt' OVERWRITE INTO TABLE class_words;
-INSERT OVERWRITE LOCAL DIRECTORY './result' SELECT * FROM class_words;
 
-ADD FILE gen-coocur-classword.py;
-DROP TABLE classwords_coocur;
-CREATE TABLE classwords_coocur AS 
-	SELECT class, word, sum(count) AS count
-		FROM
-		(
-			SELECT TRANSFORM(class, words) 
-				USING 'python gen-coocur-classword.py' 
-				AS (class, word, count) 
-				FROM class_words
-		) T
-		GROUP BY class, word;
-
-INSERT OVERWRITE LOCAL DIRECTORY './result2' SELECT * FROM classwords_coocur;
+DROP TABLE gezi_ClassWords;
+CREATE TABLE gezi_ClassWords(class STRING, words STRING);
+LOAD DATA LOCAL INPATH './test.txt' OVERWRITE INTO TABLE gezi_ClassWords;
+INSERT OVERWRITE LOCAL DIRECTORY './gezi_ClassWords' SELECT * FROM gezi_ClassWords;
