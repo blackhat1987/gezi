@@ -10,6 +10,13 @@ mb = module_builder.module_builder_t(
 					'./include/numeric/collocation.h',
 					'./include/feature/FeatureSelector.h',
 					'./include/tools/content_process.h',
+					'./include/string_util.h',
+					'./include/reg_util.h',
+					#'./include/debug_util.h',
+					#'./include/conf_util.h',
+					#'./include/convert_type.h',
+					#'./include/common_def.h',
+					'./include/ProgressBar.h'
 					],
         include_paths=[ '/home/users/chenghuige/rsc/lib2-64/wordseg', 
         '/home/users/chenghuige/rsc/lib2-64/postag/include',
