@@ -23,6 +23,8 @@
 
 #include "../include/ProgressBar.h"
 
+#include "../include/tieba/util.h"
+
 namespace bp = boost::python;
 
 BOOST_PYTHON_MODULE(libgezi){
@@ -596,6 +598,17 @@ UseStrVec;
     
     }
 
+    { //::gezi::is_thread
+    
+        typedef bool ( *is_thread_function_type )( ::std::string );
+        
+        bp::def( 
+            "is_thread"
+            , is_thread_function_type( &::gezi::is_thread )
+            , ( bp::arg("title") ) );
+    
+    }
+
     { //::gezi::max
     
         typedef ::std::string ( *max_function_type )( ::std::string,int );
@@ -882,6 +895,17 @@ UseStrVec;
     
     }
 
+    { //::gezi::seg_init2
+    
+        typedef bool ( *seg_init2_function_type )( ::std::string const &,int,::std::string const & );
+        
+        bp::def( 
+            "seg_init2"
+            , seg_init2_function_type( &::gezi::seg_init2 )
+            , ( bp::arg("dict_dir")="./data/wordseg", bp::arg("type")=(int)(0), bp::arg("conf_path")="./conf/scw.conf" ) );
+    
+    }
+
     { //::gezi::seg_set_bufsize
     
         typedef void ( *seg_set_bufsize_function_type )( int );
@@ -923,6 +947,28 @@ UseStrVec;
             "segment"
             , segment_function_type( &::gezi::segment )
             , ( bp::arg("input"), bp::arg("handle"), bp::arg("type")=(int)(4) ) );
+    
+    }
+
+    { //::gezi::segment2
+    
+        typedef ::std::string ( *segment2_function_type )( ::std::string const &,::std::string,int );
+        
+        bp::def( 
+            "segment2"
+            , segment2_function_type( &::gezi::segment2 )
+            , ( bp::arg("input"), bp::arg("sep")="\011", bp::arg("type")=(int)(4) ) );
+    
+    }
+
+    { //::gezi::segment2
+    
+        typedef bool ( *segment2_function_type )( ::std::string const &,::std::vector< std::string > &,int );
+        
+        bp::def( 
+            "segment2"
+            , segment2_function_type( &::gezi::segment2 )
+            , ( bp::arg("input"), bp::arg("result"), bp::arg("type")=(int)(4) ) );
     
     }
 
