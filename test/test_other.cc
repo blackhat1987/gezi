@@ -18,6 +18,7 @@
 #include "common_util.h"
 #include "feature/Feature.h"
 #include "feature/feature_util.h"
+#include "tieba/util.h"
 
 using namespace std;
 using namespace gezi;
@@ -48,6 +49,8 @@ struct Node
 };
 void run()
 {
+	Pval(is_thread("回复：昆明这种情况要是发生在东北  是不是暴徒就被百姓歼灭了"));
+	Pval(is_thread("昆明这种情况要是发生在东北  是不是暴徒就被百姓歼灭了"));
 	vector<Node> vec;
 	Pval(distinct_count(vec, [](const Node& a) { return a.a; }));
 

@@ -25,11 +25,22 @@ namespace gezi
 bool seg_init(const string& dict_dir = "./data/wordseg", int type = 0,
         const string& conf_path = "./conf/scw.conf");
 
+//单线程的初始化
+bool seg_init2(const string& dict_dir = "./data/wordseg", int type = 0,
+	const string& conf_path = "./conf/scw.conf");
+
+//线程安全
 bool segment(const string& input, SegHandle& handle, int type = SCW_OUT_WPCOMP);
 
+//快捷接口 线程安全
 bool segment(const string& input, vector<string>& result, int type = SCW_OUT_WPCOMP);
 
-string segment(const string& input, int type = SCW_OUT_WPCOMP);
+string segment(const string& input, string sep = "\t", int type = SCW_OUT_WPCOMP);
+
+//下面两个更快捷的方式 默认单线程方式 也就是复用外部一个公用空间handle 保证单线程速度 
+bool segment2(const string& input, vector<string>& result, int type = SCW_OUT_WPCOMP);
+
+string segment2(const string& input, string sep = "\t", int type = SCW_OUT_WPCOMP);
 
 void seg_set_bufsize(int max_len);
 

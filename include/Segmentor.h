@@ -10,6 +10,8 @@
  *  \Description:  对于分词来说 一般 整个项目 就一个分词器 不仅仅是同一个类不同线程实例
  *                 而且是所有类 所有线程公用一个 如果设计成类 封装 那么 所有类 都要引用这个 单例模式
  *                 那就只能是指针 本质上是全局共享的东西 封装成类 意义不大
+ *                 或者本身Segmentor无大的资源每个线程启用一个可以 但是需要对初始化 析构 加锁才安全
+ *                 再或者使用SegDict 分离出去共享管理浙西初始化，然后Segmentor是每个线程一个指针指向SegDict
  *                 分词 本质  输入 string  输出 strings
  *                 vector<string> result = seg(input);
  *                 保留下面的类 万一需要不是全局共享 每个类有一个自己的segmentor的适合 可以
@@ -38,7 +40,7 @@ namespace gezi
 	struct SegHandle
 	{
 		//分词buffer大小,不能开辟太大因为分词scw_create_out的时候会占过多内存
-		static const int SEG_BUFF_SIZE = 2048; //50*1024
+		static const int SEG_BUFF_SIZE = 20480; //50*1024
 
 		SegHandle()
 			: pout(NULL), tokens(NULL), nresult(0)
@@ -51,16 +53,14 @@ namespace gezi
 		}
 		void init(int bufsize = SEG_BUFF_SIZE)
 		{
-			if (!pout)
-			{
-				buf_size = bufsize;
-				u_int scw_out_flag = SCW_OUT_ALL | SCW_OUT_PROP;
-				pout = scw_create_out(SEG_BUFF_SIZE, scw_out_flag);
-				CHECK_NOTNULL(pout);
-
-				tokens = new token_t[SEG_BUFF_SIZE];
-				CHECK_NOTNULL(tokens);
-			}
+			if (pout)
+				clear();
+			buf_size = bufsize;
+			u_int scw_out_flag = SCW_OUT_ALL | SCW_OUT_PROP;
+			pout = scw_create_out(bufsize, scw_out_flag);
+			CHECK_NOTNULL(pout);
+			tokens = new token_t[bufsize];
+			CHECK_NOTNULL(tokens);
 		}
 
 		void clear()
@@ -91,10 +91,22 @@ namespace gezi
 	public:
 
 		Segmentor()
-			:_type(0), _use_tag(false), _pwdict(NULL), _split_dict(NULL)
-			//, pgconf(NULL)
+			:_type(0),
+			_use_tag(false), 
+			_pwdict(NULL),
+			_split_dict(NULL)
 		{
 
+		}
+
+		Segmentor(const string& data_dir, int type = 0, const string& conf_path = "./conf/scw.conf")
+			:_type(0),
+			_use_tag(false),
+			_pwdict(NULL),
+			_split_dict(NULL)
+		{
+			bool ret = init(data_dir, type, conf_path);
+			CHECK_EQ(ret, true);
 		}
 
 		~Segmentor()
@@ -171,7 +183,7 @@ namespace gezi
 			//---------分词
 			if (scw_segment_words(_pwdict, handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, NULL) < 0)
 			{
-				LOG_ERROR("Segment fail");
+				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
 				return false;
 			}
 

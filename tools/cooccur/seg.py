@@ -11,7 +11,10 @@ from libgezi import *
 
 LogHelper.set_level(4)
 
-seg_init2()
+data_path = 'data.tar.gz/wordseg'
+type_ = 0
+conf_path = 'conf.tar.gz/scw.conf'
+seg_init2(data_path, type_, conf_path)
 
 sep = '\t'
 sep_seg = '$#$'

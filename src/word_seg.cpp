@@ -20,11 +20,21 @@ namespace gezi
 {
 Segmentor _seg;
 int _buf_size = 15000;
+SegHandle _handle; //单线程使用 全局buffer
 
 bool seg_init(const string& dict_dir, int type,
         const string& conf_path)
 {
   return _seg.init(dict_dir, type, conf_path);
+}
+
+bool seg_init2(const string& dict_dir, int type,
+	const string& conf_path)
+{
+	bool ret = _seg.init(dict_dir, type, conf_path);
+	CHECK_EQ(ret, true);
+	_handle.init(_buf_size);
+	return true;
 }
 
 bool segment(const string& input, SegHandle& handle, int type)
@@ -43,7 +53,7 @@ bool segment(const string& input, vector<string>& vec, int type)
 	return ret;
 }
 
-string segment(const string& input, int type)
+string segment(const string& input, string sep, int type)
 {
 	SegHandle handle(_buf_size);
 	bool ret = _seg.segment(input, handle, type);
@@ -55,7 +65,33 @@ string segment(const string& input, int type)
 	ss << handle.tokens[0].buffer;
 	for (int i = 1; i < handle.nresult; i++)
 	{
-		ss << "\t" << handle.tokens[i].buffer;
+		ss << sep << handle.tokens[i].buffer;
+	}
+	return ss.str();
+}
+
+bool segment2(const string& input, vector<string>& vec, int type)
+{
+	bool ret = _seg.segment(input, _handle, type);
+	for (int i = 0; i < _handle.nresult; i++)
+	{
+		vec.push_back(_handle.tokens[i].buffer);
+	}
+	return ret;
+}
+
+string segment2(const string& input, string sep, int type)
+{
+	bool ret = _seg.segment(input, _handle, type);
+	if (!ret || _handle.nresult < 1)
+	{
+		return "";
+	}
+	std::stringstream ss;
+	ss << _handle.tokens[0].buffer;
+	for (int i = 1; i < _handle.nresult; i++)
+	{
+		ss << sep << _handle.tokens[i].buffer;
 	}
 	return ss.str();
 }
@@ -63,5 +99,6 @@ string segment(const string& input, int type)
 void seg_set_bufsize(int max_len)
 {
 	_buf_size = max_len;
+	_handle.init(_buf_size);
 }
 }
