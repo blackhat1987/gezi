@@ -1,13 +1,8 @@
-set mapred.job.name=chenghuige.upload.coocur; 
+set mapred.job.name=chenghuige.coocur-info; 
 set hive.map.aggr=true; 
 set hive.auto.convert.join=true; 
-set mapred.job.map.capacity=12; 
-set mapred.job.reduce.capacity=1;
-set hive.exec.mode.local.auto=true; 
-set hive.exec.mode.local.auto.inputbytes.max=16000000000;
-set hive.exec.mode.local.auto.tasks.max=12; 
-
-USE queryPlatform;
+set mapred.job.map.capacity=6000; 
+set mapred.job.reduce.capacity=500;
 
 DROP TABLE gezi_TotalTable;
 CREATE TABLE gezi_TotalTable AS
@@ -19,7 +14,8 @@ DROP TABLE gezi_FirstTable;
 CREATE TABLE gezi_FirstTable AS
 	SELECT word1 AS word, count FROM gezi_Coocur
 	WHERE word1 IS NOT NULL AND word2 IS NULL 
-	ORDER BY count DESC;
+	DISTRIBUTE BY count 
+	SORT BY count DESC;
 INSERT OVERWRITE LOCAL DIRECTORY './gezi_FirstTable' SELECT * FROM gezi_FirstTable;
 
 DROP TABLE gezi_SecondTable;
