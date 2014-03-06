@@ -4,7 +4,7 @@ set hive.auto.convert.join=true;
 set mapred.job.map.capacity=6000; 
 set mapred.job.reduce.capacity=500;
 
-ADD ARCHIVE python2.7.2.tar.gz;
+ADD CACHEARCHIVE python2.7.2.tar.gz;
 ADD FILE gen-coocur-classword.py;
 DROP TABLE gezi_Coocur;
 CREATE TABLE gezi_Coocur AS 
