@@ -9,5 +9,4 @@ set hive.exec.mode.local.auto.tasks.max=12;
 
 DROP TABLE gezi_Corpus;
 CREATE TABLE gezi_Corpus(text STRING);
-LOAD DATA LOCAL INPATH './result.100.txt' OVERWRITE INTO TABLE gezi_Corpus;
-INSERT OVERWRITE LOCAL DIRECTORY './gezi_Corpus' SELECT * FROM gezi_Corpus;
+LOAD DATA LOCAL INPATH './result.txt' OVERWRITE INTO TABLE gezi_Corpus;

@@ -20,7 +20,6 @@ sep = '\t'
 sep_seg = '$#$'
 for line in sys.stdin:
 	try:
-		print sep.join([line.strip(), '1'])
 		l = line.strip().split(sep)
 		label = l[0]
 		title = l[3] 
