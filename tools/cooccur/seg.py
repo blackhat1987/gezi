@@ -30,6 +30,7 @@ for line in sys.stdin:
 			result += sep_seg
 		content = strip_html(content)
 		result += segment2(content, sep_seg)
+		result =  gbk2utf8(result)
 		print sep.join([label, result])
 	except Exception:
 		continue
