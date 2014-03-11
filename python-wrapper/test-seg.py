@@ -11,7 +11,6 @@ import sys,os
 from libgezi import *
 
 LogHelper.set_level(4)
-
 seg_init('./data/wordseg/', 0, './conf/scw.conf')
 
 s = 'a我爱你中华中华人民共和国第一检察院院长长春市长春药店读美文学作文'
@@ -29,3 +28,5 @@ print segment('速去郭美美吧拿')
 l = StrVec()
 segment('速去郭美美吧拿',l)
 print l[0]
+
+

@@ -15,10 +15,25 @@
 #define TIEBA_UTIL_H_
 #include <string>
 #include <boost/algorithm/string.hpp>
+using std::string;
 namespace gezi {
-		inline bool is_thread(std::string title)
+		inline bool is_thread(string title)
 		{
-			return boost::trim_left_copy(title).find("»Ø¸´£º") != 0;
+			return boost::trim_copy(title).find("»Ø¸´£º") != 0;
+		}
+		inline string get_real_title(string title)
+		{
+			string title_ = boost::trim_copy(title);
+			string mark = "»Ø¸´£º";
+			int len = mark.length();
+			if (title_.find(mark) == 0)
+			{
+				return boost::trim_left_copy(title_.substr(len));
+			}
+			else
+			{
+				return title_;
+			}
 		}
 }  //----end of namespace gezi
 

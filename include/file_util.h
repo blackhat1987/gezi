@@ -15,8 +15,15 @@
 #define FILE_UTIL_H_
 #include "common_def.h"
 #include "hashmap_util.h"
+#include "log_util.h"
 #include <glog/logging.h>
 #include <boost/filesystem.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
+#include <map>
+#include <set>
+using std::map;
+using std::set;
 namespace bfs = boost::filesystem;
 namespace bf = boost::filesystem;
 //---------------------------for file save load

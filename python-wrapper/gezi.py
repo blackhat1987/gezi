@@ -18,7 +18,11 @@ mb = module_builder.module_builder_t(
 					#'./include/common_def.h',
 					'./include/ProgressBar.h',
 					#'./include/tieba/uname_util.h',
-					'./include/tieba/util.h'
+					'./include/tieba/util.h',
+					'./include/encoding_convert.h',
+					'./include/Identifer.h',
+					'./include/Idf.h',
+					#'./include/file_util.h'
 					],
         include_paths=[ '/home/users/chenghuige/rsc/lib2-64/wordseg', 
         '/home/users/chenghuige/rsc/lib2-64/postag/include',

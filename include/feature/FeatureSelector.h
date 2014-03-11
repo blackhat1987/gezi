@@ -10,6 +10,7 @@
  *  \Description:   实际是文本类(词,模式)特征的选取，利用特征词(模式）是否出现在某个类别中
  *								  @TODO 写一个通用的hadoop streaming版本
  *  当前是单线程版本 完成添加文本 词编号 计数 计算 排序
+ *  可以输出tf,idf信息 如果只需要编号+idf 可以使用Idf.h
  *  ==============================================================================
  */
 
@@ -29,7 +30,7 @@ namespace gezi
 //Highest score among any class:
 //?^2 (???????)=max┬(?∈???????)?〖   ?^2 (???????,?)〗
 
-class FeatureSelector : public Identifer
+class FeatureSelector 
 {
 public:
   typedef boost::function<Float(int, int, int, uint64) > Func;
@@ -220,7 +221,7 @@ public:
     return _scores;
   }
 
-  void save(string file, int maxFeatureNum = 1024, int idx = -1)
+  void save(string file, int maxFeatureNum = -1, int idx = -1)
   {
     ofstream ofs(file.c_str());
     save(ofs, maxFeatureNum, idx);
@@ -245,7 +246,7 @@ public:
       int index = _ranks[idx][i];
       if (_featureCounts[index] >= _minSupport)
       {
-        os << _index[index] << "\t" << _scores[idx][index] << endl;
+        os << _identifer[index] << "\t" << _scores[idx][index] << endl;
       }
     }
   }
@@ -267,7 +268,7 @@ private:
 		foreach(const string& word, words)
 		{
 			bool isnew = false;
-			int idx = Identifer::add(word, isnew);
+			int idx = _identifer.add(word, isnew);
 			if (isnew)
 			{
 				_featureCounts.push_back(0);
@@ -285,7 +286,7 @@ private:
 
   void finalize()
   {
-    _featureNum = this->size();
+    _featureNum = _identifer.size();
     PVAL(_featureNum);
     _instanceNum = std::accumulate(_classCounts.begin(), _classCounts.end(), int64(0));
     PVAL(_instanceNum);
@@ -312,7 +313,7 @@ private:
   }
 
 private:
-  IMat _counts;
+  IMat _counts; //共现统计
   vector<int> _featureCounts;
   vector<int> _classCounts;
   vector<double> _classPriors;
@@ -326,6 +327,8 @@ private:
 
   DMat _scores; //记录各个特征打分
   IMat _ranks; //记录特征打分排序索引
+
+	Identifer _identifer;
 };
 
 } //----end of namespace gezi

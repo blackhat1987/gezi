@@ -22,6 +22,7 @@
 #include <string>
 #include <map>
 #include <set>
+//#include "hashmap_util.h"
 //using namespace boost::python; //”–Œ Ã‚ /usr/include/bits/fcntl.h:200: error: `ssize_t' does not name a type
 namespace bp = boost::python;
 //----------------------------------------vector<X> ∞Ô÷˙
@@ -93,10 +94,13 @@ typedef std::vector<std::pair<std::string, int> > PairSIVec;
 typedef std::pair<std::string, int> StrIntPair;
 typedef std::map<std::string, std::string> StrStrMap;
 typedef std::map<std::string, int> StrIntMap;
+//typedef std::unordered_map<std::string, int> StrIntHashMap; //@TODO
 typedef std::map<std::string, double> StrDoubleMap;
 typedef std::map<std::string, float> StrFloatMap;
 typedef std::map<std::string, std::pair<int, int> > StrPairIIMap;
 typedef std::set<std::string> StrSet;
+//typedef std::unordered_set<std::string> StrHashSet;
+
 
 using bp::vector_indexing_suite;
 using bp::map_indexing_suite;
@@ -121,6 +125,10 @@ using bp::class_;
 #define UseStrIntMap \
   class_<StrIntMap > ("StrIntMap")\
 .def(map_indexing_suite< StrIntMap > ())
+
+//#define UseStrIntHashMap \
+//	class_<StrIntHashMap > ("StrIntHashMap")\
+//	.def(map_indexing_suite< StrIntHashMap > ())
 
 #define UseStrDoubleMap \
 	class_<StrDoubleMap > ("StrDoubleMap")\

@@ -25,6 +25,12 @@
 
 #include "../include/tieba/util.h"
 
+#include "../include/encoding_convert.h"
+
+#include "../include/Identifer.h"
+
+#include "../include/Idf.h"
+
 namespace bp = boost::python;
 
 BOOST_PYTHON_MODULE(libgezi){
@@ -34,6 +40,7 @@ UseStrVec;
 			UseDoubleVec;
 			UseStrStrMap;
 			UseStrIntMap;
+			//UseStrIntHashMap;
 			UseStrFloatMap;
 			UseStrDoubleMap;
 			
@@ -325,7 +332,7 @@ UseStrVec;
             FeatureSelector_exposer.def( 
                 "save"
                 , save_function_type( &::gezi::FeatureSelector::save )
-                , ( bp::arg("file"), bp::arg("maxFeatureNum")=(int)(1024), bp::arg("idx")=(int)(-0x00000000000000001) ) );
+                , ( bp::arg("file"), bp::arg("maxFeatureNum")=(int)(-0x00000000000000001), bp::arg("idx")=(int)(-0x00000000000000001) ) );
         
         }
         { //::gezi::FeatureSelector::save
@@ -370,6 +377,101 @@ UseStrVec;
         }
     }
 
+    bp::class_< gezi::Identifer >( "Identifer" )    
+        .def( 
+            "add"
+            , (int ( ::gezi::Identifer::* )( ::std::string const & ) )( &::gezi::Identifer::add )
+            , ( bp::arg("f") ) )    
+        .def( 
+            "add"
+            , (int ( ::gezi::Identifer::* )( ::std::string const &,bool & ) )( &::gezi::Identifer::add )
+            , ( bp::arg("f"), bp::arg("isnew") ) )    
+        .def( 
+            "add_unique"
+            , (int ( ::gezi::Identifer::* )( ::std::string const & ) )( &::gezi::Identifer::add_unique )
+            , ( bp::arg("f") ) )    
+        .def( 
+            "begin"
+            , (::__gnu_cxx::__normal_iterator< std::string*, std::vector< std::string > > ( ::gezi::Identifer::* )(  ) )( &::gezi::Identifer::begin ) )    
+        .def( 
+            "begin"
+            , (::__gnu_cxx::__normal_iterator< std::string const*, std::vector< std::string > > ( ::gezi::Identifer::* )(  ) const)( &::gezi::Identifer::begin ) )    
+        .def( 
+            "clear"
+            , (void ( ::gezi::Identifer::* )(  ) )( &::gezi::Identifer::clear ) )    
+        .def( 
+            "empty"
+            , (bool ( ::gezi::Identifer::* )(  ) const)( &::gezi::Identifer::empty ) )    
+        .def( 
+            "end"
+            , (::__gnu_cxx::__normal_iterator< std::string*, std::vector< std::string > > ( ::gezi::Identifer::* )(  ) )( &::gezi::Identifer::end ) )    
+        .def( 
+            "end"
+            , (::__gnu_cxx::__normal_iterator< std::string const*, std::vector< std::string > > ( ::gezi::Identifer::* )(  ) const)( &::gezi::Identifer::end ) )    
+        .def( 
+            "has"
+            , (bool ( ::gezi::Identifer::* )( ::std::string const & ) const)( &::gezi::Identifer::has )
+            , ( bp::arg("f") ) )    
+        .def( 
+            "id"
+            , (int ( ::gezi::Identifer::* )( ::std::string const & ) const)( &::gezi::Identifer::id )
+            , ( bp::arg("f") ) )    
+        .def( 
+            "key"
+            , (::std::string const & ( ::gezi::Identifer::* )( int ) const)( &::gezi::Identifer::key )
+            , ( bp::arg("id") )
+            , bp::return_value_policy< bp::copy_const_reference >() )    
+        .def( 
+            "last"
+            , (::std::string ( ::gezi::Identifer::* )(  ) )( &::gezi::Identifer::last ) )    
+        .def( 
+            "load"
+            , (bool ( ::gezi::Identifer::* )( ::std::string const &,::std::string ) )( &::gezi::Identifer::load )
+            , ( bp::arg("file"), bp::arg("sep")="\011 " ) )    
+        .def( 
+            "null_id"
+            , (int const (*)(  ))( &::gezi::Identifer::null_id ) )    
+        .def( 
+            "__call__"
+            , (int const & ( ::gezi::Identifer::* )( ::std::string ) const)( &::gezi::Identifer::operator() )
+            , ( bp::arg("key") )
+            , bp::return_value_policy< bp::copy_const_reference >() )    
+        .def( 
+            "__getitem__"
+            , (::std::string const & ( ::gezi::Identifer::* )( int ) const)( &::gezi::Identifer::operator[] )
+            , ( bp::arg("id") )
+            , bp::return_value_policy< bp::copy_const_reference >() )    
+        .def( 
+            "save"
+            , (void ( ::gezi::Identifer::* )( ::std::string const & ) )( &::gezi::Identifer::save )
+            , ( bp::arg("file") ) )    
+        .def( 
+            "size"
+            , (::size_t ( ::gezi::Identifer::* )(  ) const)( &::gezi::Identifer::size ) )    
+        .def( 
+            "words"
+            , (::std::vector< std::string > & ( ::gezi::Identifer::* )(  ) )( &::gezi::Identifer::words )
+            , bp::return_internal_reference<>())
+        .staticmethod( "null_id" );
+
+    bp::class_< gezi::Idf >( "Idf", bp::init< >() )    
+        .def( 
+            "add"
+            , (void ( ::gezi::Idf::* )( ::std::string,::std::string ) )( &::gezi::Idf::add )
+            , ( bp::arg("doc"), bp::arg("sep")="\011" ) )    
+        .def( 
+            "add"
+            , (void ( ::gezi::Idf::* )( ::std::vector< std::string > const & ) )( &::gezi::Idf::add )
+            , ( bp::arg("words") ) )    
+        .def( 
+            "save"
+            , (void ( ::gezi::Idf::* )( ::std::string const & ) )( &::gezi::Idf::save )
+            , ( bp::arg("file") ) )    
+        .def( 
+            "show"
+            , (void ( ::gezi::Idf::* )( int ) )( &::gezi::Idf::show )
+            , ( bp::arg("maxNum")=(int)(1024) ) );
+
     bp::class_< gezi::LogEChiSquareFunc >( "LogEChiSquareFunc" )    
         .def( 
             "__call__"
@@ -402,6 +504,38 @@ UseStrVec;
             "__call__"
             , (::Float ( ::gezi::PointMutualInfoFunc::* )( int,int,int,::uint64 ) )( &::gezi::PointMutualInfoFunc::operator() )
             , ( bp::arg("a"), bp::arg("n1"), bp::arg("n2"), bp::arg("n") ) );
+
+    bp::class_< gezi::ValueIdentifer< double >, bp::bases< gezi::Identifer > >( "DoubleIdentifer" )    
+        .def( 
+            "get_value"
+            , (double ( ::gezi::ValueIdentifer<double>::* )( ::std::string ) )( &::gezi::ValueIdentifer< double >::get_value )
+            , ( bp::arg("key") ) )    
+        .def( 
+            "load"
+            , (bool ( ::gezi::ValueIdentifer<double>::* )( ::std::string const &,int,::std::string ) )( &::gezi::ValueIdentifer< double >::load )
+            , ( bp::arg("file"), bp::arg("index")=(int)(1), bp::arg("sep")="\011 " ) )    
+        .def( 
+            "value"
+            , (double ( ::gezi::ValueIdentifer<double>::* )( int ) )( &::gezi::ValueIdentifer< double >::value )
+            , ( bp::arg("index") ) );
+
+    bp::class_< gezi::PyDoubleIdentifer, bp::bases< gezi::ValueIdentifer< double > > >( "PyDoubleIdentifer" );
+
+    bp::class_< gezi::ValueIdentifer< int >, bp::bases< gezi::Identifer > >( "IntIdentifer" )    
+        .def( 
+            "get_value"
+            , (int ( ::gezi::ValueIdentifer<int>::* )( ::std::string ) )( &::gezi::ValueIdentifer< int >::get_value )
+            , ( bp::arg("key") ) )    
+        .def( 
+            "load"
+            , (bool ( ::gezi::ValueIdentifer<int>::* )( ::std::string const &,int,::std::string ) )( &::gezi::ValueIdentifer< int >::load )
+            , ( bp::arg("file"), bp::arg("index")=(int)(1), bp::arg("sep")="\011 " ) )    
+        .def( 
+            "value"
+            , (int ( ::gezi::ValueIdentifer<int>::* )( int ) )( &::gezi::ValueIdentifer< int >::value )
+            , ( bp::arg("index") ) );
+
+    bp::class_< gezi::PyIntIndentifer, bp::bases< gezi::ValueIdentifer< int > > >( "PyIntIndentifer" );
 
     bp::class_< gezi::TTestFunc >( "TTestFunc" )    
         .def( 
@@ -521,6 +655,17 @@ UseStrVec;
     
     }
 
+    { //::gezi::gbk2utf8
+    
+        typedef ::std::string ( *gbk2utf8_function_type )( ::std::string const &,int );
+        
+        bp::def( 
+            "gbk2utf8"
+            , gbk2utf8_function_type( &::gezi::gbk2utf8 )
+            , ( bp::arg("src"), bp::arg("flags")=int(::UCONV_INVCHAR_IGNORE) ) );
+    
+    }
+
     { //::gezi::gbk_substr
     
         typedef ::std::string ( *gbk_substr_function_type )( ::std::string const &,int,::size_t );
@@ -529,6 +674,28 @@ UseStrVec;
             "gbk_substr"
             , gbk_substr_function_type( &::gezi::gbk_substr )
             , ( bp::arg("input"), bp::arg("start_"), bp::arg("len")=(long unsigned int)(std::basic_string<char, std::char_traits<char>, std::allocator<char> >::npos) ) );
+    
+    }
+
+    { //::gezi::gbk_to_utf8
+    
+        typedef ::std::string ( *gbk_to_utf8_function_type )( ::std::string const &,int );
+        
+        bp::def( 
+            "gbk_to_utf8"
+            , gbk_to_utf8_function_type( &::gezi::gbk_to_utf8 )
+            , ( bp::arg("src"), bp::arg("flags")=int(::UCONV_INVCHAR_IGNORE) ) );
+    
+    }
+
+    { //::gezi::get_real_title
+    
+        typedef ::std::string ( *get_real_title_function_type )( ::std::string );
+        
+        bp::def( 
+            "get_real_title"
+            , get_real_title_function_type( &::gezi::get_real_title )
+            , ( bp::arg("title") ) );
     
     }
 
@@ -1013,6 +1180,50 @@ UseStrVec;
             "to_cnvec"
             , to_cnvec_function_type( &::gezi::to_cnvec )
             , ( bp::arg("line") ) );
+    
+    }
+
+    { //::gezi::to_gbk
+    
+        typedef ::std::string ( *to_gbk_function_type )( ::std::string const &,int );
+        
+        bp::def( 
+            "to_gbk"
+            , to_gbk_function_type( &::gezi::to_gbk )
+            , ( bp::arg("src"), bp::arg("flags")=int(::UCONV_INVCHAR_IGNORE) ) );
+    
+    }
+
+    { //::gezi::to_utf8
+    
+        typedef ::std::string ( *to_utf8_function_type )( ::std::string const &,int );
+        
+        bp::def( 
+            "to_utf8"
+            , to_utf8_function_type( &::gezi::to_utf8 )
+            , ( bp::arg("src"), bp::arg("flags")=int(::UCONV_INVCHAR_IGNORE) ) );
+    
+    }
+
+    { //::gezi::utf82gbk
+    
+        typedef ::std::string ( *utf82gbk_function_type )( ::std::string const &,int );
+        
+        bp::def( 
+            "utf82gbk"
+            , utf82gbk_function_type( &::gezi::utf82gbk )
+            , ( bp::arg("src"), bp::arg("flags")=int(::UCONV_INVCHAR_IGNORE) ) );
+    
+    }
+
+    { //::gezi::utf8_to_gbk
+    
+        typedef ::std::string ( *utf8_to_gbk_function_type )( ::std::string const &,int );
+        
+        bp::def( 
+            "utf8_to_gbk"
+            , utf8_to_gbk_function_type( &::gezi::utf8_to_gbk )
+            , ( bp::arg("src"), bp::arg("flags")=int(::UCONV_INVCHAR_IGNORE) ) );
     
     }
 

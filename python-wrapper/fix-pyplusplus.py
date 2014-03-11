@@ -9,17 +9,20 @@
 
 import sys,os
 
+find = False
 print '''#include "../include/python_util.h"'''
 for line in open(sys.argv[1]):
 	if(line.find('undefined call policies') < 0):
 		print line,
-		if (line.find('BOOST_PYTHON_MODULE') >= 0):
+		if (find == False and line.find('BOOST_PYTHON_MODULE') >= 0):
+			find = True
 			print '''UseStrVec;
 			UseIntVec;
 			UseFloatVec;
 			UseDoubleVec;
 			UseStrStrMap;
 			UseStrIntMap;
+			//UseStrIntHashMap;
 			UseStrFloatMap;
 			UseStrDoubleMap;
 			'''
