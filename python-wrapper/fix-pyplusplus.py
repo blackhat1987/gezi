@@ -10,10 +10,16 @@
 import sys,os
 
 find = False
+find_warning = False
 print '''#include "../include/python_util.h"'''
 for line in open(sys.argv[1]):
 	if(line.find('undefined call policies') < 0):
+		if (find_warning):
+			print '//',
+			find_warning = False
 		print line,
+		if (line.find('WARNING:') >= 0):
+			find_warning = True 
 		if (find == False and line.find('BOOST_PYTHON_MODULE') >= 0):
 			find = True
 			print '''UseStrVec;

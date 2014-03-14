@@ -22,6 +22,8 @@ mb = module_builder.module_builder_t(
 					'./include/encoding_convert.h',
 					'./include/Identifer.h',
 					'./include/Idf.h',
+					'./include/model/Linear.h',
+					'./include/feature/Feature.h'
 					#'./include/file_util.h'
 					],
         include_paths=[ '/home/users/chenghuige/rsc/lib2-64/wordseg', 

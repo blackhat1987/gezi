@@ -95,7 +95,8 @@ LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -lcurl -ldl -rdynamic -L./ -lpytho
 #依赖模块e
 ImportConfigsFrom('..')
 #头文件路径.
-INCPATHS('/home/users/chenghuige/.jumbo/include/python2.7 /home/users/chenghuige/.jumbo/include/ . ./include ./utils ./output ./output/include ./include/feature ./include/model ./include/numeric'.replace('./',RELATIVE_PATH))
+#INCPATHS('/home/users/chenghuige/.jumbo/include/python2.7 /home/users/chenghuige/.jumbo/include/ . ./include ./utils ./output ./output/include ./include/feature ./include/model ./include/numeric'.replace('./',RELATIVE_PATH))
+INCPATHS('/home/users/chenghuige/.jumbo/include/python2.7 . ./include ./utils ./output ./output/include ./include/feature ./include/model ./include/numeric'.replace('./',RELATIVE_PATH))
 #srcs=GLOB('./src/*.cpp'.replace('./',RELATIVE_PATH))
 srcs='../src/word_seg.cpp'
 headers=''
@@ -103,7 +104,7 @@ headers=''
 #静态库
 #LIBS('/home/users/chenghuige/.jumbo/lib/libpython2.7.so /home/users/chenghuige/.jumbo/lib/libboost_python.so')
 LIBS('./libpython2.7.so ./libboost_python.so')
-SharedLibrary('wordseg',Sources('wordseg_py.cc', srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),LinkDeps(True))
+#SharedLibrary('wordseg',Sources('wordseg_py.cc', srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),LinkDeps(True))
 srcs=GLOB('../src/*.cpp')
-SharedLibrary('gezi',Sources('gezi_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),LinkDeps(True))
+SharedLibrary('gezi',Sources('gezi_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 
