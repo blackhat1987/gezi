@@ -141,10 +141,10 @@ namespace gezi
 					pgconf = NULL;
 				}
 				pgconf = scw_load_conf(conf_path);
-				CHECK_NOTNULL(pgconf);
+				CHECK(pgconf != NULL) << conf_path;
 
 				_pwdict = scw_load_worddict(data_dir);
-				CHECK_NOTNULL(_pwdict);
+				CHECK(_pwdict != NULL) << data_dir << " the path wrong ? or you use wrong segment version ?";
 				LOG_INFO("Load segmentor dict data ok");
 			}
 
@@ -153,7 +153,7 @@ namespace gezi
 				char tag_dict_path[2048];
 				sprintf(tag_dict_path, "%s/%s", data_dir, "tagdict");
 				ret = tag_open(tag_dict_path);
-				CHECK_EQ(ret, 0);
+				CHECK_EQ(ret, 0) << tag_dict_path;
 				LOG_INFO("Tag open ok");
 			}
 			else

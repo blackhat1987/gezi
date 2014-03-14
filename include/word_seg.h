@@ -21,7 +21,8 @@ namespace gezi
 {
 	using std::string;
 	using std::vector;
-//struct SegHandle;
+
+//多线程初始
 bool seg_init(const string& dict_dir = "./data/wordseg", int type = 0,
         const string& conf_path = "./conf/scw.conf");
 
@@ -31,6 +32,8 @@ bool seg_init2(const string& dict_dir = "./data/wordseg", int type = 0,
 
 //线程安全
 bool segment(const string& input, SegHandle& handle, int type = SCW_OUT_WPCOMP);
+
+bool segment(const string& input, vector<string>& result, SegHandle& handle, int type = SCW_OUT_WPCOMP);
 
 //快捷接口 线程安全
 bool segment(const string& input, vector<string>& result, int type = SCW_OUT_WPCOMP);

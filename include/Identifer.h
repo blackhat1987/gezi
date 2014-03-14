@@ -201,7 +201,21 @@ namespace gezi
 				vector<string> vec;
 				boost::split(vec, line, is_any_of(sep));
 				_hashdict[vec[0]] = id++;
-				_values.push_back(boost::lexical_cast<T>(vec[index]));
+				if (index < vec.size())
+				{
+					try
+					{
+						_values.push_back(boost::lexical_cast<T>(vec[index]));
+					}
+					catch (...)
+					{
+						_values.push_back(1);
+					}
+				}
+				else
+				{
+					_values.push_back(1);
+				}
 			}
 			_index.resize(id);
 			HashMap::const_iterator iter = _hashdict.begin();

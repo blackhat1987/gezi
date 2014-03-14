@@ -221,7 +221,7 @@ public:
     return _scores;
   }
 
-  void save(string file, int maxFeatureNum = -1, int idx = -1)
+	void save(string file, int idx = -1, int maxFeatureNum = -1)
   {
     ofstream ofs(file.c_str());
     save(ofs, maxFeatureNum, idx);
@@ -250,6 +250,39 @@ public:
       }
     }
   }
+
+	void saveIdf(string file)
+	{
+		ofstream ofs(file.c_str());
+		size_t len = _identifer.size();
+		vector<string>& vec = _identifer.words();
+		for (size_t i = 0; i < len; i++)
+		{
+			double idf = log(_instanceNum / (double)_featureCounts[i]);
+			ofs << vec[i] << "\t" << idf << endl;
+		}
+	}
+	void saveAll(string dir = "result")
+	{
+		try_create_dir(dir);
+
+		//词表
+		_identifer.save(dir + "/words.txt");
+		//idf信息
+		saveIdf(dir + "/words.idf.txt");
+		//0元 总量
+		write_elem(_instanceNum, dir + "/total.txt");
+		//一元结果 class feature
+		write_vec(_classCounts, dir + "/class.bin");
+		write_vec(_featureCounts, dir + "/feature.bin");
+		//二元统计结果 
+		write_vec2d(_counts, dir + "/cooccur.bin");
+		//统计后计算的结果如互信息
+		write_vec2d(_scores, dir + "/scores.bin");
+		this->save(dir + "/score0.txt", 0);
+		this->save(dir + "/score1.txt", 1);
+		this->save(dir + "/score2.txt");
+	}
 
   inline int featureNum()
   {

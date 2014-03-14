@@ -44,10 +44,11 @@ namespace gezi
 		//保留一个zero_thre但是实际不用也ok 稀疏使用判断==0 libsvm和tlc都是用的判断==0,虽然有一定浮点误差，为了结果一致仍然判断==0
 		//Feature feature(-1) 可以用来表示一个完全dense表示,values,nodes都dense
 
-		Feature(bool sparse = false, bool use_section_name = true, double zero_thre = 0.0)
+		Feature(bool sparse = false, int dimension = 1000, bool use_section_name = true, double zero_thre = 0.0)
 			: _sparse(sparse),
 			_use_section_name(use_section_name),
-			_zero_thre(zero_thre)
+			_zero_thre(zero_thre),
+			_dimension(dimension)
 		{
 			int len = 1000;
 			_nodes.reserve(len);
@@ -61,7 +62,10 @@ namespace gezi
 		{
 
 		}
-
+		bool sparse() const
+		{
+			return _sparse;
+		}
 		inline Feature& sparse(bool sparse_)
 		{
 			_sparse = sparse_;
@@ -79,7 +83,14 @@ namespace gezi
 		 */
 		inline int dimension() const
 		{
-			return _names.size();
+			if (!_sparse)
+			{
+				return _names.size();
+			}
+			else
+			{
+				return _dimension;
+			}
 		}
 
 		inline bool empty() const
@@ -116,9 +127,27 @@ namespace gezi
 		{
 			return _nodes;
 		}
-
+		
+		Feature& dimension(int dimension)
+		{
+			_dimension = dimension;
+			return *this;
+		}
+		void set_dimension(int dimension)
+		{
+			_dimension = dimension;
+		}
+		void to_dense()
+		{
+			_sparse = false;
+			_values.resize(_dimension, 0);
+			foreach(Node& node, _nodes)
+			{
+				_values[node.index] = node.value;
+			}
+		}
 		/**
-		 * 增加特征, 注意feature Node index 是1开始 和libsvm保持一致
+		 * 增加特征, 注意feature Node index 是0开始 不再和libsvm保持一致 和tlc保持一致
 		 */
 		void add(double value, string name)
 		{
@@ -126,12 +155,17 @@ namespace gezi
 			{
 				name = (format("%s_%s") % _section_names.back() % name).str();
 			}
-			_names.push_back(name);
-			_idx++;
-			_values.push_back(value);
+			
 			if (fabs(value) > _zero_thre)
 			{
 				_nodes.push_back(Node(_names.size(), value));
+			}
+
+			_names.push_back(name);
+			_idx++;
+			if (!_sparse)
+			{
+				_values.push_back(value);
 			}
 		}
 
@@ -166,7 +200,6 @@ namespace gezi
 		{
 			if (name.empty())
 			{
-
 				foreach(double value, values)
 				{
 					add(value);
@@ -187,6 +220,19 @@ namespace gezi
 		{
 			finalize();
 			_section_names.push_back(name);
+		}
+
+		void add(int index, double value)
+		{
+			_nodes.push_back(Node(index, value));
+		}
+
+		void add_sparse(vector<double>& values)
+		{
+			for (size_t i = 0; i < values.size(); i++)
+			{
+				_nodes.push_back(Node(i, values[i]));
+			}
 		}
 
 		void finalize()
@@ -257,8 +303,8 @@ namespace gezi
 			}
 			return ss.str();
 		}
-		//if const vector<string>& names() you need const vector<>& = names() better but not convinent
 
+		//if const vector<string>& names() you need const vector<>& = names() better but not convinent
 		inline vector<string>& names()
 		{
 			return _names;
@@ -331,6 +377,7 @@ namespace gezi
 		vector<int> _name_counts;
 		int _idx; //section 内部index 
 		bool _sparse;
+		int _dimension;
 	};
 
 	typedef Feature::Node fnode_t;

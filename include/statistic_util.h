@@ -41,6 +41,11 @@ namespace gezi
 	//using boost::bind;
 	//using boost::ref;
 
+	inline double sigmoid(double score, double A, double B)
+	{
+		return 1.0 / (1 + exp(A * score + B));
+	}
+
 	template<typename Iter>
 	ValType sum(Iter start, Iter end)
 	{

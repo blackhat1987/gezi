@@ -42,6 +42,16 @@ bool segment(const string& input, SegHandle& handle, int type)
   return _seg.segment(input, handle, type);
 }
 
+bool segment(const string& input, vector<string>& vec, SegHandle& handle, int type)
+{
+	bool ret = _seg.segment(input, handle, type);
+	for (int i = 0; i < handle.nresult; i++)
+	{
+		vec.push_back(handle.tokens[i].buffer);
+	}
+	return ret;
+}
+
 bool segment(const string& input, vector<string>& vec, int type)
 {
 	SegHandle handle(_buf_size);

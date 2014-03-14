@@ -11,6 +11,8 @@
 namespace gezi
 {
 
+	//@TODO 目前Feature已经改成按照TLC标准 0 开始 这个也不再对应
+	//将会改成完全按照TLC标准 对应增加 linear svm,svm, logistic regression 等等
 class FeatureNormalizer
 {
 public:
