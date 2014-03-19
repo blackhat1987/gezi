@@ -139,7 +139,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=b0874722967051310589c9052bb2db93  COMAKE
+COMAKE_MD5=c2b8378840d8667d3d5c666b92132f0c  COMAKE
 
 
 .PHONY:all
@@ -201,6 +201,7 @@ love:
 
 copy:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mcopy[0m']"
+	mkdir -p output/lib
 	cp ./include/tools/pinyin/libPYNotation.a ./output/lib/
 
 libgezi.a:src/gezi_Seg.o \

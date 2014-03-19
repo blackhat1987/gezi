@@ -122,7 +122,7 @@ srcs=GLOB('./src/*.cpp ./src/feature/*.cpp ./src/model/*.cpp ./src/json/*.cpp'.r
 headers=''
 #使用库
 LIBS('./include/tools/pinyin/libPYNotation.a')
-TARGET('copy', ShellCommands('cp ./include/tools/pinyin/libPYNotation.a ./output/lib/'), CleanCommands('rm -rf ./output/lib/libPYNotation.a')) 
+TARGET('copy', ShellCommands('mkdir -p output/lib','cp ./include/tools/pinyin/libPYNotation.a ./output/lib/'), CleanCommands('rm -rf ./output/lib/libPYNotation.a')) 
 
 #可执行文件
 #静态库
