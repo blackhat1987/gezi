@@ -88,17 +88,20 @@ namespace gezi
 		char pattern[4] = { 0 };
 		string np = name_pattern(uname);
 		pattern[0] = np[0];
-		pattern[2] = np.back();
+		//pattern[2] = np.back(); //c++11 only
+		pattern[2] = np[np.size() - 1];
 		if (np.size() < 3)
 		{
-			pattern[1] = np.back();
+			//pattern[1] = np.back();
+			pattern[1] = np[np.size() - 1];
 		}
 		else
 		{
 			pattern[1] = np[1];
 			for (size_t i = 1; i < np.size() - 1; i++)
 			{
-				if (np[i] != np[0] && np[i] != np.back())
+				//if (np[i] != np[0] && np[i] != np.back())
+				if (np[i] != np[0] && np[i] != np[np.size() - 1])
 				{
 					pattern[1] = np[i];
 					break;
