@@ -35,7 +35,7 @@
 
 #include "common_util.h"
 #include "feature/Feature.h"
-
+#include "statistic_util.h" //@TODO math_util.h
 namespace gezi
 {
 	class Linear
@@ -50,9 +50,6 @@ namespace gezi
 			load(modelPath);
 		}
 
-		//当前tlc的文本输出有些问题 主要是tlc其实主要依靠c#的序列化 文本输出估计没测试 
-		//以后修复
-
 		void load(const string& modelPath)
 		{
 			vector<int> indexVec;
@@ -65,18 +62,54 @@ namespace gezi
 				vector<string> vec = gezi::split(boost::trim_copy(line), "\t");
 				if (vec.size() == 2)
 				{
-					indexVec.push_back(INT(vec[0].substr(1)));
-					valueVec.push_back(DOUBLE(vec[1]));
+					indexVec.push_back(INT(boost::trim_copy(vec[0]).substr(1)));
+					valueVec.push_back(DOUBLE(boost::trim_copy(vec[1])));
 				}
 			}
 			_bias = DOUBLE(lines.back());
 			size_t len = indexVec.back() + 1;
 			_weights.resize(len, 0);
-			for (size_t i = 0; i < len; i++)
+			for (size_t i = 0; i < indexVec.size(); i++)
 			{
 				_weights[indexVec[i]] = valueVec[i];
 			}
+
+			//@TODO just hack now
+			string outPath = boost::replace_last_copy(modelPath, "model.txt", "out.txt");
+			ifstream ifs(outPath.c_str());
+			string line;
+			while (getline(ifs, line))
+			{
+				boost::trim(line);
+				if (startswith(line, "double paramA"))
+				{
+					_paramA = DOUBLE(boost::trim_copy(split(line.substr(0, line.size() - 1), "=")[1]));
+				}
+				else if (startswith(line, "double paramB"))
+				{
+					_paramB = DOUBLE(boost::trim_copy(split(line.substr(0, line.size() - 1), "=")[1]));
+				}
+			}
+			PVAL(_paramA);
+			PVAL(_paramB);
 		}
+
+		double output(Feature& feature)
+		{
+			double val = 0;
+			foreach(const Feature::Node& node, feature.cnodes())
+			{
+				if (node.index >= _weights.size())
+				{
+					continue;
+				}
+				
+				val += _weights[node.index] * node.value;
+			}
+			val += _bias;
+			return val;
+		}
+
 		double Predict(Feature& feature)
 		{
 			double val = 0;
@@ -85,11 +118,13 @@ namespace gezi
 				val += _weights[node.index] * node.value;
 			}
 			val += _bias;
-			return val;
+			return sigmoid(val, _paramA, _paramB);
 		}
 	private:
 		double _bias;
 		vector<double> _weights;
+		double _paramA;
+		double _paramB;
 	};
 }
 #endif  //----end of MODEL__LINEAR_H_

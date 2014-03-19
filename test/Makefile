@@ -1,8 +1,8 @@
 #COMAKE2 edit-mode: -*- Makefile -*-
 ####################64Bit Mode####################
 ifeq ($(shell uname -m),x86_64)
-CC=../../../../../../ps/se/toolchain/gcc_only_4.8.2/bin/g++
-CXX=../../../../../../ps/se/toolchain/gcc_only_4.8.2/bin/g++
+CC=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/bin/x86_64-unknown-linux-gnu-g++
+CXX=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/bin/x86_64-unknown-linux-gnu-g++
 CXXFLAGS=-g \
   -O0 \
   -pipe \
@@ -15,7 +15,8 @@ CXXFLAGS=-g \
   -fpermissive \
   -Wno-write-strings \
   -Wno-literal-suffix \
-  -Wno-unused-local-typedefs
+  -Wno-unused-local-typedefs \
+  -fopenmp
 CFLAGS=-g \
   -O0 \
   -pipe \
@@ -28,7 +29,8 @@ CFLAGS=-g \
   -fpermissive \
   -Wno-write-strings \
   -Wno-literal-suffix \
-  -Wno-unused-local-typedefs
+  -Wno-unused-local-typedefs \
+  -fopenmp
 CPPFLAGS=-D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\"
@@ -147,11 +149,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=4e0876a62295131defb0466e75cf78ac  COMAKE
+COMAKE_MD5=2506f9a556257be022a73258fe242a08  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear 
+all:comake2_makefile_check .copy-so test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -171,6 +173,8 @@ ccpclean:
 .PHONY:clean
 clean:ccpclean
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mclean[0m']"
+	rm -rf .copy-so
+	rm -rf ld-linux-x86-64.so.2
 	rm -rf test_lambda
 	rm -rf ./output/bin/test_lambda
 	rm -rf test_bins
@@ -207,6 +211,12 @@ clean:ccpclean
 	rm -rf ./output/bin/test_identifer
 	rm -rf test_linear
 	rm -rf ./output/bin/test_linear
+	rm -rf test_pinyin
+	rm -rf ./output/bin/test_pinyin
+	rm -rf test_namepattern
+	rm -rf ./output/bin/test_namepattern
+	rm -rf test_conf
+	rm -rf ./output/bin/test_conf
 	rm -rf test_lambda_test_lambda.o
 	rm -rf test_bins_test_bins.o
 	rm -rf test_datetime_test_datetime.o
@@ -379,6 +389,51 @@ clean:ccpclean
 	rm -rf ../src/json/test_linear_json_reader.o
 	rm -rf ../src/json/test_linear_json_value.o
 	rm -rf ../src/json/test_linear_json_writer.o
+	rm -rf test_pinyin_test_pinyin.o
+	rm -rf ../src/test_pinyin_Seg.o
+	rm -rf ../src/test_pinyin_SharedSegmentor.o
+	rm -rf ../src/test_pinyin_conf_util.o
+	rm -rf ../src/test_pinyin_word_seg.o
+	rm -rf ../src/model/test_pinyin_LinearModel.o
+	rm -rf ../src/model/test_pinyin_ModelFactory.o
+	rm -rf ../src/model/test_pinyin_Predictor.o
+	rm -rf ../src/model/test_pinyin_RandForestModel.o
+	rm -rf ../src/model/test_pinyin_Score.o
+	rm -rf ../src/model/test_pinyin_SharedPredictor.o
+	rm -rf ../src/model/test_pinyin_SvmModel.o
+	rm -rf ../src/json/test_pinyin_json_reader.o
+	rm -rf ../src/json/test_pinyin_json_value.o
+	rm -rf ../src/json/test_pinyin_json_writer.o
+	rm -rf test_namepattern_test_namepattern.o
+	rm -rf ../src/test_namepattern_Seg.o
+	rm -rf ../src/test_namepattern_SharedSegmentor.o
+	rm -rf ../src/test_namepattern_conf_util.o
+	rm -rf ../src/test_namepattern_word_seg.o
+	rm -rf ../src/model/test_namepattern_LinearModel.o
+	rm -rf ../src/model/test_namepattern_ModelFactory.o
+	rm -rf ../src/model/test_namepattern_Predictor.o
+	rm -rf ../src/model/test_namepattern_RandForestModel.o
+	rm -rf ../src/model/test_namepattern_Score.o
+	rm -rf ../src/model/test_namepattern_SharedPredictor.o
+	rm -rf ../src/model/test_namepattern_SvmModel.o
+	rm -rf ../src/json/test_namepattern_json_reader.o
+	rm -rf ../src/json/test_namepattern_json_value.o
+	rm -rf ../src/json/test_namepattern_json_writer.o
+	rm -rf test_conf_test_conf.o
+	rm -rf ../src/test_conf_Seg.o
+	rm -rf ../src/test_conf_SharedSegmentor.o
+	rm -rf ../src/test_conf_conf_util.o
+	rm -rf ../src/test_conf_word_seg.o
+	rm -rf ../src/model/test_conf_LinearModel.o
+	rm -rf ../src/model/test_conf_ModelFactory.o
+	rm -rf ../src/model/test_conf_Predictor.o
+	rm -rf ../src/model/test_conf_RandForestModel.o
+	rm -rf ../src/model/test_conf_Score.o
+	rm -rf ../src/model/test_conf_SharedPredictor.o
+	rm -rf ../src/model/test_conf_SvmModel.o
+	rm -rf ../src/json/test_conf_json_reader.o
+	rm -rf ../src/json/test_conf_json_value.o
+	rm -rf ../src/json/test_conf_json_writer.o
 
 .PHONY:dist
 dist:
@@ -397,9 +452,14 @@ love:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlove[0m']"
 	@echo "make love done"
 
-test_lambda:test_lambda_test_lambda.o
+.copy-so:
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m.copy-so[0m']"
+	ln -s ../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib//ld-linux-x86-64.so.2 ld-linux-x86-64.so.2 .
+
+test_lambda:test_lambda_test_lambda.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_lambda[0m']"
-	$(CXX) test_lambda_test_lambda.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+	$(CXX) test_lambda_test_lambda.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -472,14 +532,18 @@ test_lambda:test_lambda_test_lambda.o
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_lambda
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_lambda
 	mkdir -p ./output/bin
 	cp -f --link test_lambda ./output/bin
 
-test_bins:test_bins_test_bins.o
+test_bins:test_bins_test_bins.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_bins[0m']"
-	$(CXX) test_bins_test_bins.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+	$(CXX) test_bins_test_bins.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -552,14 +616,18 @@ test_bins:test_bins_test_bins.o
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_bins
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_bins
 	mkdir -p ./output/bin
 	cp -f --link test_bins ./output/bin
 
-test_datetime:test_datetime_test_datetime.o
+test_datetime:test_datetime_test_datetime.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_datetime[0m']"
-	$(CXX) test_datetime_test_datetime.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+	$(CXX) test_datetime_test_datetime.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -632,14 +700,18 @@ test_datetime:test_datetime_test_datetime.o
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_datetime
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_datetime
 	mkdir -p ./output/bin
 	cp -f --link test_datetime ./output/bin
 
-test_content_filter:test_content_filter_test_content_filter.o
+test_content_filter:test_content_filter_test_content_filter.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_content_filter[0m']"
-	$(CXX) test_content_filter_test_content_filter.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+	$(CXX) test_content_filter_test_content_filter.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -712,8 +784,11 @@ test_content_filter:test_content_filter_test_content_filter.o
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_content_filter
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_content_filter
 	mkdir -p ./output/bin
 	cp -f --link test_content_filter ./output/bin
 
@@ -731,7 +806,8 @@ test_regex:test_regex_test_regex.o \
   ../src/model/test_regex_SvmModel.o \
   ../src/json/test_regex_json_reader.o \
   ../src/json/test_regex_json_value.o \
-  ../src/json/test_regex_json_writer.o
+  ../src/json/test_regex_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_regex[0m']"
 	$(CXX) test_regex_test_regex.o \
   ../src/test_regex_Seg.o \
@@ -747,7 +823,7 @@ test_regex:test_regex_test_regex.o \
   ../src/model/test_regex_SvmModel.o \
   ../src/json/test_regex_json_reader.o \
   ../src/json/test_regex_json_value.o \
-  ../src/json/test_regex_json_writer.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../src/json/test_regex_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -820,8 +896,11 @@ test_regex:test_regex_test_regex.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_regex
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_regex
 	mkdir -p ./output/bin
 	cp -f --link test_regex ./output/bin
 
@@ -839,7 +918,8 @@ test_regex2:test_regex2_test_regex2.o \
   ../src/model/test_regex2_SvmModel.o \
   ../src/json/test_regex2_json_reader.o \
   ../src/json/test_regex2_json_value.o \
-  ../src/json/test_regex2_json_writer.o
+  ../src/json/test_regex2_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_regex2[0m']"
 	$(CXX) test_regex2_test_regex2.o \
   ../src/test_regex2_Seg.o \
@@ -855,7 +935,7 @@ test_regex2:test_regex2_test_regex2.o \
   ../src/model/test_regex2_SvmModel.o \
   ../src/json/test_regex2_json_reader.o \
   ../src/json/test_regex2_json_value.o \
-  ../src/json/test_regex2_json_writer.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../src/json/test_regex2_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -928,8 +1008,11 @@ test_regex2:test_regex2_test_regex2.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_regex2
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_regex2
 	mkdir -p ./output/bin
 	cp -f --link test_regex2 ./output/bin
 
@@ -947,7 +1030,8 @@ test_encode:test_encode_test_encode.o \
   ../src/model/test_encode_SvmModel.o \
   ../src/json/test_encode_json_reader.o \
   ../src/json/test_encode_json_value.o \
-  ../src/json/test_encode_json_writer.o
+  ../src/json/test_encode_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_encode[0m']"
 	$(CXX) test_encode_test_encode.o \
   ../src/test_encode_Seg.o \
@@ -963,7 +1047,7 @@ test_encode:test_encode_test_encode.o \
   ../src/model/test_encode_SvmModel.o \
   ../src/json/test_encode_json_reader.o \
   ../src/json/test_encode_json_value.o \
-  ../src/json/test_encode_json_writer.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../src/json/test_encode_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1036,8 +1120,11 @@ test_encode:test_encode_test_encode.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_encode
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_encode
 	mkdir -p ./output/bin
 	cp -f --link test_encode ./output/bin
 
@@ -1055,7 +1142,8 @@ test_json:test_json_test_json.o \
   ../src/model/test_json_SvmModel.o \
   ../src/json/test_json_json_reader.o \
   ../src/json/test_json_json_value.o \
-  ../src/json/test_json_json_writer.o
+  ../src/json/test_json_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_json[0m']"
 	$(CXX) test_json_test_json.o \
   ../src/test_json_Seg.o \
@@ -1071,7 +1159,7 @@ test_json:test_json_test_json.o \
   ../src/model/test_json_SvmModel.o \
   ../src/json/test_json_json_reader.o \
   ../src/json/test_json_json_value.o \
-  ../src/json/test_json_json_writer.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../src/json/test_json_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1144,8 +1232,11 @@ test_json:test_json_test_json.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_json
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_json
 	mkdir -p ./output/bin
 	cp -f --link test_json ./output/bin
 
@@ -1163,7 +1254,8 @@ test_escape:test_escape_test_escape.o \
   ../src/model/test_escape_SvmModel.o \
   ../src/json/test_escape_json_reader.o \
   ../src/json/test_escape_json_value.o \
-  ../src/json/test_escape_json_writer.o
+  ../src/json/test_escape_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_escape[0m']"
 	$(CXX) test_escape_test_escape.o \
   ../src/test_escape_Seg.o \
@@ -1179,7 +1271,7 @@ test_escape:test_escape_test_escape.o \
   ../src/model/test_escape_SvmModel.o \
   ../src/json/test_escape_json_reader.o \
   ../src/json/test_escape_json_value.o \
-  ../src/json/test_escape_json_writer.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../src/json/test_escape_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1252,8 +1344,11 @@ test_escape:test_escape_test_escape.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_escape
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_escape
 	mkdir -p ./output/bin
 	cp -f --link test_escape ./output/bin
 
@@ -1271,7 +1366,8 @@ test_other:test_other_test_other.o \
   ../src/model/test_other_SvmModel.o \
   ../src/json/test_other_json_reader.o \
   ../src/json/test_other_json_value.o \
-  ../src/json/test_other_json_writer.o
+  ../src/json/test_other_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_other[0m']"
 	$(CXX) test_other_test_other.o \
   ../src/test_other_Seg.o \
@@ -1287,7 +1383,7 @@ test_other:test_other_test_other.o \
   ../src/model/test_other_SvmModel.o \
   ../src/json/test_other_json_reader.o \
   ../src/json/test_other_json_value.o \
-  ../src/json/test_other_json_writer.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../src/json/test_other_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1360,8 +1456,11 @@ test_other:test_other_test_other.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_other
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_other
 	mkdir -p ./output/bin
 	cp -f --link test_other ./output/bin
 
@@ -1379,7 +1478,8 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   ../src/model/test_feature_selector_SvmModel.o \
   ../src/json/test_feature_selector_json_reader.o \
   ../src/json/test_feature_selector_json_value.o \
-  ../src/json/test_feature_selector_json_writer.o
+  ../src/json/test_feature_selector_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_feature_selector[0m']"
 	$(CXX) test_feature_selector_test_feature_selector.o \
   ../src/test_feature_selector_Seg.o \
@@ -1395,7 +1495,7 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   ../src/model/test_feature_selector_SvmModel.o \
   ../src/json/test_feature_selector_json_reader.o \
   ../src/json/test_feature_selector_json_value.o \
-  ../src/json/test_feature_selector_json_writer.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../src/json/test_feature_selector_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1468,14 +1568,18 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_feature_selector
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_feature_selector
 	mkdir -p ./output/bin
 	cp -f --link test_feature_selector ./output/bin
 
-openmp_hello:openmp/openmp_hello_hello.o
+openmp_hello:openmp/openmp_hello_hello.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mopenmp_hello[0m']"
-	$(CXX) openmp/openmp_hello_hello.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+	$(CXX) openmp/openmp_hello_hello.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1548,8 +1652,11 @@ openmp_hello:openmp/openmp_hello_hello.o
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o openmp_hello
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o openmp_hello
 	mkdir -p ./bin
 	cp -f --link openmp_hello ./bin
 
@@ -1567,7 +1674,8 @@ openmp_test:openmp/openmp_test_test.o \
   ../src/model/openmp_test_SvmModel.o \
   ../src/json/openmp_test_json_reader.o \
   ../src/json/openmp_test_json_value.o \
-  ../src/json/openmp_test_json_writer.o
+  ../src/json/openmp_test_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mopenmp_test[0m']"
 	$(CXX) openmp/openmp_test_test.o \
   ../src/openmp_test_Seg.o \
@@ -1583,7 +1691,7 @@ openmp_test:openmp/openmp_test_test.o \
   ../src/model/openmp_test_SvmModel.o \
   ../src/json/openmp_test_json_reader.o \
   ../src/json/openmp_test_json_value.o \
-  ../src/json/openmp_test_json_writer.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../src/json/openmp_test_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1656,14 +1764,18 @@ openmp_test:openmp/openmp_test_test.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o openmp_test
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o openmp_test
 	mkdir -p ./bin
 	cp -f --link openmp_test ./bin
 
-test_exception:test_exception_test_exception.o
+test_exception:test_exception_test_exception.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_exception[0m']"
-	$(CXX) test_exception_test_exception.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+	$(CXX) test_exception_test_exception.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1736,14 +1848,18 @@ test_exception:test_exception_test_exception.o
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_exception
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_exception
 	mkdir -p ./bin
 	cp -f --link test_exception ./bin
 
-test_map_util:test_map_util_test_map_util.o
+test_map_util:test_map_util_test_map_util.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_map_util[0m']"
-	$(CXX) test_map_util_test_map_util.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+	$(CXX) test_map_util_test_map_util.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1816,8 +1932,11 @@ test_map_util:test_map_util_test_map_util.o
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_map_util
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_map_util
 	mkdir -p ./bin
 	cp -f --link test_map_util ./bin
 
@@ -1835,7 +1954,8 @@ test_seg:test_seg_test_seg.o \
   ../src/model/test_seg_SvmModel.o \
   ../src/json/test_seg_json_reader.o \
   ../src/json/test_seg_json_value.o \
-  ../src/json/test_seg_json_writer.o
+  ../src/json/test_seg_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_seg[0m']"
 	$(CXX) test_seg_test_seg.o \
   ../src/test_seg_Seg.o \
@@ -1851,7 +1971,7 @@ test_seg:test_seg_test_seg.o \
   ../src/model/test_seg_SvmModel.o \
   ../src/json/test_seg_json_reader.o \
   ../src/json/test_seg_json_value.o \
-  ../src/json/test_seg_json_writer.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../src/json/test_seg_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1924,8 +2044,11 @@ test_seg:test_seg_test_seg.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_seg
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_seg
 	mkdir -p ./output/bin
 	cp -f --link test_seg ./output/bin
 
@@ -1943,7 +2066,8 @@ test_identifer:test_identifer_test_identifer.o \
   ../src/model/test_identifer_SvmModel.o \
   ../src/json/test_identifer_json_reader.o \
   ../src/json/test_identifer_json_value.o \
-  ../src/json/test_identifer_json_writer.o
+  ../src/json/test_identifer_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_identifer[0m']"
 	$(CXX) test_identifer_test_identifer.o \
   ../src/test_identifer_Seg.o \
@@ -1959,7 +2083,7 @@ test_identifer:test_identifer_test_identifer.o \
   ../src/model/test_identifer_SvmModel.o \
   ../src/json/test_identifer_json_reader.o \
   ../src/json/test_identifer_json_value.o \
-  ../src/json/test_identifer_json_writer.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../src/json/test_identifer_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -2032,8 +2156,11 @@ test_identifer:test_identifer_test_identifer.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_identifer
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_identifer
 	mkdir -p ./output/bin
 	cp -f --link test_identifer ./output/bin
 
@@ -2051,7 +2178,8 @@ test_linear:test_linear_test_linear.o \
   ../src/model/test_linear_SvmModel.o \
   ../src/json/test_linear_json_reader.o \
   ../src/json/test_linear_json_value.o \
-  ../src/json/test_linear_json_writer.o
+  ../src/json/test_linear_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_linear[0m']"
 	$(CXX) test_linear_test_linear.o \
   ../src/test_linear_Seg.o \
@@ -2067,7 +2195,7 @@ test_linear:test_linear_test_linear.o \
   ../src/model/test_linear_SvmModel.o \
   ../src/json/test_linear_json_reader.o \
   ../src/json/test_linear_json_value.o \
-  ../src/json/test_linear_json_writer.o -Xlinker "-("  ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../src/json/test_linear_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -2140,10 +2268,349 @@ test_linear:test_linear_test_linear.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_linear
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_linear
 	mkdir -p ./output/bin
 	cp -f --link test_linear ./output/bin
+
+test_pinyin:test_pinyin_test_pinyin.o \
+  ../src/test_pinyin_Seg.o \
+  ../src/test_pinyin_SharedSegmentor.o \
+  ../src/test_pinyin_conf_util.o \
+  ../src/test_pinyin_word_seg.o \
+  ../src/model/test_pinyin_LinearModel.o \
+  ../src/model/test_pinyin_ModelFactory.o \
+  ../src/model/test_pinyin_Predictor.o \
+  ../src/model/test_pinyin_RandForestModel.o \
+  ../src/model/test_pinyin_Score.o \
+  ../src/model/test_pinyin_SharedPredictor.o \
+  ../src/model/test_pinyin_SvmModel.o \
+  ../src/json/test_pinyin_json_reader.o \
+  ../src/json/test_pinyin_json_value.o \
+  ../src/json/test_pinyin_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_pinyin[0m']"
+	$(CXX) test_pinyin_test_pinyin.o \
+  ../src/test_pinyin_Seg.o \
+  ../src/test_pinyin_SharedSegmentor.o \
+  ../src/test_pinyin_conf_util.o \
+  ../src/test_pinyin_word_seg.o \
+  ../src/model/test_pinyin_LinearModel.o \
+  ../src/model/test_pinyin_ModelFactory.o \
+  ../src/model/test_pinyin_Predictor.o \
+  ../src/model/test_pinyin_RandForestModel.o \
+  ../src/model/test_pinyin_Score.o \
+  ../src/model/test_pinyin_SharedPredictor.o \
+  ../src/model/test_pinyin_SvmModel.o \
+  ../src/json/test_pinyin_json_reader.o \
+  ../src/json/test_pinyin_json_value.o \
+  ../src/json/test_pinyin_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/openssl/lib/libcrypto.a \
+  ../../../../../../third-64/openssl/lib/libssl.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
+  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  -lrt \
+  -ldl \
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_pinyin
+	mkdir -p ./output/bin
+	cp -f --link test_pinyin ./output/bin
+
+test_namepattern:test_namepattern_test_namepattern.o \
+  ../src/test_namepattern_Seg.o \
+  ../src/test_namepattern_SharedSegmentor.o \
+  ../src/test_namepattern_conf_util.o \
+  ../src/test_namepattern_word_seg.o \
+  ../src/model/test_namepattern_LinearModel.o \
+  ../src/model/test_namepattern_ModelFactory.o \
+  ../src/model/test_namepattern_Predictor.o \
+  ../src/model/test_namepattern_RandForestModel.o \
+  ../src/model/test_namepattern_Score.o \
+  ../src/model/test_namepattern_SharedPredictor.o \
+  ../src/model/test_namepattern_SvmModel.o \
+  ../src/json/test_namepattern_json_reader.o \
+  ../src/json/test_namepattern_json_value.o \
+  ../src/json/test_namepattern_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_namepattern[0m']"
+	$(CXX) test_namepattern_test_namepattern.o \
+  ../src/test_namepattern_Seg.o \
+  ../src/test_namepattern_SharedSegmentor.o \
+  ../src/test_namepattern_conf_util.o \
+  ../src/test_namepattern_word_seg.o \
+  ../src/model/test_namepattern_LinearModel.o \
+  ../src/model/test_namepattern_ModelFactory.o \
+  ../src/model/test_namepattern_Predictor.o \
+  ../src/model/test_namepattern_RandForestModel.o \
+  ../src/model/test_namepattern_Score.o \
+  ../src/model/test_namepattern_SharedPredictor.o \
+  ../src/model/test_namepattern_SvmModel.o \
+  ../src/json/test_namepattern_json_reader.o \
+  ../src/json/test_namepattern_json_value.o \
+  ../src/json/test_namepattern_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/openssl/lib/libcrypto.a \
+  ../../../../../../third-64/openssl/lib/libssl.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
+  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  -lrt \
+  -ldl \
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_namepattern
+	mkdir -p ./output/bin
+	cp -f --link test_namepattern ./output/bin
+
+test_conf:test_conf_test_conf.o \
+  ../src/test_conf_Seg.o \
+  ../src/test_conf_SharedSegmentor.o \
+  ../src/test_conf_conf_util.o \
+  ../src/test_conf_word_seg.o \
+  ../src/model/test_conf_LinearModel.o \
+  ../src/model/test_conf_ModelFactory.o \
+  ../src/model/test_conf_Predictor.o \
+  ../src/model/test_conf_RandForestModel.o \
+  ../src/model/test_conf_Score.o \
+  ../src/model/test_conf_SharedPredictor.o \
+  ../src/model/test_conf_SvmModel.o \
+  ../src/json/test_conf_json_reader.o \
+  ../src/json/test_conf_json_value.o \
+  ../src/json/test_conf_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_conf[0m']"
+	$(CXX) test_conf_test_conf.o \
+  ../src/test_conf_Seg.o \
+  ../src/test_conf_SharedSegmentor.o \
+  ../src/test_conf_conf_util.o \
+  ../src/test_conf_word_seg.o \
+  ../src/model/test_conf_LinearModel.o \
+  ../src/model/test_conf_ModelFactory.o \
+  ../src/model/test_conf_Predictor.o \
+  ../src/model/test_conf_RandForestModel.o \
+  ../src/model/test_conf_Score.o \
+  ../src/model/test_conf_SharedPredictor.o \
+  ../src/model/test_conf_SvmModel.o \
+  ../src/json/test_conf_json_reader.o \
+  ../src/json/test_conf_json_value.o \
+  ../src/json/test_conf_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/openssl/lib/libcrypto.a \
+  ../../../../../../third-64/openssl/lib/libssl.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
+  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  -lrt \
+  -ldl \
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_conf
+	mkdir -p ./output/bin
+	cp -f --link test_conf ./output/bin
 
 test_lambda_test_lambda.o:test_lambda.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_lambda_test_lambda.o[0m']"
@@ -2832,6 +3299,186 @@ test_linear_test_linear.o:test_linear.cc
 ../src/json/test_linear_json_writer.o:../src/json/json_writer.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_linear_json_writer.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_linear_json_writer.o ../src/json/json_writer.cpp
+
+test_pinyin_test_pinyin.o:test_pinyin.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_pinyin_test_pinyin.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_pinyin_test_pinyin.o test_pinyin.cc
+
+../src/test_pinyin_Seg.o:../src/Seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_pinyin_Seg.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_pinyin_Seg.o ../src/Seg.cpp
+
+../src/test_pinyin_SharedSegmentor.o:../src/SharedSegmentor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_pinyin_SharedSegmentor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_pinyin_SharedSegmentor.o ../src/SharedSegmentor.cpp
+
+../src/test_pinyin_conf_util.o:../src/conf_util.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_pinyin_conf_util.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_pinyin_conf_util.o ../src/conf_util.cpp
+
+../src/test_pinyin_word_seg.o:../src/word_seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_pinyin_word_seg.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_pinyin_word_seg.o ../src/word_seg.cpp
+
+../src/model/test_pinyin_LinearModel.o:../src/model/LinearModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_pinyin_LinearModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_pinyin_LinearModel.o ../src/model/LinearModel.cpp
+
+../src/model/test_pinyin_ModelFactory.o:../src/model/ModelFactory.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_pinyin_ModelFactory.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_pinyin_ModelFactory.o ../src/model/ModelFactory.cpp
+
+../src/model/test_pinyin_Predictor.o:../src/model/Predictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_pinyin_Predictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_pinyin_Predictor.o ../src/model/Predictor.cpp
+
+../src/model/test_pinyin_RandForestModel.o:../src/model/RandForestModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_pinyin_RandForestModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_pinyin_RandForestModel.o ../src/model/RandForestModel.cpp
+
+../src/model/test_pinyin_Score.o:../src/model/Score.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_pinyin_Score.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_pinyin_Score.o ../src/model/Score.cpp
+
+../src/model/test_pinyin_SharedPredictor.o:../src/model/SharedPredictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_pinyin_SharedPredictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_pinyin_SharedPredictor.o ../src/model/SharedPredictor.cpp
+
+../src/model/test_pinyin_SvmModel.o:../src/model/SvmModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_pinyin_SvmModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_pinyin_SvmModel.o ../src/model/SvmModel.cpp
+
+../src/json/test_pinyin_json_reader.o:../src/json/json_reader.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_pinyin_json_reader.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_pinyin_json_reader.o ../src/json/json_reader.cpp
+
+../src/json/test_pinyin_json_value.o:../src/json/json_value.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_pinyin_json_value.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_pinyin_json_value.o ../src/json/json_value.cpp
+
+../src/json/test_pinyin_json_writer.o:../src/json/json_writer.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_pinyin_json_writer.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_pinyin_json_writer.o ../src/json/json_writer.cpp
+
+test_namepattern_test_namepattern.o:test_namepattern.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_namepattern_test_namepattern.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_namepattern_test_namepattern.o test_namepattern.cc
+
+../src/test_namepattern_Seg.o:../src/Seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_namepattern_Seg.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_namepattern_Seg.o ../src/Seg.cpp
+
+../src/test_namepattern_SharedSegmentor.o:../src/SharedSegmentor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_namepattern_SharedSegmentor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_namepattern_SharedSegmentor.o ../src/SharedSegmentor.cpp
+
+../src/test_namepattern_conf_util.o:../src/conf_util.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_namepattern_conf_util.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_namepattern_conf_util.o ../src/conf_util.cpp
+
+../src/test_namepattern_word_seg.o:../src/word_seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_namepattern_word_seg.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_namepattern_word_seg.o ../src/word_seg.cpp
+
+../src/model/test_namepattern_LinearModel.o:../src/model/LinearModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_namepattern_LinearModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_namepattern_LinearModel.o ../src/model/LinearModel.cpp
+
+../src/model/test_namepattern_ModelFactory.o:../src/model/ModelFactory.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_namepattern_ModelFactory.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_namepattern_ModelFactory.o ../src/model/ModelFactory.cpp
+
+../src/model/test_namepattern_Predictor.o:../src/model/Predictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_namepattern_Predictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_namepattern_Predictor.o ../src/model/Predictor.cpp
+
+../src/model/test_namepattern_RandForestModel.o:../src/model/RandForestModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_namepattern_RandForestModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_namepattern_RandForestModel.o ../src/model/RandForestModel.cpp
+
+../src/model/test_namepattern_Score.o:../src/model/Score.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_namepattern_Score.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_namepattern_Score.o ../src/model/Score.cpp
+
+../src/model/test_namepattern_SharedPredictor.o:../src/model/SharedPredictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_namepattern_SharedPredictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_namepattern_SharedPredictor.o ../src/model/SharedPredictor.cpp
+
+../src/model/test_namepattern_SvmModel.o:../src/model/SvmModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_namepattern_SvmModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_namepattern_SvmModel.o ../src/model/SvmModel.cpp
+
+../src/json/test_namepattern_json_reader.o:../src/json/json_reader.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_namepattern_json_reader.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_namepattern_json_reader.o ../src/json/json_reader.cpp
+
+../src/json/test_namepattern_json_value.o:../src/json/json_value.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_namepattern_json_value.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_namepattern_json_value.o ../src/json/json_value.cpp
+
+../src/json/test_namepattern_json_writer.o:../src/json/json_writer.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_namepattern_json_writer.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_namepattern_json_writer.o ../src/json/json_writer.cpp
+
+test_conf_test_conf.o:test_conf.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_conf_test_conf.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_conf_test_conf.o test_conf.cc
+
+../src/test_conf_Seg.o:../src/Seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_conf_Seg.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_conf_Seg.o ../src/Seg.cpp
+
+../src/test_conf_SharedSegmentor.o:../src/SharedSegmentor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_conf_SharedSegmentor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_conf_SharedSegmentor.o ../src/SharedSegmentor.cpp
+
+../src/test_conf_conf_util.o:../src/conf_util.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_conf_conf_util.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_conf_conf_util.o ../src/conf_util.cpp
+
+../src/test_conf_word_seg.o:../src/word_seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_conf_word_seg.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_conf_word_seg.o ../src/word_seg.cpp
+
+../src/model/test_conf_LinearModel.o:../src/model/LinearModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_conf_LinearModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_conf_LinearModel.o ../src/model/LinearModel.cpp
+
+../src/model/test_conf_ModelFactory.o:../src/model/ModelFactory.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_conf_ModelFactory.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_conf_ModelFactory.o ../src/model/ModelFactory.cpp
+
+../src/model/test_conf_Predictor.o:../src/model/Predictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_conf_Predictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_conf_Predictor.o ../src/model/Predictor.cpp
+
+../src/model/test_conf_RandForestModel.o:../src/model/RandForestModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_conf_RandForestModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_conf_RandForestModel.o ../src/model/RandForestModel.cpp
+
+../src/model/test_conf_Score.o:../src/model/Score.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_conf_Score.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_conf_Score.o ../src/model/Score.cpp
+
+../src/model/test_conf_SharedPredictor.o:../src/model/SharedPredictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_conf_SharedPredictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_conf_SharedPredictor.o ../src/model/SharedPredictor.cpp
+
+../src/model/test_conf_SvmModel.o:../src/model/SvmModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_conf_SvmModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_conf_SvmModel.o ../src/model/SvmModel.cpp
+
+../src/json/test_conf_json_reader.o:../src/json/json_reader.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_conf_json_reader.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_conf_json_reader.o ../src/json/json_reader.cpp
+
+../src/json/test_conf_json_value.o:../src/json/json_value.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_conf_json_value.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_conf_json_value.o ../src/json/json_value.cpp
+
+../src/json/test_conf_json_writer.o:../src/json/json_writer.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_conf_json_writer.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_conf_json_writer.o ../src/json/json_writer.cpp
 
 endif #ifeq ($(shell uname -m),x86_64)
 

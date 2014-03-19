@@ -196,11 +196,13 @@ namespace gezi
 			}
 		}
 
-		void add(vector<double>& values, const string& name = "")
+		//void add(vector<double>& values, const string& name = "")
+		template<typename T>
+		void add(vector<T>& values, const string& name = "")
 		{
 			if (name.empty())
 			{
-				foreach(double value, values)
+				foreach(T value, values)
 				{
 					add(value);
 				}
@@ -227,7 +229,8 @@ namespace gezi
 			_nodes.push_back(Node(index, value));
 		}
 
-		void add_sparse(vector<double>& values)
+		template<typename T>
+		void add_sparse(vector<T>& values)
 		{
 			for (size_t i = 0; i < values.size(); i++)
 			{

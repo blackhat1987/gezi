@@ -66,7 +66,12 @@ inline void reg_search(const wstring& content, boost::wregex& reg, vector<wstrin
     it = m[0].second;
   }
 }
-
+inline bool reg_find(const string& content, const string& pattern)
+{
+	boost::regex reg(pattern);
+	boost::smatch m;
+	return boost::regex_search(content, m, reg);
+}
 inline string reg_search(const string& content, const string& pattern, int index = 1)
 {
   boost::regex reg(pattern);

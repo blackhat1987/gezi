@@ -76,7 +76,8 @@ public:
     _feature->add(value, name);
   }
 	
-  inline void add(vector<double>& values, const string& name = "")
+	template<typename Vec>
+  inline void add(Vec& values, const string& name = "")
   {
     _feature->add(values, name);
   }

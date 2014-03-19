@@ -139,11 +139,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=a09e413f754305afbb02017357b55a37  COMAKE
+COMAKE_MD5=b0874722967051310589c9052bb2db93  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check libgezi.a 
+all:comake2_makefile_check copy libgezi.a 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -163,6 +163,8 @@ ccpclean:
 .PHONY:clean
 clean:ccpclean
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mclean[0m']"
+	rm -rf copy
+	rm -rf ./output/lib/libPYNotation.a
 	rm -rf libgezi.a
 	rm -rf ./output/lib/libgezi.a
 	rm -rf src/gezi_Seg.o
@@ -197,6 +199,10 @@ love:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlove[0m']"
 	@echo "make love done"
 
+copy:
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mcopy[0m']"
+	cp ./include/tools/pinyin/libPYNotation.a ./output/lib/
+
 libgezi.a:src/gezi_Seg.o \
   src/gezi_SharedSegmentor.o \
   src/gezi_conf_util.o \
@@ -229,11 +235,7 @@ libgezi.a:src/gezi_Seg.o \
 	mkdir -p ./output/lib
 	cp -f --link libgezi.a ./output/lib
 
-src/gezi_Seg.o:src/Seg.cpp \
-  include/Seg.h \
-  include/Segmentor.h \
-  include/log_util.h \
-  include/debug_util.h
+src/gezi_Seg.o:src/Seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_Seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -241,11 +243,7 @@ src/gezi_Seg.o:src/Seg.cpp \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/gezi_Seg.o src/Seg.cpp
 
-src/gezi_SharedSegmentor.o:src/SharedSegmentor.cpp \
-  include/SharedSegmentor.h \
-  include/Segmentor.h \
-  include/log_util.h \
-  include/debug_util.h
+src/gezi_SharedSegmentor.o:src/SharedSegmentor.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_SharedSegmentor.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -253,33 +251,7 @@ src/gezi_SharedSegmentor.o:src/SharedSegmentor.cpp \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/gezi_SharedSegmentor.o src/SharedSegmentor.cpp
 
-src/gezi_conf_util.o:src/conf_util.cpp \
-  include/conf_util.h \
-  include/log_util.h \
-  include/debug_util.h \
-  include/common_util.h \
-  include/common_def.h \
-  include/hashmap_util.h \
-  include/conf_util.h \
-  include/string_util.h \
-  include/wstring_util.h \
-  include/encoding_convert.h \
-  include/reg_util.h \
-  include/serialize_util.h \
-  include/unordered_map_serialize.h \
-  include/unordered_set_serialize.h \
-  include/Matrix.h \
-  include/sort_util.h \
-  include/statistic_util.h \
-  include/datetime_util.h \
-  include/time_util.h \
-  include/file_util.h \
-  include/linq.h \
-  include/stl_util.h \
-  include/map_util.h \
-  include/convert_type.h \
-  include/Exception.h \
-  include/ProgressBar.h
+src/gezi_conf_util.o:src/conf_util.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_conf_util.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -287,12 +259,7 @@ src/gezi_conf_util.o:src/conf_util.cpp \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/gezi_conf_util.o src/conf_util.cpp
 
-src/gezi_word_seg.o:src/word_seg.cpp \
-  include/word_seg.h \
-  include/Segmentor.h \
-  include/log_util.h \
-  include/debug_util.h \
-  include/Segmentor.h
+src/gezi_word_seg.o:src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_word_seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -300,39 +267,7 @@ src/gezi_word_seg.o:src/word_seg.cpp \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/gezi_word_seg.o src/word_seg.cpp
 
-src/model/gezi_LinearModel.o:src/model/LinearModel.cpp \
-  include/model/LinearModel.h \
-  include/model/Model.h \
-  include/feature/Feature.h \
-  include/common_util.h \
-  include/common_def.h \
-  include/hashmap_util.h \
-  include/log_util.h \
-  include/conf_util.h \
-  include/debug_util.h \
-  include/common_util.h \
-  include/string_util.h \
-  include/wstring_util.h \
-  include/encoding_convert.h \
-  include/reg_util.h \
-  include/serialize_util.h \
-  include/unordered_map_serialize.h \
-  include/unordered_set_serialize.h \
-  include/Matrix.h \
-  include/sort_util.h \
-  include/statistic_util.h \
-  include/datetime_util.h \
-  include/time_util.h \
-  include/file_util.h \
-  include/linq.h \
-  include/stl_util.h \
-  include/map_util.h \
-  include/convert_type.h \
-  include/Exception.h \
-  include/ProgressBar.h \
-  include/model/Score.h \
-  include/feature/Feature.h \
-  include/log_util.h
+src/model/gezi_LinearModel.o:src/model/LinearModel.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_LinearModel.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -340,41 +275,7 @@ src/model/gezi_LinearModel.o:src/model/LinearModel.cpp \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_LinearModel.o src/model/LinearModel.cpp
 
-src/model/gezi_ModelFactory.o:src/model/ModelFactory.cpp \
-  include/model/LinearModel.h \
-  include/model/Model.h \
-  include/feature/Feature.h \
-  include/common_util.h \
-  include/common_def.h \
-  include/hashmap_util.h \
-  include/log_util.h \
-  include/conf_util.h \
-  include/debug_util.h \
-  include/common_util.h \
-  include/string_util.h \
-  include/wstring_util.h \
-  include/encoding_convert.h \
-  include/reg_util.h \
-  include/serialize_util.h \
-  include/unordered_map_serialize.h \
-  include/unordered_set_serialize.h \
-  include/Matrix.h \
-  include/sort_util.h \
-  include/statistic_util.h \
-  include/datetime_util.h \
-  include/time_util.h \
-  include/file_util.h \
-  include/linq.h \
-  include/stl_util.h \
-  include/map_util.h \
-  include/convert_type.h \
-  include/Exception.h \
-  include/ProgressBar.h \
-  include/model/Score.h \
-  include/feature/Feature.h \
-  include/model/SvmModel.h \
-  include/model/ModelFactory.h \
-  include/model/RandForestModel.h
+src/model/gezi_ModelFactory.o:src/model/ModelFactory.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_ModelFactory.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -382,47 +283,7 @@ src/model/gezi_ModelFactory.o:src/model/ModelFactory.cpp \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_ModelFactory.o src/model/ModelFactory.cpp
 
-src/model/gezi_Predictor.o:src/model/Predictor.cpp \
-  include/model/Predictor.h \
-  include/model/Model.h \
-  include/feature/Feature.h \
-  include/common_util.h \
-  include/common_def.h \
-  include/hashmap_util.h \
-  include/log_util.h \
-  include/conf_util.h \
-  include/debug_util.h \
-  include/common_util.h \
-  include/string_util.h \
-  include/wstring_util.h \
-  include/encoding_convert.h \
-  include/reg_util.h \
-  include/serialize_util.h \
-  include/unordered_map_serialize.h \
-  include/unordered_set_serialize.h \
-  include/Matrix.h \
-  include/sort_util.h \
-  include/statistic_util.h \
-  include/datetime_util.h \
-  include/time_util.h \
-  include/file_util.h \
-  include/linq.h \
-  include/stl_util.h \
-  include/map_util.h \
-  include/convert_type.h \
-  include/Exception.h \
-  include/ProgressBar.h \
-  include/model/Score.h \
-  include/feature/FeatureNormalizer.h \
-  include/feature/Feature.h \
-  include/feature/Feature.h \
-  include/model/Score.h \
-  include/model/ModelFactory.h \
-  include/log_util.h \
-  include/conf_util.h \
-  include/common_util.h \
-  include/debug_util.h \
-  include/feature/feature_util.h
+src/model/gezi_Predictor.o:src/model/Predictor.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_Predictor.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -430,39 +291,7 @@ src/model/gezi_Predictor.o:src/model/Predictor.cpp \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_Predictor.o src/model/Predictor.cpp
 
-src/model/gezi_RandForestModel.o:src/model/RandForestModel.cpp \
-  include/model/RandForestModel.h \
-  include/model/Model.h \
-  include/feature/Feature.h \
-  include/common_util.h \
-  include/common_def.h \
-  include/hashmap_util.h \
-  include/log_util.h \
-  include/conf_util.h \
-  include/debug_util.h \
-  include/common_util.h \
-  include/string_util.h \
-  include/wstring_util.h \
-  include/encoding_convert.h \
-  include/reg_util.h \
-  include/serialize_util.h \
-  include/unordered_map_serialize.h \
-  include/unordered_set_serialize.h \
-  include/Matrix.h \
-  include/sort_util.h \
-  include/statistic_util.h \
-  include/datetime_util.h \
-  include/time_util.h \
-  include/file_util.h \
-  include/linq.h \
-  include/stl_util.h \
-  include/map_util.h \
-  include/convert_type.h \
-  include/Exception.h \
-  include/ProgressBar.h \
-  include/model/Score.h \
-  include/feature/Feature.h \
-  include/log_util.h
+src/model/gezi_RandForestModel.o:src/model/RandForestModel.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_RandForestModel.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -470,8 +299,7 @@ src/model/gezi_RandForestModel.o:src/model/RandForestModel.cpp \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_RandForestModel.o src/model/RandForestModel.cpp
 
-src/model/gezi_Score.o:src/model/Score.cpp \
-  include/model/Score.h
+src/model/gezi_Score.o:src/model/Score.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_Score.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -479,40 +307,7 @@ src/model/gezi_Score.o:src/model/Score.cpp \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_Score.o src/model/Score.cpp
 
-src/model/gezi_SharedPredictor.o:src/model/SharedPredictor.cpp \
-  include/model/SharedPredictor.h \
-  include/model/Predictor.h \
-  include/model/Model.h \
-  include/feature/Feature.h \
-  include/common_util.h \
-  include/common_def.h \
-  include/hashmap_util.h \
-  include/log_util.h \
-  include/conf_util.h \
-  include/debug_util.h \
-  include/common_util.h \
-  include/string_util.h \
-  include/wstring_util.h \
-  include/encoding_convert.h \
-  include/reg_util.h \
-  include/serialize_util.h \
-  include/unordered_map_serialize.h \
-  include/unordered_set_serialize.h \
-  include/Matrix.h \
-  include/sort_util.h \
-  include/statistic_util.h \
-  include/datetime_util.h \
-  include/time_util.h \
-  include/file_util.h \
-  include/linq.h \
-  include/stl_util.h \
-  include/map_util.h \
-  include/convert_type.h \
-  include/Exception.h \
-  include/ProgressBar.h \
-  include/model/Score.h \
-  include/feature/FeatureNormalizer.h \
-  include/feature/Feature.h
+src/model/gezi_SharedPredictor.o:src/model/SharedPredictor.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_SharedPredictor.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -520,37 +315,7 @@ src/model/gezi_SharedPredictor.o:src/model/SharedPredictor.cpp \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_SharedPredictor.o src/model/SharedPredictor.cpp
 
-src/model/gezi_SvmModel.o:src/model/SvmModel.cpp \
-  include/model/SvmModel.h \
-  include/model/Model.h \
-  include/feature/Feature.h \
-  include/common_util.h \
-  include/common_def.h \
-  include/hashmap_util.h \
-  include/log_util.h \
-  include/conf_util.h \
-  include/debug_util.h \
-  include/common_util.h \
-  include/string_util.h \
-  include/wstring_util.h \
-  include/encoding_convert.h \
-  include/reg_util.h \
-  include/serialize_util.h \
-  include/unordered_map_serialize.h \
-  include/unordered_set_serialize.h \
-  include/Matrix.h \
-  include/sort_util.h \
-  include/statistic_util.h \
-  include/datetime_util.h \
-  include/time_util.h \
-  include/file_util.h \
-  include/linq.h \
-  include/stl_util.h \
-  include/map_util.h \
-  include/convert_type.h \
-  include/Exception.h \
-  include/ProgressBar.h \
-  include/model/Score.h
+src/model/gezi_SvmModel.o:src/model/SvmModel.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_SvmModel.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -558,16 +323,7 @@ src/model/gezi_SvmModel.o:src/model/SvmModel.cpp \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_SvmModel.o src/model/SvmModel.cpp
 
-src/json/gezi_json_reader.o:src/json/json_reader.cpp \
-  include/json/reader.h \
-  include/json/features.h \
-  include/json/forwards.h \
-  include/json/config.h \
-  include/json/value.h \
-  include/json/value.h \
-  src/json/json_tool.h \
-  include/encoding_convert.h \
-  include/log_util.h
+src/json/gezi_json_reader.o:src/json/json_reader.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_reader.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -575,41 +331,7 @@ src/json/gezi_json_reader.o:src/json/json_reader.cpp \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/json/gezi_json_reader.o src/json/json_reader.cpp
 
-src/json/gezi_json_value.o:src/json/json_value.cpp \
-  include/common_util.h \
-  include/common_def.h \
-  include/hashmap_util.h \
-  include/log_util.h \
-  include/conf_util.h \
-  include/debug_util.h \
-  include/common_util.h \
-  include/string_util.h \
-  include/wstring_util.h \
-  include/encoding_convert.h \
-  include/reg_util.h \
-  include/serialize_util.h \
-  include/unordered_map_serialize.h \
-  include/unordered_set_serialize.h \
-  include/Matrix.h \
-  include/sort_util.h \
-  include/statistic_util.h \
-  include/datetime_util.h \
-  include/time_util.h \
-  include/file_util.h \
-  include/linq.h \
-  include/stl_util.h \
-  include/map_util.h \
-  include/convert_type.h \
-  include/Exception.h \
-  include/ProgressBar.h \
-  include/encoding_convert.h \
-  include/json/value.h \
-  include/json/forwards.h \
-  include/json/config.h \
-  include/json/writer.h \
-  include/json/value.h \
-  src/json/json_batchallocator.h \
-  src/json/json_valueiterator.inl
+src/json/gezi_json_value.o:src/json/json_value.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_value.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -617,12 +339,7 @@ src/json/gezi_json_value.o:src/json/json_value.cpp \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/json/gezi_json_value.o src/json/json_value.cpp
 
-src/json/gezi_json_writer.o:src/json/json_writer.cpp \
-  include/json/writer.h \
-  include/json/value.h \
-  include/json/forwards.h \
-  include/json/config.h \
-  src/json/json_tool.h
+src/json/gezi_json_writer.o:src/json/json_writer.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_writer.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \

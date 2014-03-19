@@ -69,7 +69,7 @@ namespace gezi
 
 		~AutoTimer()
 		{
-			VLOG(3) << setiosflags(ios::left) << setfill(' ') << setw(40)
+			VLOG(2) << setiosflags(ios::left) << setfill(' ') << setw(40)
 				<< _prefix << " " << _timer.elapsed_ms() << " ms";
 		}
 	};

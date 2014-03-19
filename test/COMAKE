@@ -13,7 +13,7 @@ print 'GCC_LOCAL: %d'%GCC_LOCAL
 GCC_HIGH=1
 print 'GCC_HIGH: %d'%GCC_HIGH
 #是否使用高版本动态链接库，即是否使用高版本libc 如果启用 可以使用openmp 但是需要设置LD_LIBRARY_PATH sh ./run.sh ./main
-GCC_DYNAMIC=0
+GCC_DYNAMIC=1
 print 'GCC_DYNAMIC: %d'%GCC_DYNAMIC
 GCC_VERSION='3.4.5'
 if  GCC_HIGH == 1: 
@@ -100,7 +100,7 @@ INCPATHS('. ./include ./utils ./output ./output/include ./include/feature ./incl
 srcs=GLOB('./src/*.cpp ./src/feature/*.cpp ./src/model/*.cpp ./src/json/*.cpp'.replace('./',RELATIVE_PATH))
 headers=''
 #使用库
-#LIBS('./librsc-sender.a')
+LIBS('../include/tools/pinyin/libPYNotation.a')
 
 #可执行文件
 #静态库
@@ -127,3 +127,6 @@ Application('test_map_util',Sources('test_map_util.cc'), OutputPath('./bin'))
 Application('test_seg',Sources('test_seg.cc', srcs))
 Application('test_identifer',Sources('test_identifer.cc', srcs))
 Application('test_linear',Sources('test_linear.cc', srcs))
+Application('test_pinyin',Sources('test_pinyin.cc', srcs))
+Application('test_namepattern',Sources('test_namepattern.cc', srcs))
+Application('test_conf',Sources('test_conf.cc', srcs))

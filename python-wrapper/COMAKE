@@ -103,7 +103,7 @@ headers=''
 
 #¾²Ì¬¿â
 #LIBS('/home/users/chenghuige/.jumbo/lib/libpython2.7.so /home/users/chenghuige/.jumbo/lib/libboost_python.so')
-LIBS('./libpython2.7.so ./libboost_python.so')
+LIBS('./libpython2.7.so ./libboost_python.so ../include/tools/pinyin/libPYNotation.a')
 #SharedLibrary('wordseg',Sources('wordseg_py.cc', srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),LinkDeps(True))
 srcs=GLOB('../src/*.cpp')
 SharedLibrary('gezi',Sources('gezi_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))

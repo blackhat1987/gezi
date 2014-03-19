@@ -17,8 +17,14 @@
 namespace gezi
 {
 	//d数字c中文e英文o其它s开始 @TODO 需要更好的模板表示
+	//0    1   2    3
 	inline string name_pattern(string uname)
 	{
+		if (uname.empty())
+		{
+			return "o";
+		}
+		
 		stringstream pattern_stream;
 		char pre_pattern = 's';
 		for (size_t i = 0; i < uname.size(); i++)
@@ -73,6 +79,49 @@ namespace gezi
 			}
 		}
 		return pattern_stream.str();
+	}
+
+
+	//获取用户名的3位表示
+	inline string simple_name_pattern(string uname)
+	{
+		char pattern[4] = { 0 };
+		string np = name_pattern(uname);
+		pattern[0] = np[0];
+		pattern[2] = np.back();
+		if (np.size() < 3)
+		{
+			pattern[1] = np.back();
+		}
+		else
+		{
+			pattern[1] = np[1];
+			for (size_t i = 1; i < np.size() - 1; i++)
+			{
+				if (np[i] != np[0] && np[i] != np.back())
+				{
+					pattern[1] = np[i];
+					break;
+				}
+			}
+		}
+		return pattern;
+	}
+
+	inline vector<int> name_feature(string uname)
+	{
+		string template_ = "dceo";
+		vector<int> vec;
+		string pattern = simple_name_pattern(uname);
+		foreach (char c, pattern)
+		{
+			vec.push_back(template_.find(c));
+		}
+#if __GNUC__ > 3
+		return std::move(vec);
+#else
+		return vec;
+#endif  
 	}
 }
 

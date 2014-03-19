@@ -198,6 +198,12 @@ inline string filter_str(const string& temp)
   return ret;
 }
 
+//不包括繁简体转换 全角半角
+inline string normalize_str(const string& input)
+{
+	return boost::to_lower_copy(filter_str(input));
+}
+
 inline string extract_chinese(string& temp)
 {
   vector<char> out(temp.size() + 1, 0);

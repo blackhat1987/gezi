@@ -169,11 +169,9 @@ namespace gezi
 
 		foreach(const Feature::Node& node, feature.cnodes())
 		{
-			ofs << node.index - 1 << " " << node.value << ",";
+			ofs << node.index << " " << node.value << ",";
 		}
 		int index = feature.dimension();
-		//ofs << index << " " << uid << ",";
-		//index++;
 		ofs << index << " " << type;
 		ofs << "}" << endl;
 	}
@@ -184,9 +182,9 @@ namespace gezi
 		size_t i = 0;
 		for (; i < feature.featureNum() - 1; i++)
 		{
-			ofs << feature.cnodes()[i].index << ":" << feature.cnodes()[i].value << " ";
+			ofs << feature.cnodes()[i].index + 1<< ":" << feature.cnodes()[i].value << " ";
 		}
-		ofs << feature.cnodes()[i].index << ":" << feature.cnodes()[i].value << endl;
+		ofs << feature.cnodes()[i].index + 1 << ":" << feature.cnodes()[i].value << endl;
 	}
 
 	//TODO write_tlc tlc支持的稀疏格式

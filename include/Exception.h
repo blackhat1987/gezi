@@ -24,7 +24,9 @@ namespace gezi
 		string _msg;
 	public:
 		//without it gcc 3 will complain for no throw() which is in base
-		virtual ~Exception() throw(); 
+		virtual ~Exception() throw() 
+		{
+		};
 		Exception(const string& msg = "")
 			:_msg(msg)
 		{

@@ -83,7 +83,7 @@ inline std::string conf_trim(const std::string& input)
   }
   return input;
 }
-//string
+//string @TODO 为什么不存在的时候慢 是try catch慢 不用异常？
 
 inline void set_val(const comcfg::Configure& conf, const std::string& key, std::string& val)
 {
@@ -458,6 +458,8 @@ inline void get_val(const comcfg::Configure& conf, char* dest,
 
 }
 
+
+//@FIXME 如果配置文件里面不存在的话 速度非常慢。。。
 #define SCONF(s)\
   gezi::set_val(gezi::SharedConf::conf(), section, gezi::conf_trim(#s), s)
 #define SCONF_CLASS(root,s)\
