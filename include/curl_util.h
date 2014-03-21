@@ -92,7 +92,7 @@ public:
     CURLcode res = curl_easy_perform(_curl);
     if (res != CURLE_OK)
     {
-      UB_LOG_WARNING(" curl_easy_perform err[%d]", res);
+      LOG_WARNING(" curl_easy_perform err[%d]", res);
     }
     else
     {
@@ -134,7 +134,7 @@ public:
     CURLcode res = curl_easy_perform(_curl);
     if (res != CURLE_OK)
     {
-      UB_LOG_WARNING(" curl_easy_perform err[%d]", res);
+      LOG_WARNING(" curl_easy_perform err[%d]", res);
     }
     else
     {
