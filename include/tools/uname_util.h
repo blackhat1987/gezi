@@ -14,8 +14,7 @@
 #ifndef TOOLS_UNAME_UTIL_H_
 #define TOOLS_UNAME_UTIL_H_
 
-namespace gezi
-{
+namespace gezi {
 	//d数字c中文e英文o其它s开始 @TODO 需要更好的模板表示
 	//0    1   2    3
 	inline string name_pattern(string uname)
@@ -24,7 +23,7 @@ namespace gezi
 		{
 			return "o";
 		}
-		
+
 		stringstream pattern_stream;
 		char pre_pattern = 's';
 		for (size_t i = 0; i < uname.size(); i++)
@@ -113,7 +112,7 @@ namespace gezi
 		string template_ = "dceo";
 		vector<int> vec;
 		string pattern = simple_name_pattern(uname);
-		foreach (char c, pattern)
+		foreach(char c, pattern)
 		{
 			vec.push_back(template_.find(c));
 		}
