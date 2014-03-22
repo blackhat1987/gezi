@@ -1,5 +1,6 @@
-import os
+import os 
 import sys
+import glob
 from pyplusplus import module_builder
 
 mb = module_builder.module_builder_t(
@@ -26,7 +27,7 @@ mb = module_builder.module_builder_t(
 					'./include/feature/Feature.h',
 					'./include/tools/pinyin/Pinyin.h'
 					#'./include/file_util.h'
-					],
+					] + glob.glob('./include/tools/*.python'),
         include_paths=[ '/home/users/chenghuige/rsc/lib2-64/wordseg', 
         '/home/users/chenghuige/rsc/lib2-64/postag/include',
         '/home/users/chenghuige/rsc/lib2-64/dict/include',

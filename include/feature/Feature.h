@@ -284,7 +284,7 @@ namespace gezi
 			}
 		}
 
-		const double valueAt(int index) const
+		const double value_at(int index) const
 		{
 			int idx = (index + _values.size()) % _values.size();
 			return _values[idx];
@@ -348,17 +348,17 @@ namespace gezi
 			return _values;
 		}
 
-		static double defaultMin()
+		static double default_min()
 		{
 			return 0;
 		}
 
-		static double defaultMean()
+		static double default_mean()
 		{
 			return 0.5;
 		}
 
-		static double defaultMax()
+		static double default_max()
 		{
 			return 1.0;
 		}

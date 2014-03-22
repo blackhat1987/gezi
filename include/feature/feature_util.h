@@ -248,7 +248,7 @@ namespace gezi
 	}
 
 	template<typename Vec>
-	inline void addMeanVar(Feature* fe, const Vec& vec,
+	inline void add_mean_var(Feature* fe, const Vec& vec,
 		const string mean_name = "", const string var_name = "")
 	{
 		double mean = vec.size() > 0 ? sta::mean(vec) : 0;
@@ -258,7 +258,7 @@ namespace gezi
 	}
 
 	template<typename Vec>
-	inline void addMean(Feature* fe, const Vec& vec,
+	inline void add_mean(Feature* fe, const Vec& vec,
 		const string mean_name = "")
 	{
 		double mean = vec.size() > 0 ? sta::mean(vec) : 0;
@@ -266,7 +266,7 @@ namespace gezi
 	}
 
 	template<typename Vec>
-	inline void addVar(Feature* fe, const Vec& vec,
+	inline void add_var(Feature* fe, const Vec& vec,
 		const string var_name = "")
 	{
 		double var = vec.size() > 1 ? sta::var(vec) : 0;
@@ -274,7 +274,7 @@ namespace gezi
 	}
 
 	template<typename T>
-	inline void addMeanVar(Feature* fe, T begin, T end,
+	inline void add_mean_var(Feature* fe, T begin, T end,
 		const string mean_name = "", const string var_name = "")
 	{
 
@@ -285,7 +285,7 @@ namespace gezi
 	}
 
 	template<typename T>
-	inline void addMean(Feature* fe, T begin, T end,
+	inline void add_mean(Feature* fe, T begin, T end,
 		const string mean_name = "")
 	{
 		double mean = end > begin ? sta::mean(begin, end) : 0;
@@ -293,7 +293,7 @@ namespace gezi
 	}
 
 	template<typename T>
-	inline void addVar(Feature* fe, T begin, T end,
+	inline void add_var(Feature* fe, T begin, T end,
 		const string var_name = "")
 	{
 		double var = end - begin > 1 ? sta::var(begin, end) : 0;

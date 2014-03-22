@@ -17,6 +17,7 @@ for line in open(sys.argv[1]):
 		if (find_warning):
 			print '//',
 			find_warning = False
+		line = line.replace('.h.python', '.h')
 		print line,
 		if (line.find('WARNING:') >= 0):
 			find_warning = True 

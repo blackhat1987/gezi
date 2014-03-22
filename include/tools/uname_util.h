@@ -13,7 +13,7 @@
 
 #ifndef TOOLS_UNAME_UTIL_H_
 #define TOOLS_UNAME_UTIL_H_
-
+#include "common_util.h"
 namespace gezi {
 	//d数字c中文e英文o其它s开始 @TODO 需要更好的模板表示
 	//0    1   2    3
@@ -122,6 +122,7 @@ namespace gezi {
 		return vec;
 #endif  
 	}
-}
+
+} //end of namespace gezi
 
 #endif  //----end of TOOLS_UNAME_UTIL_H_

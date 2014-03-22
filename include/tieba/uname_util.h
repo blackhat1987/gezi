@@ -14,8 +14,7 @@
 #ifndef TIEBA_UNAME_UTIL_H_
 #define TIEBA_UNAME_UTIL_H_
 
-namespace gezi
-{
+namespace gezi {
 	//d数字c中文e英文o其它s开始 @TODO 需要更好的模板表示
 	inline string name_pattern(string uname)
 	{
@@ -74,6 +73,6 @@ namespace gezi
 		}
 		return pattern_stream.str();
 	}
-}
+} //end of namespace gezi
 
 #endif  //----end of TIEBA_UNAME_UTIL_H_

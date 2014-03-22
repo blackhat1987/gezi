@@ -14,8 +14,7 @@
 #ifndef IDENTIFER_H_
 #define IDENTIFER_H_
 #include "common_util.h"
-namespace gezi
-{
+namespace gezi {
 
 	class Identifer
 	{
