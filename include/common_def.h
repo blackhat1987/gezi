@@ -40,6 +40,9 @@ typedef unsigned long long uint64;
 typedef unsigned char uchar;
 
 typedef double Float;
+typedef vector<int> ivec;
+typedef vector<double> dvec;
+typedef vector<float> fvec;
 
 #include <boost/foreach.hpp>
 #define foreach BOOST_FOREACH
