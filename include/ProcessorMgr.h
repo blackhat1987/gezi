@@ -48,11 +48,7 @@ public:
       ret = processor_list_[i]->process(ret);
     }
 
-#if __GNUC__ > 3
-    return std::move(ret);
-#else
     return ret;
-#endif
   }
 
   T process(const T & src)
@@ -70,11 +66,7 @@ public:
       }
     }
 
-#if __GNUC__ > 3
-    return std::move(ret);
-#else
     return ret;
-#endif
   }
 
   void add(Processor* processor)

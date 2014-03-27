@@ -125,11 +125,7 @@ inline vector<string> reg_split(const string& input, const string& pattern)
   vector<string> vec;
   boost::regex reg(pattern);
   split_regex(vec, input, reg);
-#if __GNUC__ > 3
-  return std::move(vec);
-#else
   return vec;
-#endif
 }
 
 inline vector<wstring> reg_split(const wstring& input, const wstring& pattern)
@@ -137,11 +133,7 @@ inline vector<wstring> reg_split(const wstring& input, const wstring& pattern)
   vector<wstring> vec;
   boost::wregex reg(pattern);
   boost::split_regex(vec, input, reg);
-#if __GNUC__ > 3
-  return std::move(vec);
-#else
   return vec;
-#endif
 }
 
 namespace ufo
@@ -151,11 +143,7 @@ inline vector<string> reg_search(const string& content, boost::regex& reg, int i
 {
   vector<string> result;
   gezi::reg_search(content, reg, result, index);
-#if __GNUC__ > 3
-  return std::move(result);
-#else
   return result;
-#endif
 }
 
 inline vector<string> reg_search(const string& content, const string& pattern, int index = 1)
@@ -163,22 +151,14 @@ inline vector<string> reg_search(const string& content, const string& pattern, i
   vector<string> result;
   boost::regex reg(pattern);
   gezi::reg_search(content, reg, result, index);
-#if __GNUC__ > 3
-  return std::move(result);
-#else
   return result;
-#endif
 }
 
 inline vector<wstring> reg_search(const wstring& content, boost::wregex& reg, int index = 1)
 {
   vector<wstring> result;
   gezi::reg_search(content, reg, result, index);
-#if __GNUC__ > 3
-  return std::move(result);
-#else
   return result;
-#endif
 }
 
 inline vector<wstring> wreg_search(const wstring& content, const wstring& pattern, int index = 1)
@@ -186,11 +166,7 @@ inline vector<wstring> wreg_search(const wstring& content, const wstring& patter
   vector<wstring> result;
   boost::wregex reg(pattern);
   gezi::reg_search(content, reg, result, index);
-#if __GNUC__ > 3
-  return std::move(result);
-#else
   return result;
-#endif
 }
 
 }

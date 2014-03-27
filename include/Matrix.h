@@ -30,17 +30,21 @@ public:
   }
 
   Matrix(int rows, int cols)
+		:_nrow(rows), _ncol(cols)
   {
     resize(rows, cols);
   }
 
   Matrix(int rows, int cols, T defaultValue)
-  {
+		:_nrow(rows), _ncol(cols)
+	{
     resize(rows, cols, defaultValue);
   }
 
   inline void resize(int rows, int cols)
   {
+		_nrow = rows;
+		_ncol = cols;
     _mat.resize(rows);
     for (int i = 0; i < rows; i++)
     {
@@ -50,6 +54,8 @@ public:
 
   inline void resize(int rows, int cols, T defaultValue)
   {
+		_nrow = rows;
+		_ncol = cols;
     _mat.resize(rows);
     for (int i = 0; i < rows; i++)
     {
@@ -66,10 +72,21 @@ public:
   {
     return _mat;
   }
+
+	inline int rows()
+	{
+		return _nrow;
+	}
+
+	inline int cols()
+	{
+		return _ncol;
+	}
 private:
   std::vector<std::vector<T> > _mat;
+	int _nrow = 0;
+	int _ncol = 0;
 };
-
 
 }
 

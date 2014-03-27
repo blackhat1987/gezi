@@ -429,11 +429,7 @@ inline vector<String> cut_wstring(const String & s, int unit, int max_len = 0)
   {
     ret.push_back(s.substr(max(0, i * unit - max_len), unit + max_len));
   }
-#if __GNUC__ > 3
-  return std::move(ret);
-#else
   return ret;
-#endif
 }
 
 /**
@@ -490,11 +486,7 @@ inline string str_replace_all(const string& tstr, const string& old_value, const
 //      }
 //    }
 //  }
-//#if __GNUC__ > 3
-//  return std::move(vec);
-//#else
 //  return vec;
-//#endif
 //}
 
 // like a king
@@ -599,11 +591,7 @@ inline vector<string> to_cnvec(string line)
   {
     vec.push_back(line.substr(i, 2));
   }
-#if __GNUC__ > 3
-  return std::move(vec);
-#else
   return vec;
-#endif
 }
 
 }

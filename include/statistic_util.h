@@ -383,11 +383,7 @@ namespace gezi
 			int bin_index_ = bin_index(value, bin_num, min, max);
 			bins[bin_index_]++;
 		}
-#if __GNUC__ > 3
-		return std::move(bins);
-#else
 		return bins;
-#endif
 	}
 
 	inline vector<double> bin_values(const vector<double>& values, int bin_num,
@@ -400,11 +396,7 @@ namespace gezi
 		{
 			bin_values[i] = (double)bins[i] / count;
 		}
-#if __GNUC__ > 3
-		return std::move(bin_values);
-#else
 		return bin_values;
-#endif
 	}
 
 	//例如thes 0.3,0.5,0.7  就是 ..,0.3) [0.3,0.5)[0.5,0.7) [0.7,...  4个桶
@@ -419,11 +411,7 @@ namespace gezi
 			int bin_index_ = bin_index(value, thres);
 			bins[bin_index_]++;
 		}
-#if __GNUC__ > 3
-		return std::move(bins);
-#else
 		return bins;
-#endif
 	}
 
 	inline vector<double> bin_values(const vector<double>& values, const vector<double>& thres)
@@ -436,11 +424,7 @@ namespace gezi
 		{
 			bin_values[i] = (double)bins[i] / count;
 		}
-#if __GNUC__ > 3
-		return std::move(bin_values);
-#else
 		return bin_values;
-#endif
 	}
 
 	//TODO verify

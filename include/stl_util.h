@@ -89,11 +89,7 @@ namespace gezi {
 		{
 			boost::trim(str);
 		}
-#if __GNUC__ > 3
-		return std::move(vec);
-#else
 		return vec;
-#endif
 	}
 
 	inline vector<string> split(const string& input_, const string& sep = "\t ")
@@ -106,11 +102,7 @@ namespace gezi {
 		{
 			boost::trim(str);
 		}
-#if __GNUC__ > 3
-		return std::move(vec);
-#else
 		return vec;
-#endif
 	}
 
 	//TODO FIXME 貌似比如 "1, 2, 3"这样还是处理不了会抛异常 按说trim了

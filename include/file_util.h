@@ -98,11 +98,7 @@ namespace gezi
 			boost::trim(line);
 			vec.push_back(line);
 		}
-#if __GNUC__ > 3
-		return std::move(vec);
-#else
 		return vec;
-#endif
 	}
 
 	inline void read_lines(string infile, vector<string>& vec)
@@ -152,11 +148,7 @@ namespace gezi
 			boost::trim(line);
 			container.insert(line);
 		}
-#if __GNUC__ > 3
-		return std::move(container);
-#else
 		return container;
-#endif
 	}
 
 	inline unordered_set<string> to_uset(string infile)
@@ -169,11 +161,7 @@ namespace gezi
 			boost::trim(line);
 			container.insert(line);
 		}
-#if __GNUC__ > 3
-		return std::move(container);
-#else
 		return container;
-#endif
 	}
 
 	//¶àÁĞ read_to
@@ -307,11 +295,7 @@ namespace gezi
 			boost::trim(line);
 			m[line] = start++;
 		}
-#if __GNUC__ > 3
-		return std::move(m);
-#else
 		return m;
-#endif
 	}
 
 	template<typename Map>

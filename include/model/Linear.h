@@ -50,6 +50,7 @@ namespace gezi
 			load(modelPath);
 		}
 
+		//@FIXME 修改文本格式 
 		void load(const string& modelPath)
 		{
 			vector<int> indexVec;
@@ -57,14 +58,16 @@ namespace gezi
 
 			vector<string> lines = read_lines(modelPath);
 			CHECK(lines.size() > 0) << modelPath;
+			int num = 0;
 			foreach(string line, lines)
 			{
 				vector<string> vec = gezi::split(boost::trim_copy(line), "\t");
-				if (vec.size() == 2)
+				if (vec.size() == 2 || (vec.size() == 3 && num == lines.size() - 2))
 				{
 					indexVec.push_back(INT(boost::trim_copy(vec[0]).substr(1)));
 					valueVec.push_back(DOUBLE(boost::trim_copy(vec[1])));
 				}
+				num++;
 			}
 			_bias = DOUBLE(lines.back());
 			size_t len = indexVec.back() + 1;

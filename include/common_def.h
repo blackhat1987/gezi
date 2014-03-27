@@ -39,10 +39,25 @@ typedef unsigned int uint;
 typedef unsigned long long uint64;
 typedef unsigned char uchar;
 
+#ifdef FLOAT32
+typedef float Float;
+#else
 typedef double Float;
+#endif // FLOAT
+
+//using std::string;
+//using std::vector;
+//using std::set;
+//using std::map;
+//using std::ifstream;
+//using std::ofstream;
+using std::array;
+using namespace std;
 typedef vector<int> ivec;
 typedef vector<double> dvec;
 typedef vector<float> fvec;
+typedef vector<string> svec;
+typedef vector<bool> BitArray;
 
 #include <boost/foreach.hpp>
 #define foreach BOOST_FOREACH
@@ -72,14 +87,5 @@ using namespace boost::lambda;
 
 #define BOOST_THREAD_DONT_USE_CHRONO
 #include <boost/thread.hpp>
-
-//using std::string;
-//using std::vector;
-//using std::set;
-//using std::map;
-//using std::ifstream;
-//using std::ofstream;
-using std::array;
-using namespace std;
 
 #endif  //----end of COMMON_DEF_H_
