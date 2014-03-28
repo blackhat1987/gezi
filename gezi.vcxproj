@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\glog.0.3.3.0\build\native\glog.props" Condition="Exists('C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\glog.0.3.3.0\build\native\glog.props')" />
+  <Import Project="C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\gflags.2.0.1.0\build\native\gflags.props" Condition="Exists('C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\gflags.2.0.1.0\build\native\gflags.props')" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2E4B83A0-D82A-4CEC-9860-C15DBB6B8735}</ProjectGuid>
+    <RootNamespace>gezi</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>./include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="include\all_util.h" />
+    <ClInclude Include="include\bloom_filter.h" />
+    <ClInclude Include="include\common\Exception.h" />
+    <ClInclude Include="include\common_algorithm.h" />
+    <ClInclude Include="include\common_def.h" />
+    <ClInclude Include="include\common_util.h" />
+    <ClInclude Include="include\conf_util.h" />
+    <ClInclude Include="include\convert_type.h" />
+    <ClInclude Include="include\curl_util.h" />
+    <ClInclude Include="include\DataBase.h" />
+    <ClInclude Include="include\datetime_util.h" />
+    <ClInclude Include="include\db\otl\DataBase.h" />
+    <ClInclude Include="include\db\otl\DBHelper.h" />
+    <ClInclude Include="include\db\otl\DBReader.h" />
+    <ClInclude Include="include\db\otl\otlv4.h" />
+    <ClInclude Include="include\debug_util.h" />
+    <ClInclude Include="include\editdistance.h" />
+    <ClInclude Include="include\edit_distance.h" />
+    <ClInclude Include="include\encoding_convert.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\feature\Feature.h" />
+    <ClInclude Include="include\feature\FeatureExtractor.h" />
+    <ClInclude Include="include\feature\FeatureExtractorMgr.h" />
+    <ClInclude Include="include\feature\FeatureIdentifer.h" />
+    <ClInclude Include="include\feature\FeatureNormalizer.h" />
+    <ClInclude Include="include\feature\FeatureSelector.h" />
+    <ClInclude Include="include\feature\feature_selection.h" />
+    <ClInclude Include="include\feature\feature_util.h" />
+    <ClInclude Include="include\file_util.h" />
+    <ClInclude Include="include\hashmap_util.h" />
+    <ClInclude Include="include\Identifer.h" />
+    <ClInclude Include="include\Idf.h" />
+    <ClInclude Include="include\IProcessor.h" />
+    <ClInclude Include="include\json.h" />
+    <ClInclude Include="include\json\autolink.h" />
+    <ClInclude Include="include\json\config.h" />
+    <ClInclude Include="include\json\features.h" />
+    <ClInclude Include="include\json\forwards.h" />
+    <ClInclude Include="include\json\json.h" />
+    <ClInclude Include="include\json\reader.h" />
+    <ClInclude Include="include\json\value.h" />
+    <ClInclude Include="include\json\writer.h" />
+    <ClInclude Include="include\linq.h" />
+    <ClInclude Include="include\linq\boolinq.h" />
+    <ClInclude Include="include\linq\cpplinq.hpp" />
+    <ClInclude Include="include\log_util.h" />
+    <ClInclude Include="include\map_util.h" />
+    <ClInclude Include="include\MatchDict.h" />
+    <ClInclude Include="include\Matrix.h" />
+    <ClInclude Include="include\MinHash.h" />
+    <ClInclude Include="include\model\Linear.h" />
+    <ClInclude Include="include\model\LinearModel.h" />
+    <ClInclude Include="include\model\Model.h" />
+    <ClInclude Include="include\model\ModelFactory.h" />
+    <ClInclude Include="include\model\Predictor.h" />
+    <ClInclude Include="include\model\predictor_util.h" />
+    <ClInclude Include="include\model\RandForestModel.h" />
+    <ClInclude Include="include\model\Score.h" />
+    <ClInclude Include="include\model\SharedPredictor.h" />
+    <ClInclude Include="include\model\SvmModel.h" />
+    <ClInclude Include="include\MultiHash.h" />
+    <ClInclude Include="include\myclient_help.h" />
+    <ClInclude Include="include\myclient_stream.h" />
+    <ClInclude Include="include\numeric\collocation.h" />
+    <ClInclude Include="include\ProcessorMgr.h" />
+    <ClInclude Include="include\ProgressBar.h" />
+    <ClInclude Include="include\python_util.h" />
+    <ClInclude Include="include\RegexMatcher.h" />
+    <ClInclude Include="include\RegexReplaceProcessor.h" />
+    <ClInclude Include="include\RegexSearcher.h" />
+    <ClInclude Include="include\reg_util.h" />
+    <ClInclude Include="include\Seg.h" />
+    <ClInclude Include="include\SegDict.h" />
+    <ClInclude Include="include\Segmentor.h" />
+    <ClInclude Include="include\serialize_util.h" />
+    <ClInclude Include="include\SharedSegDict.h" />
+    <ClInclude Include="include\SharedSegmentor.h" />
+    <ClInclude Include="include\SimpleServer.h" />
+    <ClInclude Include="include\sort_map_by_value.h" />
+    <ClInclude Include="include\sort_util.h" />
+    <ClInclude Include="include\statistic_util.h" />
+    <ClInclude Include="include\stl_util.h" />
+    <ClInclude Include="include\string_util.h" />
+    <ClInclude Include="include\tieba\common_def.h" />
+    <ClInclude Include="include\tieba\get_info.h" />
+    <ClInclude Include="include\tieba\JsonParser.h" />
+    <ClInclude Include="include\tieba\uname_util.h" />
+    <ClInclude Include="include\tieba\util.h" />
+    <ClInclude Include="include\time_util.h" />
+    <ClInclude Include="include\tools\ip.h" />
+    <ClInclude Include="include\tools\IpFinder.h" />
+    <ClInclude Include="include\tools\pinyin\IPYFactory.h" />
+    <ClInclude Include="include\tools\pinyin\IPYNotation.h" />
+    <ClInclude Include="include\tools\pinyin\Pinyin.h" />
+    <ClInclude Include="include\tools\uname_util.h" />
+    <ClInclude Include="include\undef_convert.h" />
+    <ClInclude Include="include\unique_add_and_copy.h" />
+    <ClInclude Include="include\unordered_map_serialize.h" />
+    <ClInclude Include="include\unordered_set_serialize.h" />
+    <ClInclude Include="include\url_util.h" />
+    <ClInclude Include="include\word_seg.h" />
+    <ClInclude Include="include\wstring_util.h" />
+    <ClInclude Include="src\json\json_batchallocator.h" />
+    <ClInclude Include="src\json\json_tool.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="include\editdistance.cc" />
+    <ClCompile Include="src\conf_util.cpp" />
+    <ClCompile Include="src\json\json_reader.cpp" />
+    <ClCompile Include="src\json\json_value.cpp" />
+    <ClCompile Include="src\json\json_writer.cpp" />
+    <ClCompile Include="src\model\bak\BinaryFastRankModel.cpp" />
+    <ClCompile Include="src\model\LinearModel.cpp" />
+    <ClCompile Include="src\model\ModelFactory.cpp" />
+    <ClCompile Include="src\model\Predictor.cpp" />
+    <ClCompile Include="src\model\RandForestModel.cpp" />
+    <ClCompile Include="src\model\Score.cpp" />
+    <ClCompile Include="src\model\SharedPredictor.cpp" />
+    <ClCompile Include="src\model\SvmModel.cpp" />
+    <ClCompile Include="src\Seg.cpp" />
+    <ClCompile Include="src\SharedSegmentor.cpp" />
+    <ClCompile Include="src\word_seg.cpp" />
+    <ClCompile Include="test\linq\test.cc" />
+    <ClCompile Include="test\openmp\hello.cc" />
+    <ClCompile Include="test\openmp\test.cc" />
+    <ClCompile Include="test\test_bins.cc" />
+    <ClCompile Include="test\test_content_filter.cc" />
+    <ClCompile Include="test\test_datetime.cc" />
+    <ClCompile Include="test\test_encode.cc" />
+    <ClCompile Include="test\test_escape.cc" />
+    <ClCompile Include="test\test_feature_selector.cc" />
+    <ClCompile Include="test\test_json.cc" />
+    <ClCompile Include="test\test_lambda.cc" />
+    <ClCompile Include="test\test_map_util.cc" />
+    <ClCompile Include="test\test_namepattern.cc" />
+    <ClCompile Include="test\test_other.cc" />
+    <ClCompile Include="test\test_regex.cc" />
+    <ClCompile Include="test\test_regex2.cc" />
+    <ClCompile Include="test\test_seg.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="src\json\json_internalarray.inl" />
+    <None Include="src\json\json_internalmap.inl" />
+    <None Include="src\json\json_valueiterator.inl" />
+    <None Include="test\COMAKE" />
+    <None Include="test\Makefile" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\boost.1.55.0.16\build\native\boost.targets" Condition="Exists('C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\boost.1.55.0.16\build\native\boost.targets')" />
+    <Import Project="C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\gflags.2.0.1.0\build\native\gflags.targets" Condition="Exists('C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\gflags.2.0.1.0\build\native\gflags.targets')" />
+    <Import Project="C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\glog.0.3.3.0\build\native\glog.targets" Condition="Exists('C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\glog.0.3.3.0\build\native\glog.targets')" />
+  </ImportGroup>
+</Project>
