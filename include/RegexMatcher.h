@@ -37,7 +37,17 @@ public:
       reg_list_.push_back(boost::regex(pattern, boost::regex::perl));
     }
   }
-  
+
+	//vector<string> set<string>
+	template<typename Container>
+	void add(const Container& patterns, bool icase = true)
+	{
+		foreach (string pattern, patterns)
+		{
+			add(pattern, icase);
+		}
+	}
+
   bool init(const char* file, bool icase = true)
   {
     ifstream ifs(file);
