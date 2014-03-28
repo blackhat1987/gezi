@@ -1,8 +1,8 @@
 #COMAKE2 edit-mode: -*- Makefile -*-
 ####################64Bit Mode####################
 ifeq ($(shell uname -m),x86_64)
-CC=g++
-CXX=g++
+CC=../../../../../ps/se/toolchain/gcc_only_4.8.2/bin/g++
+CXX=../../../../../ps/se/toolchain/gcc_only_4.8.2/bin/g++
 CXXFLAGS=-g \
   -O0 \
   -pipe \
@@ -46,6 +46,10 @@ DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../com/btest/gtest/include \
   -I../../../../../com/btest/gtest/output \
   -I../../../../../com/btest/gtest/output/include \
+  -I../../../../../lib2-64/bsl \
+  -I../../../../../lib2-64/bsl/include \
+  -I../../../../../lib2-64/bsl/output \
+  -I../../../../../lib2-64/bsl/output/include \
   -I../../../../../lib2-64/ccode \
   -I../../../../../lib2-64/ccode/include \
   -I../../../../../lib2-64/ccode/output \
@@ -86,14 +90,26 @@ DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../public/configure/include \
   -I../../../../../public/configure/output \
   -I../../../../../public/configure/output/include \
+  -I../../../../../public/connectpool \
+  -I../../../../../public/connectpool/include \
+  -I../../../../../public/connectpool/output \
+  -I../../../../../public/connectpool/output/include \
   -I../../../../../public/odict \
   -I../../../../../public/odict/include \
   -I../../../../../public/odict/output \
   -I../../../../../public/odict/output/include \
+  -I../../../../../public/spreg \
+  -I../../../../../public/spreg/include \
+  -I../../../../../public/spreg/output \
+  -I../../../../../public/spreg/output/include \
   -I../../../../../public/uconv \
   -I../../../../../public/uconv/include \
   -I../../../../../public/uconv/output \
   -I../../../../../public/uconv/output/include \
+  -I../../../../../quality/autotest/reportlib/cpp \
+  -I../../../../../quality/autotest/reportlib/cpp/include \
+  -I../../../../../quality/autotest/reportlib/cpp/output \
+  -I../../../../../quality/autotest/reportlib/cpp/output/include \
   -I../../../../../third-64/boost \
   -I../../../../../third-64/boost/include \
   -I../../../../../third-64/boost/output \
@@ -110,6 +126,10 @@ DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../third-64/openssl/include \
   -I../../../../../third-64/openssl/output \
   -I../../../../../third-64/openssl/output/include \
+  -I../../../../../third-64/pcre \
+  -I../../../../../third-64/pcre/include \
+  -I../../../../../third-64/pcre/output \
+  -I../../../../../third-64/pcre/output/include \
   -I../../../../../third-64/tcmalloc \
   -I../../../../../third-64/tcmalloc/include \
   -I../../../../../third-64/tcmalloc/output \
@@ -129,7 +149,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=873a02e4c5f46c3920cc14955eefe76c  COMAKE
+COMAKE_MD5=3c7c50290b786d11cd029504088961b0  COMAKE
 
 
 .PHONY:all
