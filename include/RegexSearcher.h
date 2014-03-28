@@ -40,6 +40,15 @@ public:
       reg_list_.push_back(boost::regex(pattern, boost::regex::perl));
     }
   }
+
+	template<typename Vec>
+	void add(const Vec& patterns, bool icase = false)
+	{
+		foreach(auto pattern, patterns)
+		{
+			add(pattern, icase);
+		}
+	}
   
   void add(const wstring& pattern, bool icase = true)
   {
@@ -125,7 +134,7 @@ public:
     {
       if (boost::regex_search(src, reg_list_[i]))
       {
-        VLOG(3) << (format("%s find with %dth reg %s") % src % i % reg_list_[i].str()).str();
+        VLOG(4) << (format("%s find with %dth reg %s") % src % i % reg_list_[i].str()).str();
         return true;
       }
     }

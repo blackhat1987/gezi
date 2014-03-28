@@ -90,9 +90,9 @@ public:
   {
     for (int i = 0; i < (int) reg_list_.size(); i++)
     {
-      if (boost::regex_match(ret, reg_list_[i]))
+      if (boost::regex_match(src, reg_list_[i]))
       {
-        DLOG(INFO) << (format("%s find with %dth reg %s")%src%i%reg_list_[i].str()).str();
+        VLOG(4) << (format("%s find with %dth reg %s")%src%i%reg_list_[i].str()).str();
         return true;
       }
     }
