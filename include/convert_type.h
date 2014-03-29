@@ -30,6 +30,7 @@
 #define UINT boost::lexical_cast<unsigned int>
 #define INT64 boost::lexical_cast<long long>
 #define UINT64 boost::lexical_cast<unsigned long long>
+#define FLOAT_ boost::lexical_cast<Float>
 #undef BOOL
 #define BOOL boost::lexical_cast<bool>
 #undef FLOAT
