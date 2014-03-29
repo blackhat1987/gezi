@@ -28,6 +28,8 @@ TEST(print, func)
 		std::cout << "Hello World!\n";
 	}
 	Pval(omp_get_num_threads());
+	Pval(omp_get_max_threads());
+	Pval(omp_get_num_procs());
 }
 
 int main(int argc, char *argv[])
