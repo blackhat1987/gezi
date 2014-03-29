@@ -27,6 +27,7 @@ TEST(print, func)
 	{
 		std::cout << "Hello World!\n";
 	}
+	Pval(omp_get_num_threads());
 }
 
 int main(int argc, char *argv[])
