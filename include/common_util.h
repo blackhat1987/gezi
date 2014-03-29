@@ -50,6 +50,10 @@
 
 #include "ProgressBar.h"
 
+#if __GNUC__ > 3
+#include <omp.h>
+#endif
+
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
 	TypeName(const TypeName&); \
 	void operator=(const TypeName&)
