@@ -84,12 +84,12 @@ namespace gezi
 			return *this;
 		}
 
-		bool is_dense()
+		bool is_dense() const 
 		{
 			return _nodes.empty();
 		}
 
-		bool is_sparse()
+		bool is_sparse() const
 		{
 			return !_nodes.empty();
 		}
