@@ -18,7 +18,8 @@
 #include <chrono>       // std::chrono::system_clock
 
 namespace gezi {
-
+ 
+	//@FIXME 似乎这个值始终一样 起不到作用？
 	inline unsigned random_seed()
 	{
 		return std::chrono::system_clock::now().time_since_epoch().count();
@@ -29,7 +30,7 @@ namespace gezi {
 	std::mt19937 g(rd());
 	std::shuffle(v.begin(), v.end(), g);*/
 
-	inline Random get_random(int randSeed = 0)
+	inline Random get_random(unsigned randSeed = 0)
 	{
 		if (randSeed)
 		{
@@ -37,7 +38,7 @@ namespace gezi {
 		}
 		else
 		{
-			return Random(random_seed());
+			return Random(std::random_device());
 		}
 	}
 
