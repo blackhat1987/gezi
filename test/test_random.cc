@@ -50,6 +50,18 @@ TEST(test_random, func)
 	for (int& x : foo) std::cout << ' ' << x;
 	std::cout << '\n';
 
+
+	std::uniform_int_distribution<uint32_t> uint_dist10(0, 10); // range [0,10]
+	std::uniform_int_distribution<uint32_t> uint_dist10(0, 10); // range [0,10]
+	std::normal_distribution<double> normal_dist(mean, stddeviation);  // N(mean, stddeviation)
+	int x = 0;
+	while (x++ < 100)
+	{
+		std::cout << uint_dist(rng) << " "
+			<< uint_dist10(rng) << " "
+			<< normal_dist(rng) << std::endl;
+	}
+
 }
 
 int main(int argc, char *argv[])
