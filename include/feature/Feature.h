@@ -375,7 +375,7 @@ namespace gezi
 			return _name_counts;
 		}
 
-		inline const vector<double>& values() const
+		inline const vector<double>& cvalues() const
 		{
 			return _values;
 		}
