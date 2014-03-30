@@ -86,12 +86,12 @@ namespace gezi
 
 		bool is_dense()
 		{
-			return !_values.empty();
+			return _nodes.empty();
 		}
 
 		bool is_sparse()
 		{
-			return _values.empty();
+			return !_nodes.empty();
 		}
 
 		inline int size() const
@@ -120,17 +120,19 @@ namespace gezi
 			return _names.empty();
 		}
 
-		/**
-		 * 返回非零的特征数量
-		 *
-		 */
-		//@TODO remove
+		//@TODO remove  feature num 应该是所有feature的num  这个应该用count代替 @FIXME
+		//也可能nodes里面有value是0的 
 		inline int featureNum() const
 		{
 			return _nodes.size();
 		}
 
 		inline int feature_num() const
+		{
+			return _nodes.size();
+		}
+
+		inline int count()
 		{
 			return _nodes.size();
 		}
