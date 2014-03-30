@@ -105,6 +105,14 @@ namespace gezi {
 		return vec;
 	}
 
+	inline void split(const string& input_, const string& sep, string& first, string& second)
+	{
+		string input = boost::trim_copy(input_);
+		int index = input_.find(sep);
+		first = input.substr(0, index);
+		second = input.substr(index + sep.size());
+	}
+
 	//TODO FIXME 貌似比如 "1, 2, 3"这样还是处理不了会抛异常 按说trim了
 	template<typename T>
 	inline void to_vec(const string& input_, vector<T>& ovec, const string& sep = ",")
