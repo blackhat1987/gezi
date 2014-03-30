@@ -15,7 +15,7 @@
 #define private public
 #define protected public
 #include "common_util.h"
-
+#include "random_util.h"
 using namespace std;
 using namespace gezi;
 DEFINE_int32(level, 0, "min log level");
@@ -25,7 +25,8 @@ DEFINE_string(type, "simple", "");
 
 TEST(test_random, func)
 {
-
+	vector<Int> vec = cpplinq::range(10) >> to_vector();
+	Pvec(vec);
 }
 
 int main(int argc, char *argv[])
