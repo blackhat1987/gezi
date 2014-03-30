@@ -19,7 +19,7 @@
 using namespace std;
 using namespace gezi;
 DEFINE_int32(level, 0, "min log level");
-DEFINE_uint32(seed, 0, "seed");
+DEFINE_uint64(seed, 0, "seed");
 DEFINE_string(i, "", "input");
 DEFINE_string(o, "", "output");
 DEFINE_string(type, "simple", "");
