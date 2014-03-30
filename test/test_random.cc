@@ -73,14 +73,14 @@ TEST(test_random, func)
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
 		//sample(vec, 10, FLAGS_seed);
-		sample(vec.begin(), vec.end(), 10, Random(FLAGS_seed));
+		sample(vec.begin(), vec.end(), 10, get_random(FLAGS_seed));
 		Pvec(vec);
 	}
 	{
 		{
 			vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 			Pvec(vec);
-			shuffle2(vec.begin(), vec.end(), Random(FLAGS_seed));
+			shuffle2(vec.begin(), vec.end(), get_random(FLAGS_seed));
 			Pvec(vec);
 		}
 	}
