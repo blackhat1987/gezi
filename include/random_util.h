@@ -55,13 +55,13 @@ namespace gezi {
 	}
 
 	template<typename RandomAccessIterator, typename RandomNumberEngine>
-	inline void sample(RandomAccessIterator first, RandomAccessIterator last, int sample_num, RandomNumberEngine&& rng)
+	inline void sample(RandomAccessIterator first, RandomAccessIterator last, size_t sample_num, RandomNumberEngine&& rng)
 	{
 		if (first == last)
 			return;
 
-		int total = last - first;
-		int len = std::min(total, sample_num);
+		size_t total = last - first;
+		size_t len = std::min(total, sample_num);
 
 		for (size_t i = 0; i < len; i++)
 		{
