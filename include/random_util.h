@@ -65,13 +65,13 @@ namespace gezi {
 
 		for (size_t i = 0; i < len; i++)
 		{
-			std::uniform_int_distribution<size_t> d(i, total - 1);
+			std::uniform_int_distribution<size_t> d(0, total - i - 1);
 			swap(first[i], first[i + d(rng)]);
 		}
 	}
 
 	template<typename Vec>
-	void sample(Vec& vec, int maxNum, unsigned randSeed = 0)
+	void sample(Vec& vec, size_t maxNum, unsigned randSeed = 0)
 	{
 		sample(vec.begin(), vec.end(), maxNum, get_random(randSeed));
 	}
