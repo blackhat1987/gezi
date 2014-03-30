@@ -37,7 +37,9 @@ namespace gezi {
 		}
 		else
 		{
-			return Random(random_seed());
+			unsigned seed = random_seed();
+			Pval(seed);
+			return Random(seed);
 		}
 	}
 
