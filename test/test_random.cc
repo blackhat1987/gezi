@@ -51,7 +51,7 @@ TEST(test_random, func)
 	std::cout << '\n';
 
 
-	std::uniform_int_distribution<uint32_t> uint_dist10(0, 10); // range [0,10]
+	std::uniform_int_distribution<uint32_t> uint_dist(0, 10); // range [0,10]
 	std::uniform_int_distribution<uint32_t> uint_dist10(0, 10); // range [0,10]
 	std::normal_distribution<double> normal_dist(mean, stddeviation);  // N(mean, stddeviation)
 	int x = 0;
