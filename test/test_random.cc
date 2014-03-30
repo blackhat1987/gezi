@@ -29,7 +29,7 @@ TEST(test_random, func)
 	{
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
-		shuffle(vec.begin(), vec.end(), Random());
+		shuffle(vec.begin(), vec.end(), get_random(FLAGS_seed));
 		Pvec(vec);
 	}
 	{

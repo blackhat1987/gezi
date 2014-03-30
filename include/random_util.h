@@ -31,15 +31,16 @@ namespace gezi {
 
 	inline Random get_random(unsigned randSeed = 0)
 	{
-		if (randSeed != 0)
+		if (randSeed)
 		{
 			return Random(randSeed);
 		}
 		else
 		{
-			unsigned seed = random_seed();
-			Pval(seed);
-			return Random(seed);
+			std::random_device rd;
+			return Random(rd());
+			//or
+			//return Random(random_seed());
 		}
 	}
 
