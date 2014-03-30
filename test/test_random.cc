@@ -38,6 +38,18 @@ TEST(test_random, func)
 		shuffle(vec.begin(), vec.end(), Random(FLAGS_seed));
 		Pvec(vec);
 	}
+
+	std::array<int, 5> foo{ 1, 2, 3, 4, 5 };
+
+	// obtain a time-based seed:
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+	shuffle(foo.begin(), foo.end(), std::default_random_engine(seed));
+
+	std::cout << "shuffled elements:";
+	for (int& x : foo) std::cout << ' ' << x;
+	std::cout << '\n';
+
 }
 
 int main(int argc, char *argv[])
