@@ -38,7 +38,8 @@ namespace gezi {
 		}
 		else
 		{
-			return Random(std::random_device());
+			std::random_device rd;
+			return Random(rd());
 		}
 	}
 
