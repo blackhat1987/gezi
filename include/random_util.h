@@ -66,7 +66,10 @@ namespace gezi {
 		for (size_t i = 0; i < len; i++)
 		{
 			std::uniform_int_distribution<size_t> d(0, total - i - 1);
-			swap(first[i], first[i + d(rng)]);
+			int val = d(rng);
+			Pval(val);
+			swap(first[i], first[i + val]);
+			//swap(first[i], first[i + d(rng)]);
 		}
 	}
 
