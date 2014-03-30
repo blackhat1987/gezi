@@ -72,19 +72,19 @@ TEST(test_random, func)
 	{
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
-		sample(vec, 10, 1982);
+		sample(vec, 10, FLAGS_seed);
 		Pvec(vec);
 	}
 	{
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
-		sample(vec, 3, 1982);
+		sample(vec, 2, FLAGS_seed);
 		Pvec(vec);
 	}
 	{
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
-		sample(vec, 1, 1982);
+		sample(vec, 1, FLAGS_seed);
 		Pvec(vec);
 	}
 }
