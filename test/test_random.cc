@@ -25,8 +25,18 @@ DEFINE_string(type, "simple", "");
 
 TEST(test_random, func)
 {
-	vector<int> vec = cpplinq::range(0, 10) >> to_vector();
-	Pvec(vec);
+	{
+		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
+		Pvec(vec);
+		shuffle(vec.begin(), vec.end(), Random());
+		Pvec(vec);
+	}
+	{
+		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
+		Pvec(vec);
+		shuffle(vec.begin(), vec.end(), Random());
+		Pvec(vec);
+	}
 }
 
 int main(int argc, char *argv[])
