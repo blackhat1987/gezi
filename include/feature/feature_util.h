@@ -218,7 +218,7 @@ namespace gezi
 	//注意不要单独使用 一般是在类似下面 情况使用
 	inline void write_table(const Feature& feature, const string& label, ofstream& ofs, const string& name = "")
 	{
-		if (feature.sparse())
+		if (feature.only_sparse())
 		{
 			write_sparse(feature, label, ofs, name);
 			return;

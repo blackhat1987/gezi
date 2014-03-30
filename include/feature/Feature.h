@@ -94,6 +94,16 @@ namespace gezi
 			return !_nodes.empty();
 		}
 
+		bool only_sparse() const
+		{
+			return _values.empty();
+		}
+
+		bool only_dense() const
+		{
+			return _nodes.empty();
+		}
+
 		inline int size() const
 		{
 			return _values.size();
