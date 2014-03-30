@@ -19,6 +19,7 @@
 using namespace std;
 using namespace gezi;
 DEFINE_int32(level, 0, "min log level");
+DEFINE_int32(seed, 0, "min log level");
 DEFINE_string(i, "", "input");
 DEFINE_string(o, "", "output");
 DEFINE_string(type, "simple", "");
@@ -34,7 +35,7 @@ TEST(test_random, func)
 	{
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
-		shuffle(vec.begin(), vec.end(), Random());
+		shuffle(vec.begin(), vec.end(), Random(FLAGS_seed));
 		Pvec(vec);
 	}
 }
