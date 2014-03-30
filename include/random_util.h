@@ -62,14 +62,27 @@ namespace gezi {
 
 		size_t total = last - first;
 		size_t len = std::min(total, sample_num);
-
+		//注意如果len= total 那么最后一个交换其实不需要
 		for (size_t i = 0; i < len; i++)
 		{
 			std::uniform_int_distribution<size_t> d(0, total - i - 1);
-			int val = d(rng);
-			Pval(val);
-			swap(first[i], first[i + val]);
-			//swap(first[i], first[i + d(rng)]);
+			swap(first[i], first[i + d(rng)]);
+		}
+	}
+
+	//just for test
+	template<typename RandomAccessIterator, typename RandomNumberEngine>
+	inline void shuffle2(RandomAccessIterator first, RandomAccessIterator last, RandomNumberEngine&& rng)
+	{
+		if (first == last)
+			return;
+
+		diff_t n = last - first;
+		typedef typename std::iterator_traits<RandomAccessIterator>::difference_type diff_t;
+		for (diff_t i = n - 1; i > 0; i--)
+		{
+			std::uniform_int_distribution<size_t> d(0, i);
+			swap(first[i], first[d(rng)]);
 		}
 	}
 

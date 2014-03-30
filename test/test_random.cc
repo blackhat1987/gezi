@@ -70,10 +70,18 @@ TEST(test_random, func)
 	}
 
 	{
-		vector<int> vec = cpplinq::range(0, 10) >> reverse() >> to_vector();
+		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
 		sample(vec, 10, FLAGS_seed);
 		Pvec(vec);
+	}
+	{
+		{
+			vector<int> vec = cpplinq::range(0, 10) >> to_vector();
+			Pvec(vec);
+			shuffle2(vec.begin(), vec.end(), FLAGS_seed);
+			Pvec(vec);
+		}
 	}
 	{
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
