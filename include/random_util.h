@@ -24,23 +24,26 @@ namespace gezi {
 		return std::chrono::system_clock::now().time_since_epoch().count();
 	}
 
-	typedef std::default_random_engine Random;
+	typedef std::default_random_engine RandomEngine;
+	typedef RandomEngine Random;
+	typedef std::uniform_int_distribution<uint32_t> RandomRange;
+
 	/*std::random_device rd;
 	std::mt19937 g(rd());
 	std::shuffle(v.begin(), v.end(), g);*/
 
-	inline Random get_random(unsigned randSeed = 0)
+	inline RandomEngine get_random(unsigned randSeed = 0)
 	{
 		if (randSeed)
 		{
-			return Random(randSeed);
+			return RandomEngine(randSeed);
 		}
 		else
 		{
 			std::random_device rd;
-			return Random(rd());
+			return RandomEngine(rd());
 			//or
-			//return Random(random_seed());
+			//return RandomEngine(random_seed());
 		}
 	}
 
