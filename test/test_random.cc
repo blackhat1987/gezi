@@ -62,6 +62,13 @@ TEST(test_random, func)
 			<< normal_dist(rng) << std::endl;
 	}
 
+	{
+		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
+		Pvec(vec);
+		shuffle(vec, FLAGS_seed);
+		Pvec(vec);
+	}
+
 }
 
 int main(int argc, char *argv[])

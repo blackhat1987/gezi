@@ -47,6 +47,11 @@ namespace gezi {
 		}
 	}
 
+	template<typename Vec>
+	void shuffle(Vec& vec, unsigned randSeed = 0)
+	{
+		shuffle(vec.begin(), vec.end(), get_random(randSeed));
+	}
 }  //----end of namespace gezi
 
 #endif  //----end of RANDOM_UTIL_H_
