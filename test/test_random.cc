@@ -69,6 +69,24 @@ TEST(test_random, func)
 		Pvec(vec);
 	}
 
+	{
+		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
+		Pvec(vec);
+		sample(vec, 10, 1982);
+		Pvec(vec);
+	}
+	{
+		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
+		Pvec(vec);
+		sample(vec, 3, 1982);
+		Pvec(vec);
+	}
+	{
+		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
+		Pvec(vec);
+		sample(vec, 1, 1982);
+		Pvec(vec);
+	}
 }
 
 int main(int argc, char *argv[])

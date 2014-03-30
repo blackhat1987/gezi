@@ -26,7 +26,8 @@ namespace gezi {
 
 	typedef std::default_random_engine RandomEngine;
 	typedef RandomEngine Random;
-	typedef std::uniform_int_distribution<uint32_t> RandomRange;
+	//注意是闭区间
+	typedef std::uniform_int_distribution<uint32_t> RandomRange; 
 
 	/*std::random_device rd;
 	std::mt19937 g(rd());
@@ -51,6 +52,28 @@ namespace gezi {
 	void shuffle(Vec& vec, unsigned randSeed = 0)
 	{
 		shuffle(vec.begin(), vec.end(), get_random(randSeed));
+	}
+
+	template<typename RandomAccessIterator, typename RandomNumberEngine>
+	inline voi sample(RandomAccessIterator first, RandomAccessIterator last, int sample_num, RandomNumberEngine&& rng)
+	{
+		if (first == last)
+			return;
+
+		int total = last - first;
+		int len = std::min(total, sample_num);
+
+		for (size_t i = 0; i < len; i++)
+		{
+			std::uniform_int_distribution<size_t> d(i, total - 1);
+			swap(first[i], first[i + d(rng)]);
+		}
+	}
+
+	template<typename Vec>
+	void sample(Vec& vec, int maxNum, unsigned randSeed = 0)
+	{
+		sample(vec.begin(), vec.end(), maxNum, get_random(randSeed));
 	}
 }  //----end of namespace gezi
 
