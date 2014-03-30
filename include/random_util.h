@@ -19,7 +19,6 @@
 
 namespace gezi {
  
-	//@FIXME 似乎这个值始终一样 起不到作用？
 	inline unsigned random_seed()
 	{
 		return std::chrono::system_clock::now().time_since_epoch().count();
@@ -38,8 +37,7 @@ namespace gezi {
 		}
 		else
 		{
-			std::random_device rd;
-			return Random(rd());
+			return Random(random_seed());
 		}
 	}
 

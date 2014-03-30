@@ -26,7 +26,6 @@ DEFINE_string(type, "simple", "");
 
 TEST(test_random, func)
 {
-	Pval(random_seed());
 	{
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
