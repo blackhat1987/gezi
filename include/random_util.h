@@ -77,8 +77,8 @@ namespace gezi {
 		if (first == last)
 			return;
 
-		diff_t n = last - first;
 		typedef typename std::iterator_traits<RandomAccessIterator>::difference_type diff_t;
+		diff_t n = last - first;
 		for (diff_t i = n - 1; i > 0; i--)
 		{
 			std::uniform_int_distribution<size_t> d(0, i);
