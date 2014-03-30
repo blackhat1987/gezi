@@ -55,7 +55,7 @@ namespace gezi {
 	}
 
 	template<typename RandomAccessIterator, typename RandomNumberEngine>
-	inline voi sample(RandomAccessIterator first, RandomAccessIterator last, int sample_num, RandomNumberEngine&& rng)
+	inline void sample(RandomAccessIterator first, RandomAccessIterator last, int sample_num, RandomNumberEngine&& rng)
 	{
 		if (first == last)
 			return;
