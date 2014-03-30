@@ -18,12 +18,15 @@
 #include <map>
 #if __GNUC__ > 3
 #include <array>
+#include <memory>
 #else
+#include <boost/shared_ptr.hpp>
 #include <boost/array.hpp>
 #include <boost/ref.hpp>
 namespace std {
 	using boost::array;
 	using boost::ref;
+	using boost::shared_ptr;
 }
 #endif
 #include <fstream>
