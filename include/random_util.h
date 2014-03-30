@@ -31,7 +31,7 @@ namespace gezi {
 
 	inline Random get_random(unsigned randSeed = 0)
 	{
-		if (randSeed)
+		if (randSeed != 0)
 		{
 			return Random(randSeed);
 		}
