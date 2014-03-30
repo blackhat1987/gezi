@@ -44,8 +44,9 @@ namespace gezi
 		//保留一个zero_thre但是实际不用也ok 稀疏使用判断==0 libsvm和tlc都是用的判断==0,虽然有一定浮点误差，为了结果一致仍然判断==0
 		//Feature feature(-1) 可以用来表示一个完全dense表示,values,nodes都dense
 
-		Feature(bool sparse = false, int dimension = 1000, bool use_section_name = true, double zero_thre = 0.0)
-			: _sparse(sparse),
+		Feature(bool keep_dense = false, bool keep_sparse = false, int dimension = 1000, bool use_section_name = true, double zero_thre = 0.0)
+			: _keep_dense(keep_dense),
+			_keep_sparse(keep_sparse),
 			_use_section_name(use_section_name),
 			_zero_thre(zero_thre),
 			_dimension(dimension)
@@ -62,14 +63,35 @@ namespace gezi
 		{
 
 		}
-		bool sparse() const
+		bool keep_sparse() const
 		{
-			return _sparse;
+			return _keep_sparse;
 		}
-		inline Feature& sparse(bool sparse_)
+		inline Feature& keep_sparse(bool sparse_)
 		{
-			_sparse = sparse_;
+			_keep_sparse = sparse_;
 			return *this;
+		}
+
+		bool keep_dense() const
+		{
+			return _keep_dense;
+		}
+
+		inline Feature& keep_dense(bool dense_)
+		{
+			_keep_dense = dense_;
+			return *this;
+		}
+
+		bool is_dense()
+		{
+			return !_values.empty();
+		}
+
+		bool is_sparse()
+		{
+			return _values.empty();
 		}
 
 		inline int size() const
@@ -83,7 +105,7 @@ namespace gezi
 		 */
 		inline int dimension() const
 		{
-			if (!_sparse)
+			if (!_keep_sparse)
 			{
 				return _names.size();
 			}
@@ -102,7 +124,13 @@ namespace gezi
 		 * 返回非零的特征数量
 		 *
 		 */
+		//@TODO remove
 		inline int featureNum() const
+		{
+			return _nodes.size();
+		}
+
+		inline int feature_num() const
 		{
 			return _nodes.size();
 		}
@@ -139,7 +167,7 @@ namespace gezi
 		}
 		void to_dense()
 		{
-			_sparse = false;
+			_keep_sparse = false;
 			_values.resize(_dimension, 0);
 			foreach(Node& node, _nodes)
 			{
@@ -156,14 +184,14 @@ namespace gezi
 				name = (format("%s_%s") % _section_names.back() % name).str();
 			}
 			
-			if (fabs(value) > _zero_thre)
+			if (!_keep_dense && fabs(value) > _zero_thre)
 			{
 				_nodes.push_back(Node(_names.size(), value));
 			}
 
 			_names.push_back(name);
 			_idx++;
-			if (!_sparse)
+			if (!_keep_sparse)
 			{
 				_values.push_back(value);
 			}
@@ -328,6 +356,8 @@ namespace gezi
 			return _values;
 		}
 
+
+		//@TODO 去掉cnames,cvalues 暂时只为兼容性
 		inline const vector<string>& cnames() const
 		{
 			return _names;
@@ -343,7 +373,27 @@ namespace gezi
 			return _name_counts;
 		}
 
-		inline const vector<double>& cvalues() const
+		inline const vector<double>& values() const
+		{
+			return _values;
+		}
+
+		inline const vector<string>& names() const
+		{
+			return _names;
+		}
+
+		inline const vector<string>& section_names() const
+		{
+			return _section_names;
+		}
+
+		inline const vector<int>& name_counts() const
+		{
+			return _name_counts;
+		}
+
+		inline const vector<double>& values() const
 		{
 			return _values;
 		}
@@ -369,6 +419,43 @@ namespace gezi
 			return os;
 		}
 
+		template<typename ValueVistor>
+		void ForEach(ValueVistor visitor) const
+		{
+			if (is_dense())
+			{
+				for (size_t i = 0; i < _values.size(); i++)
+				{
+					visitor(i, _values[i]);
+				}
+			}
+			else
+			{
+				foreach(const Node& node, _nodes)
+				{
+					visitor(node.index, node.value);
+				}
+			}
+		}
+
+		template<typename ValueVistor>
+		void ForEach(ValueVistor visitor)
+		{
+			if (is_dense())
+			{
+				for (size_t i = 0; i < _values.size(); i++)
+				{
+					visitor(i, ref(_values[i]));
+				}
+			}
+			else
+			{
+				foreach(Node& node, _nodes)
+				{
+					visitor(node.index, ref(node.value));
+				}
+			}
+		}
 	private:
 		vector<Node> _nodes;
 		double _zero_thre;
@@ -379,7 +466,8 @@ namespace gezi
 		vector<double>_values;
 		vector<int> _name_counts;
 		int _idx; //section 内部index 
-		bool _sparse;
+		bool _keep_sparse;
+		bool _keep_dense;
 		int _dimension;
 	};
 

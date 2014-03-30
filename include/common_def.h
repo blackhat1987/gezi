@@ -20,8 +20,10 @@
 #include <array>
 #else
 #include <boost/array.hpp>
+#include <boost/ref.hpp>
 namespace std {
 	using boost::array;
+	using boost::ref;
 }
 #endif
 #include <fstream>
