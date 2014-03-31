@@ -35,7 +35,7 @@ TEST(test_random, func)
 	{
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
-		shuffle(vec.begin(), vec.end(), Random(FLAGS_seed));
+		shuffle(vec.begin(), vec.end(), RandomEngine(FLAGS_seed));
 		Pvec(vec);
 	}
 
