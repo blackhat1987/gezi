@@ -118,7 +118,6 @@ srcs=GLOB('./src/*.cpp ./src/feature/*.cpp ./src/model/*.cpp'.replace('./',RELAT
 headers=''
 #使用库
 LIBS('./include/tools/pinyin/libPYNotation.a')
-#TARGET('copy', ShellCommands('mkdir -p output/lib;mkdir -p output/include','cp ./include/tools/pinyin/libPYNotation.a ./output/lib/;cp -rf ./melt/include/* output/include'), CleanCommands('rm -rf ./output/lib/libPYNotation.a')) 
 
 TARGET('copy-pinyin-lib', ShellCommands('mkdir -p output/lib','cp ./include/tools/pinyin/libPYNotation.a ./output/lib/'), CleanCommands('rm -rf ./output/lib/libPYNotation.a')) 
 
@@ -128,9 +127,6 @@ StaticLibrary('gezi_common',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG'
 
 srcs = GLOB('./src/json/*.cpp'.replace('./',RELATIVE_PATH))
 StaticLibrary('gezi_json',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),HeaderFiles(headers))
-
-#srcs = GLOB('./melt/src/Prediction/Instances/*.cpp'.replace('./',RELATIVE_PATH))
-#StaticLibrary('gezi_melt',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),HeaderFiles(headers))
  
 #共享库
 #子目录

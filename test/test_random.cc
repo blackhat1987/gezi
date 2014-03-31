@@ -29,7 +29,7 @@ TEST(test_random, func)
 	{
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
-		shuffle(vec.begin(), vec.end(), get_random_engine(FLAGS_seed));
+		shuffle(vec.begin(), vec.end(), random_engine(FLAGS_seed));
 		Pvec(vec);
 	}
 	{
@@ -50,7 +50,7 @@ TEST(test_random, func)
 	for (int& x : foo) std::cout << ' ' << x;
 	std::cout << '\n';
 
-	RandomEngine rng = get_random_engine();
+	RandomEngine rng = random_engine();
 	std::uniform_int_distribution<uint32_t> uint_dist; // range [0,10]
 	RandomRange uint_dist10(0, 10); // range [0,10]
 	std::normal_distribution<double> normal_dist(0, 1);  // N(mean, stddeviation)
@@ -73,14 +73,14 @@ TEST(test_random, func)
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
 		//sample(vec, 10, FLAGS_seed);
-		sample(vec.begin(), vec.end(), 10, get_random_engine(FLAGS_seed));
+		sample(vec.begin(), vec.end(), 10, random_engine(FLAGS_seed));
 		Pvec(vec);
 	}
 	{
 		{
 			vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 			Pvec(vec);
-			shuffle2(vec.begin(), vec.end(), get_random_engine(FLAGS_seed));
+			shuffle2(vec.begin(), vec.end(), random_engine(FLAGS_seed));
 			Pvec(vec);
 		}
 	}

@@ -333,45 +333,6 @@
     <ClInclude Include="gcc_IntelliSense.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="melt\include\MLCore\IPredictor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="melt\include\MLCore\ITrainer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="melt\include\MLCore\ITrainerFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="melt\include\Numeric\Vector\Vector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="melt\include\Prediction\Instances\HeaderSchema.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="melt\include\Prediction\Instances\Instance.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="melt\include\Prediction\Instances\InstanceParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="melt\include\Prediction\Instances\Instances.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="melt\include\Predictors\FastRank\FastRankClassification.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="melt\include\Predictors\FastRank\FastRankRanking.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="melt\include\Predictors\FastRank\FastRankRegression.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="melt\include\Run\CVFoldCreator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="melt\include\Run\MeltArguments.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -492,9 +453,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="test\test_shared_ptr.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="melt\src\Prediction\Instances\InstanceParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
