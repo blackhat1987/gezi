@@ -41,7 +41,8 @@ INCPATH=-I. \
   -I./output/include \
   -I./include/feature \
   -I./include/model \
-  -I./include/numeric
+  -I./include/numeric \
+  -I./melt/include/
 DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../com/btest/gtest/include \
   -I../../../../../com/btest/gtest/output \
@@ -149,11 +150,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=3c7c50290b786d11cd029504088961b0  COMAKE
+COMAKE_MD5=df239a39d2fc20f1e0c13616ddf1fedf  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check copy libgezi.a 
+all:comake2_makefile_check copy-pinyin-lib libgezi_common.a libgezi_json.a 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -173,24 +174,26 @@ ccpclean:
 .PHONY:clean
 clean:ccpclean
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mclean[0m']"
-	rm -rf copy
+	rm -rf copy-pinyin-lib
 	rm -rf ./output/lib/libPYNotation.a
-	rm -rf libgezi.a
-	rm -rf ./output/lib/libgezi.a
-	rm -rf src/gezi_Seg.o
-	rm -rf src/gezi_SharedSegmentor.o
-	rm -rf src/gezi_conf_util.o
-	rm -rf src/gezi_word_seg.o
-	rm -rf src/model/gezi_LinearModel.o
-	rm -rf src/model/gezi_ModelFactory.o
-	rm -rf src/model/gezi_Predictor.o
-	rm -rf src/model/gezi_RandForestModel.o
-	rm -rf src/model/gezi_Score.o
-	rm -rf src/model/gezi_SharedPredictor.o
-	rm -rf src/model/gezi_SvmModel.o
-	rm -rf src/json/gezi_json_reader.o
-	rm -rf src/json/gezi_json_value.o
-	rm -rf src/json/gezi_json_writer.o
+	rm -rf libgezi_common.a
+	rm -rf ./output/lib/libgezi_common.a
+	rm -rf libgezi_json.a
+	rm -rf ./output/lib/libgezi_json.a
+	rm -rf src/gezi_common_Seg.o
+	rm -rf src/gezi_common_SharedSegmentor.o
+	rm -rf src/gezi_common_conf_util.o
+	rm -rf src/gezi_common_word_seg.o
+	rm -rf src/model/gezi_common_LinearModel.o
+	rm -rf src/model/gezi_common_ModelFactory.o
+	rm -rf src/model/gezi_common_Predictor.o
+	rm -rf src/model/gezi_common_RandForestModel.o
+	rm -rf src/model/gezi_common_Score.o
+	rm -rf src/model/gezi_common_SharedPredictor.o
+	rm -rf src/model/gezi_common_SvmModel.o
+	rm -rf src/json/gezi_json_json_reader.o
+	rm -rf src/json/gezi_json_json_value.o
+	rm -rf src/json/gezi_json_json_writer.o
 
 .PHONY:dist
 dist:
@@ -209,154 +212,158 @@ love:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlove[0m']"
 	@echo "make love done"
 
-copy:
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mcopy[0m']"
+copy-pinyin-lib:
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mcopy-pinyin-lib[0m']"
 	mkdir -p output/lib
 	cp ./include/tools/pinyin/libPYNotation.a ./output/lib/
 
-libgezi.a:src/gezi_Seg.o \
-  src/gezi_SharedSegmentor.o \
-  src/gezi_conf_util.o \
-  src/gezi_word_seg.o \
-  src/model/gezi_LinearModel.o \
-  src/model/gezi_ModelFactory.o \
-  src/model/gezi_Predictor.o \
-  src/model/gezi_RandForestModel.o \
-  src/model/gezi_Score.o \
-  src/model/gezi_SharedPredictor.o \
-  src/model/gezi_SvmModel.o \
-  src/json/gezi_json_reader.o \
-  src/json/gezi_json_value.o \
-  src/json/gezi_json_writer.o
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibgezi.a[0m']"
-	ar crs libgezi.a src/gezi_Seg.o \
-  src/gezi_SharedSegmentor.o \
-  src/gezi_conf_util.o \
-  src/gezi_word_seg.o \
-  src/model/gezi_LinearModel.o \
-  src/model/gezi_ModelFactory.o \
-  src/model/gezi_Predictor.o \
-  src/model/gezi_RandForestModel.o \
-  src/model/gezi_Score.o \
-  src/model/gezi_SharedPredictor.o \
-  src/model/gezi_SvmModel.o \
-  src/json/gezi_json_reader.o \
-  src/json/gezi_json_value.o \
-  src/json/gezi_json_writer.o
+libgezi_common.a:src/gezi_common_Seg.o \
+  src/gezi_common_SharedSegmentor.o \
+  src/gezi_common_conf_util.o \
+  src/gezi_common_word_seg.o \
+  src/model/gezi_common_LinearModel.o \
+  src/model/gezi_common_ModelFactory.o \
+  src/model/gezi_common_Predictor.o \
+  src/model/gezi_common_RandForestModel.o \
+  src/model/gezi_common_Score.o \
+  src/model/gezi_common_SharedPredictor.o \
+  src/model/gezi_common_SvmModel.o
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibgezi_common.a[0m']"
+	ar crs libgezi_common.a src/gezi_common_Seg.o \
+  src/gezi_common_SharedSegmentor.o \
+  src/gezi_common_conf_util.o \
+  src/gezi_common_word_seg.o \
+  src/model/gezi_common_LinearModel.o \
+  src/model/gezi_common_ModelFactory.o \
+  src/model/gezi_common_Predictor.o \
+  src/model/gezi_common_RandForestModel.o \
+  src/model/gezi_common_Score.o \
+  src/model/gezi_common_SharedPredictor.o \
+  src/model/gezi_common_SvmModel.o
 	mkdir -p ./output/lib
-	cp -f --link libgezi.a ./output/lib
+	cp -f --link libgezi_common.a ./output/lib
 
-src/gezi_Seg.o:src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_Seg.o[0m']"
+libgezi_json.a:src/json/gezi_json_json_reader.o \
+  src/json/gezi_json_json_value.o \
+  src/json/gezi_json_json_writer.o
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibgezi_json.a[0m']"
+	ar crs libgezi_json.a src/json/gezi_json_json_reader.o \
+  src/json/gezi_json_json_value.o \
+  src/json/gezi_json_json_writer.o
+	mkdir -p ./output/lib
+	cp -f --link libgezi_json.a ./output/lib
+
+src/gezi_common_Seg.o:src/Seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_common_Seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/gezi_Seg.o src/Seg.cpp
+  -DNDEBUG $(CXXFLAGS)  -o src/gezi_common_Seg.o src/Seg.cpp
 
-src/gezi_SharedSegmentor.o:src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_SharedSegmentor.o[0m']"
+src/gezi_common_SharedSegmentor.o:src/SharedSegmentor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_common_SharedSegmentor.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/gezi_SharedSegmentor.o src/SharedSegmentor.cpp
+  -DNDEBUG $(CXXFLAGS)  -o src/gezi_common_SharedSegmentor.o src/SharedSegmentor.cpp
 
-src/gezi_conf_util.o:src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_conf_util.o[0m']"
+src/gezi_common_conf_util.o:src/conf_util.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_common_conf_util.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/gezi_conf_util.o src/conf_util.cpp
+  -DNDEBUG $(CXXFLAGS)  -o src/gezi_common_conf_util.o src/conf_util.cpp
 
-src/gezi_word_seg.o:src/word_seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_word_seg.o[0m']"
+src/gezi_common_word_seg.o:src/word_seg.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_common_word_seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/gezi_word_seg.o src/word_seg.cpp
+  -DNDEBUG $(CXXFLAGS)  -o src/gezi_common_word_seg.o src/word_seg.cpp
 
-src/model/gezi_LinearModel.o:src/model/LinearModel.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_LinearModel.o[0m']"
+src/model/gezi_common_LinearModel.o:src/model/LinearModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_LinearModel.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_LinearModel.o src/model/LinearModel.cpp
+  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_LinearModel.o src/model/LinearModel.cpp
 
-src/model/gezi_ModelFactory.o:src/model/ModelFactory.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_ModelFactory.o[0m']"
+src/model/gezi_common_ModelFactory.o:src/model/ModelFactory.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_ModelFactory.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_ModelFactory.o src/model/ModelFactory.cpp
+  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_ModelFactory.o src/model/ModelFactory.cpp
 
-src/model/gezi_Predictor.o:src/model/Predictor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_Predictor.o[0m']"
+src/model/gezi_common_Predictor.o:src/model/Predictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_Predictor.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_Predictor.o src/model/Predictor.cpp
+  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_Predictor.o src/model/Predictor.cpp
 
-src/model/gezi_RandForestModel.o:src/model/RandForestModel.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_RandForestModel.o[0m']"
+src/model/gezi_common_RandForestModel.o:src/model/RandForestModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_RandForestModel.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_RandForestModel.o src/model/RandForestModel.cpp
+  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_RandForestModel.o src/model/RandForestModel.cpp
 
-src/model/gezi_Score.o:src/model/Score.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_Score.o[0m']"
+src/model/gezi_common_Score.o:src/model/Score.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_Score.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_Score.o src/model/Score.cpp
+  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_Score.o src/model/Score.cpp
 
-src/model/gezi_SharedPredictor.o:src/model/SharedPredictor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_SharedPredictor.o[0m']"
+src/model/gezi_common_SharedPredictor.o:src/model/SharedPredictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_SharedPredictor.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_SharedPredictor.o src/model/SharedPredictor.cpp
+  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_SharedPredictor.o src/model/SharedPredictor.cpp
 
-src/model/gezi_SvmModel.o:src/model/SvmModel.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_SvmModel.o[0m']"
+src/model/gezi_common_SvmModel.o:src/model/SvmModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_SvmModel.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_SvmModel.o src/model/SvmModel.cpp
+  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_SvmModel.o src/model/SvmModel.cpp
 
-src/json/gezi_json_reader.o:src/json/json_reader.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_reader.o[0m']"
+src/json/gezi_json_json_reader.o:src/json/json_reader.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_json_reader.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/json/gezi_json_reader.o src/json/json_reader.cpp
+  -DNDEBUG $(CXXFLAGS)  -o src/json/gezi_json_json_reader.o src/json/json_reader.cpp
 
-src/json/gezi_json_value.o:src/json/json_value.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_value.o[0m']"
+src/json/gezi_json_json_value.o:src/json/json_value.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_json_value.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/json/gezi_json_value.o src/json/json_value.cpp
+  -DNDEBUG $(CXXFLAGS)  -o src/json/gezi_json_json_value.o src/json/json_value.cpp
 
-src/json/gezi_json_writer.o:src/json/json_writer.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_writer.o[0m']"
+src/json/gezi_json_json_writer.o:src/json/json_writer.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_json_writer.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/json/gezi_json_writer.o src/json/json_writer.cpp
+  -DNDEBUG $(CXXFLAGS)  -o src/json/gezi_json_json_writer.o src/json/json_writer.cpp
 
 endif #ifeq ($(shell uname -m),x86_64)
 

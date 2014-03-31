@@ -65,6 +65,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="gcc_IntelliSense.h" />
     <ClInclude Include="include\all_util.h" />
     <ClInclude Include="include\bloom_filter.h" />
     <ClInclude Include="include\common\Exception.h" />
@@ -168,11 +169,25 @@
     <ClInclude Include="include\url_util.h" />
     <ClInclude Include="include\word_seg.h" />
     <ClInclude Include="include\wstring_util.h" />
+    <ClInclude Include="melt\include\MLCore\IPredictor.h" />
+    <ClInclude Include="melt\include\MLCore\ITrainer.h" />
+    <ClInclude Include="melt\include\MLCore\ITrainerFactory.h" />
+    <ClInclude Include="melt\include\Numeric\Vector\Vector.h" />
+    <ClInclude Include="melt\include\Prediction\Instances\HeaderSchema.h" />
+    <ClInclude Include="melt\include\Prediction\Instances\Instance.h" />
+    <ClInclude Include="melt\include\Prediction\Instances\InstanceParser.h" />
+    <ClInclude Include="melt\include\Prediction\Instances\Instances.h" />
+    <ClInclude Include="melt\include\Predictors\FastRank\FastRankClassification.h" />
+    <ClInclude Include="melt\include\Predictors\FastRank\FastRankRanking.h" />
+    <ClInclude Include="melt\include\Predictors\FastRank\FastRankRegression.h" />
+    <ClInclude Include="melt\include\Run\CVFoldCreator.h" />
+    <ClInclude Include="melt\include\Run\MeltArguments.h" />
     <ClInclude Include="src\json\json_batchallocator.h" />
     <ClInclude Include="src\json\json_tool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc" />
+    <ClCompile Include="melt\src\Prediction\Instances\InstanceParser.cpp" />
     <ClCompile Include="src\conf_util.cpp" />
     <ClCompile Include="src\json\json_reader.cpp" />
     <ClCompile Include="src\json\json_value.cpp" />
@@ -211,6 +226,7 @@
     <ClCompile Include="test\test_regex.cc" />
     <ClCompile Include="test\test_regex2.cc" />
     <ClCompile Include="test\test_seg.cc" />
+    <ClCompile Include="test\test_shared_ptr.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
