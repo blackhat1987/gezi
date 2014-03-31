@@ -94,7 +94,6 @@ namespace gezi {
 		Timer* _timer;
 		int _level;
 	};
-
 } //end of namespace gezi
 
 namespace gz = gezi;

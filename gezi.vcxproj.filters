@@ -327,6 +327,9 @@
     <ClInclude Include="include\tools\pinyin\Pinyin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\random_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -426,6 +429,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="test\test_namepattern.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_identifer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_conf.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_pinyin.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_random.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_linear.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_exception.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\glog.0.3.3.0\build\native\glog.props" Condition="Exists('C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\glog.0.3.3.0\build\native\glog.props')" />
-  <Import Project="C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\gflags.2.0.1.0\build\native\gflags.props" Condition="Exists('C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\gflags.2.0.1.0\build\native\gflags.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -46,7 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -134,6 +132,7 @@
     <ClInclude Include="include\ProcessorMgr.h" />
     <ClInclude Include="include\ProgressBar.h" />
     <ClInclude Include="include\python_util.h" />
+    <ClInclude Include="include\random_util.h" />
     <ClInclude Include="include\RegexMatcher.h" />
     <ClInclude Include="include\RegexReplaceProcessor.h" />
     <ClInclude Include="include\RegexSearcher.h" />
@@ -193,16 +192,22 @@
     <ClCompile Include="test\openmp\hello.cc" />
     <ClCompile Include="test\openmp\test.cc" />
     <ClCompile Include="test\test_bins.cc" />
+    <ClCompile Include="test\test_conf.cc" />
     <ClCompile Include="test\test_content_filter.cc" />
     <ClCompile Include="test\test_datetime.cc" />
     <ClCompile Include="test\test_encode.cc" />
     <ClCompile Include="test\test_escape.cc" />
+    <ClCompile Include="test\test_exception.cc" />
     <ClCompile Include="test\test_feature_selector.cc" />
+    <ClCompile Include="test\test_identifer.cc" />
     <ClCompile Include="test\test_json.cc" />
     <ClCompile Include="test\test_lambda.cc" />
+    <ClCompile Include="test\test_linear.cc" />
     <ClCompile Include="test\test_map_util.cc" />
     <ClCompile Include="test\test_namepattern.cc" />
     <ClCompile Include="test\test_other.cc" />
+    <ClCompile Include="test\test_pinyin.cc" />
+    <ClCompile Include="test\test_random.cc" />
     <ClCompile Include="test\test_regex.cc" />
     <ClCompile Include="test\test_regex2.cc" />
     <ClCompile Include="test\test_seg.cc" />
@@ -216,9 +221,4 @@
     <None Include="test\Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\boost.1.55.0.16\build\native\boost.targets" Condition="Exists('C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\boost.1.55.0.16\build\native\boost.targets')" />
-    <Import Project="C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\gflags.2.0.1.0\build\native\gflags.targets" Condition="Exists('C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\gflags.2.0.1.0\build\native\gflags.targets')" />
-    <Import Project="C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\glog.0.3.3.0\build\native\glog.targets" Condition="Exists('C:\Users\gezi\Documents\Visual Studio 2013\Projects\chenghuige\packages\glog.0.3.3.0\build\native\glog.targets')" />
-  </ImportGroup>
 </Project>

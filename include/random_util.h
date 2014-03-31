@@ -25,7 +25,6 @@ namespace gezi {
 	}
 
 	typedef std::default_random_engine RandomEngine;
-	typedef RandomEngine Random;
 	//注意是闭区间
 	typedef std::uniform_int_distribution<uint32_t> RandomRange; 
 
@@ -33,7 +32,7 @@ namespace gezi {
 	std::mt19937 g(rd());
 	std::shuffle(v.begin(), v.end(), g);*/
 
-	inline RandomEngine get_random(unsigned randSeed = 0)
+	inline RandomEngine get_random_engine(unsigned randSeed = 0)
 	{
 		if (randSeed)
 		{
@@ -41,17 +40,33 @@ namespace gezi {
 		}
 		else
 		{
-			std::random_device rd;
-			return RandomEngine(rd());
-			//or
+			return RandomEngine(std::random_device());
 			//return RandomEngine(random_seed());
 		}
 	}
 
+	//产生一个[min,max]之间的随机整数
+	class RandomInt
+	{
+	public:
+		RandomInt(int max, int min = 0)
+			:_d(min, max), _rng(std::random_device())
+		{
+
+		}
+		int Next()
+		{
+			return _d(_rng);
+		}
+	private:
+		RandomEngine _rng;
+		std::uniform_int_distribution<size_t> _d;
+	};
+
 	template<typename Vec>
 	void shuffle(Vec& vec, unsigned randSeed = 0)
 	{
-		shuffle(vec.begin(), vec.end(), get_random(randSeed));
+		shuffle(vec.begin(), vec.end(), get_random_engine(randSeed));
 	}
 
 	template<typename RandomAccessIterator, typename RandomNumberEngine>
@@ -89,7 +104,7 @@ namespace gezi {
 	template<typename Vec>
 	void sample(Vec& vec, size_t maxNum, unsigned randSeed = 0)
 	{
-		sample(vec.begin(), vec.end(), maxNum, get_random(randSeed));
+		sample(vec.begin(), vec.end(), maxNum, get_random_engine(randSeed));
 	}
 }  //----end of namespace gezi
 
