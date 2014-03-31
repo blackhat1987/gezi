@@ -32,11 +32,11 @@ namespace gezi {
 	std::mt19937 g(rd());
 	std::shuffle(v.begin(), v.end(), g);*/
 
-	inline RandomEngine get_random_engine(unsigned randSeed = 0)
+	inline RandomEngine get_random_engine(unsigned randSeed = 0, int idx = 0, int randomStep = 10000)
 	{
 		if (randSeed)
 		{
-			return RandomEngine(randSeed);
+			return RandomEngine(randSeed + idx * randomStep);
 		}
 		else
 		{
