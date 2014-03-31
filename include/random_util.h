@@ -40,7 +40,8 @@ namespace gezi {
 		}
 		else
 		{
-			return RandomEngine(std::random_device());
+			std::random_device rd;
+			return RandomEngine(rd());
 			//return RandomEngine(random_seed());
 		}
 	}
@@ -50,7 +51,7 @@ namespace gezi {
 	{
 	public:
 		RandomInt(int max, int min = 0)
-			:_d(min, max), _rng(std::random_device())
+			:_d(min, max), _rng(_rd())
 		{
 
 		}
@@ -59,6 +60,7 @@ namespace gezi {
 			return _d(_rng);
 		}
 	private:
+		std::random_device _rd;
 		RandomEngine _rng;
 		std::uniform_int_distribution<size_t> _d;
 	};
