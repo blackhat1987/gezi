@@ -61,6 +61,7 @@ using namespace std;
 typedef vector<int> ivec;
 typedef vector<double> dvec;
 typedef vector<float> fvec;
+typedef vector<Float> Fvec;
 typedef vector<string> svec;
 typedef vector<bool> BitArray;
 

@@ -6,8 +6,7 @@ using std::vector;
 using std::pair;
 using std::make_pair;
 
-namespace gezi
-{
+namespace gezi {
 
 	//这个特征是在线用的 所以默认稀疏，dense表示都存在，包含所有name信息，实际应该是叫做：特征向量 表示
 	//离线特征需要再设计(如是否稀疏表示，名字仅仅存在Instances，Instance仅仅数据) TODO
@@ -23,7 +22,7 @@ namespace gezi
 			{
 			}
 
-			Node(int index_, double value_)
+			Node(int index_, Float value_)
 				: index(index_), value(value_)
 			{
 
@@ -35,16 +34,16 @@ namespace gezi
 
 			}
 			int index;
-			double value;
+			Float value;
 		};
 		typedef vector<Node>::iterator Iter;
 		typedef vector<Node>::const_iterator ConstIter;
-		typedef vector<double>::iterator VIter;
-		typedef vector<double>::const_iterator ConstVIter;
+		typedef vector<Float>::iterator VIter;
+		typedef vector<Float>::const_iterator ConstVIter;
 		//保留一个zero_thre但是实际不用也ok 稀疏使用判断==0 libsvm和tlc都是用的判断==0,虽然有一定浮点误差，为了结果一致仍然判断==0
 		//Feature feature(-1) 可以用来表示一个完全dense表示,values,nodes都dense
 
-		Feature(bool keep_dense = false, bool keep_sparse = false, int dimension = 1000, bool use_section_name = true, double zero_thre = 0.0)
+		Feature(bool keep_dense = false, bool keep_sparse = false, int dimension = 1000, bool use_section_name = true, Float zero_thre = 0.0)
 			: _keep_dense(keep_dense),
 			_keep_sparse(keep_sparse),
 			_use_section_name(use_section_name),
@@ -84,15 +83,17 @@ namespace gezi
 			return *this;
 		}
 
-		bool is_dense() const 
+		//因为默认是同时dense + sparse 存在values就是dense 存在nodes就是sparse
+		bool is_dense() const
 		{
-			return _nodes.empty();
+			return !_values.empty();
 		}
 
 		bool is_sparse() const
 		{
 			return !_nodes.empty();
 		}
+
 
 		bool only_sparse() const
 		{
@@ -167,7 +168,7 @@ namespace gezi
 		{
 			return _nodes;
 		}
-		
+
 		Feature& dimension(int dimension)
 		{
 			_dimension = dimension;
@@ -189,13 +190,13 @@ namespace gezi
 		/**
 		 * 增加特征, 注意feature Node index 是0开始 不再和libsvm保持一致 和tlc保持一致
 		 */
-		void add(double value, string name)
+		void add(Float value, string name)
 		{
 			if (_use_section_name)
 			{
 				name = (format("%s_%s") % _section_names.back() % name).str();
 			}
-			
+
 			if (!_keep_dense && fabs(value) > _zero_thre)
 			{
 				_nodes.push_back(Node(_names.size(), value));
@@ -211,13 +212,13 @@ namespace gezi
 
 		//注意调用前 一定先要add_section
 
-		void add(double value)
+		void add(Float value)
 		{
 			string name = (format("%s%d") % _section_names.back() % _idx).str();
 			add(value, name);
 		}
 
-		void add(double* values, int len, const string& name = "")
+		void add(Float* values, int len, const string& name = "")
 		{
 			if (name.empty())
 			{
@@ -236,7 +237,7 @@ namespace gezi
 			}
 		}
 
-		//void add(vector<double>& values, const string& name = "")
+		//void add(vector<Float>& values, const string& name = "")
 		template<typename T>
 		void add(vector<T>& values, const string& name = "")
 		{
@@ -264,9 +265,12 @@ namespace gezi
 			_section_names.push_back(name);
 		}
 
-		void add(int index, double value)
+		void add(int index, Float value)
 		{
-			_nodes.push_back(Node(index, value));
+			if (value)
+			{
+				_nodes.push_back(Node(index, value));
+			}
 		}
 
 		template<typename T>
@@ -289,7 +293,7 @@ namespace gezi
 
 		//设置稀疏index, value 
 
-		void set(int index, double value)
+		void set(int index, Float value)
 		{
 			Iter iter = std::lower_bound(_nodes.begin(), _nodes.end(), Node(index),
 				boost::bind(&Node::index, _1) < boost::bind(&Node::index, _2));
@@ -301,7 +305,7 @@ namespace gezi
 
 		//获取稀疏value
 
-		const double value(int index) const
+		const Float value(int index) const
 		{
 			ConstIter iter = std::lower_bound(_nodes.begin(), _nodes.end(), Node(index),
 				boost::bind(&Node::index, _1) < boost::bind(&Node::index, _2));
@@ -313,7 +317,7 @@ namespace gezi
 
 
 		//获取value 首先尝试dense 
-		const double operator[](int index) const {
+		const Float operator[](int index) const {
 			if (!_values.empty())
 			{
 				return _values[index];
@@ -324,13 +328,13 @@ namespace gezi
 			}
 		}
 
-		const double value_at(int index) const
+		const Float value_at(int index) const
 		{
 			int idx = (index + _values.size()) % _values.size();
 			return _values[idx];
 		}
 
-		const double at(int index) const
+		const Float at(int index) const
 		{
 			int idx = (index + _values.size()) % _values.size();
 			return _values[idx];
@@ -363,7 +367,7 @@ namespace gezi
 			return _name_counts;
 		}
 
-		inline vector<double>& values()
+		inline vector<Float>& values()
 		{
 			return _values;
 		}
@@ -385,7 +389,7 @@ namespace gezi
 			return _name_counts;
 		}
 
-		inline const vector<double>& cvalues() const
+		inline const vector<Float>& cvalues() const
 		{
 			return _values;
 		}
@@ -405,22 +409,22 @@ namespace gezi
 			return _name_counts;
 		}
 
-		inline const vector<double>& values() const
+		inline const vector<Float>& values() const
 		{
 			return _values;
 		}
 
-		static double default_min()
+		static Float default_min()
 		{
 			return 0;
 		}
 
-		static double default_mean()
+		static Float default_mean()
 		{
 			return 0.5;
 		}
 
-		static double default_max()
+		static Float default_max()
 		{
 			return 1.0;
 		}
@@ -468,14 +472,53 @@ namespace gezi
 				}
 			}
 		}
+
+		//-------------------------兼容离线接口 事实上也可以通过继承直接用离线设计 但是 需要修改feature_util  @TODO
+		bool IsDense() const
+		{
+			return !_values.empty();
+		}
+
+
+		template<typename ValueVistor>
+		void ForEachDense(ValueVistor visitor)
+		{
+			for (size_t i = 0; i < _values.size(); i++)
+			{
+				visitor(i, ref(_values[i]));
+			}
+		}
+
+		template<typename ValueVistor>
+		void ForEachSparse(ValueVistor visitor) const
+		{
+			for (size_t i = 0; i < _values.size(); i++)
+			{
+				visitor(_nodes[i].index, _nodes[i].value);
+			}
+		}
+
+		void Add(Float value)
+		{
+			_values.push_back(value);
+		}
+
+		void Add(int index, Float value)
+		{
+			if (value)
+			{
+				_nodes.push_back(Node(index, value));
+			}
+		}
+
 	private:
 		vector<Node> _nodes;
-		double _zero_thre;
+		Float _zero_thre;
 		bool _use_section_name;
 
 		vector<string> _names;
 		vector<string> _section_names;
-		vector<double>_values;
+		vector<Float>_values;
 		vector<int> _name_counts;
 		int _idx; //section 内部index 
 		bool _keep_sparse;
