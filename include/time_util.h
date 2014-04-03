@@ -18,9 +18,11 @@
 #include <boost/progress.hpp>
 #include <glog/logging.h>
 #include <string>
+#include "common_def.h"
+
 using std::string;
-namespace gezi
-{
+
+namespace gezi {
 	class MicrosecTimer
 	{
 	public:
@@ -61,18 +63,51 @@ namespace gezi
 	public:
 		string _prefix;
 		MicrosecTimer _timer;
+		int _level;
 
-		AutoTimer(const string& prefix)
-			: _prefix(prefix)
+		AutoTimer(const string& prefix, int level = 2)
+			: _prefix(prefix), _level(level)
 		{
 		}
 
 		~AutoTimer()
 		{
-			VLOG(2) << setiosflags(ios::left) << setfill(' ') << setw(40)
+			VLOG(_level) << setiosflags(ios::left) << setfill(' ') << setw(40)
 				<< _prefix << " " << _timer.elapsed_ms() << " ms";
 		}
 	};
+
+	class Noticer
+	{
+	public:
+		Noticer(string info, int level = 0, bool caclTime = true)
+			:_info(info), _timer(NULL), _level(level)
+		{
+			VLOG(_level) << _info << " started";
+			if (caclTime)
+			{
+				_timer = new Timer;
+			}
+		}
+		~Noticer()
+		{
+			if (_timer)
+			{
+				VLOG(_level) << _info << "finished using: " << _timer->elapsed_ms() << " ms";
+			}
+			else
+			{
+				VLOG(_level) << _info << " finished";
+			}
+
+			FREE(_timer);
+		}
+	private:
+		string _info;
+		Timer* _timer;
+		int _level;
+	};
+
 } //----end of namespace gezi
 
 #endif  //----end of TIME_UTIL_H_

@@ -88,6 +88,7 @@ namespace gezi
 		return true;
 	}
 
+	//@TODO read_lines_safe
 	inline vector<string> read_lines(const std::string& infile)
 	{
 		vector<string> vec;
@@ -95,7 +96,7 @@ namespace gezi
 		string line;
 		while (getline(ifs, line))
 		{
-			boost::trim(line);
+			//boost::trim(line);
 			vec.push_back(line);
 		}
 		return vec;

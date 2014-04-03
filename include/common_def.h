@@ -94,4 +94,20 @@ using namespace boost::lambda;
 #define BOOST_THREAD_DONT_USE_CHRONO
 #include <boost/thread.hpp>
 
+#if __GNUC__ > 3
+#include <omp.h>
+#endif
+
+#define DISALLOW_COPY_AND_ASSIGN(TypeName) \
+	TypeName(const TypeName&); \
+	void operator=(const TypeName&)
+
+
+#define FREE(ptr) \
+{if (ptr) { delete ptr; ptr = NULL;}}
+
+#define FREE2(ptr) \
+{if (ptr) { delete [] ptr; ptr = NULL;}}
+
+
 #endif  //----end of COMMON_DEF_H_

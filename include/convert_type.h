@@ -18,6 +18,7 @@
 #include <string>
 #include <boost/lexical_cast.hpp>
 
+//@TODO ±Èatoi atofÂý 
 #define TO_INT boost::lexical_cast<int>
 #define TO_UINT boost::lexical_cast<unsigned int>
 #define TO_INT64 boost::lexical_cast<long long>
@@ -69,6 +70,7 @@
 //#define UINT64 gezi::lexical_cast<unsigned long long>
 //#define BOOL gezi::lexical_cast<bool>
 //#define FLOAT gezi::lexical_cast<float>
+//#define FLOAT_ gezi::lexical_cast<Float>
 //#define DOUBLE gezi::lexical_cast<double>
 //#define STRING gezi::lexical_cast<std::string>
 //#define STR gezi::lexical_cast<std::string>

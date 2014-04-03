@@ -92,7 +92,8 @@ namespace gezi {
 		return vec;
 	}
 
-	inline vector<string> split(const string& input_, const string& sep = "\t ")
+	//@TODO trim好像很慢 回头把依赖 需要trim的代码 改为使用 split_safe
+	/*inline vector<string> split(const string& input_, const string& sep = "\t ")
 	{
 		vector<string> vec;
 		string input = boost::trim_copy(input_);
@@ -103,16 +104,77 @@ namespace gezi {
 			boost::trim(str);
 		}
 		return vec;
+	}*/
+
+	//this one is speed similar to boost::split(container, str, std::bind1st(std::equal_to<char>(), ','));
+	inline std::vector<std::string> split2(std::string s, const char delimiter)
+	{
+		size_t start = 0;
+		size_t end = s.find_first_of(delimiter);
+
+		std::vector<std::string> output;
+
+		while (end <= std::string::npos)
+		{
+			output.emplace_back(s.substr(start, end - start));
+
+			if (end == std::string::npos)
+				break;
+
+			start = end + 1;
+			end = s.find_first_of(delimiter, start);
+		}
+
+		return output;
 	}
 
-	inline void split(const string& input_, const string& sep, string& first, string& second)
+	inline vector<string> split(const string& input, char sep)
 	{
-		string input = boost::trim_copy(input_);
-		int index = input_.find(sep);
+		vector<string> vec;
+		boost::split(vec, input, std::bind1st(std::equal_to<char>(), sep));
+		return vec;
+	}
+
+	inline vector<string> split(const string& input, const string& sep = "\t ")
+	{
+		vector<string> vec;
+		if (sep.size() == 1)
+		{
+			boost::split(vec, input, std::bind1st(std::equal_to<char>(), sep[0]));
+		}
+		else
+		{
+			boost::split(vec, input, is_any_of(sep));
+		}
+		return vec;
+	}
+
+	inline bool split(const string& input, const string& sep, string& first, string& second)
+	{
+		int index = sep.size() == 1 ? input.find(sep[0]) : input.find(sep);
+		if (index == string::npos)
+		{
+			return false;
+		}
+		
 		first = input.substr(0, index);
 		second = input.substr(index + sep.size());
+		return true;
 	}
 
+	inline bool split(const string& input, const char sep, string& first, string& second)
+	{
+		int index = input.find(sep);
+		if (index == string::npos)
+		{
+			return false;
+		}
+		first = input.substr(0, index);
+		second = input.substr(index + 1);
+		return true;
+	}
+
+	//@TODO 去掉trim 带trim的统一后缀 _safe
 	//TODO FIXME 貌似比如 "1, 2, 3"这样还是处理不了会抛异常 按说trim了
 	template<typename T>
 	inline void to_vec(const string& input_, vector<T>& ovec, const string& sep = ",")

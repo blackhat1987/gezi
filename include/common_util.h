@@ -50,51 +50,7 @@
 
 #include "ProgressBar.h"
 
-#if __GNUC__ > 3
-#include <omp.h>
-#endif
 
-#define DISALLOW_COPY_AND_ASSIGN(TypeName) \
-	TypeName(const TypeName&); \
-	void operator=(const TypeName&)
-
-
-#define FREE(ptr) \
-  {if (ptr) { delete ptr; ptr = NULL;}}
-
-#define FREE2(ptr) \
-  {if (ptr) { delete [] ptr; ptr = NULL;}}
-
-namespace gezi {
-
-	class Noticer
-	{
-	public:
-		Noticer(string info, bool caclTime = false, int level = 3)
-			:_info(info), _timer(NULL), _level(level)
-		{
-			VLOG(_level) << _info << " started"; 
-			if (caclTime)
-			{
-				_timer = new Timer;
-			}
-		}
-		~Noticer()
-		{
-			VLOG(_level) << _info << " finished";
-			if (_timer)
-			{
-				VLOG(_level) << _info << " using: " << _timer->elapsed_ms() << " ms";
-			}
-			
-			FREE(_timer);
-		}
-	private:
-		string _info;
-		Timer* _timer;
-		int _level;
-	};
-} //end of namespace gezi
 
 namespace gz = gezi;
 #endif  //----end of COMMON_UTIL_H_

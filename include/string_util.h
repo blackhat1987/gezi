@@ -561,6 +561,10 @@ inline bool endswith(string input, string part)
   return input.rfind(part) == input.length() - part.length();
 }
 
+inline bool contains(string input, char part)
+{
+	return input.find(part) != string::npos;
+}
 inline bool contains(string input, string part)
 {
   return input.find(part) != string::npos;
