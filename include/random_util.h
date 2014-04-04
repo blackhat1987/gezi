@@ -26,7 +26,7 @@ namespace gezi {
 
 	typedef std::default_random_engine RandomEngine;
 	//注意是闭区间
-	typedef std::uniform_int_distribution<uint32_t> RandomRange;
+	typedef std::uniform_int_distribution<uint32_t> UintDistribution;
 
 	/*std::random_device rd;
 	std::mt19937 g(rd());
@@ -76,19 +76,19 @@ namespace gezi {
 	class RandomDouble
 	{
 	public:
-		RandomDouble()
-			:_d(0.0, 1.0), _rng(_rd())
+		RandomDouble(double lower = 0.0, double upper = 1.0)
+			:_d(lower, upper), _rng(_rd())
 		{
 
 		}
 
-		RandomDouble(const RandomEngine& rng)
-			:_d(0.0, 1.0),_rng(rng)
+		RandomDouble(const RandomEngine& rng, double lower = 0.0, double upper = 1.0)
+			:_d(lower, upper), _rng(rng)
 		{
 
 		}
 
-		int Next()
+		double Next()
 		{
 			return _d(_rng);
 		}
@@ -98,30 +98,92 @@ namespace gezi {
 		std::uniform_real_distribution<> _d;
 	};
 
-	//产生一个[0, max)之间的随机排序 不重复
-	class RandomIntRange
+	//模仿c#
+	class Random
 	{
 	public:
-		RandomIntRange(int max, const RandomEngine& rng)
+		Random()
+			:_rng(_rd())
+		{
+		}
+		Random(unsigned seed)
+			:_rng(seed)
+		{
+
+		}
+
+		//return int in [0, max int)
+		int Next()
+		{
+			std::uniform_int_distribution<int> d(0, std::numeric_limits<int>::max());
+			return d(_rng);
+		}
+
+		//return int in[0, max)
+		int Next(int max)
+		{
+			std::uniform_int_distribution<int> d(0, max - 1);
+			return d(_rng);
+		}
+		
+		//return int in [min,max)
+		int Next(int min, int max)
+		{
+			std::uniform_int_distribution<int> d(min, max - 1);
+			return d(_rng);
+		}
+
+		//return double in [0.0,1.0]
+		double NextDouble()
+		{
+			std::uniform_real_distribution<> d;
+			return d(_rng);
+		}
+	private:
+		std::random_device _rd;
+		RandomEngine _rng;
+	};
+
+	//产生一个[0, max)之间的随机排序 不重复 
+	//单线程。。。
+
+	class RandomRange
+	{
+	public:
+		RandomRange(int max)
+			:_end(max), _rng(_rd())
+		{
+			Init();
+		}
+
+		RandomRange(int max, const RandomEngine& rng)
 			:_end(max), _rng(rng)
 		{
-			_vec.resize(max);
-			for (int i = 0; i < max; i++) _vec[i] = i;
+			Init();
 		}
 
 		int Next()
 		{
 			std::uniform_int_distribution<size_t> d(0, _end - _index - 1);
 			swap(_vec[_index], _vec[_index + d(_rng)]);
-			_index++;
-			return _vec[_index - 1];
+			int index = _index;
+			_index = (_index + 1) % _end;
+			//Pvec(_vec);
+			return _vec[index];
 		}
 	private:
+		void Init()
+		{
+			_vec.resize(_end);
+			for (int i = 0; i < _end; i++)
+				_vec[i] = i;
+		}
+	private:
+		std::random_device _rd;
+		RandomEngine _rng;
+		ivec _vec;
 		int _end;
 		int _index = 0;
-		ivec _vec;
-		RandomEngine _rng;
-		std::uniform_int_distribution<size_t> _d;
 	};
 
 	template<typename Vec>
@@ -130,11 +192,19 @@ namespace gezi {
 		shuffle(vec.begin(), vec.end(), random_engine(randSeed));
 	}
 
+	//@FIXME 为什么不去优先匹配上面的 却匹配下面的模板报错了呢。。shuffle(vec, FLAGS_seed); ???
+	//是比较严格 需要 shuffle(vec, (unsigned)FLAGS_seed);
 	template<typename Vec, typename Rng>
-	void shuffle(Vec& vec, const Rng& rng)
+	void shuffle(Vec& vec, Rng&& rng)
 	{
 		shuffle(vec.begin(), vec.end(), rng);
 	}
+
+	/*template<typename Vec>
+	void shuffle(Vec& vec, const RandomEngine& rng)
+	{
+	shuffle(vec.begin(), vec.end(), rng);
+	}*/
 
 	template<typename RandomAccessIterator, typename RandomNumberEngine>
 	inline void sample(RandomAccessIterator first, RandomAccessIterator last, size_t sample_num, RandomNumberEngine&& rng)
@@ -192,16 +262,28 @@ namespace gezi {
 	}
 
 	template<typename Vec, typename Rng>
-	void sample(Vec& vec, size_t maxNum, const Rng& rng)
+	void sample(Vec& vec, size_t maxNum, Rng&& rng)
 	{
 		sample(vec.begin(), vec.end(), maxNum, rng);
 	}
 
+	/*template<typename Vec>
+	void sample(Vec& vec, size_t maxNum, const RandomEngine& rng)
+	{
+	sample(vec.begin(), vec.end(), maxNum, rng);
+	}*/
+
 	template<typename Vec, typename Rng>
-	void sample_reverse(Vec& vec, size_t maxNum, const Rng& rng)
+	void sample_reverse(Vec& vec, size_t maxNum, Rng&& rng)
 	{
 		sample_reverse(vec.begin(), vec.end(), maxNum, rng);
 	}
+
+	//template<typename Vec>
+	//void sample_reverse(Vec& vec, size_t maxNum, const RandomEngine& rng)
+	//{
+	//	sample_reverse(vec.begin(), vec.end(), maxNum, rng);
+	//}
 }  //----end of namespace gezi
 
 #endif  //----end of RANDOM_UTIL_H_

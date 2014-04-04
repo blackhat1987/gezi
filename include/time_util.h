@@ -93,7 +93,9 @@ namespace gezi {
 		{
 			if (_timer)
 			{
-				VLOG(_level) << _info << "finished using: " << _timer->elapsed_ms() << " ms";
+				string prefix = _info + " finished using:";
+				VLOG(_level) << setiosflags(ios::left) << setfill(' ') << setw(40)
+					<< prefix << " " << _timer->elapsed_ms() << " ms";
 			}
 			else
 			{

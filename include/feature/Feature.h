@@ -9,8 +9,7 @@ using std::make_pair;
 namespace gezi {
 
 	//这个特征是在线用的 所以默认稀疏，dense表示都存在，包含所有name信息，实际应该是叫做：特征向量 表示
-	//离线特征需要再设计(如是否稀疏表示，名字仅仅存在Instances，Instance仅仅数据) TODO
-
+	//@TODO class Feature : public Vector # svec names;
 	class Feature
 	{
 	public:

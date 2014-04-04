@@ -24,12 +24,41 @@ DEFINE_string(i, "", "input");
 DEFINE_string(o, "", "output");
 DEFINE_string(type, "simple", "");
 
+struct Node
+{
+	vector<int> vec = { 1, 2, 3 };
+};
+
+template<typename _Node>
+void move_it(_Node&& node)
+{
+	_Node node2 = node;
+	Pvec(node2.vec);
+}
+
+
 TEST(test_random, func)
 {
+	{
+		Node node;
+		Pvec(node.vec);
+		move_it(node);
+		Pvec(node.vec);
+		move_it(Node());
+	}
 	{
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
 		shuffle(vec.begin(), vec.end(), random_engine(FLAGS_seed));
+		Pvec(vec);
+	}
+	{
+		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
+		Pvec(vec);
+		RandomEngine rand = random_engine(FLAGS_seed);
+		std::shuffle(vec.begin(), vec.end(), rand);
+		Pvec(vec);
+		shuffle(vec.begin(), vec.end(), rand);
 		Pvec(vec);
 	}
 	{
@@ -52,7 +81,7 @@ TEST(test_random, func)
 
 	RandomEngine rng = random_engine();
 	std::uniform_int_distribution<uint32_t> uint_dist; // range [0,10]
-	RandomRange uint_dist10(0, 10); // range [0,10]
+	UintDistribution uint_dist10(0, 10); // range [0,10]
 	std::normal_distribution<double> normal_dist(0, 1);  // N(mean, stddeviation)
 	int x = 0;
 	while (x++ < 100)
@@ -65,7 +94,7 @@ TEST(test_random, func)
 	{
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
-		shuffle(vec, FLAGS_seed);
+		shuffle(vec, (unsigned)FLAGS_seed);
 		Pvec(vec);
 	}
 
@@ -87,14 +116,53 @@ TEST(test_random, func)
 	{
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
-		sample(vec, 2, FLAGS_seed);
+		sample(vec, 2, (unsigned)FLAGS_seed);
 		Pvec(vec);
 	}
 	{
 		vector<int> vec = cpplinq::range(0, 10) >> to_vector();
 		Pvec(vec);
-		sample(vec, 1, FLAGS_seed);
+		sample(vec, 1, (unsigned)FLAGS_seed);
 		Pvec(vec);
+	}
+	{
+		RandomDouble rand;
+		for (size_t i = 0; i < 10; i++)
+		{
+			Pval(rand.Next());
+		}
+	}
+	{
+		RandomInt rand(10);
+		for (size_t i = 0; i < 20; i++)
+		{
+			Pval(rand.Next());
+		}
+	}
+	{
+		RandomRange rand(10);
+		for (size_t i = 0; i < 10; i++)
+		{
+			Pval(rand.Next());
+		}
+		for (size_t i = 0; i < 10; i++)
+		{
+			Pval(rand.Next());
+		}
+		for (size_t i = 0; i < 10; i++)
+		{
+			Pval(rand.Next());
+		}
+	}
+	{
+		Random rand;
+		for (size_t i = 0; i < 10; i++)
+		{
+			Pval(rand.Next());
+			Pval(rand.Next(3));
+			Pval(rand.Next(1, 3));
+			Pval(rand.NextDouble());
+		}
 	}
 }
 
