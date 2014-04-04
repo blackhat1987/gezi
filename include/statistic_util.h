@@ -133,6 +133,26 @@ namespace gezi
 		return y - (x * n / ValType(n - 1));
 	}
 
+	template<typename Iter, typename ValType>
+	void mean_var(Iter start, Iter end, ValType& mean_, ValType& var_)
+	{
+		int n = end - start;
+		mean_ = mean(start, end);
+		ValType x = std::pow(mean_, 2);
+		ValType y = std::accumulate(start, end, 0.0, sd_op()) / (ValType)(n - 1);
+		var_ = y - (x * n / ValType(n - 1));
+	}
+
+	template<typename Container, typename ValType>
+	void mean_var(const Container& vec, ValType& mean_, ValType& var_)
+	{
+		int n = vec.size();
+		mean_ = mean(vec);
+		ValType x = std::pow(mean(vec), 2);
+		ValType y = std::accumulate(vec.begin(), vec.end(), 0.0, sd_op()) / (n - 1);
+		var_ = y - (x * n / ValType(n - 1));
+	}
+
 	template<typename Iter>
 	ValType var(Iter start, Iter end, ValType mean)
 	{
@@ -557,5 +577,5 @@ namespace gezi
 #endif
 
 } //----end of namespace sta
-namespace sta = gezi; //TODO temply now since I use many sta:: right now
+namespace sta = gezi; //@TODO temply now since I use many sta:: right now
 #endif  //----end of STATISTIC_UTIL_H_
