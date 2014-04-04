@@ -23,9 +23,50 @@
 #include "log_util.h"
 #include "debug_util.h" //common util 里面已经有debug util了。。 为啥还需要 TODO FIXME
 #include "common_util.h"
-
+#include "Exception.h"
+#include "string_util.h"
 namespace gezi
 {
+	inline int parse_int_param(string name, string line, const string& sep = "=")
+	{
+		string pattern = name + sep;
+		if (!startswith(line, pattern))
+		{
+			THROW(line + "-- not start with " + pattern);
+		}
+		return atoi(line.substr(pattern.size()).c_str());
+	}
+
+	inline string parse_string_param(string name, string line, const string& sep = "=")
+	{
+		string pattern = name + sep;
+		if (!startswith(line, pattern))
+		{
+			THROW(line + "-- not start with " + pattern);
+		}
+		return line.substr(pattern.size());
+	}
+
+	inline double parse_double_param(string name, string line, const string& sep = "=")
+	{
+		string pattern = name + sep;
+		if (!startswith(line, pattern))
+		{
+			THROW(line + "-- not start with " + pattern);
+		}
+		return atof(line.substr(pattern.size()).c_str());
+	}
+
+	inline bool parse_bool_param(string name, string line, const string& sep = "=")
+	{
+		string pattern = name + sep;
+		if (!startswith(line, pattern))
+		{
+			THROW(line + "-- not start with " + pattern);
+		}
+		return atoi(line.substr(pattern.size()).c_str());
+	}
+
 using std::string;
 using comcfg::Configure;
 #define DECLARE_SHAREDCONF\

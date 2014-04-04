@@ -19,14 +19,14 @@
 #include <boost/lexical_cast.hpp>
 
 //@TODO ±Èatoi atofÂý 
-#define TO_INT boost::lexical_cast<int>
+/*#define TO_INT boost::lexical_cast<int>
 #define TO_UINT boost::lexical_cast<unsigned int>
 #define TO_INT64 boost::lexical_cast<long long>
 #define TO_UINT64 boost::lexical_cast<unsigned long long>
 #define TO_BOOL boost::lexical_cast<bool>
 #define TO_FLOAT boost::lexical_cast<float>
 #define TO_DOUBLE boost::lexical_cast<double>
-#define TO_STRING boost::lexical_cast<std::string>
+#define TO_STRING boost::lexical_cast<std::string>*/
 #define INT boost::lexical_cast<int>
 #define UINT boost::lexical_cast<unsigned int>
 #define INT64 boost::lexical_cast<long long>
@@ -41,6 +41,20 @@
 #undef  STRING
 #define STRING boost::lexical_cast<std::string>
 #define STR boost::lexical_cast<std::string>
+#define  STR_TO_INT(a) \
+atoi(a.c_str())
+#define STR_TO_DOUBLE(a) \
+atof(a.c_str())
+
+#define  TO_INT(a) \
+atoi(a.c_str())
+#define TO_DOUBLE(a) \
+atof(a.c_str())
+
+#define  INT_PARSE(a) \
+atoi(a.c_str())
+#define DOUBLE_PARSE(a) \
+atof(a.c_str())
 
 //namespace gezi
 //{
