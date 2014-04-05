@@ -10,11 +10,12 @@ namespace gezi {
 
 	//这个特征是在线用的 所以默认稀疏，dense表示都存在，包含所有name信息，实际应该是叫做：特征向量 表示
 	//@TODO class Feature : public Vector # svec names;
+	//其实应该是FeatureVector 或者 FeatureArray 另外Node 使用std::pair 泛化更好？
 	class Feature
 	{
 	public:
 
-		struct Node
+		struct Node //Node其实是Feature
 		{
 
 			Node()

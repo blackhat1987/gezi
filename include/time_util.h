@@ -114,7 +114,7 @@ namespace gezi {
 	{
 	public:
 		Notifer(string info, int level = 0)
-			:_info(info), _timer(NULL), _level(level)
+			:_info(info), _level(level)
 		{
 		}
 		~Notifer()
