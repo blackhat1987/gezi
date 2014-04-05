@@ -57,6 +57,11 @@ namespace gezi {
 			_section_names.reserve(len);
 		}
 
+		Feature(int length)
+			:_dimension(length)
+		{
+
+		}
 		~Feature() = default;
 		Feature(Feature&&) = default;
 		Feature& operator = (Feature&&) = default;
@@ -323,7 +328,8 @@ namespace gezi {
 
 
 		//获取value 首先尝试dense 
-		const Float operator[](int index) const {
+		const Float operator[](int index) const
+		{
 			if (!_values.empty())
 			{
 				return _values[index];
@@ -552,6 +558,11 @@ namespace gezi {
 		vector<Float>& Values() 
 		{
 			return _values;
+		}
+
+		int Length()
+		{
+			return _dimension;
 		}
 
 	private:
