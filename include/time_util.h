@@ -117,7 +117,7 @@ namespace gezi {
 			:_info(info), _timer(NULL), _level(level)
 		{
 		}
-		~Noticer()
+		~Notifer()
 		{
 			string prefix = _info + " using:";
 			VLOG(_level) << setiosflags(ios::left) << setfill(' ') << setw(40)
