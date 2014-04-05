@@ -536,12 +536,12 @@ namespace gezi {
 
 		Float ValueAt(int index) const
 		{
-			return _values[index].value;
+			return _nodes[index].value;
 		}
 
 		Float& ValueAt(int index)
 		{
-			return _values[index].value;
+			return _nodes[index].value;
 		}
 
 		const vector<Float>& Values() const
