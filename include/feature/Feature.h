@@ -57,10 +57,12 @@ namespace gezi {
 			_section_names.reserve(len);
 		}
 
-		virtual ~Feature()
-		{
+		~Feature() = default;
+		Feature(Feature&&) = default;
+		Feature& operator = (Feature&&) = default;
+		Feature(const Feature&) = default;
+		Feature& operator = (const Feature&) = default;
 
-		}
 		bool keep_sparse() const
 		{
 			return _keep_sparse;
@@ -472,7 +474,8 @@ namespace gezi {
 			}
 		}
 
-		//-------------------------兼容离线接口 事实上也可以通过继承直接用离线设计 但是 需要修改feature_util  @TODO
+		//-------------------------兼容离线接口 事实上也可以通过继承直接用离线设计 
+		//但是 需要修改feature_util  @TODO
 		bool IsDense() const
 		{
 			return !_values.empty();
@@ -491,7 +494,7 @@ namespace gezi {
 		template<typename ValueVistor>
 		void ForEachSparse(ValueVistor visitor) const
 		{
-			for (size_t i = 0; i < _values.size(); i++)
+			for (size_t i = 0; i < _nodes.size(); i++)
 			{
 				visitor(_nodes[i].index, _nodes[i].value);
 			}
