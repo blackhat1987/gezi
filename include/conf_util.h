@@ -27,44 +27,40 @@
 #include "string_util.h"
 namespace gezi
 {
-	inline int parse_int_param(string name, string line, const string& sep = "=")
+	inline int parse_int_param(string name, string line)
 	{
-		string pattern = name + sep;
-		if (!startswith(line, pattern))
+		if (!startswith(line, name))
 		{
-			THROW(line + "-- not start with " + pattern);
+			THROW(line + "-- not start with " + name);
 		}
-		return atoi(line.substr(pattern.size()).c_str());
+		return INT(line.substr(name.size()));
 	}
 
-	inline string parse_string_param(string name, string line, const string& sep = "=")
+	inline string parse_string_param(string name, string line)
 	{
-		string pattern = name + sep;
-		if (!startswith(line, pattern))
+		if (!startswith(line, name))
 		{
-			THROW(line + "-- not start with " + pattern);
+			THROW(line + "-- not start with " + name);
 		}
-		return line.substr(pattern.size());
+		return line.substr(name.size());
 	}
 
-	inline double parse_double_param(string name, string line, const string& sep = "=")
+	inline double parse_double_param(string name, string line)
 	{
-		string pattern = name + sep;
-		if (!startswith(line, pattern))
+		if (!startswith(line, name))
 		{
-			THROW(line + "-- not start with " + pattern);
+			THROW(line + "-- not start with " + name);
 		}
-		return atof(line.substr(pattern.size()).c_str());
+		return DOUBLE(line.substr(name.size()));
 	}
 
-	inline bool parse_bool_param(string name, string line, const string& sep = "=")
+	inline bool parse_bool_param(string name, string line)
 	{
-		string pattern = name + sep;
-		if (!startswith(line, pattern))
+		if (!startswith(line, name))
 		{
-			THROW(line + "-- not start with " + pattern);
+			THROW(line + "-- not start with " + name);
 		}
-		return atoi(line.substr(pattern.size()).c_str());
+		return INT(line.substr(name.size()));
 	}
 
 using std::string;
