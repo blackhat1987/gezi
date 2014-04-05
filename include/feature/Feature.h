@@ -436,6 +436,10 @@ namespace gezi {
 			return os;
 		}
 
+	
+
+		//-------------------------兼容离线接口 事实上也可以通过继承直接用离线设计 
+		//但是 需要修改feature_util  @TODO
 		template<typename ValueVistor>
 		void ForEach(ValueVistor visitor) const
 		{
@@ -474,8 +478,6 @@ namespace gezi {
 			}
 		}
 
-		//-------------------------兼容离线接口 事实上也可以通过继承直接用离线设计 
-		//但是 需要修改feature_util  @TODO
 		bool IsDense() const
 		{
 			return !_values.empty();
@@ -511,6 +513,30 @@ namespace gezi {
 			{
 				_nodes.push_back(Node(index, value));
 			}
+		}
+		int Count() const
+		{
+			return _nodes.size();
+		}
+
+		int IndexAt(int index) const
+		{
+			return _nodes[index].index;
+		}
+
+		int IndexAt(int index)
+		{
+			return _indices[index].index;
+		}
+
+		Float ValueAt(int index) const
+		{
+			return _values[index].value;
+		}
+
+		Float& ValueAt(int index)
+		{
+			return _values[index].value;
 		}
 
 	private:
