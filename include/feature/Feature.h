@@ -67,7 +67,7 @@ namespace gezi {
 		{
 			return _keep_sparse;
 		}
-		inline Feature& keep_sparse(bool sparse_)
+		Feature& keep_sparse(bool sparse_)
 		{
 			_keep_sparse = sparse_;
 			return *this;
@@ -78,7 +78,7 @@ namespace gezi {
 			return _keep_dense;
 		}
 
-		inline Feature& keep_dense(bool dense_)
+		Feature& keep_dense(bool dense_)
 		{
 			_keep_dense = dense_;
 			return *this;
@@ -106,7 +106,7 @@ namespace gezi {
 			return _nodes.empty();
 		}
 
-		inline int size() const
+		int size() const
 		{
 			return _values.size();
 		}
@@ -115,7 +115,7 @@ namespace gezi {
 		 * 返回特征向量维度
 		 * @return
 		 */
-		inline int dimension() const
+		int dimension() const
 		{
 			if (!_keep_sparse)
 			{
@@ -127,29 +127,29 @@ namespace gezi {
 			}
 		}
 
-		inline bool empty() const
+		bool empty() const
 		{
 			return _names.empty();
 		}
 
 		//@TODO remove  feature num 应该是所有feature的num  这个应该用count代替 @FIXME
 		//也可能nodes里面有value是0的 
-		inline int featureNum() const
+		int featureNum() const
 		{
 			return _nodes.size();
 		}
 
-		inline int feature_num() const
+		int feature_num() const
 		{
 			return _nodes.size();
 		}
 
-		inline int count()
+		int count()
 		{
 			return _nodes.size();
 		}
 
-		inline int features() const
+		int features() const
 		{
 			return _nodes.size();
 		}
@@ -160,12 +160,17 @@ namespace gezi {
 		 *
 		 * @return
 		 */
-		inline vector<Node>& nodes()
+		vector<Node>& nodes()
 		{
 			return _nodes;
 		}
 
-		inline const vector<Node>& cnodes() const
+		const vector<Node>& nodes() const
+		{
+			return _nodes;
+		}
+
+		const vector<Node>& cnodes() const
 		{
 			return _nodes;
 		}
@@ -353,64 +358,64 @@ namespace gezi {
 		}
 
 		//if const vector<string>& names() you need const vector<>& = names() better but not convinent
-		inline vector<string>& names()
+		vector<string>& names()
 		{
 			return _names;
 		}
 
-		inline vector<string>& section_names()
+		vector<string>& section_names()
 		{
 			return _section_names;
 		}
 
-		inline vector<int>& name_counts()
+		vector<int>& name_counts()
 		{
 			return _name_counts;
 		}
 
-		inline vector<Float>& values()
+		vector<Float>& values()
 		{
 			return _values;
 		}
 
 
 		//@TODO 去掉cnames,cvalues 暂时只为兼容性
-		inline const vector<string>& cnames() const
+		const vector<string>& cnames() const
 		{
 			return _names;
 		}
 
-		inline const vector<string>& csection_names() const
+		const vector<string>& csection_names() const
 		{
 			return _section_names;
 		}
 
-		inline const vector<int>& cname_counts() const
+		const vector<int>& cname_counts() const
 		{
 			return _name_counts;
 		}
 
-		inline const vector<Float>& cvalues() const
+		const vector<Float>& cvalues() const
 		{
 			return _values;
 		}
 
-		inline const vector<string>& names() const
+		const vector<string>& names() const
 		{
 			return _names;
 		}
 
-		inline const vector<string>& section_names() const
+		const vector<string>& section_names() const
 		{
 			return _section_names;
 		}
 
-		inline const vector<int>& name_counts() const
+		const vector<int>& name_counts() const
 		{
 			return _name_counts;
 		}
 
-		inline const vector<Float>& values() const
+		const vector<Float>& values() const
 		{
 			return _values;
 		}
@@ -430,13 +435,13 @@ namespace gezi {
 			return 1.0;
 		}
 
-		friend inline ostream & operator <<(ostream & os, Feature& fe)
+		friend  ostream & operator <<(ostream & os, Feature& fe)
 		{
 			os << fe.str();
 			return os;
 		}
 
-	
+
 
 		//-------------------------兼容离线接口 事实上也可以通过继承直接用离线设计 
 		//但是 需要修改feature_util  @TODO
@@ -526,7 +531,7 @@ namespace gezi {
 
 		int IndexAt(int index)
 		{
-			return _indices[index].index;
+			return _nodes[index].index;
 		}
 
 		Float ValueAt(int index) const
@@ -537,6 +542,16 @@ namespace gezi {
 		Float& ValueAt(int index)
 		{
 			return _values[index].value;
+		}
+
+		const vector<Float>& Values() const
+		{
+			return _values;
+		}
+
+		vector<Float>& Values() 
+		{
+			return _values;
 		}
 
 	private:
