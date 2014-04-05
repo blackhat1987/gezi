@@ -110,6 +110,24 @@ namespace gezi {
 		int _level;
 	};
 
+	class Notifer
+	{
+	public:
+		Notifer(string info, int level = 0)
+			:_info(info), _timer(NULL), _level(level)
+		{
+		}
+		~Noticer()
+		{
+			string prefix = _info + " using:";
+			VLOG(_level) << setiosflags(ios::left) << setfill(' ') << setw(40)
+				<< prefix << " " << _timer.elapsed_ms() << " ms";
+		}
+	private:
+		string _info;
+		Timer _timer;
+		int _level;
+	};
 } //----end of namespace gezi
 
 #endif  //----end of TIME_UTIL_H_
