@@ -19,7 +19,7 @@
 
 #include "Matrix.h"
 #include "Identifer.h"
-#include "numeric/collocation.h"
+#include "Numeric/collocation.h"
 #include "sort_util.h"
 namespace gezi
 {

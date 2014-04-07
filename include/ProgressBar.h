@@ -42,7 +42,7 @@ public:
 
 		ProgressBar(size_t total) : 
 			prev_progress_(0), 
-			log_word_("FinishedT_T"),
+			log_word_("Finished"),
 			Bar("*******************************************"),
 			Space("                                           "), 
 			Size(Bar.size() - 1), 
@@ -78,7 +78,7 @@ public:
 
         if (prev_progress_ != progress)
         {
-            std::cout << log_word_ << " |" << std::setw(3) << progress << '%'
+            std::cout << log_word_ << " :T_T|" << std::setw(3) << progress << '%'
                     << " |";
             std::cout.write(&Bar[0], bar_length);
             std::cout.write(&Space[0], Size - bar_length);

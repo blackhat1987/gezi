@@ -83,7 +83,6 @@ namespace gezi {
 			values.swap(vec);
 		}
 
-		//do not check if dense // _indices empty
 		void ToSparse()
 		{
 			Fvec vec;
@@ -727,6 +726,7 @@ namespace gezi {
 		Float sparsityRatio = 0.25; //non_zero count < ratio to sparse, non_zero count >= ratio to dense
 		bool keepDense = false;
 		bool keepSparse = false;
+		bool normalized = false;
 	};
 
 	inline Float dot(const Vector& a, const Vector& b)

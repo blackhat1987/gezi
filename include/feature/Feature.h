@@ -10,7 +10,7 @@ namespace gezi {
 
 	//这个特征是在线用的 所以默认稀疏，dense表示都存在，包含所有name信息，实际应该是叫做：特征向量 表示
 	//@TODO class Feature : public Vector # svec names;
-	//其实应该是FeatureVector 或者 FeatureArray 另外Node 使用std::pair 泛化更好？Node命名Feature?
+	//其实应该是FeatureVector 另外Node 使用std::pair 泛化更好？Node命名Feature?
 	class Feature
 	{
 	public:
@@ -36,7 +36,7 @@ namespace gezi {
 			int index;
 			Float value;
 		};
-		
+
 		typedef vector<Node>::iterator Iter;
 		typedef vector<Node>::const_iterator ConstIter;
 		typedef vector<Float>::iterator VIter;
@@ -557,7 +557,7 @@ namespace gezi {
 			return _values;
 		}
 
-		vector<Float>& Values() 
+		vector<Float>& Values()
 		{
 			return _values;
 		}
@@ -580,6 +580,8 @@ namespace gezi {
 		bool _keep_sparse;
 		bool _keep_dense;
 		int _dimension;
+	public:
+		bool normalized = false;
 	};
 
 	typedef Feature::Node fnode_t;
