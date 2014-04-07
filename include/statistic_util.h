@@ -94,7 +94,6 @@ namespace gezi
 
 	struct sd_op
 	{
-
 		template<typename T1, typename T2 >
 		T1 operator()(T1 init, T2 cur)
 		{
