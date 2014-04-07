@@ -94,7 +94,6 @@ private:
     std::string Space;
     size_t Size;
 		size_t total_;
-		boost::progress_timer timer_;
 };
 
 struct NoProgressBar
