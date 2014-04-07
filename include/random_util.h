@@ -106,10 +106,22 @@ namespace gezi {
 			:_rng(_rd())
 		{
 		}
+		
 		Random(unsigned seed)
 			:_rng(seed)
 		{
 
+		}
+
+		Random(RandomEngine& rng)
+			:_rng(rng)
+		{
+
+		}
+
+		void seed(unsigned seed_)
+		{
+			_rng.seed(seed_);
 		}
 
 		//return int in [0, max int)
@@ -149,6 +161,8 @@ namespace gezi {
 		std::random_device _rd;
 		RandomEngine _rng;
 	};
+
+	typedef shared_ptr<Random> RandomPtr;
 
 	//产生一个[0, max)之间的随机排序 不重复 
 	//单线程。。。
