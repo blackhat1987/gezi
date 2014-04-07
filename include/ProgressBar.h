@@ -73,8 +73,8 @@ public:
 		}
     void operator()(size_t current, size_t total)
     {
-        size_t progress = static_cast<int> (100.0 * current / total);
-        size_t bar_length = static_cast<int> (1.0 * current * Size / total);
+        size_t progress = static_cast<int> (100.0 * (current + 1) / total);
+        size_t bar_length = static_cast<int> (1.0 * (current + 1) * Size / total);
 
         if (prev_progress_ != progress)
         {
