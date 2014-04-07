@@ -18,7 +18,7 @@
 #include <iterator>
 #ifdef SIMPLE_DEBUG
 #define LOG(INFO) cout
-#define DLOG(INFO) cout
+#define VLOG(0) cout
 #define VLOG(5) cout
 #else
 #include <glog/logging.h>
@@ -39,33 +39,33 @@ using namespace std;
       VLOG(4) << u << " " << #s <<" --- [" << s << "]"
 
 #define Pval(s)\
-      DLOG(INFO) << #s <<" --- [" << s << "]"
+      VLOG(0) << #s <<" --- [" << s << "]"
 #define Pval_(s, u)\
-      DLOG(INFO)  << u << " " << #s <<" --- [" << s << "]"
+      VLOG(0)  << u << " " << #s <<" --- [" << s << "]"
 
 #define PVAL2(a, b)\
       VLOG(4) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "]"
 
 #define Pval2(a, b)\
-      DLOG(INFO) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "]"
+      VLOG(0) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "]"
 
 #define PVAL3(a, b, c)\
       VLOG(4) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "]"
 
 #define Pval3(a, b, c)\
-      DLOG(INFO) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "]"
+      VLOG(0) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "]"
 
 #define PVAL4(a, b, c, d)\
 	VLOG(4) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "] " << #d <<" -- [" << d << "]"
 
 #define Pval4(a, b, c, d)\
-	DLOG(INFO) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "] " << #d <<" -- [" << d << "]"
+	VLOG(0) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "] " << #d <<" -- [" << d << "]"
 
 #define PVAL5(a, b, c, d, e)\
 	VLOG(4) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "] " << #d <<" -- [" << d << "] " << #e <<" -- [" << e << "]"
 
 #define Pval5(a, b, c, d, e)\
-	DLOG(INFO) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "] " << #d <<" -- [" << d << "] " << #e <<" -- [" << e << "]"
+	VLOG(0) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "] " << #d <<" -- [" << d << "] " << #e <<" -- [" << e << "]"
 
 #define PvalFile(s, ofs)\
      ofs << #s <<" --- " << s << endl
@@ -155,10 +155,10 @@ void PRange(Iter begin, Iter end, std::ostream& out = std::cout, const string& s
 }
 
 #define Pvec(v)\
-        DLOG(INFO) << #v <<" --- " << v.size();\
+        VLOG(0) << #v <<" --- " << v.size();\
         for (size_t i = 0; i < v.size(); i++)\
         {\
-            DLOG(INFO) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << v[i] << "\n";\
+            VLOG(0) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << v[i] << "\n";\
         }
 
 
