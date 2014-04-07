@@ -78,11 +78,11 @@ public:
 
         if (prev_progress_ != progress)
         {
-            std::cerr << log_word_ << " |" << std::setw(3) << progress << '%'
+            std::cout << log_word_ << " |" << std::setw(3) << progress << '%'
                     << " |";
-            std::cerr.write(&Bar[0], bar_length);
-            std::cerr.write(&Space[0], Size - bar_length);
-            std::cerr << '|' << (progress == 100 ? '\n' : '\r');
+            std::cout.write(&Bar[0], bar_length);
+            std::cout.write(&Space[0], Size - bar_length);
+            std::cout << '|' << (progress == 100 ? '\n' : '\r');
             prev_progress_ = progress;
         }
     }
