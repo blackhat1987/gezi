@@ -79,6 +79,9 @@ TEST(test_shared_ptr, func)
 		print(node);
 		print(node.get());
 		print(*node);
+		Node& other = *Node;
+		shared_ptr<Node> node2 = &other;
+		Pval((node.get() == node2.get()));
 	}
 	{
 		shared_ptr<Node2> node = make_shared<Node2>();

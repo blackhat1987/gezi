@@ -36,6 +36,7 @@ namespace gezi {
 			int index;
 			Float value;
 		};
+		
 		typedef vector<Node>::iterator Iter;
 		typedef vector<Node>::const_iterator ConstIter;
 		typedef vector<Float>::iterator VIter;

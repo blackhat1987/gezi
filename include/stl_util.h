@@ -200,6 +200,22 @@ namespace gezi {
 		}
 	}
 	
+	template<typename T>
+	int compare(T a, T b)
+	{
+		if (a == b)
+		{
+			return 0;
+		}
+		else if (a < b)
+		{
+			return -1;
+		}
+		else
+		{
+			return 1;
+		}
+	}
 }  //----end of namespace gezi
 
 #undef TO_STRING

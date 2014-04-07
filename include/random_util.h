@@ -16,7 +16,7 @@
 
 #include <random>       // std::default_random_engine
 #include <chrono>       // std::chrono::system_clock
-
+#include "common_def.h"
 namespace gezi {
 
 	inline unsigned random_seed()
@@ -135,6 +135,12 @@ namespace gezi {
 
 		//return double in [0.0,1.0]
 		double NextDouble()
+		{
+			std::uniform_real_distribution<> d;
+			return d(_rng);
+		}
+
+		Float NextFloat()
 		{
 			std::uniform_real_distribution<> d;
 			return d(_rng);
