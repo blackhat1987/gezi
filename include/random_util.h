@@ -113,7 +113,7 @@ namespace gezi {
 
 		}
 
-		Random(RandomEngine& rng)
+		Random(const RandomEngine& rng)
 			:_rng(rng)
 		{
 
