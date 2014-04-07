@@ -42,7 +42,7 @@ public:
 
 		ProgressBar(size_t total) : 
 			prev_progress_(0), 
-			log_word_("Finished:"),
+			log_word_("FinishedT_T"),
 			Bar("*******************************************"),
 			Space("                                           "), 
 			Size(Bar.size() - 1), 
