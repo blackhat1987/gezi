@@ -1,12 +1,12 @@
-/** 
+/**
  *  ==============================================================================
- * 
+ *
  *          \file   ProgressBar.h
  *
- *        \author   gezi  
- *          
+ *        \author   gezi
+ *
  *          \date   2010-10-13 19:59:53.237718
- *  
+ *
  *  \Description:
  *  ==============================================================================
  */
@@ -17,46 +17,48 @@
 #include <iostream>
 #include <iomanip>
 #include <boost/progress.hpp>
-class ProgressBar
-{
-public:
 
-    ProgressBar() : 
-			prev_progress_(0),
-			log_word_("Finished:"), 
-			Bar("*******************************************"), 
-			Space("                                           "), 
-			Size(Bar.size() - 1)
-    {
-    }
+namespace gezi {
+	class ProgressBar
+	{
+	public:
 
-    ProgressBar(const std::string& log_word) : 
-			prev_progress_(0), 
-			log_word_(log_word), 
-			Bar("*******************************************"), 
-			Space("                                           "), 
-			Size(Bar.size() - 1)
-    {
-    }
-
-
-		ProgressBar(size_t total) : 
-			prev_progress_(0), 
-			log_word_("Finished"),
+		ProgressBar() :
+			_prev_progress(0),
+			_log_word("Finished:"),
 			Bar("*******************************************"),
-			Space("                                           "), 
-			Size(Bar.size() - 1), 
-			total_(total)
+			Space("                                           "),
+			Size(Bar.size() - 1)
+		{
+		}
+
+		ProgressBar(const std::string& log_word) :
+			_prev_progress(0),
+			_log_word(log_word),
+			Bar("*******************************************"),
+			Space("                                           "),
+			Size(Bar.size() - 1)
+		{
+		}
+
+
+		ProgressBar(size_t total) :
+			_prev_progress(0),
+			_log_word("Finished"),
+			Bar("*******************************************"),
+			Space("                                           "),
+			Size(Bar.size() - 1),
+			_total(total)
 		{
 		}
 
 		ProgressBar(const std::string& log_word, size_t total) :
-			prev_progress_(0),
-			log_word_(log_word),
+			_prev_progress(0),
+			_log_word(log_word),
 			Bar("*******************************************"),
 			Space("                                           "),
 			Size(Bar.size() - 1),
-			total_(total)
+			_total(total)
 		{
 		}
 		void progress(size_t current)
@@ -69,40 +71,42 @@ public:
 		}
 		void operator()(size_t current)
 		{
-			(*this)(current, total_);
+			(*this)(current, _total);
 		}
-    void operator()(size_t current, size_t total)
-    {
-        size_t progress = static_cast<int> (100.0 * (current + 1) / total);
-        size_t bar_length = static_cast<int> (1.0 * (current + 1) * Size / total);
+		void operator()(size_t current, size_t total)
+		{
+			size_t progress = static_cast<int> (100.0 * (current + 1) / total);
+			size_t bar_length = static_cast<int> (1.0 * (current + 1) * Size / total);
 
-        if (prev_progress_ != progress)
-        {
-            std::cout << log_word_ << " :T_T|" << std::setw(3) << progress << '%'
-                    << " |";
-            std::cout.write(&Bar[0], bar_length);
-            std::cout.write(&Space[0], Size - bar_length);
-            std::cout << '|' << (progress == 100 ? '\n' : '\r');
-            prev_progress_ = progress;
-        }
-    }
+			if (_prev_progress != progress)
+			{
+				std::cout << _log_word << " (" << _timer.elapsed() << " s)" << std::setw(3) << progress << '%'
+					<< " |";
+				std::cout.write(&Bar[0], bar_length);
+				std::cout.write(&Space[0], Size - bar_length);
+				std::cout << '|' << (progress == 100 ? '\n' : '\r');
+				_prev_progress = progress;
+			}
+		}
 
-private:
-    size_t prev_progress_;
-    std::string log_word_;
-    std::string Bar;
-    std::string Space;
-    size_t Size;
-		size_t total_;
-};
+	private:
+		size_t _prev_progress;
+		std::string _log_word;
+		std::string Bar;
+		std::string Space;
+		size_t Size;
+		size_t _total;
+		Timer _timer;
+	};
 
-struct NoProgressBar
-{
+	struct NoProgressBar
+	{
+		void operator()(size_t, size_t) const
+		{
+		}
+	};
+	typedef NoProgressBar DefaultProgressBar;
 
-    void operator()(size_t, size_t) const
-    {
-    }
-};
+}
 
-typedef NoProgressBar DefaultProgressBar;
 #endif  //----end of PROGRESS_BAR_H_
