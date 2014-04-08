@@ -18,7 +18,8 @@ namespace gezi
 {
 
 /**
- * value从大到小排序  作为默认顺序
+ * value second从大到小排序  作为默认顺序
+ * index id first 从小到大排序 作为默认顺序
  */
 struct CmpNode
 {
@@ -70,6 +71,76 @@ struct CmpNodeFirst
   }
 };
 
+struct CmpNodeReverseFirst
+{
+
+	template<typename _Node>
+	bool operator() (const _Node& left, const _Node& right)
+	{
+		return (left.first > right.first);
+	}
+};
+
+//--------------------------尽量使用这一组  如果是pair类型
+struct CmpPairByFirst
+{
+
+	template<typename _Node>
+	bool operator() (const _Node& left, const _Node& right)
+	{
+		return (left.first < right.first);
+	}
+};
+
+struct CmpPairBySecond
+{
+
+	template<typename _Node>
+	bool operator() (const _Node& left, const _Node& right)
+	{
+		return (left.second < right.second);
+	}
+};
+
+struct CmpPairByFirstReverse
+{
+
+	template<typename _Node>
+	bool operator() (const _Node& left, const _Node& right)
+	{
+		return (left.first > right.first);
+	}
+};
+
+struct CmpPairBySecondReverse
+{
+
+	template<typename _Node>
+	bool operator() (const _Node& left, const _Node& right)
+	{
+		return (left.second > right.second);
+	}
+};
+
+struct EqualPairByFirst
+{
+	template<typename _Node>
+	bool operator() (const _Node& left, const _Node& right)
+	{
+		return (left.first == right.first);
+	}
+};
+
+struct EqualPairBySecond
+{
+	template<typename _Node>
+	bool operator() (const _Node& left, const _Node& right)
+	{
+		return (left.second == right.second);
+	}
+};
+//----------------------------------------------------
+
 struct EqualNodeFirst
 {
 
@@ -78,6 +149,16 @@ struct EqualNodeFirst
   {
     return (left.first == right.first);
   }
+};
+
+struct EqualNodeByID
+{
+
+	template<typename _Node>
+	bool operator() (const _Node& left, const _Node& right)
+	{
+		return (left.id == right.id);
+	}
 };
 
 struct CmpNodeByID
@@ -90,15 +171,26 @@ struct CmpNodeByID
   }
 };
 
-struct EqualNodeByID
+struct EqualNodeByIndex
 {
 
   template<typename _Node>
           bool operator() (const _Node& left, const _Node& right)
   {
-    return (left.id == right.id);
+    return (left.index == right.index);
   }
 };
+
+struct CmpNodeByIndex
+{
+
+	template<typename _Node>
+	bool operator() (const _Node& left, const _Node& right)
+	{
+		return (left.index < right.index);
+	}
+};
+
 
 template<typename ValueVec = vector<double>, typename IndexVec = vector<int> >
 struct IndexCmper

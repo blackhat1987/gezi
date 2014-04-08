@@ -193,7 +193,6 @@ namespace gezi {
 	template<typename T>
 	void convert(const vector<string>&ivec, vector<T>& ovec)
 	{
-
 		foreach(const string item, ivec)
 		{
 			ovec.push_back(boost::lexical_cast<T>(item));

@@ -24,41 +24,26 @@ namespace gezi {
 	public:
 
 		ProgressBar() :
-			_prev_progress(0),
-			_log_word("Finished:"),
-			Bar("*******************************************"),
-			Space("                                           "),
 			Size(Bar.size() - 1)
 		{
 		}
 
 		ProgressBar(const std::string& log_word) :
-			_prev_progress(0),
-			_log_word(log_word),
-			Bar("*******************************************"),
-			Space("                                           "),
+			_log_word(log_word), 
 			Size(Bar.size() - 1)
 		{
 		}
 
 
 		ProgressBar(size_t total) :
-			_prev_progress(0),
-			_log_word("Finished"),
-			Bar("*******************************************"),
-			Space("                                           "),
-			Size(Bar.size() - 1),
-			_total(total)
+			_total(total), 
+			Size(Bar.size() - 1)
 		{
 		}
 
 		ProgressBar(const std::string& log_word, size_t total) :
-			_prev_progress(0),
-			_log_word(log_word),
-			Bar("*******************************************"),
-			Space("                                           "),
-			Size(Bar.size() - 1),
-			_total(total)
+			_log_word(log_word), _total(total), 
+			Size(Bar.size() - 1)
 		{
 		}
 		void progress(size_t current)
@@ -77,23 +62,23 @@ namespace gezi {
 		{
 			size_t progress = static_cast<int> (100.0 * (current + 1) / total);
 			size_t bar_length = static_cast<int> (1.0 * (current + 1) * Size / total);
-
 			if (_prev_progress != progress)
 			{
-				std::cout << _log_word << " (" << _timer.elapsed() << " s)" << std::setw(3) << progress << '%'
+				std::cout << _log_word << " [ " << current + 1 << " ] (" << _timer.elapsed() << " s)" << std::setw(3) << progress << '%'
 					<< " |";
 				std::cout.write(&Bar[0], bar_length);
 				std::cout.write(&Space[0], Size - bar_length);
 				std::cout << '|' << (progress == 100 ? '\n' : '\r');
+				std::cout.flush();
 				_prev_progress = progress;
 			}
 		}
 
 	private:
-		size_t _prev_progress;
-		std::string _log_word;
-		std::string Bar;
-		std::string Space;
+		size_t _prev_progress = 1;
+		std::string _log_word = "Finished";
+		std::string Bar = "*******************************************";
+		std::string Space = "                                           ";
 		size_t Size;
 		size_t _total;
 		Timer _timer;

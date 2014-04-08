@@ -465,6 +465,12 @@ namespace gezi {
 			}
 		}
 
+		Vector& operator *= (Float d)
+		{
+			ScaleBy(d);
+			return *this;
+		}
+		
 		/// Multiples the Vector by a real value
 		void ScaleBy(Float d)
 		{

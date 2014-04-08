@@ -35,6 +35,7 @@
 //#include <boost/accumulators/statistics/moment.hpp>
 namespace gezi
 {
+	static const Float EPSILON = (Float)1e-15;
 	typedef double ValType;
 	//namespace ba = boost::accumulators;
 	namespace bm = boost::math;
@@ -473,6 +474,107 @@ namespace gezi
 		return res;
 	}
 
+	//@TODO ±ß½ç
+	inline Fvec find_bins(Fvec& values, int maxBins)
+	{
+		vector<pair<Float, Float> > binLowerUpperBounds; //first as loewr, second as upper
+		vector<pair<int, Float> > countValues; //first as counts, second as distinct values
+
+		// chck whether to allocate datastructures
+		size_t sampleSize = values.size();
+		size_t allocSize = sampleSize < maxBins ? sampleSize : maxBins;
+		if (allocSize > binLowerUpperBounds.size())
+		{
+			binLowerUpperBounds.resize(allocSize, make_pair(0.0, 0.0));
+		}
+		if (sampleSize > countValues.size())
+		{
+			countValues.resize(sampleSize, make_pair(0, 0.0));
+		}
+		Fvec result;
+
+		// Get histogram of values
+		int numValues = 1;
+		std::sort(values.begin(), values.end());
+		countValues[0].second = values[0];
+		countValues[0].first = 1;
+		for (int i = 1; i < values.size(); ++i)
+		{
+			if (values[i] != values[i - 1])
+			{
+				countValues[numValues].second = values[i];
+				countValues[numValues].first = 1;
+				++numValues;
+			}
+			else
+			{
+				countValues[numValues - 1].first++;
+			}
+		}
+
+		// case 1: each distinct value is a bin
+		if (numValues <= maxBins)
+		{
+			result.resize(numValues);
+			for (int i = 0; i < numValues - 1; ++i)
+				result[i] = (countValues[i].second + countValues[i + 1].second) / 2;
+			result[numValues - 1] = std::numeric_limits<Float>::max();
+			return result;
+		}
+
+		// case 2: more distinct values than bins
+
+		// find single value bins
+		int meanBinSize = countValues.size() / maxBins;
+		sort(countValues.begin(), countValues.begin() + numValues, CmpPairByFirstReverse());
+		int numBins = 0;
+		int countSoFar = 0;
+		while (countValues[numBins].first > meanBinSize)
+		{
+			binLowerUpperBounds[numBins].second = countValues[numBins].second;
+			binLowerUpperBounds[numBins].first = countValues[numBins].second;
+			countSoFar += countValues[numBins].first;
+			++numBins;
+		}
+
+		// find remaining bins
+		if (numBins < maxBins)
+		{
+			sort(countValues.begin() + numBins, countValues.begin() + numValues, CmpPairBySecond());
+			binLowerUpperBounds[numBins].first = countValues[numBins].second;
+			meanBinSize = (countValues.size() - countSoFar) / (maxBins - numBins);
+			int currBinSize = 0;
+			for (int i = numBins; i < numValues - 1; ++i)
+			{
+				binLowerUpperBounds[numBins].second = countValues[i].second;
+				currBinSize += countValues[i].first;
+				countSoFar += countValues[i].first;
+				if (currBinSize + countValues[i + 1].first > meanBinSize)
+				{
+					++numBins;
+					if (numBins == maxBins)
+						break;
+					binLowerUpperBounds[numBins].first = countValues[i + 1].second;
+					meanBinSize = (countValues.size() - countSoFar) / (maxBins - numBins);
+					currBinSize = 0;
+				}
+			}
+			if (numBins < maxBins)
+			{
+				binLowerUpperBounds[numBins].second = countValues[numValues - 1].second;
+				++numBins;
+			}
+		}
+
+		// prepare result 
+		sort(binLowerUpperBounds.begin(), binLowerUpperBounds.begin() + numBins, CmpPairByFirst());
+		result.resize(numBins, 0);
+		for (int i = 0; i < numBins - 1; ++i)
+			result[i] = (binLowerUpperBounds[i].second + binLowerUpperBounds[i + 1].first) / 2;
+		result[numBins - 1] = std::numeric_limits<Float>::max();
+		return result;
+	}
+	
 	template<typename Iter>
 	inline double information(Iter begin, Iter end)
 	{

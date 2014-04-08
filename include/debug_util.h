@@ -86,6 +86,18 @@ void Pvec_(const T&vec, std::ostream& out = std::cout, const string& sep = "\n",
 }
 
 template<typename T>
+void PrintPairVec(const T&vec, int level = 0, const string& sep = "\n", const string& last = "\n")
+{
+	typedef typename T::value_type VType;
+	typedef typename T::const_iterator Iter;
+	for (Iter iter = vec.begin(); iter != vec.end(); ++iter)
+	{
+		VLOG(level) << iter->first << " " << iter->second << sep;
+	}
+	VLOG(level) << last;
+}
+
+template<typename T>
 void Pvec2_(const T&vec, std::ostream& out = std::cout, const string& sep = "\n", const string& last = "\n")
 {
   typedef typename T::value_type VType;
