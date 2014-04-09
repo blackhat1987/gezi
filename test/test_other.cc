@@ -37,7 +37,7 @@ void write_a(ostream& s)
 	s << "ostream" << endl;
 }
 
-void write_a(const string& s)
+void write_a(string s)
 {
 	cout << "string" << endl;
 }

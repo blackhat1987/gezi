@@ -38,7 +38,7 @@ public:
   {
     std::cout << "SampleString destruct" << endl;
   }
-  virtual string process(const string& input)
+  virtual string process(string input)
   {
     return "SampleStringProcessor " + input;
   }
@@ -51,7 +51,7 @@ public:
   {
     std::cout << "SampleStrings destruct" << endl;
   }
-  virtual string process(const string& input)
+  virtual string process(string input)
   {
     return "SampleStringProcessor2 " + input;
   }

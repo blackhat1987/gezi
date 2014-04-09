@@ -105,8 +105,8 @@ public:
     /**
      * Find the min edit distance only do not need path info.
      */
-    //static inline int EditDistance(const string& s1, const string& s2);
-    static inline int EditDistance(const string& s1, const string& s2)
+    //static inline int EditDistance(string s1, string s2);
+    static inline int EditDistance(string s1, string s2)
     {
         using std::min;
         int len1 = s1.length();

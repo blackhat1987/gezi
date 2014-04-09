@@ -79,7 +79,7 @@ namespace gezi
 		feature_str = gezi::remove_dupspace(feature_str);
 	}
 
-	inline Feature to_feature(const string& feature_str_)
+	inline Feature to_feature(string feature_str_)
 	{
 		string feature_str = feature_str_;
 		libsvm_normalize(feature_str);
@@ -157,13 +157,13 @@ namespace gezi
 		}
 	}
 
-	inline void write_header(const Feature& feature, const string& file)
+	inline void write_header(const Feature& feature, string file)
 	{
 		ofstream ofs(file.c_str());
 		write_header(feature, ofs);
 	}
 
-	inline void write_arff(const Feature& feature, const string& uid, const string& type, std::ostream& ofs)
+	inline void write_arff(const Feature& feature, string uid, string type, std::ostream& ofs)
 	{
 		ofs << "{";
 
@@ -176,7 +176,7 @@ namespace gezi
 		ofs << "}" << endl;
 	}
 
-	inline void write_libsvm(const Feature& feature, const string& label, std::ostream& ofs)
+	inline void write_libsvm(const Feature& feature, string label, std::ostream& ofs)
 	{
 		ofs << label << " ";
 		size_t i = 0;
@@ -192,7 +192,7 @@ namespace gezi
 	//tlc dense 采用标准输出 第一列是名字比如pid 第二列是label 例如下面 另外输出的是原始特征 未经过normalize
 	//# 	label	JaccardSimilarity	CTR_s10_Query	CTR_s100_Query	CTR_s1000_Query	LogitCTR_s10_Query	LogitCTR_s100_Query	LogitCTR_s1000_Query	impressions_Query	clicks_Query
 	//_lottery|acute leukemia	0	0	0.013693014	0.013704492	0.013818185	-4.277081865	-4.276232328	-4.267855249	103347	1415
-	inline void write_sparse(const Feature& feature, const string& label, ofstream& ofs, const string& name = "")
+	inline void write_sparse(const Feature& feature, string label, ofstream& ofs, string name = "")
 	{
 		if (!name.empty())
 			ofs << "_" << name << "\t" << label;
@@ -216,7 +216,7 @@ namespace gezi
 	}
 
 	//注意不要单独使用 一般是在类似下面 情况使用
-	inline void write_table(const Feature& feature, const string& label, ofstream& ofs, const string& name = "")
+	inline void write_table(const Feature& feature, string label, ofstream& ofs, string name = "")
 	{
 		if (feature.only_sparse())
 		{

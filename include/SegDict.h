@@ -52,7 +52,7 @@ public:
       ds_del(split_dict_);
   }
 
-  bool init(const string& data_dir, bool use_tag = false)
+  bool init(string data_dir, bool use_tag = false)
   {
     return init(data_dir.c_str(), use_tag);
   }

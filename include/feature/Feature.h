@@ -231,7 +231,7 @@ namespace gezi {
 			add(value, name);
 		}
 
-		void add(Float* values, int len, const string& name = "")
+		void add(Float* values, int len, string name = "")
 		{
 			if (name.empty())
 			{
@@ -250,9 +250,9 @@ namespace gezi {
 			}
 		}
 
-		//void add(vector<Float>& values, const string& name = "")
+		//void add(vector<Float>& values, string name = "")
 		template<typename T>
-		void add(vector<T>& values, const string& name = "")
+		void add(vector<T>& values, string name = "")
 		{
 			if (name.empty())
 			{

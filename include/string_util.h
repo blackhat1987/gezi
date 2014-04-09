@@ -45,7 +45,7 @@ inline bool is_gbk_ch(unsigned char ch1, unsigned char ch2)
           (ch1 == 254 && ch2 <= 160)));
 }
 
-inline bool is_gbk_ch(const string& phrase)
+inline bool is_gbk_ch(string phrase)
 {
   if (phrase.size() != 2)
     return false;
@@ -55,7 +55,7 @@ inline bool is_gbk_ch(const string& phrase)
 
 //en means single byte
 
-inline bool all_en(const std::string& phrase)
+inline bool all_en(string phrase)
 {
   for (size_t i = 0; i < phrase.size(); i++)
   {
@@ -71,7 +71,7 @@ inline bool all_en(const std::string& phrase)
 
 //这里的en是single btye cn 限定gbk ch
 
-inline bool is_en_dominate(const std::string& phrase, int var = 3)
+inline bool is_en_dominate(string phrase, int var = 3)
 {
   int cn_count = 0;
   int en_count = 0;
@@ -101,7 +101,7 @@ inline bool is_en_dominate(const std::string& phrase, int var = 3)
 
 //提取中文
 
-inline string extract_chinese(const string& temp)
+inline string extract_chinese(string temp)
 {
   vector<char> out(temp.size() + 1, 0);
   int index = 0;
@@ -125,7 +125,7 @@ inline string extract_chinese(const string& temp)
 }
 //提取符号
 
-inline string extract_suspect_symb(const string& temp)
+inline string extract_suspect_symb(string temp)
 {
   //char out[temp.size() + 1];
   vector<char> out(temp.size() + 1, 0);
@@ -158,7 +158,6 @@ inline string extract_suspect_symb(const string& temp)
         logtmp[0] = temp[i];
         logtmp[1] = temp[i + 1];
         logtmp[2] = 0;
-        ul_writelog(UL_LOG_DEBUG, "extract suspect [%s] [%x]", logtmp, code);
       }
       i++;
     }
@@ -172,7 +171,7 @@ inline string extract_suspect_symb(const string& temp)
 /**
  *brief 过滤掉标点符号 不可见字符
  */
-inline string filter_str(const string& temp)
+inline string filter_str(string temp)
 {
   vector<char> out(temp.size() + 1, 0);
   int index = 0;
@@ -199,12 +198,12 @@ inline string filter_str(const string& temp)
 }
 
 //不包括繁简体转换 全角半角
-inline string normalize_str(const string& input)
+inline string normalize_str(string input)
 {
 	return boost::to_lower_copy(filter_str(input));
 }
 
-inline string extract_chinese(string& temp)
+inline string extract_chinese(string temp)
 {
   vector<char> out(temp.size() + 1, 0);
   int index = 0;
@@ -225,7 +224,7 @@ inline string extract_chinese(string& temp)
   return ret;
 }
 
-inline string remove_space_cn(const string& phrase)
+inline string remove_space_cn(string phrase)
 {
   if (phrase.empty())
   {
@@ -261,7 +260,7 @@ inline string remove_space_cn(const string& phrase)
   return rs;
 }
 
-inline string remove_space_cnonly(const string & phrase)
+inline string remove_space_cnonly(string phrase)
 {
   char *buf = new char[phrase.size() + 1];
   int j = 0;
@@ -314,7 +313,7 @@ inline int wchar_count(const char* buf, int len)
   return count;
 }
 
-inline int word_count(const string& phrase)
+inline int word_count(string phrase)
 {
   int num = 0;
   bool not_ch = false;
@@ -349,7 +348,7 @@ inline int word_count(const string& phrase)
   return num;
 }
 
-inline string remove_dupspace(const string& input)
+inline string remove_dupspace(string input)
 {
   if (input.size() == 0)
   {
@@ -389,7 +388,7 @@ inline string remove_dupspace(const string& input)
 
 //将特殊空白替换为空格
 
-inline string replace_special_whitespace(const string& s, const char rep = ' ')
+inline string replace_special_whitespace(string s, const char rep = ' ')
 {
   vector<char> buf(s.size() + 1, '\0');
   int j = 0;
@@ -440,7 +439,7 @@ inline vector<String> cut_wstring(const String & s, int unit, int max_len = 0)
  * @retval: 替换后的字符串
  *
  */
-inline string str_replace_all(const string& tstr, const string& old_value, const string& new_value)
+inline string str_replace_all(string tstr, string old_value, string new_value)
 {
   string str = tstr;
   while (true)
@@ -453,7 +452,7 @@ inline string str_replace_all(const string& tstr, const string& old_value, const
   return str;
 }
 
-//inline void gbk_mark(const string& src, vector<bool>& vec)
+//inline void gbk_mark(string src, vector<bool>& vec)
 //{
 //  vec.resize(src.length(), true);
 //  for (int i = 0; i < (int) src.size(); i++)
@@ -469,7 +468,7 @@ inline string str_replace_all(const string& tstr, const string& old_value, const
 //  }
 //}
 //
-//inline vector<bool> gbk_mark(const string& src)
+//inline vector<bool> gbk_mark(string src)
 //{
 //  vector<bool> vec(src.length(), false);
 //  for (int i = 0; i < (int) src.size(); i++)
@@ -491,7 +490,7 @@ inline string str_replace_all(const string& tstr, const string& old_value, const
 
 // like a king
 
-inline bool is_alpha_only(const string& input)
+inline bool is_alpha_only(string input)
 {
   for (int i = 0; i < (int) input.size(); i++)
   {
@@ -507,7 +506,7 @@ inline bool is_alpha_only(const string& input)
   return true;
 }
 
-inline string gbk_substr(const string& input, int start_, size_t len = string::npos)
+inline string gbk_substr(string input, int start_, size_t len = string::npos)
 {
   if (start_ >= (int) input.length())
   {

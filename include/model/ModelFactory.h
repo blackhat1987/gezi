@@ -27,7 +27,7 @@ class ModelFactory
 public:
   static Model* createModel(const char* modelType, const char* modelPath, const char* infoPath);
 
-  static Model* createModel(const std::string& modelType, const std::string& modelPath, const string& infoPath)
+  static Model* createModel(const std::string& modelType, const std::string& modelPath, string infoPath)
   {
     return createModel(modelType.c_str(), modelPath.c_str(), infoPath.c_str());
   }

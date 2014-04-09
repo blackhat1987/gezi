@@ -74,14 +74,14 @@ namespace gezi {
 			_index.clear();
 		}
 
-		inline const string& key(int id) const
+		inline string key(int id) const
 		{
 			return _index[id];
 		}
 
 		//get a item's id (index in dict),if the item does not exist return null_id()
 
-		inline IdType id(const string& f) const
+		inline IdType id(string f) const
 		{
 			HashMap::const_iterator it = _hashdict.find(f);
 			if (it == _hashdict.end())
@@ -89,12 +89,12 @@ namespace gezi {
 			return it->second;
 		}
 
-		inline bool has(const string& f) const
+		inline bool has(string f) const
 		{
 			return _hashdict.find(f) != _hashdict.end();
 		}
 
-		inline IdType add(const string& f)
+		inline IdType add(string f)
 		{
 			HashMap::iterator it = _hashdict.find(f);
 			if (it != _hashdict.end())
@@ -106,7 +106,7 @@ namespace gezi {
 			return id;
 		}
 
-		inline IdType add(const string& f, bool& isnew)
+		inline IdType add(string f, bool& isnew)
 		{
 			HashMap::iterator it = _hashdict.find(f);
 			if (it != _hashdict.end())
@@ -126,7 +126,7 @@ namespace gezi {
 			return _index.back();
 		}
 
-		inline IdType add_unique(const string& f)
+		inline IdType add_unique(string f)
 		{
 			int id = _index.size();
 			_hashdict[f] = id;
@@ -134,7 +134,7 @@ namespace gezi {
 			return id;
 		}
 
-		bool load(const string& file, string sep = "\t")
+		bool load(string file, string sep = "\t")
 		{
 			ifstream ifs(file.c_str());
 			CHECK_EQ(ifs.is_open(), true) << file;
@@ -157,7 +157,7 @@ namespace gezi {
 			return true;
 		}
 
-		void save(const string& file)
+		void save(string file)
 		{
 			ofstream ofs(file.c_str());
 
@@ -168,7 +168,7 @@ namespace gezi {
 			}
 		}
 
-		const string& operator [] (int id) const {
+		string operator [] (int id) const {
 			return _index[id];
 		}
 
@@ -188,7 +188,7 @@ namespace gezi {
 	class ValueIdentifer : public Identifer
 	{
 	public:
-		bool load(const string& file, int index = 1, string sep = "\t")
+		bool load(string file, int index = 1, string sep = "\t")
 		{
 			ifstream ifs(file.c_str());
 			CHECK_EQ(ifs.is_open(), true) << file;

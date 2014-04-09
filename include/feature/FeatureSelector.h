@@ -298,7 +298,7 @@ private:
 
 	void add(const set<string>& words, int labelIdx)
 	{
-		foreach(const string& word, words)
+		foreach(string word, words)
 		{
 			bool isnew = false;
 			int idx = _identifer.add(word, isnew);

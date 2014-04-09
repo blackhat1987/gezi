@@ -35,7 +35,7 @@ public:
       dm_dict_del(dict_);
     }
   }
-  bool init(const string& file)
+  bool init(string file)
   {
     if (!dict_)
     {

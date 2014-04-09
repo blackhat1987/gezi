@@ -99,7 +99,7 @@ namespace gezi
 
 		}
 
-		Segmentor(const string& data_dir, int type = 0, const string& conf_path = "./conf/scw.conf")
+		Segmentor(string data_dir, int type = 0, string conf_path = "./conf/scw.conf")
 			:_type(0),
 			_use_tag(false),
 			_pwdict(NULL),
@@ -123,7 +123,7 @@ namespace gezi
 				ds_del(_split_dict);
 		}
 
-		bool init(const string& data_dir, int type = 0, const string& conf_path = "./conf/scw.conf")
+		bool init(string data_dir, int type = 0, string conf_path = "./conf/scw.conf")
 		{
 			return init(data_dir.c_str(), type, conf_path.c_str());
 		}
@@ -178,7 +178,7 @@ namespace gezi
 			return true;
 		}
 
-		bool segment(const string& input, SegHandle& handle, int type = SCW_OUT_WPCOMP)
+		bool segment(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP)
 		{
 			//---------分词
 			if (scw_segment_words(_pwdict, handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, NULL) < 0)
@@ -203,7 +203,7 @@ namespace gezi
 		}
 
 		//  //返回按照unicode的切分长度序列
-		//  vector<int> segment_w(const string& input, SegHandle& handle, int type = SCW_OUT_WPCOMP)
+		//  vector<int> segment_w(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP)
 		//  {
 		//    segment(input, handle, type);
 		//    

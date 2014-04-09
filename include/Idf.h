@@ -41,7 +41,7 @@ namespace gezi {
 			add(wordSet);
 		}
 
-		void save(const string& file)
+		void save(string file)
 		{
 			ofstream ofs(file.c_str());
 			size_t len = _identifer.size();
@@ -83,7 +83,7 @@ namespace gezi {
 	private:
 		void add(const set<string>& words)
 		{
-			foreach(const string& word, words)
+			foreach(string word, words)
 			{
 				bool isnew = false;
 				int idx = _identifer.add(word, isnew);

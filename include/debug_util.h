@@ -74,7 +74,7 @@ using namespace std;
  * TODO FIXME!!! Prange 怎么会丢失没有打印第一个字符？ 见test_prob_seg;
  */
 template<typename T>
-void Pvec_(const T&vec, std::ostream& out = std::cout, const string& sep = "\n", const string& last = "\n")
+void Pvec_(const T&vec, std::ostream& out = std::cout, string sep = "\n", string last = "\n")
 {
   typedef typename T::value_type VType;
   typedef typename T::const_iterator Iter;
@@ -86,7 +86,7 @@ void Pvec_(const T&vec, std::ostream& out = std::cout, const string& sep = "\n",
 }
 
 template<typename T>
-void PrintPairVec(const T&vec, int level = 0, const string& sep = "\n", const string& last = "\n")
+void PrintPairVec(const T&vec, int level = 0, string sep = "\n", string last = "\n")
 {
 	typedef typename T::value_type VType;
 	typedef typename T::const_iterator Iter;
@@ -98,7 +98,7 @@ void PrintPairVec(const T&vec, int level = 0, const string& sep = "\n", const st
 }
 
 template<typename T>
-void Pvec2_(const T&vec, std::ostream& out = std::cout, const string& sep = "\n", const string& last = "\n")
+void Pvec2_(const T&vec, std::ostream& out = std::cout, string sep = "\n", string last = "\n")
 {
   typedef typename T::value_type VType;
   typedef typename T::const_iterator Iter;
@@ -111,7 +111,7 @@ void Pvec2_(const T&vec, std::ostream& out = std::cout, const string& sep = "\n"
 //TODO 不好重载。。。
 
 template<typename Iter>
-void Prange2(Iter begin, Iter end, std::ostream& out = std::cout, const string& sep = "\n", const string& last = "\n")
+void Prange2(Iter begin, Iter end, std::ostream& out = std::cout, string sep = "\n", string last = "\n")
 {
   for (; begin != end; ++begin)
   {
@@ -121,7 +121,7 @@ void Prange2(Iter begin, Iter end, std::ostream& out = std::cout, const string& 
 }
 
 template<typename Iter>
-void Prange(Iter begin, Iter end, std::ostream& out = std::cout, const string& sep = "\n", const string& last = "\n")
+void Prange(Iter begin, Iter end, std::ostream& out = std::cout, string sep = "\n", string last = "\n")
 {
   for (; begin != end; ++begin)
   {
@@ -131,7 +131,7 @@ void Prange(Iter begin, Iter end, std::ostream& out = std::cout, const string& s
 }
 
 template<typename T>
-void PVec(const T&vec, std::ostream& out = std::cout, const string& sep = "\n", const string& last = "\n")
+void PVec(const T&vec, std::ostream& out = std::cout, string sep = "\n", string last = "\n")
 {
   typedef typename T::value_type VType;
   typedef typename T::const_iterator Iter;
@@ -143,7 +143,7 @@ void PVec(const T&vec, std::ostream& out = std::cout, const string& sep = "\n", 
 }
 
 template<typename Iter>
-void PRange(Iter begin, Iter end, std::ostream& out = std::cout, const string& sep = "\n", const string& last = "\n")
+void PRange(Iter begin, Iter end, std::ostream& out = std::cout, string sep = "\n", string last = "\n")
 {
   for (; begin != end; ++begin)
   {

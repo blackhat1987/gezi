@@ -71,18 +71,18 @@ public:
     return _feature;
   }
 
-  inline void add(double value, const string& name = "")
+  inline void add(double value, string name = "")
   {
     _feature->add(value, name);
   }
 	
 	template<typename Vec>
-  inline void add(Vec& values, const string& name = "")
+  inline void add(Vec& values, string name = "")
   {
     _feature->add(values, name);
   }
 
-  inline void add(double* values, int n, const string& name = "")
+  inline void add(double* values, int n, string name = "")
   {
     _feature->add(values, n, name);
   }

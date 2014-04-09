@@ -22,14 +22,14 @@ Segmentor _seg;
 int _buf_size = 15000;
 SegHandle _handle; //单线程使用 全局buffer
 
-bool seg_init(const string& dict_dir, int type,
-        const string& conf_path)
+bool seg_init(string dict_dir, int type,
+        string conf_path)
 {
   return _seg.init(dict_dir, type, conf_path);
 }
 
-bool seg_init2(const string& dict_dir, int type,
-	const string& conf_path)
+bool seg_init2(string dict_dir, int type,
+	string conf_path)
 {
 	bool ret = _seg.init(dict_dir, type, conf_path);
 	CHECK_EQ(ret, true);
@@ -37,12 +37,12 @@ bool seg_init2(const string& dict_dir, int type,
 	return true;
 }
 
-bool segment(const string& input, SegHandle& handle, int type)
+bool segment(string input, SegHandle& handle, int type)
 {
   return _seg.segment(input, handle, type);
 }
 
-bool segment(const string& input, vector<string>& vec, SegHandle& handle, int type)
+bool segment(string input, vector<string>& vec, SegHandle& handle, int type)
 {
 	bool ret = _seg.segment(input, handle, type);
 	for (int i = 0; i < handle.nresult; i++)
@@ -52,7 +52,7 @@ bool segment(const string& input, vector<string>& vec, SegHandle& handle, int ty
 	return ret;
 }
 
-bool segment(const string& input, vector<string>& vec, int type)
+bool segment(string input, vector<string>& vec, int type)
 {
 	SegHandle handle(_buf_size);
 	bool ret = _seg.segment(input, handle, type);
@@ -63,7 +63,7 @@ bool segment(const string& input, vector<string>& vec, int type)
 	return ret;
 }
 
-string segment(const string& input, string sep, int type)
+string segment(string input, string sep, int type)
 {
 	SegHandle handle(_buf_size);
 	bool ret = _seg.segment(input, handle, type);
@@ -80,7 +80,7 @@ string segment(const string& input, string sep, int type)
 	return ss.str();
 }
 
-bool segment2(const string& input, vector<string>& vec, int type)
+bool segment2(string input, vector<string>& vec, int type)
 {
 	bool ret = _seg.segment(input, _handle, type);
 	for (int i = 0; i < _handle.nresult; i++)
@@ -90,7 +90,7 @@ bool segment2(const string& input, vector<string>& vec, int type)
 	return ret;
 }
 
-string segment2(const string& input, string sep, int type)
+string segment2(string input, string sep, int type)
 {
 	bool ret = _seg.segment(input, _handle, type);
 	if (!ret || _handle.nresult < 1)

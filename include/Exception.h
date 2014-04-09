@@ -27,7 +27,7 @@ namespace gezi
 		virtual ~Exception() throw() 
 		{
 		};
-		Exception(const string& msg = "")
+		Exception(string msg = "")
 			:_msg(msg)
 		{
 

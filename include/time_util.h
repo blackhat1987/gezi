@@ -65,7 +65,7 @@ namespace gezi {
 		MicrosecTimer _timer;
 		int _level;
 
-		AutoTimer(const string& prefix, int level = 2)
+		AutoTimer(string prefix, int level = 2)
 			: _prefix(prefix), _level(level)
 		{
 		}

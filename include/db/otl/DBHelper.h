@@ -76,7 +76,7 @@ public:
   {
   }
 
-  DBHelper(const string& config_file, const string& section = "", const string& dir = "./conf")
+  DBHelper(string config_file, string section = "", string dir = "./conf")
   {
     init(config_file, section, dir);
   }
@@ -92,7 +92,7 @@ public:
     _conn.logoff();
   }
 
-  void init(const string& config_file, const string& section = "", const string& dir = "./conf")
+  void init(string config_file, string section = "", string dir = "./conf")
   {
     readConfig(config_file, section, dir);
     initDB();
@@ -100,7 +100,7 @@ public:
   }
 
   /**重新配置文件执行其它sql操作,也可以直接再执行setSql操作等等*/
-  void reset(const string& config_file, const string& section = "", const string& dir = "./conf")
+  void reset(string config_file, string section = "", string dir = "./conf")
   {
     readConfig(config_file, section, dir);
     initSql();
@@ -235,7 +235,7 @@ public:
 private:
 
   /**读取所有配置信息*/
-  void readConfig(const string& config_file, const string& section, const string& dir)
+  void readConfig(string config_file, string section, string dir)
   {
     CHECK(!config.empty()) << "Need to specify the db config to use";
     LOG(INFO) << Pval(config_file);
@@ -364,30 +364,30 @@ public:
     }
   }
 
-  void setSql(const string& sql)
+  void setSql(string sql)
   {
     Sql = sql;
   }
 
-  void setSelect(const string& select)
+  void setSelect(string select)
   {
     Select = select;
     initSql2();
   }
 
-  void setFrom(const string& from)
+  void setFrom(string from)
   {
     From = from;
     initSql2();
   }
 
-  void setTable(const string& from)
+  void setTable(string from)
   {
     From = from;
     initSql2();
   }
 
-  void setWhere(const string& where)
+  void setWhere(string where)
   {
     Where = where;
     initSql2();
@@ -667,19 +667,19 @@ public:
     return true;
   }
 
-  bool drop(const string& table)
+  bool drop(string table)
   {
     Sql = "drop table " + table;
     return execute();
   }
 
-  bool create(const string& table)
+  bool create(string table)
   {
     Sql = ("create table " + table + " ") + Sql;
     return execute();
   }
 
-  bool insert(const string& table)
+  bool insert(string table)
   {
     Sql = ("insert into " + table + " ") + Sql;
   }

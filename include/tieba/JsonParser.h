@@ -406,11 +406,11 @@ namespace gezi {
 			}
 
 			//解析json获取历史 no throw
-			static bool getHistory(const string& json_str_, HistoryType& history_)
+			static bool getHistory(string json_str_, HistoryType& history_)
 			{
 				return getHistory(json_str_, &history_);
 			}
-			static bool getHistory(const string& json_str_, HistoryType* history_)
+			static bool getHistory(string json_str_, HistoryType* history_)
 			{
 				HistoryType& history = *history_;
 				string json_str = filter(json_str_);

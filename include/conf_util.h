@@ -64,7 +64,7 @@ namespace gezi
 		return INT(line.substr(name.size()));
 	}
 
-using std::string;
+using string;
 using comcfg::Configure;
 #define DECLARE_SHAREDCONF\
   comcfg::Configure SharedConf::_conf
@@ -88,7 +88,7 @@ public:
     return &_conf;
   }
 
-  static bool init(const string& config_file = "strategy.conf", const string& dir = "./conf")
+  static bool init(string config_file = "strategy.conf", string dir = "./conf")
   {
     int ret = _conf.load(dir.c_str(), config_file.c_str());
     if (ret != 0)
@@ -105,7 +105,7 @@ private:
   static comcfg::Configure _conf; //comcfg::Configure SharedConf::conf_; need this on one of your cpp
 };
 
-inline std::string conf_trim(const std::string& input)
+inline string conf_trim(string input)
 {
   //string input = boost::to_lower_copy(input_);
   if (input.size() > 1)
@@ -121,9 +121,9 @@ inline std::string conf_trim(const std::string& input)
   }
   return input;
 }
-//string @TODO 为什么不存在的时候慢 是try catch慢 不用异常？
+//string @TODO 为什么不存在的时候慢 是try catch慢 不用异常？ @FIXME
 
-inline void set_val(const comcfg::Configure& conf, const std::string& key, std::string& val)
+inline void set_val(const comcfg::Configure& conf, string key, string& val)
 {
   try
   {
@@ -136,7 +136,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& key, std::
   }
 }
 
-inline void set_val(const comcfg::Configure& conf, const std::string& field, const std::string& key, std::string& val)
+inline void set_val(const comcfg::Configure& conf, string field, string key, string& val)
 {
   if (field.empty())
   {
@@ -156,9 +156,9 @@ inline void set_val(const comcfg::Configure& conf, const std::string& field, con
   }
 }
 
-inline std::string get_val(const comcfg::Configure& conf, const std::string& key, const std::string& default_val)
+inline string get_val(const comcfg::Configure& conf, string key, string default_val)
 {
-  std::string val;
+  string val;
   try
   {
     val = conf[key.c_str()].to_cstr();
@@ -172,9 +172,9 @@ inline std::string get_val(const comcfg::Configure& conf, const std::string& key
   return val;
 }
 
-inline std::string get_val(const comcfg::Configure& conf, const std::string& field, const std::string& key, const std::string& default_val)
+inline string get_val(const comcfg::Configure& conf, string field, string key, string default_val)
 {
-  std::string val;
+  string val;
   if (field.empty())
   {
     return get_val(conf, key, default_val);
@@ -194,7 +194,7 @@ inline std::string get_val(const comcfg::Configure& conf, const std::string& fie
 }
 ///int
 
-inline void set_val(const comcfg::Configure& conf, const std::string& key, int& val)
+inline void set_val(const comcfg::Configure& conf, string key, int& val)
 {
   try
   {
@@ -207,7 +207,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& key, int& 
   }
 }
 
-inline void set_val(const comcfg::Configure& conf, const std::string& field, const std::string& key, int& val)
+inline void set_val(const comcfg::Configure& conf, string field, string key, int& val)
 {
   if (field.empty())
   {
@@ -226,7 +226,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& field, con
   }
 }
 
-inline int get_val(const comcfg::Configure& conf, const std::string& key, int default_val)
+inline int get_val(const comcfg::Configure& conf, string key, int default_val)
 {
   int val;
   try
@@ -242,7 +242,7 @@ inline int get_val(const comcfg::Configure& conf, const std::string& key, int de
   return val;
 }
 
-inline int get_val(const comcfg::Configure& conf, const std::string& field, const std::string& key, int default_val)
+inline int get_val(const comcfg::Configure& conf, string field, string key, int default_val)
 {
   int val;
   if (field.empty())
@@ -265,7 +265,7 @@ inline int get_val(const comcfg::Configure& conf, const std::string& field, cons
 
 //bool
 
-inline void set_val(const comcfg::Configure& conf, const std::string& key, bool& val)
+inline void set_val(const comcfg::Configure& conf, string key, bool& val)
 {
   try
   {
@@ -278,7 +278,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& key, bool&
   }
 }
 
-inline void set_val(const comcfg::Configure& conf, const std::string& field, const std::string& key, bool& val)
+inline void set_val(const comcfg::Configure& conf, string field, string key, bool& val)
 {
   if (field.empty())
   {
@@ -297,7 +297,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& field, con
   }
 }
 
-//inline bool get_val(const comcfg::Configure& conf, const std::string& key, bool default_val)
+//inline bool get_val(const comcfg::Configure& conf, string key, bool default_val)
 //{
 //  int val;
 //  try
@@ -313,7 +313,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& field, con
 //  return (bool)val;
 //}
 //
-//inline bool get_val(const comcfg::Configure& conf, const std::string& field, const std::string& key, bool default_val)
+//inline bool get_val(const comcfg::Configure& conf, string field, string key, bool default_val)
 //{
 //  int val;
 //  if (field.empty())
@@ -336,7 +336,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& field, con
 
 ///int64
 
-inline void set_val(const comcfg::Configure& conf, const std::string& key, long long& val)
+inline void set_val(const comcfg::Configure& conf, string key, long long& val)
 {
   try
   {
@@ -349,7 +349,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& key, long 
   }
 }
 
-inline void set_val(const comcfg::Configure& conf, const std::string& field, std::string& key, long long& val)
+inline void set_val(const comcfg::Configure& conf, string field, string& key, long long& val)
 {
   if (field.empty())
   {
@@ -368,7 +368,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& field, std
   }
 }
 
-inline long long get_val(const comcfg::Configure& conf, const std::string& key, long long default_val)
+inline long long get_val(const comcfg::Configure& conf, string key, long long default_val)
 {
   long long val;
   try
@@ -384,7 +384,7 @@ inline long long get_val(const comcfg::Configure& conf, const std::string& key, 
   return val;
 }
 
-inline long long get_val(const comcfg::Configure& conf, const std::string& field, std::string& key, long long default_val)
+inline long long get_val(const comcfg::Configure& conf, string field, string& key, long long default_val)
 {
   long long val;
   if (field.empty())
@@ -407,7 +407,7 @@ inline long long get_val(const comcfg::Configure& conf, const std::string& field
 
 ///double
 
-inline void set_val(const comcfg::Configure& conf, const std::string& key, double& val)
+inline void set_val(const comcfg::Configure& conf, string key, double& val)
 {
   try
   {
@@ -421,7 +421,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& key, doubl
 }
 //key not const, default_val const double will cause always ????double  WHY?
 
-inline void set_val(const comcfg::Configure& conf, const std::string& field, const std::string& key, double& val)
+inline void set_val(const comcfg::Configure& conf, string field, string key, double& val)
 {
   if (field.empty())
   {
@@ -440,7 +440,7 @@ inline void set_val(const comcfg::Configure& conf, const std::string& field, con
   }
 }
 
-inline double get_val(const comcfg::Configure& conf, const std::string& key, double default_val)
+inline double get_val(const comcfg::Configure& conf, string key, double default_val)
 {
   double val;
   try
@@ -457,7 +457,7 @@ inline double get_val(const comcfg::Configure& conf, const std::string& key, dou
 }
 //key not const, default_val const double will cause always ????double  WHY?
 
-inline double get_val(const comcfg::Configure& conf, const std::string& field, const std::string& key, double default_val)
+inline double get_val(const comcfg::Configure& conf, string field, string key, double default_val)
 {
   double val;
   if (field.empty())
@@ -479,17 +479,17 @@ inline double get_val(const comcfg::Configure& conf, const std::string& field, c
 }
 
 inline void get_val(const comcfg::Configure& conf, char* dest,
-        const std::string& key, const std::string& default_val)
+        string key, string default_val)
 {
-  std::string tmp = get_val(conf, key, default_val);
+  string tmp = get_val(conf, key, default_val);
   strncpy(dest, tmp.c_str(), tmp.length());
   dest[tmp.length()] = '\0';
 }
 
 inline void get_val(const comcfg::Configure& conf, char* dest,
-        const std::string& field, const std::string& key, const std::string& default_val)
+        string field, string key, string default_val)
 {
-  std::string tmp = get_val(conf, field, key, default_val);
+  string tmp = get_val(conf, field, key, default_val);
   strncpy(dest, tmp.c_str(), tmp.length());
   dest[tmp.length()] = '\0';
 }
@@ -564,12 +564,12 @@ inline void get_val(const comcfg::Configure& conf, char* dest,
 
 //-----------with root used 
 #define CONF_STRCPY_VAL(root, s,default_value)\
-    std::string VAL_STRCPY_##s##result = gezi::get_val(conf, gezi::conf_trim(#s),default_value);\
+    string VAL_STRCPY_##s##result = gezi::get_val(conf, gezi::conf_trim(#s),default_value);\
     strncpy(root, VAL_STRCPY_##s##result.c_str(), VAL_STRCPY_##s##result.length());\
     root[ VAL_STRCPY_##s##result.length()] = '\0'
 
 #define CONF_STRCPY_PROP(root, s,field,default_value)\
-    std::string PROP_STRCPY_##s##result;\
+    string PROP_STRCPY_##s##result;\
     PROP_STRCPY_##s##result = gezi::get_val(conf, field,gezi::conf_trim(#s), default_value);\
     strncpy(root , PROP_STRCPY_##s##result.c_str(), PROP_STRCPY_##s##result.length());\
     root[PROP_STRCPY_##s##result.length()] = '\0'

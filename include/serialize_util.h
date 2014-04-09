@@ -17,6 +17,10 @@
 #include <fstream>
 #include <iostream>
 
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/nvp.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+
 #include "serialization/shared_ptr.hpp"
 #include "serialization/shared_ptr_helper.hpp"
 #include "serialization/unique_ptr.hpp"
@@ -31,11 +35,13 @@
 #include "serialization/unordered_map_serialize.h"
 #include "serialization/unordered_set_serialize.h"
 
+
+
 namespace serialize_util {
 using std::string;
 /**将data序列化输出到file*/
 template<class T>
-void save(const T& data, const string& file)
+void save(const T& data, string file)
 {
     std::ofstream ofs(file.c_str());
     boost::archive::binary_oarchive oa(ofs, std::ios::binary); //文本的输出归档类，使用一个ostream来构造
@@ -43,7 +49,7 @@ void save(const T& data, const string& file)
 }
 /**序列化从file中file中读出data*/
 template<class T>
-bool load(const string& file, T& data)
+bool load(string file, T& data)
 {
     std::ifstream ifs(file.c_str());
     if (!ifs)
@@ -65,7 +71,7 @@ bool load(const string& file, T& data)
 }
 /**序列化从file中file中读出data*/
 template<class T>
-bool load(T& data, const string& file)
+bool load(T& data, string file)
 {
     return load(file, data);
 }

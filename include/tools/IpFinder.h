@@ -437,7 +437,7 @@ namespace gezi {
 				indexEnd);
 		}
 
-		bool Open(const string& file)
+		bool Open(string file)
 		{
 			return Open(file.c_str());
 		}

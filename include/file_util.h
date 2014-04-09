@@ -29,7 +29,7 @@ namespace bf = boost::filesystem;
 //---------------------------for file save load
 namespace gezi
 {
-	inline void try_create_dir(const string& dir)
+	inline void try_create_dir(string dir)
 	{
 		if (!bfs::exists(dir))
 		{
@@ -45,7 +45,7 @@ namespace gezi
 			std::istreambuf_iterator<char>()));
 	}
 
-	inline void write_file(const string& content, const string& outfile)
+	inline void write_file(string content, string outfile)
 	{
 		std::ofstream ofs(outfile.c_str());
 		ofs << content;
@@ -168,7 +168,7 @@ namespace gezi
 	//¶àÁÐ read_to
 
 	inline void read_to_set(const std::string& infile, std::set<std::string>& container,
-		int index = 0, const string& sep = "\t ")
+		int index = 0, string sep = "\t ")
 	{
 		std::ifstream ifs(infile.c_str());
 		string line;
@@ -182,7 +182,7 @@ namespace gezi
 	}
 
 	inline void read_to_set(const std::string& infile, unordered_set<std::string>& container,
-		int index = 0, const string& sep = "\t ")
+		int index = 0, string sep = "\t ")
 	{
 		std::ifstream ifs(infile.c_str());
 		string line;
@@ -196,7 +196,7 @@ namespace gezi
 	}
 
 	template<typename Container>
-	void read_to_set(const std::string& infile, Container& container, int index = 0, const string& sep = "\t ")
+	void read_to_set(const std::string& infile, Container& container, int index = 0, string sep = "\t ")
 	{
 		typedef typename Container::value_type T;
 		std::ifstream ifs(infile.c_str());
@@ -211,7 +211,7 @@ namespace gezi
 	}
 
 	inline void read_to_vec(const std::string& infile, std::vector<std::string>& container,
-		int index = 0, const string& sep = "\t ")
+		int index = 0, string sep = "\t ")
 	{
 		std::ifstream ifs(infile.c_str());
 		string line;
@@ -225,7 +225,7 @@ namespace gezi
 	}
 
 	template<typename Container>
-	void read_to_vec(const std::string& infile, Container& container, int index = 0, const string& sep = "\t ")
+	void read_to_vec(const std::string& infile, Container& container, int index = 0, string sep = "\t ")
 	{
 		typedef typename Container::value_type T;
 		std::ifstream ifs(infile.c_str());
@@ -241,7 +241,7 @@ namespace gezi
 	//TODO better method...
 
 	inline void read_map(const std::string& infile, std::map<std::string, std::string>& container,
-		const string& sep = "\t", int key_idx = 0, int value_idx = 1)
+		string sep = "\t", int key_idx = 0, int value_idx = 1)
 	{
 		std::ifstream ifs(infile.c_str());
 		string line;
@@ -255,7 +255,7 @@ namespace gezi
 	}
 
 	inline void read_map(const std::string& infile, unordered_map<std::string, std::string>& container,
-		const string& sep = "\t", int key_idx = 0, int value_idx = 1)
+		string sep = "\t", int key_idx = 0, int value_idx = 1)
 	{
 		std::ifstream ifs(infile.c_str());
 		string line;
@@ -269,7 +269,7 @@ namespace gezi
 	}
 
 	template<typename Container>
-	void read_map(const std::string& infile, Container& container, const string& sep = "\t",
+	void read_map(const std::string& infile, Container& container, string sep = "\t",
 		int key_idx = 0, int value_idx = 1)
 	{
 		//  typedef typename Container::key_type T;

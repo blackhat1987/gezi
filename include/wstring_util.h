@@ -34,12 +34,12 @@ inline wstring str_to_wstr(const char* pc, int len)
     return val;
 }
 
-inline wstring str_to_wstr(const string& src)
+inline wstring str_to_wstr(string src)
 {
   return str_to_wstr(src.c_str(), src.length());
 }
 
-inline wstring to_wstr(const string& src)
+inline wstring to_wstr(string src)
 {
   return str_to_wstr(src);
 }
@@ -79,7 +79,7 @@ inline string wstr2str(const wstring& src)
   return wstr_to_str(src);
 }
 
-inline wstring str2wstr(const string& src) 
+inline wstring str2wstr(string src) 
 {
   return str_to_wstr(src);
 }

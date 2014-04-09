@@ -25,7 +25,7 @@ namespace gezi {
 		{
 			FREE(_pyNotaion);
 		}
-		void Load(const string& dictPath)
+		void Load(string dictPath)
 		{
 			_pyNotaion = NLP::Pinyin::IPYFactory::getPYInstance();
 			string path = dictPath + "/dyz.dat";
@@ -37,7 +37,7 @@ namespace gezi {
 			path = dictPath + "/dz_pro.dat";
 			CHECK(_pyNotaion->loadBMEDict(path.c_str()) == true) << path;
 		}
-		string Convert(const string& input)
+		string Convert(string input)
 		{
 			vector<string> result;
 			bool ret = _pyNotaion->convertToPY(input.c_str(), &result);

@@ -37,11 +37,11 @@ public:
     return true;
   }
 
-  static bool segmentor_init(const string& dict_dir = "./data/wordseg")
+  static bool segmentor_init(string dict_dir = "./data/wordseg")
   {
     return true;
   }
-  static bool segment(const string& input, SegHandle& handle, int type = SCW_OUT_WPCOMP | SCW_OUT_PROP)
+  static bool segment(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP | SCW_OUT_PROP)
   {
     return true;
   }

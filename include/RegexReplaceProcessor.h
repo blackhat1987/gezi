@@ -41,7 +41,7 @@ public:
 
   }
 
-  void add(const string& pattern, bool icase = true)
+  void add(string pattern, bool icase = true)
   {
     if (icase)
     {
@@ -106,12 +106,12 @@ public:
     return true;
   }
 
-  bool init(const string& file, bool icase = true)
+  bool init(string file, bool icase = true)
   {
     return init(file.c_str(), icase);
   }
 
-  bool init2(const string& file, bool icase = true)
+  bool init2(string file, bool icase = true)
   {
     return init2(file.c_str(), icase);
   }
@@ -138,7 +138,7 @@ public:
     return ret;
   }
 
-  void set_replacer(const string& replacer)
+  void set_replacer(string replacer)
   {
     replacer_ = replacer;
   }

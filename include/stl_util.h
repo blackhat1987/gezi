@@ -79,7 +79,7 @@ namespace gezi {
 
 	
 
-	inline vector<string> to_vec(const string& input_, const string& sep = ",")
+	inline vector<string> to_vec(string input_, string sep = ",")
 	{
 		vector<string> vec;
 		string input = boost::trim_copy(input_);
@@ -93,7 +93,7 @@ namespace gezi {
 	}
 
 	//@TODO trim好像很慢 回头把依赖 需要trim的代码 改为使用 split_safe
-	/*inline vector<string> split(const string& input_, const string& sep = "\t ")
+	/*inline vector<string> split(string input_, string sep = "\t ")
 	{
 		vector<string> vec;
 		string input = boost::trim_copy(input_);
@@ -128,14 +128,14 @@ namespace gezi {
 		return output;
 	}
 
-	inline vector<string> split(const string& input, char sep)
+	inline vector<string> split(string input, char sep)
 	{
 		vector<string> vec;
 		boost::split(vec, input, std::bind1st(std::equal_to<char>(), sep));
 		return vec;
 	}
 
-	inline vector<string> split(const string& input, const string& sep = "\t ")
+	inline vector<string> split(string input, string sep = "\t ")
 	{
 		vector<string> vec;
 		if (sep.size() == 1)
@@ -149,7 +149,7 @@ namespace gezi {
 		return vec;
 	}
 
-	inline bool split(const string& input, const string& sep, string& first, string& second)
+	inline bool split(string input, string sep, string& first, string& second)
 	{
 		int index = sep.size() == 1 ? input.find(sep[0]) : input.find(sep);
 		if (index == string::npos)
@@ -162,7 +162,7 @@ namespace gezi {
 		return true;
 	}
 
-	inline bool split(const string& input, const char sep, string& first, string& second)
+	inline bool split(string input, const char sep, string& first, string& second)
 	{
 		int index = input.find(sep);
 		if (index == string::npos)
@@ -177,7 +177,7 @@ namespace gezi {
 	//@TODO 去掉trim 带trim的统一后缀 _safe
 	//TODO FIXME 貌似比如 "1, 2, 3"这样还是处理不了会抛异常 按说trim了
 	template<typename T>
-	inline void to_vec(const string& input_, vector<T>& ovec, const string& sep = ",")
+	inline void to_vec(string input_, vector<T>& ovec, string sep = ",")
 	{
 		vector<string> vec;
 		string input = boost::trim_copy(input_);

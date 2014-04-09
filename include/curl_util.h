@@ -109,13 +109,13 @@ public:
     return res;
   }
 
-	string get(const string& url)
+	string get(string url)
 	{
 		string result;
 		get(url, result);
 		return result;
 	}
-	CURLcode get(const string& url, string& resStr)
+	CURLcode get(string url, string& resStr)
 	{
 		return get(url.c_str(), resStr);
 	}

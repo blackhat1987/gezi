@@ -45,13 +45,13 @@ namespace gezi
 		{
 
 		}
-		Linear(const string& modelPath)
+		Linear(string modelPath)
 		{
 			load(modelPath);
 		}
 
 		//@FIXME 修改文本格式 
-		void load(const string& modelPath)
+		void load(string modelPath)
 		{
 			vector<int> indexVec;
 			vector<double> valueVec;

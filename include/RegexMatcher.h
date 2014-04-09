@@ -26,7 +26,7 @@ using namespace std;
 class RegexMatcher
 {
 public:
-  void add(const string& pattern, bool icase = true)
+  void add(string pattern, bool icase = true)
   {
     if (icase)
     {
@@ -68,7 +68,7 @@ public:
     return true;
   }
   
-  bool init(const string& file, bool icase = true)
+  bool init(string file, bool icase = true)
   {
     return init(file.c_str(), icase);
   }
@@ -86,7 +86,7 @@ public:
     return sum;
   }
   
-  bool has_match(const string& src)
+  bool has_match(string src)
   {
     for (int i = 0; i < (int) reg_list_.size(); i++)
     {
