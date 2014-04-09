@@ -27,6 +27,8 @@ namespace gezi {
 		vector<pair<Float, Float> > _binLowerUpperBounds; //first as loewr, second as upper
 		vector<pair<int, Float> > _countValues; //first as counts, second as distinct values
 	public:
+
+		//@TODO 实现一个Array.Sort(keys[],values[], cmper)
 		/// <summary>
 		/// Finds the bins.
 		/// </summary>

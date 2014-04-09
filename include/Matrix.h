@@ -115,6 +115,7 @@ namespace gezi {
 
 	typedef std::vector<std::vector<int> > imat;
 	typedef std::vector<std::vector<float> > fmat;
+	typedef std::vector<std::vector<Float> > Fmat;
 	typedef std::vector<std::vector<double> > dmat;
 } //----end of namespace gezi
 
