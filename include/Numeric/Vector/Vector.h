@@ -16,6 +16,7 @@
 #ifndef NUMERIC__VECTOR__VECTOR_H_
 #define NUMERIC__VECTOR__VECTOR_H_
 #include "common_util.h"
+#include "serialize_util.h"
 namespace gezi {
 
 	class Vector
@@ -723,6 +724,19 @@ namespace gezi {
 		}
 
 		friend Float dot(const Vector& l, const Vector& r);
+
+		friend class boost::serialization::access;
+		template<class Archive>
+		void serialize(Archive &ar, const unsigned int version)
+		{
+			ar & indices;
+			ar & values;
+			ar & length;
+			ar & sparsityRatio;
+			ar & keepDense;
+			ar & keepSparse;
+			ar & normalized;
+		}
 
 	public:
 		//@TODO 有没有必要写成shared_ptr<ivec> indices; //更加灵活 允许两个Vector相同indice 不同value 避免拷贝

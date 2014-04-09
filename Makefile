@@ -42,7 +42,8 @@ INCPATH=-I. \
   -I./include/feature \
   -I./include/model \
   -I./include/numeric \
-  -I./melt/include/
+  -I./melt/include/ \
+  -I./include/serialization/
 DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../com/btest/gtest/include \
   -I../../../../../com/btest/gtest/output \
@@ -150,7 +151,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=c5bdf7119489d30cd12a79a5996671ba  COMAKE
+COMAKE_MD5=970b9a8265b2bc31277311f087eec69e  COMAKE
 
 
 .PHONY:all
@@ -191,6 +192,7 @@ clean:ccpclean
 	rm -rf src/model/gezi_common_Score.o
 	rm -rf src/model/gezi_common_SharedPredictor.o
 	rm -rf src/model/gezi_common_SvmModel.o
+	rm -rf src/seralization/gezi_common_shared_ptr_helper.o
 	rm -rf src/json/gezi_json_json_reader.o
 	rm -rf src/json/gezi_json_json_value.o
 	rm -rf src/json/gezi_json_json_writer.o
@@ -227,7 +229,8 @@ libgezi_common.a:src/gezi_common_Seg.o \
   src/model/gezi_common_RandForestModel.o \
   src/model/gezi_common_Score.o \
   src/model/gezi_common_SharedPredictor.o \
-  src/model/gezi_common_SvmModel.o
+  src/model/gezi_common_SvmModel.o \
+  src/seralization/gezi_common_shared_ptr_helper.o
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibgezi_common.a[0m']"
 	ar crs libgezi_common.a src/gezi_common_Seg.o \
   src/gezi_common_SharedSegmentor.o \
@@ -239,7 +242,8 @@ libgezi_common.a:src/gezi_common_Seg.o \
   src/model/gezi_common_RandForestModel.o \
   src/model/gezi_common_Score.o \
   src/model/gezi_common_SharedPredictor.o \
-  src/model/gezi_common_SvmModel.o
+  src/model/gezi_common_SvmModel.o \
+  src/seralization/gezi_common_shared_ptr_helper.o
 	mkdir -p ./output/lib
 	cp -f --link libgezi_common.a ./output/lib
 
@@ -340,6 +344,14 @@ src/model/gezi_common_SvmModel.o:src/model/SvmModel.cpp
   -DVERSION=\"1.9.8.7\" \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_SvmModel.o src/model/SvmModel.cpp
+
+src/seralization/gezi_common_shared_ptr_helper.o:src/seralization/shared_ptr_helper.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/seralization/gezi_common_shared_ptr_helper.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
+  -D__STDC_LIMIT_MACROS \
+  -DVERSION=\"1.9.8.7\" \
+  -O3 \
+  -DNDEBUG $(CXXFLAGS)  -o src/seralization/gezi_common_shared_ptr_helper.o src/seralization/shared_ptr_helper.cpp
 
 src/json/gezi_json_json_reader.o:src/json/json_reader.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_json_reader.o[0m']"

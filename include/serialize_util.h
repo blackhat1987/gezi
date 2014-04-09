@@ -16,6 +16,11 @@
 
 #include <fstream>
 #include <iostream>
+
+#include "serialization/shared_ptr.hpp"
+#include "serialization/shared_ptr_helper.hpp"
+#include "serialization/unique_ptr.hpp"
+
 #include <boost/serialization/utility.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
@@ -23,8 +28,8 @@
 #include <boost/serialization/map.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/set.hpp>
-#include "unordered_map_serialize.h"
-#include "unordered_set_serialize.h"
+#include "serialization/unordered_map_serialize.h"
+#include "serialization/unordered_set_serialize.h"
 
 namespace serialize_util {
 using std::string;

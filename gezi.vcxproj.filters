@@ -336,7 +336,10 @@
     <ClInclude Include="include\Numeric\BinFinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\matrix_util.h">
+    <ClInclude Include="include\Numeric\Vector\Vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Numeric\Vector\vector_util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

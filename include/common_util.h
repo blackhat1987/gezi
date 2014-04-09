@@ -38,6 +38,8 @@
 
 #include "file_util.h"
 
+#include "serialize_util.h"
+
 #include "linq.h"
 #include "stl_util.h"
 
@@ -49,8 +51,6 @@
 #include "Exception.h"
 
 #include "ProgressBar.h"
-
-
 
 namespace gz = gezi;
 #endif  //----end of COMMON_UTIL_H_

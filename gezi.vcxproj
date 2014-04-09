@@ -131,6 +131,8 @@
     <ClInclude Include="include\myclient_stream.h" />
     <ClInclude Include="include\Numeric\BinFinder.h" />
     <ClInclude Include="include\numeric\collocation.h" />
+    <ClInclude Include="include\Numeric\Vector\Vector.h" />
+    <ClInclude Include="include\Numeric\Vector\vector_util.h" />
     <ClInclude Include="include\ProcessorMgr.h" />
     <ClInclude Include="include\ProgressBar.h" />
     <ClInclude Include="include\python_util.h" />
