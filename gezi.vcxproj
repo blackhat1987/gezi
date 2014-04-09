@@ -129,6 +129,7 @@
     <ClInclude Include="include\MultiHash.h" />
     <ClInclude Include="include\myclient_help.h" />
     <ClInclude Include="include\myclient_stream.h" />
+    <ClInclude Include="include\Numeric\BinFinder.h" />
     <ClInclude Include="include\numeric\collocation.h" />
     <ClInclude Include="include\ProcessorMgr.h" />
     <ClInclude Include="include\ProgressBar.h" />
@@ -215,7 +216,6 @@
     <ClCompile Include="test\test_shared_ptr.cc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="src\json\json_internalarray.inl" />
     <None Include="src\json\json_internalmap.inl" />
     <None Include="src\json\json_valueiterator.inl" />

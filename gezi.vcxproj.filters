@@ -333,6 +333,12 @@
     <ClInclude Include="gcc_IntelliSense.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Numeric\BinFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\matrix_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -468,6 +474,5 @@
     </None>
     <None Include="test\COMAKE" />
     <None Include="test\Makefile" />
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>
