@@ -95,7 +95,7 @@ namespace gezi {
 		vec = move(result);
 	}
 
-	//以vec为准遍历, shiftIndices 辅助定位有用的非0项
+	//以vec为准遍历, shiftIndices 辅助定位有用的非0项, func无返回值 采用引用修改值
 	template<typename Func>
 	void apply(Vector& vec, const ivec& shiftIndices, Func func)
 	{
@@ -103,7 +103,7 @@ namespace gezi {
 		{
 			for (size_t i = 0; i < vec.values.size(); i++)
 			{
-				vec.values[i] = func(i, vec.values[i]);
+				func(i, vec.values[i]);
 			}
 		}
 		else

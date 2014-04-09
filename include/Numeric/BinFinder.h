@@ -37,6 +37,14 @@ namespace gezi {
 		/// <returns>An array of bin upper bounds</returns> @TODO  研究下 是说相似能bin一起？
 		Fvec FindBins(Fvec& values, int maxBins)
 		{
+			Fvec result;
+
+			if (values.empty() || maxBins <= 1)
+			{
+				result.push_back(std::numeric_limits<Float>::max());
+				return result;
+			}
+
 			// chck whether to allocate datastructures
 			size_t sampleSize = values.size();
 			size_t allocSize = sampleSize < maxBins ? sampleSize : maxBins;
@@ -48,8 +56,7 @@ namespace gezi {
 			{
 				_countValues.resize(sampleSize, make_pair(0, 0.0));
 			}
-			Fvec result;
-
+			
 			// Get histogram of values
 			int numValues = 1;
 			std::sort(values.begin(), values.end());

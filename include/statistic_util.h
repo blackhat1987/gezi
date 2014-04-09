@@ -477,6 +477,13 @@ namespace gezi
 	//@TODO ±ß½ç
 	inline Fvec find_bins(Fvec& values, int maxBins)
 	{
+		Fvec result;
+		if (values.empty() || maxBins <= 1)
+		{
+			result.push_back(std::numeric_limits<Float>::max());
+			return result;
+		}
+
 		vector<pair<Float, Float> > binLowerUpperBounds; //first as loewr, second as upper
 		vector<pair<int, Float> > countValues; //first as counts, second as distinct values
 
@@ -491,7 +498,6 @@ namespace gezi
 		{
 			countValues.resize(sampleSize, make_pair(0, 0.0));
 		}
-		Fvec result;
 
 		// Get histogram of values
 		int numValues = 1;

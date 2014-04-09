@@ -215,6 +215,13 @@ namespace gezi {
 			return 1;
 		}
 	}
+
+	template<typename Vec>
+	void free_memory(Vec& vec)
+	{
+		vec.clear();
+		vec.shrink_to_fit();
+	}
 }  //----end of namespace gezi
 
 #undef TO_STRING
