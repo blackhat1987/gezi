@@ -145,6 +145,7 @@ TEST(extractor_old, func)
 
 TEST(other, func)
 {
+	{
 	Vector f1, f2;
 	f1.Add(1, 3);
 	f1.Add(3, 4);
@@ -156,6 +157,22 @@ TEST(other, func)
 
 	f1.ScaleBy(3);
 	Pval(f1.str());
+	}
+	{
+	Vector f1(10);
+	Vector f2;
+	f1.Add(1, 3);
+	f1.Add(3, 4);
+	f2.Add(3, 6);
+	f2.Add(4, 7);
+	f1.ToDense();
+	Pval(dot(f1, f2));
+	Pval(f1.str());
+	Pval(f2.str());
+               
+	f1.ScaleBy(3);
+	Pval(f1.str());
+	}
 }
 
 TEST(other2, func)
@@ -166,7 +183,9 @@ TEST(other2, func)
 	f1.Add(3, 4);
 	f2.Add(3, 6);
 	f2.Add(4, 7);
+	Pval(f1.str());
 	f1.ToDense();
+	Pval(f1.str());
 	Pval(dot(f1, f2));
 	Pval(f1.str());
 	Pval(f2.str());
