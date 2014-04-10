@@ -177,6 +177,15 @@ namespace gezi {
 			return _nameCounts;
 		}
 
+	/*	vector<Float>& values()
+		{
+			return values;
+		}
+
+		const vector<Float>& values() const
+		{
+			return values;
+		}*/
 		//-----------------------最重要的添加数据
 		/**
 	 * 增加特征, 注意feature Node index 是0开始 不再和libsvm保持一致 和tlc保持一致
@@ -249,6 +258,7 @@ namespace gezi {
 			_sectionNames.push_back(name);
 		}
 
+		//慎用 仅仅获取一个sparse 独立于Vector之外 如果有这个需要一般需要用Vector 然后Add(index, value)
 		void add(int index, Float value)
 		{
 			if (value)

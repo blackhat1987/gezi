@@ -93,6 +93,9 @@
     <ClInclude Include="include\feature\FeatureIdentifer.h" />
     <ClInclude Include="include\feature\FeatureNormalizer.h" />
     <ClInclude Include="include\feature\FeatureSelector.h" />
+    <ClInclude Include="include\feature\FeaturesExtractor.h" />
+    <ClInclude Include="include\feature\FeaturesExtractorMgr.h" />
+    <ClInclude Include="include\feature\features_util.h" />
     <ClInclude Include="include\feature\FeatureVector.h" />
     <ClInclude Include="include\feature\feature_selection.h" />
     <ClInclude Include="include\feature\feature_util.h" />

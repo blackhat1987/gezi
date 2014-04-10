@@ -73,12 +73,6 @@ namespace gezi
 		}
 	}
 
-	inline void libsvm_normalize(string& feature_str)
-	{
-		boost::trim(feature_str);
-		feature_str = gezi::remove_dupspace(feature_str);
-	}
-
 	inline Feature to_feature(string feature_str_)
 	{
 		string feature_str = feature_str_;
@@ -94,11 +88,7 @@ namespace gezi
 			feature.nodes().push_back(Feature::Node(INT(parts[0]), DOUBLE(parts[1])));
 		}
 
-#if __GNUC__ > 3
-		return std::move(feature);
-#else
 		return feature;
-#endif
 	}
 
 	template<typename _Stream>

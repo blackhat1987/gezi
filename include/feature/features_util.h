@@ -14,8 +14,272 @@
 #ifndef FEATURE_FEATURES_UTIL_H_
 #define FEATURE_FEATURES_UTIL_H_
 
+#include "feature/FeatureVector.h"
+#include "feature/feature_util.h" //@TODO　remove here just use to_libsvm
+
 namespace gezi {
 
-}  //----end of namespace gezi
+	inline void write_template(const Features& features, string outfile)
+	{
+		ofstream ofs(outfile.c_str());
+		int len = features.names().size();
+		for (int i = 0; i < len; i++)
+		{
+			ofs << "#define " << features.names()[i] << " fv[" << i << "]" << endl;
+		}
+	}
+	inline void write_def(const Features& features, string outfile)
+	{
+		write_template(features, outfile);
+	}
+	template<typename _Stream>
+	void debug_print(const Features& features, _Stream& out)
+	{
+		const vector<int>& name_counts = features.name_counts();
+		int idx = 0;
+		for (int i = 0; i < (int)name_counts.size(); i++)
+		{
+			out << format("---[%-3d-%s] len:%d\n") % i % features.section_names()[i] % name_counts[i];
+			for (int j = 0; j < name_counts[i]; j++)
+			{
+				double val = features.values[idx];
+				out << format("%-3d %-3d: %-20s : [%f]\n") % (idx + 1) % (j + 1) % features.names()[idx] % val;
+				idx++;
+			}
+		}
+	}
+
+	template<typename _Stream>
+	void debug_print(const Features& features, _Stream& out,
+		const vector<pair<double, double> >& normal_vec,
+		const vector<pair<double, double> >& spam_vec)
+	{
+		const vector<int>& name_counts = features.name_counts();
+		int idx = 0;
+		for (int i = 0; i < (int)name_counts.size(); i++)
+		{
+			out << format("---[%-3d-%s] len:%d\n") % i % features.section_names()[i] % name_counts[i];
+			for (int j = 0; j < name_counts[i]; j++)
+			{
+				double normed_val = features.values[idx]; //dense表示的特征被norm
+				double val = features[idx + 1]; //稀疏表示的保持不变
+				out << format("%-3d %-3d %-25s : [%f:%f] : [NormalMean %f] : [SpamMean %f] : [NormalVar %f] : [SpamVar %f]\n")
+					% (idx + 1) % (j + 1) % features.names()[idx] % val % normed_val
+					% normal_vec[idx].first % spam_vec[idx].first
+					% normal_vec[idx].second % spam_vec[idx].second;
+				idx++;
+			}
+		}
+	}
+
+	inline Vector to_features(string sparseFeatureStr)
+	{
+		libsvm_normalize(sparseFeatureStr);
+		Vector features;
+		vector<string> vec;
+		boost::split(vec, sparseFeatureStr, is_any_of("\t "));
+		int len = vec.size();
+		for (int i = 0; i < len; i++)
+		{
+			vector<string> parts;
+			boost::split(parts, vec[i], is_any_of(":"));
+			features.Add(INT(parts[0]), DOUBLE(parts[1]));
+		}
+		return features;
+	}
+
+	template<typename _Stream>
+	void write_arff_header(const Features& features, _Stream& ofs, string relation, string classes = "spam,normal")
+	{
+		ofs << "@relation " << relation << "\n" << endl;
+		for (int i = 0; i < (int)features.names().size(); i++)
+		{
+			ofs << "@attribute " << features.names()[i] << " numeric" << endl;
+		}
+
+		ofs << "@attribute class {" << classes << "}\n" << endl;
+
+		ofs << "@data\n" << endl;
+	}
+
+	template<typename _Stream>
+	void write_table_header(const Features& features, _Stream& ofs, string name = "id", string label = "label")
+	{
+		ofs << "#";
+		if (!name.empty())
+		{
+			ofs << name << "\t";
+		}
+		ofs << label;
+
+		foreach(string fname, features.names())
+		{
+			ofs << "\t" << fname;
+		}
+		ofs << endl;
+	}
+
+	template<typename _Stream>
+	void write_ftable_header(const Features& features, _Stream& ofs, string name = "")
+	{
+		ofs << "instance\ttrue\tprobability\tassigned";
+		if (!name.empty())
+		{
+			ofs << "\t" << name;
+		}
+
+		foreach(string fname, features.names())
+		{
+			ofs << "\t" << fname;
+		}
+		ofs << endl;
+	}
+
+
+	inline void write_header(const Features& features, std::ostream& ofs)
+	{
+		foreach(string name, features.names())
+		{
+			ofs << name << "," << endl;
+		}
+	}
+
+	inline void write_header(const Features& features, string file)
+	{
+		ofstream ofs(file.c_str());
+		write_header(features, ofs);
+	}
+
+	inline void write_arff(const Features& features, string uid, string type, std::ostream& ofs)
+	{
+		ofs << "{";
+
+		foreach(const Features::Feature& node, features.features())
+		{
+			ofs << node.index << " " << node.value << ",";
+		}
+		int index = features.dimension();
+		ofs << index << " " << type;
+		ofs << "}" << endl;
+	}
+
+	inline void write_libsvm(const Features& features, string label, std::ostream& ofs)
+	{
+		ofs << label << " ";
+		size_t i = 0;
+		for (; i < features.count() - 1; i++)
+		{
+			ofs << features.features()[i].index + 1 << ":" << features.features()[i].value << " ";
+		}
+		ofs << features.features()[i].index + 1 << ":" << features.features()[i].value << endl;
+	}
+
+	//TODO write_tlc tlc支持的稀疏格式
+	//tlc也能使用稀疏表示 考虑到目前大部分应用特征不会太多<500 目前只输出dense format 方便使用excell
+	//tlc dense 采用标准输出 第一列是名字比如pid 第二列是label 例如下面 另外输出的是原始特征 未经过normalize
+	//# 	label	JaccardSimilarity	CTR_s10_Query	CTR_s100_Query	CTR_s1000_Query	LogitCTR_s10_Query	LogitCTR_s100_Query	LogitCTR_s1000_Query	impressions_Query	clicks_Query
+	//_lottery|acute leukemia	0	0	0.013693014	0.013704492	0.013818185	-4.277081865	-4.276232328	-4.267855249	103347	1415
+	inline void write_sparse(const Features& features, string label, ofstream& ofs, string name = "")
+	{
+		if (!name.empty())
+			ofs << "_" << name << "\t" << label;
+		else
+			ofs << label;
+
+		ofs << "\t" << features.dimension();
+
+		if (features.count() == 0)
+		{
+			ofs << "\t" << "0:0";
+		}
+		else
+		{
+			foreach(const Features::Feature& node, features.features())
+			{
+				ofs << "\t" << node.index << ":" << node.value;
+			}
+		}
+		ofs << endl;
+	}
+
+	//注意不要单独使用 一般是在类似下面 情况使用
+	inline void write_table(const Features& features, string label, ofstream& ofs, string name = "")
+	{
+		if (!name.empty())
+			ofs << "_" << name << "\t" << label;
+		else
+			ofs << label;
+
+		foreach(double value, features.values)
+		{
+			ofs << "\t" << value;
+		}
+		ofs << endl;
+	}
+
+	//ofs_full << id << "\t" << label << "\t" << 1 << "\t" << 1 << "\t" << content;
+	//write_table_feature(features, ofs_full);
+	inline void write_table_feature(const Features& features, ofstream& ofs)
+	{
+		foreach(double value, features.values)
+		{
+			ofs << "\t" << value;
+		}
+		ofs << endl;
+	}
+
+	template<typename Vec>
+	inline void add_mean_var(Features* fe, const Vec& vec,
+		const string mean_name = "", const string var_name = "")
+	{
+		double mean = vec.size() > 0 ? sta::mean(vec) : 0;
+		fe->add(mean, mean_name);
+		double var = vec.size() > 1 ? sta::var(vec, mean) : 0;
+		fe->add(var, var_name);
+	}
+
+	template<typename Vec>
+	inline void add_mean(Features* fe, const Vec& vec,
+		const string mean_name = "")
+	{
+		double mean = vec.size() > 0 ? sta::mean(vec) : 0;
+		fe->add(mean, mean_name);
+	}
+
+	template<typename Vec>
+	inline void add_var(Features* fe, const Vec& vec,
+		const string var_name = "")
+	{
+		double var = vec.size() > 1 ? sta::var(vec) : 0;
+		fe->add(var, var_name);
+	}
+
+	template<typename T>
+	inline void add_mean_var(Features* fe, T begin, T end,
+		const string mean_name = "", const string var_name = "")
+	{
+
+		double mean = end > begin ? sta::mean(begin, end) : 0;
+		fe->add(mean, mean_name);
+		double var = end - begin > 1 ? sta::var(begin, end, mean) : 0;
+		fe->add(var, var_name);
+	}
+
+	template<typename T>
+	inline void add_mean(Features* fe, T begin, T end,
+		const string mean_name = "")
+	{
+		double mean = end > begin ? sta::mean(begin, end) : 0;
+		fe->add(mean, mean_name);
+	}
+
+	template<typename T>
+	inline void add_var(Features* fe, T begin, T end,
+		const string var_name = "")
+	{
+		double var = end - begin > 1 ? sta::var(begin, end) : 0;
+		fe->add(var, var_name);
+	}
+} //----end of namespace gezi
 
 #endif  //----end of FEATURE_FEATURES_UTIL_H_

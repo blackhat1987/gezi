@@ -161,7 +161,7 @@ namespace gezi {
 
 		void Densify(Float maxSparsity)
 		{
-			if (keepDense || Count() >= (uint64)(length * maxSparsity))
+			if (length > 0 && (keepDense || Count() >= (uint64)(length * maxSparsity)))
 			{
 				ToDense();
 			}
@@ -195,10 +195,8 @@ namespace gezi {
 
 		Float& operator[](int i)
 		{
-#ifndef NDEBUG
 			if (i < 0 || i >= length)
 				THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
-#endif 
 			if (IsDense())
 			{
 				return values[i];
@@ -482,7 +480,7 @@ namespace gezi {
 			ScaleBy(d);
 			return *this;
 		}
-		
+
 		/// Multiples the Vector by a real value
 		void ScaleBy(Float d)
 		{
@@ -544,10 +542,10 @@ namespace gezi {
 		template<typename ParallelManipulator>
 		void ApplyWith(Vector a, ParallelManipulator manip)
 		{
-			if (a.length != length)
-			{
-				THROW("Vectors must have the same dimensionality.");
-			}
+			/*		if (a.length != length)
+					{
+					THROW("Vectors must have the same dimensionality.");
+					}*/
 
 			if (a.Count() == 0)
 				return;
@@ -577,7 +575,7 @@ namespace gezi {
 					indices.clear();
 					values.swap(newValues);
 				}
-				Sparsify(); 
+				Sparsify();
 			}
 			else if (IsDense())
 			{ // a sparse, this not sparse
@@ -723,7 +721,7 @@ namespace gezi {
 					indices.swap(newIndices);
 					values.swap(newVals);
 
-					Densify();  
+					Densify();
 				}
 			}
 		}
@@ -732,6 +730,24 @@ namespace gezi {
 		Float Norm()
 		{
 			return sqrt(std::accumulate(values.begin(), values.end(), 0.0, sd_op()));
+		}
+
+		string Str()
+		{
+			stringstream ss;
+			ForEachNonZero([&ss](int index, Float value) {
+				ss << index << ":" << value << " ";
+			});
+			return ss.str();
+		}
+
+		string str()
+		{
+			stringstream ss;
+			ForEachNonZero([&ss](int index, Float value) {
+				ss << index << ":" << value << " ";
+			});
+			return ss.str();
 		}
 
 		friend Float dot(const Vector& l, const Vector& r);
@@ -767,13 +783,13 @@ namespace gezi {
 		{
 			return 0;
 		}
-		
+
 		if (a.indices.begin() == b.indices.begin())
 		{
-			if (a.Length() != b.Length())
+			/*if (a.Length() != b.Length())
 			{
-				THROW("Vectors must have the same dimensionality.");
-			}
+			THROW("Vectors must have the same dimensionality.");
+			}*/
 			Float res = 0;
 			for (size_t i = 0; i < a.values.size(); i++)
 			{
