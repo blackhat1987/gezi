@@ -234,6 +234,11 @@ TEST(other4, func)
 	a.begin() = c.begin();
 	Pvec(c);
 	Pvec(a);
+	a.push_back(4);
+	b.push_back(3);
+	a.clear();
+	b.clear();
+	Pval((a.begin() == b.begin()));
 }
 int main(int argc, char *argv[])
 {
