@@ -64,7 +64,6 @@ namespace gezi
 		return INT(line.substr(name.size()));
 	}
 
-using string;
 using comcfg::Configure;
 #define DECLARE_SHAREDCONF\
   comcfg::Configure SharedConf::_conf

@@ -390,12 +390,22 @@ namespace gezi {
 			return length;
 		}
 
+		int size() const
+		{
+			return length;
+		}
+
 		void SetLength(int length_)
 		{
 			length = length_;
 		}
 
 		bool Empty() const
+		{
+			return length == 0;
+		}
+
+		bool empty() const
 		{
 			return length == 0;
 		}

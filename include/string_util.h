@@ -101,28 +101,28 @@ inline bool is_en_dominate(string phrase, int var = 3)
 
 //提取中文
 
-inline string extract_chinese(string temp)
-{
-  vector<char> out(temp.size() + 1, 0);
-  int index = 0;
-  for (size_t i = 0; i < temp.size(); i++)
-  {
-    unsigned high = (unsigned) (0xff & temp[i]);
-    if (high >= 0x81)
-    {
-      if ((high > 0xa9 || high <= 0xa0) && i < temp.size() - 1)
-      {
-        out[index] = temp[i];
-        out[index + 1] = temp[i + 1];
-        index += 2;
-      }
-      i++;
-    }
-
-  }
-  string ret(&out[0]);
-  return ret;
-}
+//inline string extract_chinese(string temp)
+//{
+//  vector<char> out(temp.size() + 1, 0);
+//  int index = 0;
+//  for (size_t i = 0; i < temp.size(); i++)
+//  {
+//    unsigned high = (unsigned) (0xff & temp[i]);
+//    if (high >= 0x81)
+//    {
+//      if ((high > 0xa9 || high <= 0xa0) && i < temp.size() - 1)
+//      {
+//        out[index] = temp[i];
+//        out[index + 1] = temp[i + 1];
+//        index += 2;
+//      }
+//      i++;
+//    }
+//
+//  }
+//  string ret(&out[0]);
+//  return ret;
+//}
 //提取符号
 
 inline string extract_suspect_symb(string temp)
