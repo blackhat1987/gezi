@@ -230,7 +230,7 @@ TEST(other4, func)
 
 	ivec a, b;
 	Pval((a.begin() == b.begin()));
-	ivc c = { 5, 4, 3, 2, 1 };
+	ivec c = { 5, 4, 3, 2, 1 };
 	a.begin() = c.begin();
 	Pvec(c);
 	Pvec(a);
