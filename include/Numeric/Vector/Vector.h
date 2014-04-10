@@ -787,7 +787,8 @@ namespace gezi {
 		}
 
 		//if (a.indices.begin() == b.indices.begin() || a.indices.empty() && b.indices.empty())
-		if (a.indices == b.indices)
+		//if (a.indices == b.indices)
+		if (a.indices.begin() == b.indices.begin())
 		{
 			/*if (a.Length() != b.Length())
 			{
