@@ -157,6 +157,58 @@ TEST(other, func)
 	f1.ScaleBy(3);
 	Pval(f1.str());
 }
+
+TEST(other2, func)
+{
+	Features f1(10);
+	Features f2(10);
+	f1.Add(1, 3);
+	f1.Add(3, 4);
+	f2.Add(3, 6);
+	f2.Add(4, 7);
+	f1.ToDense();
+	Pval(dot(f1, f2));
+	Pval(f1.str());
+	Pval(f2.str());
+
+	f1.ScaleBy(3);
+	Pval(f1.str());
+}
+
+TEST(other3, func)
+{
+	Features f1(10);
+	Features f2(10);
+	f1.Add(1, 3);
+	f1.Add(3, 4);
+	f2.Add(3, 6);
+	f2.Add(4, 7);
+	f2.ToDense();
+	Pval(dot(f1, f2));
+	Pval(f1.str());
+	Pval(f2.str());
+
+	f1.ScaleBy(3);
+	Pval(f1.str());
+}
+
+TEST(other4, func)
+{
+	Features f1(10);
+	Features f2(10);
+	f1.Add(1, 3);
+	f1.Add(3, 4);
+	f2.Add(3, 6);
+	f2.Add(4, 7);
+	f1.ToDense();
+	f2.ToDense();
+	Pval(dot(f1, f2));
+	Pval(f1.str());
+	Pval(f2.str());
+
+	f1.ScaleBy(3);
+	Pval(f1.str());
+}
 int main(int argc, char *argv[])
 {
 	testing::InitGoogleTest(&argc, argv);
