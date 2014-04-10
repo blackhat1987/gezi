@@ -229,8 +229,7 @@ TEST(other4, func)
 	Pval(f1.str());
 
 	ivec a, b;
-	Pval(a.begin());
-	Pval(b.begin());
+	Pval((a.begin() == b.begin()));
 }
 int main(int argc, char *argv[])
 {
