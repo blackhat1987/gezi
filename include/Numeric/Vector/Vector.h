@@ -518,7 +518,7 @@ namespace gezi {
 			if (a.Count() == 0)
 				return;
 
-			if (a.indices.begin() == indices.begin())
+			if (a.indices.begin() == indices.begin() || a.indices.empty() && indices.empty())
 			{
 				for (size_t i = 0; i < values.size(); i++)
 					values[i] += a.values[i];
@@ -585,7 +585,7 @@ namespace gezi {
 					manip(index, a.values[i], ref(values[index]));
 				}
 			}
-			else if (a.indices.begin() == indices.begin())
+			else if (a.indices.begin() == indices.begin() || a.indices.empty() && indices.empty())
 			{ // both sparse, same indices
 				for (size_t i = 0; i < values.size(); i++)
 				{
@@ -784,7 +784,7 @@ namespace gezi {
 			return 0;
 		}
 
-		if (a.indices.begin() == b.indices.begin())
+		if (a.indices.begin() == b.indices.begin() || a.indices.empty() && b.indices.empty())
 		{
 			/*if (a.Length() != b.Length())
 			{
