@@ -585,7 +585,7 @@ namespace gezi {
 					manip(index, a.values[i], ref(values[index]));
 				}
 			}
-			else if (a.indices == indices)
+			else if (a.indices.begin() == indices.begin())
 			{ // both sparse, same indices
 				for (size_t i = 0; i < values.size(); i++)
 				{
