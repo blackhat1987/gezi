@@ -131,7 +131,7 @@ namespace gezi {
 		{
 			std::stringstream ss;
 
-			if (_useSparseAlso && indices.empty())
+			if (_useSparseAlso && !_features.empty())
 			{
 				for (Feature& feature : _features)
 				{
