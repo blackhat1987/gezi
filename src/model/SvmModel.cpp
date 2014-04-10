@@ -766,7 +766,7 @@ int SvmModel::predict(Feature *ftr, Score *scr)
   double *prob_estimates = NULL;
   double predict_label;
 
-  vector<fnode_t> fvector = ftr->cnodes();
+  vector<fnode_t> fvector = ftr->nodes();
   fvector.push_back(fnode_t(-1, 0));
   svm_node *x = &(fvector[0]);
 
@@ -810,7 +810,7 @@ void SvmModel::predict(Feature& ft, vector<double>& result)
   double *prob_estimates = NULL;
   double predict_label;
 
-  vector<fnode_t> fvector = ftr->cnodes();
+  vector<fnode_t> fvector = ftr->nodes();
   fvector.push_back(fnode_t(-1, 0));
   svm_node *x = &(fvector[0]);
 

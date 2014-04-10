@@ -73,6 +73,7 @@
     <ClInclude Include="include\common_def.h" />
     <ClInclude Include="include\common_util.h" />
     <ClInclude Include="include\conf_util.h" />
+    <ClInclude Include="include\container\RegressionTree.h" />
     <ClInclude Include="include\convert_type.h" />
     <ClInclude Include="include\curl_util.h" />
     <ClInclude Include="include\DataBase.h" />
@@ -92,6 +93,7 @@
     <ClInclude Include="include\feature\FeatureIdentifer.h" />
     <ClInclude Include="include\feature\FeatureNormalizer.h" />
     <ClInclude Include="include\feature\FeatureSelector.h" />
+    <ClInclude Include="include\feature\FeatureVector.h" />
     <ClInclude Include="include\feature\feature_selection.h" />
     <ClInclude Include="include\feature\feature_util.h" />
     <ClInclude Include="include\file_util.h" />
@@ -202,6 +204,7 @@
     <ClCompile Include="test\test_encode.cc" />
     <ClCompile Include="test\test_escape.cc" />
     <ClCompile Include="test\test_exception.cc" />
+    <ClCompile Include="test\test_featurevector.cc" />
     <ClCompile Include="test\test_feature_selector.cc" />
     <ClCompile Include="test\test_identifer.cc" />
     <ClCompile Include="test\test_json.cc" />
