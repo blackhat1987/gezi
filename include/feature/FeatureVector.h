@@ -32,11 +32,11 @@ namespace gezi {
 		{
 			keepDense = true;
 		}
-		FeatureVector(int length_, bool useSparse)
+		FeatureVector(int length_, bool useSparse = true)
 			:Vector(length_), _useSparseAlso(useSparse)
 		{
 			FeatureVector();
-			_values.reserve(length);
+			values.reserve(length);
 		}
 	public:
 
@@ -91,6 +91,11 @@ namespace gezi {
 			length = _names.size();
 		}
 
+		void set_length(int len)
+		{
+			length = len;
+		}
+
 		void finalize()
 		{
 			if (_sectionNames.size() > 0)
@@ -135,7 +140,7 @@ namespace gezi {
 			}
 			else
 			{
-				ForEachNonZero([](int index, Float value) {
+				ForEachNonZero([&ss](int index, Float value) {
 					ss << index << ":" << value << " ";
 				});
 			}
@@ -175,10 +180,15 @@ namespace gezi {
 		//-----------------------最重要的添加数据
 		/**
 	 * 增加特征, 注意feature Node index 是0开始 不再和libsvm保持一致 和tlc保持一致
+	 * 注意调用前 一定先要add_section
 	 */
-		void add(Float value, string name)
+		void add(Float value, string name = "")
 		{
-			if (_useSectionName)
+			if (name.empty())
+			{
+				name = (format("%s%d") % _sectionNames.back() % _idx).str();
+			} 
+			else if (_useSectionName && !_sectionNames.empty())
 			{
 				name = (format("%s_%s") % _sectionNames.back() % name).str();
 			}
@@ -191,14 +201,6 @@ namespace gezi {
 			_names.push_back(name);
 			_idx++;
 			Add(value); //Vector添加dense数据
-		}
-
-		//注意调用前 一定先要add_section
-
-		void add(Float value)
-		{
-			string name = (format("%s%d") % _sectionNames.back() % _idx).str();
-			add(value, name);
 		}
 
 		void add(Float* values, int len, string name = "")
@@ -220,12 +222,12 @@ namespace gezi {
 			}
 		}
 
-		template<typename T>
-		void add(vector<T>& values, string name = "")
+		template<typename Vec>
+		void add(Vec& values, string name = "")
 		{
 			if (name.empty())
 			{
-				for(T value : values)
+				for(auto value : values)
 				{
 					add(value);
 				}
@@ -275,7 +277,7 @@ namespace gezi {
 			ar & _sectionNames;
 			ar & _nameCounts;
 			ar & _idx;
-			ar & _useSparse;
+			ar & _useSparseAlso;
 			ar & _features;
 		}
 	protected:

@@ -197,10 +197,15 @@ namespace gezi {
 		}
 		/**
 		 * 增加特征, 注意feature Node index 是0开始 不再和libsvm保持一致 和tlc保持一致
+		 * /注意调用前 一定先要add_section
 		 */
-		void add(Float value, string name)
+		void add(Float value, string name = "")
 		{
-			if (_use_section_name)
+			if (name.empty())
+			{
+				name = (format("%s%d") % _section_names.back() % _idx).str();
+			}
+			else if (_use_section_name && !_section_names.empty())
 			{
 				name = (format("%s_%s") % _section_names.back() % name).str();
 			}
@@ -216,14 +221,6 @@ namespace gezi {
 			{
 				_values.push_back(value);
 			}
-		}
-
-		//注意调用前 一定先要add_section
-
-		void add(Float value)
-		{
-			string name = (format("%s%d") % _section_names.back() % _idx).str();
-			add(value, name);
 		}
 
 		void add(Float* values, int len, string name = "")

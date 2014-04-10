@@ -4,4 +4,6 @@ FeatureVector.h
 FeatureSelector.h 
 features_util.h
 FeaturesExtractor.h 
-FeaturesExtractorMgr.h
+FeaturesExtractorMgr.h 
+
+可以直接使用 #include "feature/Features.h"
