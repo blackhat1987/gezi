@@ -23,10 +23,10 @@ namespace gezi
 	inline void write_template(const Feature& feature, string outfile)
 	{
 		ofstream ofs(outfile.c_str());
-		int len = feature.cnames().size();
+		int len = feature.names().size();
 		for (int i = 0; i < len; i++)
 		{
-			ofs << "#define " << feature.cnames()[i] << " fv[" << i << "]" << endl;
+			ofs << "#define " << feature.names()[i] << " fv[" << i << "]" << endl;
 		}
 	}
 	inline void write_def(const Feature& feature, string outfile)
@@ -36,15 +36,15 @@ namespace gezi
 	template<typename _Stream>
 	void debug_print(const Feature& feature, _Stream& out)
 	{
-		const vector<int>& name_counts = feature.cname_counts();
+		const vector<int>& name_counts = feature.name_counts();
 		int idx = 0;
 		for (int i = 0; i < (int)name_counts.size(); i++)
 		{
-			out << format("---[%-3d-%s] len:%d\n") % i % feature.csection_names()[i] % name_counts[i];
+			out << format("---[%-3d-%s] len:%d\n") % i % feature.section_names()[i] % name_counts[i];
 			for (int j = 0; j < name_counts[i]; j++)
 			{
-				double val = feature.cvalues()[idx];
-				out << format("%-3d %-3d: %-20s : [%f]\n") % (idx + 1) % (j + 1) % feature.cnames()[idx] % val;
+				double val = feature.values()[idx];
+				out << format("%-3d %-3d: %-20s : [%f]\n") % (idx + 1) % (j + 1) % feature.names()[idx] % val;
 				idx++;
 			}
 		}
@@ -55,17 +55,17 @@ namespace gezi
 		const vector<pair<double, double> >& normal_vec,
 		const vector<pair<double, double> >& spam_vec)
 	{
-		const vector<int>& name_counts = feature.cname_counts();
+		const vector<int>& name_counts = feature.name_counts();
 		int idx = 0;
 		for (int i = 0; i < (int)name_counts.size(); i++)
 		{
-			out << format("---[%-3d-%s] len:%d\n") % i % feature.csection_names()[i] % name_counts[i];
+			out << format("---[%-3d-%s] len:%d\n") % i % feature.section_names()[i] % name_counts[i];
 			for (int j = 0; j < name_counts[i]; j++)
 			{
-				double val = feature.cvalues()[idx];
+				double val = feature.values()[idx];
 				double normed_val = feature.value(idx + 1);
 				out << format("%-3d %-3d %-25s : [%f:%f] : [NormalMean %f] : [SpamMean %f] : [NormalVar %f] : [SpamVar %f]\n")
-					% (idx + 1) % (j + 1) % feature.cnames()[idx] % val % normed_val
+					% (idx + 1) % (j + 1) % feature.names()[idx] % val % normed_val
 					% normal_vec[idx].first % spam_vec[idx].first
 					% normal_vec[idx].second % spam_vec[idx].second;
 				idx++;
@@ -105,9 +105,9 @@ namespace gezi
 	void write_arff_header(const Feature& feature, _Stream& ofs, string relation, string classes = "spam,normal")
 	{
 		ofs << "@relation " << relation << "\n" << endl;
-		for (int i = 0; i < (int)feature.cnames().size(); i++)
+		for (int i = 0; i < (int)feature.names().size(); i++)
 		{
-			ofs << "@attribute " << feature.cnames()[i] << " numeric" << endl;
+			ofs << "@attribute " << feature.names()[i] << " numeric" << endl;
 		}
 
 		ofs << "@attribute class {" << classes << "}\n" << endl;
@@ -125,7 +125,7 @@ namespace gezi
 		}
 		ofs << label;
 
-		foreach(string fname, feature.cnames())
+		foreach(string fname, feature.names())
 		{
 			ofs << "\t" << fname;
 		}
@@ -141,7 +141,7 @@ namespace gezi
 			ofs << "\t" << name;
 		}
 
-		foreach(string fname, feature.cnames())
+		foreach(string fname, feature.names())
 		{
 			ofs << "\t" << fname;
 		}
@@ -151,7 +151,7 @@ namespace gezi
 
 	inline void write_header(const Feature& feature, std::ostream& ofs)
 	{
-		foreach(string name, feature.cnames())
+		foreach(string name, feature.names())
 		{
 			ofs << name << "," << endl;
 		}
@@ -167,7 +167,7 @@ namespace gezi
 	{
 		ofs << "{";
 
-		foreach(const Feature::Node& node, feature.cnodes())
+		foreach(const Feature::Node& node, feature.nodes())
 		{
 			ofs << node.index << " " << node.value << ",";
 		}
@@ -182,9 +182,9 @@ namespace gezi
 		size_t i = 0;
 		for (; i < feature.featureNum() - 1; i++)
 		{
-			ofs << feature.cnodes()[i].index + 1<< ":" << feature.cnodes()[i].value << " ";
+			ofs << feature.nodes()[i].index + 1<< ":" << feature.nodes()[i].value << " ";
 		}
-		ofs << feature.cnodes()[i].index + 1 << ":" << feature.cnodes()[i].value << endl;
+		ofs << feature.nodes()[i].index + 1 << ":" << feature.nodes()[i].value << endl;
 	}
 
 	//TODO write_tlc tlc支持的稀疏格式
@@ -207,7 +207,7 @@ namespace gezi
 		}
 		else
 		{
-			foreach(const Feature::Node& node, feature.cnodes())
+			foreach(const Feature::Node& node, feature.nodes())
 			{
 				ofs << "\t" << node.index << ":" << node.value;
 			}
@@ -229,7 +229,7 @@ namespace gezi
 		else
 			ofs << label;
 
-		foreach(double value, feature.cvalues())
+		foreach(double value, feature.values())
 		{
 			ofs << "\t" << value;
 		}
@@ -240,7 +240,7 @@ namespace gezi
 	//write_table_feature(feature, ofs_full);
 	inline void write_table_feature(const Feature& feature, ofstream& ofs)
 	{
-		foreach(double value, feature.cvalues())
+		foreach(double value, feature.values())
 		{
 			ofs << "\t" << value;
 		}

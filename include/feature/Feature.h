@@ -177,11 +177,6 @@ namespace gezi {
 			return _nodes;
 		}
 
-		const vector<Node>& cnodes() const
-		{
-			return _nodes;
-		}
-
 		Feature& dimension(int dimension)
 		{
 			_dimension = dimension;
@@ -386,24 +381,7 @@ namespace gezi {
 			return _values;
 		}
 
-
-		//@TODO 去掉cnames,cvalues 暂时只为兼容性
-		const vector<string>& cnames() const
-		{
-			return _names;
-		}
-
-		const vector<string>& csection_names() const
-		{
-			return _section_names;
-		}
-
-		const vector<int>& cname_counts() const
-		{
-			return _name_counts;
-		}
-
-		const vector<Float>& cvalues() const
+		const vector<Float>& values() const
 		{
 			return _values;
 		}
@@ -421,11 +399,6 @@ namespace gezi {
 		const vector<int>& name_counts() const
 		{
 			return _name_counts;
-		}
-
-		const vector<Float>& values() const
-		{
-			return _values;
 		}
 
 		static Float default_min()
@@ -448,8 +421,6 @@ namespace gezi {
 			os << fe.str();
 			return os;
 		}
-
-
 
 		//-------------------------兼容离线接口 事实上也可以通过继承直接用离线设计 
 		//但是 需要修改feature_util  @TODO
