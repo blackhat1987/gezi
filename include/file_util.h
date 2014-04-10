@@ -477,7 +477,29 @@ namespace gezi
 	private:
 		std::ofstream _ofs;
 	};
+
+	template<typename T>
+	inline void save_shared_ptr(T obj, string path, string name)
+	{
+		string outName = "";
+		if (obj != nullptr)
+		{
+			obj->Save(path + "/" + name);
+			outName = obj->Name();
+		}
+		write_file(outName, path + "/" + name + ".name.txt");
+	}
 }
+
+#define SAVE_SHARED_PTR(obj)\
+	gezi::save_shared_ptr(obj, path, gezi::conf_trim(#obj))
+
+#define OBJ_PATH(obj)\
+	string(path + "/" + gezi::conf_trim(#obj))
+
+#define  OBJ_NAME_PATH(obj)\
+	string(path + "/" + gezi::conf_trim(#obj) + ".name.txt")
+
 //----end of namespace gezi
 
 #endif  //----end of FILE_UTIL_H_

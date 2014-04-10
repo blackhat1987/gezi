@@ -22,8 +22,8 @@ namespace gezi {
 	class Vector
 	{
 	public:
-		Vector() = default;
-		~Vector() = default;
+		Vector() = default; //@TODO remove it ? 没有length很危险 建议生成时就带有length
+		virtual ~Vector() {}
 		Vector(Vector&&) = default;
 		Vector& operator = (Vector&&) = default;
 		Vector(const Vector&) = default;
@@ -390,6 +390,7 @@ namespace gezi {
 			return length;
 		}
 
+		//小写开头的是为了兼容stl
 		int size() const
 		{
 			return length;
@@ -759,6 +760,7 @@ namespace gezi {
 		bool normalized = false;
 	};
 
+	typedef shared_ptr<Vector> VectorPtr;
 	inline Float dot(const Vector& a, const Vector& b)
 	{
 		if (!a.Count() || !b.Count())

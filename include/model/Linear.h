@@ -100,7 +100,7 @@ namespace gezi
 		double output(Feature& feature)
 		{
 			double val = 0;
-			foreach(const Feature::Node& node, feature.cnodes())
+			foreach(const Feature::Node& node, feature.nodes())
 			{
 				if (node.index >= _weights.size())
 				{
@@ -116,7 +116,7 @@ namespace gezi
 		double Predict(Feature& feature)
 		{
 			double val = 0;
-			foreach(const Feature::Node& node, feature.cnodes())
+			foreach(const Feature::Node& node, feature.nodes())
 			{
 				val += _weights[node.index] * node.value;
 			}

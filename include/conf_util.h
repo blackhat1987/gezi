@@ -104,22 +104,7 @@ private:
   static comcfg::Configure _conf; //comcfg::Configure SharedConf::conf_; need this on one of your cpp
 };
 
-inline string conf_trim(string input)
-{
-  //string input = boost::to_lower_copy(input_);
-  if (input.size() > 1)
-  {
-    if (input[input.size() - 1] == '_')
-    {
-      return input.substr(0, input.size() - 1);
-    }
-    else if (input[0] == '_')
-    {
-      return input.substr(1);
-    }
-  }
-  return input;
-}
+
 //string @TODO 为什么不存在的时候慢 是try catch慢 不用异常？ @FIXME
 
 inline void set_val(const comcfg::Configure& conf, string key, string& val)

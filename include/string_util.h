@@ -597,6 +597,23 @@ inline vector<string> to_cnvec(string line)
   return vec;
 }
 
+inline string conf_trim(string input)
+{
+	//string input = boost::to_lower_copy(input_);
+	if (input.size() > 1)
+	{
+		if (input[input.size() - 1] == '_')
+		{
+			return input.substr(0, input.size() - 1);
+		}
+		else if (input[0] == '_')
+		{
+			return input.substr(1);
+		}
+	}
+	return input;
+}
+
 }
 
 #endif  //----end of STRING_UTIL_H_
