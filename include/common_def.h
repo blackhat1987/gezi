@@ -60,12 +60,14 @@ typedef double Float;
 using std::array;
 using namespace std;
 typedef vector<int> ivec;
+typedef shared_ptr<ivec> IvecPtr;
 typedef vector<int64> lvec;
 typedef vector<uint> uvec;
 typedef vector<uint64> ulvec;
 typedef vector<double> dvec;
 typedef vector<float> fvec;
 typedef vector<Float> Fvec;
+typedef shared_ptr<Fvec> FvecPtr;
 typedef vector<string> svec;
 typedef vector<bool> BitArray;
 

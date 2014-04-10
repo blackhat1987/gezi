@@ -227,6 +227,10 @@ TEST(other4, func)
 
 	f1.ScaleBy(3);
 	Pval(f1.str());
+
+	ivec a, b;
+	Pval(a.begin());
+	Pval(b.begin());
 }
 int main(int argc, char *argv[])
 {

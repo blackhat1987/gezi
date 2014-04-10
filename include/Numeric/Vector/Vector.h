@@ -518,7 +518,7 @@ namespace gezi {
 			if (a.Count() == 0)
 				return;
 
-			if (indices == a.indices)
+			if (a.indices.begin() == indices.begin())
 			{
 				for (size_t i = 0; i < values.size(); i++)
 					values[i] += a.values[i];
@@ -768,7 +768,7 @@ namespace gezi {
 	public:
 		//@TODO 有没有必要写成shared_ptr<ivec> indices; //更加灵活 允许两个Vector相同indice 不同value 避免拷贝
 		ivec indices; //不使用Node(index,value)更加灵活 同时可以允许一项为空
-		Fvec values;
+		Fvec values; //@TODO may be FvecPtr 或者加一个指针 修改代码 如果指针不是空 使用指针指向的
 		int length = 0;
 		Float sparsityRatio = 0.25; //non_zero count < ratio to sparse, non_zero count >= ratio to dense
 		bool keepDense = false;
