@@ -39,27 +39,6 @@ public:
 		_leafValue.resize(maxLeaves);
 	}
 
-	//解析文本 TLC格式
-	void LoadText(string infile)
-	{
-
-	}
-
-	void SaveText(string outfile)
-	{
-
-	}
-
-	void Load(string path)
-	{
-		serialize_util::load(*this, path);
-	}
-
-	void Save(string path)
-	{
-		serialize_util::save(*this, path);
-	}
-
 public:
 	//@TODO  BITWISE COPY?
 	//namespace boost {  namespace serialization {
