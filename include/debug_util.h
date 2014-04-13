@@ -153,21 +153,21 @@ void PRange(Iter begin, Iter end, std::ostream& out = std::cout, string sep = "\
 }
 
 #define PVEC(v)\
-        VLOG(5) << #v <<" --- " << v.size();\
+        VLOG(6) << #v <<" --- " << v.size();\
         for (size_t i = 0; i < v.size(); i++)\
         {\
             VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << v[i] << "\n";\
         }
 
 #define PVEC_TOPN(v, n)\
-	VLOG(5) << #v <<" --- " << v.size();\
+	VLOG(6) << #v <<" --- " << v.size();\
 	for (size_t i = 0; i < v.size() && i < n; i++)\
 {\
 	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << v[i] << "\n";\
 }
 
 #define Pvec(v)\
-        VLOG(0) << #v <<" --- " << v.size();\
+        VLOG(1) << #v <<" --- " << v.size();\
         for (size_t i = 0; i < v.size(); i++)\
         {\
             VLOG(0) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << v[i] << "\n";\
