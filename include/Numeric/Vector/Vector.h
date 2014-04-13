@@ -211,8 +211,10 @@ namespace gezi {
 
 		Float operator[](int i) const
 		{
-	/*		if (i < 0 || i >= length)
-				THROW((format("Index %d out of range in Vector of length %d") % i % length).str());*/
+			if (i < 0 || i >= length)
+				return 0;
+				//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
+				
 			if (IsDense())
 			{
 				return values[i];
@@ -230,8 +232,9 @@ namespace gezi {
 
 		Float& operator[](int i)
 		{
-		/*	if (i < 0 || i >= length)
-				THROW((format("Index %d out of range in Vector of length %d") % i % length).str());*/
+			if (i < 0 || i >= length)
+				return 0;
+				//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
 			if (IsDense())
 			{
 				return values[i];
