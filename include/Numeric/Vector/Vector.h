@@ -78,8 +78,6 @@ namespace gezi {
 					}
 				}
 			}
-			Pval(length);
-			Pval(this->values[137]);
 		}
 
 		void Init(int length_, ivec& indices_, Fvec& values_)
