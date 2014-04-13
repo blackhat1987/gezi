@@ -29,6 +29,7 @@ namespace gezi {
 			VLOG(0) << Name() << " load from " << path;
 		}
 
+		//另外兼容之前 小写开头的load save看做类似 LoadText, SaveText
 		virtual void SaveText(string file)
 		{
 			VLOG(0) << Name() << " save as text to " << file;

@@ -183,6 +183,14 @@ namespace gezi {
 				return null_id();
 			return it->second;
 		}
+
+		friend class boost::serialization::access;
+		template<class Archive>
+		void serialize(Archive &ar, const unsigned int version)
+		{
+			ar & _hashdict;
+			ar & _index;
+		}
 	protected:
 		HashMap _hashdict;
 		vector<string> _index; //kid->key
