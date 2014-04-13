@@ -229,9 +229,10 @@ namespace gezi {
 		}
 
 		Float& operator[](int i)
-		{
+		{//hack
 			if (i < 0 || i >= length)
-				THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
+				return _value;
+				//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
 			if (IsDense())
 			{
 				return values[i];
@@ -818,6 +819,7 @@ namespace gezi {
 			ar & keepDense;
 			ar & keepSparse;
 			ar & normalized;
+			ar & _value;
 		}
 
 	public:
@@ -830,6 +832,7 @@ namespace gezi {
 		bool normalized = false;
 	private:
 		int length = 0;
+		Float _value = 0;
 	};
 
 	typedef shared_ptr<Vector> VectorPtr;
