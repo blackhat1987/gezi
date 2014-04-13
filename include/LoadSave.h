@@ -21,7 +21,7 @@ namespace gezi {
 	public:
 		virtual void Save(string path)
 		{
-			VLOG(0) << Name() << " sav to " << path;
+			VLOG(0) << Name() << " save to " << path;
 		}
 
 		virtual void Load(string path)
