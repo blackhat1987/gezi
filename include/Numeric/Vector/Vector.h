@@ -230,8 +230,8 @@ namespace gezi {
 
 		Float& operator[](int i)
 		{//hack
-			if (i < 0 || i >= length)
-				return _value;
+			/*if (i < 0 || i >= length)
+				return _value;*/
 				//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
 			if (IsDense())
 			{
@@ -240,10 +240,10 @@ namespace gezi {
 			else
 			{
 				auto iter = std::lower_bound(indices.begin(), indices.end(), i);
-#ifndef NDEBUG
+				//hack
 				if (iter == indices.end() || *iter != i)
-					THROW((format("In sparse vector could not find the index %d") % i).str());
-#endif 
+					return _value;
+					//THROW((format("In sparse vector could not find the index %d") % i).str());
 				return values[iter - indices.begin()];
 			}
 		}
