@@ -231,8 +231,7 @@ namespace gezi {
 		Float& operator[](int i)
 		{
 			if (i < 0 || i >= length)
-				return 0;
-				//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
+				THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
 			if (IsDense())
 			{
 				return values[i];
