@@ -28,15 +28,20 @@ namespace gezi {
 		FeatureVector& operator = (const FeatureVector&) = default;
 
 		//在线始终是dense
-		FeatureVector()
+		FeatureVector(bool useSparse = true)
+			:_useSparseAlso(useSparse)
 		{
-			keepDense = true;
+			int len = 1000;
+			values.reserve(len);
+			_names.reserve(len);
+			keepDense = true;   //@TODO will this is the best ?
 		}
-		FeatureVector(int length_, bool useSparse = true)
-			:Vector(length_), _useSparseAlso(useSparse)
+
+		//尽量不用 如果需要 可以考虑直接用Vector 稀疏情况
+		FeatureVector(int length_)
+			:Vector(length_)
 		{
-			FeatureVector();
-			values.reserve(length);
+
 		}
 	public:
 
@@ -83,17 +88,7 @@ namespace gezi {
 		//覆盖掉基类  注意尽量在FeatureVector数据填充完之后 set_length一下(FeatureExtractor)
 		int dimension() const
 		{
-			return _names.size();
-		}
-
-		void set_length()
-		{
-			length = _names.size();
-		}
-
-		void set_length(int len)
-		{
-			length = len;
+			return Length();
 		}
 
 		void finalize()
@@ -103,7 +98,6 @@ namespace gezi {
 				_nameCounts.push_back(_idx);
 			}
 			_idx = 0;
-			set_length();
 		}
 
 		vector<Feature>& features()
@@ -135,13 +129,13 @@ namespace gezi {
 			{
 				for (Feature& feature : _features)
 				{
-					ss << feature.index << ":" << feature.value << " ";
+					ss << feature.index << ":" << feature.value << "\t";
 				}
 			}
 			else
 			{
 				ForEachNonZero([&ss](int index, Float value) {
-					ss << index << ":" << value << " ";
+					ss << index << ":" << value << "\t";
 				});
 			}
 			return ss.str();
@@ -177,15 +171,15 @@ namespace gezi {
 			return _nameCounts;
 		}
 
-	/*	vector<Float>& values()
-		{
+		/*	vector<Float>& values()
+			{
 			return values;
-		}
+			}
 
-		const vector<Float>& values() const
-		{
+			const vector<Float>& values() const
+			{
 			return values;
-		}*/
+			}*/
 		//-----------------------最重要的添加数据
 		/**
 	 * 增加特征, 注意feature Node index 是0开始 不再和libsvm保持一致 和tlc保持一致
@@ -196,7 +190,7 @@ namespace gezi {
 			if (name.empty())
 			{
 				name = (format("%s%d") % _sectionNames.back() % _idx).str();
-			} 
+			}
 			else if (_useSectionName && !_sectionNames.empty())
 			{
 				name = (format("%s_%s") % _sectionNames.back() % name).str();
@@ -236,7 +230,7 @@ namespace gezi {
 		{
 			if (name.empty())
 			{
-				for(auto value : values)
+				for (auto value : values)
 				{
 					add(value);
 				}

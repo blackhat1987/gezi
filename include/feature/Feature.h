@@ -6,6 +6,7 @@ using std::vector;
 using std::pair;
 using std::make_pair;
 
+//@WARNING depreciated -> use FeatureVector.h
 namespace gezi {
 
 	//这个特征是在线用的 所以默认稀疏，dense表示都存在，包含所有name信息，实际应该是叫做：特征向量 表示

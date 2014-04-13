@@ -17,6 +17,7 @@
 #include "Feature.h"
 #include "common_util.h"
 
+//@WARNING depreciated -> use features_util.h
 namespace gezi
 {
 

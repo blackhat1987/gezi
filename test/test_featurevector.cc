@@ -230,6 +230,10 @@ TEST(other4, func)
 
 	ivec a, b;
 	Pval((a.begin() == b.begin()));
+	Pval((&a == &b));
+	Pval(&a);
+	Pval(&b);
+	Pval((&a == &a));
 	ivec c = { 5, 4, 3, 2, 1 };
 	a.begin() = c.begin();
 	Pvec(c);
@@ -239,6 +243,10 @@ TEST(other4, func)
 	a.clear();
 	b.clear();
 	Pval((a.begin() == b.begin()));
+	Pval((&a == &b));
+	Pval(&a);
+	Pval(&b);
+	Pval((&a == &a));
 }
 int main(int argc, char *argv[])
 {

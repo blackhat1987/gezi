@@ -79,6 +79,11 @@ namespace gezi {
 			return _index[id];
 		}
 
+		vector<string>& keys()
+		{
+			return _index;
+		}
+
 		//get a item's id (index in dict),if the item does not exist return null_id()
 
 		inline IdType id(string f) const
@@ -143,8 +148,7 @@ namespace gezi {
 			IdType id = 0;
 			while (std::getline(ifs, line))
 			{
-				vector<string> vec;
-				boost::split(vec, line, is_any_of(sep));
+				vector<string> vec = split(line, sep);
 				_hashdict[vec[0]] = id++;
 			}
 			_index.resize(id);
@@ -197,8 +201,7 @@ namespace gezi {
 			IdType id = 0;
 			while (std::getline(ifs, line))
 			{
-				vector<string> vec;
-				boost::split(vec, line, is_any_of(sep));
+				vector<string> vec = split(line, sep);
 				_hashdict[vec[0]] = id++;
 				if (index < vec.size())
 				{

@@ -222,6 +222,14 @@ namespace gezi {
 		vec.clear();
 		vec.shrink_to_fit();
 	}
+
+	//广义相同 即完全内存位置一样的两个vector 或者 两个空vector 
+	//类似C# both null or point to the same a.indices == b.indices
+	template<typename Vec>
+	bool generalized_same(const Vec& l, const Vec& r)
+	{
+		return &l == &r || l.empty() && r.empty();
+	}
 }  //----end of namespace gezi
 
 #undef TO_STRING

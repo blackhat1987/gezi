@@ -21,7 +21,8 @@ namespace gezi {
 
 	inline unsigned random_seed()
 	{
-		return std::chrono::system_clock::now().time_since_epoch().count();
+		//return std::chrono::system_clock::now().time_since_epoch().count();
+		return std::random_device()();
 	}
 
 	typedef std::default_random_engine RandomEngine;
@@ -40,9 +41,7 @@ namespace gezi {
 		}
 		else
 		{
-			std::random_device rd;
-			return RandomEngine(rd());
-			//return RandomEngine(random_seed());
+			return RandomEngine(std::random_device()());
 		}
 	}
 
@@ -51,7 +50,7 @@ namespace gezi {
 	{
 	public:
 		RandomInt(int max, int min = 0)
-			:_d(min, max - 1), _rng(_rd())
+			:_d(min, max - 1), _rng(random_seed())
 		{
 
 		}
@@ -67,7 +66,6 @@ namespace gezi {
 			return _d(_rng);
 		}
 	private:
-		std::random_device _rd;
 		RandomEngine _rng;
 		std::uniform_int_distribution<size_t> _d;
 	};
@@ -77,7 +75,7 @@ namespace gezi {
 	{
 	public:
 		RandomDouble(double lower = 0.0, double upper = 1.0)
-			:_d(lower, upper), _rng(_rd())
+			:_d(lower, upper), _rng(random_seed())
 		{
 
 		}
@@ -93,7 +91,6 @@ namespace gezi {
 			return _d(_rng);
 		}
 	private:
-		std::random_device _rd;
 		RandomEngine _rng;
 		std::uniform_real_distribution<> _d;
 	};
@@ -103,7 +100,7 @@ namespace gezi {
 	{
 	public:
 		Random()
-			:_rng(_rd())
+			:_rng(random_seed())
 		{
 		}
 		
@@ -158,7 +155,6 @@ namespace gezi {
 			return d(_rng);
 		}
 	private:
-		std::random_device _rd;
 		RandomEngine _rng;
 	};
 
@@ -171,7 +167,7 @@ namespace gezi {
 	{
 	public:
 		RandomRange(int max)
-			:_end(max), _rng(_rd())
+			:_end(max), _rng(random_seed())
 		{
 			Init();
 		}
@@ -199,12 +195,13 @@ namespace gezi {
 				_vec[i] = i;
 		}
 	private:
-		std::random_device _rd;
 		RandomEngine _rng;
 		ivec _vec;
 		int _end;
 		int _index = 0;
 	};
+
+	typedef shared_ptr<RandomRange> RandomRangePtr;
 
 	template<typename Vec>
 	void shuffle(Vec& vec, unsigned randSeed = 0)

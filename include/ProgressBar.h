@@ -29,20 +29,20 @@ namespace gezi {
 		}
 
 		ProgressBar(const std::string& log_word) :
-			_log_word(log_word), 
+			_log_word(log_word),
 			Size(Bar.size() - 1)
 		{
 		}
 
 
 		ProgressBar(size_t total) :
-			_total(total), 
+			_total(total),
 			Size(Bar.size() - 1)
 		{
 		}
 
 		ProgressBar(const std::string& log_word, size_t total) :
-			_log_word(log_word), _total(total), 
+			_log_word(log_word), _total(total),
 			Size(Bar.size() - 1)
 		{
 		}
@@ -58,24 +58,38 @@ namespace gezi {
 		{
 			(*this)(current, _total);
 		}
+
+		void operator++()
+		{
+			(*this)(_current++, _total);
+		}
+
+		void operator+=(size_t step)
+		{
+			(*this)(_current, _total);
+			_current += step;
+		}
+
 		void operator()(size_t current, size_t total)
 		{
 			size_t progress = static_cast<int> (100.0 * (current + 1) / total);
 			size_t bar_length = static_cast<int> (1.0 * (current + 1) * Size / total);
 			if (_prev_progress != progress)
 			{
-				std::cout << _log_word << " [ " << current + 1 << " ] (" << _timer.elapsed() << " s)" << std::setw(3) << progress << '%'
+				std::cerr << _log_word << " [ " << current + 1 << " ] (" << _timer.elapsed() << " s)" << std::setw(3) << progress << '%'
 					<< " |";
-				std::cout.write(&Bar[0], bar_length);
-				std::cout.write(&Space[0], Size - bar_length);
-				std::cout << '|' << (progress == 100 ? '\n' : '\r');
-				std::cout.flush();
+				std::cerr.write(&Bar[0], bar_length);
+				std::cerr.write(&Space[0], Size - bar_length);
+				std::cerr << '|' << (progress == 100 ? '\n' : '\r');
+				//std::cerr << "|\r";
+				std::cerr.flush();
 				_prev_progress = progress;
 			}
 		}
 
 	private:
 		size_t _prev_progress = 1;
+		size_t _current = 0;
 		std::string _log_word = "Finished";
 		std::string Bar = "*******************************************";
 		std::string Space = "                                           ";

@@ -89,7 +89,7 @@ namespace gezi {
 	}
 
 	template<typename _Stream>
-	void write_arff_header(const Features& features, _Stream& ofs, string relation, string classes = "spam,normal")
+	void write_arff_header(const Features& features, _Stream& ofs, string relation = "table", string classes = "negative,positive")
 	{
 		ofs << "@relation " << relation << "\n" << endl;
 		for (int i = 0; i < (int)features.names().size(); i++)

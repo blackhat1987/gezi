@@ -166,6 +166,18 @@ TEST(test_random, func)
 	}
 }
 
+TEST(simple, func)
+{
+	unsigned seed = random_seed();
+	Pval(seed);
+	seed = random_seed();
+	Pval(seed);
+
+	{
+		int seed = random_seed();
+		Pval(seed);
+	}
+}
 int main(int argc, char *argv[])
 {
   testing::InitGoogleTest(&argc, argv);

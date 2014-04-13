@@ -34,7 +34,7 @@ namespace gezi
 		if (!bfs::exists(dir))
 		{
 			LOG_WARNING("%s not exist, will create first", dir.c_str());
-			bfs::create_directories(dir);
+			bfs::create_directories(dir); //@FIXME以前没遇到 现在需要 export LC_ALL="C"
 		}
 	}
 
@@ -489,10 +489,22 @@ namespace gezi
 		}
 		write_file(outName, path + "/" + name + ".name.txt");
 	}
+
+	template<typename T>
+	inline void save_shared_ptr_astext(T obj, string name)
+	{
+		if (obj != nullptr)
+		{
+			obj->SaveText(name);
+		}
+	}
 }
 
 #define SAVE_SHARED_PTR(obj)\
 	gezi::save_shared_ptr(obj, path, gezi::conf_trim(#obj))
+
+#define SAVE_SHARED_PTR_ASTEXT(obj)\
+	gezi::save_shared_ptr_astext(obj, _path + "/" + gezi::conf_trim(#obj) + ".txt")
 
 #define OBJ_PATH(obj)\
 	string(path + "/" + gezi::conf_trim(#obj))

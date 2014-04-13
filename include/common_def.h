@@ -115,5 +115,7 @@ using namespace boost::lambda;
 #define FREE2(ptr) \
 {if (ptr) { delete [] ptr; ptr = NULL;}}
 
+#define  EXECUTE(cmd) \
+	system((cmd).c_str())
 
 #endif  //----end of COMMON_DEF_H_

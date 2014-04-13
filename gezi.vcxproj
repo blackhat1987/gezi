@@ -92,6 +92,7 @@
     <ClInclude Include="include\feature\FeatureExtractorMgr.h" />
     <ClInclude Include="include\feature\FeatureIdentifer.h" />
     <ClInclude Include="include\feature\FeatureNormalizer.h" />
+    <ClInclude Include="include\feature\Features.h" />
     <ClInclude Include="include\feature\FeatureSelector.h" />
     <ClInclude Include="include\feature\FeaturesExtractor.h" />
     <ClInclude Include="include\feature\FeaturesExtractorMgr.h" />
@@ -116,6 +117,7 @@
     <ClInclude Include="include\linq.h" />
     <ClInclude Include="include\linq\boolinq.h" />
     <ClInclude Include="include\linq\cpplinq.hpp" />
+    <ClInclude Include="include\LoadSave.h" />
     <ClInclude Include="include\log_util.h" />
     <ClInclude Include="include\map_util.h" />
     <ClInclude Include="include\MatchDict.h" />

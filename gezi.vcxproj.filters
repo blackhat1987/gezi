@@ -357,6 +357,12 @@
     <ClInclude Include="include\feature\FeaturesExtractorMgr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\feature\Features.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LoadSave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">

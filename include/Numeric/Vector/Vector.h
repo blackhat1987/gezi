@@ -8,8 +8,9 @@
  *          \date   2014-03-26 10:46:03.965585
  *
  *  \Description:  特征的核心表示
- *								 支持读写，dense and sparse  可以增加支持binary 比如value为空表示binary
- *                 暂时不增加 感觉意义不大@TODO
+ *								 支持读写，dense and sparse  
+									 可以增加支持binary 比如value为空表示binary @TODO
+ *               
  *  ==============================================================================
  */
 
@@ -22,13 +23,15 @@ namespace gezi {
 	class Vector
 	{
 	public:
-		Vector() = default; //@TODO remove it ? 没有length很危险 建议生成时就带有length
+		Vector() = default; //sparse生成时必须带有length
 		virtual ~Vector() {}
 		Vector(Vector&&) = default;
 		Vector& operator = (Vector&&) = default;
 		Vector(const Vector&) = default;
 		Vector& operator = (const Vector&) = default;
 
+		//需要外部注意的 初始设置length 那么如果是Add(value) dense方式 要保证values最后长度
+		//和初始设置的一样 不要Add不够 因为实际Length()函数表示向量长度 这个其实主要针对sparse
 		Vector(int length_)
 			: length(length_)
 		{
@@ -39,6 +42,41 @@ namespace gezi {
 		{
 			indices.swap(indices_);
 			values.swap(values_);
+		}
+
+		//注意desne情况 可以直接用这个种方法产生 推荐 或者调用Add 接口，
+		//Add接口 内部不对length处理 
+		Vector(Fvec& values_)
+		{
+			ToDense(values_);
+		}
+
+		//方便debug Vector vec("1\t3\t4\t5"); Vector vec("1:2.3\t3:4.5"); or vec("1 3") space is also ok
+		Vector(string input, string sep = ",\t ")
+		{
+			svec inputs = split(input, sep);
+			if (inputs.size() > 0)
+			{
+				length = (int)inputs.size();
+				if (contains(inputs[0], ':'))
+				{
+					for (string part : inputs)
+					{
+						string index_, val_;
+						split(part, ':', index_, val_);
+						int index = INT(index_);
+						double val = DOUBLE(val_);
+						Add(index, val);
+					}
+				}
+				else
+				{
+					for (string val_ : inputs)
+					{
+						Add(val_);
+					}
+				}
+			}
 		}
 
 		void Init(int length_, ivec& indices_, Fvec& values_)
@@ -53,12 +91,6 @@ namespace gezi {
 			length = other.length;
 			indices.swap(other.indices);
 			values.swap(other.values);
-		}
-
-		//to a densnse format from values
-		Vector(Fvec& values_)
-		{
-			ToDense(values_);
 		}
 
 		void Init(Fvec& values_)
@@ -86,6 +118,8 @@ namespace gezi {
 
 		void ToSparse()
 		{
+			if (!length)
+				length = values.size();  //为了安全 转sparse时候设置下length 
 			Fvec vec;
 			for (size_t i = 0; i < values.size(); i++)
 			{
@@ -174,10 +208,8 @@ namespace gezi {
 
 		Float operator[](int i) const
 		{
-#ifndef NDEBUG
-			if (i < 0 || i >= length)
-				THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
-#endif 
+	/*		if (i < 0 || i >= length)
+				THROW((format("Index %d out of range in Vector of length %d") % i % length).str());*/
 			if (IsDense())
 			{
 				return values[i];
@@ -195,8 +227,8 @@ namespace gezi {
 
 		Float& operator[](int i)
 		{
-			if (i < 0 || i >= length)
-				THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
+		/*	if (i < 0 || i >= length)
+				THROW((format("Index %d out of range in Vector of length %d") % i % length).str());*/
 			if (IsDense())
 			{
 				return values[i];
@@ -210,6 +242,11 @@ namespace gezi {
 #endif 
 				return values[iter - indices.begin()];
 			}
+		}
+
+		Vector& operator()(int index, Float value)
+		{
+			Add(index, value);
 		}
 
 		/// Applies the given ValueVisitor to every element of the vector, in order of index.  (Zeros of sparse vectors will not be included.)
@@ -382,16 +419,22 @@ namespace gezi {
 		{
 			return indices.size() == values.size();
 		}
+
+		//@TODO  尽量少用length Length
 		/// Gets a int value representing the dimensionality of the vector.
 		int Length() const
 		{
+			if (indices.empty())
+			{
+				return values.size();
+			}
 			return length;
 		}
 
 		//小写开头的是为了兼容stl
 		int size() const
 		{
-			return length;
+			return Length();
 		}
 
 		void SetLength(int length_)
@@ -510,16 +553,15 @@ namespace gezi {
 		/// Adds the supplied vector to myself.  (this += a)
 		void Add(Vector a)
 		{
-			if (a.length != length)
-			{
+			/*	if (a.length != length)
+				{
 				THROW("Vectors must have the same dimensionality.");
-			}
+				}*/
 
 			if (a.Count() == 0)
 				return;
 
-			if (a.indices.begin() == indices.begin() || a.indices.empty() && indices.empty())
-			//if (a.indices == indices)
+			if (generalized_same(a.indices, indices))
 			{
 				for (size_t i = 0; i < values.size(); i++)
 					values[i] += a.values[i];
@@ -586,8 +628,7 @@ namespace gezi {
 					manip(index, a.values[i], ref(values[index]));
 				}
 			}
-			else if (a.indices.begin() == indices.begin() || a.indices.empty() && indices.empty())
-			//else if (a.indices == indices)
+			else if (&a.indices == &indices)
 			{ // both sparse, same indices
 				for (size_t i = 0; i < values.size(); i++)
 				{
@@ -738,7 +779,16 @@ namespace gezi {
 		{
 			stringstream ss;
 			ForEachNonZero([&ss](int index, Float value) {
-				ss << index << ":" << value << " ";
+				ss << index << ":" << value << "\t";
+			});
+			return ss.str();
+		}
+
+		string DenseStr()
+		{
+			stringstream ss;
+			ForEachAll([&ss](int index, Float value) {
+				ss << index << ":" << value << "\t";
 			});
 			return ss.str();
 		}
@@ -747,7 +797,7 @@ namespace gezi {
 		{
 			stringstream ss;
 			ForEachNonZero([&ss](int index, Float value) {
-				ss << index << ":" << value << " ";
+				ss << index << ":" << value << "\t";
 			});
 			return ss.str();
 		}
@@ -771,11 +821,12 @@ namespace gezi {
 		//@TODO 有没有必要写成shared_ptr<ivec> indices; //更加灵活 允许两个Vector相同indice 不同value 避免拷贝
 		ivec indices; //不使用Node(index,value)更加灵活 同时可以允许一项为空
 		Fvec values; //@TODO may be FvecPtr 或者加一个指针 修改代码 如果指针不是空 使用指针指向的
-		int length = 0;
 		Float sparsityRatio = 0.25; //non_zero count < ratio to sparse, non_zero count >= ratio to dense
 		bool keepDense = false;
 		bool keepSparse = false;
 		bool normalized = false;
+	private:
+		int length = 0;
 	};
 
 	typedef shared_ptr<Vector> VectorPtr;
@@ -786,9 +837,7 @@ namespace gezi {
 			return 0;
 		}
 
-		if (a.indices.begin() == b.indices.begin() || a.indices.empty() && b.indices.empty())
-		//if (a.indices == b.indices)
-		//if (a.indices.begin() == b.indices.begin())
+		if (generalized_same(a.indices, b.indices))
 		{
 			/*if (a.Length() != b.Length())
 			{

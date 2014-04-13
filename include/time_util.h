@@ -95,7 +95,8 @@ namespace gezi {
 			{
 				string prefix = _info + " finished using:";
 				VLOG(_level) << setiosflags(ios::left) << setfill(' ') << setw(40)
-					<< prefix << " " << _timer->elapsed_ms() << " ms";
+					<< prefix << " " << "[" << _timer->elapsed_ms() << " ms] "
+				<< "(" << _timer->elapsed() << " s)";
 			}
 			else
 			{
@@ -121,7 +122,8 @@ namespace gezi {
 		{
 			string prefix = _info + " using:";
 			VLOG(_level) << setiosflags(ios::left) << setfill(' ') << setw(40)
-				<< prefix << " " << _timer.elapsed_ms() << " ms";
+				<< prefix << " " << "[" << _timer.elapsed_ms() << " ms] "
+				<< "(" << _timer.elapsed() << " s)";
 		}
 	private:
 		string _info;

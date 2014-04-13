@@ -52,5 +52,7 @@
 
 #include "ProgressBar.h"
 
+#include "LoadSave.h"
+
 namespace gz = gezi;
 #endif  //----end of COMMON_UTIL_H_

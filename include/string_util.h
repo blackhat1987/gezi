@@ -451,6 +451,12 @@ namespace gezi {
 		return str;
 	}
 
+	inline string replace(string input, char a, char b)
+	{
+		std::replace(input.begin(), input.end(), a, b);
+		return input;
+	}
+
 	//inline void gbk_mark(string src, vector<bool>& vec)
 	//{
 	//  vec.resize(src.length(), true);
@@ -550,6 +556,11 @@ namespace gezi {
 	}
 
 	inline bool startswith(string input, string part)
+	{
+		return input.find(part) == 0;
+	}
+
+	inline bool startswith(string input, char part)
 	{
 		return input.find(part) == 0;
 	}
