@@ -58,6 +58,7 @@ namespace gezi {
 			if (inputs.size() > 0)
 			{
 				length = (int)inputs.size();
+				Pval(length);
 				if (contains(inputs[0], ':'))
 				{
 					for (string part : inputs)
@@ -77,6 +78,7 @@ namespace gezi {
 					}
 				}
 			}
+			Pvec(this->values);
 		}
 
 		void Init(int length_, ivec& indices_, Fvec& values_)
