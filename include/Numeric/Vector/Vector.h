@@ -73,7 +73,7 @@ namespace gezi {
 				{
 					for (string val_ : inputs)
 					{
-						Add(val_);
+						Add(DOUBLE(val_));
 					}
 				}
 			}
