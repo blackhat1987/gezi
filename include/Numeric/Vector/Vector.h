@@ -52,13 +52,12 @@ namespace gezi {
 		}
 
 		//方便debug Vector vec("1\t3\t4\t5"); Vector vec("1:2.3\t3:4.5"); or vec("1 3") space is also ok
-		Vector(string input, string sep = ",\t ")
+		Vector(string input, int length_ = 0, string sep = ",\t ")
 		{
 			svec inputs = split(input, sep);
+			length = length_;
 			if (inputs.size() > 0)
-			{
-				length = (int)inputs.size();
-				Pval(length);
+			{ //注意可能稀疏没有带有length
 				if (contains(inputs[0], ':'))
 				{
 					for (string part : inputs)
@@ -72,13 +71,15 @@ namespace gezi {
 				}
 				else
 				{
+					length = inputs.size();
 					for (string val_ : inputs)
 					{
 						Add(DOUBLE(val_));
 					}
 				}
 			}
-			Pvec(this->values);
+			Pval(length);
+			Pval(this->values[137]);
 		}
 
 		void Init(int length_, ivec& indices_, Fvec& values_)
