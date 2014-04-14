@@ -234,7 +234,7 @@ namespace gezi {
 				return _value;*/
 				//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
 			if (IsDense())
-			{
+			{//外部确保不越界！
 				return values[i];
 			}
 			else
