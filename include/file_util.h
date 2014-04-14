@@ -17,8 +17,9 @@
 #include "hashmap_util.h"
 #include "log_util.h"
 #include <glog/logging.h>
-#define BOOST_NO_SCOPED_ENUMS
-#include <boost/filesystem.hpp>
+#define  BOOST_NO_CXX11_SCOPED_ENUMS
+#include <boost/filesystem.hpp> //@TODO 尽管define仍然c++0x会造成copy_file失败
+#undef BOOST_NO_CXX11_SCOPED_ENUMS
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <map>
@@ -28,8 +29,15 @@ using std::set;
 namespace bfs = boost::filesystem;
 namespace bf = boost::filesystem;
 //---------------------------for file save load
-namespace gezi
-{
+namespace gezi {
+
+	//forced copy
+	inline void copy_file(string src, string dest)
+	{
+		ifstream infile(src, std::ios_base::binary);
+		ofstream outfile(dest, std::ios_base::binary);
+		outfile << infile.rdbuf();
+	}
 	inline void try_create_dir(string dir)
 	{
 		if (!bfs::exists(dir))

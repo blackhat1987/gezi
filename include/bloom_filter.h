@@ -25,7 +25,9 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
+#define BOOST_NO_CXX11_SCOPED_ENUMS
 #include <boost/filesystem.hpp>
+#undef BOOST_NO_CXX11_SCOPED_ENUMS
 //#include "ul_sign.h"
 #include "common_help.h"
 #include "ul_log_help.h"
