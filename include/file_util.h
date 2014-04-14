@@ -17,6 +17,7 @@
 #include "hashmap_util.h"
 #include "log_util.h"
 #include <glog/logging.h>
+#define BOOST_NO_SCOPED_ENUMS
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
