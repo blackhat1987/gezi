@@ -206,6 +206,13 @@ namespace gezi {
 			Add(value); //Vector添加dense数据
 		}
 
+		////hack for template match error  void add(Vec& values_, string name = "") @FIXME
+		////是c++ 11 的重载匹配变严格了吗 不会自动转float匹配？
+		//void add(int value, string name = "")
+		//{
+		//	add(Float(value), name);
+		//}
+
 		void add(Float* values_, int len, string name = "")
 		{
 			if (name.empty())
@@ -224,9 +231,55 @@ namespace gezi {
 				}
 			}
 		}
+		//c++ 貌似模板匹配的优先度太高了 add(1,"")也会匹配下面这个 而不会匹配 add(Float,"")
+		//template<typename Vec> void add(Vec& values_, string name = "")
+		template<typename T>
+		void add(const vector<T>& values_, string name = "")
+		{
+			if (name.empty())
+			{
+				for (auto value : values_)
+				{
+					add(value);
+				}
+			}
+			else
+			{
+				int len = values_.size();
+				for (int i = 0; i < len; i++)
+				{
+					string name_ = name + STRING(i);
+					add(values_[i], name_);
+				}
+			}
+		}
 
+		//@TODO 由于add(int, )不会自动转float 匹配正确重载 而是优先匹配模板 造成代码重复。。
+		//可以考虑add vector 改名 adds 更清晰
+		template<typename T, size_t Len>
+		void add(std::array<T, Len>& values_, string name = "")
+		{
+			if (name.empty())
+			{
+				for (auto value : values_)
+				{
+					add(value);
+				}
+			}
+			else
+			{
+				int len = values_.size();
+				for (int i = 0; i < len; i++)
+				{
+					string name_ = name + STRING(i);
+					add(values_[i], name_);
+				}
+			}
+		}
+
+		//adds(set.. unordered set or for vector @TODO尽量使用这个 避免上面的 上面仅为兼容
 		template<typename Vec>
-		void add(Vec& values_, string name = "")
+		void adds(const Vec& values_, string name = "")
 		{
 			if (name.empty())
 			{
