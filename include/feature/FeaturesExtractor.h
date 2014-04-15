@@ -23,79 +23,79 @@ class FeaturesExtractor
 public:
  //每个FeatureExtractor类对应有一个名字
 
-  FeaturesExtractor(string name = "")
-  : _name(name)
-  {
+	FeaturesExtractor(string name = "")
+	: _name(name)
+	{
 
-  }
+	}
 
-  virtual ~FeaturesExtractor()
-  {
+	virtual ~FeaturesExtractor()
+	{
 
-  }
+	}
 
-  //获取资源数据或者数据预处理
+	//获取资源数据或者数据预处理
 
-  virtual void init()
-  {
+	virtual void init()
+	{
 
-  }
+	}
 
-  //特征抽取部分
+	//特征抽取部分
 
-  virtual void extract()
-  {
+	virtual void extract()
+	{
 
-  }
+	}
 
-  void bind(Features* features)
-  {
-    _features = features;
-  }
+	void bind(Features* features)
+	{
+		_features = features;
+	}
 
-  virtual void process(Features* features)
-  {
-    bind(features);
-    _features->add_section(_name);
-    init();
-    extract();
-  }
+	virtual void process(Features* features)
+	{
+		bind(features);
+		_features->add_section(_name);
+		init();
+		extract();
+	}
 
-  string name()
-  {
-    return _name;
-  }
+	string name()
+	{
+		return _name;
+	}
 
-  Features* features()
-  {
-    return _features;
-  }
+	Features* features()
+	{
+		return _features;
+	}
 
 	//@TODO remove 兼容旧的接口
 	Features* feature()
-  {
-    return _features;
-  }
+	{
+		return _features;
+	}
 
-  void add(double value, string name = "")
-  {
-    _features->add(value, name);
-  }
+	void add(double value, string name = "")
+	{
+		_features->add(value, name);
+	}
 	
 	template<typename Vec>
-  void add(Vec& values, string name = "")
-  {
-    _features->add(values, name);
-  }
+	void add(Vec& values, string name = "")
+	{
+		_features->add(values, name);
+	}
 
-  void add(double* values, int n, string name = "")
-  {
-    _features->add(values, n, name);
-  }
+	void add(double* values, int n, string name = "")
+	{
+		_features->add(values, n, name);
+	}
 
 protected:
-  string _name;
-  Features* _features;
+	string _name;
+	Features* _features;
 };
 
 }  //----end of namespace gezi

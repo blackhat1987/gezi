@@ -201,7 +201,7 @@ public:
         string section_ = section;
         if (i > 0)
         {
-          section_ += TO_STRING(i);
+          section_ += STR(i);
         }
 
         PCONF2_CLASS(_client_conf[i], port, section_, (int) _client_conf[i].port);

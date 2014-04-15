@@ -16,6 +16,7 @@
 #include "common_util.h"
 #include "curl_util.h"
 #include "json/json.h"
+
 namespace gezi {
 	namespace tieba {
 		inline string get_info(string url, int timeout = -1)

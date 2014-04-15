@@ -395,10 +395,10 @@ typedef int otl_stream_buffer_size_type;
 
 // --------------------- Invalid combinations --------------------------
 
-#if (defined(OTL_ORA7_TIMESTAMP_TO_STRING)||defined(OTL_ORA7_STRING_TO_TIMESTAMP)) \
+#if (defined(OTL_ORA7_TIMESTAMP_STR)||defined(OTL_ORA7_STRING_TO_TIMESTAMP)) \
   && defined(OTL_ORA_TIMESTAMP)
 #error Invalid combination: OTL_ORA_TIMESTAMP and \
-OTL_ORA7_TIMESTAMP_TO_STRING/OTL_ORA7_STRING_TO_TIMESTAMP
+OTL_ORA7_TIMESTAMP_STR/OTL_ORA7_STRING_TO_TIMESTAMP
 #endif
 
 #if defined(OTL_ORA_MAP_BIGINT_TO_LONG) && \
@@ -6001,7 +6001,7 @@ private:
           *t++=*c1++;
         *t=0;
         size=atoi(tmp);
-#if defined(OTL_ADD_NULL_TERMINATOR_TO_STRING_SIZE)
+#if defined(OTL_ADD_NULL_TERMINATOR_STR_SIZE)
         size+=1;
 #endif
       }
@@ -6017,7 +6017,7 @@ private:
           *t++=*c1++;
         *t=0;
         size=atoi(tmp);
-#if defined(OTL_ADD_NULL_TERMINATOR_TO_STRING_SIZE)
+#if defined(OTL_ADD_NULL_TERMINATOR_STR_SIZE)
         size+=1;
 #endif
       }
@@ -6213,7 +6213,7 @@ private:
           // declaration <char> is invalid
           return 0;
         size=atoi(tmp);
-#if defined(OTL_ADD_NULL_TERMINATOR_TO_STRING_SIZE)
+#if defined(OTL_ADD_NULL_TERMINATOR_STR_SIZE)
         if(type=='C')size+=1;
 #endif
         if(size<2)
@@ -6234,7 +6234,7 @@ private:
         if(*tmp==0)
           return 0;
         size=atoi(tmp);
-#if defined(OTL_ADD_NULL_TERMINATOR_TO_STRING_SIZE)
+#if defined(OTL_ADD_NULL_TERMINATOR_STR_SIZE)
         size+=1;
 #endif
       }
@@ -16401,7 +16401,7 @@ public:
    otl_time tmp;
    last_oper_was_read_op=false;
    reset_end_marker();
-#if defined(OTL_ODBC_TIMESTAMP_TO_STRING)
+#if defined(OTL_ODBC_TIMESTAMP_STR)
     if(describe_next_in_var()->ftype==otl_var_char){
 #if defined(OTL_UNICODE)
 #if defined(OTL_UNICODE_CHAR_TYPE)
@@ -16412,7 +16412,7 @@ public:
 #else
       char tmp_str[100];
 #endif      
-     OTL_ODBC_TIMESTAMP_TO_STRING(s,tmp_str);
+     OTL_ODBC_TIMESTAMP_STR(s,tmp_str);
 #if defined(OTL_ODBC_TIME_ZONE)
      OTL_TRACE_READ
        (OTL_TRACE_FORMAT_TZ_DATETIME(s),
@@ -21509,10 +21509,10 @@ public:
  {
    last_oper_was_read_op=false;
    reset_end_marker();
-#if defined(OTL_ORA7) && defined(OTL_ORA7_TIMESTAMP_TO_STRING)
+#if defined(OTL_ORA7) && defined(OTL_ORA7_TIMESTAMP_STR)
     if(describe_next_in_var()->ftype==otl_var_char){
      char tmp_str[100];
-     OTL_ORA7_TIMESTAMP_TO_STRING(s,tmp_str);
+     OTL_ORA7_TIMESTAMP_STR(s,tmp_str);
      OTL_TRACE_READ
        (OTL_TRACE_FORMAT_DATETIME(s),
         "operator <<",
@@ -32371,7 +32371,7 @@ public:
  {
   last_oper_was_read_op=false;
   reset_end_marker();
-#if defined(OTL_ORA7_TIMESTAMP_TO_STRING)
+#if defined(OTL_ORA7_TIMESTAMP_STR)
     if(describe_next_in_var()->ftype==otl_var_char){
 #if defined(OTL_UNICODE)
       OTL_CHAR tmp_str[100];
@@ -32380,7 +32380,7 @@ public:
 #else
       char tmp_str[100];
 #endif
-      OTL_ORA7_TIMESTAMP_TO_STRING(s,tmp_str);
+      OTL_ORA7_TIMESTAMP_STR(s,tmp_str);
       OTL_TRACE_READ
        (OTL_TRACE_FORMAT_DATETIME(s),
         "operator <<",

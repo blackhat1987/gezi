@@ -43,16 +43,15 @@
 #include "linq.h"
 #include "stl_util.h"
 
-
-#ifndef NO_GEZI_CONVERT
-#include "convert_type.h"
-#endif
-
 #include "Exception.h"
 
 #include "ProgressBar.h"
 
 #include "LoadSave.h"
+
+#ifndef NO_GEZI_CONVERT
+#include "convert_type.h"
+#endif
 
 namespace gz = gezi;
 #endif  //----end of COMMON_UTIL_H_

@@ -26,7 +26,8 @@
 #define TO_BOOL boost::lexical_cast<bool>
 #define TO_FLOAT boost::lexical_cast<float>
 //#define TO_DOUBLE boost::lexical_cast<double>
-#define TO_STRING boost::lexical_cast<std::string>
+#undef  TO_STR
+#define TO_STR boost::lexical_cast<std::string>
 //#define INT boost::lexical_cast<int>
 #define UINT boost::lexical_cast<unsigned int>
 #define INT64 boost::lexical_cast<long long>
@@ -36,11 +37,15 @@
 #define BOOL boost::lexical_cast<bool>
 #undef FLOAT
 #define FLOAT boost::lexical_cast<float>
-//#undef  DOUBLE	
+#undef INT
+#undef  DOUBLE	
 //#define DOUBLE boost::lexical_cast<double>
 #undef  STRING
 #define STRING boost::lexical_cast<std::string>
+
+#undef  STR
 #define STR boost::lexical_cast<std::string>
+
 #define  STR_TO_INT(a) \
 atoi(a.c_str())
 #define STR_TO_DOUBLE(a) \
@@ -87,7 +92,7 @@ atof(a.c_str())
 //#define TO_BOOL boost::lexical_cast<bool>
 //#define TO_FLOAT boost::lexical_cast<float>
 //#define TO_DOUBLE boost::lexical_cast<double>
-//#define TO_STRING boost::lexical_cast<std::string>
+//#define STR boost::lexical_cast<std::string>
 //#define INT gezi::lexical_cast<int>
 //#define UINT gezi::lexical_cast<unsigned int>
 //#define INT64 gezi::lexical_cast<long long>

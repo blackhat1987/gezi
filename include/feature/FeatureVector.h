@@ -206,13 +206,13 @@ namespace gezi {
 			Add(value); //VectorÌí¼ÓdenseÊý¾Ý
 		}
 
-		void add(Float* values, int len, string name = "")
+		void add(Float* values_, int len, string name = "")
 		{
 			if (name.empty())
 			{
 				for (int i = 0; i < len; i++)
 				{
-					add(values[i]);
+					add(values_[i]);
 				}
 			}
 			else
@@ -220,28 +220,28 @@ namespace gezi {
 				for (int i = 0; i < len; i++)
 				{
 					string name_ = name + STRING(i);
-					add(values[i], name_);
+					add(values_[i], name_);
 				}
 			}
 		}
 
 		template<typename Vec>
-		void add(Vec& values, string name = "")
+		void add(Vec& values_, string name = "")
 		{
 			if (name.empty())
 			{
-				for (auto value : values)
+				for (auto value : values_)
 				{
 					add(value);
 				}
 			}
 			else
 			{
-				int len = values.size();
+				int len = values_.size();
 				for (int i = 0; i < len; i++)
 				{
 					string name_ = name + STRING(i);
-					add(values[i], name_);
+					add(values_[i], name_);
 				}
 			}
 		}

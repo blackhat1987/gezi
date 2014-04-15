@@ -22,7 +22,6 @@
 #undef TO_BOOL \
 #undef TO_FLOAT \
 #undef TO_DOUBLE \
-#undef TO_STRING \
 #undef INT \
 #undef UINT \
 #undef INT64 \
@@ -31,7 +30,7 @@
 #undef FLOAT \
 #undef DOUBLE \
 #undef STRING \
-#undef STR 
+#undef TO_STRING 
 
 #endif
 

@@ -15,9 +15,9 @@
 #define STL_UTIL_H_
 
 #include "common_def.h"
+#include "convert_type.h"
 #include "map_util.h"
 #include <boost/lexical_cast.hpp>
-#define TO_STRING boost::lexical_cast<std::string>
 namespace gezi {
 	template<typename T>
 	std::string join(const std::vector<T>& vec, const std::string& sep = " ")
@@ -59,7 +59,7 @@ namespace gezi {
 		std::vector<string> rvec;
 		for (int i = 0; i < (int)vec.size(); i++)
 		{
-			string kv = (format("\"%1%\":\"%2%\"") % TO_STRING(i) % TO_STRING(vec[i])).str();
+			string kv = (format("\"%1%\":\"%2%\"") % STR(i) % STR(vec[i])).str();
 			rvec.push_back(kv);
 		}
 		return (format("{%1%}") % join(rvec, ",")).str();
@@ -71,7 +71,7 @@ namespace gezi {
 		std::vector<string> rvec;
 		for (int i = 0; i < len; i++)
 		{
-			string kv = (format("\"%1%\":\"%2%\"") % TO_STRING(i) % TO_STRING(vec[i])).str();
+			string kv = (format("\"%1%\":\"%2%\"") % STR(i) % STR(vec[i])).str();
 			rvec.push_back(kv);
 		}
 		return (format("{%1%}") % join(rvec, ",")).str();
@@ -232,5 +232,4 @@ namespace gezi {
 	}
 }  //----end of namespace gezi
 
-#undef TO_STRING
 #endif  //----end of STL_UTIL_H_
