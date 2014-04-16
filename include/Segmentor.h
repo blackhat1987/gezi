@@ -33,8 +33,7 @@
 #include <vector>
 //#include "common_util.h"
 
-namespace gezi
-{
+namespace gezi {
 	using namespace std;
 
 	struct SegHandle
@@ -56,8 +55,8 @@ namespace gezi
 			if (pout)
 				clear();
 			buf_size = bufsize;
-			u_int scw_out_flag = SCW_OUT_ALL | SCW_OUT_PROP;
-			pout = scw_create_out(bufsize, scw_out_flag);
+			u_int scw_out__flag = SCW_OUT_ALL | SCW_OUT_PROP;
+			pout = scw_create_out(bufsize, scw_out__flag);
 			CHECK_NOTNULL(pout);
 			tokens = new token_t[bufsize];
 			CHECK_NOTNULL(tokens);
@@ -82,28 +81,18 @@ namespace gezi
 		int buf_size;
 	};
 	//进程级别 一般 一个程序一个Segmentor资源实例
+#define  SEG_SIMPLE
 #define SEG_USE_POSTAG 1
 #define SEG_USE_SPLIT 2
 #define SEG_USE_TRIE 4
-#define SEG_USE_ALL 256
+#define SEG_USE_ALL 255
 	class Segmentor
 	{
 	public:
 
-		Segmentor()
-			:_type(0),
-			_use_tag(false), 
-			_pwdict(NULL),
-			_split_dict(NULL)
-		{
+		Segmentor() = default;
 
-		}
-
-		Segmentor(string data_dir, int type = 0, string conf_path = "./conf/scw.conf")
-			:_type(0),
-			_use_tag(false),
-			_pwdict(NULL),
-			_split_dict(NULL)
+		Segmentor(string data_dir = "./data/wordseg", int type = SEG_SIMPLE, string conf_path = "./conf/scw.conf")
 		{
 			bool ret = init(data_dir, type, conf_path);
 			CHECK_EQ(ret, true);
@@ -111,7 +100,7 @@ namespace gezi
 
 		~Segmentor()
 		{
-			if (_use_tag)
+			if (_type & SEG_USE_POSTAG)
 			{
 				tag_close();
 			}
@@ -123,15 +112,85 @@ namespace gezi
 				ds_del(_split_dict);
 		}
 
-		bool init(string data_dir, int type = 0, string conf_path = "./conf/scw.conf")
+		Segmentor& set_flag(int flag)
+		{
+			_flag = flag;
+			return *this;
+		}
+
+		bool init(string data_dir = "./data/wordseg", int type = SEG_SIMPLE, string conf_path = "./conf/scw.conf")
 		{
 			return init(data_dir.c_str(), type, conf_path.c_str());
 		}
 
+		bool seg_words(string input, SegHandle& handle)
+		{
+			//---------分词
+			if (scw_segment_words(_pwdict, handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)_flag) < 0)
+			{
+				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
+				return false;
+			}
+			return true;
+		}
+
+		int get_tokens(SegHandle& handle, int type = SCW_OUT_WPCOMP)
+		{
+			handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
+			return handle.nresult;
+		}
+
+		bool segment(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP)
+		{
+			//---------分词
+			if (scw_segment_words(_pwdict, handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)_flag) < 0)
+			{
+				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
+				return false;
+			}
+
+			//TODO temp change to use basic 切分
+			handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
+
+			if (_type & SEG_USE_POSTAG)
+			{
+				//----------标注
+				if (tag_postag(handle.tokens, handle.nresult) < 0)
+				{
+					LOG_ERROR("Tagging failed!");
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		vector<string> segment(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP)
+		{
+			vector<string> vec;
+			segment(input, handle, type);
+			for (int i = 0; i < handle.nresult; i++)
+			{
+				vec.push_back(handle.tokens[i].buffer);
+			}
+			return vec;
+		}
+
+		//快捷接口 线程安全
+		bool segment(string input, int type = SCW_OUT_WPCOMP)
+		{
+
+		}
+		/*vector<string> segment(string input, )*/
+		//  //返回按照unicode的切分长度序列
+		//  vector<int> segment_w(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP)
+		//  {
+		//    segment(input, handle, type);
+		//    
+		//  }
+	private:
 		bool init(const char* data_dir, int type = 0, const char* conf_path = "./conf/scw.conf")
 		{
 			_type = type;
-			_use_tag = (bool)(_type & SEG_USE_POSTAG);
 			int ret = -1;
 			//--------------打开分词字典
 			{
@@ -148,7 +207,7 @@ namespace gezi
 				LOG_INFO("Load segmentor dict data ok");
 			}
 
-			if (_use_tag)
+			if (_type & SEG_USE_POSTAG)
 			{ //--------------启动标注
 				char tag_dict_path[2048];
 				sprintf(tag_dict_path, "%s/%s", data_dir, "tagdict");
@@ -160,8 +219,7 @@ namespace gezi
 			{
 				LOG_INFO("Do not use pos tag");
 			}
-			{
-				//---------------尝试打开need split字典，如果不存在或者打开出错就不使用
+			{	//---------------尝试打开need split字典，如果不存在或者打开出错就不使用
 				char user_dict_path[2048];
 				sprintf(user_dict_path, "%s/%s", data_dir, "need_split");
 				_split_dict = ds_load(user_dict_path, "need_split");
@@ -178,61 +236,17 @@ namespace gezi
 			return true;
 		}
 
-		bool segment_words(string input, SegHandle& handle, int flag = 0)
+		static SegHandle& GetSegHandle(int buf_size = 15000)
 		{
-			//---------分词
-			if (scw_segment_words(_pwdict, handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *) flag) < 0)
-			{
-				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
-				return false;
-			}
-			return true;
+			static SegHandle _handle(buf_size);
+			return _handle;
 		}
-
-		int seg_get_tokens(SegHandle& handle, int type = SCW_OUT_WPCOMP)
-		{
-			handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
-			return handle.nresult;
-		}
-
-		bool segment(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP, int flag = 0)
-		{
-			//---------分词
-			if (scw_segment_words(_pwdict, handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *) flag) < 0)
-			{
-				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
-				return false;
-			}
-
-			//TODO temp change to use basic 切分
-			handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
-
-			if (_type)
-			{
-				//----------标注
-				if (tag_postag(handle.tokens, handle.nresult) < 0)
-				{
-					LOG_ERROR("Tagging failed!");
-					return false;
-				}
-			}
-			return true;
-		}
-
-		vector<string> segment(string input, )
-		//  //返回按照unicode的切分长度序列
-		//  vector<int> segment_w(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP)
-		//  {
-		//    segment(input, handle, type);
-		//    
-		//  }
-
 	private:
-		scw_worddict_t* _pwdict;
+		scw_worddict_t* _pwdict = NULL;
 		//scw_conf_t* pgconf;
-		Sdict_search* _split_dict; //自定义不需要在分词字典中去除内部再切分的字典资源 
-		int _type;
-		bool _use_tag;
+		Sdict_search* _split_dict = NULL; //自定义不需要在分词字典中去除内部再切分的字典资源 
+		int _type = 0; //是否使用pos tag 等等
+		int _flag = 0; //dynfloag 是否开启crf等 当前主要考虑设置是否开启crf
 	};
 
 	//util
@@ -241,10 +255,27 @@ namespace gezi
 		Pval(handle.nresult);
 		for (int i = 0; i < handle.nresult; i++)
 		{
-			VLOG(3) << setiosflags(ios::left) << setfill(' ') << setw(4) << i <<
+			VLOG(3) << setios_flags(ios::left) << setfill(' ') << setw(4) << i <<
 				handle.tokens[i].buffer << " " << handle.tokens[i].length;
 		}
 	}
+
+	class SharedSegmentor
+	{
+	public:
+		static Segmentor* Instance()
+		{
+			return &GetSegmentor();
+		}
+
+		static Segmentor& GetSegmentor()
+		{
+			static Segmentor _segmentor;
+			return _segmentor;
+		}
+	};
+
+	typedef SharedSegmentor Seg;
 } //----end of namespace gezi
 
 #endif  //----end of SEGMENTOR_H_

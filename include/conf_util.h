@@ -79,7 +79,7 @@ public:
 
 	static comcfg::Configure& conf()
 	{
-		static comcfg::Configure _conf
+		static comcfg::Configure _conf;
 		return _conf;
 	}
 
