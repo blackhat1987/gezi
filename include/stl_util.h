@@ -223,6 +223,13 @@ namespace gezi {
 		vec.shrink_to_fit();
 	}
 
+	template<typename Map>
+	void free_map(Map& m)
+	{
+		m.clear();
+		Map().swap(m);
+	}
+
 	//广义相同 即完全内存位置一样的两个vector 或者 两个空vector 
 	//类似C# both null or point to the same a.indices == b.indices
 	template<typename Vec>

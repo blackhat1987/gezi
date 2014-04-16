@@ -178,10 +178,27 @@ namespace gezi
 			return true;
 		}
 
-		bool segment(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP)
+		bool segment_words(string input, SegHandle& handle, int flag = 0)
 		{
 			//---------分词
-			if (scw_segment_words(_pwdict, handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, NULL) < 0)
+			if (scw_segment_words(_pwdict, handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *) flag) < 0)
+			{
+				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
+				return false;
+			}
+			return true;
+		}
+
+		int seg_get_tokens(SegHandle& handle, int type = SCW_OUT_WPCOMP)
+		{
+			handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
+			return handle.nresult;
+		}
+
+		bool segment(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP, int flag = 0)
+		{
+			//---------分词
+			if (scw_segment_words(_pwdict, handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *) flag) < 0)
 			{
 				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
 				return false;
@@ -202,6 +219,7 @@ namespace gezi
 			return true;
 		}
 
+		vector<string> segment(string input, )
 		//  //返回按照unicode的切分长度序列
 		//  vector<int> segment_w(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP)
 		//  {

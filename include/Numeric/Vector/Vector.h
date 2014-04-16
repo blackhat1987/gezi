@@ -55,7 +55,7 @@ namespace gezi {
 		Vector(string input, int length_ = 0, string sep = ",\t ")
 		{
 			boost::trim(input); //需要注意 因为DOUBLE采用atof快速但是不安全 可能输入是一个空格 导致有问题
-			//@TODO @FIXME split("",sep)得到不是空结果 而是有1个空元素的vector 不符合逻辑？
+			//注意split("",sep)得到不是空结果 而是有1个空元素的vector c# python	也是		
 			svec inputs = from(split(input, sep)) >> where([](string a) { return !a.empty(); }) >> to_vector();
 			length = length_;
 			if (inputs.size() > 0)

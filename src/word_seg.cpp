@@ -23,9 +23,9 @@ int _buf_size = 15000;
 SegHandle _handle; //单线程使用 全局buffer
 
 bool seg_init(string dict_dir, int type,
-        string conf_path)
+				string conf_path)
 {
-  return _seg.init(dict_dir, type, conf_path);
+	return _seg.init(dict_dir, type, conf_path);
 }
 
 bool seg_init2(string dict_dir, int type,
@@ -39,7 +39,14 @@ bool seg_init2(string dict_dir, int type,
 
 bool segment(string input, SegHandle& handle, int type)
 {
-  return _seg.segment(input, handle, type);
+	return _seg.segment(input, handle, type);
+}
+
+SegHandle segment_(string input, int type = SCW_OUT_WPCOMP)
+{
+	SegHandle handle(_buf_size);
+	_seg.segment(input, handle, type);
+	return handle;
 }
 
 bool segment(string input, vector<string>& vec, SegHandle& handle, int type)
@@ -61,6 +68,18 @@ bool segment(string input, vector<string>& vec, int type)
 		vec.push_back(handle.tokens[i].buffer);
 	}
 	return ret;
+}
+
+vector<string> segment(string input, int type)
+{
+	SegHandle handle(_buf_size);
+	_seg.segment(input, handle, type);
+	vector<string> vec;
+	for (int i = 0; i < handle.nresult; i++)
+	{
+		vec.push_back(handle.tokens[i].buffer);
+	}
+	return vec;
 }
 
 string segment(string input, string sep, int type)
@@ -90,6 +109,17 @@ bool segment2(string input, vector<string>& vec, int type)
 	return ret;
 }
 
+vector<string> segment2(string input, int type)
+{
+	_seg.segment(input, _handle, type);
+	vector<string> vec;
+	for (int i = 0; i < _handle.nresult; i++)
+	{
+		vec.push_back(_handle.tokens[i].buffer);
+	}
+	return vec;
+}
+
 string segment2(string input, string sep, int type)
 {
 	bool ret = _seg.segment(input, _handle, type);
@@ -110,5 +140,14 @@ void seg_set_bufsize(int max_len)
 {
 	_buf_size = max_len;
 	_handle.init(_buf_size);
+}
+
+bool segment_words(string input, SegHandle& handle, int flag = 0)
+{
+	
+}
+int seg_get_tokens(SegHandle& handle, int type = SCW_OUT_WPCOMP)
+{
+
 }
 }
