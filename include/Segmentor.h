@@ -39,35 +39,36 @@ namespace gezi {
 	struct SegHandle
 	{
 		//分词buffer大小,不能开辟太大因为分词scw_create_out的时候会占过多内存
-		static const int SEG_BUFF_SIZE = 20480; //50*1024
+		//static const int SEG_BUFF_SIZE = 20480; //50*1024
+		static const int SEG_BUFF_SIZE = 15000; //50*1024
 
-		SegHandle()
-			: pout(NULL), tokens(NULL), nresult(0)
-		{
-		}
+		SegHandle() = default;
+
 		SegHandle(int bufsize)
-			: pout(NULL), tokens(NULL), nresult(0)
 		{
 			init(bufsize);
 		}
-		void init(int bufsize = SEG_BUFF_SIZE)
+
+		void init(int buf_size_ = SEG_BUFF_SIZE)
 		{
 			if (pout)
 				clear();
-			buf_size = bufsize;
+			buf_size = buf_size_;
 			u_int scw_out__flag = SCW_OUT_ALL | SCW_OUT_PROP;
-			pout = scw_create_out(bufsize, scw_out__flag);
+			pout = scw_create_out(buf_size, scw_out__flag);
 			CHECK_NOTNULL(pout);
-			tokens = new token_t[bufsize];
-			CHECK_NOTNULL(tokens);
+			token_vec.resize(buf_size);
+			tokens = &token_vec[0];
 		}
 
 		void clear()
 		{
 			if (pout)
 				scw_destroy_out(pout);
-			if (tokens)
-				delete[] tokens;
+			pout = NULL;
+			token_vec.clear();
+			token_vec.shrink_to_fit();
+			tokens = NULL;
 		}
 
 		~SegHandle()
@@ -75,13 +76,14 @@ namespace gezi {
 			clear();
 		}
 
-		scw_out_t *pout;
-		token_t* tokens;
-		int nresult;
-		int buf_size;
+		scw_out_t* pout = NULL;
+		token_t* tokens = NULL;
+		vector<token_t> token_vec;
+		int nresult = 0;
+		int buf_size = 0;
 	};
 	//进程级别 一般 一个程序一个Segmentor资源实例
-#define  SEG_SIMPLE
+#define  SEG_SIMPLE 0
 #define SEG_USE_POSTAG 1
 #define SEG_USE_SPLIT 2
 #define SEG_USE_TRIE 4
@@ -89,10 +91,9 @@ namespace gezi {
 	class Segmentor
 	{
 	public:
-
 		Segmentor() = default;
 
-		Segmentor(string data_dir = "./data/wordseg", int type = SEG_SIMPLE, string conf_path = "./conf/scw.conf")
+		Segmentor(string data_dir, int type = SEG_SIMPLE, string conf_path = "./conf/scw.conf")
 		{
 			bool ret = init(data_dir, type, conf_path);
 			CHECK_EQ(ret, true);
@@ -115,6 +116,12 @@ namespace gezi {
 		Segmentor& set_flag(int flag)
 		{
 			_flag = flag;
+			return *this;
+		}
+
+		Segmentor& set_buff_size(int buff_size)
+		{
+			_buf_size = buff_size;
 			return *this;
 		}
 
@@ -164,21 +171,64 @@ namespace gezi {
 			return true;
 		}
 		
-		vector<string> segment(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP)
+		bool segment(string input, SegHandle& handle, vector<string>& result,
+			int type = SCW_OUT_WPCOMP)
 		{
-			vector<string> vec;
-			segment(input, handle, type);
+			bool ret = segment(input, handle, type);
+			if (!ret)
+			{
+				return;
+			}
+			
 			for (int i = 0; i < handle.nresult; i++)
 			{
-				vec.push_back(handle.tokens[i].buffer);
+				result.push_back(handle.tokens[i].buffer);
 			}
-			return vec;
 		}
 
-		//快捷接口 线程安全
-		bool segment(string input, int type = SCW_OUT_WPCOMP)
+		string segment(string input, SegHandle& handle, string sep, int type = SCW_OUT_WPCOMP)
 		{
+			bool ret = segment(input, handle, type);
+			if (!ret || handle.nresult < 1)
+			{
+				return "";
+			}
+			std::stringstream ss;
+			ss << handle.tokens[0].buffer;
+			for (int i = 1; i < handle.nresult; i++)
+			{
+				ss << sep << handle.tokens[i].buffer;
+			}
+			return ss.str();
+		}
 
+		//快捷接口 线程安全 thread safe 但是一般不需要用到 多线程 类自己维护一个handle即可
+		//python等单线程 调用单线程快捷接口
+		vector<string> segment_ts(string input, int type = SCW_OUT_WPCOMP)
+		{
+			SegHandle handle(_buf_size);
+			vector<string> result;
+			segment(input, handle, result, type); 
+			return result;
+		}
+
+		string segment_ts(string input, string sep, int type = SCW_OUT_WPCOMP)
+		{
+			SegHandle handle(_buf_size);
+			return segment(input, handle, sep, type);
+		}
+
+		//快捷接口 线程不安全 单线程下更快速
+		vector<string> segment(string input, int type = SCW_OUT_WPCOMP)
+		{
+			vector<string> result;
+			segment(input, GetSegHandle(), result, type);
+			return result;
+		}
+
+		string segment(string input, string sep, int type = SCW_OUT_WPCOMP)
+		{
+			return segment(input, GetSegHandle(), sep, type);
 		}
 		/*vector<string> segment(string input, )*/
 		//  //返回按照unicode的切分长度序列
@@ -236,7 +286,7 @@ namespace gezi {
 			return true;
 		}
 
-		static SegHandle& GetSegHandle(int buf_size = 15000)
+		static SegHandle& GetSegHandle(int buf_size = SegHandle::SEG_BUFF_SIZE)
 		{
 			static SegHandle _handle(buf_size);
 			return _handle;
@@ -247,6 +297,7 @@ namespace gezi {
 		Sdict_search* _split_dict = NULL; //自定义不需要在分词字典中去除内部再切分的字典资源 
 		int _type = 0; //是否使用pos tag 等等
 		int _flag = 0; //dynfloag 是否开启crf等 当前主要考虑设置是否开启crf
+		int _buf_size = SegHandle::SEG_BUFF_SIZE;
 	};
 
 	//util
@@ -255,7 +306,7 @@ namespace gezi {
 		Pval(handle.nresult);
 		for (int i = 0; i < handle.nresult; i++)
 		{
-			VLOG(3) << setios_flags(ios::left) << setfill(' ') << setw(4) << i <<
+			VLOG(3) << setiosflags(ios::left) << setfill(' ') << setw(4) << i <<
 				handle.tokens[i].buffer << " " << handle.tokens[i].length;
 		}
 	}

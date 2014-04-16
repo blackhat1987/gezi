@@ -181,9 +181,6 @@ clean:ccpclean
 	rm -rf ./output/lib/libgezi_common.a
 	rm -rf libgezi_json.a
 	rm -rf ./output/lib/libgezi_json.a
-	rm -rf src/gezi_common_Seg.o
-	rm -rf src/gezi_common_SharedSegmentor.o
-	rm -rf src/gezi_common_conf_util.o
 	rm -rf src/gezi_common_word_seg.o
 	rm -rf src/model/gezi_common_LinearModel.o
 	rm -rf src/model/gezi_common_ModelFactory.o
@@ -219,10 +216,7 @@ copy-pinyin-lib:
 	mkdir -p output/lib
 	cp ./include/tools/pinyin/libPYNotation.a ./output/lib/
 
-libgezi_common.a:src/gezi_common_Seg.o \
-  src/gezi_common_SharedSegmentor.o \
-  src/gezi_common_conf_util.o \
-  src/gezi_common_word_seg.o \
+libgezi_common.a:src/gezi_common_word_seg.o \
   src/model/gezi_common_LinearModel.o \
   src/model/gezi_common_ModelFactory.o \
   src/model/gezi_common_Predictor.o \
@@ -232,10 +226,7 @@ libgezi_common.a:src/gezi_common_Seg.o \
   src/model/gezi_common_SvmModel.o \
   src/seralization/gezi_common_shared_ptr_helper.o
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibgezi_common.a[0m']"
-	ar crs libgezi_common.a src/gezi_common_Seg.o \
-  src/gezi_common_SharedSegmentor.o \
-  src/gezi_common_conf_util.o \
-  src/gezi_common_word_seg.o \
+	ar crs libgezi_common.a src/gezi_common_word_seg.o \
   src/model/gezi_common_LinearModel.o \
   src/model/gezi_common_ModelFactory.o \
   src/model/gezi_common_Predictor.o \
@@ -256,30 +247,6 @@ libgezi_json.a:src/json/gezi_json_json_reader.o \
   src/json/gezi_json_json_writer.o
 	mkdir -p ./output/lib
 	cp -f --link libgezi_json.a ./output/lib
-
-src/gezi_common_Seg.o:src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_common_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
-  -D__STDC_LIMIT_MACROS \
-  -DVERSION=\"1.9.8.7\" \
-  -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/gezi_common_Seg.o src/Seg.cpp
-
-src/gezi_common_SharedSegmentor.o:src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_common_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
-  -D__STDC_LIMIT_MACROS \
-  -DVERSION=\"1.9.8.7\" \
-  -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/gezi_common_SharedSegmentor.o src/SharedSegmentor.cpp
-
-src/gezi_common_conf_util.o:src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_common_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
-  -D__STDC_LIMIT_MACROS \
-  -DVERSION=\"1.9.8.7\" \
-  -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/gezi_common_conf_util.o src/conf_util.cpp
 
 src/gezi_common_word_seg.o:src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_common_word_seg.o[0m']"
