@@ -236,9 +236,6 @@ clean:ccpclean
 	rm -rf test_datetime_test_datetime.o
 	rm -rf test_content_filter_test_content_filter.o
 	rm -rf test_regex_test_regex.o
-	rm -rf ../src/test_regex_Seg.o
-	rm -rf ../src/test_regex_SharedSegmentor.o
-	rm -rf ../src/test_regex_conf_util.o
 	rm -rf ../src/test_regex_word_seg.o
 	rm -rf ../src/model/test_regex_LinearModel.o
 	rm -rf ../src/model/test_regex_ModelFactory.o
@@ -251,9 +248,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_regex_json_value.o
 	rm -rf ../src/json/test_regex_json_writer.o
 	rm -rf test_regex2_test_regex2.o
-	rm -rf ../src/test_regex2_Seg.o
-	rm -rf ../src/test_regex2_SharedSegmentor.o
-	rm -rf ../src/test_regex2_conf_util.o
 	rm -rf ../src/test_regex2_word_seg.o
 	rm -rf ../src/model/test_regex2_LinearModel.o
 	rm -rf ../src/model/test_regex2_ModelFactory.o
@@ -266,9 +260,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_regex2_json_value.o
 	rm -rf ../src/json/test_regex2_json_writer.o
 	rm -rf test_encode_test_encode.o
-	rm -rf ../src/test_encode_Seg.o
-	rm -rf ../src/test_encode_SharedSegmentor.o
-	rm -rf ../src/test_encode_conf_util.o
 	rm -rf ../src/test_encode_word_seg.o
 	rm -rf ../src/model/test_encode_LinearModel.o
 	rm -rf ../src/model/test_encode_ModelFactory.o
@@ -281,9 +272,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_encode_json_value.o
 	rm -rf ../src/json/test_encode_json_writer.o
 	rm -rf test_json_test_json.o
-	rm -rf ../src/test_json_Seg.o
-	rm -rf ../src/test_json_SharedSegmentor.o
-	rm -rf ../src/test_json_conf_util.o
 	rm -rf ../src/test_json_word_seg.o
 	rm -rf ../src/model/test_json_LinearModel.o
 	rm -rf ../src/model/test_json_ModelFactory.o
@@ -296,9 +284,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_json_json_value.o
 	rm -rf ../src/json/test_json_json_writer.o
 	rm -rf test_escape_test_escape.o
-	rm -rf ../src/test_escape_Seg.o
-	rm -rf ../src/test_escape_SharedSegmentor.o
-	rm -rf ../src/test_escape_conf_util.o
 	rm -rf ../src/test_escape_word_seg.o
 	rm -rf ../src/model/test_escape_LinearModel.o
 	rm -rf ../src/model/test_escape_ModelFactory.o
@@ -311,9 +296,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_escape_json_value.o
 	rm -rf ../src/json/test_escape_json_writer.o
 	rm -rf test_other_test_other.o
-	rm -rf ../src/test_other_Seg.o
-	rm -rf ../src/test_other_SharedSegmentor.o
-	rm -rf ../src/test_other_conf_util.o
 	rm -rf ../src/test_other_word_seg.o
 	rm -rf ../src/model/test_other_LinearModel.o
 	rm -rf ../src/model/test_other_ModelFactory.o
@@ -326,9 +308,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_other_json_value.o
 	rm -rf ../src/json/test_other_json_writer.o
 	rm -rf test_feature_selector_test_feature_selector.o
-	rm -rf ../src/test_feature_selector_Seg.o
-	rm -rf ../src/test_feature_selector_SharedSegmentor.o
-	rm -rf ../src/test_feature_selector_conf_util.o
 	rm -rf ../src/test_feature_selector_word_seg.o
 	rm -rf ../src/model/test_feature_selector_LinearModel.o
 	rm -rf ../src/model/test_feature_selector_ModelFactory.o
@@ -342,9 +321,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_feature_selector_json_writer.o
 	rm -rf openmp/openmp_hello_hello.o
 	rm -rf openmp/openmp_test_test.o
-	rm -rf ../src/openmp_test_Seg.o
-	rm -rf ../src/openmp_test_SharedSegmentor.o
-	rm -rf ../src/openmp_test_conf_util.o
 	rm -rf ../src/openmp_test_word_seg.o
 	rm -rf ../src/model/openmp_test_LinearModel.o
 	rm -rf ../src/model/openmp_test_ModelFactory.o
@@ -359,9 +335,6 @@ clean:ccpclean
 	rm -rf test_exception_test_exception.o
 	rm -rf test_map_util_test_map_util.o
 	rm -rf test_seg_test_seg.o
-	rm -rf ../src/test_seg_Seg.o
-	rm -rf ../src/test_seg_SharedSegmentor.o
-	rm -rf ../src/test_seg_conf_util.o
 	rm -rf ../src/test_seg_word_seg.o
 	rm -rf ../src/model/test_seg_LinearModel.o
 	rm -rf ../src/model/test_seg_ModelFactory.o
@@ -374,9 +347,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_seg_json_value.o
 	rm -rf ../src/json/test_seg_json_writer.o
 	rm -rf test_identifer_test_identifer.o
-	rm -rf ../src/test_identifer_Seg.o
-	rm -rf ../src/test_identifer_SharedSegmentor.o
-	rm -rf ../src/test_identifer_conf_util.o
 	rm -rf ../src/test_identifer_word_seg.o
 	rm -rf ../src/model/test_identifer_LinearModel.o
 	rm -rf ../src/model/test_identifer_ModelFactory.o
@@ -389,9 +359,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_identifer_json_value.o
 	rm -rf ../src/json/test_identifer_json_writer.o
 	rm -rf test_linear_test_linear.o
-	rm -rf ../src/test_linear_Seg.o
-	rm -rf ../src/test_linear_SharedSegmentor.o
-	rm -rf ../src/test_linear_conf_util.o
 	rm -rf ../src/test_linear_word_seg.o
 	rm -rf ../src/model/test_linear_LinearModel.o
 	rm -rf ../src/model/test_linear_ModelFactory.o
@@ -404,9 +371,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_linear_json_value.o
 	rm -rf ../src/json/test_linear_json_writer.o
 	rm -rf test_pinyin_test_pinyin.o
-	rm -rf ../src/test_pinyin_Seg.o
-	rm -rf ../src/test_pinyin_SharedSegmentor.o
-	rm -rf ../src/test_pinyin_conf_util.o
 	rm -rf ../src/test_pinyin_word_seg.o
 	rm -rf ../src/model/test_pinyin_LinearModel.o
 	rm -rf ../src/model/test_pinyin_ModelFactory.o
@@ -419,9 +383,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_pinyin_json_value.o
 	rm -rf ../src/json/test_pinyin_json_writer.o
 	rm -rf test_namepattern_test_namepattern.o
-	rm -rf ../src/test_namepattern_Seg.o
-	rm -rf ../src/test_namepattern_SharedSegmentor.o
-	rm -rf ../src/test_namepattern_conf_util.o
 	rm -rf ../src/test_namepattern_word_seg.o
 	rm -rf ../src/model/test_namepattern_LinearModel.o
 	rm -rf ../src/model/test_namepattern_ModelFactory.o
@@ -434,9 +395,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_namepattern_json_value.o
 	rm -rf ../src/json/test_namepattern_json_writer.o
 	rm -rf test_conf_test_conf.o
-	rm -rf ../src/test_conf_Seg.o
-	rm -rf ../src/test_conf_SharedSegmentor.o
-	rm -rf ../src/test_conf_conf_util.o
 	rm -rf ../src/test_conf_word_seg.o
 	rm -rf ../src/model/test_conf_LinearModel.o
 	rm -rf ../src/model/test_conf_ModelFactory.o
@@ -449,9 +407,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_conf_json_value.o
 	rm -rf ../src/json/test_conf_json_writer.o
 	rm -rf test_random_test_random.o
-	rm -rf ../src/test_random_Seg.o
-	rm -rf ../src/test_random_SharedSegmentor.o
-	rm -rf ../src/test_random_conf_util.o
 	rm -rf ../src/test_random_word_seg.o
 	rm -rf ../src/model/test_random_LinearModel.o
 	rm -rf ../src/model/test_random_ModelFactory.o
@@ -464,9 +419,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_random_json_value.o
 	rm -rf ../src/json/test_random_json_writer.o
 	rm -rf test_shared_ptr_test_shared_ptr.o
-	rm -rf ../src/test_shared_ptr_Seg.o
-	rm -rf ../src/test_shared_ptr_SharedSegmentor.o
-	rm -rf ../src/test_shared_ptr_conf_util.o
 	rm -rf ../src/test_shared_ptr_word_seg.o
 	rm -rf ../src/model/test_shared_ptr_LinearModel.o
 	rm -rf ../src/model/test_shared_ptr_ModelFactory.o
@@ -479,9 +431,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_shared_ptr_json_value.o
 	rm -rf ../src/json/test_shared_ptr_json_writer.o
 	rm -rf test_binfinder_test_binfinder.o
-	rm -rf ../src/test_binfinder_Seg.o
-	rm -rf ../src/test_binfinder_SharedSegmentor.o
-	rm -rf ../src/test_binfinder_conf_util.o
 	rm -rf ../src/test_binfinder_word_seg.o
 	rm -rf ../src/model/test_binfinder_LinearModel.o
 	rm -rf ../src/model/test_binfinder_ModelFactory.o
@@ -494,9 +443,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_binfinder_json_value.o
 	rm -rf ../src/json/test_binfinder_json_writer.o
 	rm -rf test_seralize_test_seralize.o
-	rm -rf ../src/test_seralize_Seg.o
-	rm -rf ../src/test_seralize_SharedSegmentor.o
-	rm -rf ../src/test_seralize_conf_util.o
 	rm -rf ../src/test_seralize_word_seg.o
 	rm -rf ../src/model/test_seralize_LinearModel.o
 	rm -rf ../src/model/test_seralize_ModelFactory.o
@@ -509,9 +455,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_seralize_json_value.o
 	rm -rf ../src/json/test_seralize_json_writer.o
 	rm -rf test_string_test_string.o
-	rm -rf ../src/test_string_Seg.o
-	rm -rf ../src/test_string_SharedSegmentor.o
-	rm -rf ../src/test_string_conf_util.o
 	rm -rf ../src/test_string_word_seg.o
 	rm -rf ../src/model/test_string_LinearModel.o
 	rm -rf ../src/model/test_string_ModelFactory.o
@@ -524,9 +467,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_string_json_value.o
 	rm -rf ../src/json/test_string_json_writer.o
 	rm -rf test_bitop_test_bitop.o
-	rm -rf ../src/test_bitop_Seg.o
-	rm -rf ../src/test_bitop_SharedSegmentor.o
-	rm -rf ../src/test_bitop_conf_util.o
 	rm -rf ../src/test_bitop_word_seg.o
 	rm -rf ../src/model/test_bitop_LinearModel.o
 	rm -rf ../src/model/test_bitop_ModelFactory.o
@@ -539,9 +479,6 @@ clean:ccpclean
 	rm -rf ../src/json/test_bitop_json_value.o
 	rm -rf ../src/json/test_bitop_json_writer.o
 	rm -rf test_featurevector_test_featurevector.o
-	rm -rf ../src/test_featurevector_Seg.o
-	rm -rf ../src/test_featurevector_SharedSegmentor.o
-	rm -rf ../src/test_featurevector_conf_util.o
 	rm -rf ../src/test_featurevector_word_seg.o
 	rm -rf ../src/model/test_featurevector_LinearModel.o
 	rm -rf ../src/model/test_featurevector_ModelFactory.o
@@ -912,9 +849,6 @@ test_content_filter:test_content_filter_test_content_filter.o \
 	cp -f --link test_content_filter ./output/bin
 
 test_regex:test_regex_test_regex.o \
-  ../src/test_regex_Seg.o \
-  ../src/test_regex_SharedSegmentor.o \
-  ../src/test_regex_conf_util.o \
   ../src/test_regex_word_seg.o \
   ../src/model/test_regex_LinearModel.o \
   ../src/model/test_regex_ModelFactory.o \
@@ -929,9 +863,6 @@ test_regex:test_regex_test_regex.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_regex[0m']"
 	$(CXX) test_regex_test_regex.o \
-  ../src/test_regex_Seg.o \
-  ../src/test_regex_SharedSegmentor.o \
-  ../src/test_regex_conf_util.o \
   ../src/test_regex_word_seg.o \
   ../src/model/test_regex_LinearModel.o \
   ../src/model/test_regex_ModelFactory.o \
@@ -1024,9 +955,6 @@ test_regex:test_regex_test_regex.o \
 	cp -f --link test_regex ./output/bin
 
 test_regex2:test_regex2_test_regex2.o \
-  ../src/test_regex2_Seg.o \
-  ../src/test_regex2_SharedSegmentor.o \
-  ../src/test_regex2_conf_util.o \
   ../src/test_regex2_word_seg.o \
   ../src/model/test_regex2_LinearModel.o \
   ../src/model/test_regex2_ModelFactory.o \
@@ -1041,9 +969,6 @@ test_regex2:test_regex2_test_regex2.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_regex2[0m']"
 	$(CXX) test_regex2_test_regex2.o \
-  ../src/test_regex2_Seg.o \
-  ../src/test_regex2_SharedSegmentor.o \
-  ../src/test_regex2_conf_util.o \
   ../src/test_regex2_word_seg.o \
   ../src/model/test_regex2_LinearModel.o \
   ../src/model/test_regex2_ModelFactory.o \
@@ -1136,9 +1061,6 @@ test_regex2:test_regex2_test_regex2.o \
 	cp -f --link test_regex2 ./output/bin
 
 test_encode:test_encode_test_encode.o \
-  ../src/test_encode_Seg.o \
-  ../src/test_encode_SharedSegmentor.o \
-  ../src/test_encode_conf_util.o \
   ../src/test_encode_word_seg.o \
   ../src/model/test_encode_LinearModel.o \
   ../src/model/test_encode_ModelFactory.o \
@@ -1153,9 +1075,6 @@ test_encode:test_encode_test_encode.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_encode[0m']"
 	$(CXX) test_encode_test_encode.o \
-  ../src/test_encode_Seg.o \
-  ../src/test_encode_SharedSegmentor.o \
-  ../src/test_encode_conf_util.o \
   ../src/test_encode_word_seg.o \
   ../src/model/test_encode_LinearModel.o \
   ../src/model/test_encode_ModelFactory.o \
@@ -1248,9 +1167,6 @@ test_encode:test_encode_test_encode.o \
 	cp -f --link test_encode ./output/bin
 
 test_json:test_json_test_json.o \
-  ../src/test_json_Seg.o \
-  ../src/test_json_SharedSegmentor.o \
-  ../src/test_json_conf_util.o \
   ../src/test_json_word_seg.o \
   ../src/model/test_json_LinearModel.o \
   ../src/model/test_json_ModelFactory.o \
@@ -1265,9 +1181,6 @@ test_json:test_json_test_json.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_json[0m']"
 	$(CXX) test_json_test_json.o \
-  ../src/test_json_Seg.o \
-  ../src/test_json_SharedSegmentor.o \
-  ../src/test_json_conf_util.o \
   ../src/test_json_word_seg.o \
   ../src/model/test_json_LinearModel.o \
   ../src/model/test_json_ModelFactory.o \
@@ -1360,9 +1273,6 @@ test_json:test_json_test_json.o \
 	cp -f --link test_json ./output/bin
 
 test_escape:test_escape_test_escape.o \
-  ../src/test_escape_Seg.o \
-  ../src/test_escape_SharedSegmentor.o \
-  ../src/test_escape_conf_util.o \
   ../src/test_escape_word_seg.o \
   ../src/model/test_escape_LinearModel.o \
   ../src/model/test_escape_ModelFactory.o \
@@ -1377,9 +1287,6 @@ test_escape:test_escape_test_escape.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_escape[0m']"
 	$(CXX) test_escape_test_escape.o \
-  ../src/test_escape_Seg.o \
-  ../src/test_escape_SharedSegmentor.o \
-  ../src/test_escape_conf_util.o \
   ../src/test_escape_word_seg.o \
   ../src/model/test_escape_LinearModel.o \
   ../src/model/test_escape_ModelFactory.o \
@@ -1472,9 +1379,6 @@ test_escape:test_escape_test_escape.o \
 	cp -f --link test_escape ./output/bin
 
 test_other:test_other_test_other.o \
-  ../src/test_other_Seg.o \
-  ../src/test_other_SharedSegmentor.o \
-  ../src/test_other_conf_util.o \
   ../src/test_other_word_seg.o \
   ../src/model/test_other_LinearModel.o \
   ../src/model/test_other_ModelFactory.o \
@@ -1489,9 +1393,6 @@ test_other:test_other_test_other.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_other[0m']"
 	$(CXX) test_other_test_other.o \
-  ../src/test_other_Seg.o \
-  ../src/test_other_SharedSegmentor.o \
-  ../src/test_other_conf_util.o \
   ../src/test_other_word_seg.o \
   ../src/model/test_other_LinearModel.o \
   ../src/model/test_other_ModelFactory.o \
@@ -1584,9 +1485,6 @@ test_other:test_other_test_other.o \
 	cp -f --link test_other ./output/bin
 
 test_feature_selector:test_feature_selector_test_feature_selector.o \
-  ../src/test_feature_selector_Seg.o \
-  ../src/test_feature_selector_SharedSegmentor.o \
-  ../src/test_feature_selector_conf_util.o \
   ../src/test_feature_selector_word_seg.o \
   ../src/model/test_feature_selector_LinearModel.o \
   ../src/model/test_feature_selector_ModelFactory.o \
@@ -1601,9 +1499,6 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_feature_selector[0m']"
 	$(CXX) test_feature_selector_test_feature_selector.o \
-  ../src/test_feature_selector_Seg.o \
-  ../src/test_feature_selector_SharedSegmentor.o \
-  ../src/test_feature_selector_conf_util.o \
   ../src/test_feature_selector_word_seg.o \
   ../src/model/test_feature_selector_LinearModel.o \
   ../src/model/test_feature_selector_ModelFactory.o \
@@ -1780,9 +1675,6 @@ openmp_hello:openmp/openmp_hello_hello.o \
 	cp -f --link openmp_hello ./bin
 
 openmp_test:openmp/openmp_test_test.o \
-  ../src/openmp_test_Seg.o \
-  ../src/openmp_test_SharedSegmentor.o \
-  ../src/openmp_test_conf_util.o \
   ../src/openmp_test_word_seg.o \
   ../src/model/openmp_test_LinearModel.o \
   ../src/model/openmp_test_ModelFactory.o \
@@ -1797,9 +1689,6 @@ openmp_test:openmp/openmp_test_test.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mopenmp_test[0m']"
 	$(CXX) openmp/openmp_test_test.o \
-  ../src/openmp_test_Seg.o \
-  ../src/openmp_test_SharedSegmentor.o \
-  ../src/openmp_test_conf_util.o \
   ../src/openmp_test_word_seg.o \
   ../src/model/openmp_test_LinearModel.o \
   ../src/model/openmp_test_ModelFactory.o \
@@ -2060,9 +1949,6 @@ test_map_util:test_map_util_test_map_util.o \
 	cp -f --link test_map_util ./bin
 
 test_seg:test_seg_test_seg.o \
-  ../src/test_seg_Seg.o \
-  ../src/test_seg_SharedSegmentor.o \
-  ../src/test_seg_conf_util.o \
   ../src/test_seg_word_seg.o \
   ../src/model/test_seg_LinearModel.o \
   ../src/model/test_seg_ModelFactory.o \
@@ -2077,9 +1963,6 @@ test_seg:test_seg_test_seg.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_seg[0m']"
 	$(CXX) test_seg_test_seg.o \
-  ../src/test_seg_Seg.o \
-  ../src/test_seg_SharedSegmentor.o \
-  ../src/test_seg_conf_util.o \
   ../src/test_seg_word_seg.o \
   ../src/model/test_seg_LinearModel.o \
   ../src/model/test_seg_ModelFactory.o \
@@ -2172,9 +2055,6 @@ test_seg:test_seg_test_seg.o \
 	cp -f --link test_seg ./output/bin
 
 test_identifer:test_identifer_test_identifer.o \
-  ../src/test_identifer_Seg.o \
-  ../src/test_identifer_SharedSegmentor.o \
-  ../src/test_identifer_conf_util.o \
   ../src/test_identifer_word_seg.o \
   ../src/model/test_identifer_LinearModel.o \
   ../src/model/test_identifer_ModelFactory.o \
@@ -2189,9 +2069,6 @@ test_identifer:test_identifer_test_identifer.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_identifer[0m']"
 	$(CXX) test_identifer_test_identifer.o \
-  ../src/test_identifer_Seg.o \
-  ../src/test_identifer_SharedSegmentor.o \
-  ../src/test_identifer_conf_util.o \
   ../src/test_identifer_word_seg.o \
   ../src/model/test_identifer_LinearModel.o \
   ../src/model/test_identifer_ModelFactory.o \
@@ -2284,9 +2161,6 @@ test_identifer:test_identifer_test_identifer.o \
 	cp -f --link test_identifer ./output/bin
 
 test_linear:test_linear_test_linear.o \
-  ../src/test_linear_Seg.o \
-  ../src/test_linear_SharedSegmentor.o \
-  ../src/test_linear_conf_util.o \
   ../src/test_linear_word_seg.o \
   ../src/model/test_linear_LinearModel.o \
   ../src/model/test_linear_ModelFactory.o \
@@ -2301,9 +2175,6 @@ test_linear:test_linear_test_linear.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_linear[0m']"
 	$(CXX) test_linear_test_linear.o \
-  ../src/test_linear_Seg.o \
-  ../src/test_linear_SharedSegmentor.o \
-  ../src/test_linear_conf_util.o \
   ../src/test_linear_word_seg.o \
   ../src/model/test_linear_LinearModel.o \
   ../src/model/test_linear_ModelFactory.o \
@@ -2396,9 +2267,6 @@ test_linear:test_linear_test_linear.o \
 	cp -f --link test_linear ./output/bin
 
 test_pinyin:test_pinyin_test_pinyin.o \
-  ../src/test_pinyin_Seg.o \
-  ../src/test_pinyin_SharedSegmentor.o \
-  ../src/test_pinyin_conf_util.o \
   ../src/test_pinyin_word_seg.o \
   ../src/model/test_pinyin_LinearModel.o \
   ../src/model/test_pinyin_ModelFactory.o \
@@ -2413,9 +2281,6 @@ test_pinyin:test_pinyin_test_pinyin.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_pinyin[0m']"
 	$(CXX) test_pinyin_test_pinyin.o \
-  ../src/test_pinyin_Seg.o \
-  ../src/test_pinyin_SharedSegmentor.o \
-  ../src/test_pinyin_conf_util.o \
   ../src/test_pinyin_word_seg.o \
   ../src/model/test_pinyin_LinearModel.o \
   ../src/model/test_pinyin_ModelFactory.o \
@@ -2508,9 +2373,6 @@ test_pinyin:test_pinyin_test_pinyin.o \
 	cp -f --link test_pinyin ./output/bin
 
 test_namepattern:test_namepattern_test_namepattern.o \
-  ../src/test_namepattern_Seg.o \
-  ../src/test_namepattern_SharedSegmentor.o \
-  ../src/test_namepattern_conf_util.o \
   ../src/test_namepattern_word_seg.o \
   ../src/model/test_namepattern_LinearModel.o \
   ../src/model/test_namepattern_ModelFactory.o \
@@ -2525,9 +2387,6 @@ test_namepattern:test_namepattern_test_namepattern.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_namepattern[0m']"
 	$(CXX) test_namepattern_test_namepattern.o \
-  ../src/test_namepattern_Seg.o \
-  ../src/test_namepattern_SharedSegmentor.o \
-  ../src/test_namepattern_conf_util.o \
   ../src/test_namepattern_word_seg.o \
   ../src/model/test_namepattern_LinearModel.o \
   ../src/model/test_namepattern_ModelFactory.o \
@@ -2620,9 +2479,6 @@ test_namepattern:test_namepattern_test_namepattern.o \
 	cp -f --link test_namepattern ./output/bin
 
 test_conf:test_conf_test_conf.o \
-  ../src/test_conf_Seg.o \
-  ../src/test_conf_SharedSegmentor.o \
-  ../src/test_conf_conf_util.o \
   ../src/test_conf_word_seg.o \
   ../src/model/test_conf_LinearModel.o \
   ../src/model/test_conf_ModelFactory.o \
@@ -2637,9 +2493,6 @@ test_conf:test_conf_test_conf.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_conf[0m']"
 	$(CXX) test_conf_test_conf.o \
-  ../src/test_conf_Seg.o \
-  ../src/test_conf_SharedSegmentor.o \
-  ../src/test_conf_conf_util.o \
   ../src/test_conf_word_seg.o \
   ../src/model/test_conf_LinearModel.o \
   ../src/model/test_conf_ModelFactory.o \
@@ -2732,9 +2585,6 @@ test_conf:test_conf_test_conf.o \
 	cp -f --link test_conf ./output/bin
 
 test_random:test_random_test_random.o \
-  ../src/test_random_Seg.o \
-  ../src/test_random_SharedSegmentor.o \
-  ../src/test_random_conf_util.o \
   ../src/test_random_word_seg.o \
   ../src/model/test_random_LinearModel.o \
   ../src/model/test_random_ModelFactory.o \
@@ -2749,9 +2599,6 @@ test_random:test_random_test_random.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_random[0m']"
 	$(CXX) test_random_test_random.o \
-  ../src/test_random_Seg.o \
-  ../src/test_random_SharedSegmentor.o \
-  ../src/test_random_conf_util.o \
   ../src/test_random_word_seg.o \
   ../src/model/test_random_LinearModel.o \
   ../src/model/test_random_ModelFactory.o \
@@ -2844,9 +2691,6 @@ test_random:test_random_test_random.o \
 	cp -f --link test_random ./output/bin
 
 test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
-  ../src/test_shared_ptr_Seg.o \
-  ../src/test_shared_ptr_SharedSegmentor.o \
-  ../src/test_shared_ptr_conf_util.o \
   ../src/test_shared_ptr_word_seg.o \
   ../src/model/test_shared_ptr_LinearModel.o \
   ../src/model/test_shared_ptr_ModelFactory.o \
@@ -2861,9 +2705,6 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_shared_ptr[0m']"
 	$(CXX) test_shared_ptr_test_shared_ptr.o \
-  ../src/test_shared_ptr_Seg.o \
-  ../src/test_shared_ptr_SharedSegmentor.o \
-  ../src/test_shared_ptr_conf_util.o \
   ../src/test_shared_ptr_word_seg.o \
   ../src/model/test_shared_ptr_LinearModel.o \
   ../src/model/test_shared_ptr_ModelFactory.o \
@@ -2956,9 +2797,6 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
 	cp -f --link test_shared_ptr ./output/bin
 
 test_binfinder:test_binfinder_test_binfinder.o \
-  ../src/test_binfinder_Seg.o \
-  ../src/test_binfinder_SharedSegmentor.o \
-  ../src/test_binfinder_conf_util.o \
   ../src/test_binfinder_word_seg.o \
   ../src/model/test_binfinder_LinearModel.o \
   ../src/model/test_binfinder_ModelFactory.o \
@@ -2973,9 +2811,6 @@ test_binfinder:test_binfinder_test_binfinder.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_binfinder[0m']"
 	$(CXX) test_binfinder_test_binfinder.o \
-  ../src/test_binfinder_Seg.o \
-  ../src/test_binfinder_SharedSegmentor.o \
-  ../src/test_binfinder_conf_util.o \
   ../src/test_binfinder_word_seg.o \
   ../src/model/test_binfinder_LinearModel.o \
   ../src/model/test_binfinder_ModelFactory.o \
@@ -3068,9 +2903,6 @@ test_binfinder:test_binfinder_test_binfinder.o \
 	cp -f --link test_binfinder ./output/bin
 
 test_seralize:test_seralize_test_seralize.o \
-  ../src/test_seralize_Seg.o \
-  ../src/test_seralize_SharedSegmentor.o \
-  ../src/test_seralize_conf_util.o \
   ../src/test_seralize_word_seg.o \
   ../src/model/test_seralize_LinearModel.o \
   ../src/model/test_seralize_ModelFactory.o \
@@ -3085,9 +2917,6 @@ test_seralize:test_seralize_test_seralize.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_seralize[0m']"
 	$(CXX) test_seralize_test_seralize.o \
-  ../src/test_seralize_Seg.o \
-  ../src/test_seralize_SharedSegmentor.o \
-  ../src/test_seralize_conf_util.o \
   ../src/test_seralize_word_seg.o \
   ../src/model/test_seralize_LinearModel.o \
   ../src/model/test_seralize_ModelFactory.o \
@@ -3180,9 +3009,6 @@ test_seralize:test_seralize_test_seralize.o \
 	cp -f --link test_seralize ./output/bin
 
 test_string:test_string_test_string.o \
-  ../src/test_string_Seg.o \
-  ../src/test_string_SharedSegmentor.o \
-  ../src/test_string_conf_util.o \
   ../src/test_string_word_seg.o \
   ../src/model/test_string_LinearModel.o \
   ../src/model/test_string_ModelFactory.o \
@@ -3197,9 +3023,6 @@ test_string:test_string_test_string.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_string[0m']"
 	$(CXX) test_string_test_string.o \
-  ../src/test_string_Seg.o \
-  ../src/test_string_SharedSegmentor.o \
-  ../src/test_string_conf_util.o \
   ../src/test_string_word_seg.o \
   ../src/model/test_string_LinearModel.o \
   ../src/model/test_string_ModelFactory.o \
@@ -3292,9 +3115,6 @@ test_string:test_string_test_string.o \
 	cp -f --link test_string ./output/bin
 
 test_bitop:test_bitop_test_bitop.o \
-  ../src/test_bitop_Seg.o \
-  ../src/test_bitop_SharedSegmentor.o \
-  ../src/test_bitop_conf_util.o \
   ../src/test_bitop_word_seg.o \
   ../src/model/test_bitop_LinearModel.o \
   ../src/model/test_bitop_ModelFactory.o \
@@ -3309,9 +3129,6 @@ test_bitop:test_bitop_test_bitop.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_bitop[0m']"
 	$(CXX) test_bitop_test_bitop.o \
-  ../src/test_bitop_Seg.o \
-  ../src/test_bitop_SharedSegmentor.o \
-  ../src/test_bitop_conf_util.o \
   ../src/test_bitop_word_seg.o \
   ../src/model/test_bitop_LinearModel.o \
   ../src/model/test_bitop_ModelFactory.o \
@@ -3404,9 +3221,6 @@ test_bitop:test_bitop_test_bitop.o \
 	cp -f --link test_bitop ./output/bin
 
 test_featurevector:test_featurevector_test_featurevector.o \
-  ../src/test_featurevector_Seg.o \
-  ../src/test_featurevector_SharedSegmentor.o \
-  ../src/test_featurevector_conf_util.o \
   ../src/test_featurevector_word_seg.o \
   ../src/model/test_featurevector_LinearModel.o \
   ../src/model/test_featurevector_ModelFactory.o \
@@ -3421,9 +3235,6 @@ test_featurevector:test_featurevector_test_featurevector.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_featurevector[0m']"
 	$(CXX) test_featurevector_test_featurevector.o \
-  ../src/test_featurevector_Seg.o \
-  ../src/test_featurevector_SharedSegmentor.o \
-  ../src/test_featurevector_conf_util.o \
   ../src/test_featurevector_word_seg.o \
   ../src/model/test_featurevector_LinearModel.o \
   ../src/model/test_featurevector_ModelFactory.o \
@@ -3535,18 +3346,6 @@ test_regex_test_regex.o:test_regex.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_regex_test_regex.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_regex_test_regex.o test_regex.cc
 
-../src/test_regex_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex_Seg.o ../src/Seg.cpp
-
-../src/test_regex_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_regex_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex_conf_util.o ../src/conf_util.cpp
-
 ../src/test_regex_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex_word_seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex_word_seg.o ../src/word_seg.cpp
@@ -3594,18 +3393,6 @@ test_regex_test_regex.o:test_regex.cc
 test_regex2_test_regex2.o:test_regex2.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_regex2_test_regex2.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_regex2_test_regex2.o test_regex2.cc
-
-../src/test_regex2_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex2_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex2_Seg.o ../src/Seg.cpp
-
-../src/test_regex2_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex2_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex2_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_regex2_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex2_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_regex2_conf_util.o ../src/conf_util.cpp
 
 ../src/test_regex2_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_regex2_word_seg.o[0m']"
@@ -3655,18 +3442,6 @@ test_encode_test_encode.o:test_encode.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_encode_test_encode.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_encode_test_encode.o test_encode.cc
 
-../src/test_encode_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_encode_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_encode_Seg.o ../src/Seg.cpp
-
-../src/test_encode_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_encode_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_encode_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_encode_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_encode_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_encode_conf_util.o ../src/conf_util.cpp
-
 ../src/test_encode_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_encode_word_seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_encode_word_seg.o ../src/word_seg.cpp
@@ -3714,18 +3489,6 @@ test_encode_test_encode.o:test_encode.cc
 test_json_test_json.o:test_json.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_json_test_json.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_json_test_json.o test_json.cc
-
-../src/test_json_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_json_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_json_Seg.o ../src/Seg.cpp
-
-../src/test_json_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_json_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_json_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_json_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_json_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_json_conf_util.o ../src/conf_util.cpp
 
 ../src/test_json_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_json_word_seg.o[0m']"
@@ -3775,18 +3538,6 @@ test_escape_test_escape.o:test_escape.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_escape_test_escape.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_escape_test_escape.o test_escape.cc
 
-../src/test_escape_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_escape_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_escape_Seg.o ../src/Seg.cpp
-
-../src/test_escape_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_escape_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_escape_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_escape_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_escape_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_escape_conf_util.o ../src/conf_util.cpp
-
 ../src/test_escape_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_escape_word_seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_escape_word_seg.o ../src/word_seg.cpp
@@ -3835,18 +3586,6 @@ test_other_test_other.o:test_other.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_other_test_other.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_other_test_other.o test_other.cc
 
-../src/test_other_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_other_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_other_Seg.o ../src/Seg.cpp
-
-../src/test_other_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_other_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_other_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_other_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_other_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_other_conf_util.o ../src/conf_util.cpp
-
 ../src/test_other_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_other_word_seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_other_word_seg.o ../src/word_seg.cpp
@@ -3894,18 +3633,6 @@ test_other_test_other.o:test_other.cc
 test_feature_selector_test_feature_selector.o:test_feature_selector.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_feature_selector_test_feature_selector.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_feature_selector_test_feature_selector.o test_feature_selector.cc
-
-../src/test_feature_selector_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_feature_selector_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_feature_selector_Seg.o ../src/Seg.cpp
-
-../src/test_feature_selector_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_feature_selector_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_feature_selector_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_feature_selector_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_feature_selector_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_feature_selector_conf_util.o ../src/conf_util.cpp
 
 ../src/test_feature_selector_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_feature_selector_word_seg.o[0m']"
@@ -3958,18 +3685,6 @@ openmp/openmp_hello_hello.o:openmp/hello.cc
 openmp/openmp_test_test.o:openmp/test.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mopenmp/openmp_test_test.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o openmp/openmp_test_test.o openmp/test.cc
-
-../src/openmp_test_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/openmp_test_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/openmp_test_Seg.o ../src/Seg.cpp
-
-../src/openmp_test_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/openmp_test_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/openmp_test_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/openmp_test_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/openmp_test_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/openmp_test_conf_util.o ../src/conf_util.cpp
 
 ../src/openmp_test_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/openmp_test_word_seg.o[0m']"
@@ -4027,18 +3742,6 @@ test_seg_test_seg.o:test_seg.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_seg_test_seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_seg_test_seg.o test_seg.cc
 
-../src/test_seg_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_seg_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_seg_Seg.o ../src/Seg.cpp
-
-../src/test_seg_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_seg_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_seg_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_seg_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_seg_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_seg_conf_util.o ../src/conf_util.cpp
-
 ../src/test_seg_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_seg_word_seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_seg_word_seg.o ../src/word_seg.cpp
@@ -4086,18 +3789,6 @@ test_seg_test_seg.o:test_seg.cc
 test_identifer_test_identifer.o:test_identifer.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_identifer_test_identifer.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_identifer_test_identifer.o test_identifer.cc
-
-../src/test_identifer_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_identifer_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_identifer_Seg.o ../src/Seg.cpp
-
-../src/test_identifer_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_identifer_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_identifer_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_identifer_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_identifer_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_identifer_conf_util.o ../src/conf_util.cpp
 
 ../src/test_identifer_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_identifer_word_seg.o[0m']"
@@ -4147,18 +3838,6 @@ test_linear_test_linear.o:test_linear.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_linear_test_linear.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_linear_test_linear.o test_linear.cc
 
-../src/test_linear_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_linear_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_linear_Seg.o ../src/Seg.cpp
-
-../src/test_linear_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_linear_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_linear_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_linear_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_linear_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_linear_conf_util.o ../src/conf_util.cpp
-
 ../src/test_linear_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_linear_word_seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_linear_word_seg.o ../src/word_seg.cpp
@@ -4206,18 +3885,6 @@ test_linear_test_linear.o:test_linear.cc
 test_pinyin_test_pinyin.o:test_pinyin.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_pinyin_test_pinyin.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_pinyin_test_pinyin.o test_pinyin.cc
-
-../src/test_pinyin_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_pinyin_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_pinyin_Seg.o ../src/Seg.cpp
-
-../src/test_pinyin_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_pinyin_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_pinyin_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_pinyin_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_pinyin_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_pinyin_conf_util.o ../src/conf_util.cpp
 
 ../src/test_pinyin_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_pinyin_word_seg.o[0m']"
@@ -4267,18 +3934,6 @@ test_namepattern_test_namepattern.o:test_namepattern.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_namepattern_test_namepattern.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_namepattern_test_namepattern.o test_namepattern.cc
 
-../src/test_namepattern_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_namepattern_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_namepattern_Seg.o ../src/Seg.cpp
-
-../src/test_namepattern_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_namepattern_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_namepattern_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_namepattern_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_namepattern_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_namepattern_conf_util.o ../src/conf_util.cpp
-
 ../src/test_namepattern_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_namepattern_word_seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_namepattern_word_seg.o ../src/word_seg.cpp
@@ -4326,18 +3981,6 @@ test_namepattern_test_namepattern.o:test_namepattern.cc
 test_conf_test_conf.o:test_conf.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_conf_test_conf.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_conf_test_conf.o test_conf.cc
-
-../src/test_conf_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_conf_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_conf_Seg.o ../src/Seg.cpp
-
-../src/test_conf_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_conf_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_conf_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_conf_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_conf_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_conf_conf_util.o ../src/conf_util.cpp
 
 ../src/test_conf_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_conf_word_seg.o[0m']"
@@ -4387,18 +4030,6 @@ test_random_test_random.o:test_random.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_random_test_random.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_random_test_random.o test_random.cc
 
-../src/test_random_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_random_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_random_Seg.o ../src/Seg.cpp
-
-../src/test_random_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_random_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_random_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_random_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_random_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_random_conf_util.o ../src/conf_util.cpp
-
 ../src/test_random_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_random_word_seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_random_word_seg.o ../src/word_seg.cpp
@@ -4446,18 +4077,6 @@ test_random_test_random.o:test_random.cc
 test_shared_ptr_test_shared_ptr.o:test_shared_ptr.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_shared_ptr_test_shared_ptr.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_shared_ptr_test_shared_ptr.o test_shared_ptr.cc
-
-../src/test_shared_ptr_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_shared_ptr_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_shared_ptr_Seg.o ../src/Seg.cpp
-
-../src/test_shared_ptr_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_shared_ptr_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_shared_ptr_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_shared_ptr_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_shared_ptr_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_shared_ptr_conf_util.o ../src/conf_util.cpp
 
 ../src/test_shared_ptr_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_shared_ptr_word_seg.o[0m']"
@@ -4507,18 +4126,6 @@ test_binfinder_test_binfinder.o:test_binfinder.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_binfinder_test_binfinder.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_binfinder_test_binfinder.o test_binfinder.cc
 
-../src/test_binfinder_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_binfinder_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_binfinder_Seg.o ../src/Seg.cpp
-
-../src/test_binfinder_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_binfinder_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_binfinder_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_binfinder_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_binfinder_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_binfinder_conf_util.o ../src/conf_util.cpp
-
 ../src/test_binfinder_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_binfinder_word_seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_binfinder_word_seg.o ../src/word_seg.cpp
@@ -4566,18 +4173,6 @@ test_binfinder_test_binfinder.o:test_binfinder.cc
 test_seralize_test_seralize.o:test_seralize.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_seralize_test_seralize.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_seralize_test_seralize.o test_seralize.cc
-
-../src/test_seralize_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_seralize_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_seralize_Seg.o ../src/Seg.cpp
-
-../src/test_seralize_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_seralize_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_seralize_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_seralize_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_seralize_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_seralize_conf_util.o ../src/conf_util.cpp
 
 ../src/test_seralize_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_seralize_word_seg.o[0m']"
@@ -4627,18 +4222,6 @@ test_string_test_string.o:test_string.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_string_test_string.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_string_test_string.o test_string.cc
 
-../src/test_string_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_string_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_string_Seg.o ../src/Seg.cpp
-
-../src/test_string_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_string_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_string_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_string_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_string_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_string_conf_util.o ../src/conf_util.cpp
-
 ../src/test_string_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_string_word_seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_string_word_seg.o ../src/word_seg.cpp
@@ -4687,18 +4270,6 @@ test_bitop_test_bitop.o:test_bitop.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_bitop_test_bitop.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_bitop_test_bitop.o test_bitop.cc
 
-../src/test_bitop_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_bitop_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_bitop_Seg.o ../src/Seg.cpp
-
-../src/test_bitop_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_bitop_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_bitop_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_bitop_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_bitop_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_bitop_conf_util.o ../src/conf_util.cpp
-
 ../src/test_bitop_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_bitop_word_seg.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_bitop_word_seg.o ../src/word_seg.cpp
@@ -4746,18 +4317,6 @@ test_bitop_test_bitop.o:test_bitop.cc
 test_featurevector_test_featurevector.o:test_featurevector.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_featurevector_test_featurevector.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_featurevector_test_featurevector.o test_featurevector.cc
-
-../src/test_featurevector_Seg.o:../src/Seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_featurevector_Seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_featurevector_Seg.o ../src/Seg.cpp
-
-../src/test_featurevector_SharedSegmentor.o:../src/SharedSegmentor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_featurevector_SharedSegmentor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_featurevector_SharedSegmentor.o ../src/SharedSegmentor.cpp
-
-../src/test_featurevector_conf_util.o:../src/conf_util.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_featurevector_conf_util.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/test_featurevector_conf_util.o ../src/conf_util.cpp
 
 ../src/test_featurevector_word_seg.o:../src/word_seg.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/test_featurevector_word_seg.o[0m']"

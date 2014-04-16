@@ -88,6 +88,8 @@ namespace gezi {
 #define SEG_USE_SPLIT 2
 #define SEG_USE_TRIE 4
 #define SEG_USE_ALL 255
+
+#define SEG_USE_NEWWORD  (SCW_OUT_WPCOMP|SCW_OUT_NEWWORD) 
 	class Segmentor
 	{
 	public:
@@ -113,6 +115,7 @@ namespace gezi {
 				ds_del(_split_dict);
 		}
 
+		//理论上通过这个 可以配置CRF开关 覆盖配置文件中的crf开关 但是测试无效　TRACE: 04-16 13:38:28:   * 0 Do not load CRF model, please check scw.conf-->Scw_crf = 1?　＠TODO 或许新版本可以？
 		Segmentor& set_flag(int flag)
 		{
 			_flag = flag;
@@ -150,14 +153,20 @@ namespace gezi {
 		bool segment(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP)
 		{
 			//---------分词
-			if (scw_segment_words(_pwdict, handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)_flag) < 0)
+			int* pflag = _flag == 0 ? NULL : &_flag;
+			if (scw_segment_words(_pwdict, handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)pflag) < 0)
 			{
 				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
 				return false;
 			}
-
-			//TODO temp change to use basic 切分
-			handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
+			if (type != SEG_USE_NEWWORD || !handle.pout->pnewword->newwordbtermcount)
+			{
+				handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
+			}
+			else
+			{
+				handle.nresult = merge_newword(handle);
+			}
 
 			if (_type & SEG_USE_POSTAG)
 			{
@@ -170,7 +179,7 @@ namespace gezi {
 			}
 			return true;
 		}
-		
+
 		bool segment(string input, SegHandle& handle, vector<string>& result,
 			int type = SCW_OUT_WPCOMP)
 		{
@@ -179,7 +188,7 @@ namespace gezi {
 			{
 				return;
 			}
-			
+
 			for (int i = 0; i < handle.nresult; i++)
 			{
 				result.push_back(handle.tokens[i].buffer);
@@ -208,7 +217,7 @@ namespace gezi {
 		{
 			SegHandle handle(_buf_size);
 			vector<string> result;
-			segment(input, handle, result, type); 
+			segment(input, handle, result, type);
 			return result;
 		}
 
@@ -290,6 +299,55 @@ namespace gezi {
 		{
 			static SegHandle _handle(buf_size);
 			return _handle;
+		}
+
+		int merge_newword(SegHandle& handle)
+		{
+			scw_newword_t* pnewword = handle.pout->pnewword;
+			scw_out_t* pout = handle.pout;
+			token_t* tokens = handle.tokens;
+
+			int i = 0, j = 0, index = 0;
+			for (; j < pnewword->newwordbtermcount; i++, index++)
+			{
+				int idx1 = pout->wpbtermoffsets[i];
+				int idx2 = pnewword->newwordbtermoffsets[j * 2];//-这里是2*i,因为offset是不一样的
+				int pos1 = GET_TERM_POS(pout->wpbtermpos[i]);
+				int len1 = GET_TERM_LEN(pout->wpbtermpos[i]);
+				if (idx1 == idx2)
+				{
+					int pos2 = GET_TERM_POS(pnewword->newwordbtermpos[j]);
+					int len2 = GET_TERM_LEN(pnewword->newwordbtermpos[j]);
+					while (len1 != len2)
+					{
+						i++;
+						len1 += GET_TERM_LEN(pout->wpbtermpos[i]);
+					}
+					strncpy(tokens[index].buffer, pnewword->newwordbuf + pos2, len2);
+					tokens[index].buffer[len2] = '\0';
+					tokens[index].length = len2;
+					tokens[index].offset = idx2;
+					j++;
+				}
+				else
+				{ // can only be idx2 > idx1
+					strncpy(tokens[index].buffer, pout->wpcompbuf + pos1, len1);
+					tokens[index].buffer[len1] = '\0';
+					tokens[index].length = len1;
+					tokens[index].offset = idx1;
+				}
+			}
+			for (;  i < pout->wpbtermcount; i++, index++)
+			{
+				int idx1 = pout->wpbtermoffsets[i]; //应该==i
+				int pos1 = GET_TERM_POS(pout->wpbtermpos[i]);
+				int len1 = GET_TERM_LEN(pout->wpbtermpos[i]);
+				strncpy(handle.tokens[index].buffer, pout->wpcompbuf + pos1, len1);
+				handle.tokens[index].buffer[len1] = '\0';
+				handle.tokens[index].length = len1;
+				handle.tokens[index].offset = idx1;
+			}
+			return index;
 		}
 	private:
 		scw_worddict_t* _pwdict = NULL;
