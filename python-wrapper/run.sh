@@ -1,3 +1,8 @@
+cp -rf ../include/* ../include.python/ 
+pushd .
+cd ../include.python/ 
+gen-header-all.py
+popd
 sh gen-py.sh $1
 comake2 -P
 make clean
