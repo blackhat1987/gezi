@@ -189,15 +189,16 @@ namespace gezi {
 				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
 				return false;
 			}
-			if (strategy != SEG_MERGE_NEWWORD || !handle.pout->pnewword->newwordbtermcount)
+			if (type != SEG_MERGE_NEWWORD || !handle.pout->pnewword->newwordbtermcount)
 			{
-				handle.nresult = scw_get_token_1(handle.pout, strategy, handle.tokens, handle.buf_size);
+				handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
 			}
 			else
 			{
 				handle.nresult = merge_newword(handle);
 			}
 
+			//notice you can use if (strategy & ) also
 			if (strategy() & SEG_USE_POSTAG)
 			{
 				//----------БъзЂ
