@@ -39,18 +39,18 @@ SegHandle segment_(string input, int type = SCW_OUT_WPCOMP);
 bool segment(string input, vector<string>& result, SegHandle& handle, int type = SCW_OUT_WPCOMP);
 
 //快捷接口 线程安全
+bool segment_ts(string input, vector<string>& result, int type = SCW_OUT_WPCOMP);
+
+vector<string> segment_ts(string input, int type = SCW_OUT_WPCOMP);
+
+string segment_ts(string input, string sep, int type = SCW_OUT_WPCOMP);
+
+//下面两个更快捷的方式 默认单线程方式 也就是复用外部一个公用空间handle 保证单线程速度 
 bool segment(string input, vector<string>& result, int type = SCW_OUT_WPCOMP);
 
 vector<string> segment(string input, int type = SCW_OUT_WPCOMP);
 
 string segment(string input, string sep, int type = SCW_OUT_WPCOMP);
-
-//下面两个更快捷的方式 默认单线程方式 也就是复用外部一个公用空间handle 保证单线程速度 
-bool segment2(string input, vector<string>& result, int type = SCW_OUT_WPCOMP);
-
-vector<string> segment2(string input, int type = SCW_OUT_WPCOMP);
-
-string segment2(string input, string sep, int type = SCW_OUT_WPCOMP);
 
 void seg_set_bufsize(int max_len);
 

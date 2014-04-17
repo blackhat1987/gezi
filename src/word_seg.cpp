@@ -59,7 +59,7 @@ bool segment(string input, vector<string>& vec, SegHandle& handle, int type)
 	return ret;
 }
 
-bool segment(string input, vector<string>& vec, int type)
+bool segment_ts(string input, vector<string>& vec, int type)
 {
 	SegHandle handle(_buf_size);
 	bool ret = _seg.segment(input, handle, type);
@@ -70,7 +70,7 @@ bool segment(string input, vector<string>& vec, int type)
 	return ret;
 }
 
-vector<string> segment(string input, int type)
+vector<string> segment_ts(string input, int type)
 {
 	SegHandle handle(_buf_size);
 	_seg.segment(input, handle, type);
@@ -82,7 +82,7 @@ vector<string> segment(string input, int type)
 	return vec;
 }
 
-string segment(string input, string sep, int type)
+string segment_ts(string input, string sep, int type)
 {
 	SegHandle handle(_buf_size);
 	bool ret = _seg.segment(input, handle, type);
@@ -99,7 +99,7 @@ string segment(string input, string sep, int type)
 	return ss.str();
 }
 
-bool segment2(string input, vector<string>& vec, int type)
+bool segment(string input, vector<string>& vec, int type)
 {
 	bool ret = _seg.segment(input, _handle, type);
 	for (int i = 0; i < _handle.nresult; i++)
@@ -109,7 +109,7 @@ bool segment2(string input, vector<string>& vec, int type)
 	return ret;
 }
 
-vector<string> segment2(string input, int type)
+vector<string> segment(string input, int type)
 {
 	_seg.segment(input, _handle, type);
 	vector<string> vec;
@@ -120,7 +120,7 @@ vector<string> segment2(string input, int type)
 	return vec;
 }
 
-string segment2(string input, string sep, int type)
+string segment(string input, string sep, int type)
 {
 	bool ret = _seg.segment(input, _handle, type);
 	if (!ret || _handle.nresult < 1)

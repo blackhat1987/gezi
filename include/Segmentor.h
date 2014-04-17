@@ -44,6 +44,8 @@ namespace gezi {
 
 		SegHandle() = default;
 
+		//SegHandle(int bufsize = SEG_BUFF_SIZE)
+		//这个要在Segmentor读取配置文件之后创建
 		SegHandle(int bufsize)
 		{
 			init(bufsize);
@@ -55,6 +57,7 @@ namespace gezi {
 				clear();
 			buf_size = buf_size_;
 			u_int scw_out__flag = SCW_OUT_ALL | SCW_OUT_PROP;
+			//nlp分词设计的 如果 没有Segmentor读配置文件 这里会创建失败的。。@TODO
 			pout = scw_create_out(buf_size, scw_out__flag);
 			CHECK_NOTNULL(pout);
 			token_vec.resize(buf_size);
@@ -83,19 +86,39 @@ namespace gezi {
 		int buf_size = 0;
 	};
 	//进程级别 一般 一个程序一个Segmentor资源实例
-#define  SEG_SIMPLE 0
-#define SEG_USE_POSTAG 1
-#define SEG_USE_SPLIT 2
-#define SEG_USE_TRIE 4
-#define SEG_USE_ALL 255
+	static const int  SEG_USE_DEFAULT = 0;
+	static const int SEG_USE_POSTAG = 1;
+	static const int SEG_USE_SPLIT = 2;
+	static const int SEG_USE_TRIE = 4;
+	static const int SEG_USE_ALL = 255;
 
-#define SEG_USE_NEWWORD  (SCW_OUT_WPCOMP|SCW_OUT_NEWWORD) 
+	//混排合并新词
+	static const int SEG_MERGE_NEWWORD = SCW_OUT_WPCOMP | SCW_OUT_NEWWORD;
+	//混排粒度
+	static const int SEG_WPCOMP = SCW_OUT_WPCOMP;
+	//新词结果
+	static const int SEG_NEWWORD = SCW_OUT_NEWWORD;
+	//基本小粒度
+	static const int SEG_BASIC = SCW_OUT_BASIC;
+	//人名结果
+	static const int SEG_HUMAN_NAME = SCW_OUT_HUMANNAME;
+
+	//改为线程安全设计 可以每个线程启动一个Segmentor,兼容之前的进程级别设计 仍然提供接受
+	//SegHandle的接口 可以进程启动一个Segmentor多个线程共享 自己再提供SegHandel存储结果
 	class Segmentor
 	{
 	public:
-		Segmentor() = default;
+		//保留 不初始化资源的初始接口 好处是比如需要读取配置文件后再初始Segmentor 如果没有
+		//需要使用shared_ptr方式用指针 达到延迟初始化 这样不方便SharedSegmentor设计
+		Segmentor(int seg_buff_size = SegHandle::SEG_BUFF_SIZE)
+			:_buf_size(seg_buff_size)
+		{
 
-		Segmentor(string data_dir, int type = SEG_SIMPLE, string conf_path = "./conf/scw.conf")
+		}
+
+		Segmentor(string data_dir, int seg_buff_size = SegHandle::SEG_BUFF_SIZE,
+			int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
+			:_buf_size(seg_buff_size)
 		{
 			bool ret = init(data_dir, type, conf_path);
 			CHECK_EQ(ret, true);
@@ -103,16 +126,19 @@ namespace gezi {
 
 		~Segmentor()
 		{
-			if (_type & SEG_USE_POSTAG)
+			//需要先关闭它 
+			_handle.clear();
+			if (type() & SEG_USE_POSTAG)
 			{
 				tag_close();
 			}
 			//---关闭分词字典
-			if (_pwdict)
-				scw_destroy_worddict(_pwdict);
+			if (pwdict())
+				scw_destroy_worddict(pwdict());
+			pwdict() = NULL;
 			//---关闭用户需要内部切分字典
-			if (_split_dict)
-				ds_del(_split_dict);
+			if (split_dict())
+				ds_del(split_dict());
 		}
 
 		//理论上通过这个 可以配置CRF开关 覆盖配置文件中的crf开关 但是测试无效　TRACE: 04-16 13:38:28:   * 0 Do not load CRF model, please check scw.conf-->Scw_crf = 1?　＠TODO 或许新版本可以？
@@ -128,7 +154,7 @@ namespace gezi {
 			return *this;
 		}
 
-		bool init(string data_dir = "./data/wordseg", int type = SEG_SIMPLE, string conf_path = "./conf/scw.conf")
+		bool init(string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
 		{
 			return init(data_dir.c_str(), type, conf_path.c_str());
 		}
@@ -136,7 +162,7 @@ namespace gezi {
 		bool seg_words(string input, SegHandle& handle)
 		{
 			//---------分词
-			if (scw_segment_words(_pwdict, handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)_flag) < 0)
+			if (scw_segment_words(pwdict(), handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)_flag) < 0)
 			{
 				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
 				return false;
@@ -154,12 +180,12 @@ namespace gezi {
 		{
 			//---------分词
 			int* pflag = _flag == 0 ? NULL : &_flag;
-			if (scw_segment_words(_pwdict, handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)pflag) < 0)
+			if (scw_segment_words(pwdict(), handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)pflag) < 0)
 			{
 				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
 				return false;
 			}
-			if (type != SEG_USE_NEWWORD || !handle.pout->pnewword->newwordbtermcount)
+			if (type != SEG_MERGE_NEWWORD || !handle.pout->pnewword->newwordbtermcount)
 			{
 				handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
 			}
@@ -168,7 +194,7 @@ namespace gezi {
 				handle.nresult = merge_newword(handle);
 			}
 
-			if (_type & SEG_USE_POSTAG)
+			if (type() & SEG_USE_POSTAG)
 			{
 				//----------标注
 				if (tag_postag(handle.tokens, handle.nresult) < 0)
@@ -210,34 +236,19 @@ namespace gezi {
 			}
 			return ss.str();
 		}
-
-		//快捷接口 线程安全 thread safe 但是一般不需要用到 多线程 类自己维护一个handle即可
-		//python等单线程 调用单线程快捷接口
-		vector<string> segment_ts(string input, int type = SCW_OUT_WPCOMP)
-		{
-			SegHandle handle(_buf_size);
-			vector<string> result;
-			segment(input, handle, result, type);
-			return result;
-		}
-
-		string segment_ts(string input, string sep, int type = SCW_OUT_WPCOMP)
-		{
-			SegHandle handle(_buf_size);
-			return segment(input, handle, sep, type);
-		}
-
-		//快捷接口 线程不安全 单线程下更快速
+		//快捷接口
 		vector<string> segment(string input, int type = SCW_OUT_WPCOMP)
 		{
 			vector<string> result;
-			segment(input, GetSegHandle(), result, type);
+			//segment(input, GetSegHandle(), result, type);
+			segment(input, _handle, result, type);
 			return result;
 		}
 
 		string segment(string input, string sep, int type = SCW_OUT_WPCOMP)
 		{
-			return segment(input, GetSegHandle(), sep, type);
+			//return segment(input, GetSegHandle(), sep, type);
+			return segment(input, _handle, sep, type);
 		}
 		/*vector<string> segment(string input, )*/
 		//  //返回按照unicode的切分长度序列
@@ -246,10 +257,16 @@ namespace gezi {
 		//    segment(input, handle, type);
 		//    
 		//  }
-	private:
-		bool init(const char* data_dir, int type = 0, const char* conf_path = "./conf/scw.conf")
+
+		SegHandle& handle()
 		{
-			_type = type;
+			return _handle;
+		}
+
+	private:
+		static bool init(const char* data_dir, int type = 0, const char* conf_path = "./conf/scw.conf")
+		{
+			type() = type;
 			int ret = -1;
 			//--------------打开分词字典
 			{
@@ -261,12 +278,12 @@ namespace gezi {
 				pgconf = scw_load_conf(conf_path);
 				CHECK(pgconf != NULL) << conf_path;
 
-				_pwdict = scw_load_worddict(data_dir);
-				CHECK(_pwdict != NULL) << data_dir << " the path wrong ? or you use wrong segment version ?";
+				pwdict() = scw_load_worddict(data_dir);
+				CHECK(pwdict() != NULL) << data_dir << " the path wrong ? or you use wrong segment version ?";
 				LOG_INFO("Load segmentor dict data ok");
 			}
 
-			if (_type & SEG_USE_POSTAG)
+			if (type() & SEG_USE_POSTAG)
 			{ //--------------启动标注
 				char tag_dict_path[2048];
 				sprintf(tag_dict_path, "%s/%s", data_dir, "tagdict");
@@ -281,8 +298,8 @@ namespace gezi {
 			{	//---------------尝试打开need split字典，如果不存在或者打开出错就不使用
 				char user_dict_path[2048];
 				sprintf(user_dict_path, "%s/%s", data_dir, "need_split");
-				_split_dict = ds_load(user_dict_path, "need_split");
-				if (!_split_dict)
+				split_dict() = ds_load(user_dict_path, "need_split");
+				if (!split_dict())
 				{
 					LOG_WARNING("Do not use user defined split dictionary, not find %s", user_dict_path);
 				}
@@ -291,15 +308,20 @@ namespace gezi {
 					LOG_INFO("User defined split dictionary open ok");
 				}
 			}
+			_handle.init(_buf_size);
+			LOG_INFO("Segmentor hadle init ok");
 			LOG_INFO("Segmentor init ok");
+			Pval((pgconf == NULL));
 			return true;
 		}
 
-		static SegHandle& GetSegHandle(int buf_size = SegHandle::SEG_BUFF_SIZE)
-		{
+		//这个比较奇怪 c++没有问题 但是python不能很好处理static 运行没事  最后程序结束析构 
+		//SegHandle scw_destroy (pout)会出core
+		/*	static SegHandle& GetSegHandle(int buf_size = SegHandle::SEG_BUFF_SIZE)
+			{
 			static SegHandle _handle(buf_size);
 			return _handle;
-		}
+			}*/
 
 		int merge_newword(SegHandle& handle)
 		{
@@ -337,7 +359,7 @@ namespace gezi {
 					tokens[index].offset = idx1;
 				}
 			}
-			for (;  i < pout->wpbtermcount; i++, index++)
+			for (; i < pout->wpbtermcount; i++, index++)
 			{
 				int idx1 = pout->wpbtermoffsets[i]; //应该==i
 				int pos1 = GET_TERM_POS(pout->wpbtermpos[i]);
@@ -349,11 +371,27 @@ namespace gezi {
 			}
 			return index;
 		}
+
+		static scw_worddict_t*& pwdict()
+		{
+			static scw_worddict_t* _pwdict = NULL;
+			return _pwdict;
+		}
+
+		static Sdict_search*& split_dict()
+		{
+			static Sdict_search* _split_dict = NULL;
+			return _split_dict;
+		}
+
+		static int& type()
+		{
+			static int _type = 0; //是否使用pos tag 等等
+			return _type;
+		}
 	private:
-		scw_worddict_t* _pwdict = NULL;
 		//scw_conf_t* pgconf;
-		Sdict_search* _split_dict = NULL; //自定义不需要在分词字典中去除内部再切分的字典资源 
-		int _type = 0; //是否使用pos tag 等等
+		SegHandle _handle;
 		int _flag = 0; //dynfloag 是否开启crf等 当前主要考虑设置是否开启crf
 		int _buf_size = SegHandle::SEG_BUFF_SIZE;
 	};
