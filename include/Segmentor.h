@@ -128,17 +128,21 @@ namespace gezi {
 		{
 			//需要先关闭它 
 			_handle.clear();
-			if (type() & SEG_USE_POSTAG)
-			{
-				tag_close();
-			}
-			//---关闭分词字典
 			if (pwdict())
-				scw_destroy_worddict(pwdict());
-			pwdict() = NULL;
-			//---关闭用户需要内部切分字典
-			if (split_dict())
-				ds_del(split_dict());
+			{
+				if (type() & SEG_USE_POSTAG)
+				{
+					tag_close();
+				}
+				//---关闭分词字典
+				if (pwdict())
+					scw_destroy_worddict(pwdict());
+				pwdict() = NULL;
+				//---关闭用户需要内部切分字典
+				if (split_dict())
+					ds_del(split_dict());
+				split_dict() = NULL;
+			}
 		}
 
 		//理论上通过这个 可以配置CRF开关 覆盖配置文件中的crf开关 但是测试无效　TRACE: 04-16 13:38:28:   * 0 Do not load CRF model, please check scw.conf-->Scw_crf = 1?　＠TODO 或许新版本可以？
