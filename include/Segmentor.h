@@ -117,10 +117,10 @@ namespace gezi {
 		}
 
 		Segmentor(string data_dir, int seg_buff_size = SegHandle::SEG_BUFF_SIZE,
-			int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
+			int strategy = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
 			:_buf_size(seg_buff_size)
 		{
-			bool ret = init(data_dir, type, conf_path);
+			bool ret = init(data_dir, strategy, conf_path);
 			CHECK_EQ(ret, true);
 		}
 
@@ -130,7 +130,7 @@ namespace gezi {
 			_handle.clear();
 			if (pwdict())
 			{
-				if (type() & SEG_USE_POSTAG)
+				if (strategy() & SEG_USE_POSTAG)
 				{
 					tag_close();
 				}
@@ -189,16 +189,16 @@ namespace gezi {
 				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
 				return false;
 			}
-			if (type != SEG_MERGE_NEWWORD || !handle.pout->pnewword->newwordbtermcount)
+			if (strategy != SEG_MERGE_NEWWORD || !handle.pout->pnewword->newwordbtermcount)
 			{
-				handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
+				handle.nresult = scw_get_token_1(handle.pout, strategy, handle.tokens, handle.buf_size);
 			}
 			else
 			{
 				handle.nresult = merge_newword(handle);
 			}
 
-			if (type() & SEG_USE_POSTAG)
+			if (strategy() & SEG_USE_POSTAG)
 			{
 				//----------标注
 				if (tag_postag(handle.tokens, handle.nresult) < 0)
@@ -268,48 +268,52 @@ namespace gezi {
 		}
 
 	private:
-		static bool init(const char* data_dir, int type = 0, const char* conf_path = "./conf/scw.conf")
+		//@TODO 是否线程安全？ 除了handle init 都是static
+		bool init(const char* data_dir, int type = 0, const char* conf_path = "./conf/scw.conf")
 		{
-			type() = type;
+			strategy() = type;
 			int ret = -1;
 			//--------------打开分词字典
+			if (!pwdict())
 			{
-				if (pgconf != NULL)
 				{
-					scw_destroy_conf(pgconf);
-					pgconf = NULL;
+					if (pgconf != NULL)
+					{
+						scw_destroy_conf(pgconf);
+						pgconf = NULL;
+					}
+					pgconf = scw_load_conf(conf_path);
+					CHECK(pgconf != NULL) << conf_path;
+
+					pwdict() = scw_load_worddict(data_dir);
+					CHECK(pwdict() != NULL) << data_dir << " the path wrong ? or you use wrong segment version ?";
+					LOG_INFO("Load segmentor dict data ok");
 				}
-				pgconf = scw_load_conf(conf_path);
-				CHECK(pgconf != NULL) << conf_path;
 
-				pwdict() = scw_load_worddict(data_dir);
-				CHECK(pwdict() != NULL) << data_dir << " the path wrong ? or you use wrong segment version ?";
-				LOG_INFO("Load segmentor dict data ok");
-			}
-
-			if (type() & SEG_USE_POSTAG)
-			{ //--------------启动标注
-				char tag_dict_path[2048];
-				sprintf(tag_dict_path, "%s/%s", data_dir, "tagdict");
-				ret = tag_open(tag_dict_path);
-				CHECK_EQ(ret, 0) << tag_dict_path;
-				LOG_INFO("Tag open ok");
-			}
-			else
-			{
-				LOG_INFO("Do not use pos tag");
-			}
-			{	//---------------尝试打开need split字典，如果不存在或者打开出错就不使用
-				char user_dict_path[2048];
-				sprintf(user_dict_path, "%s/%s", data_dir, "need_split");
-				split_dict() = ds_load(user_dict_path, "need_split");
-				if (!split_dict())
-				{
-					LOG_WARNING("Do not use user defined split dictionary, not find %s", user_dict_path);
+				if (strategy() & SEG_USE_POSTAG)
+				{ //--------------启动标注
+					char tag_dict_path[2048];
+					sprintf(tag_dict_path, "%s/%s", data_dir, "tagdict");
+					ret = tag_open(tag_dict_path);
+					CHECK_EQ(ret, 0) << tag_dict_path;
+					LOG_INFO("Tag open ok");
 				}
 				else
 				{
-					LOG_INFO("User defined split dictionary open ok");
+					LOG_INFO("Do not use pos tag");
+				}
+				{	//---------------尝试打开need split字典，如果不存在或者打开出错就不使用
+					char user_dict_path[2048];
+					sprintf(user_dict_path, "%s/%s", data_dir, "need_split");
+					split_dict() = ds_load(user_dict_path, "need_split");
+					if (!split_dict())
+					{
+						LOG_WARNING("Do not use user defined split dictionary, not find %s", user_dict_path);
+					}
+					else
+					{
+						LOG_INFO("User defined split dictionary open ok");
+					}
 				}
 			}
 			_handle.init(_buf_size);
@@ -388,10 +392,10 @@ namespace gezi {
 			return _split_dict;
 		}
 
-		static int& type()
+		static int& strategy()
 		{
-			static int _type = 0; //是否使用pos tag 等等
-			return _type;
+			static int _strategy = 0; //是否使用pos tag 等等
+			return _strategy;
 		}
 	private:
 		//scw_conf_t* pgconf;
