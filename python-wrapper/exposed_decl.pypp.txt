@@ -2717,7 +2717,6 @@
 ~@variable_t@sysevents@::com_logstat_t::sysevents
 ~@variable_t@m_phinfo_bpos@::SCW_LEMMA_T::m_phinfo_bpos
 ~@variable_t@int_p_sep_by_space@::lconv::int_p_sep_by_space
-+@variable_t@_type@::gezi::Segmentor::_type
 ~@variable_t@push@::comspace::Category::push
 ~@variable_t@ru_nswap@::rusage::ru_nswap
 ~@variable_t@_queue@::comspace::XSigQu< void* >::_queue
@@ -5212,6 +5211,7 @@
 ~@member_function_t@do_pos_format@::std::money_base::pattern ( ::std::moneypunct<wchar_t, true>::* )(  ) const::std::money_base::pattern ( ::std::moneypunct<wchar_t, true>::* )(  ) const
 ~@member_function_t@do_pos_format@::std::money_base::pattern ( ::std::moneypunct<char, false>::* )(  ) const::std::money_base::pattern ( ::std::moneypunct<char, false>::* )(  ) const
 ~@member_function_t@do_pos_format@::std::money_base::pattern ( ::std::moneypunct<char, true>::* )(  ) const::std::money_base::pattern ( ::std::moneypunct<char, true>::* )(  ) const
++@member_function_t@strategy@int & (*)(  )int & (*)(  )
 ~@member_function_t@get_bigram_templs_num@int ( ::CRFPP::CrfModel::* )(  ) constint ( ::CRFPP::CrfModel::* )(  ) const
 ~@member_function_t@__do_catch@bool ( ::std::type_info::* )( ::std::type_info const *,void * *,unsigned int ) constbool ( ::std::type_info::* )( ::std::type_info const *,void * *,unsigned int ) const
 ~@member_function_t@empty@bool ( ::std::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> >::* )(  ) constbool ( ::std::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> >::* )(  ) const

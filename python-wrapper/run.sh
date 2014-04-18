@@ -2,6 +2,9 @@ cp -rf ../include/* ../include.python/
 pushd .
 cd ../include.python/ 
 gen-header-all.py
+cd tieba
+gen-header-all.py 
+cd .. 
 popd
 sh gen-py.sh $1
 comake2 -P

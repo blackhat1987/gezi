@@ -22,7 +22,9 @@ l = seg.segment('速去郭美美吧拿')
 print l[0]
 print seg.segment('马布里的扣扣是3212','|')
 
-print seg.segment('马布里的扣扣是3212','|',SEG_MERGE_NEWWORD)
+print seg.segment('马布里的扣扣是3212中华人民共和国','|')
+print seg.segment('马布里的扣扣是3212中华人民共和国','|',SEG_MERGE_NEWWORD)
+print seg.segment('马布里的扣扣是3212中华人民共和国','|',SEG_BASIC)
 
 print seg.segment('abc def', '|')
 

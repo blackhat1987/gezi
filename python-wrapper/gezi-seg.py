@@ -5,11 +5,7 @@ from pyplusplus import module_builder
 
 mb = module_builder.module_builder_t(
         gccxml_path='~/.jumbo/bin/gccxml',
-        files=[
-					'./include.python/log_util.h',
-					'./include.python/Segmentor.h',
-					'./include.python/ProgressBar.h',
-					'./include.python/tieba/util.h'
+        files=['./include/Segmentor.h.python',
 					],
         include_paths=[ '/home/users/chenghuige/rsc/lib2-64/wordseg', 
         '/home/users/chenghuige/rsc/lib2-64/postag/include',
@@ -31,10 +27,10 @@ mb = module_builder.module_builder_t(
 				'/home/users/chenghuige/rsc/com/btest/gtest/include/',
 				'/home/users/chenghuige/rsc/app/search/sep/anti-spam/gezi/include/'
          ]
-        )
+			)
 
-mb.build_code_creator( module_name='libgezi' )
+mb.build_code_creator( module_name='libgeziseg' )
 
 mb.code_creator.user_defined_directories.append( os.path.abspath('..') )
 
-mb.write_module( os.path.join( os.path.abspath('./python-wrapper/'), 'gezi_py.cc' )) 
+mb.write_module( os.path.join( os.path.abspath('./python-wrapper/'), 'gezi_seg_py.cc' )) 
