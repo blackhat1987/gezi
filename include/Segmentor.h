@@ -320,7 +320,6 @@ namespace gezi {
 			_handle.init(_buf_size);
 			LOG_INFO("Segmentor hadle init ok");
 			LOG_INFO("Segmentor init ok");
-			Pval((pgconf == NULL));
 			return true;
 		}
 
