@@ -145,7 +145,7 @@ namespace gezi {
 			}
 		}
 
-		//理论上通过这个 可以配置CRF开关 覆盖配置文件中的crf开关 但是测试无效　TRACE: 04-16 13:38:28:   * 0 Do not load CRF model, please check scw.conf-->Scw_crf = 1?　＠TODO 或许新版本可以？
+		//理论上通过这个 可以配置CRF开关 覆盖配置文件中的crf开关 但是测试无效　TRACE: 04-16 13:38:28:   * 0 Do not load CRF model, please check scw.conf-->Scw_crf = 1? 原因是要设置1 然后这里可以屏蔽crf
 		Segmentor& set_flag(int flag)
 		{
 			_flag = flag;

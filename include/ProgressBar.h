@@ -18,7 +18,11 @@
 #include <iomanip>
 #include <boost/progress.hpp>
 
+//#include "common_util.h"
+#include "time_util.h" //@TODO  当前使用common_util.h python的封装有问题
+
 namespace gezi {
+
 	class ProgressBar
 	{
 	public:
@@ -106,6 +110,6 @@ namespace gezi {
 	};
 	typedef NoProgressBar DefaultProgressBar;
 
-}
+} //-----------end of gezi
 
 #endif  //----end of PROGRESS_BAR_H_

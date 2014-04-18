@@ -23,11 +23,13 @@
 using std::string;
 
 namespace gezi {
+
 	class MicrosecTimer
 	{
 	public:
 
-		MicrosecTimer() : _start_time(boost::posix_time::microsec_clock::local_time())
+		MicrosecTimer() :
+			_start_time(boost::posix_time::microsec_clock::local_time())
 		{
 		}
 
@@ -96,7 +98,7 @@ namespace gezi {
 				string prefix = _info + " finished using:";
 				VLOG(_level) << setiosflags(ios::left) << setfill(' ') << setw(40)
 					<< prefix << " " << "[" << _timer->elapsed_ms() << " ms] "
-				<< "(" << _timer->elapsed() << " s)";
+					<< "(" << _timer->elapsed() << " s)";
 			}
 			else
 			{

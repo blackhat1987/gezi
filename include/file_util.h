@@ -325,7 +325,8 @@ namespace gezi {
 	*/
 	template<typename _Node>
 	void write_vec(const std::vector<_Node>& vec, const std::string& file)
-	{//不输出长度
+	{
+		//不输出长度
 		std::ofstream ofs(file.c_str(), std::ios::binary);
 		ofs.write(reinterpret_cast<const char*> (&vec[0]), sizeof (_Node)* vec.size());
 	}
@@ -507,7 +508,7 @@ namespace gezi {
 			obj->SaveText(name);
 		}
 	}
-}
+} //----end of namespace gezi
 
 #define SAVE_SHARED_PTR(obj)\
 	gezi::save_shared_ptr(obj, path, gezi::conf_trim(#obj))
@@ -520,7 +521,5 @@ namespace gezi {
 
 #define  OBJ_NAME_PATH(obj)\
 	string(path + "/" + gezi::conf_trim(#obj) + ".name.txt")
-
-//----end of namespace gezi
 
 #endif  //----end of FILE_UTIL_H_
