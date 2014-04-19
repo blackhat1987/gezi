@@ -92,6 +92,7 @@ namespace gezi {
 		int length;
 		int offset;
 		int weight;
+		SegNode() = default;	
 		SegNode(string word_, int length_, int offset_, int weight_)
 			:word(word_), length(length_), offset(offset_), weight(weight_)
 		{
@@ -106,9 +107,9 @@ namespace gezi {
 	static const int SEG_USE_ALL = 255;
 
 	//混排合并新词
-	static const int SEG_MERGE_NEWWORD = SEG_WPCOMP | SCW_OUT_NEWWORD;
+	static const int SEG_MERGE_NEWWORD = SCW_OUT_WPCOMP | SCW_OUT_NEWWORD;
 	//混排粒度
-	static const int SEG_WPCOMP = SEG_WPCOMP;
+	static const int SEG_WPCOMP = SCW_OUT_WPCOMP;
 	//新词结果
 	static const int SEG_NEWWORD = SCW_OUT_NEWWORD;
 	//基本小粒度
@@ -276,7 +277,6 @@ namespace gezi {
 			bool ret = segment(input, _handle, type);
 			if (!ret)
 				return false;
-			result.resize(_handle.nresult);
 			for (int i = 0; i < _handle.nresult; i++)
 			{
 				result.push_back(SegNode(_handle.tokens[i].buffer, _handle.tokens[i].length,
