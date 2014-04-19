@@ -89,9 +89,11 @@ namespace gezi {
 	struct SegNode
 	{
 		string word;
+		int length;
 		int offset;
-		SegNode(string word_, int offset_)
-			:word(word_), offset(offset_)
+		int weight;
+		SegNode(string word_, int length_, int offset_, int weight_)
+			:word(word_), length(length_), offset(offset_), weight(weight_)
 		{
 
 		}
@@ -268,6 +270,7 @@ namespace gezi {
 			return segment(input, _handle, sep, type);
 		}
 
+		//主要为了python封装的分词获取offset,weight信息
 		bool segment(string input, vector<SegNode>& result, int type = SEG_WPCOMP)
 		{
 			bool ret = segment(input, _handle, type);
@@ -276,7 +279,8 @@ namespace gezi {
 			result.resize(_handle.nresult);
 			for (int i = 0; i < _handle.nresult; i++)
 			{
-				result.push_back()
+				result.push_back(SegNode(_handle.tokens[i].buffer, _handle.tokens[i].length,
+					_handle.tokens[i].offset, _handle.tokens[i].weight));
 			}
 			return true;
 		}
