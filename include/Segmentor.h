@@ -197,8 +197,8 @@ namespace gezi {
 
 		int get_tokens(int type = SEG_WPCOMP)
 		{
-			handle.nresult = scw_get_token_1(_handle.pout, type, _handle.tokens, _handle.buf_size);
-			return handle.nresult;
+			_handle.nresult = scw_get_token_1(_handle.pout, type, _handle.tokens, _handle.buf_size);
+			return _handle.nresult;
 		}
 
 		static vector<SegNode> get_segnodes(SegHandle& handle)
