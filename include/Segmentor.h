@@ -85,6 +85,17 @@ namespace gezi {
 		int nresult = 0;
 		int buf_size = 0;
 	};
+
+	struct SegNode
+	{
+		string word;
+		int offset;
+		SegNode(string word_, int offset_)
+			:word(word_), offset(offset_)
+		{
+
+		}
+	};
 	//进程级别 一般 一个程序一个Segmentor资源实例
 	static const int  SEG_USE_DEFAULT = 0;
 	static const int SEG_USE_POSTAG = 1;
@@ -93,9 +104,9 @@ namespace gezi {
 	static const int SEG_USE_ALL = 255;
 
 	//混排合并新词
-	static const int SEG_MERGE_NEWWORD = SCW_OUT_WPCOMP | SCW_OUT_NEWWORD;
+	static const int SEG_MERGE_NEWWORD = SEG_WPCOMP | SCW_OUT_NEWWORD;
 	//混排粒度
-	static const int SEG_WPCOMP = SCW_OUT_WPCOMP;
+	static const int SEG_WPCOMP = SEG_WPCOMP;
 	//新词结果
 	static const int SEG_NEWWORD = SCW_OUT_NEWWORD;
 	//基本小粒度
@@ -164,11 +175,6 @@ namespace gezi {
 			return init(data_dir.c_str(), type, conf_path.c_str());
 		}
 
-		bool init(string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
-		{
-
-		}
-
 		bool seg_words(string input, SegHandle& handle)
 		{
 			//---------分词
@@ -180,13 +186,13 @@ namespace gezi {
 			return true;
 		}
 
-		int get_tokens(SegHandle& handle, int type = SCW_OUT_WPCOMP)
+		int get_tokens(SegHandle& handle, int type = SEG_WPCOMP)
 		{
 			handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
 			return handle.nresult;
 		}
 
-		bool segment(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP)
+		bool segment(string input, SegHandle& handle, int type = SEG_WPCOMP)
 		{
 			//---------分词
 			int* pflag = _flag == 0 ? NULL : &_flag;
@@ -218,7 +224,7 @@ namespace gezi {
 		}
 
 		bool segment(string input, SegHandle& handle, vector<string>& result,
-			int type = SCW_OUT_WPCOMP)
+			int type = SEG_WPCOMP)
 		{
 			bool ret = segment(input, handle, type);
 			if (!ret)
@@ -232,7 +238,7 @@ namespace gezi {
 			}
 		}
 
-		string segment(string input, SegHandle& handle, string sep, int type = SCW_OUT_WPCOMP)
+		string segment(string input, SegHandle& handle, string sep, int type = SEG_WPCOMP)
 		{
 			bool ret = segment(input, handle, type);
 			if (!ret || handle.nresult < 1)
@@ -248,7 +254,7 @@ namespace gezi {
 			return ss.str();
 		}
 		//快捷接口
-		vector<string> segment(string input, int type = SCW_OUT_WPCOMP)
+		vector<string> segment(string input, int type = SEG_WPCOMP)
 		{
 			vector<string> result;
 			//segment(input, GetSegHandle(), result, type);
@@ -256,14 +262,27 @@ namespace gezi {
 			return result;
 		}
 
-		string segment(string input, string sep, int type = SCW_OUT_WPCOMP)
+		string segment(string input, string sep, int type = SEG_WPCOMP)
 		{
 			//return segment(input, GetSegHandle(), sep, type);
 			return segment(input, _handle, sep, type);
 		}
+
+		bool segment(string input, vector<SegNode>& result, int type = SEG_WPCOMP)
+		{
+			bool ret = segment(input, _handle, type);
+			if (!ret)
+				return false;
+			result.resize(_handle.nresult);
+			for (int i = 0; i < _handle.nresult; i++)
+			{
+				result.push_back()
+			}
+			return true;
+		}
 		/*vector<string> segment(string input, )*/
 		//  //返回按照unicode的切分长度序列
-		//  vector<int> segment_w(string input, SegHandle& handle, int type = SCW_OUT_WPCOMP)
+		//  vector<int> segment_w(string input, SegHandle& handle, int type = SEG_WPCOMP)
 		//  {
 		//    segment(input, handle, type);
 		//    

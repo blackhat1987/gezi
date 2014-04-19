@@ -151,7 +151,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=fdc0b2d8f46ebfd7f72e2f985800f098  COMAKE
+COMAKE_MD5=1762185b50f8e17f01937de7e1328b56  COMAKE
 
 
 .PHONY:all
@@ -181,7 +181,6 @@ clean:ccpclean
 	rm -rf ./output/lib/libgezi_common.a
 	rm -rf libgezi_json.a
 	rm -rf ./output/lib/libgezi_json.a
-	rm -rf src/gezi_common_word_seg.o
 	rm -rf src/model/gezi_common_LinearModel.o
 	rm -rf src/model/gezi_common_ModelFactory.o
 	rm -rf src/model/gezi_common_Predictor.o
@@ -215,8 +214,7 @@ copy-pinyin-lib:
 	mkdir -p output/lib
 	cp ./include/tools/pinyin/libPYNotation.a ./output/lib/
 
-libgezi_common.a:src/gezi_common_word_seg.o \
-  src/model/gezi_common_LinearModel.o \
+libgezi_common.a:src/model/gezi_common_LinearModel.o \
   src/model/gezi_common_ModelFactory.o \
   src/model/gezi_common_Predictor.o \
   src/model/gezi_common_RandForestModel.o \
@@ -224,8 +222,7 @@ libgezi_common.a:src/gezi_common_word_seg.o \
   src/model/gezi_common_SharedPredictor.o \
   src/model/gezi_common_SvmModel.o
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibgezi_common.a[0m']"
-	ar crs libgezi_common.a src/gezi_common_word_seg.o \
-  src/model/gezi_common_LinearModel.o \
+	ar crs libgezi_common.a src/model/gezi_common_LinearModel.o \
   src/model/gezi_common_ModelFactory.o \
   src/model/gezi_common_Predictor.o \
   src/model/gezi_common_RandForestModel.o \
@@ -244,14 +241,6 @@ libgezi_json.a:src/json/gezi_json_json_reader.o \
   src/json/gezi_json_json_writer.o
 	mkdir -p ./output/lib
 	cp -f --link libgezi_json.a ./output/lib
-
-src/gezi_common_word_seg.o:src/word_seg.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/gezi_common_word_seg.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
-  -D__STDC_LIMIT_MACROS \
-  -DVERSION=\"1.9.8.7\" \
-  -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/gezi_common_word_seg.o src/word_seg.cpp
 
 src/model/gezi_common_LinearModel.o:src/model/LinearModel.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_LinearModel.o[0m']"

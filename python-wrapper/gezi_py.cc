@@ -5,6 +5,8 @@
 
 #include "boost/python.hpp"
 
+#include "__array_1.pypp.hpp"
+
 #include "boost/python/suite/indexing/vector_indexing_suite.hpp"
 
 #include "../include/log_util.h"
@@ -18,7 +20,607 @@ const int gezi::SegHandle::SEG_BUFF_SIZE;
 
 #include "../include/tools/content_process.h"
 
+#include "/home/users/chenghuige/rsc/lib2-64/wordseg/isegment.h"
+
+#include "/home/users/chenghuige/rsc/lib2-64/wordseg/property.h"
+
+#include "/home/users/chenghuige/rsc/lib2-64/wordseg/scwdef.h"
+
 namespace bp = boost::python;
+
+struct PHRASE_DICT_T_wrapper : PHRASE_DICT_T, bp::wrapper< PHRASE_DICT_T > {
+
+PHRASE_DICT_T_wrapper(PHRASE_DICT_T const & arg )
+: PHRASE_DICT_T( arg )
+, bp::wrapper< PHRASE_DICT_T >(){
+// copy constructor
+
+}
+
+PHRASE_DICT_T_wrapper()
+: PHRASE_DICT_T()
+, bp::wrapper< PHRASE_DICT_T >(){
+// null constructor
+
+}
+
+static ::Sdict_search * get_m_subindex(PHRASE_DICT_T const & inst ){
+return inst.m_subindex;
+}
+
+static void set_m_subindex( PHRASE_DICT_T & inst, ::Sdict_search * new_value ){
+inst.m_subindex = new_value;
+}
+
+};
+
+struct SCW_INPUTLEMMA_T_wrapper : SCW_INPUTLEMMA_T, bp::wrapper< SCW_INPUTLEMMA_T > {
+
+SCW_INPUTLEMMA_T_wrapper(SCW_INPUTLEMMA_T const & arg )
+: SCW_INPUTLEMMA_T( arg )
+, bp::wrapper< SCW_INPUTLEMMA_T >(){
+// copy constructor
+
+}
+
+SCW_INPUTLEMMA_T_wrapper()
+: SCW_INPUTLEMMA_T()
+, bp::wrapper< SCW_INPUTLEMMA_T >(){
+// null constructor
+
+}
+
+static pyplusplus::containers::static_sized::array_1_t< char, 256>
+pyplusplus_m_lmstr_wrapper( ::SCW_INPUTLEMMA_T & inst ){
+return pyplusplus::containers::static_sized::array_1_t< char, 256>( inst.m_lmstr );
+}
+
+static pyplusplus::containers::static_sized::array_1_t< unsigned int, 512>
+pyplusplus_m_manuallist_wrapper( ::SCW_INPUTLEMMA_T & inst ){
+return pyplusplus::containers::static_sized::array_1_t< unsigned int, 512>( inst.m_manuallist );
+}
+
+static pyplusplus::containers::static_sized::array_1_t< unsigned int, 512>
+pyplusplus_m_subphlist_wrapper( ::SCW_INPUTLEMMA_T & inst ){
+return pyplusplus::containers::static_sized::array_1_t< unsigned int, 512>( inst.m_subphlist );
+}
+
+static pyplusplus::containers::static_sized::array_1_t< unsigned int, 512>
+pyplusplus_m_wordlist_wrapper( ::SCW_INPUTLEMMA_T & inst ){
+return pyplusplus::containers::static_sized::array_1_t< unsigned int, 512>( inst.m_wordlist );
+}
+
+};
+
+struct SCW_LEMMA_T_wrapper : SCW_LEMMA_T, bp::wrapper< SCW_LEMMA_T > {
+
+SCW_LEMMA_T_wrapper(SCW_LEMMA_T const & arg )
+: SCW_LEMMA_T( arg )
+, bp::wrapper< SCW_LEMMA_T >(){
+// copy constructor
+
+}
+
+SCW_LEMMA_T_wrapper()
+: SCW_LEMMA_T()
+, bp::wrapper< SCW_LEMMA_T >(){
+// null constructor
+
+}
+
+unsigned int get_m_length() const {
+return m_length;
+}
+
+void set_m_length( unsigned int new_value ){
+m_length = new_value;
+}
+
+unsigned int get_m_type() const {
+return m_type;
+}
+
+void set_m_type( unsigned int new_value ){
+m_type = new_value;
+}
+
+unsigned int get_m_weight() const {
+return m_weight;
+}
+
+void set_m_weight( unsigned int new_value ){
+m_weight = new_value;
+}
+
+};
+
+struct SCW_NEWWORD_T_wrapper : SCW_NEWWORD_T, bp::wrapper< SCW_NEWWORD_T > {
+
+SCW_NEWWORD_T_wrapper(SCW_NEWWORD_T const & arg )
+: SCW_NEWWORD_T( arg )
+, bp::wrapper< SCW_NEWWORD_T >(){
+// copy constructor
+
+}
+
+SCW_NEWWORD_T_wrapper()
+: SCW_NEWWORD_T()
+, bp::wrapper< SCW_NEWWORD_T >(){
+// null constructor
+
+}
+
+static ::scw_property_t * get_newwordbtermprop(SCW_NEWWORD_T const & inst ){
+return inst.newwordbtermprop;
+}
+
+static void set_newwordbtermprop( SCW_NEWWORD_T & inst, ::scw_property_t * new_value ){
+inst.newwordbtermprop = new_value;
+}
+
+static ::neprop_t * get_newwordneprop(SCW_NEWWORD_T const & inst ){
+return inst.newwordneprop;
+}
+
+static void set_newwordneprop( SCW_NEWWORD_T & inst, ::neprop_t * new_value ){
+inst.newwordneprop = new_value;
+}
+
+};
+
+struct _CHS_LANG_DICT_T_wrapper : _CHS_LANG_DICT_T, bp::wrapper< _CHS_LANG_DICT_T > {
+
+_CHS_LANG_DICT_T_wrapper(_CHS_LANG_DICT_T const & arg )
+: _CHS_LANG_DICT_T( arg )
+, bp::wrapper< _CHS_LANG_DICT_T >(){
+// copy constructor
+
+}
+
+_CHS_LANG_DICT_T_wrapper()
+: _CHS_LANG_DICT_T()
+, bp::wrapper< _CHS_LANG_DICT_T >(){
+// null constructor
+
+}
+
+static ::sodict_search_t * get_nerworddict(_CHS_LANG_DICT_T const & inst ){
+return inst.nerworddict;
+}
+
+static void set_nerworddict( _CHS_LANG_DICT_T & inst, ::sodict_search_t * new_value ){
+inst.nerworddict = new_value;
+}
+
+static ::phrase_sub_dict * get_phrasesubdict(_CHS_LANG_DICT_T const & inst ){
+return inst.phrasesubdict;
+}
+
+static void set_phrasesubdict( _CHS_LANG_DICT_T & inst, ::phrase_sub_dict * new_value ){
+inst.phrasesubdict = new_value;
+}
+
+};
+
+struct _SCW_CONF_SECTION_T_wrapper : _SCW_CONF_SECTION_T, bp::wrapper< _SCW_CONF_SECTION_T > {
+
+_SCW_CONF_SECTION_T_wrapper(_SCW_CONF_SECTION_T const & arg )
+: _SCW_CONF_SECTION_T( arg )
+, bp::wrapper< _SCW_CONF_SECTION_T >(){
+// copy constructor
+
+}
+
+_SCW_CONF_SECTION_T_wrapper()
+: _SCW_CONF_SECTION_T()
+, bp::wrapper< _SCW_CONF_SECTION_T >(){
+// null constructor
+
+}
+
+static ::scw_kvpair_t * get_kv_conf(_SCW_CONF_SECTION_T const & inst ){
+return inst.kv_conf;
+}
+
+static void set_kv_conf( _SCW_CONF_SECTION_T & inst, ::scw_kvpair_t * new_value ){
+inst.kv_conf = new_value;
+}
+
+};
+
+struct _SCW_CONF_T_wrapper : _SCW_CONF_T, bp::wrapper< _SCW_CONF_T > {
+
+_SCW_CONF_T_wrapper(_SCW_CONF_T const & arg )
+: _SCW_CONF_T( arg )
+, bp::wrapper< _SCW_CONF_T >(){
+// copy constructor
+
+}
+
+_SCW_CONF_T_wrapper()
+: _SCW_CONF_T()
+, bp::wrapper< _SCW_CONF_T >(){
+// null constructor
+
+}
+
+static ::scw_conf_section_t * get_lang_section(_SCW_CONF_T const & inst ){
+return inst.lang_section;
+}
+
+static void set_lang_section( _SCW_CONF_T & inst, ::scw_conf_section_t * new_value ){
+inst.lang_section = new_value;
+}
+
+static ::scw_lang_func_t * * get_ppfunc(_SCW_CONF_T const & inst ){
+return inst.ppfunc;
+}
+
+static void set_ppfunc( _SCW_CONF_T & inst, ::scw_lang_func_t * * new_value ){
+inst.ppfunc = new_value;
+}
+
+};
+
+struct _SCW_GLOBAL_DICT_T_wrapper : _SCW_GLOBAL_DICT_T, bp::wrapper< _SCW_GLOBAL_DICT_T > {
+
+_SCW_GLOBAL_DICT_T_wrapper(_SCW_GLOBAL_DICT_T const & arg )
+: _SCW_GLOBAL_DICT_T( arg )
+, bp::wrapper< _SCW_GLOBAL_DICT_T >(){
+// copy constructor
+
+}
+
+_SCW_GLOBAL_DICT_T_wrapper()
+: _SCW_GLOBAL_DICT_T()
+, bp::wrapper< _SCW_GLOBAL_DICT_T >(){
+// null constructor
+
+}
+
+static ::scw_lang_dict_t * * get_ppdict(_SCW_GLOBAL_DICT_T const & inst ){
+return inst.ppdict;
+}
+
+static void set_ppdict( _SCW_GLOBAL_DICT_T & inst, ::scw_lang_dict_t * * new_value ){
+inst.ppdict = new_value;
+}
+
+};
+
+struct _SCW_INNER_T_wrapper : _SCW_INNER_T, bp::wrapper< _SCW_INNER_T > {
+
+_SCW_INNER_T_wrapper(_SCW_INNER_T const & arg )
+: _SCW_INNER_T( arg )
+, bp::wrapper< _SCW_INNER_T >(){
+// copy constructor
+
+}
+
+_SCW_INNER_T_wrapper()
+: _SCW_INNER_T()
+, bp::wrapper< _SCW_INNER_T >(){
+// null constructor
+
+}
+
+static ::crf_out_t * get_crf_out(_SCW_INNER_T const & inst ){
+return inst.crf_out;
+}
+
+static void set_crf_out( _SCW_INNER_T & inst, ::crf_out_t * new_value ){
+inst.crf_out = new_value;
+}
+
+static ::scw_crf_out * get_crf_res(_SCW_INNER_T const & inst ){
+return inst.crf_res;
+}
+
+static void set_crf_res( _SCW_INNER_T & inst, ::scw_crf_out * new_value ){
+inst.crf_res = new_value;
+}
+
+static ::SegCrfTag * get_crf_tag(_SCW_INNER_T const & inst ){
+return inst.crf_tag;
+}
+
+static void set_crf_tag( _SCW_INNER_T & inst, ::SegCrfTag * new_value ){
+inst.crf_tag = new_value;
+}
+
+static ::scw_lemma_t * get_m_dynlm(_SCW_INNER_T const & inst ){
+return inst.m_dynlm;
+}
+
+static void set_m_dynlm( _SCW_INNER_T & inst, ::scw_lemma_t * new_value ){
+inst.m_dynlm = new_value;
+}
+
+static ::scw_lemma_t * * get_m_ppseg(_SCW_INNER_T const & inst ){
+return inst.m_ppseg;
+}
+
+static void set_m_ppseg( _SCW_INNER_T & inst, ::scw_lemma_t * * new_value ){
+inst.m_ppseg = new_value;
+}
+
+static ::dm_pack_t * get_multiterm_pack(_SCW_INNER_T const & inst ){
+return inst.multiterm_pack;
+}
+
+static void set_multiterm_pack( _SCW_INNER_T & inst, ::dm_pack_t * new_value ){
+inst.multiterm_pack = new_value;
+}
+
+static ::scw_newword_t * get_pdisambword(_SCW_INNER_T const & inst ){
+return inst.pdisambword;
+}
+
+static void set_pdisambword( _SCW_INNER_T & inst, ::scw_newword_t * new_value ){
+inst.pdisambword = new_value;
+}
+
+static ::scw_newword_t * get_pnewword(_SCW_INNER_T const & inst ){
+return inst.pnewword;
+}
+
+static void set_pnewword( _SCW_INNER_T & inst, ::scw_newword_t * new_value ){
+inst.pnewword = new_value;
+}
+
+static ::scw_lemma_t * * get_tmp_ppseg(_SCW_INNER_T const & inst ){
+return inst.tmp_ppseg;
+}
+
+static void set_tmp_ppseg( _SCW_INNER_T & inst, ::scw_lemma_t * * new_value ){
+inst.tmp_ppseg = new_value;
+}
+
+};
+
+struct _SCW_KVPAIR_T_wrapper : _SCW_KVPAIR_T, bp::wrapper< _SCW_KVPAIR_T > {
+
+_SCW_KVPAIR_T_wrapper(_SCW_KVPAIR_T const & arg )
+: _SCW_KVPAIR_T( arg )
+, bp::wrapper< _SCW_KVPAIR_T >(){
+// copy constructor
+
+}
+
+_SCW_KVPAIR_T_wrapper()
+: _SCW_KVPAIR_T()
+, bp::wrapper< _SCW_KVPAIR_T >(){
+// null constructor
+
+}
+
+static pyplusplus::containers::static_sized::array_1_t< char, 256>
+pyplusplus_achKey_wrapper( ::_SCW_KVPAIR_T & inst ){
+return pyplusplus::containers::static_sized::array_1_t< char, 256>( inst.achKey );
+}
+
+static pyplusplus::containers::static_sized::array_1_t< char, 256>
+pyplusplus_achValue_wrapper( ::_SCW_KVPAIR_T & inst ){
+return pyplusplus::containers::static_sized::array_1_t< char, 256>( inst.achValue );
+}
+
+};
+
+struct _SCW_OUT_T_wrapper : _SCW_OUT_T, bp::wrapper< _SCW_OUT_T > {
+
+_SCW_OUT_T_wrapper(_SCW_OUT_T const & arg )
+: _SCW_OUT_T( arg )
+, bp::wrapper< _SCW_OUT_T >(){
+// copy constructor
+
+}
+
+_SCW_OUT_T_wrapper()
+: _SCW_OUT_T()
+, bp::wrapper< _SCW_OUT_T >(){
+// null constructor
+
+}
+
+static ::scw_property_t * get_bnbtermprop(_SCW_OUT_T const & inst ){
+return inst.bnbtermprop;
+}
+
+static void set_bnbtermprop( _SCW_OUT_T & inst, ::scw_property_t * new_value ){
+inst.bnbtermprop = new_value;
+}
+
+static ::scw_inner_t * get_m_pir(_SCW_OUT_T const & inst ){
+return inst.m_pir;
+}
+
+static void set_m_pir( _SCW_OUT_T & inst, ::scw_inner_t * new_value ){
+inst.m_pir = new_value;
+}
+
+static ::scw_property_t * get_namebtermprop(_SCW_OUT_T const & inst ){
+return inst.namebtermprop;
+}
+
+static void set_namebtermprop( _SCW_OUT_T & inst, ::scw_property_t * new_value ){
+inst.namebtermprop = new_value;
+}
+
+static ::scw_newword_t * get_pdisambword(_SCW_OUT_T const & inst ){
+return inst.pdisambword;
+}
+
+static void set_pdisambword( _SCW_OUT_T & inst, ::scw_newword_t * new_value ){
+inst.pdisambword = new_value;
+}
+
+static ::scw_newword_t * get_pnewword(_SCW_OUT_T const & inst ){
+return inst.pnewword;
+}
+
+static void set_pnewword( _SCW_OUT_T & inst, ::scw_newword_t * new_value ){
+inst.pnewword = new_value;
+}
+
+static ::scw_lang_inner_t * * get_pplir(_SCW_OUT_T const & inst ){
+return inst.pplir;
+}
+
+static void set_pplir( _SCW_OUT_T & inst, ::scw_lang_inner_t * * new_value ){
+inst.pplir = new_value;
+}
+
+static ::scw_property_t * get_spbtermprop(_SCW_OUT_T const & inst ){
+return inst.spbtermprop;
+}
+
+static void set_spbtermprop( _SCW_OUT_T & inst, ::scw_property_t * new_value ){
+inst.spbtermprop = new_value;
+}
+
+static ::scw_property_t * get_wpbtermprop(_SCW_OUT_T const & inst ){
+return inst.wpbtermprop;
+}
+
+static void set_wpbtermprop( _SCW_OUT_T & inst, ::scw_property_t * new_value ){
+inst.wpbtermprop = new_value;
+}
+
+static ::scw_property_t * get_wsbtermprop(_SCW_OUT_T const & inst ){
+return inst.wsbtermprop;
+}
+
+static void set_wsbtermprop( _SCW_OUT_T & inst, ::scw_property_t * new_value ){
+inst.wsbtermprop = new_value;
+}
+
+};
+
+struct _SCW_VERSION_MAP_wrapper : _SCW_VERSION_MAP, bp::wrapper< _SCW_VERSION_MAP > {
+
+_SCW_VERSION_MAP_wrapper(_SCW_VERSION_MAP const & arg )
+: _SCW_VERSION_MAP( arg )
+, bp::wrapper< _SCW_VERSION_MAP >(){
+// copy constructor
+
+}
+
+_SCW_VERSION_MAP_wrapper()
+: _SCW_VERSION_MAP()
+, bp::wrapper< _SCW_VERSION_MAP >(){
+// null constructor
+
+}
+
+static ::Sdict_build * get_m_dver_dict(_SCW_VERSION_MAP const & inst ){
+return inst.m_dver_dict;
+}
+
+static void set_m_dver_dict( _SCW_VERSION_MAP & inst, ::Sdict_build * new_value ){
+inst.m_dver_dict = new_value;
+}
+
+static ::Sdict_build * get_m_sver_dict(_SCW_VERSION_MAP const & inst ){
+return inst.m_sver_dict;
+}
+
+static void set_m_sver_dict( _SCW_VERSION_MAP & inst, ::Sdict_build * new_value ){
+inst.m_sver_dict = new_value;
+}
+
+static pyplusplus::containers::static_sized::array_1_t< char[1024], 1024>
+pyplusplus_m_ver_table_wrapper( ::_SCW_VERSION_MAP & inst ){
+return pyplusplus::containers::static_sized::array_1_t< char[1024], 1024>( inst.m_ver_table );
+}
+
+};
+
+struct _SCW_WORDDICT_T_wrapper : _SCW_WORDDICT_T, bp::wrapper< _SCW_WORDDICT_T > {
+
+_SCW_WORDDICT_T_wrapper(_SCW_WORDDICT_T const & arg )
+: _SCW_WORDDICT_T( arg )
+, bp::wrapper< _SCW_WORDDICT_T >(){
+// copy constructor
+
+}
+
+_SCW_WORDDICT_T_wrapper()
+: _SCW_WORDDICT_T()
+, bp::wrapper< _SCW_WORDDICT_T >(){
+// null constructor
+
+}
+
+static ::CRFPP::CrfModel * get_crf_model(_SCW_WORDDICT_T const & inst ){
+return inst.crf_model;
+}
+
+static void set_crf_model( _SCW_WORDDICT_T & inst, ::CRFPP::CrfModel * new_value ){
+inst.crf_model = new_value;
+}
+
+static ::scw_dictentry_t * get_m_dictentry(_SCW_WORDDICT_T const & inst ){
+return inst.m_dictentry;
+}
+
+static void set_m_dictentry( _SCW_WORDDICT_T & inst, ::scw_dictentry_t * new_value ){
+inst.m_dictentry = new_value;
+}
+
+static ::scw_lemma_t * get_m_lemmalist(_SCW_WORDDICT_T const & inst ){
+return inst.m_lemmalist;
+}
+
+static void set_m_lemmalist( _SCW_WORDDICT_T & inst, ::scw_lemma_t * new_value ){
+inst.m_lemmalist = new_value;
+}
+
+static ::scw_utilinfo_t * get_m_utilinfo(_SCW_WORDDICT_T const & inst ){
+return inst.m_utilinfo;
+}
+
+static void set_m_utilinfo( _SCW_WORDDICT_T & inst, ::scw_utilinfo_t * new_value ){
+inst.m_utilinfo = new_value;
+}
+
+static ::dm_dict_t * get_multitermdict(_SCW_WORDDICT_T const & inst ){
+return inst.multitermdict;
+}
+
+static void set_multitermdict( _SCW_WORDDICT_T & inst, ::dm_dict_t * new_value ){
+inst.multitermdict = new_value;
+}
+
+static ::sodict_search_t * get_newworddict(_SCW_WORDDICT_T const & inst ){
+return inst.newworddict;
+}
+
+static void set_newworddict( _SCW_WORDDICT_T & inst, ::sodict_search_t * new_value ){
+inst.newworddict = new_value;
+}
+
+static ::Sdict_search * get_pdict_lsn_rule(_SCW_WORDDICT_T const & inst ){
+return inst.pdict_lsn_rule;
+}
+
+static void set_pdict_lsn_rule( _SCW_WORDDICT_T & inst, ::Sdict_search * new_value ){
+inst.pdict_lsn_rule = new_value;
+}
+
+static ::Sdict_search * get_pdict_rsn_rule(_SCW_WORDDICT_T const & inst ){
+return inst.pdict_rsn_rule;
+}
+
+static void set_pdict_rsn_rule( _SCW_WORDDICT_T & inst, ::Sdict_search * new_value ){
+inst.pdict_rsn_rule = new_value;
+}
+
+static pyplusplus::containers::static_sized::array_1_t< char, 100>
+pyplusplus_version_wrapper( ::_SCW_WORDDICT_T & inst ){
+return pyplusplus::containers::static_sized::array_1_t< char, 100>( inst.version );
+}
+
+};
 
 struct SegHandle_wrapper : gezi::SegHandle, bp::wrapper< gezi::SegHandle > {
 
@@ -61,6 +663,84 @@ inst.tokens = new_value;
 
 };
 
+struct scw_crf_out_t_wrapper : scw_crf_out_t, bp::wrapper< scw_crf_out_t > {
+
+scw_crf_out_t_wrapper(scw_crf_out_t const & arg )
+: scw_crf_out_t( arg )
+, bp::wrapper< scw_crf_out_t >(){
+// copy constructor
+
+}
+
+scw_crf_out_t_wrapper()
+: scw_crf_out_t()
+, bp::wrapper< scw_crf_out_t >(){
+// null constructor
+
+}
+
+static pyplusplus::containers::static_sized::array_1_t< ::scw_crf_term_t, 1>
+pyplusplus_term_buf_wrapper( ::scw_crf_out_t & inst ){
+return pyplusplus::containers::static_sized::array_1_t< ::scw_crf_term_t, 1>( inst.term_buf );
+}
+
+};
+
+struct token_t_wrapper : token_t, bp::wrapper< token_t > {
+
+token_t_wrapper(token_t const & arg )
+: token_t( arg )
+, bp::wrapper< token_t >(){
+// copy constructor
+
+}
+
+token_t_wrapper()
+: token_t()
+, bp::wrapper< token_t >(){
+// null constructor
+
+}
+
+static pyplusplus::containers::static_sized::array_1_t< char, 256>
+pyplusplus_buffer_wrapper( ::token_t & inst ){
+return pyplusplus::containers::static_sized::array_1_t< char, 256>( inst.buffer );
+}
+
+::uint32_t get_length() const {
+return length;
+}
+
+void set_length( ::uint32_t new_value ){
+length = new_value;
+}
+
+::uint32_t get_offset() const {
+return offset;
+}
+
+void set_offset( ::uint32_t new_value ){
+offset = new_value;
+}
+
+::uint32_t get_type() const {
+return type;
+}
+
+void set_type( ::uint32_t new_value ){
+type = new_value;
+}
+
+::uint32_t get_weight() const {
+return weight;
+}
+
+void set_weight( ::uint32_t new_value ){
+weight = new_value;
+}
+
+};
+
 BOOST_PYTHON_MODULE(libgezi){
 UseStrVec;
 UseIntVec;
@@ -82,6 +762,349 @@ bp::scope vector_less__token_t__greater__scope( vector_less__token_t__greater__e
 
 bp::class_< std::vector< std::string > >("vector_less__std_scope_string__greater_")
 .def( bp::vector_indexing_suite< ::std::vector< std::string >, true >() );
+
+bp::enum_< NAME_POS>("NAME_POS")
+.value("NAME_BGN", NAME_BGN)
+.value("NAME_MID", NAME_MID)
+.value("NAME_END", NAME_END)
+.value("NAME_OTH", NAME_OTH)
+.export_values()
+;
+
+bp::class_< PHRASE_DICT_T_wrapper >( "PHRASE_DICT_T" )
+.def_readwrite( "m_subbuf_len", &PHRASE_DICT_T::m_subbuf_len )
+.add_property( "m_subindex"
+, bp::make_function( (::Sdict_search * (*)( ::PHRASE_DICT_T const & ))(&PHRASE_DICT_T_wrapper::get_m_subindex), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::PHRASE_DICT_T &,::Sdict_search * ))(&PHRASE_DICT_T_wrapper::set_m_subindex), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.def_readwrite( "m_subpos_cnt", &PHRASE_DICT_T::m_subpos_cnt );
+
+bp::class_< SCW_DICTENTRY_T >( "SCW_DICTENTRY_T" )
+.def_readwrite( "m_lemma_pos", &SCW_DICTENTRY_T::m_lemma_pos )
+.def_readwrite( "m_suffix_pos", &SCW_DICTENTRY_T::m_suffix_pos )
+.def_readwrite( "m_value", &SCW_DICTENTRY_T::m_value );
+
+{ //::SCW_INPUTLEMMA_T
+typedef bp::class_< SCW_INPUTLEMMA_T_wrapper > SCW_INPUTLEMMA_T_exposer_t;
+SCW_INPUTLEMMA_T_exposer_t SCW_INPUTLEMMA_T_exposer = SCW_INPUTLEMMA_T_exposer_t( "SCW_INPUTLEMMA_T" );
+bp::scope SCW_INPUTLEMMA_T_scope( SCW_INPUTLEMMA_T_exposer );
+SCW_INPUTLEMMA_T_exposer.def_readwrite( "m_bwcount", &SCW_INPUTLEMMA_T::m_bwcount );
+pyplusplus::containers::static_sized::register_array_1< char, 256 >( "__array_1_char_256" );
+{ //SCW_INPUTLEMMA_T::m_lmstr [variable], type=char[256]
+
+typedef pyplusplus::containers::static_sized::array_1_t< char, 256> ( *array_wrapper_creator )( ::SCW_INPUTLEMMA_T & );
+
+SCW_INPUTLEMMA_T_exposer.add_property( "m_lmstr"
+, bp::make_function( array_wrapper_creator(&SCW_INPUTLEMMA_T_wrapper::pyplusplus_m_lmstr_wrapper)
+, bp::with_custodian_and_ward_postcall< 0, 1 >() ) );
+}
+pyplusplus::containers::static_sized::register_array_1< unsigned int, 512 >( "__array_1_unsigned_int_512" );
+{ //SCW_INPUTLEMMA_T::m_manuallist [variable], type=unsigned int[512]
+
+typedef pyplusplus::containers::static_sized::array_1_t< unsigned int, 512> ( *array_wrapper_creator )( ::SCW_INPUTLEMMA_T & );
+
+SCW_INPUTLEMMA_T_exposer.add_property( "m_manuallist"
+, bp::make_function( array_wrapper_creator(&SCW_INPUTLEMMA_T_wrapper::pyplusplus_m_manuallist_wrapper)
+, bp::with_custodian_and_ward_postcall< 0, 1 >() ) );
+}
+SCW_INPUTLEMMA_T_exposer.def_readwrite( "m_mcount", &SCW_INPUTLEMMA_T::m_mcount );
+SCW_INPUTLEMMA_T_exposer.def_readwrite( "m_property", &SCW_INPUTLEMMA_T::m_property );
+SCW_INPUTLEMMA_T_exposer.def_readwrite( "m_sphcount", &SCW_INPUTLEMMA_T::m_sphcount );
+{ //SCW_INPUTLEMMA_T::m_subphlist [variable], type=unsigned int[512]
+
+typedef pyplusplus::containers::static_sized::array_1_t< unsigned int, 512> ( *array_wrapper_creator )( ::SCW_INPUTLEMMA_T & );
+
+SCW_INPUTLEMMA_T_exposer.add_property( "m_subphlist"
+, bp::make_function( array_wrapper_creator(&SCW_INPUTLEMMA_T_wrapper::pyplusplus_m_subphlist_wrapper)
+, bp::with_custodian_and_ward_postcall< 0, 1 >() ) );
+}
+SCW_INPUTLEMMA_T_exposer.def_readwrite( "m_type", &SCW_INPUTLEMMA_T::m_type );
+SCW_INPUTLEMMA_T_exposer.def_readwrite( "m_weight", &SCW_INPUTLEMMA_T::m_weight );
+{ //SCW_INPUTLEMMA_T::m_wordlist [variable], type=unsigned int[512]
+
+typedef pyplusplus::containers::static_sized::array_1_t< unsigned int, 512> ( *array_wrapper_creator )( ::SCW_INPUTLEMMA_T & );
+
+SCW_INPUTLEMMA_T_exposer.add_property( "m_wordlist"
+, bp::make_function( array_wrapper_creator(&SCW_INPUTLEMMA_T_wrapper::pyplusplus_m_wordlist_wrapper)
+, bp::with_custodian_and_ward_postcall< 0, 1 >() ) );
+}
+}
+
+bp::class_< SCW_LEMMA_T_wrapper >( "SCW_LEMMA_T" )
+.def_readwrite( "m_phinfo_bpos", &SCW_LEMMA_T::m_phinfo_bpos )
+.def_readwrite( "m_word_bpos", &SCW_LEMMA_T::m_word_bpos )
+.add_property( "m_length"
+, (unsigned int ( SCW_LEMMA_T_wrapper::* )(  ) const)(&SCW_LEMMA_T_wrapper::get_m_length)
+, (void ( SCW_LEMMA_T_wrapper::* )( unsigned int ) )(&SCW_LEMMA_T_wrapper::set_m_length) )
+.def_readwrite( "m_prelm_pos", &SCW_LEMMA_T::m_prelm_pos )
+.def_readwrite( "m_property", &SCW_LEMMA_T::m_property )
+.def_readwrite( "m_subphinfo_bpos", &SCW_LEMMA_T::m_subphinfo_bpos )
+.add_property( "m_type"
+, (unsigned int ( SCW_LEMMA_T_wrapper::* )(  ) const)(&SCW_LEMMA_T_wrapper::get_m_type)
+, (void ( SCW_LEMMA_T_wrapper::* )( unsigned int ) )(&SCW_LEMMA_T_wrapper::set_m_type) )
+.def_readwrite( "m_utilinfo_pos", &SCW_LEMMA_T::m_utilinfo_pos )
+.add_property( "m_weight"
+, (unsigned int ( SCW_LEMMA_T_wrapper::* )(  ) const)(&SCW_LEMMA_T_wrapper::get_m_weight)
+, (void ( SCW_LEMMA_T_wrapper::* )( unsigned int ) )(&SCW_LEMMA_T_wrapper::set_m_weight) );
+
+bp::class_< SCW_NEWWORD_T_wrapper >( "SCW_NEWWORD_T" )
+.def_readwrite( "newwordb_curpos", &SCW_NEWWORD_T::newwordb_curpos )
+.def_readwrite( "newwordbmaxcount", &SCW_NEWWORD_T::newwordbmaxcount )
+.def_readwrite( "newwordbsize", &SCW_NEWWORD_T::newwordbsize )
+.def_readwrite( "newwordbtermcount", &SCW_NEWWORD_T::newwordbtermcount )
+.add_property( "newwordbtermprop"
+, bp::make_function( (::scw_property_t * (*)( ::SCW_NEWWORD_T const & ))(&SCW_NEWWORD_T_wrapper::get_newwordbtermprop), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::SCW_NEWWORD_T &,::scw_property_t * ))(&SCW_NEWWORD_T_wrapper::set_newwordbtermprop), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.add_property( "newwordneprop"
+, bp::make_function( (::neprop_t * (*)( ::SCW_NEWWORD_T const & ))(&SCW_NEWWORD_T_wrapper::get_newwordneprop), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::SCW_NEWWORD_T &,::neprop_t * ))(&SCW_NEWWORD_T_wrapper::set_newwordneprop), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+
+bp::class_< SCW_PROPERTY_T >( "SCW_PROPERTY_T" )
+.def_readwrite( "m_hprop", &SCW_PROPERTY_T::m_hprop )
+.def_readwrite( "m_lprop", &SCW_PROPERTY_T::m_lprop );
+
+bp::class_< SCW_UTILITYINFO_T >( "SCW_UTILITYINFO_T" )
+.def_readwrite( "m_ambsuffix_pos", &SCW_UTILITYINFO_T::m_ambsuffix_pos )
+.def_readwrite( "m_fnameprob_pos", &SCW_UTILITYINFO_T::m_fnameprob_pos )
+.def_readwrite( "m_inameprob_pos", &SCW_UTILITYINFO_T::m_inameprob_pos );
+
+bp::class_< _CHS_LANG_DICT_T_wrapper >( "_CHS_LANG_DICT_T" )
+.add_property( "nerworddict"
+, bp::make_function( (::sodict_search_t * (*)( ::_CHS_LANG_DICT_T const & ))(&_CHS_LANG_DICT_T_wrapper::get_nerworddict), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_CHS_LANG_DICT_T &,::sodict_search_t * ))(&_CHS_LANG_DICT_T_wrapper::set_nerworddict), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.add_property( "phrasesubdict"
+, bp::make_function( (::phrase_sub_dict * (*)( ::_CHS_LANG_DICT_T const & ))(&_CHS_LANG_DICT_T_wrapper::get_phrasesubdict), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_CHS_LANG_DICT_T &,::phrase_sub_dict * ))(&_CHS_LANG_DICT_T_wrapper::set_phrasesubdict), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+
+bp::class_< _SCW_CONF_SECTION_T_wrapper >( "_SCW_CONF_SECTION_T" )
+.add_property( "kv_conf"
+, bp::make_function( (::scw_kvpair_t * (*)( ::_SCW_CONF_SECTION_T const & ))(&_SCW_CONF_SECTION_T_wrapper::get_kv_conf), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_CONF_SECTION_T &,::scw_kvpair_t * ))(&_SCW_CONF_SECTION_T_wrapper::set_kv_conf), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.def_readwrite( "pair_num", &_SCW_CONF_SECTION_T::pair_num )
+.def_readwrite( "section_id", &_SCW_CONF_SECTION_T::section_id );
+
+bp::class_< _SCW_CONF_T_wrapper >( "_SCW_CONF_T" )
+.def_readwrite( "lang_num", &_SCW_CONF_T::lang_num )
+.add_property( "lang_section"
+, bp::make_function( (::scw_conf_section_t * (*)( ::_SCW_CONF_T const & ))(&_SCW_CONF_T_wrapper::get_lang_section), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_CONF_T &,::scw_conf_section_t * ))(&_SCW_CONF_T_wrapper::set_lang_section), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.add_property( "ppfunc"
+, bp::make_function( (::scw_lang_func_t * * (*)( ::_SCW_CONF_T const & ))(&_SCW_CONF_T_wrapper::get_ppfunc), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_CONF_T &,::scw_lang_func_t * * ))(&_SCW_CONF_T_wrapper::set_ppfunc), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+
+bp::class_< _SCW_GLOBAL_DICT_T_wrapper >( "_SCW_GLOBAL_DICT_T" )
+.def_readwrite( "dict_num", &_SCW_GLOBAL_DICT_T::dict_num )
+.add_property( "ppdict"
+, bp::make_function( (::scw_lang_dict_t * * (*)( ::_SCW_GLOBAL_DICT_T const & ))(&_SCW_GLOBAL_DICT_T_wrapper::get_ppdict), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_GLOBAL_DICT_T &,::scw_lang_dict_t * * ))(&_SCW_GLOBAL_DICT_T_wrapper::set_ppdict), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+
+bp::class_< _SCW_INNER_T_wrapper >( "_SCW_INNER_T" )
+.add_property( "crf_out"
+, bp::make_function( (::crf_out_t * (*)( ::_SCW_INNER_T const & ))(&_SCW_INNER_T_wrapper::get_crf_out), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_INNER_T &,::crf_out_t * ))(&_SCW_INNER_T_wrapper::set_crf_out), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.add_property( "crf_res"
+, bp::make_function( (::scw_crf_out * (*)( ::_SCW_INNER_T const & ))(&_SCW_INNER_T_wrapper::get_crf_res), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_INNER_T &,::scw_crf_out * ))(&_SCW_INNER_T_wrapper::set_crf_res), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.add_property( "crf_tag"
+, bp::make_function( (::SegCrfTag * (*)( ::_SCW_INNER_T const & ))(&_SCW_INNER_T_wrapper::get_crf_tag), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_INNER_T &,::SegCrfTag * ))(&_SCW_INNER_T_wrapper::set_crf_tag), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.def_readwrite( "m_dynb_curpos", &_SCW_INNER_T::m_dynb_curpos )
+.def_readwrite( "m_dynb_size", &_SCW_INNER_T::m_dynb_size )
+.add_property( "m_dynlm"
+, bp::make_function( (::scw_lemma_t * (*)( ::_SCW_INNER_T const & ))(&_SCW_INNER_T_wrapper::get_m_dynlm), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_INNER_T &,::scw_lemma_t * ))(&_SCW_INNER_T_wrapper::set_m_dynlm), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.def_readwrite( "m_dynlm_cnt", &_SCW_INNER_T::m_dynlm_cnt )
+.def_readwrite( "m_dynlm_size", &_SCW_INNER_T::m_dynlm_size )
+.def_readwrite( "m_dynph_curpos", &_SCW_INNER_T::m_dynph_curpos )
+.def_readwrite( "m_dynph_curpos_tmp", &_SCW_INNER_T::m_dynph_curpos_tmp )
+.def_readwrite( "m_dynph_size", &_SCW_INNER_T::m_dynph_size )
+.def_readwrite( "m_dynph_size_tmp", &_SCW_INNER_T::m_dynph_size_tmp )
+.def_readwrite( "m_flag", &_SCW_INNER_T::m_flag )
+.def_readwrite( "m_mandictword_cnt", &_SCW_INNER_T::m_mandictword_cnt )
+.def_readwrite( "m_mandictword_size", &_SCW_INNER_T::m_mandictword_size )
+.def_readwrite( "m_maxterm", &_SCW_INNER_T::m_maxterm )
+.def_readwrite( "m_merged_flag", &_SCW_INNER_T::m_merged_flag )
+.def_readwrite( "m_offset", &_SCW_INNER_T::m_offset )
+.add_property( "m_ppseg"
+, bp::make_function( (::scw_lemma_t * * (*)( ::_SCW_INNER_T const & ))(&_SCW_INNER_T_wrapper::get_m_ppseg), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_INNER_T &,::scw_lemma_t * * ))(&_SCW_INNER_T_wrapper::set_m_ppseg), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.def_readwrite( "m_ppseg_cnt", &_SCW_INNER_T::m_ppseg_cnt )
+.def_readwrite( "m_protect_cnt", &_SCW_INNER_T::m_protect_cnt )
+.def_readwrite( "m_tmpbuf_len", &_SCW_INNER_T::m_tmpbuf_len )
+.add_property( "multiterm_pack"
+, bp::make_function( (::dm_pack_t * (*)( ::_SCW_INNER_T const & ))(&_SCW_INNER_T_wrapper::get_multiterm_pack), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_INNER_T &,::dm_pack_t * ))(&_SCW_INNER_T_wrapper::set_multiterm_pack), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.def_readwrite( "needremove", &_SCW_INNER_T::needremove )
+.add_property( "pdisambword"
+, bp::make_function( (::scw_newword_t * (*)( ::_SCW_INNER_T const & ))(&_SCW_INNER_T_wrapper::get_pdisambword), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_INNER_T &,::scw_newword_t * ))(&_SCW_INNER_T_wrapper::set_pdisambword), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.add_property( "pnewword"
+, bp::make_function( (::scw_newword_t * (*)( ::_SCW_INNER_T const & ))(&_SCW_INNER_T_wrapper::get_pnewword), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_INNER_T &,::scw_newword_t * ))(&_SCW_INNER_T_wrapper::set_pnewword), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.add_property( "tmp_ppseg"
+, bp::make_function( (::scw_lemma_t * * (*)( ::_SCW_INNER_T const & ))(&_SCW_INNER_T_wrapper::get_tmp_ppseg), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_INNER_T &,::scw_lemma_t * * ))(&_SCW_INNER_T_wrapper::set_tmp_ppseg), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.def_readwrite( "tmp_ppseg_cnt", &_SCW_INNER_T::tmp_ppseg_cnt );
+
+{ //::_SCW_KVPAIR_T
+typedef bp::class_< _SCW_KVPAIR_T_wrapper > _SCW_KVPAIR_T_exposer_t;
+_SCW_KVPAIR_T_exposer_t _SCW_KVPAIR_T_exposer = _SCW_KVPAIR_T_exposer_t( "_SCW_KVPAIR_T" );
+bp::scope _SCW_KVPAIR_T_scope( _SCW_KVPAIR_T_exposer );
+{ //_SCW_KVPAIR_T::achKey [variable], type=char[256]
+
+typedef pyplusplus::containers::static_sized::array_1_t< char, 256> ( *array_wrapper_creator )( ::_SCW_KVPAIR_T & );
+
+_SCW_KVPAIR_T_exposer.add_property( "achKey"
+, bp::make_function( array_wrapper_creator(&_SCW_KVPAIR_T_wrapper::pyplusplus_achKey_wrapper)
+, bp::with_custodian_and_ward_postcall< 0, 1 >() ) );
+}
+{ //_SCW_KVPAIR_T::achValue [variable], type=char[256]
+
+typedef pyplusplus::containers::static_sized::array_1_t< char, 256> ( *array_wrapper_creator )( ::_SCW_KVPAIR_T & );
+
+_SCW_KVPAIR_T_exposer.add_property( "achValue"
+, bp::make_function( array_wrapper_creator(&_SCW_KVPAIR_T_wrapper::pyplusplus_achValue_wrapper)
+, bp::with_custodian_and_ward_postcall< 0, 1 >() ) );
+}
+}
+
+bp::class_< _SCW_LANG_FUNC_T >( "_SCW_LANG_FUNC_T" );
+
+bp::class_< _SCW_LANG_INNER_T >( "_SCW_LANG_INNER_T" );
+
+bp::class_< _SCW_OUT_T_wrapper >( "_SCW_OUT_T" )
+.def_readwrite( "bnb_curpos", &_SCW_OUT_T::bnb_curpos )
+.def_readwrite( "bnbsize", &_SCW_OUT_T::bnbsize )
+.def_readwrite( "bnbtermcount", &_SCW_OUT_T::bnbtermcount )
+.add_property( "bnbtermprop"
+, bp::make_function( (::scw_property_t * (*)( ::_SCW_OUT_T const & ))(&_SCW_OUT_T_wrapper::get_bnbtermprop), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_OUT_T &,::scw_property_t * ))(&_SCW_OUT_T_wrapper::set_bnbtermprop), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.add_property( "m_pir"
+, bp::make_function( (::scw_inner_t * (*)( ::_SCW_OUT_T const & ))(&_SCW_OUT_T_wrapper::get_m_pir), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_OUT_T &,::scw_inner_t * ))(&_SCW_OUT_T_wrapper::set_m_pir), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.def_readwrite( "mb_curpos", &_SCW_OUT_T::mb_curpos )
+.def_readwrite( "mbsize", &_SCW_OUT_T::mbsize )
+.def_readwrite( "mbtermcount", &_SCW_OUT_T::mbtermcount )
+.def_readwrite( "nameb_curpos", &_SCW_OUT_T::nameb_curpos )
+.def_readwrite( "namebsize", &_SCW_OUT_T::namebsize )
+.def_readwrite( "namebtermcount", &_SCW_OUT_T::namebtermcount )
+.add_property( "namebtermprop"
+, bp::make_function( (::scw_property_t * (*)( ::_SCW_OUT_T const & ))(&_SCW_OUT_T_wrapper::get_namebtermprop), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_OUT_T &,::scw_property_t * ))(&_SCW_OUT_T_wrapper::set_namebtermprop), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.add_property( "pdisambword"
+, bp::make_function( (::scw_newword_t * (*)( ::_SCW_OUT_T const & ))(&_SCW_OUT_T_wrapper::get_pdisambword), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_OUT_T &,::scw_newword_t * ))(&_SCW_OUT_T_wrapper::set_pdisambword), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.def_readwrite( "phrase_merged", &_SCW_OUT_T::phrase_merged )
+.add_property( "pnewword"
+, bp::make_function( (::scw_newword_t * (*)( ::_SCW_OUT_T const & ))(&_SCW_OUT_T_wrapper::get_pnewword), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_OUT_T &,::scw_newword_t * ))(&_SCW_OUT_T_wrapper::set_pnewword), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.add_property( "pplir"
+, bp::make_function( (::scw_lang_inner_t * * (*)( ::_SCW_OUT_T const & ))(&_SCW_OUT_T_wrapper::get_pplir), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_OUT_T &,::scw_lang_inner_t * * ))(&_SCW_OUT_T_wrapper::set_pplir), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.def_readwrite( "spb_curpos", &_SCW_OUT_T::spb_curpos )
+.def_readwrite( "spbsize", &_SCW_OUT_T::spbsize )
+.def_readwrite( "spbtermcount", &_SCW_OUT_T::spbtermcount )
+.add_property( "spbtermprop"
+, bp::make_function( (::scw_property_t * (*)( ::_SCW_OUT_T const & ))(&_SCW_OUT_T_wrapper::get_spbtermprop), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_OUT_T &,::scw_property_t * ))(&_SCW_OUT_T_wrapper::set_spbtermprop), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.def_readwrite( "wordtotallen", &_SCW_OUT_T::wordtotallen )
+.def_readwrite( "wpb_curpos", &_SCW_OUT_T::wpb_curpos )
+.def_readwrite( "wpbsize", &_SCW_OUT_T::wpbsize )
+.def_readwrite( "wpbtermcount", &_SCW_OUT_T::wpbtermcount )
+.add_property( "wpbtermprop"
+, bp::make_function( (::scw_property_t * (*)( ::_SCW_OUT_T const & ))(&_SCW_OUT_T_wrapper::get_wpbtermprop), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_OUT_T &,::scw_property_t * ))(&_SCW_OUT_T_wrapper::set_wpbtermprop), bp::with_custodian_and_ward_postcall< 1, 2 >() ) )
+.def_readwrite( "wsb_curpos", &_SCW_OUT_T::wsb_curpos )
+.def_readwrite( "wsbsize", &_SCW_OUT_T::wsbsize )
+.def_readwrite( "wsbtermcount", &_SCW_OUT_T::wsbtermcount )
+.add_property( "wsbtermprop"
+, bp::make_function( (::scw_property_t * (*)( ::_SCW_OUT_T const & ))(&_SCW_OUT_T_wrapper::get_wsbtermprop), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_OUT_T &,::scw_property_t * ))(&_SCW_OUT_T_wrapper::set_wsbtermprop), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+
+{ //::_SCW_VERSION_MAP
+typedef bp::class_< _SCW_VERSION_MAP_wrapper > _SCW_VERSION_MAP_exposer_t;
+_SCW_VERSION_MAP_exposer_t _SCW_VERSION_MAP_exposer = _SCW_VERSION_MAP_exposer_t( "_SCW_VERSION_MAP" );
+bp::scope _SCW_VERSION_MAP_scope( _SCW_VERSION_MAP_exposer );
+_SCW_VERSION_MAP_exposer.def_readwrite( "m_bufpos", &_SCW_VERSION_MAP::m_bufpos );
+_SCW_VERSION_MAP_exposer.def_readwrite( "m_bufsize", &_SCW_VERSION_MAP::m_bufsize );
+_SCW_VERSION_MAP_exposer.def_readwrite( "m_dver_count", &_SCW_VERSION_MAP::m_dver_count );
+_SCW_VERSION_MAP_exposer.add_property( "m_dver_dict"
+, bp::make_function( (::Sdict_build * (*)( ::_SCW_VERSION_MAP const & ))(&_SCW_VERSION_MAP_wrapper::get_m_dver_dict), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_VERSION_MAP &,::Sdict_build * ))(&_SCW_VERSION_MAP_wrapper::set_m_dver_dict), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+_SCW_VERSION_MAP_exposer.def_readwrite( "m_sver_count", &_SCW_VERSION_MAP::m_sver_count );
+_SCW_VERSION_MAP_exposer.add_property( "m_sver_dict"
+, bp::make_function( (::Sdict_build * (*)( ::_SCW_VERSION_MAP const & ))(&_SCW_VERSION_MAP_wrapper::get_m_sver_dict), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_VERSION_MAP &,::Sdict_build * ))(&_SCW_VERSION_MAP_wrapper::set_m_sver_dict), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+pyplusplus::containers::static_sized::register_array_1< char[1024], 1024, bp::return_internal_reference< > >( "__array_1_char_o_sq_brace_1024_c_sq_brace__1024" );
+{ //_SCW_VERSION_MAP::m_ver_table [variable], type=char[1024][1024]
+
+typedef pyplusplus::containers::static_sized::array_1_t< char[1024], 1024> ( *array_wrapper_creator )( ::_SCW_VERSION_MAP & );
+
+_SCW_VERSION_MAP_exposer.add_property( "m_ver_table"
+, bp::make_function( array_wrapper_creator(&_SCW_VERSION_MAP_wrapper::pyplusplus_m_ver_table_wrapper)
+, bp::with_custodian_and_ward_postcall< 0, 1 >() ) );
+}
+}
+
+{ //::_SCW_WORDDICT_T
+typedef bp::class_< _SCW_WORDDICT_T_wrapper > _SCW_WORDDICT_T_exposer_t;
+_SCW_WORDDICT_T_exposer_t _SCW_WORDDICT_T_exposer = _SCW_WORDDICT_T_exposer_t( "_SCW_WORDDICT_T" );
+bp::scope _SCW_WORDDICT_T_scope( _SCW_WORDDICT_T_exposer );
+_SCW_WORDDICT_T_exposer.add_property( "crf_model"
+, bp::make_function( (::CRFPP::CrfModel * (*)( ::_SCW_WORDDICT_T const & ))(&_SCW_WORDDICT_T_wrapper::get_crf_model), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_WORDDICT_T &,::CRFPP::CrfModel * ))(&_SCW_WORDDICT_T_wrapper::set_crf_model), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_ambpos", &_SCW_WORDDICT_T::m_ambpos );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_ambsize", &_SCW_WORDDICT_T::m_ambsize );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_depos", &_SCW_WORDDICT_T::m_depos );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_desize", &_SCW_WORDDICT_T::m_desize );
+_SCW_WORDDICT_T_exposer.add_property( "m_dictentry"
+, bp::make_function( (::scw_dictentry_t * (*)( ::_SCW_WORDDICT_T const & ))(&_SCW_WORDDICT_T_wrapper::get_m_dictentry), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_WORDDICT_T &,::scw_dictentry_t * ))(&_SCW_WORDDICT_T_wrapper::set_m_dictentry), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_dynb_curpos", &_SCW_WORDDICT_T::m_dynb_curpos );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_dynb_size", &_SCW_WORDDICT_T::m_dynb_size );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_dynph_curpos", &_SCW_WORDDICT_T::m_dynph_curpos );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_dynph_size", &_SCW_WORDDICT_T::m_dynph_size );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_entrance", &_SCW_WORDDICT_T::m_entrance );
+_SCW_WORDDICT_T_exposer.add_property( "m_lemmalist"
+, bp::make_function( (::scw_lemma_t * (*)( ::_SCW_WORDDICT_T const & ))(&_SCW_WORDDICT_T_wrapper::get_m_lemmalist), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_WORDDICT_T &,::scw_lemma_t * ))(&_SCW_WORDDICT_T_wrapper::set_m_lemmalist), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_lmpos", &_SCW_WORDDICT_T::m_lmpos );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_lmsize", &_SCW_WORDDICT_T::m_lmsize );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_pbpos", &_SCW_WORDDICT_T::m_pbpos );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_pbsize", &_SCW_WORDDICT_T::m_pbsize );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_phipos", &_SCW_WORDDICT_T::m_phipos );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_phisize", &_SCW_WORDDICT_T::m_phisize );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_seipos", &_SCW_WORDDICT_T::m_seipos );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_seisize", &_SCW_WORDDICT_T::m_seisize );
+_SCW_WORDDICT_T_exposer.add_property( "m_utilinfo"
+, bp::make_function( (::scw_utilinfo_t * (*)( ::_SCW_WORDDICT_T const & ))(&_SCW_WORDDICT_T_wrapper::get_m_utilinfo), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_WORDDICT_T &,::scw_utilinfo_t * ))(&_SCW_WORDDICT_T_wrapper::set_m_utilinfo), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_utilipos", &_SCW_WORDDICT_T::m_utilipos );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_utilisize", &_SCW_WORDDICT_T::m_utilisize );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_wbpos", &_SCW_WORDDICT_T::m_wbpos );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_wbsize", &_SCW_WORDDICT_T::m_wbsize );
+_SCW_WORDDICT_T_exposer.def_readwrite( "m_wdtype", &_SCW_WORDDICT_T::m_wdtype );
+_SCW_WORDDICT_T_exposer.add_property( "multitermdict"
+, bp::make_function( (::dm_dict_t * (*)( ::_SCW_WORDDICT_T const & ))(&_SCW_WORDDICT_T_wrapper::get_multitermdict), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_WORDDICT_T &,::dm_dict_t * ))(&_SCW_WORDDICT_T_wrapper::set_multitermdict), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+_SCW_WORDDICT_T_exposer.add_property( "newworddict"
+, bp::make_function( (::sodict_search_t * (*)( ::_SCW_WORDDICT_T const & ))(&_SCW_WORDDICT_T_wrapper::get_newworddict), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_WORDDICT_T &,::sodict_search_t * ))(&_SCW_WORDDICT_T_wrapper::set_newworddict), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+_SCW_WORDDICT_T_exposer.add_property( "pdict_lsn_rule"
+, bp::make_function( (::Sdict_search * (*)( ::_SCW_WORDDICT_T const & ))(&_SCW_WORDDICT_T_wrapper::get_pdict_lsn_rule), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_WORDDICT_T &,::Sdict_search * ))(&_SCW_WORDDICT_T_wrapper::set_pdict_lsn_rule), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+_SCW_WORDDICT_T_exposer.add_property( "pdict_rsn_rule"
+, bp::make_function( (::Sdict_search * (*)( ::_SCW_WORDDICT_T const & ))(&_SCW_WORDDICT_T_wrapper::get_pdict_rsn_rule), bp::return_internal_reference< >() )
+, bp::make_function( (void (*)( ::_SCW_WORDDICT_T &,::Sdict_search * ))(&_SCW_WORDDICT_T_wrapper::set_pdict_rsn_rule), bp::with_custodian_and_ward_postcall< 1, 2 >() ) );
+pyplusplus::containers::static_sized::register_array_1< char, 100 >( "__array_1_char_100" );
+{ //_SCW_WORDDICT_T::version [variable], type=char[100]
+
+typedef pyplusplus::containers::static_sized::array_1_t< char, 100> ( *array_wrapper_creator )( ::_SCW_WORDDICT_T & );
+
+_SCW_WORDDICT_T_exposer.add_property( "version"
+, bp::make_function( array_wrapper_creator(&_SCW_WORDDICT_T_wrapper::pyplusplus_version_wrapper)
+, bp::with_custodian_and_ward_postcall< 0, 1 >() ) );
+}
+}
 
 { //::gezi::LogHelper
 typedef bp::class_< gezi::LogHelper > LogHelper_exposer_t;
@@ -204,7 +1227,6 @@ typedef bp::class_< gezi::Segmentor > Segmentor_exposer_t;
 Segmentor_exposer_t Segmentor_exposer = Segmentor_exposer_t( "Segmentor", bp::init< bp::optional< int > >(( bp::arg("seg_buff_size")=(int)(gezi::SegHandle::SEG_BUFF_SIZE) )) );
 bp::scope Segmentor_scope( Segmentor_exposer );
 bp::implicitly_convertible< int, gezi::Segmentor >();
-Segmentor_exposer.def( bp::init< std::string, bp::optional< int, int, std::string > >(( bp::arg("data_dir"), bp::arg("seg_buff_size")=(int)(gezi::SegHandle::SEG_BUFF_SIZE), bp::arg("strategy")=(int)(gezi::SEG_USE_DEFAULT), bp::arg("conf_path")="./conf/scw.conf" )) );
 { //::gezi::Segmentor::get_tokens
 
 typedef int ( ::gezi::Segmentor::*get_tokens_function_type )( ::gezi::SegHandle &,int ) ;
@@ -227,7 +1249,7 @@ Segmentor_exposer.def(
 }
 { //::gezi::Segmentor::init
 
-typedef bool ( ::gezi::Segmentor::*init_function_type )( ::std::string,int,::std::string ) ;
+typedef bool ( *init_function_type )( ::std::string,int,::std::string );
 
 Segmentor_exposer.def(
 "init"
@@ -317,21 +1339,69 @@ Segmentor_exposer.def(
 , bp::return_internal_reference<>());
 
 }
+{ //::gezi::Segmentor::uninit
+
+typedef void ( *uninit_function_type )(  );
+
+Segmentor_exposer.def(
+"uninit"
+, uninit_function_type( &::gezi::Segmentor::uninit ) );
+
+}
+Segmentor_exposer.staticmethod( "init" );
+Segmentor_exposer.staticmethod( "uninit" );
 }
 
-bp::class_< gezi::SharedSegmentor >( "SharedSegmentor" )
-.def(
-"GetSegmentor"
-, (::gezi::Segmentor & (*)(  ))( &::gezi::SharedSegmentor::GetSegmentor )
-, bp::return_internal_reference<>())
-.def(
-"Instance"
-, (::gezi::Segmentor * (*)(  ))( &::gezi::SharedSegmentor::Instance )
-, bp::return_internal_reference<>())
-.staticmethod( "GetSegmentor" )
-.staticmethod( "Instance" );
-
 bp::class_< gezi::ThreadLogHelper >( "ThreadLogHelper", bp::init< >() );
+
+{ //::scw_crf_out_t
+typedef bp::class_< scw_crf_out_t_wrapper > scw_crf_out_t_exposer_t;
+scw_crf_out_t_exposer_t scw_crf_out_t_exposer = scw_crf_out_t_exposer_t( "scw_crf_out_t" );
+bp::scope scw_crf_out_t_scope( scw_crf_out_t_exposer );
+scw_crf_out_t_exposer.def_readwrite( "nbest", &scw_crf_out_t::nbest );
+pyplusplus::containers::static_sized::register_array_1< ::scw_crf_term_t, 1, bp::return_internal_reference< > >( "__array_1__scope_scw_crf_term_t_1" );
+{ //scw_crf_out_t::term_buf [variable], type=scw_crf_term[1]
+
+typedef pyplusplus::containers::static_sized::array_1_t< ::scw_crf_term_t, 1> ( *array_wrapper_creator )( ::scw_crf_out_t & );
+
+scw_crf_out_t_exposer.add_property( "term_buf"
+, bp::make_function( array_wrapper_creator(&scw_crf_out_t_wrapper::pyplusplus_term_buf_wrapper)
+, bp::with_custodian_and_ward_postcall< 0, 1 >() ) );
+}
+}
+
+bp::class_< scw_crf_term_t >( "scw_crf_term_t" )
+.def_readwrite( "crftermcount", &scw_crf_term_t::crftermcount )
+.def_readwrite( "wordtotallen", &scw_crf_term_t::wordtotallen );
+
+{ //::token_t
+typedef bp::class_< token_t_wrapper > token_t_exposer_t;
+token_t_exposer_t token_t_exposer = token_t_exposer_t( "token_t" );
+bp::scope token_t_scope( token_t_exposer );
+token_t_exposer.def_readwrite( "m_hprop", &token_t::m_hprop );
+token_t_exposer.def_readwrite( "m_lprop", &token_t::m_lprop );
+{ //token_t::buffer [variable], type=char[256]
+
+typedef pyplusplus::containers::static_sized::array_1_t< char, 256> ( *array_wrapper_creator )( ::token_t & );
+
+token_t_exposer.add_property( "buffer"
+, bp::make_function( array_wrapper_creator(&token_t_wrapper::pyplusplus_buffer_wrapper)
+, bp::with_custodian_and_ward_postcall< 0, 1 >() ) );
+}
+token_t_exposer.def_readwrite( "index", &token_t::index );
+token_t_exposer.add_property( "length"
+, (::uint32_t ( token_t_wrapper::* )(  ) const)(&token_t_wrapper::get_length)
+, (void ( token_t_wrapper::* )( ::uint32_t ) )(&token_t_wrapper::set_length) );
+token_t_exposer.add_property( "offset"
+, (::uint32_t ( token_t_wrapper::* )(  ) const)(&token_t_wrapper::get_offset)
+, (void ( token_t_wrapper::* )( ::uint32_t ) )(&token_t_wrapper::set_offset) );
+token_t_exposer.add_property( "type"
+, (::uint32_t ( token_t_wrapper::* )(  ) const)(&token_t_wrapper::get_type)
+, (void ( token_t_wrapper::* )( ::uint32_t ) )(&token_t_wrapper::set_type) );
+token_t_exposer.add_property( "weight"
+, (::uint32_t ( token_t_wrapper::* )(  ) const)(&token_t_wrapper::get_weight)
+, (void ( token_t_wrapper::* )( ::uint32_t ) )(&token_t_wrapper::set_weight) );
+}
 
 { //::gezi::get_real_title
 
@@ -366,6 +1436,140 @@ bp::def(
 
 }
 
+{ //::scw_create_out
+
+typedef ::scw_out_t * ( *scw_create_out_function_type )( unsigned int,int );
+
+bp::def(
+"scw_create_out"
+, scw_create_out_function_type( &::scw_create_out )
+, ( bp::arg("tsize"), bp::arg("flag") )
+, bp::return_internal_reference<>());
+
+}
+
+{ //::scw_destroy_conf
+
+typedef void ( *scw_destroy_conf_function_type )( ::scw_conf_t * );
+
+bp::def(
+"scw_destroy_conf"
+, scw_destroy_conf_function_type( &::scw_destroy_conf )
+, ( bp::arg("pscw_conf") ) );
+
+}
+
+{ //::scw_destroy_out
+
+typedef void ( *scw_destroy_out_function_type )( ::scw_out_t * );
+
+bp::def(
+"scw_destroy_out"
+, scw_destroy_out_function_type( &::scw_destroy_out )
+, ( bp::arg("pout") ) );
+
+}
+
+{ //::scw_destroy_worddict
+
+typedef void ( *scw_destroy_worddict_function_type )( ::scw_worddict_t * );
+
+bp::def(
+"scw_destroy_worddict"
+, scw_destroy_worddict_function_type( &::scw_destroy_worddict )
+, ( bp::arg("pdict") ) );
+
+}
+
+{ //::scw_get_token_1
+
+typedef int ( *scw_get_token_1_function_type )( ::scw_out_t *,int,::token_t *,unsigned int );
+
+bp::def(
+"scw_get_token_1"
+, scw_get_token_1_function_type( &::scw_get_token_1 )
+, ( bp::arg("pout"), bp::arg("type"), bp::arg("result"), bp::arg("max") ) );
+
+}
+
+{ //::scw_get_worddict_version
+
+typedef int ( *scw_get_worddict_version_function_type )( int,::scw_worddict_t *,char *,int );
+
+bp::def(
+"scw_get_worddict_version"
+, scw_get_worddict_version_function_type( &::scw_get_worddict_version )
+, ( bp::arg("langid"), bp::arg("pwdict"), bp::arg("str"), bp::arg("len") ) );
+
+}
+
+{ //::scw_get_wordseg_version
+
+typedef int ( *scw_get_wordseg_version_function_type )( char *,int );
+
+bp::def(
+"scw_get_wordseg_version"
+, scw_get_wordseg_version_function_type( &::scw_get_wordseg_version )
+, ( bp::arg("str"), bp::arg("len") ) );
+
+}
+
+{ //::scw_load_conf
+
+typedef ::scw_conf_t * ( *scw_load_conf_function_type )( char const * );
+
+bp::def(
+"scw_load_conf"
+, scw_load_conf_function_type( &::scw_load_conf )
+, ( bp::arg("confpath") )
+, bp::return_internal_reference<>());
+
+}
+
+{ //::scw_load_worddict
+
+typedef ::scw_worddict_t * ( *scw_load_worddict_function_type )( char const * );
+
+bp::def(
+"scw_load_worddict"
+, scw_load_worddict_function_type( &::scw_load_worddict )
+, ( bp::arg("dictpath") )
+, bp::return_internal_reference<>());
+
+}
+
+{ //::scw_segment_words
+
+typedef int ( *scw_segment_words_function_type )( ::scw_worddict_t *,::scw_out_t *,char const *,int const,int,void * );
+
+bp::def(
+"scw_segment_words"
+, scw_segment_words_function_type( &::scw_segment_words )
+, ( bp::arg("pdict"), bp::arg("pout"), bp::arg("inbuf"), bp::arg("inlen"), bp::arg("langid")=int(::LANGTYPE_SIMP_CHINESE), bp::arg("lang_para")=0l ) );
+
+}
+
+{ //::scw_show_version
+
+typedef void ( *scw_show_version_function_type )(  );
+
+bp::def(
+"scw_show_version"
+, scw_show_version_function_type( &::scw_show_version ) );
+
+}
+
+{ //::seg_split
+
+typedef int ( *seg_split_function_type )( ::Sdict_search *,::scw_out_t *,::token_t *,int );
+
+bp::def(
+"seg_split"
+, seg_split_function_type( &::seg_split )
+, ( bp::arg("phrasedict"), bp::arg("pout"), bp::arg("subtokens"), bp::arg("tcnt") ) );
+
+}
+
 { //::gezi::strip_html
 
 typedef ::std::string ( *strip_html_function_type )( ::std::string );
@@ -376,6 +1580,68 @@ bp::def(
 , ( bp::arg("src") ) );
 
 }
+
+bp::scope().attr("AUX_WEIGHT_INC") = AUX_WEIGHT_INC;
+
+bp::scope().attr("COMMON_NULL") = COMMON_NULL;
+
+bp::scope().attr("DEFAULT_DE_SIZE") = DEFAULT_DE_SIZE;
+
+bp::scope().attr("DEFAULT_HASH_SIZE") = DEFAULT_HASH_SIZE;
+
+bp::scope().attr("DEFAULT_INFO_SIZE") = DEFAULT_INFO_SIZE;
+
+bp::scope().attr("DEFAULT_LEMMA_COUNT") = DEFAULT_LEMMA_COUNT;
+
+bp::scope().attr("DEFAULT_WORDBUF_SIZE") = DEFAULT_WORDBUF_SIZE;
+
+bp::scope().attr("DENTRY_FIRST") = DENTRY_FIRST;
+
+bp::scope().attr("DENTRY_NULL") = DENTRY_NULL;
+
+bp::scope().attr("LEMMA_DEFAULT_PROB") = LEMMA_DEFAULT_PROB;
+
+bp::scope().attr("LEMMA_DEFAULT_PROB_JP") = LEMMA_DEFAULT_PROB_JP;
+
+bp::scope().attr("LEMMA_NULL") = LEMMA_NULL;
+
+bp::scope().attr("LEMMA_SMOOTH_PROB") = LEMMA_SMOOTH_PROB;
+
+bp::scope().attr("LEMMA_SMOOTH_PROB_JP") = LEMMA_SMOOTH_PROB_JP;
+
+bp::scope().attr("LEMMA_TYPE_DBASIC") = LEMMA_TYPE_DBASIC;
+
+bp::scope().attr("LEMMA_TYPE_DPHRASE") = LEMMA_TYPE_DPHRASE;
+
+bp::scope().attr("LEMMA_TYPE_MAN") = LEMMA_TYPE_MAN;
+
+bp::scope().attr("LEMMA_TYPE_POLY") = LEMMA_TYPE_POLY;
+
+bp::scope().attr("LEMMA_TYPE_QYPD") = LEMMA_TYPE_QYPD;
+
+bp::scope().attr("LEMMA_TYPE_SBASIC") = LEMMA_TYPE_SBASIC;
+
+bp::scope().attr("LEMMA_TYPE_SPHRASE") = LEMMA_TYPE_SPHRASE;
+
+bp::scope().attr("MAX_AMB_NUM") = MAX_AMB_NUM;
+
+bp::scope().attr("MAX_IL_LEN") = MAX_IL_LEN;
+
+bp::scope().attr("MAX_LEMMA_LENGTH") = MAX_LEMMA_LENGTH;
+
+bp::scope().attr("MAX_LEMMA_POS") = MAX_LEMMA_POS;
+
+bp::scope().attr("MAX_SPLIT_NUM") = MAX_SPLIT_NUM;
+
+bp::scope().attr("MAX_TERM") = MAX_TERM;
+
+bp::scope().attr("NAME_PROP_COUNT") = NAME_PROP_COUNT;
+
+bp::scope().attr("NORMALIZE_INTEGER") = NORMALIZE_INTEGER;
+
+bp::scope().attr("SCW_INFO_FACT") = SCW_INFO_FACT;
+
+bp::scope().attr("SCW_MAXWORDLEN") = SCW_MAXWORDLEN;
 
 bp::scope().attr("SEG_BASIC") = gezi::SEG_BASIC;
 
@@ -396,4 +1662,14 @@ bp::scope().attr("SEG_USE_SPLIT") = gezi::SEG_USE_SPLIT;
 bp::scope().attr("SEG_USE_TRIE") = gezi::SEG_USE_TRIE;
 
 bp::scope().attr("SEG_WPCOMP") = gezi::SEG_WPCOMP;
+
+bp::scope().attr("SUFENTRY_NULL") = SUFENTRY_NULL;
+
+bp::scope().attr("TYPE_MULTITERM") = TYPE_MULTITERM;
+
+bp::scope().attr("TYPE_MULTITERM_NEWWORD") = TYPE_MULTITERM_NEWWORD;
+
+bp::scope().attr("TYPE_NEWWORD") = TYPE_NEWWORD;
+
+bp::scope().attr("WORDELE_WEIGHT_INC") = WORDELE_WEIGHT_INC;
 }

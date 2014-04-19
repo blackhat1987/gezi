@@ -94,7 +94,6 @@ ImportConfigsFrom('..')
 #INCPATHS('/home/users/chenghuige/.jumbo/include/python2.7 /home/users/chenghuige/.jumbo/include/ . ./include ./utils ./output ./output/include ./include/feature ./include/model ./include/numeric'.replace('./',RELATIVE_PATH))
 INCPATHS('/home/users/chenghuige/.jumbo/include/python2.7 . ./include ./utils ./output ./output/include ./include/feature ./include/model ./include/numeric'.replace('./',RELATIVE_PATH))
 #srcs=GLOB('./src/*.cpp'.replace('./',RELATIVE_PATH))
-srcs='../src/word_seg.cpp'
 headers=''
 
 #¾²Ì¬¿â

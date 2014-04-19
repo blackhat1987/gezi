@@ -11,7 +11,7 @@ mb = module_builder.module_builder_t(
 					'./include.python/ProgressBar.h',
 					'./include.python/tieba/util.h',
 					'./include.python/tools/content_process.h'
-					],
+					] + glob.glob('/home/users/chenghuige/rsc/lib2-64/wordseg/*.h'),
         include_paths=[ '/home/users/chenghuige/rsc/lib2-64/wordseg', 
         '/home/users/chenghuige/rsc/lib2-64/postag/include',
         '/home/users/chenghuige/rsc/lib2-64/dict/include',
