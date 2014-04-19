@@ -23,24 +23,24 @@ namespace gezi {
 	public:
 		virtual ~Pinyin()
 		{
-			FREE(_pyNotaion);
+			FREE(PyNotaion());
 		}
-		void Load(string dictPath)
+		static void Load(string dictPath)
 		{
-			_pyNotaion = NLP::Pinyin::IPYFactory::getPYInstance();
+			PyNotaion() = NLP::Pinyin::IPYFactory::getPYInstance();
 			string path = dictPath + "/dyz.dat";
-			CHECK(_pyNotaion->loadDyzDict(path.c_str()) == true) << path;
+			CHECK(PyNotaion()->loadDyzDict(path.c_str()) == true) << path;
 			path = dictPath + "/dict.dat";
-			CHECK(_pyNotaion->loadDict(path.c_str()) == true) << path;
+			CHECK(PyNotaion()->loadDict(path.c_str()) == true) << path;
 			path = dictPath + "/duoyong.dat";
-			CHECK(_pyNotaion->loadDYDict(path.c_str()) == true) << path;
+			CHECK(PyNotaion()->loadDYDict(path.c_str()) == true) << path;
 			path = dictPath + "/dz_pro.dat";
-			CHECK(_pyNotaion->loadBMEDict(path.c_str()) == true) << path;
+			CHECK(PyNotaion()->loadBMEDict(path.c_str()) == true) << path;
 		}
-		string Convert(string input)
+		static string Convert(string input)
 		{
 			vector<string> result;
-			bool ret = _pyNotaion->convertToPY(input.c_str(), &result);
+			bool ret = PyNotaion()->convertToPY(input.c_str(), &result);
 			if (ret && !result.empty())
 			{
 				return result[0];
@@ -52,7 +52,11 @@ namespace gezi {
 		}
 	protected:
 	private:
-		NLP::Pinyin::IPYNotation* _pyNotaion;
+		static NLP::Pinyin::IPYNotation*& PyNotaion()
+		{
+			static NLP::Pinyin::IPYNotation* _pyNotaion = NULL;
+			return _pyNotaion;
+		}
 	};
 }  //----end of namespace gezi
 

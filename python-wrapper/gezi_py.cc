@@ -16,6 +16,8 @@ const int gezi::SegHandle::SEG_BUFF_SIZE;
 
 #include "../include/tieba/util.h"
 
+#include "../include/tools/content_process.h"
+
 namespace bp = boost::python;
 
 struct SegHandle_wrapper : gezi::SegHandle, bp::wrapper< gezi::SegHandle > {
@@ -361,6 +363,17 @@ bp::def(
 "print_seg_result"
 , print_seg_result_function_type( &::gezi::print_seg_result )
 , ( bp::arg("handle") ) );
+
+}
+
+{ //::gezi::strip_html
+
+typedef ::std::string ( *strip_html_function_type )( ::std::string );
+
+bp::def(
+"strip_html"
+, strip_html_function_type( &::gezi::strip_html )
+, ( bp::arg("src") ) );
 
 }
 

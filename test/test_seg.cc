@@ -16,6 +16,7 @@
 #define protected public
 #include "common_util.h"
 //#include "word_seg.h"
+#include "Segmentor.h"
 using namespace std;
 using namespace gezi;
 DEFINE_int32(level, 0, "min log level");
@@ -131,20 +132,21 @@ DEFINE_string(type, "simple", "");
 
 TEST(final, func)
 {
-	Seg::Instance()->init();
-	Pval(Seg::Instance()->segment("我爱你中国扣扣是速去美女激晴吧", "|", SCW_OUT_WPCOMP));
+	Segmentor::init();
+	Segmentor seg;
+	Pval(seg.segment("我爱你中国扣扣是速去美女激晴吧", "|", SCW_OUT_WPCOMP));
 
-	Pval(Seg::Instance()->segment("我的扣扣是马布里杨美美基晴视频", "|", SCW_OUT_WPCOMP));
+	Pval(seg.segment("我的扣扣是马布里杨美美基晴视频", "|", SCW_OUT_WPCOMP));
 
-	Pval(Seg::Instance()->segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
+	Pval(seg.segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
 
-	Pval(Seg::Instance()->set_flag(SCW_CRF).segment("我的扣扣是马布里杨美美基晴视频", "|", SCW_OUT_WPCOMP | SCW_OUT_NEWWORD));
+	Pval(seg.set_flag(SCW_CRF).segment("我的扣扣是马布里杨美美基晴视频", "|", SCW_OUT_WPCOMP | SCW_OUT_NEWWORD));
 
-	Pval(Seg::Instance()->segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
+	Pval(seg.segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
 
-	Pval(Seg::Instance()->set_flag(0).segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
+	Pval(seg.set_flag(0).segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
 
-	Pval(Seg::Instance()->segment("回复：【新版斗破苍穹传奇】2014年最新火爆开放◆数月调试震撼上演	萧炎这才无奈的摇了摇头", "|", SEG_MERGE_NEWWORD));
+	Pval(seg.segment("回复：【新版斗破苍穹传奇】2014年最新火爆开放◆数月调试震撼上演	萧炎这才无奈的摇了摇头", "|", SEG_MERGE_NEWWORD));
 }
 
 int main(int argc, char *argv[])

@@ -151,7 +151,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=889c112542a8340a48e063f2144732dd  COMAKE
+COMAKE_MD5=fdc0b2d8f46ebfd7f72e2f985800f098  COMAKE
 
 
 .PHONY:all
@@ -189,7 +189,6 @@ clean:ccpclean
 	rm -rf src/model/gezi_common_Score.o
 	rm -rf src/model/gezi_common_SharedPredictor.o
 	rm -rf src/model/gezi_common_SvmModel.o
-	rm -rf src/seralization/gezi_common_shared_ptr_helper.o
 	rm -rf src/json/gezi_json_json_reader.o
 	rm -rf src/json/gezi_json_json_value.o
 	rm -rf src/json/gezi_json_json_writer.o
@@ -223,8 +222,7 @@ libgezi_common.a:src/gezi_common_word_seg.o \
   src/model/gezi_common_RandForestModel.o \
   src/model/gezi_common_Score.o \
   src/model/gezi_common_SharedPredictor.o \
-  src/model/gezi_common_SvmModel.o \
-  src/seralization/gezi_common_shared_ptr_helper.o
+  src/model/gezi_common_SvmModel.o
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibgezi_common.a[0m']"
 	ar crs libgezi_common.a src/gezi_common_word_seg.o \
   src/model/gezi_common_LinearModel.o \
@@ -233,8 +231,7 @@ libgezi_common.a:src/gezi_common_word_seg.o \
   src/model/gezi_common_RandForestModel.o \
   src/model/gezi_common_Score.o \
   src/model/gezi_common_SharedPredictor.o \
-  src/model/gezi_common_SvmModel.o \
-  src/seralization/gezi_common_shared_ptr_helper.o
+  src/model/gezi_common_SvmModel.o
 	mkdir -p ./output/lib
 	cp -f --link libgezi_common.a ./output/lib
 
@@ -311,14 +308,6 @@ src/model/gezi_common_SvmModel.o:src/model/SvmModel.cpp
   -DVERSION=\"1.9.8.7\" \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_SvmModel.o src/model/SvmModel.cpp
-
-src/seralization/gezi_common_shared_ptr_helper.o:src/seralization/shared_ptr_helper.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/seralization/gezi_common_shared_ptr_helper.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
-  -D__STDC_LIMIT_MACROS \
-  -DVERSION=\"1.9.8.7\" \
-  -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/seralization/gezi_common_shared_ptr_helper.o src/seralization/shared_ptr_helper.cpp
 
 src/json/gezi_json_json_reader.o:src/json/json_reader.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_json_reader.o[0m']"

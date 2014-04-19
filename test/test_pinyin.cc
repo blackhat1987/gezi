@@ -25,29 +25,28 @@ DEFINE_string(type, "simple", "");
 
 TEST(test_pinyin, func)
 {
-	Pinyin pinyin;
-	pinyin.Load(FLAGS_i);
+	Pinyin::Load(FLAGS_i);
 	size_t length = 12;
 
 #pragma omp parallel for 
 	for (size_t i = 0; i < length; i++)
 	{
-		Pval(pinyin.Convert("abc你好"));
-		Pval(pinyin.Convert("美女基情音乐"));
+		Pval(Pinyin::Convert("abc你好"));
+		Pval(Pinyin::Convert("美女基情音乐"));
 	}
 	
 }
 
 int main(int argc, char *argv[])
 {
-  testing::InitGoogleTest(&argc, argv);
-  google::InitGoogleLogging(argv[0]);
-  google::InstallFailureSignalHandler();
-  int s = google::ParseCommandLineFlags(&argc, &argv, false);
-  if (FLAGS_log_dir.empty())
-    FLAGS_logtostderr = true;
-  FLAGS_minloglevel = FLAGS_level;
-  boost::progress_timer timer;
-  
-  return RUN_ALL_TESTS();
+	testing::InitGoogleTest(&argc, argv);
+	google::InitGoogleLogging(argv[0]);
+	google::InstallFailureSignalHandler();
+	int s = google::ParseCommandLineFlags(&argc, &argv, false);
+	if (FLAGS_log_dir.empty())
+		FLAGS_logtostderr = true;
+	FLAGS_minloglevel = FLAGS_level;
+	boost::progress_timer timer;
+	
+	return RUN_ALL_TESTS();
 }

@@ -113,21 +113,22 @@ namespace gezi {
 		Segmentor(int seg_buff_size = SegHandle::SEG_BUFF_SIZE)
 			:_buf_size(seg_buff_size)
 		{
-
-		}
-
-		Segmentor(string data_dir, int seg_buff_size = SegHandle::SEG_BUFF_SIZE,
-			int strategy = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
-			:_buf_size(seg_buff_size)
-		{
-			bool ret = init(data_dir, strategy, conf_path);
-			CHECK_EQ(ret, true);
+			_handle.init(_buf_size); //在这之前需要先调用 Segmentor::init
+			LOG_INFO("Segmentor handle init ok");
 		}
 
 		~Segmentor()
 		{
 			//需要先关闭它 
 			_handle.clear();
+#pragma omp critical
+			{
+				uninit();
+			}
+		}
+
+		static void uninit()
+		{
 			if (pwdict())
 			{
 				if (strategy() & SEG_USE_POSTAG)
@@ -158,9 +159,14 @@ namespace gezi {
 			return *this;
 		}
 
-		bool init(string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
+		static bool init(string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
 		{
 			return init(data_dir.c_str(), type, conf_path.c_str());
+		}
+
+		bool init(string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
+		{
+
 		}
 
 		bool seg_words(string input, SegHandle& handle)
@@ -269,8 +275,7 @@ namespace gezi {
 		}
 
 	private:
-		//@TODO 是否线程安全？ 除了handle init 都是static
-		bool init(const char* data_dir, int type = 0, const char* conf_path = "./conf/scw.conf")
+		static bool init(const char* data_dir, int type = 0, const char* conf_path = "./conf/scw.conf")
 		{
 			strategy() = type;
 			int ret = -1;
@@ -317,8 +322,6 @@ namespace gezi {
 					}
 				}
 			}
-			_handle.init(_buf_size);
-			LOG_INFO("Segmentor hadle init ok");
 			LOG_INFO("Segmentor init ok");
 			return true;
 		}
@@ -340,7 +343,8 @@ namespace gezi {
 			int i = 0, j = 0, index = 0;
 			for (; j < pnewword->newwordbtermcount; i++, index++)
 			{
-				int idx1 = pout->wpbtermoffsets[i];
+				//int idx1 = pout->wpbtermoffsets[i]; //混排粒度offset是相对基本粒度的offset
+				int idx1 = i;
 				int idx2 = pnewword->newwordbtermoffsets[j * 2];//-这里是2*i,因为offset是不一样的
 				int pos1 = GET_TERM_POS(pout->wpbtermpos[i]);
 				int len1 = GET_TERM_LEN(pout->wpbtermpos[i]);
@@ -415,22 +419,6 @@ namespace gezi {
 		}
 	}
 
-	class SharedSegmentor
-	{
-	public:
-		static Segmentor* Instance()
-		{
-			return &GetSegmentor();
-		}
-
-		static Segmentor& GetSegmentor()
-		{
-			static Segmentor _segmentor;
-			return _segmentor;
-		}
-	};
-
-	typedef SharedSegmentor Seg;
 } //----end of namespace gezi
 
 #endif  //----end of SEGMENTOR_H_

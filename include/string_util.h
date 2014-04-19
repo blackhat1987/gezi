@@ -23,20 +23,19 @@
 
 #include "wstring_util.h"
 #include "encoding_convert.h"
-#include "common_util.h"
-
+#include "common_def.h"
 #include "reg_util.h"
 
 namespace gezi {
 	using namespace std;
 
+	//already gbk chinese,judge if gb2312 chinese
 	inline bool is_gb2312(unsigned char ch1, unsigned char ch2)
-	{ //already gbk chinese,judge if gb2312 chinese
+	{
 		return (ch1 >= 176) && (ch1 <= 247) && (ch2 >= 161);
 	}
 
 	//TODO just use ccode
-
 	inline bool is_gbk_ch(unsigned char ch1, unsigned char ch2)
 	{
 		return ((ch2 >= 64) && (ch2 <= 254) && (ch2 != 127) &&
@@ -53,7 +52,6 @@ namespace gezi {
 
 
 	//en means single byte
-
 	inline bool all_en(string phrase)
 	{
 		for (size_t i = 0; i < phrase.size(); i++)
@@ -69,7 +67,6 @@ namespace gezi {
 	}
 
 	//这里的en是single btye cn 限定gbk ch
-
 	inline bool is_en_dominate(string phrase, int var = 3)
 	{
 		int cn_count = 0;
@@ -99,7 +96,6 @@ namespace gezi {
 	}
 
 	//提取中文
-
 	//inline string extract_chinese(string temp)
 	//{
 	//  vector<char> out(temp.size() + 1, 0);
@@ -386,7 +382,6 @@ namespace gezi {
 
 
 	//将特殊空白替换为空格
-
 	inline string replace_special_whitespace(string s, const char rep = ' ')
 	{
 		vector<char> buf(s.size() + 1, '\0');
@@ -592,7 +587,6 @@ namespace gezi {
 	}
 
 	//默认输入是中文
-
 	inline vector<string> to_cnvec(string line)
 	{
 		vector<string> vec;

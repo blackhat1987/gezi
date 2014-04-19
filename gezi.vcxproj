@@ -166,6 +166,7 @@
     <ClInclude Include="include\tieba\uname_util.h" />
     <ClInclude Include="include\tieba\util.h" />
     <ClInclude Include="include\time_util.h" />
+    <ClInclude Include="include\tools\content_process.h" />
     <ClInclude Include="include\tools\ip.h" />
     <ClInclude Include="include\tools\IpFinder.h" />
     <ClInclude Include="include\tools\pinyin\IPYFactory.h" />

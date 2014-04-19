@@ -25,9 +25,9 @@
 
 #include "hashmap_util.h"
 #include "log_util.h"
+#include "string_util.h"
 #include "conf_util.h"
 #include "debug_util.h"
-#include "string_util.h"
 #include "serialize_util.h"
 #include "Matrix.h"
 #include "sort_util.h"
