@@ -189,10 +189,32 @@ namespace gezi {
 			return true;
 		}
 
-		int get_tokens(SegHandle& handle, int type = SEG_WPCOMP)
+		static int get_tokens(SegHandle& handle, int type = SEG_WPCOMP)
 		{
 			handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
 			return handle.nresult;
+		}
+
+		int get_tokens(int type = SEG_WPCOMP)
+		{
+			handle.nresult = scw_get_token_1(_handle.pout, type, _handle.tokens, _handle.buf_size);
+			return handle.nresult;
+		}
+
+		static vector<SegNode> get_segnodes(SegHandle& handle)
+		{
+			vector<SegNode> result;
+			for (int i = 0; i < handle.nresult; i++)
+			{
+				result.push_back(SegNode(handle.tokens[i].buffer, handle.tokens[i].length,
+					handle.tokens[i].offset, handle.tokens[i].weight));
+			}
+			return result;
+		}
+
+		vector<SegNode> get_segnodes()
+		{
+			return get_segnodes(_handle);
 		}
 
 		bool segment(string input, SegHandle& handle, int type = SEG_WPCOMP)
