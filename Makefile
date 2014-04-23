@@ -40,7 +40,6 @@ INCPATH=-I. \
   -I./output \
   -I./output/include \
   -I./include/feature \
-  -I./include/model \
   -I./include/numeric \
   -I./melt/include/ \
   -I./include/serialization/
@@ -151,7 +150,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=1762185b50f8e17f01937de7e1328b56  COMAKE
+COMAKE_MD5=ae96aad067cbebe41af61dd66dbc01dd  COMAKE
 
 
 .PHONY:all
@@ -181,13 +180,6 @@ clean:ccpclean
 	rm -rf ./output/lib/libgezi_common.a
 	rm -rf libgezi_json.a
 	rm -rf ./output/lib/libgezi_json.a
-	rm -rf src/model/gezi_common_LinearModel.o
-	rm -rf src/model/gezi_common_ModelFactory.o
-	rm -rf src/model/gezi_common_Predictor.o
-	rm -rf src/model/gezi_common_RandForestModel.o
-	rm -rf src/model/gezi_common_Score.o
-	rm -rf src/model/gezi_common_SharedPredictor.o
-	rm -rf src/model/gezi_common_SvmModel.o
 	rm -rf src/json/gezi_json_json_reader.o
 	rm -rf src/json/gezi_json_json_value.o
 	rm -rf src/json/gezi_json_json_writer.o
@@ -214,21 +206,9 @@ copy-pinyin-lib:
 	mkdir -p output/lib
 	cp ./include/tools/pinyin/libPYNotation.a ./output/lib/
 
-libgezi_common.a:src/model/gezi_common_LinearModel.o \
-  src/model/gezi_common_ModelFactory.o \
-  src/model/gezi_common_Predictor.o \
-  src/model/gezi_common_RandForestModel.o \
-  src/model/gezi_common_Score.o \
-  src/model/gezi_common_SharedPredictor.o \
-  src/model/gezi_common_SvmModel.o
+libgezi_common.a:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibgezi_common.a[0m']"
-	ar crs libgezi_common.a src/model/gezi_common_LinearModel.o \
-  src/model/gezi_common_ModelFactory.o \
-  src/model/gezi_common_Predictor.o \
-  src/model/gezi_common_RandForestModel.o \
-  src/model/gezi_common_Score.o \
-  src/model/gezi_common_SharedPredictor.o \
-  src/model/gezi_common_SvmModel.o
+	ar crs libgezi_common.a 
 	mkdir -p ./output/lib
 	cp -f --link libgezi_common.a ./output/lib
 
@@ -241,62 +221,6 @@ libgezi_json.a:src/json/gezi_json_json_reader.o \
   src/json/gezi_json_json_writer.o
 	mkdir -p ./output/lib
 	cp -f --link libgezi_json.a ./output/lib
-
-src/model/gezi_common_LinearModel.o:src/model/LinearModel.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_LinearModel.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
-  -D__STDC_LIMIT_MACROS \
-  -DVERSION=\"1.9.8.7\" \
-  -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_LinearModel.o src/model/LinearModel.cpp
-
-src/model/gezi_common_ModelFactory.o:src/model/ModelFactory.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_ModelFactory.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
-  -D__STDC_LIMIT_MACROS \
-  -DVERSION=\"1.9.8.7\" \
-  -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_ModelFactory.o src/model/ModelFactory.cpp
-
-src/model/gezi_common_Predictor.o:src/model/Predictor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_Predictor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
-  -D__STDC_LIMIT_MACROS \
-  -DVERSION=\"1.9.8.7\" \
-  -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_Predictor.o src/model/Predictor.cpp
-
-src/model/gezi_common_RandForestModel.o:src/model/RandForestModel.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_RandForestModel.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
-  -D__STDC_LIMIT_MACROS \
-  -DVERSION=\"1.9.8.7\" \
-  -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_RandForestModel.o src/model/RandForestModel.cpp
-
-src/model/gezi_common_Score.o:src/model/Score.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_Score.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
-  -D__STDC_LIMIT_MACROS \
-  -DVERSION=\"1.9.8.7\" \
-  -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_Score.o src/model/Score.cpp
-
-src/model/gezi_common_SharedPredictor.o:src/model/SharedPredictor.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_SharedPredictor.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
-  -D__STDC_LIMIT_MACROS \
-  -DVERSION=\"1.9.8.7\" \
-  -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_SharedPredictor.o src/model/SharedPredictor.cpp
-
-src/model/gezi_common_SvmModel.o:src/model/SvmModel.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/model/gezi_common_SvmModel.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
-  -D__STDC_LIMIT_MACROS \
-  -DVERSION=\"1.9.8.7\" \
-  -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/model/gezi_common_SvmModel.o src/model/SvmModel.cpp
 
 src/json/gezi_json_json_reader.o:src/json/json_reader.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_json_reader.o[0m']"

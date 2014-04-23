@@ -13,7 +13,7 @@
 
 #ifndef DATETIME_UTIL_H_
 #define DATETIME_UTIL_H_
-//date time
+//date time @FIXMEºÍpy++ gccxml³åÍ»
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 #include "common_util.h"

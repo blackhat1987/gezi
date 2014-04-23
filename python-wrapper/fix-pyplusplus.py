@@ -18,6 +18,7 @@ for line in open(sys.argv[1]):
 			print '//',
 			find_warning = False
 		line = line.replace('.h.python', '.h').replace('include.python','include')
+		line = line.replace('boost::unordered','std')
 		print line,
 		if (line.find('WARNING:') >= 0):
 			find_warning = True 

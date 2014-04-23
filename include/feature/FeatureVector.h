@@ -85,6 +85,34 @@ namespace gezi {
 			return values[i];
 		}
 
+		Float value_at(int index) const
+		{
+			int idx = (index + values.size()) % values.size();
+			return values[idx];
+		}
+
+#ifndef GCCXML
+		Float& value_at(int index) 
+		{
+			int idx = (index + values.size()) % values.size();
+			return values[idx];
+		}
+#endif
+
+		Float at(int index) const
+		{
+			int idx = (index + values.size()) % values.size();
+			return values[idx];
+		}
+
+#ifndef GCCXML
+		Float& at(int index)
+		{
+			int idx = (index + values.size()) % values.size();
+			return values[idx];
+		}
+#endif
+
 		//覆盖掉基类  注意尽量在FeatureVector数据填充完之后 set_length一下(FeatureExtractor)
 		int dimension() const
 		{
@@ -121,7 +149,7 @@ namespace gezi {
 			return _names.empty();
 		}
 
-		string str()
+		string str(string sep = ",")
 		{
 			std::stringstream ss;
 
@@ -129,16 +157,16 @@ namespace gezi {
 			{
 				for (Feature& feature : _features)
 				{
-					ss << feature.index << ":" << feature.value << "\t";
+					ss << feature.index << ":" << feature.value << sep;
 				}
 			}
 			else
 			{
-				ForEachNonZero([&ss](int index, Float value) {
-					ss << index << ":" << value << "\t";
+				ForEachNonZero([&](int index, Float value) {
+					ss << index << ":" << value << sep;
 				});
 			}
-			return ss.str();
+			return ss.str().substr(0, ss.str().length() - 1);
 		}
 
 		vector<string>& names()
@@ -352,6 +380,11 @@ namespace gezi {
 	typedef shared_ptr<FeatureVector> FeatureVectorPtr;
 	typedef FeatureVector Features;
 	typedef FeatureVectorPtr FeaturesPtr;
+
+	class PyFeatures : public Features
+	{
+
+	};
 }  //----end of namespace gezi
 
 #endif  //----end of FEATURE__FEATURE_VECTOR_H_

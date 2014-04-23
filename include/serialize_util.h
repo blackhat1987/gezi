@@ -52,7 +52,7 @@ template<class T>
 bool load(string file, T& data)
 {
     std::ifstream ifs(file.c_str());
-    if (!ifs)
+    if (!ifs.is_open())
     {
         //        LOG(INFO) << "open " << file << " error" << std::endl;
         //        throw new int(10);

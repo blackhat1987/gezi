@@ -52,7 +52,7 @@ namespace gezi {
 		}
 
 		//方便debug Vector vec("1\t3\t4\t5"); Vector vec("1:2.3\t3:4.5"); or vec("1 3") space is also ok
-		Vector(string input, int length_ = 0, string sep = ",\t ")
+		Vector(string input, int length_ = 1024000, string sep = ",\t ")
 		{
 			boost::trim(input); //需要注意 因为DOUBLE采用atof快速但是不安全 可能输入是一个空格 导致有问题
 			//注意split("",sep)得到不是空结果 而是有1个空元素的vector c# python	也是		
@@ -231,7 +231,7 @@ namespace gezi {
 		}
 
 		Float& operator[](int i)
-		{//hack
+		{
 			/*if (i < 0 || i >= length)
 				return _value;*/
 				//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
@@ -501,10 +501,18 @@ namespace gezi {
 			return values[index];
 		}
 
+		//@FIXME why fail boost.python
+#ifndef GCCXML
 		Float& Value(int index)
 		{
 			return values[index];
 		}
+//#else 
+//		double& Value(int index) //这个没问题但是python里面 不能用 例如 fe.Value(3) = 4
+//		{
+//			return values[index];
+//		}
+#endif
 
 		void Clear()
 		{
@@ -830,7 +838,8 @@ namespace gezi {
 		//@TODO 有没有必要写成shared_ptr<ivec> indices; //更加灵活 允许两个Vector相同indice 不同value 避免拷贝
 		ivec indices; //不使用Node(index,value)更加灵活 同时可以允许一项为空
 		Fvec values; //@TODO may be FvecPtr 或者加一个指针 修改代码 如果指针不是空 使用指针指向的
-		Float sparsityRatio = 0.25; //non_zero count < ratio to sparse, non_zero count >= ratio to dense
+		//non_zero count < ratio to sparse, non_zero count >= ratio to dense
+		Float sparsityRatio = 0.25;  
 		bool keepDense = false;
 		bool keepSparse = false;
 		bool normalized = false;

@@ -15,7 +15,7 @@
 #define FEATURE_FEATURES_UTIL_H_
 
 #include "feature/FeatureVector.h"
-#include "feature/feature_util.h" //@TODO¡¡remove here just use to_libsvm
+#include "string_util.h"
 
 namespace gezi {
 

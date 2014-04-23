@@ -1,8 +1,18 @@
+gcc3
 cp -rf ../include/* ../include.python/ 
 pushd .
 cd ../include.python/ 
 gen-header-all.py
 cd tieba
+gen-header-all.py 
+cd .. 
+cd Numeric
+gen-header-all.py 
+cd Vector
+gen-header-all.py 
+cd .. 
+cd .. 
+cd feature
 gen-header-all.py 
 cd .. 
 popd

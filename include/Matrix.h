@@ -14,6 +14,7 @@
 #ifndef MATRIX_H_
 #define MATRIX_H_
 #include <vector>
+#include "common_def.h"
 namespace gezi {
 	namespace ufo {
 

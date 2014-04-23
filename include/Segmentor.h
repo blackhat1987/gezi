@@ -128,21 +128,18 @@ namespace gezi {
 			:_buf_size(seg_buff_size)
 		{
 			_handle.init(_buf_size); //在这之前需要先调用 Segmentor::init
-			LOG_INFO("Segmentor handle init ok");
+			VLOG(3) << "Segmentor handle init ok";
 		}
 
 		~Segmentor()
 		{
 			//需要先关闭它 
 			_handle.clear();
-#pragma omp critical
-			{
-				uninit();
-			}
 		}
 
 		static void uninit()
 		{
+			LOG(INFO) << "segmentor uninit";
 			if (pwdict())
 			{
 				if (strategy() & SEG_USE_POSTAG)
@@ -159,7 +156,6 @@ namespace gezi {
 				split_dict() = NULL;
 			}
 		}
-
 		//理论上通过这个 可以配置CRF开关 覆盖配置文件中的crf开关 但是测试无效　TRACE: 04-16 13:38:28:   * 0 Do not load CRF model, please check scw.conf-->Scw_crf = 1? 原因是要设置1 然后这里可以屏蔽crf
 		Segmentor& set_flag(int flag)
 		{
@@ -287,6 +283,11 @@ namespace gezi {
 			return result;
 		}
 
+		bool segment(string input, vector<string>& result, int type = SEG_WPCOMP)
+		{
+			return segment(input, _handle, result, type);
+		}
+
 		string segment(string input, string sep, int type = SEG_WPCOMP)
 		{
 			//return segment(input, GetSegHandle(), sep, type);
@@ -338,7 +339,7 @@ namespace gezi {
 
 					pwdict() = scw_load_worddict(data_dir);
 					CHECK(pwdict() != NULL) << data_dir << " the path wrong ? or you use wrong segment version ?";
-					LOG_INFO("Load segmentor dict data ok");
+					LOG(INFO) << "Load segmentor dict data ok";
 				}
 
 				if (strategy() & SEG_USE_POSTAG)
@@ -347,11 +348,11 @@ namespace gezi {
 					sprintf(tag_dict_path, "%s/%s", data_dir, "tagdict");
 					ret = tag_open(tag_dict_path);
 					CHECK_EQ(ret, 0) << tag_dict_path;
-					LOG_INFO("Tag open ok");
+					LOG(INFO) << "Tag open ok";
 				}
 				else
 				{
-					LOG_INFO("Do not use pos tag");
+					LOG(INFO) << "Do not use pos tag";
 				}
 				{	//---------------尝试打开need split字典，如果不存在或者打开出错就不使用
 					char user_dict_path[2048];
@@ -363,11 +364,11 @@ namespace gezi {
 					}
 					else
 					{
-						LOG_INFO("User defined split dictionary open ok");
+						LOG(INFO) << "User defined split dictionary open ok";
 					}
 				}
 			}
-			LOG_INFO("Segmentor init ok");
+			LOG(INFO) << "Segmentor init ok";
 			return true;
 		}
 

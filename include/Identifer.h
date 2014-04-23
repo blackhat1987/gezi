@@ -38,6 +38,7 @@ namespace gezi {
 			return _index;
 		}
 
+#ifndef GCCXML	
 		iterator begin()
 		{
 			return _index.begin();
@@ -57,6 +58,7 @@ namespace gezi {
 		{
 			return _index.end();
 		}
+#endif
 
 		size_t size()const
 		{
@@ -184,6 +186,16 @@ namespace gezi {
 			return it->second;
 		}
 
+		void Load(string path)
+		{
+			serialize_util::load(*this, path);
+		}
+
+		void Save(string path)
+		{
+			serialize_util::save(*this, path);
+		}
+
 		friend class boost::serialization::access;
 		template<class Archive>
 		void serialize(Archive &ar, const unsigned int version)
@@ -255,7 +267,7 @@ namespace gezi {
 	typedef ValueIdentifer<int> IntIdentifer;
 	typedef ValueIdentifer<double> DoubleIdentifer;
 
-	//py++ work around py++不处理typdef
+	//py++ work around py++不处理typedef
 	class PyIntIndentifer : public IntIdentifer
 	{
 

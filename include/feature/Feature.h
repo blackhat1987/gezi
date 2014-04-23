@@ -44,13 +44,9 @@ namespace gezi {
 		typedef vector<Float>::const_iterator ConstVIter;
 		//保留一个zero_thre但是实际不用也ok 稀疏使用判断==0 libsvm和tlc都是用的判断==0,虽然有一定浮点误差，为了结果一致仍然判断==0
 		//Feature feature(-1) 可以用来表示一个完全dense表示,values,nodes都dense
-
+		//@FIXME h2cc.py对于构造函数:下面多行 存在bug
 		Feature(bool keep_dense = false, bool keep_sparse = false, int dimension = 1000, bool use_section_name = true, Float zero_thre = 0.0)
-			: _keep_dense(keep_dense),
-			_keep_sparse(keep_sparse),
-			_use_section_name(use_section_name),
-			_zero_thre(zero_thre),
-			_dimension(dimension)
+			: _keep_dense(keep_dense), _keep_sparse(keep_sparse), _use_section_name(use_section_name), _zero_thre(zero_thre), _dimension(dimension)
 		{
 			int len = 1000;
 			_nodes.reserve(len);

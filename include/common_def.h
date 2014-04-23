@@ -24,10 +24,12 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/array.hpp>
 #include <boost/ref.hpp>
+#include <boost/function.hpp>
 namespace std {
 	using boost::array;
 	using boost::ref;
 	using boost::shared_ptr;
+	using boost::function;
 }
 #endif
 #include <fstream>
