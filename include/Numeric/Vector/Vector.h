@@ -791,29 +791,29 @@ namespace gezi {
 			return sqrt(std::accumulate(values.begin(), values.end(), 0.0, sd_op()));
 		}
 
-		string Str()
+		string Str(string sep = ",")
 		{
 			stringstream ss;
-			ForEachNonZero([&ss](int index, Float value) {
-				ss << index << ":" << value << "\t";
+			ForEachNonZero([&](int index, Float value) {
+				ss << index << ":" << value << sep;
 			});
 			return ss.str();
 		}
 
-		string DenseStr()
+		string DenseStr(string sep = ",")
 		{
 			stringstream ss;
-			ForEachAll([&ss](int index, Float value) {
-				ss << index << ":" << value << "\t";
+			ForEachAll([&](int index, Float value) {
+				ss << index << ":" << value << sep;
 			});
 			return ss.str();
 		}
 
-		string str()
+		string str(string sep = ",")
 		{
 			stringstream ss;
-			ForEachNonZero([&ss](int index, Float value) {
-				ss << index << ":" << value << "\t";
+			ForEachNonZero([&](int index, Float value) {
+				ss << index << ":" << value << sep;
 			});
 			return ss.str();
 		}
