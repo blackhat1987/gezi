@@ -20,7 +20,7 @@
 
 //#include "common_util.h"
 #include "time_util.h" //@TODO  当前使用common_util.h python的封装有问题
-
+using std::string;
 namespace gezi {
 
 	class ProgressBar
@@ -32,24 +32,27 @@ namespace gezi {
 		{
 		}
 
-		ProgressBar(const std::string& log_word) :
-			_log_word(log_word),
-			Size(Bar.size() - 1)
+		ProgressBar(string log_word) :
+			_log_word(log_word), Size(Bar.size() - 1)
 		{
 		}
 
 
 		ProgressBar(size_t total) :
-			_total(total),
-			Size(Bar.size() - 1)
+			_total(total), Size(Bar.size() - 1)
 		{
 		}
 
-		ProgressBar(const std::string& log_word, size_t total) :
-			_log_word(log_word), _total(total),
-			Size(Bar.size() - 1)
+		ProgressBar(string log_word, size_t total) :
+			_log_word(log_word), _total(total), Size(Bar.size() - 1)
 		{
 		}
+
+		ProgressBar(size_t total, string log_word) :
+			_total(total), _log_word(log_word), Size(Bar.size() - 1)
+		{
+		}
+
 		void progress(size_t current)
 		{
 			(*this)(current);

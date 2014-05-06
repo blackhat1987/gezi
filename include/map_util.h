@@ -61,6 +61,19 @@ namespace gezi {
 		}
 	}
 
+	template<typename Map, typename T, typename U>
+	void add_value(Map& map, T name, U value)
+	{
+		if (!map.count(name))
+		{
+			map[name] = value;
+		}
+		else
+		{
+			map[name] += value;
+		}
+	}
+
 	template<typename ValueType, typename KeyType, typename Map>
 	ValueType get_value(const Map& m, KeyType key, const ValueType& default_value)
 	{

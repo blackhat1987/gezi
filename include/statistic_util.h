@@ -56,6 +56,32 @@ namespace gezi {
 	}
 
 	template<typename Iter>
+	size_t num_zeros(Iter start, Iter end)
+	{
+		typedef typename Iter::value_type ValueType;
+		return std::accumulate(start, end, (size_t) 0, [](ValueType a) { return a == 0; });
+	}
+
+	template<typename Container>
+	size_t num_zeros(const Container& vec)
+	{
+		return num_zeros(vec.begin(), vec.end());
+	}
+
+	template<typename Iter>
+	size_t num_nonzeros(Iter start, Iter end)
+	{
+		typedef typename Iter::value_type ValueType;
+		return std::accumulate(start, end, (size_t)0, [](ValueType a) { return a != 0; });
+	}
+
+	template<typename Container>
+	size_t num_nonzeros(const Container& vec)
+	{
+		return num_nonzeros(vec.begin(), vec.end());
+	}
+
+	template<typename Iter>
 	ValType mean(Iter start, Iter end)
 	{
 		return std::accumulate(start, end, 0.0) / (ValType)(end - start);
@@ -417,6 +443,7 @@ namespace gezi {
 	}
 
 	//@TODO 边界
+	//输入是dense表示的数组
 	inline Fvec find_bins(Fvec& values, int maxBins)
 	{
 		Fvec result;
@@ -523,6 +550,7 @@ namespace gezi {
 		return result;
 	}
 
+	//信息量
 	template<typename Iter>
 	inline double information(Iter begin, Iter end)
 	{

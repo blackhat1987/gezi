@@ -1,4 +1,3 @@
-#include "../include/python_util.h"
 #define private public
 #define protected public
 #include "../include/python_util.h"
@@ -9,6 +8,10 @@
 #include "boost/python/suite/indexing/vector_indexing_suite.hpp"
 
 #include "boost/python/suite/indexing/map_indexing_suite.hpp"
+
+#include "../include/PythonWrapper/Predictor.h"
+
+#include "../include/PythonWrapper/PredictorFactory.h"
 
 #include "../include/file_util.h"
 
@@ -150,16 +153,6 @@ inst.tokens = new_value;
 
 BOOST_PYTHON_MODULE(libgezi){
 UseStrVec;
-			UseIntVec;
-			UseFloatVec;
-			UseDoubleVec;
-			UseStrStrMap;
-			UseStrIntMap;
-			//UseStrIntHashMap;
-			UseStrFloatMap;
-			UseStrDoubleMap;
-			
-UseStrVec;
 UseIntVec;
 UseFloatVec;
 UseDoubleVec;
@@ -174,7 +167,7 @@ typedef bp::class_< std::vector< token_t > > vector_less__token_t__greater__expo
 vector_less__token_t__greater__exposer_t vector_less__token_t__greater__exposer = vector_less__token_t__greater__exposer_t( "vector_less__token_t__greater_" );
 bp::scope vector_less__token_t__greater__scope( vector_less__token_t__greater__exposer );
 //WARNING: the next line of code will not compile, because "::token_t" does not have operator== !
-// //         vector_less__token_t__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< token_t > >() );
+//         vector_less__token_t__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< token_t > >() );
 }
 
 { //::std::vector< std::vector< double > >
@@ -182,14 +175,14 @@ typedef bp::class_< std::vector< std::vector< double > > > vector_less__std_scop
 vector_less__std_scope_vector_less__double__greater___greater__exposer_t vector_less__std_scope_vector_less__double__greater___greater__exposer = vector_less__std_scope_vector_less__double__greater___greater__exposer_t( "vector_less__std_scope_vector_less__double__greater___greater_" );
 bp::scope vector_less__std_scope_vector_less__double__greater___greater__scope( vector_less__std_scope_vector_less__double__greater___greater__exposer );
 //WARNING: the next line of code will not compile, because "::std::vector<double, std::allocator<double> >" does not have operator== !
-// //         vector_less__std_scope_vector_less__double__greater___greater__exposer.def( bp::vector_indexing_suite< ::std::vector< std::vector< double > > >() );
+//         vector_less__std_scope_vector_less__double__greater___greater__exposer.def( bp::vector_indexing_suite< ::std::vector< std::vector< double > > >() );
 }
 
 { //::std::vector< std::string >
-typedef bp::class_< std::vector< std::string > > Strings_exposer_t;
-Strings_exposer_t Strings_exposer = Strings_exposer_t( "Strings" );
-bp::scope Strings_scope( Strings_exposer );
-Strings_exposer.def( bp::vector_indexing_suite< ::std::vector< std::string >, true >() );
+typedef bp::class_< std::vector< std::string > > vector_less__std_scope_string__greater__exposer_t;
+vector_less__std_scope_string__greater__exposer_t vector_less__std_scope_string__greater__exposer = vector_less__std_scope_string__greater__exposer_t( "vector_less__std_scope_string__greater_" );
+bp::scope vector_less__std_scope_string__greater__scope( vector_less__std_scope_string__greater__exposer );
+vector_less__std_scope_string__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< std::string >, true >() );
 }
 
 { //::std::vector< std::wstring >
@@ -217,7 +210,7 @@ typedef bp::class_< std::vector< gezi::SegNode > > vector_less__gezi_scope_SegNo
 vector_less__gezi_scope_SegNode__greater__exposer_t vector_less__gezi_scope_SegNode__greater__exposer = vector_less__gezi_scope_SegNode__greater__exposer_t("vector_less__gezi_scope_SegNode__greater_");
 bp::scope vector_less__gezi_scope_SegNode__greater__scope( vector_less__gezi_scope_SegNode__greater__exposer );
 //WARNING: the next line of code will not compile, because "::gezi::SegNode" does not have operator== !
-// //         vector_less__gezi_scope_SegNode__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< gezi::SegNode > >() );
+//         vector_less__gezi_scope_SegNode__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< gezi::SegNode > >() );
 } //scope end
 
 { //::std::vector< gezi::FeaturesExtractor* >
@@ -232,7 +225,7 @@ typedef bp::class_< std::vector< gezi::FeatureVector::Feature > > vector_less__g
 vector_less__gezi_scope_FeatureVector_scope_Feature__greater__exposer_t vector_less__gezi_scope_FeatureVector_scope_Feature__greater__exposer = vector_less__gezi_scope_FeatureVector_scope_Feature__greater__exposer_t( "vector_less__gezi_scope_FeatureVector_scope_Feature__greater_" );
 bp::scope vector_less__gezi_scope_FeatureVector_scope_Feature__greater__scope( vector_less__gezi_scope_FeatureVector_scope_Feature__greater__exposer );
 //WARNING: the next line of code will not compile, because "::gezi::FeatureVector::Feature" does not have operator== !
-// //         vector_less__gezi_scope_FeatureVector_scope_Feature__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< gezi::FeatureVector::Feature > >() );
+//         vector_less__gezi_scope_FeatureVector_scope_Feature__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< gezi::FeatureVector::Feature > >() );
 }
 
 { //::std::vector< double >
@@ -530,7 +523,7 @@ bp::implicitly_convertible< int, gezi::Vector >();
 Vector_exposer.def( bp::init< int, ivec &, Fvec & >(( bp::arg("length_"), bp::arg("indices_"), bp::arg("values_") )) );
 Vector_exposer.def( bp::init< Fvec & >(( bp::arg("values_") )) );
 bp::implicitly_convertible< Fvec &, gezi::Vector >();
-Vector_exposer.def( bp::init< std::string, bp::optional< int, std::string > >(( bp::arg("input"), bp::arg("length_")=(int)(0), bp::arg("sep")=",\011 " )) );
+Vector_exposer.def( bp::init< std::string, bp::optional< int, std::string > >(( bp::arg("input"), bp::arg("length_")=(int)(1024000), bp::arg("sep")=",\011 " )) );
 { //::gezi::Vector::Add
 
 typedef void ( ::gezi::Vector::*Add_function_type )( ::Float ) ;
@@ -590,11 +583,12 @@ Vector_exposer.def(
 }
 { //::gezi::Vector::DenseStr
 
-typedef ::std::string ( ::gezi::Vector::*DenseStr_function_type )(  ) ;
+typedef ::std::string ( ::gezi::Vector::*DenseStr_function_type )( ::std::string ) ;
 
 Vector_exposer.def(
 "DenseStr"
-, DenseStr_function_type( &::gezi::Vector::DenseStr ) );
+, DenseStr_function_type( &::gezi::Vector::DenseStr )
+, ( bp::arg("sep")="," ) );
 
 }
 { //::gezi::Vector::Densify
@@ -739,6 +733,15 @@ Vector_exposer.def(
 , Norm_function_type( &::gezi::Vector::Norm ) );
 
 }
+{ //::gezi::Vector::NumNonZeros
+
+typedef int ( ::gezi::Vector::*NumNonZeros_function_type )(  ) ;
+
+Vector_exposer.def(
+"NumNonZeros"
+, NumNonZeros_function_type( &::gezi::Vector::NumNonZeros ) );
+
+}
 { //::gezi::Vector::PrepareDense
 
 typedef void ( ::gezi::Vector::*PrepareDense_function_type )(  ) ;
@@ -789,11 +792,12 @@ Vector_exposer.def(
 }
 { //::gezi::Vector::Str
 
-typedef ::std::string ( ::gezi::Vector::*Str_function_type )(  ) ;
+typedef ::std::string ( ::gezi::Vector::*Str_function_type )( ::std::string ) ;
 
 Vector_exposer.def(
 "Str"
-, Str_function_type( &::gezi::Vector::Str ) );
+, Str_function_type( &::gezi::Vector::Str )
+, ( bp::arg("sep")="," ) );
 
 }
 { //::gezi::Vector::Swap
@@ -928,17 +932,19 @@ Vector_exposer.def(
 }
 { //::gezi::Vector::str
 
-typedef ::std::string ( ::gezi::Vector::*str_function_type )(  ) ;
+typedef ::std::string ( ::gezi::Vector::*str_function_type )( ::std::string ) ;
 
 Vector_exposer.def(
 "str"
-, str_function_type( &::gezi::Vector::str ) );
+, str_function_type( &::gezi::Vector::str )
+, ( bp::arg("sep")="," ) );
 
 }
 Vector_exposer.def_readwrite( "indices", &gezi::Vector::indices );
 Vector_exposer.def_readwrite( "keepDense", &gezi::Vector::keepDense );
 Vector_exposer.def_readwrite( "keepSparse", &gezi::Vector::keepSparse );
 Vector_exposer.def_readwrite( "normalized", &gezi::Vector::normalized );
+Vector_exposer.def_readwrite( "numNonZeros", &gezi::Vector::numNonZeros );
 Vector_exposer.def_readwrite( "sparsityRatio", &gezi::Vector::sparsityRatio );
 Vector_exposer.def_readwrite( "values", &gezi::Vector::values );
 }
@@ -1160,11 +1166,12 @@ FeatureVector_exposer.def(
 }
 { //::gezi::FeatureVector::str
 
-typedef ::std::string ( ::gezi::FeatureVector::*str_function_type )(  ) ;
+typedef ::std::string ( ::gezi::FeatureVector::*str_function_type )( ::std::string ) ;
 
 FeatureVector_exposer.def(
 "str"
-, str_function_type( &::gezi::FeatureVector::str ) );
+, str_function_type( &::gezi::FeatureVector::str )
+, ( bp::arg("sep")="," ) );
 
 }
 { //::gezi::FeatureVector::value_at
@@ -1441,11 +1448,12 @@ bp::class_< gezi::PointMutualInfoFunc >( "PointMutualInfoFunc" )
 typedef bp::class_< gezi::ProgressBar > ProgressBar_exposer_t;
 ProgressBar_exposer_t ProgressBar_exposer = ProgressBar_exposer_t( "ProgressBar", bp::init< >() );
 bp::scope ProgressBar_scope( ProgressBar_exposer );
-ProgressBar_exposer.def( bp::init< std::string const & >(( bp::arg("log_word") )) );
-bp::implicitly_convertible< std::string const &, gezi::ProgressBar >();
+ProgressBar_exposer.def( bp::init< std::string >(( bp::arg("log_word") )) );
+bp::implicitly_convertible< std::string, gezi::ProgressBar >();
 ProgressBar_exposer.def( bp::init< size_t >(( bp::arg("total") )) );
 bp::implicitly_convertible< size_t, gezi::ProgressBar >();
-ProgressBar_exposer.def( bp::init< std::string const &, size_t >(( bp::arg("log_word"), bp::arg("total") )) );
+ProgressBar_exposer.def( bp::init< std::string, size_t >(( bp::arg("log_word"), bp::arg("total") )) );
+ProgressBar_exposer.def( bp::init< size_t, std::string >(( bp::arg("total"), bp::arg("log_word") )) );
 { //::gezi::ProgressBar::operator()
 
 typedef void ( ::gezi::ProgressBar::*__call___function_type )( ::size_t ) ;
@@ -1491,6 +1499,14 @@ ProgressBar_exposer.def(
 
 bp::class_< gezi::ValueIdentifer< double >, bp::bases< gezi::Identifer > >( "DoubleIdentifer" )
 .def(
+"Load"
+, (void ( ::gezi::ValueIdentifer<double>::* )( ::std::string ) )( &::gezi::ValueIdentifer< double >::Load )
+, ( bp::arg("file") ) )
+.def(
+"Save"
+, (void ( ::gezi::ValueIdentifer<double>::* )( ::std::string ) )( &::gezi::ValueIdentifer< double >::Save )
+, ( bp::arg("file") ) )
+.def(
 "get_value"
 , (double ( ::gezi::ValueIdentifer<double>::* )( ::std::string ) )( &::gezi::ValueIdentifer< double >::get_value )
 , ( bp::arg("key") ) )
@@ -1509,6 +1525,14 @@ bp::class_< gezi::PyFeatures, bp::bases< gezi::FeatureVector > >( "PyFeatures" )
 
 bp::class_< gezi::ValueIdentifer< int >, bp::bases< gezi::Identifer > >( "IntIdentifer" )
 .def(
+"Load"
+, (void ( ::gezi::ValueIdentifer<int>::* )( ::std::string ) )( &::gezi::ValueIdentifer< int >::Load )
+, ( bp::arg("file") ) )
+.def(
+"Save"
+, (void ( ::gezi::ValueIdentifer<int>::* )( ::std::string ) )( &::gezi::ValueIdentifer< int >::Save )
+, ( bp::arg("file") ) )
+.def(
 "get_value"
 , (int ( ::gezi::ValueIdentifer<int>::* )( ::std::string ) )( &::gezi::ValueIdentifer< int >::get_value )
 , ( bp::arg("key") ) )
@@ -1522,6 +1546,31 @@ bp::class_< gezi::ValueIdentifer< int >, bp::bases< gezi::Identifer > >( "IntIde
 , ( bp::arg("index") ) );
 
 bp::class_< gezi::PyIntIndentifer, bp::bases< gezi::ValueIdentifer< int > > >( "PyIntIndentifer" );
+
+bp::class_< gezi::PyPredictor >( "PyPredictor" )
+.def(
+"Normalize"
+, (::gezi::Vector ( ::gezi::PyPredictor::* )( ::gezi::Vector & ) )( &::gezi::PyPredictor::Normalize )
+, ( bp::arg("features") ) )
+.def(
+"Output"
+, (::Float ( ::gezi::PyPredictor::* )( ::gezi::Vector & ) )( &::gezi::PyPredictor::Output )
+, ( bp::arg("features") ) )
+.def(
+"Predict"
+, (::Float ( ::gezi::PyPredictor::* )( ::gezi::Vector & ) )( &::gezi::PyPredictor::Predict )
+, ( bp::arg("features") ) )
+.def(
+"Predict"
+, (::Float ( ::gezi::PyPredictor::* )( ::gezi::Vector &,::Float & ) )( &::gezi::PyPredictor::Predict )
+, ( bp::arg("features"), bp::arg("output") ) );
+
+bp::class_< gezi::PyPredictorFactory >( "PyPredictorFactory" )
+.def(
+"LoadPredictor"
+, (::gezi::PyPredictor (*)( ::std::string ))( &::gezi::PyPredictorFactory::LoadPredictor )
+, ( bp::arg("path") ) )
+.staticmethod( "LoadPredictor" );
 
 { //::gezi::SegHandle
 typedef bp::class_< SegHandle_wrapper > SegHandle_exposer_t;
@@ -2459,6 +2508,39 @@ bp::def(
 
 }
 
+{ //::gezi::ufo::reg_search
+
+typedef ::std::vector< std::wstring > ( *reg_search_function_type )( ::std::wstring const &,::boost::wregex &,int );
+
+bp::def(
+"reg_search"
+, reg_search_function_type( &::gezi::ufo::reg_search )
+, ( bp::arg("content"), bp::arg("reg"), bp::arg("index")=(int)(1) ) );
+
+}
+
+{ //::gezi::ufo::reg_search
+
+typedef ::std::vector< std::string > ( *reg_search_function_type )( ::std::string const &,::std::string,int );
+
+bp::def(
+"reg_search"
+, reg_search_function_type( &::gezi::ufo::reg_search )
+, ( bp::arg("content"), bp::arg("pattern"), bp::arg("index")=(int)(1) ) );
+
+}
+
+{ //::gezi::ufo::reg_search
+
+typedef ::std::vector< std::string > ( *reg_search_function_type )( ::std::string const &,::boost::regex &,int );
+
+bp::def(
+"reg_search"
+, reg_search_function_type( &::gezi::ufo::reg_search )
+, ( bp::arg("content"), bp::arg("reg"), bp::arg("index")=(int)(1) ) );
+
+}
+
 { //::gezi::reg_search
 
 typedef void ( *reg_search_function_type )( ::std::wstring const &,::std::wstring,::std::vector< std::wstring > &,int );
@@ -2543,39 +2625,6 @@ typedef ::std::string ( *reg_search_function_type )( ::std::string const &,::boo
 bp::def(
 "reg_search"
 , reg_search_function_type( &::gezi::reg_search )
-, ( bp::arg("content"), bp::arg("reg"), bp::arg("index")=(int)(1) ) );
-
-}
-
-{ //::gezi::ufo::reg_search
-
-typedef ::std::vector< std::wstring > ( *reg_search_function_type )( ::std::wstring const &,::boost::wregex &,int );
-
-bp::def(
-"reg_search"
-, reg_search_function_type( &::gezi::ufo::reg_search )
-, ( bp::arg("content"), bp::arg("reg"), bp::arg("index")=(int)(1) ) );
-
-}
-
-{ //::gezi::ufo::reg_search
-
-typedef ::std::vector< std::string > ( *reg_search_function_type )( ::std::string const &,::std::string,int );
-
-bp::def(
-"reg_search"
-, reg_search_function_type( &::gezi::ufo::reg_search )
-, ( bp::arg("content"), bp::arg("pattern"), bp::arg("index")=(int)(1) ) );
-
-}
-
-{ //::gezi::ufo::reg_search
-
-typedef ::std::vector< std::string > ( *reg_search_function_type )( ::std::string const &,::boost::regex &,int );
-
-bp::def(
-"reg_search"
-, reg_search_function_type( &::gezi::ufo::reg_search )
 , ( bp::arg("content"), bp::arg("reg"), bp::arg("index")=(int)(1) ) );
 
 }

@@ -30,9 +30,7 @@ namespace gezi {
 		}
 		void add(string doc, string sep = "\t")
 		{
-			vector<string> words;
-			boost::split(words, doc, is_any_of(sep));
-			add(words);
+			add(split(doc, sep));
 		}
 
 		void add(const vector<string>& words)

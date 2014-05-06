@@ -41,6 +41,7 @@ namespace gezi {
 		{
 			vector<string> result;
 			bool ret = PyNotaion()->convertToPY(input.c_str(), &result);
+			PVEC(result);
 			if (ret && !result.empty())
 			{
 				return result[0];

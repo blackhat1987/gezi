@@ -24,7 +24,7 @@ namespace gezi {
 	class BinFinder
 	{
 	private:
-		vector<pair<Float, Float> > _binLowerUpperBounds; //first as loewr, second as upper
+		vector<pair<Float, Float> > _binLowerUpperBounds; //first as lower, second as upper
 		vector<pair<int, Float> > _countValues; //first as counts, second as distinct values
 	public:
 

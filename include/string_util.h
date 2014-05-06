@@ -25,6 +25,7 @@
 #include "encoding_convert.h"
 #include "common_def.h"
 #include "reg_util.h"
+#include "stl_util.h"
 
 namespace gezi {
 	using namespace std;
@@ -624,6 +625,23 @@ namespace gezi {
 	{
 		boost::trim(feature_str);
 		feature_str = gezi::remove_dupspace(feature_str);
+	}
+
+	//@TODO move to somewhere else
+	inline vector<string> get_words(vector<string>& l, int ngram = 3, string sep = "$#$")
+	{
+		int len = l.size();
+		vector<string> result;
+		for (int i = 0; i < len; i++)
+		{
+			for (int j = 0; j < ngram; j++)
+			{
+				if (i + j >= len)
+					continue;
+				result.push_back(join(l.begin() + i, l.begin() + i + j + 1, sep));
+			}
+		}
+		return result;
 	}
 }
 

@@ -8,9 +8,9 @@
  *          \date   2014-03-26 10:46:03.965585
  *
  *  \Description:  特征的核心表示
- *								 支持读写，dense and sparse  
-									 可以增加支持binary 比如value为空表示binary @TODO
- *               
+ *								 支持读写，dense and sparse
+ 可以增加支持binary 比如value为空表示binary @TODO
+ *   @TODO 是否需要 int length , index 改为int64
  *  ==============================================================================
  */
 
@@ -62,14 +62,17 @@ namespace gezi {
 			{ //注意可能稀疏没有带有length
 				if (contains(inputs[0], ':'))
 				{
+					int maxIndex = -1;
 					for (string part : inputs)
 					{
 						string index_, val_;
 						split(part, ':', index_, val_);
 						int index = INT(index_);
+						maxIndex = index;
 						double val = DOUBLE(val_);
 						Add(index, val);
 					}
+					length = std::max(maxIndex * 2, length);
 				}
 				else
 				{
@@ -115,6 +118,7 @@ namespace gezi {
 			{
 				vec[indices[i]] = values[i];
 			}
+			numNonZeros = indices.size();
 			indices.clear();
 			values.swap(vec);
 		}
@@ -175,14 +179,7 @@ namespace gezi {
 			if (!IsDense() || keepDense)
 				return;
 
-			int nonZeroNum = 0;
-			for (auto item : values)
-			{
-				if (item != 0)
-				{
-					nonZeroNum++;
-				}
-			}
+			int nonZeroNum = GetNumNonZeros();
 			//@TODO 检查特征全是0的情况
 			if (nonZeroNum < (uint64)(length * maxSparsity))
 			{
@@ -213,8 +210,8 @@ namespace gezi {
 		{
 			if (i < 0 || i >= length)
 				return 0;
-				//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
-				
+			//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
+
 			if (IsDense())
 			{
 				return values[i];
@@ -234,7 +231,7 @@ namespace gezi {
 		{
 			/*if (i < 0 || i >= length)
 				return _value;*/
-				//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
+			//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
 			if (IsDense())
 			{//外部确保不越界！
 				return values[i];
@@ -466,6 +463,23 @@ namespace gezi {
 			return values.size();
 		}
 
+		//注意只适用于初始化好后 如果后续修改Vector内容 可能造成NumNonZerors结果不对
+		int NumNonZeros()
+		{
+			if (IsSparse())
+			{
+				return indices.size();
+			}
+			else if (numNonZeros >= 0)
+			{
+				return numNonZeros;
+			}
+			else
+			{
+				return GetNumNonZeros();
+			}
+		}
+
 		const ivec& Indices() const
 		{
 			return indices;
@@ -507,11 +521,11 @@ namespace gezi {
 		{
 			return values[index];
 		}
-//#else 
-//		double& Value(int index) //这个没问题但是python里面 不能用 例如 fe.Value(3) = 4
-//		{
-//			return values[index];
-//		}
+		//#else 
+		//		double& Value(int index) //这个没问题但是python里面 不能用 例如 fe.Value(3) = 4
+		//		{
+		//			return values[index];
+		//		}
 #endif
 
 		void Clear()
@@ -831,18 +845,34 @@ namespace gezi {
 			ar & keepDense;
 			ar & keepSparse;
 			ar & normalized;
+			ar & numNonZeros;
 			ar & _value;
 		}
-
+	private:
+		//获取dense格式表示结构中的非0数目
+		int GetNumNonZeros()
+		{
+			int nonZeroNum = 0;
+			for (auto item : values)
+			{
+				if (item != 0)
+				{
+					nonZeroNum++;
+				}
+			}
+			numNonZeros = nonZeroNum; //save non zero num
+			return numNonZeros;
+		}
 	public:
 		//@TODO 有没有必要写成shared_ptr<ivec> indices; //更加灵活 允许两个Vector相同indice 不同value 避免拷贝
 		ivec indices; //不使用Node(index,value)更加灵活 同时可以允许一项为空
 		Fvec values; //@TODO may be FvecPtr 或者加一个指针 修改代码 如果指针不是空 使用指针指向的
 		//non_zero count < ratio to sparse, non_zero count >= ratio to dense
-		Float sparsityRatio = 0.25;  
+		Float sparsityRatio = 0.25;
 		bool keepDense = false;
 		bool keepSparse = false;
 		bool normalized = false;
+		int numNonZeros = -1; //-1 means unknow
 	private:
 		int length = 0;
 		Float _value = 0.0;
@@ -892,6 +922,7 @@ namespace gezi {
 				{
 				case 0:
 					result += a.Value(aI++) * b.Value(bI++);
+					PVAL(result);
 					break;
 				case -1:
 					aI++;
@@ -904,7 +935,6 @@ namespace gezi {
 				}
 			}
 		}
-
 		return result;
 	}
 }  //----end of namespace gezi

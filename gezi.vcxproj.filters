@@ -369,6 +369,12 @@
     <ClInclude Include="include\Numeric\HypothesisTester.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\PythonWrapper\Predictor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PythonWrapper\PredictorFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -492,6 +498,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="test\test_featurevector.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PythonWrapper\PredictorFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PythonWrapper\Predictor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_binfinder.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

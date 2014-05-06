@@ -120,4 +120,27 @@ using namespace boost::lambda;
 #define  EXECUTE(cmd) \
 	system((cmd).c_str())
 
+//use this or just use pair ? first as key second as value//suggested to use pair for generic
+template<typename Key, typename Value>
+struct KeyValuePair
+{
+	Key key;
+	Value value;
+
+	KeyValuePair(const Key& key_, const Value& value_)
+		:key(key_), value(value_)
+	{
+
+	}
+
+	bool operator == (const KeyValuePair<Key, Value>& other)
+	{
+		return key == other.key;
+	}
+
+	bool operator < (const KeyValuePair<Key, Value>& other)
+	{
+		key < other.key;
+	}
+};
 #endif  //----end of COMMON_DEF_H_

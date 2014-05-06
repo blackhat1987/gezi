@@ -249,6 +249,16 @@ namespace gezi {
 			return true;
 		}
 
+		void Save(string file)
+		{
+			serialize_util::save(*this, file);
+		}
+
+		void Load(string file)
+		{
+			serialize_util::load(*this, file);
+		}
+
 		T value(int index)
 		{
 			return _values[index];
@@ -258,6 +268,14 @@ namespace gezi {
 		T get_value(string key)
 		{
 			return _values[id(key)];
+		}
+
+		friend class boost::serialization::access;
+		template<class Archive>
+		void serialize(Archive &ar, const unsigned int version)
+		{
+			ar & boost::serialization::base_object<Identifer>(*this);
+			ar & _values;
 		}
 
 	private:

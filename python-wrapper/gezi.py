@@ -6,6 +6,8 @@ from pyplusplus import module_builder
 mb = module_builder.module_builder_t(
         gccxml_path='~/.jumbo/bin/gccxml',
         files=[
+					'./include.python/PythonWrapper/Predictor.h',
+					'./include.python/PythonWrapper/PredictorFactory.h',
 					'./include.python/file_util.h',
 					'./include.python/Numeric/collocation.h',
 					'./include.python/conf_util.h',
@@ -44,7 +46,8 @@ mb = module_builder.module_builder_t(
 				'/home/users/chenghuige/rsc/public/uconv/output/include',
 				'/home/users/chenghuige/rsc/lib2-64/bsl/include/',
 				'/home/users/chenghuige/rsc/com/btest/gtest/include/',
-				'/home/users/chenghuige/rsc/app/search/sep/anti-spam/gezi/include.python/'
+				'/home/users/chenghuige/rsc/app/search/sep/anti-spam/gezi/include.python/',
+				'/home/users/chenghuige/rsc/app/search/sep/anti-spam/melt/include.python/'
          ]
         )
 

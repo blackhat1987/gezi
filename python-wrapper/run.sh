@@ -15,6 +15,9 @@ cd ..
 cd feature
 gen-header-all.py 
 cd .. 
+cd PythonWrapper
+gen-header-all.py 
+cd .. 
 popd
 sh gen-py.sh $1
 comake2 -P

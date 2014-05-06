@@ -174,6 +174,8 @@ namespace gezi {
 			return init(data_dir.c_str(), type, conf_path.c_str());
 		}
 
+		//输入是带有SegHandle的 可以作为static其实 static bool seg_words(string input, SegHandle& handle)
+		//Segmentor::segment(input, handle) @TODO
 		bool seg_words(string input, SegHandle& handle)
 		{
 			//---------分词
@@ -213,6 +215,7 @@ namespace gezi {
 			return get_segnodes(_handle);
 		}
 
+		//@TODO can be static with handle outside Segmentor
 		bool segment(string input, SegHandle& handle, int type = SEG_WPCOMP)
 		{
 			//---------分词
@@ -430,6 +433,8 @@ namespace gezi {
 			return index;
 		}
 
+		//另外一种设计是单独提出一个SegDict类 处理所有资源数据 然后作为Segmentor的一个static成员
+		//特别是当比如同时存在多个不同Segmentor使用不同的SegDict数据
 		static scw_worddict_t*& pwdict()
 		{
 			static scw_worddict_t* _pwdict = NULL;

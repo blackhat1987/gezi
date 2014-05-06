@@ -143,6 +143,8 @@
     <ClInclude Include="include\Numeric\Vector\vector_util.h" />
     <ClInclude Include="include\ProcessorMgr.h" />
     <ClInclude Include="include\ProgressBar.h" />
+    <ClInclude Include="include\PythonWrapper\Predictor.h" />
+    <ClInclude Include="include\PythonWrapper\PredictorFactory.h" />
     <ClInclude Include="include\python_util.h" />
     <ClInclude Include="include\random_util.h" />
     <ClInclude Include="include\RegexMatcher.h" />
@@ -198,12 +200,15 @@
     <ClCompile Include="src\model\Score.cpp" />
     <ClCompile Include="src\model\SharedPredictor.cpp" />
     <ClCompile Include="src\model\SvmModel.cpp" />
+    <ClCompile Include="src\PythonWrapper\Predictor.cpp" />
+    <ClCompile Include="src\PythonWrapper\PredictorFactory.cpp" />
     <ClCompile Include="src\Seg.cpp" />
     <ClCompile Include="src\SharedSegmentor.cpp" />
     <ClCompile Include="src\word_seg.cpp" />
     <ClCompile Include="test\linq\test.cc" />
     <ClCompile Include="test\openmp\hello.cc" />
     <ClCompile Include="test\openmp\test.cc" />
+    <ClCompile Include="test\test_binfinder.cc" />
     <ClCompile Include="test\test_bins.cc" />
     <ClCompile Include="test\test_conf.cc" />
     <ClCompile Include="test\test_content_filter.cc" />
