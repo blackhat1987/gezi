@@ -17,6 +17,9 @@
 #include <string>
 #include <vector>
 #include <map>
+
+#include <limits>
+#include <cmath>
 #if __GNUC__ > 3
 #include <array>
 #include <memory>

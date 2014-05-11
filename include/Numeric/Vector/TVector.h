@@ -1,7 +1,7 @@
 /**
  *  ==============================================================================
  *
- *          \file   Numeric/Vector/Vector.h
+ *          \file   Numeric/Vector/TVector.h
  *
  *        \author   chenghuige
  *
@@ -14,87 +14,37 @@
  *  ==============================================================================
  */
 
-#ifndef NUMERIC__VECTOR__VECTOR_H_
-#define NUMERIC__VECTOR__VECTOR_H_
+#ifndef NUMERIC__VECTOR__FVECTOR_H_
+#define NUMERIC__VECTOR__FVECTOR_H_
 #include "common_util.h"
 #include "serialize_util.h"
 namespace gezi {
 
-	class Vector
+	//@TODO TVector 和 Vector 统一 合并？ 目前为了不影响使用Vector的代码暂时这样 Tvector只要使用
+	//TVector<int> 也就是fastrank里面的IntArray 但是fastrank里面IntArray更复杂 动态int short bool
+	template<typename ValueType>
+	class TVector
 	{
 	public:
-		Vector() = default; //sparse生成时必须带有length
-		virtual ~Vector() {}
-		Vector(Vector&&) = default;
-		Vector& operator = (Vector&&) = default;
-		Vector(const Vector&) = default;
-		Vector& operator = (const Vector&) = default;
+		TVector() = default; //sparse生成时必须带有length
+		virtual ~TVector() {}
+		TVector(TVector&&) = default;
+		TVector& operator = (TVector&&) = default;
+		TVector(const TVector&) = default;
+		TVector& operator = (const TVector&) = default;
+
+		typedef vector<ValueType> Vec;
 
 		//需要外部注意的 初始设置length 那么如果是Add(value) dense方式 要保证values最后长度
 		//和初始设置的一样 不要Add不够 因为实际Length()函数表示向量长度 这个其实主要针对sparse
-		Vector(int length_)
+		TVector(int length_)
 			: length(length_)
 		{
 		}
 
-		Vector(int length_, Float value_)
+		TVector(int length_, ValueType value_)
 			: length(length_), _zeroValue(value_)
 		{
-		}
-
-		Vector(int length_, ivec& indices_, Fvec& values_)
-			:length(length_)
-		{
-			indices.swap(indices_);
-			values.swap(values_);
-		}
-
-		//注意desne情况 可以直接用这个种方法产生 推荐 或者调用Add 接口，
-		//Add接口 内部不对length处理 
-		Vector(Fvec& values_)
-		{
-			ToDense(values_);
-		}
-
-		//方便debug Vector vec("1\t3\t4\t5"); Vector vec("1:2.3\t3:4.5"); or vec("1 3") space is also ok
-		Vector(string input, int length_ = 1024000, string sep = ",\t ")
-		{
-			boost::trim(input); //需要注意 因为DOUBLE采用atof快速但是不安全 可能输入是一个空格 导致有问题
-			//注意split("",sep)得到不是空结果 而是有1个空元素的vector c# python	也是		
-			svec inputs = from(split(input, sep)) >> where([](string a) { return !a.empty(); }) >> to_vector();
-			length = length_;
-			if (inputs.size() > 0)
-			{ //注意可能稀疏没有带有length
-				if (contains(inputs[0], ':'))
-				{
-					int maxIndex = -1;
-					for (string part : inputs)
-					{
-						string index_, val_;
-						split(part, ':', index_, val_);
-						int index = INT(index_);
-						maxIndex = index;
-						double val = DOUBLE(val_);
-						Add(index, val);
-					}
-					length = std::max(maxIndex * 2, length);
-				}
-				else
-				{
-					length = inputs.size();
-					for (string val_ : inputs)
-					{
-						Add(DOUBLE(val_));
-					}
-				}
-			}
-		}
-
-		void Init(int length_, ivec& indices_, Fvec& values_)
-		{
-			length = length_;
-			indices.swap(indices_);
-			values.swap(values_);
 		}
 
 		void Swap(Vector& other)
@@ -104,12 +54,12 @@ namespace gezi {
 			values.swap(other.values);
 		}
 
-		void Init(Fvec& values_)
+		void Init(Vec& values_)
 		{
 			ToDense(values_);
 		}
 
-		void ToDense(Fvec& values_)
+		void ToDense(Vec& values_)
 		{
 			values.swap(values_);
 			length = values.size();
@@ -118,7 +68,7 @@ namespace gezi {
 
 		void ToDense()
 		{
-			Fvec vec(length, _zeroValue);
+			Vec vec(length, _zeroValue);
 			for (size_t i = 0; i < indices.size(); i++)
 			{
 				vec[indices[i]] = values[i];
@@ -132,10 +82,10 @@ namespace gezi {
 		{
 			if (!length)
 				length = values.size();  //为了安全 转sparse时候设置下length 
-			Fvec vec;
+			Vec vec;
 			for (size_t i = 0; i < values.size(); i++)
 			{
-				if (values[i] != _zeroValue) //@TODO for double may not work if not 0
+				if (values[i] != _zeroValue)
 				{
 					indices.push_back(i);
 					vec.push_back(values[i]);
@@ -160,12 +110,12 @@ namespace gezi {
 			}
 		}
 
-		void Add(Float value)
+		void Add(ValueType value)
 		{
 			values.push_back(value);
 		}
 
-		void Add(int index, Float value)
+		void Add(int index, ValueType value)
 		{
 			if (value != _zeroValue)
 			{
@@ -211,7 +161,7 @@ namespace gezi {
 			Densify(sparsityRatio);
 		}
 
-		Float operator[](int i) const
+		ValueType operator[](int i) const
 		{
 			if (i < 0 || i >= length)
 				return _zeroValue;
@@ -232,7 +182,7 @@ namespace gezi {
 			}
 		}
 
-		Float& operator[](int i)
+		ValueType& operator[](int i)
 		{
 			/*if (i < 0 || i >= length)
 				return _value;*/
@@ -254,7 +204,7 @@ namespace gezi {
 			}
 		}
 
-		Vector& operator()(int index, Float value)
+		Vector& operator()(int index, ValueType value)
 		{
 			Add(index, value);
 		}
@@ -345,6 +295,20 @@ namespace gezi {
 				visitor(i, values[i]);
 			}
 		}
+
+		template<typename ValueVistor>
+		void ForEachDenseIf(ValueVistor visitor, bool& ok) const
+		{
+			for (size_t i = 0; i < values.size(); i++)
+			{
+				visitor(i, values[i], ok);
+				if (!ok)
+				{
+					break;
+				}
+			}
+		}
+
 		template<typename ValueVistor>
 		void ForEachDense(ValueVistor visitor)
 		{
@@ -360,6 +324,19 @@ namespace gezi {
 			for (size_t i = 0; i < values.size(); i++)
 			{
 				visitor(indices[i], values[i]);
+			}
+		}
+
+		template<typename ValueVistor>
+		void ForEachSparseIf(ValueVistor visitor, bool& ok) const
+		{
+			for (size_t i = 0; i < values.size(); i++)
+			{
+				visitor(indices[i], values[i], ok);
+				if (!ok)
+				{
+					break;
+				}
 			}
 		}
 
@@ -490,7 +467,7 @@ namespace gezi {
 			return indices;
 		}
 
-		const Fvec& Values() const
+		const Vec& Values() const
 		{
 			return values;
 		}
@@ -500,7 +477,7 @@ namespace gezi {
 			return indices;
 		}
 
-		Fvec& Values()
+		Vec& Values()
 		{
 			return values;
 		}
@@ -515,14 +492,14 @@ namespace gezi {
 			return indices[index];
 		}
 
-		Float Value(int index) const
+		ValueType Value(int index) const
 		{
 			return values[index];
 		}
 
 		//@FIXME why fail boost.python
 #ifndef GCCXML
-		Float& Value(int index)
+		ValueType& Value(int index)
 		{
 			return values[index];
 		}
@@ -553,267 +530,10 @@ namespace gezi {
 			}
 		}
 
-		Vector& operator *= (Float d)
-		{
-			ScaleBy(d);
-			return *this;
-		}
-
-		/// Multiples the Vector by a real value
-		void ScaleBy(Float d)
-		{
-			if (d == 1.0)
-				return;
-
-			if (d == 0)
-			{
-				if (!keepDense)
-				{
-					values.clear();
-					indices.clear();
-				}
-				else
-				{
-					for (size_t i = 0; i < values.size(); i++)
-						values[i] = 0;
-				}
-			}
-			else
-			{
-				for (size_t i = 0; i < values.size(); i++)
-					values[i] *= d;
-			}
-		}
-
-		/// Adds the supplied vector to myself.  (this += a)
-		void Add(Vector a)
-		{
-			/*	if (a.length != length)
-				{
-				THROW("Vectors must have the same dimensionality.");
-				}*/
-
-			if (a.Count() == 0)
-				return;
-
-			if (generalized_same(a.indices, indices))
-			{
-				for (size_t i = 0; i < values.size(); i++)
-					values[i] += a.values[i];
-			}
-			else if (IsDense())
-			{ // a sparse, this not sparse
-				for (int i = 0; i < a.indices.size(); i++)
-				{
-					values[a.indices[i]] += a.values[i];
-				}
-			}
-			else
-			{
-				ApplyWith(a, [](int ind, Float v1, Float& v2) { v2 += v1; });
-			}
-		}
-
-		/// Applies the ParallelManipulator to each corresponding pair of elements where the argument is non-zero, in order of index.
-		//@TODO 拷贝之痛 暂时使用swap 不保证运算后a不会被改变,如果需要提前拷贝复制a
-		//@TODO 理解两个稀疏向量相加/相乘...
-		template<typename ParallelManipulator>
-		void ApplyWith(Vector a, ParallelManipulator manip)
-		{
-			/*		if (a.length != length)
-					{
-					THROW("Vectors must have the same dimensionality.");
-					}*/
-
-			if (a.Count() == 0)
-				return;
-
-			if (a.IsDense())
-			{
-				if (IsDense())
-				{
-					for (size_t i = 0; i < values.size(); i++)
-					{
-						manip(i, a.values[i], ref(values[i]));
-					}
-				}
-				else
-				{  // this sparse, a not sparse
-					Fvec newValues(length);
-					int myI = 0;
-					for (size_t i = 0; i < newValues.size(); i++)
-					{
-						if (myI < Count() && indices[myI] == i)
-						{
-							newValues[i] = values[myI++];
-						} // else, newValues[i] is already zero
-						manip(i, a.values[i], ref(newValues[i]));
-					}
-
-					indices.clear();
-					values.swap(newValues);
-				}
-				Sparsify();
-			}
-			else if (IsDense())
-			{ // a sparse, this not sparse
-				for (size_t i = 0; i < a.indices.size(); i++)
-				{
-					int index = a.indices[i];
-					manip(index, a.values[i], ref(values[index]));
-				}
-			}
-			else if (&a.indices == &indices)
-			{ // both sparse, same indices
-				for (size_t i = 0; i < values.size(); i++)
-				{
-					manip(indices[i], a.values[i], ref(values[i]));
-				}
-			}
-			else if (Count() == 0)
-			{
-				values.resize(a.Count(), 0);
-				indices.swap(a.indices);
-				for (size_t i = 0; i < values.size(); i++)
-				{
-					manip(indices[i], a.values[i], ref(values[i]));
-				}
-			}
-			else
-			{ // both sparse
-				size_t myI = 0;
-
-				size_t newLength = indices.size();
-				// try to find each a index in my indices, counting how many more we'll add
-				for (size_t aI = 0; aI < a.indices.size(); aI++)
-				{
-					int aIndex = a.indices[aI];
-					while (myI < indices.size() && indices[myI] < aIndex)
-					{
-						myI++;
-					}
-					if (myI == indices.size())
-					{
-						newLength += a.indices.size() - aI;
-						break;
-					}
-					else if (indices[myI] == aIndex)
-					{
-						myI++;
-					}
-					else
-					{
-						newLength++;
-					}
-				}
-
-				myI = 0;
-
-				if (newLength == indices.size())
-				{
-					if (newLength == a.indices.size())
-					{
-						for (size_t i = 0; i < values.size(); i++)
-						{
-							manip(indices[i], a.values[i], ref(values[i]));
-						}
-						//a.indices = indices;
-					}
-					else
-					{
-						for (size_t aI = 0; aI < a.indices.size(); aI++)
-						{
-							int aIndex = a.indices[aI];
-							while (indices[myI] < aIndex)
-								myI++;
-							manip(aIndex, a.Value(aI), ref(values[myI++]));
-						}
-					}
-				}
-				else if (newLength == a.indices.size())
-				{
-					Fvec newVals(newLength, 0);
-
-					for (int aI = 0; aI < a.indices.size(); aI++)
-					{
-						int aIndex = a.indices[aI];
-						if (myI < indices.size() && indices[myI] == aIndex)
-						{
-							newVals[aI] = values[myI++];
-						}
-
-						manip(aIndex, a.Value(aI), ref(newVals[aI]));
-					}
-
-					indices.swap(a.indices);
-					values.swap(newVals);
-				}
-				else
-				{
-					ivec newIndices(newLength, 0);
-					Fvec newVals(newLength, 0);
-
-					int newI = 0;
-					for (size_t aI = 0; aI < a.indices.size(); aI++)
-					{
-						int aIndex = a.indices[aI];
-						while (myI < indices.size() && indices[myI] < aIndex)
-						{
-							newVals[newI] = values[myI];
-							newIndices[newI] = indices[myI];
-							myI++;
-							newI++;
-						}
-						if (myI == indices.size())
-						{
-							while (aI < a.indices.size())
-							{
-								newIndices[newI] = a.indices[aI];
-								manip(aIndex, a.Value(aI), ref(newVals[newI]));
-								aI++;
-								newI++;
-							}
-							break;
-						}
-
-						Float myVal = 0;
-						if (indices[myI] == aIndex)
-						{
-							myVal = values[myI++];
-						}
-
-						manip(aIndex, a.Value(aI), ref(myVal));
-						newVals[newI] = myVal;
-						newIndices[newI] = aIndex;
-						newI++;
-					}
-
-					while (myI < indices.size())
-					{
-						newVals[newI] = values[myI];
-						newIndices[newI] = indices[myI];
-						myI++;
-						newI++;
-					}
-
-					indices.swap(newIndices);
-					values.swap(newVals);
-
-					Densify();
-				}
-			}
-		}
-
-		//l2norm
-		Float Norm()
-		{
-			return sqrt(std::accumulate(values.begin(), values.end(), 0.0, sd_op()));
-		}
-
 		string Str(string sep = ",")
 		{
 			stringstream ss;
-			ForEachNonZero([&](int index, Float value) {
+			ForEachNonZero([&](int index, ValueType value) {
 				ss << index << ":" << value << sep;
 			});
 			return ss.str();
@@ -822,7 +542,7 @@ namespace gezi {
 		string DenseStr(string sep = ",")
 		{
 			stringstream ss;
-			ForEachAll([&](int index, Float value) {
+			ForEachAll([&](int index, ValueType value) {
 				ss << index << ":" << value << sep;
 			});
 			return ss.str();
@@ -831,13 +551,16 @@ namespace gezi {
 		string str(string sep = ",")
 		{
 			stringstream ss;
-			ForEachNonZero([&](int index, Float value) {
+			ForEachNonZero([&](int index, ValueType value) {
 				ss << index << ":" << value << sep;
 			});
 			return ss.str();
 		}
 
-		friend Float dot(const Vector& l, const Vector& r);
+		const ValueType ZeroValue() const
+		{
+			return _zeroValue;
+		}
 
 		friend class boost::serialization::access;
 		template<class Archive>
@@ -871,77 +594,19 @@ namespace gezi {
 	public:
 		//@TODO 有没有必要写成shared_ptr<ivec> indices; //更加灵活 允许两个Vector相同indice 不同value 避免拷贝
 		ivec indices; //不使用Node(index,value)更加灵活 同时可以允许一项为空
-		Fvec values; //@TODO may be FvecPtr 或者加一个指针 修改代码 如果指针不是空 使用指针指向的
+		Vec values; //@TODO may be VecPtr 或者加一个指针 修改代码 如果指针不是空 使用指针指向的
 		//non_zero count < ratio to sparse, non_zero count >= ratio to dense
-		Float sparsityRatio = 0.25;
+		Float sparsityRatio = 0.3; //the same as fastrank
 		bool keepDense = false;
 		bool keepSparse = false;
 		bool normalized = false;
 		int numNonZeros = -1; //-1 means unknow
 	private:
 		int length = 0;
-		Float _zeroValue = 0.0;
+		ValueType _zeroValue = 0;
 	};
 
-	typedef shared_ptr<Vector> VectorPtr;
-	inline Float dot(const Vector& a, const Vector& b)
-	{
-		if (!a.Count() || !b.Count())
-		{
-			return 0;
-		}
-
-		if (generalized_same(a.indices, b.indices))
-		{
-			/*if (a.Length() != b.Length())
-			{
-			THROW("Vectors must have the same dimensionality.");
-			}*/
-			Float res = 0;
-			for (size_t i = 0; i < a.values.size(); i++)
-			{
-				res += a.values[i] * b.values[i];
-			}
-			return res;
-		}
-
-		Float result = 0;
-
-		//注意TLC对 内容为空的indices,values做了特殊处理 
-		if (b.IsDense())
-		{
-			for (size_t i = 0; i < a.indices.size(); i++)
-				result += a.values[i] * b.values[a.indices[i]];
-		}
-		else if (a.IsDense())
-		{
-			for (size_t i = 0; i < b.indices.size(); i++)
-				result += a.values[b.indices[i]] * b.values[i];
-		}
-		else
-		{ // both sparse
-			size_t aI = 0, bI = 0;
-			while (aI < a.indices.size() && bI < b.indices.size())
-			{
-				switch (compare(a.indices[aI], b.indices[bI]))
-				{
-				case 0:
-					result += a.Value(aI++) * b.Value(bI++);
-					PVAL(result);
-					break;
-				case -1:
-					aI++;
-					break;
-				case 1:
-					bI++;
-					break;
-				default:
-					break;
-				}
-			}
-		}
-		return result;
-	}
+	typedef TVector<int> IntArray;
 }  //----end of namespace gezi
 
-#endif  //----end of NUMERIC__VECTOR__VECTOR_H_
+#endif  //----end of NUMERIC__VECTOR__FVECTOR_H_

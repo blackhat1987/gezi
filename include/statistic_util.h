@@ -27,6 +27,9 @@
 
 #include "hashmap_util.h"
 #include "common_util.h"
+
+#include "Numeric/find_bins.h"
+
 //#include <boost/accumulators/accumulators.hpp>
 //#include <boost/accumulators/statistics/stats.hpp>
 //#include <boost/accumulators/statistics/mean.hpp>
@@ -59,7 +62,7 @@ namespace gezi {
 	size_t num_zeros(Iter start, Iter end)
 	{
 		typedef typename Iter::value_type ValueType;
-		return std::accumulate(start, end, (size_t) 0, [](ValueType a) { return a == 0; });
+		return std::accumulate(start, end, (size_t)0, [](ValueType a) { return a == 0; });
 	}
 
 	template<typename Container>
@@ -99,6 +102,12 @@ namespace gezi {
 		return std::accumulate(vec.begin(), vec.end(), 0.0) / (ValType)n;
 	}
 
+	template<typename Container, typename T>
+	size_t first_ge(const Container& vec, T value)
+	{
+		return std::lower_bound(vec.begin(), vec.end(), value) - vec.begin();
+	}
+
 	namespace ufo {
 
 		template<typename Container>
@@ -107,10 +116,63 @@ namespace gezi {
 			return *(std::min_element(vec.begin(), vec.end()));
 		}
 
+		template<typename Container, typename Iter>
+		Iter min_element(const Container& vec)
+		{
+			return std::min_element(vec.begin(), vec.end());
+		}
+
+		
 		template<typename Container>
 		ValType max(const Container& vec)
 		{
 			return *(std::max_element(vec.begin(), vec.end()));
+		}
+
+		template<typename Container, typename Iter>
+		Iter max_element(const Container& vec)
+		{
+			return std::max_element(vec.begin(), vec.end());
+		}
+
+		template<typename Container, typename ValueType>
+		void fill(const Container& vec, const ValueType& val)
+		{
+			std::fill(vec.begin(), vec.end(), val);
+		}
+	}
+
+	template<typename Container>
+	size_t min_index(const Container& vec)
+	{
+		return std::min_element(vec.begin(), vec.end()) - vec.begin();
+	}
+
+	template<typename Container>
+	size_t max_index(const Container& vec)
+	{
+		return std::max_element(vec.begin(), vec.end()) - vec.begin();
+	}
+
+	//如果找不到 返回vec.size()
+	template<typename Container, typename ValueType>
+	size_t find_index(const Container& vec, const ValueType& val)
+	{
+		return std::find(vec.begin(), vec.end(), val) - vec.begin();
+	}
+
+	template<typename Container>
+	void zeroset(Container& vec)
+	{
+		std::fill(vec.begin(), vec.end(), 0);
+	}
+
+	template<typename Iter, typename Iter2>
+	void fill_range(Iter dest, Iter2 src, int len)
+	{
+		for (int i = 0; i < len; i++)
+		{
+			*dest++ = *src++;
 		}
 	}
 
@@ -330,7 +392,7 @@ namespace gezi {
 		}
 
 	}//-----end of namespace student_t_help
-	namespace sth = student_t;	
+	namespace sth = student_t;
 	//----------------桶计数 比如2个桶 [0,0.5) 0 [0.5,1) 1
 
 	inline int bin_index(double value, int bin_num, double min = 0, double max = 1.0)
@@ -440,114 +502,6 @@ namespace gezi {
 			res = (res - from) / (to - from - step);
 		}
 		return res;
-	}
-
-	//@TODO 边界
-	//输入是dense表示的数组
-	inline Fvec find_bins(Fvec& values, int maxBins)
-	{
-		Fvec result;
-		if (values.empty() || maxBins <= 1)
-		{
-			result.push_back(std::numeric_limits<Float>::max());
-			return result;
-		}
-
-		vector<pair<Float, Float> > binLowerUpperBounds; //first as loewr, second as upper
-		vector<pair<int, Float> > countValues; //first as counts, second as distinct values
-
-		// chck whether to allocate datastructures
-		size_t sampleSize = values.size();
-		size_t allocSize = sampleSize < maxBins ? sampleSize : maxBins;
-		if (allocSize > binLowerUpperBounds.size())
-		{
-			binLowerUpperBounds.resize(allocSize, make_pair(0.0, 0.0));
-		}
-		if (sampleSize > countValues.size())
-		{
-			countValues.resize(sampleSize, make_pair(0, 0.0));
-		}
-
-		// Get histogram of values
-		int numValues = 1;
-		std::sort(values.begin(), values.end());
-		countValues[0].second = values[0];
-		countValues[0].first = 1;
-		for (int i = 1; i < values.size(); ++i)
-		{
-			if (values[i] != values[i - 1])
-			{
-				countValues[numValues].second = values[i];
-				countValues[numValues].first = 1;
-				++numValues;
-			}
-			else
-			{
-				countValues[numValues - 1].first++;
-			}
-		}
-
-		// case 1: each distinct value is a bin
-		if (numValues <= maxBins)
-		{
-			result.resize(numValues);
-			for (int i = 0; i < numValues - 1; ++i)
-				result[i] = (countValues[i].second + countValues[i + 1].second) / 2;
-			result[numValues - 1] = std::numeric_limits<Float>::max();
-			return result;
-		}
-
-		// case 2: more distinct values than bins
-
-		// find single value bins
-		int meanBinSize = countValues.size() / maxBins;
-		sort(countValues.begin(), countValues.begin() + numValues, CmpPairByFirstReverse());
-		int numBins = 0;
-		int countSoFar = 0;
-		while (countValues[numBins].first > meanBinSize)
-		{
-			binLowerUpperBounds[numBins].second = countValues[numBins].second;
-			binLowerUpperBounds[numBins].first = countValues[numBins].second;
-			countSoFar += countValues[numBins].first;
-			++numBins;
-		}
-
-		// find remaining bins
-		if (numBins < maxBins)
-		{
-			sort(countValues.begin() + numBins, countValues.begin() + numValues, CmpPairBySecond());
-			binLowerUpperBounds[numBins].first = countValues[numBins].second;
-			meanBinSize = (countValues.size() - countSoFar) / (maxBins - numBins);
-			int currBinSize = 0;
-			for (int i = numBins; i < numValues - 1; ++i)
-			{
-				binLowerUpperBounds[numBins].second = countValues[i].second;
-				currBinSize += countValues[i].first;
-				countSoFar += countValues[i].first;
-				if (currBinSize + countValues[i + 1].first > meanBinSize)
-				{
-					++numBins;
-					if (numBins == maxBins)
-						break;
-					binLowerUpperBounds[numBins].first = countValues[i + 1].second;
-					meanBinSize = (countValues.size() - countSoFar) / (maxBins - numBins);
-					currBinSize = 0;
-				}
-			}
-			if (numBins < maxBins)
-			{
-				binLowerUpperBounds[numBins].second = countValues[numValues - 1].second;
-				++numBins;
-			}
-		}
-
-		// prepare result 
-		sort(binLowerUpperBounds.begin(), binLowerUpperBounds.begin() + numBins, CmpPairByFirst());
-		result.resize(numBins, 0);
-		for (int i = 0; i < numBins - 1; ++i)
-			result[i] = (binLowerUpperBounds[i].second + binLowerUpperBounds[i + 1].first) / 2;
-		result[numBins - 1] = std::numeric_limits<Float>::max();
-		return result;
 	}
 
 	//信息量

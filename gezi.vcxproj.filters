@@ -375,6 +375,12 @@
     <ClInclude Include="include\PythonWrapper\PredictorFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Numeric\find_bins.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Numeric\Vector\TVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">

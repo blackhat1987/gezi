@@ -37,7 +37,7 @@ void run()
 		}
 		Pval(a);
 	}
-	Pval(INT("0.0"));
+	Pval((INT_("0.0")));
 	Pval(UINT64("43820119745.0"));
 	char out[2 * 10];
 	memset(out, 0, sizeof (out));

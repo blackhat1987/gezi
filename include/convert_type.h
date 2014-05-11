@@ -68,6 +68,8 @@ atof(a.c_str())
 
 #define  INT(a) \
 	atoi(a.c_str())
+#define  INT_(a) \
+	atoi(a)
 #define DOUBLE(a) \
 	atof(a.c_str())
 
