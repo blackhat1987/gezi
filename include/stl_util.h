@@ -235,7 +235,7 @@ namespace gezi {
 	template<typename Vec>
 	bool generalized_same(const Vec& l, const Vec& r)
 	{
-		return &l == &r || l.empty() && r.empty();
+		return ((&l == &r) || (l.empty() && r.empty()));
 	}
 }  //----end of namespace gezi
 

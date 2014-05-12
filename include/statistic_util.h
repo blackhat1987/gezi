@@ -41,6 +41,11 @@ namespace gezi {
 	//using boost::bind;
 	//using boost::ref;
 
+	inline bool are_same(double a, double b)
+	{
+		return fabs(a - b) < EPSILON;
+	}
+
 	inline double sigmoid(double score, double A, double B)
 	{
 		return 1.0 / (1 + exp(A * score + B));
