@@ -55,5 +55,7 @@
 
 #include "sort_map_by_value.h"
 
+#include "openmp_util.h"
+
 namespace gz = gezi;
 #endif  //----end of COMMON_UTIL_H_

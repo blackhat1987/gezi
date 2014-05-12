@@ -146,4 +146,5 @@ struct KeyValuePair
 		key < other.key;
 	}
 };
+
 #endif  //----end of COMMON_DEF_H_

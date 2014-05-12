@@ -143,6 +143,7 @@
     <ClInclude Include="include\Numeric\Vector\TVector.h" />
     <ClInclude Include="include\Numeric\Vector\Vector.h" />
     <ClInclude Include="include\Numeric\Vector\vector_util.h" />
+    <ClInclude Include="include\openmp_util.h" />
     <ClInclude Include="include\ProcessorMgr.h" />
     <ClInclude Include="include\ProgressBar.h" />
     <ClInclude Include="include\PythonWrapper\Predictor.h" />
