@@ -81,7 +81,7 @@ namespace gezi {
 
 		// case 2: more distinct values than bins
 		// find single value bins
-		int meanBinSize = countValues.size() / maxBins;
+		int meanBinSize = sampleSize / maxBins;
 		sort(countValues.begin(), countValues.begin() + numValues, CmpPairByFirstReverse());
 		int numBins = 0;
 		int countSoFar = 0;
@@ -98,7 +98,7 @@ namespace gezi {
 		{
 			sort(countValues.begin() + numBins, countValues.begin() + numValues, CmpPairBySecond());
 			binLowerUpperBounds[numBins].first = countValues[numBins].second;
-			meanBinSize = (countValues.size() - countSoFar) / (maxBins - numBins);
+			meanBinSize = (sampleSize - countSoFar) / (maxBins - numBins);
 			int currBinSize = 0;
 			for (int i = numBins; i < numValues - 1; ++i)
 			{
@@ -111,7 +111,7 @@ namespace gezi {
 					if (numBins == maxBins)
 						break;
 					binLowerUpperBounds[numBins].first = countValues[i + 1].second;
-					meanBinSize = (countValues.size() - countSoFar) / (maxBins - numBins);
+					meanBinSize = (sampleSize - countSoFar) / (maxBins - numBins);
 					currBinSize = 0;
 				}
 			}
@@ -121,7 +121,6 @@ namespace gezi {
 				++numBins;
 			}
 		}
-
 		// prepare result 
 		sort(binLowerUpperBounds.begin(), binLowerUpperBounds.begin() + numBins, CmpPairByFirst());
 		result.resize(numBins, 0);
@@ -251,11 +250,8 @@ namespace gezi {
 
 		// Get histogram of values
 		int numValues = find_distinct_counts(values, countValues);
-		Pval2(numValues, maxBins);
 		binUpperBounds = find_bins(countValues, binLowerUpperBounds, maxBins, sampleSize, numValues);
-		Pval2(maxBins, binUpperBounds.size());
 		find_medians(countValues, numValues, maxBins, binUpperBounds, binMedians);
-		Pval(binUpperBounds.size());
 	}
 
 	inline void find_bins_(Fvec& values, int len, int maxBins,
@@ -273,16 +269,13 @@ namespace gezi {
 		}
 		if (sampleSize > countValues.size())
 		{
-			countValues.resize(sampleSize, make_pair(0, 0.0));
+			countValues.resize(sampleSize, make_pair(0, 0.0)); //注意这个可能coutValues.size > sampleSize!
 		}
 
 		// Get histogram of values
 		int numValues = find_distinct_counts(values, len, countValues);
-		Pval2(numValues, maxBins);
 		binUpperBounds = find_bins(countValues, binLowerUpperBounds, maxBins, sampleSize, numValues);
-		Pval2(maxBins, binUpperBounds.size());
 		find_medians(countValues, numValues, maxBins, binUpperBounds, binMedians);
-		Pval(binUpperBounds.size());
 	}
 
 	//输入是dense表示的数组 例如[0,0,0,3,2.3,4.5,4.3,4.5]
