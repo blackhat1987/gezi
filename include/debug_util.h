@@ -170,7 +170,7 @@ void PRange(Iter begin, Iter end, std::ostream& out = std::cout, string sep = "\
 	ss << #v << ":";\
 	for (size_t i_ = 0; i_ < v.size(); i_++)\
 {\
-	ss << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
+	ss << v[i_] << " ";\
 }\
 	VLOG(5) << ss.str();\
 }
@@ -182,7 +182,7 @@ void PRange(Iter begin, Iter end, std::ostream& out = std::cout, string sep = "\
 	ss << #v << ":";\
 	for (size_t i_ = 0; i_ < v.size(); i_++)\
 {\
-	ss << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_]; \
+	ss << v[i_] << " "; \
 }\
 	VLOG(0) << ss.str();\
 }
