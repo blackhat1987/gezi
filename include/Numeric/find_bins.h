@@ -253,7 +253,7 @@ namespace gezi {
 
 		// Get histogram of values
 		int numValues = find_distinct_counts(values, countValues);
-		
+		Pval(numValues);
 		binUpperBounds = find_bins(countValues, binLowerUpperBounds, maxBins, sampleSize, numValues);
 
 		find_medians(countValues, numValues, maxBins, binUpperBounds, binMedians);
