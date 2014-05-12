@@ -166,7 +166,7 @@ void PRange(Iter begin, Iter end, std::ostream& out = std::cout, string sep = "\
 
 #define PVECTOR(v)\
 	stringstream ss;\
-	ss << #v << ":";
+	ss << #v << ":";\
 	for (size_t i_ = 0; i_ < v.size(); i_++)\
 {\
 	ss << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
@@ -175,7 +175,7 @@ VLOG(5) << ss.str()
 
 #define Pvector(v)\
 	stringstream ss;\
-	ss << #v << ":";
+	ss << #v << ":";\
 for (size_t i_ = 0; i_ < v.size(); i_++)\
 {\
 ss << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_]; \
