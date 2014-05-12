@@ -55,7 +55,7 @@ namespace gezi {
 		Pval(numZeros);
 		if (numZeros <= 0) //注意伪稀疏特殊直接返回
 			return numValues;
-
+		LOG(INFO) << "continue";
 		auto item = make_pair(numZeros, 0.0);
 		//@TODO why fail
 		/*	auto iter = std::lower_bound(countValues.begin(), countValues.end(), item,
@@ -176,7 +176,6 @@ namespace gezi {
 
 		// Get histogram of values
 		int numValues = find_distinct_counts(values, len, countValues);
-		Pval(numValues);
 
 		return find_bins(countValues, binLowerUpperBounds, maxBins, sampleSize, numValues);
 	}
@@ -254,6 +253,7 @@ namespace gezi {
 
 		// Get histogram of values
 		int numValues = find_distinct_counts(values, countValues);
+		Pval(numValues);
 		binUpperBounds = find_bins(countValues, binLowerUpperBounds, maxBins, sampleSize, numValues);
 
 		find_medians(countValues, numValues, maxBins, binUpperBounds, binMedians);
