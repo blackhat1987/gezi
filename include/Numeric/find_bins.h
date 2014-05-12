@@ -253,8 +253,9 @@ namespace gezi {
 		int numValues = find_distinct_counts(values, countValues);
 		Pval2(numValues, maxBins);
 		binUpperBounds = find_bins(countValues, binLowerUpperBounds, maxBins, sampleSize, numValues);
-		Pval(maxBins);
+		Pval2(maxBins, binUpperBounds.size());
 		find_medians(countValues, numValues, maxBins, binUpperBounds, binMedians);
+		Pval(binUpperBounds.size());
 	}
 
 	inline void find_bins_(Fvec& values, int len, int maxBins,
@@ -279,8 +280,9 @@ namespace gezi {
 		int numValues = find_distinct_counts(values, len, countValues);
 		Pval2(numValues, maxBins);
 		binUpperBounds = find_bins(countValues, binLowerUpperBounds, maxBins, sampleSize, numValues);
-		Pval(maxBins);
+		Pval2(maxBins, binUpperBounds.size());
 		find_medians(countValues, numValues, maxBins, binUpperBounds, binMedians);
+		Pval(binUpperBounds.size());
 	}
 
 	//输入是dense表示的数组 例如[0,0,0,3,2.3,4.5,4.3,4.5]
