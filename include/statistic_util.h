@@ -41,6 +41,8 @@ namespace gezi {
 	//using boost::bind;
 	//using boost::ref;
 
+	//@TODO FIXME 
+	//http://stackoverflow.com/questions/17333/most-effective-way-for-float-and-double-comparison 
 	inline bool are_same(double a, double b)
 	{
 		return fabs(a - b) < EPSILON;
@@ -132,7 +134,7 @@ namespace gezi {
 			return std::min_element(vec.begin(), vec.end());
 		}
 
-		
+
 		template<typename Container>
 		ValType max(const Container& vec)
 		{
