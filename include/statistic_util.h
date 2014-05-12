@@ -46,6 +46,11 @@ namespace gezi {
 		return fabs(a - b) < EPSILON;
 	}
 
+	inline bool is_zero(double a)
+	{
+		return fabs(a) < EPSILON;
+	}
+
 	inline double sigmoid(double score, double A, double B)
 	{
 		return 1.0 / (1 + exp(A * score + B));

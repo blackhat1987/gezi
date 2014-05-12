@@ -52,10 +52,10 @@ namespace gezi {
 	{
 		int numValues = find_distinct_counts(values, countValues);
 		int numZeros = len - values.size();
-		if (numZeros == 0) //注意伪稀疏特殊直接返回
+		if (numZeros <= 0) //注意伪稀疏特殊直接返回
 			return numValues;
 
-			auto item = make_pair(numZeros, 0.0);
+		auto item = make_pair(numZeros, 0.0);
 		//@TODO why fail
 		/*	auto iter = std::lower_bound(countValues.begin(), countValues.end(), item,
 		[](pair<int, Float>& l, pair<int, Float>& r) { return l.second < r.second; });*/
