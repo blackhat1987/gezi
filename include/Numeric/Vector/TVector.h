@@ -11,6 +11,7 @@
  *								 支持读写，dense and sparse
  可以增加支持binary 比如value为空表示binary @TODO
  *   @TODO 是否需要 int length , index 改为int64
+
  *  ==============================================================================
  */
 
@@ -22,6 +23,7 @@ namespace gezi {
 
 	//@TODO TVector 和 Vector 统一 合并？ 目前为了不影响使用Vector的代码暂时这样 Tvector只要使用
 	//TVector<int> 也就是fastrank里面的IntArray 但是fastrank里面IntArray更复杂 动态int short bool
+	//@TODO 取消Vector 使用TVector<double> 代表Vector 只维护TVector 目前的Vector内部有错误的
 	template<typename ValueType>
 	class TVector
 	{
@@ -250,9 +252,47 @@ namespace gezi {
 					}
 					visitor(j++, values[i]);
 				}
+				while (j < length)
+				{
+					visitor(j++, _zeroValue);
+				}
 			}
 		}
 
+		template<typename ValueVistor>
+		bool ForEachAllIf(ValueVistor visitor) const
+		{
+			if (IsDense())
+			{
+				for (size_t i = 0; i < values.size(); i++)
+				{
+					if (!visitor(i, values[i]))
+						return false;
+				}
+			}
+			else
+			{
+				size_t j = 0;
+				for (size_t i = 0; i < values.size(); i++)
+				{
+					while (j < indices[i])
+					{
+						if (!visitor(j++, _zeroValue))
+							return false;
+					}
+					if (!visitor(j++, values[i]))
+						return false;
+				}
+				while (j < length)
+				{
+					if (!visitor(j++, _zeroValue))
+						return false;
+				}
+			}
+			return true;
+		}
+
+		//@TODO  这个逻辑有些问题 应该是遍历所有Length 而不是截止到values.size()
 		template<typename ValueVistor>
 		void ForEachAllSparse(ValueVistor visitor) const
 		{
@@ -265,6 +305,32 @@ namespace gezi {
 				}
 				visitor(j++, values[i]);
 			}
+			while (j < length)
+			{
+				visitor(j++, _zeroValue);
+			}
+		}
+
+		template<typename ValueVistor>
+		bool ForEachAllSparseIf(ValueVistor visitor) const
+		{
+			size_t j = 0;
+			for (size_t i = 0; i < values.size(); i++)
+			{
+				while (j < indices[i])
+				{
+					if (!visitor(j++, _zeroValue))
+						return false;
+				}
+				if (!visitor(j++, values[i]))
+					return false;
+			}
+			while (j < length)
+			{
+				if (!visitor(j++, _zeroValue))
+					return false;
+			}
+			return true;
 		}
 
 
@@ -297,16 +363,14 @@ namespace gezi {
 		}
 
 		template<typename ValueVistor>
-		void ForEachDenseIf(ValueVistor visitor, bool& ok) const
+		bool ForEachDenseIf(ValueVistor visitor) const
 		{
 			for (size_t i = 0; i < values.size(); i++)
 			{
-				visitor(i, values[i], ok);
-				if (!ok)
-				{
-					break;
-				}
+				if (!visitor(i, values[i]))
+					return false;
 			}
+			return true;
 		}
 
 		template<typename ValueVistor>
@@ -328,16 +392,14 @@ namespace gezi {
 		}
 
 		template<typename ValueVistor>
-		void ForEachSparseIf(ValueVistor visitor, bool& ok) const
+		bool ForEachSparseIf(ValueVistor visitor) const
 		{
 			for (size_t i = 0; i < values.size(); i++)
 			{
-				visitor(indices[i], values[i], ok);
-				if (!ok)
-				{
-					break;
-				}
+				if (!visitor(indices[i], values[i]))
+					return false;
 			}
+			return true;
 		}
 
 		template<typename ValueVistor>
@@ -407,14 +469,18 @@ namespace gezi {
 			return indices.size() == values.size();
 		}
 
-		//@TODO  尽量少用length Length
+		//@TODO  尽量少用length 而使用Length() 这里不一致有些易错 主要为了方便 FeatureVecor desne 不断add 
+		//可以最后不设置length 自动按照values.size(),而对于稀疏length几乎是必须要设置
 		/// Gets a int value representing the dimensionality of the vector.
 		int Length() const
 		{
-			if (indices.empty())
+			if (length)  
+				return length;
+			if (indices.empty()) //dense
 			{
 				return values.size();
 			}
+			//sparse no lenth return 0 empty
 			return length;
 		}
 
@@ -607,6 +673,11 @@ namespace gezi {
 	};
 
 	typedef TVector<int> IntArray;
+
+	class PyIntArray : public IntArray
+	{
+
+	};
 }  //----end of namespace gezi
 
 #endif  //----end of NUMERIC__VECTOR__FVECTOR_H_

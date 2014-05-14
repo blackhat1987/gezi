@@ -21,6 +21,14 @@ using namespace gezi;
 
 DEFINE_string(type, "simple", "");
 
+void work(int i)
+{
+#pragma omp parallel for
+	for (size_t j = 0; j < 10; j++)
+	{
+		Pval2(i, j);
+	}
+}
 TEST(print, func)
 {
 #pragma omp parallel
@@ -30,6 +38,12 @@ TEST(print, func)
 	Pval(omp_get_num_threads());
 	Pval(omp_get_max_threads());
 	Pval(omp_get_num_procs());
+
+//#pragma  omp parallel for
+	for (size_t i = 0; i < 5; i++)
+	{
+		work(i);
+	}
 }
 
 int main(int argc, char *argv[])

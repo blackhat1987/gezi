@@ -78,7 +78,7 @@ namespace gezi {
 		for (; i < len; i++)
 		{
 			index = shiftIndices[i];
-			val = 0;
+			val = 0; //@TODO vec.ZeroValue()
 			func(index, ref(val));
 			result.Add(index, val);
 		}

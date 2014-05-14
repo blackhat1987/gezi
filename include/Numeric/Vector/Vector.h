@@ -20,6 +20,7 @@
 #include "serialize_util.h"
 namespace gezi {
 
+	//@FIXME depriciated 使用TVector<Float>替代
 	class Vector
 	{
 	public:
@@ -279,6 +280,7 @@ namespace gezi {
 			}
 		}
 
+		//下面两个函数有误 @FIXME 
 		template<typename ValueVistor>
 		void ForEachAll(ValueVistor visitor) const
 		{
@@ -434,10 +436,13 @@ namespace gezi {
 		/// Gets a int value representing the dimensionality of the vector.
 		int Length() const
 		{
-			if (indices.empty())
+			if (length)
+				return length;
+			if (indices.empty()) //dense
 			{
 				return values.size();
 			}
+			//sparse no length return 0 empty
 			return length;
 		}
 
@@ -884,6 +889,8 @@ namespace gezi {
 	};
 
 	typedef shared_ptr<Vector> VectorPtr;
+
+	//@TODO generic for Vector or IntArray
 	inline Float dot(const Vector& a, const Vector& b)
 	{
 		if (!a.Count() || !b.Count())

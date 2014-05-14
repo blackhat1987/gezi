@@ -54,14 +54,25 @@ namespace gezi {
 		int numZeros = len - values.size();
 		if (numZeros <= 0) //注意伪稀疏特殊直接返回
 			return numValues;
-		auto item = make_pair(numZeros, 0.0);
-		//@TODO why fail
-		/*	auto iter = std::lower_bound(countValues.begin(), countValues.end(), item,
-		[](pair<int, Float>& l, pair<int, Float>& r) { return l.second < r.second; });*/
-		auto iter = std::lower_bound(countValues.begin(), countValues.end(), item,
-			boost::bind(&pair<int, Float>::second, _1) < boost::bind(&pair<int, Float>::second, _2));
-		countValues.insert(iter, item);
-		return numValues + 1;
+
+		if (values.empty())
+		{
+			countValues[0].first = len;
+			countValues[0].second = 0.0;
+			return 1;
+		}
+		else
+		{
+			auto item = make_pair(numZeros, 0.0);
+			//@TODO why fail
+			/*	auto iter = std::lower_bound(countValues.begin(), countValues.end(), item,
+			[](pair<int, Float>& l, pair<int, Float>& r) { return l.second < r.second; });*/
+			//注意不是countValues.end()因为空间复用
+			auto iter = std::lower_bound(countValues.begin(), countValues.begin() + numValues, item,
+				boost::bind(&pair<int, Float>::second, _1) < boost::bind(&pair<int, Float>::second, _2));
+			countValues.insert(iter, item); //@TODO insert ?
+			return numValues + 1;
+		}
 	}
 
 	inline Fvec find_bins(vector<pair<int, Float> >& countValues,

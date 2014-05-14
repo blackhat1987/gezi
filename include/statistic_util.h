@@ -148,7 +148,7 @@ namespace gezi {
 		}
 
 		template<typename Container, typename ValueType>
-		void fill(const Container& vec, const ValueType& val)
+		void fill(Container& vec, const ValueType& val)
 		{
 			std::fill(vec.begin(), vec.end(), val);
 		}
