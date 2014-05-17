@@ -520,6 +520,7 @@ bp::scope Vector_scope( Vector_exposer );
 Vector_exposer.def( bp::init< gezi::Vector const & >(( bp::arg("arg0") )) );
 Vector_exposer.def( bp::init< int >(( bp::arg("length_") )) );
 bp::implicitly_convertible< int, gezi::Vector >();
+Vector_exposer.def( bp::init< int, Float >(( bp::arg("length_"), bp::arg("value_") )) );
 Vector_exposer.def( bp::init< int, ivec &, Fvec & >(( bp::arg("length_"), bp::arg("indices_"), bp::arg("values_") )) );
 Vector_exposer.def( bp::init< Fvec & >(( bp::arg("values_") )) );
 bp::implicitly_convertible< Fvec &, gezi::Vector >();
@@ -2131,6 +2132,17 @@ bp::def(
 "get_val"
 , get_val_function_type( &::gezi::get_val )
 , ( bp::arg("conf"), bp::arg("key"), bp::arg("default_val") ) );
+
+}
+
+{ //::gezi::get_words
+
+typedef ::std::vector< std::string > ( *get_words_function_type )( ::std::vector< std::string > &,int,::std::string );
+
+bp::def(
+"get_words"
+, get_words_function_type( &::gezi::get_words )
+, ( bp::arg("l"), bp::arg("ngram")=(int)(3), bp::arg("sep")="$#$" ) );
 
 }
 

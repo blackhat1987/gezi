@@ -280,7 +280,6 @@ namespace gezi {
 			}
 		}
 
-		//下面两个函数有误 @FIXME 
 		template<typename ValueVistor>
 		void ForEachAll(ValueVistor visitor) const
 		{
@@ -302,9 +301,47 @@ namespace gezi {
 					}
 					visitor(j++, values[i]);
 				}
+				while (j < length)
+				{
+					visitor(j++, _zeroValue);
+				}
 			}
 		}
 
+		template<typename ValueVistor>
+		bool ForEachAllIf(ValueVistor visitor) const
+		{
+			if (IsDense())
+			{
+				for (size_t i = 0; i < values.size(); i++)
+				{
+					if (!visitor(i, values[i]))
+						return false;
+				}
+			}
+			else
+			{
+				size_t j = 0;
+				for (size_t i = 0; i < values.size(); i++)
+				{
+					while (j < indices[i])
+					{
+						if (!visitor(j++, _zeroValue))
+							return false;
+					}
+					if (!visitor(j++, values[i]))
+						return false;
+				}
+				while (j < length)
+				{
+					if (!visitor(j++, _zeroValue))
+						return false;
+				}
+			}
+			return true;
+		}
+
+		//@TODO  这个逻辑有些问题 应该是遍历所有Length 而不是截止到values.size()
 		template<typename ValueVistor>
 		void ForEachAllSparse(ValueVistor visitor) const
 		{
@@ -317,6 +354,32 @@ namespace gezi {
 				}
 				visitor(j++, values[i]);
 			}
+			while (j < length)
+			{
+				visitor(j++, _zeroValue);
+			}
+		}
+
+		template<typename ValueVistor>
+		bool ForEachAllSparseIf(ValueVistor visitor) const
+		{
+			size_t j = 0;
+			for (size_t i = 0; i < values.size(); i++)
+			{
+				while (j < indices[i])
+				{
+					if (!visitor(j++, _zeroValue))
+						return false;
+				}
+				if (!visitor(j++, values[i]))
+					return false;
+			}
+			while (j < length)
+			{
+				if (!visitor(j++, _zeroValue))
+					return false;
+			}
+			return true;
 		}
 
 
@@ -347,6 +410,18 @@ namespace gezi {
 				visitor(i, values[i]);
 			}
 		}
+
+		template<typename ValueVistor>
+		bool ForEachDenseIf(ValueVistor visitor) const
+		{
+			for (size_t i = 0; i < values.size(); i++)
+			{
+				if (!visitor(i, values[i]))
+					return false;
+			}
+			return true;
+		}
+
 		template<typename ValueVistor>
 		void ForEachDense(ValueVistor visitor)
 		{
@@ -363,6 +438,17 @@ namespace gezi {
 			{
 				visitor(indices[i], values[i]);
 			}
+		}
+
+		template<typename ValueVistor>
+		bool ForEachSparseIf(ValueVistor visitor) const
+		{
+			for (size_t i = 0; i < values.size(); i++)
+			{
+				if (!visitor(indices[i], values[i]))
+					return false;
+			}
+			return true;
 		}
 
 		template<typename ValueVistor>
@@ -418,7 +504,6 @@ namespace gezi {
 				}
 			}
 		}
-
 	public:
 		//注意和TLC的区别 默认一个空的Vector是Sparse的 也就是表示所有向量值都是0的情况
 		//注意需要保证如果是sparse indices和values始终长度相同 Count() == 0 一定是Sparse
