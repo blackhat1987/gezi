@@ -111,6 +111,18 @@ namespace gezi {
 		return vec;
 	}
 
+	inline vector<string> read_lines(ifstream& ifs)
+	{
+		vector<string> vec;
+		string line;
+		while (getline(ifs, line))
+		{
+			//boost::trim(line);
+			vec.push_back(line);
+		}
+		return vec;
+	}
+
 	inline void read_lines(string infile, vector<string>& vec)
 	{
 		std::ifstream ifs(infile.c_str());

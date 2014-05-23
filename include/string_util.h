@@ -643,6 +643,26 @@ namespace gezi {
 		}
 		return result;
 	}
+
+	inline void get_skipn_bigram(const svec& l, svec& li, int n, string sep = "$#$")
+	{
+		svec l2(2);
+		int len = l.size();
+		for (int i = 0; i < len - 1 - n; i++)
+		{
+			l2[0] = l[i];
+			l2[1] = l[i + 1 + n];
+			li.push_back(l2[0] + sep + l2[1]);
+		}
+	}
+
+	inline void get_skip_bigram(const svec& l, svec& li, int n, string sep = "$#$")
+	{
+		for (int skip = 1; skip < n; skip++)
+		{
+			get_skipn_bigram(l, li, skip, sep);
+		}
+	}
 }
 
 #endif  //----end of STRING_UTIL_H_
