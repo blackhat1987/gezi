@@ -64,7 +64,7 @@ namespace gezi {
 				double normed_val = features.values[idx]; //dense表示的特征被norm
 				double val = features[idx + 1]; //稀疏表示的保持不变
 				out << format("%-3d %-3d %-25s : [%f:%f] : [NormalMean %f] : [SpamMean %f] : [NormalVar %f] : [SpamVar %f]\n")
-					% (idx + 1) % (j + 1) % features.names()[idx] % val % normed_val
+					% (idx) % (j) % features.names()[idx] % val % normed_val
 					% normal_vec[idx].first % spam_vec[idx].first
 					% normal_vec[idx].second % spam_vec[idx].second;
 				idx++;
