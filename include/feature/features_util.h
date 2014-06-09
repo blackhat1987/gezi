@@ -43,7 +43,7 @@ namespace gezi {
 			for (int j = 0; j < name_counts[i]; j++)
 			{
 				double val = features.values[idx];
-				out << format("%-3d %-3d: %-20s : [%f]\n") % (idx + 1) % (j + 1) % features.names()[idx] % val;
+				out << format("%-3d %-3d: %-20s : [%f]\n") % (idx) % (j) % features.names()[idx] % val;
 				idx++;
 			}
 		}
