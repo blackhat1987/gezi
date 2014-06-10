@@ -149,6 +149,24 @@ namespace gezi {
 		return vec;
 	}
 
+	inline vector<string> splits(string s, string delim, bool keep_empty = true)
+	{
+			vector<string> result;
+			string::iterator substart = s.begin(), subend;
+			while (true) {
+				subend = search(substart, s.end(), delim.begin(), delim.end());
+				string temp(substart, subend);
+				if (keep_empty || !temp.empty()) {
+					result.push_back(temp);
+				}
+				if (subend == s.end()) {
+					break;
+				}
+				substart = subend + delim.size();
+			}
+			return result;
+	}
+
 	inline bool split(string input, string sep, string& first, string& second)
 	{
 		int index = sep.size() == 1 ? input.find(sep[0]) : input.find(sep);

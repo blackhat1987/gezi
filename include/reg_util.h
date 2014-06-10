@@ -125,7 +125,7 @@ inline vector<string> reg_split(const string& input, string pattern)
 {
 	vector<string> vec;
 	boost::regex reg(pattern);
-	split_regex(vec, input, reg);
+	boost::split_regex(vec, input, reg);
 	return vec;
 }
 
