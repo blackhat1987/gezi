@@ -258,6 +258,7 @@ namespace gezi {
 		{
 			VLOG(0) << "Identifer Loading " << file;
 			serialize_util::load(*this, file);
+			VLOG(0) << "Identifer Loading Done";
 		}
 
 		T value(int index)

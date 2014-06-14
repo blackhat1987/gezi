@@ -38,9 +38,9 @@ const int gezi::SegHandle::SEG_BUFF_SIZE;
 
 #include "../include/ProgressBar.h"
 
-#include "../include/tieba/util.h"
-
 #include "../include/tools/content_process.h"
+
+#include "../include/tieba/util.h"
 
 #include "../include/string_util.h"
 
@@ -1915,6 +1915,61 @@ bp::def(
 
 }
 
+{ //::gezi::contains_any
+
+typedef bool ( *contains_any_function_type )( ::std::string,::std::string );
+
+bp::def(
+"contains_any"
+, contains_any_function_type( &::gezi::contains_any )
+, ( bp::arg("src"), bp::arg("type") ) );
+
+}
+
+{ //::gezi::contains_at
+
+typedef bool ( *contains_at_function_type )( ::std::string );
+
+bp::def(
+"contains_at"
+, contains_at_function_type( &::gezi::contains_at )
+, ( bp::arg("src") ) );
+
+}
+
+{ //::gezi::contains_num
+
+typedef bool ( *contains_num_function_type )( ::std::string );
+
+bp::def(
+"contains_num"
+, contains_num_function_type( &::gezi::contains_num )
+, ( bp::arg("src") ) );
+
+}
+
+{ //::gezi::contains_pic
+
+typedef bool ( *contains_pic_function_type )( ::std::string );
+
+bp::def(
+"contains_pic"
+, contains_pic_function_type( &::gezi::contains_pic )
+, ( bp::arg("src") ) );
+
+}
+
+{ //::gezi::contains_url
+
+typedef bool ( *contains_url_function_type )( ::std::string );
+
+bp::def(
+"contains_url"
+, contains_url_function_type( &::gezi::contains_url )
+, ( bp::arg("src") ) );
+
+}
+
 { //::gezi::copy_file
 
 typedef void ( *copy_file_function_type )( ::std::string,::std::string );
@@ -2022,6 +2077,28 @@ bp::def(
 "get_real_title"
 , get_real_title_function_type( &::gezi::get_real_title )
 , ( bp::arg("title") ) );
+
+}
+
+{ //::gezi::get_skip_bigram
+
+typedef void ( *get_skip_bigram_function_type )( ::svec const &,::svec &,int,::std::string );
+
+bp::def(
+"get_skip_bigram"
+, get_skip_bigram_function_type( &::gezi::get_skip_bigram )
+, ( bp::arg("l"), bp::arg("li"), bp::arg("n"), bp::arg("sep")="$#$" ) );
+
+}
+
+{ //::gezi::get_skipn_bigram
+
+typedef void ( *get_skipn_bigram_function_type )( ::svec const &,::svec &,int,::std::string );
+
+bp::def(
+"get_skipn_bigram"
+, get_skipn_bigram_function_type( &::gezi::get_skipn_bigram )
+, ( bp::arg("l"), bp::arg("li"), bp::arg("n"), bp::arg("sep")="$#$" ) );
 
 }
 
@@ -2368,6 +2445,17 @@ bp::def(
 
 { //::gezi::read_lines
 
+typedef ::std::vector< std::string > ( *read_lines_function_type )( ::std::ifstream & );
+
+bp::def(
+"read_lines"
+, read_lines_function_type( &::gezi::read_lines )
+, ( bp::arg("ifs") ) );
+
+}
+
+{ //::gezi::read_lines
+
 typedef ::std::vector< std::string > ( *read_lines_function_type )( ::std::string const & );
 
 bp::def(
@@ -2385,6 +2473,17 @@ bp::def(
 "read_lines"
 , read_lines_function_type( &::gezi::read_lines )
 , ( bp::arg("infile"), bp::arg("vec") ) );
+
+}
+
+{ //::gezi::read_lines
+
+typedef ::std::vector< std::string > ( *read_lines_function_type )( ::std::ifstream & );
+
+bp::def(
+"read_lines"
+, read_lines_function_type( &::gezi::read_lines )
+, ( bp::arg("ifs") ) );
 
 }
 

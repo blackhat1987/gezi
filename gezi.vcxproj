@@ -234,6 +234,7 @@
     <ClCompile Include="test\test_regex2.cc" />
     <ClCompile Include="test\test_seg.cc" />
     <ClCompile Include="test\test_shared_ptr.cc" />
+    <ClCompile Include="test\test_split.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl" />

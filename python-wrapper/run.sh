@@ -3,6 +3,9 @@ cp -rf ../include/* ../include.python/
 pushd .
 cd ../include.python/ 
 gen-header-all.py
+cd tools
+gen-header-all.py
+cd ..
 cd tieba
 gen-header-all.py 
 cd .. 

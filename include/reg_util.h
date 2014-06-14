@@ -121,11 +121,18 @@ inline wstring reg_remove(const wstring& input, wstring pattern)
 	return boost::regex_replace(input, reg, L"");
 }
 
+//@TODO http://www.boost.org/doc/libs/1_46_1/libs/regex/doc/html/boost_regex/ref/regex_token_iterator.html
 inline vector<string> reg_split(const string& input, string pattern)
 {
 	vector<string> vec;
 	boost::regex reg(pattern);
-	boost::split_regex(vec, input, reg);
+	//split_regex(vec, input, reg);*/
+	boost::sregex_token_iterator i(input.begin(), input.end(), reg);
+	boost::sregex_token_iterator j;
+	while (i != j)
+	{
+		vec.push_back(*i++);
+	}
 	return vec;
 }
 
@@ -133,7 +140,13 @@ inline vector<wstring> reg_split(const wstring& input, wstring pattern)
 {
 	vector<wstring> vec;
 	boost::wregex reg(pattern);
-	boost::split_regex(vec, input, reg);
+	//split_regex(std::back_inserter(vec), input, reg);
+	boost::wsregex_token_iterator i(input.begin(), input.end(), reg);
+	boost::wsregex_token_iterator j;
+	while (i != j)
+	{
+		vec.push_back(*i++);
+	}
 	return vec;
 }
 
