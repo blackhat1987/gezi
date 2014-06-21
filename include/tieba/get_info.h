@@ -37,8 +37,6 @@ namespace gezi {
 			string pids_ = gezi::join(pids, ",");
 			string url = (format("http://service.tieba.baidu.com/service/antiserver?method=antiGetRscInfo&post_ids=%s&format=mcpackraw")%pids_).str();
 
-			Pval(url);
-
 			return get_info(url);
 		}
 		//获取用户信息
