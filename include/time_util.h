@@ -24,6 +24,12 @@ using std::string;
 
 namespace gezi {
 
+	inline string get_now_time_str()
+	{
+		namespace pt = boost::posix_time;
+		return pt::to_iso_string(pt::second_clock::local_time());
+	}
+
 	class MicrosecTimer
 	{
 	public:

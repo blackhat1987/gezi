@@ -16,6 +16,7 @@
 #include "common_util.h"
 #include "curl_util.h"
 #include "json/json.h"
+#include "random_util.h"
 
 namespace gezi {
 	namespace tieba {
@@ -32,12 +33,123 @@ namespace gezi {
 
 
 		//获取帖子内容
-		inline string get_post_info(svec pids)
+		inline string get_posts_info(svec pids)
 		{
 			string pids_ = gezi::join(pids, ",");
 			string url = (format("http://service.tieba.baidu.com/service/antiserver?method=antiGetRscInfo&post_ids=%s&format=mcpackraw")%pids_).str();
-
 			return get_info(url);
+		}
+
+		inline bool get_post_info(uint64 pid, string& title, string& content)
+		{
+			Json::Reader reader;
+			Json::Value root;
+			string url = (format("http://service.tieba.baidu.com/service/post?method=getPostInfo&post_ids=a:1:{i:0;i:%1%;}&format=mcpackraw") % pid).str();
+			string jsonStr = get_info(url); 
+			bool ret = reader.parse(jsonStr, root);
+			if (!ret)
+			{
+				LOG(WARNING) << "json parse fail";
+				return false;
+			}
+
+			try
+			{
+				auto& m = root["output"][0];
+				title = m["title"].asString();
+				content = m["content"].asString();
+			}
+			catch (...)
+			{
+				LOG(WARNING) << "get json value fail";
+				return false;
+			}
+			return true;
+		}
+
+
+		inline int get_posts_delete_info(vector<uint64>& pids, vector<uint64>& tids, int maxCount = 50)
+		{
+			Json::Reader reader;
+			Json::Value root;
+			string url = "http://service.tieba.baidu.com/service/post?method=getDelpostInfo&post_ids=[$input$]&format=json";
+
+			int total = std::min(pids.size(), tids.size());
+			bool needRandom = total > maxCount;
+			int len = std::min(total, maxCount);
+			
+			vector<string> parts;
+			if (!needRandom)
+			{
+				for (int i = 0; i < len; i++)
+				{
+					string part = "{%22thread_id%22:" + STR(tids[i]) + ",%22post_id%22:" + STR(pids[i]) + "}";
+					parts.push_back(part);
+				}
+			}
+			else
+			{
+				RandomRange range(total);
+				for (int i = 0; i < len; i++)
+				{
+					int idx = range.Next();
+					string part = "{%22thread_id%22:" + STR(tids[idx]) + ",%22post_id%22:" + STR(pids[idx]) + "}";
+					parts.push_back(part);
+				}
+			}
+			
+			boost::replace_first(url, "$input$", gezi::join(parts, ","));
+			//Pval(url);
+			string jsonStr = get_info(url);
+			PVAL(jsonStr);
+			bool ret = reader.parse(jsonStr, root);
+			if (!ret)
+			{
+				LOG(WARNING) << "json parse fail";
+				return 0;
+			}
+
+			int pds = 0, tds = 0;
+			try
+			{
+				pds = root["output"]["delpost_res"].size();
+				tds = root["output"]["delthread_res"].size();
+				PVAL2(pds, tds);
+			}
+			catch (...)
+			{
+				LOG(WARNING) << "get json value fail";
+				return 0;
+			}
+			return std::max(pds, tds);
+		}
+
+		inline bool get_post_deleted_info(uint64 pid, uint64 tid, bool& isPostDeleted, bool& isThreadDeleted)
+		{
+			Json::Reader reader;
+			Json::Value root;
+			string url = "http://service.tieba.baidu.com/service/post?method=getDelpostInfo&post_ids=[{%22thread_id%22:$tid$,%22post_id%22:$pid$}]&format=json";
+			boost::replace_first(url, "$pid$", STR(pid));
+			boost::replace_first(url, "$tid$", STR(tid));
+			string jsonStr = get_info(url);
+			bool ret = reader.parse(jsonStr, root);
+			if (!ret)
+			{
+				LOG(WARNING) << "json parse fail";
+				return false;
+			}
+
+			try
+			{
+				isPostDeleted = root["output"]["delpost_res"].size() > 0;
+				isThreadDeleted = root["output"]["delthread_res"].size() > 0;
+			}
+			catch (...)
+			{
+				LOG(WARNING) << "get json value fail";
+				return false;
+			}
+			return true;
 		}
 		//获取用户信息
 
