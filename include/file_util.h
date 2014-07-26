@@ -44,7 +44,7 @@ namespace gezi {
 	{
 		if (!bfs::exists(dir))
 		{
-			LOG_WARNING("%s not exist, will create first", dir.c_str());
+			LOG(WARNING) << dir << " not exitst, will create first";
 			bfs::create_directories(dir); //@FIXME以前没遇到 现在需要 export LC_ALL="C"
 		}
 	}
