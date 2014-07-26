@@ -522,9 +522,10 @@ Vector_exposer.def( bp::init< int >(( bp::arg("length_") )) );
 bp::implicitly_convertible< int, gezi::Vector >();
 Vector_exposer.def( bp::init< int, Float >(( bp::arg("length_"), bp::arg("value_") )) );
 Vector_exposer.def( bp::init< int, ivec &, Fvec & >(( bp::arg("length_"), bp::arg("indices_"), bp::arg("values_") )) );
+Vector_exposer.def( bp::init< ivec &, Fvec &, bp::optional< int > >(( bp::arg("indices_"), bp::arg("values_"), bp::arg("length_")=(int)(1024000) )) );
 Vector_exposer.def( bp::init< Fvec & >(( bp::arg("values_") )) );
 bp::implicitly_convertible< Fvec &, gezi::Vector >();
-Vector_exposer.def( bp::init< std::string, bp::optional< int, std::string > >(( bp::arg("input"), bp::arg("length_")=(int)(1024000), bp::arg("sep")=",\011 " )) );
+Vector_exposer.def( bp::init< std::string, bp::optional< int, int, std::string > >(( bp::arg("input"), bp::arg("startIndex")=(int)(0), bp::arg("length_")=(int)(1024000), bp::arg("sep")=",\011 " )) );
 { //::gezi::Vector::Add
 
 typedef void ( ::gezi::Vector::*Add_function_type )( ::Float ) ;
@@ -2456,7 +2457,18 @@ bp::def(
 
 { //::gezi::read_lines
 
-typedef ::std::vector< std::string > ( *read_lines_function_type )( ::std::string const & );
+typedef ::std::vector< std::string > ( *read_lines_function_type )( ::std::string,::std::string );
+
+bp::def(
+"read_lines"
+, read_lines_function_type( &::gezi::read_lines )
+, ( bp::arg("infile"), bp::arg("ignore") ) );
+
+}
+
+{ //::gezi::read_lines
+
+typedef ::std::vector< std::string > ( *read_lines_function_type )( ::std::string );
 
 bp::def(
 "read_lines"
@@ -2489,11 +2501,44 @@ bp::def(
 
 { //::gezi::read_lines
 
-typedef ::std::vector< std::string > ( *read_lines_function_type )( ::std::string const & );
+typedef ::std::vector< std::string > ( *read_lines_function_type )( ::std::string,::std::string );
 
 bp::def(
 "read_lines"
 , read_lines_function_type( &::gezi::read_lines )
+, ( bp::arg("infile"), bp::arg("ignore") ) );
+
+}
+
+{ //::gezi::read_lines
+
+typedef ::std::vector< std::string > ( *read_lines_function_type )( ::std::string );
+
+bp::def(
+"read_lines"
+, read_lines_function_type( &::gezi::read_lines )
+, ( bp::arg("infile") ) );
+
+}
+
+{ //::gezi::read_lines_noempty
+
+typedef ::std::vector< std::string > ( *read_lines_noempty_function_type )( ::std::string );
+
+bp::def(
+"read_lines_noempty"
+, read_lines_noempty_function_type( &::gezi::read_lines_noempty )
+, ( bp::arg("infile") ) );
+
+}
+
+{ //::gezi::read_lines_noempty
+
+typedef ::std::vector< std::string > ( *read_lines_noempty_function_type )( ::std::string );
+
+bp::def(
+"read_lines_noempty"
+, read_lines_noempty_function_type( &::gezi::read_lines_noempty )
 , ( bp::arg("infile") ) );
 
 }

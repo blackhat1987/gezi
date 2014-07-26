@@ -183,8 +183,8 @@ namespace gezi {
 				}
 				i++;
 			}
-			else if (temp[i] >= '0' && temp[i] <= '9' || temp[i] >= 'A' && temp[i] <= 'Z'
-				|| temp[i] >= 'a' && temp[i] <= 'z')
+			else if ((temp[i] >= '0' && temp[i] <= '9') || (temp[i] >= 'A' && temp[i] <= 'Z')
+				|| (temp[i] >= 'a' && temp[i] <= 'z'))
 			{
 				out[index++] = temp[i];
 			}
@@ -387,13 +387,13 @@ namespace gezi {
 	{
 		vector<char> buf(s.size() + 1, '\0');
 		int j = 0;
-		for (int i = 0; i < s.size(); i++)
+		for (int i = 0; i < (int)s.size(); i++)
 		{
-			if (s[i] < 0 && i < s.size() - 1)
+			if (s[i] < 0 && i < (int)s.size() - 1)
 			{
 				if ((int)s[i] == -95 && (int)s[i + 1] == -95)
 				{
-					buf[j++] = ' ';
+					buf[j++] = rep;
 				}
 				else
 				{
