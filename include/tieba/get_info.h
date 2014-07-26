@@ -24,7 +24,8 @@ namespace gezi {
 		{
 			if (timeout < 0)
 			{
-				timeout = PSCONF_(timeout, "tieba.get_info", 1000);
+				//timeout = PSCONF_(timeout, "tieba.get_info", 1000);
+				timeout = 1000;
 			}
 			CurlUtil curl;
 			curl.setTimeout(timeout);
@@ -36,7 +37,7 @@ namespace gezi {
 		inline string get_posts_info(svec pids)
 		{
 			string pids_ = gezi::join(pids, ",");
-			string url = (format("http://service.tieba.baidu.com/service/antiserver?method=antiGetRscInfo&post_ids=%s&format=mcpackraw")%pids_).str();
+			string url = (format("http://service.tieba.baidu.com/service/antiserver?method=antiGetRscInfo&post_ids=%s&format=mcpackraw") % pids_).str();
 			return get_info(url);
 		}
 
@@ -45,7 +46,7 @@ namespace gezi {
 			Json::Reader reader;
 			Json::Value root;
 			string url = (format("http://service.tieba.baidu.com/service/post?method=getPostInfo&post_ids=a:1:{i:0;i:%1%;}&format=mcpackraw") % pid).str();
-			string jsonStr = get_info(url); 
+			string jsonStr = get_info(url);
 			bool ret = reader.parse(jsonStr, root);
 			if (!ret)
 			{
@@ -67,6 +68,76 @@ namespace gezi {
 			return true;
 		}
 
+		inline bool is_thread_deleted(uint64 tid)
+		{
+			Json::Reader reader;
+			Json::Value root;
+			string url = "http://service.tieba.baidu.com/service/post?method=getDelpostInfo&post_ids=[{%22thread_id%22:$tid$,%22post_id%22:19821229}]&format=json";
+			boost::replace_first(url, "$tid$", STR(tid));
+			string jsonStr = get_info(url);
+			bool ret = reader.parse(jsonStr, root);
+			if (!ret)
+			{
+				LOG(WARNING) << "json parse fail";
+				return false;
+			}
+
+			bool isThreadDeleted = false;
+			try
+			{
+				isThreadDeleted = root["output"]["delthread_res"].size() > 0;
+			}
+			catch (...)
+			{
+				LOG(WARNING) << "get json value fail";
+				return false;
+			}
+			return isThreadDeleted;
+		}
+
+		template<typename Vec>
+		set<uint64> get_deleted_threads(Vec& tids)
+		{
+			set<uint64> deletedThreads;
+
+			Json::Reader reader;
+			Json::Value root;
+			string url = "http://service.tieba.baidu.com/service/post?method=getDelpostInfo&post_ids=[$input$]&format=json";
+
+			svec parts;
+			for (auto& item : tids)
+			{
+				string part = "{%22thread_id%22:" + STR(item) + ",%22post_id%22:19821229}";
+				parts.push_back(part);
+			}
+
+			boost::replace_first(url, "$input$", gezi::join(parts, ","));
+			PVAL(url);
+			string jsonStr = get_info(url);
+			PVAL(jsonStr);
+			bool ret = reader.parse(jsonStr, root);
+			if (!ret)
+			{
+				LOG(WARNING) << "json parse fail";
+				return deletedThreads;
+			}
+
+			try
+			{
+				auto tds = root["output"]["delthread_res"];
+				auto member = tds.getMemberNames();
+				for (auto iter = member.begin(); iter != member.end(); ++iter)
+				{
+					deletedThreads.insert(UINT64(*(iter)));
+				}
+			}
+			catch (...)
+			{
+				LOG(WARNING) << "get json value fail";
+				return deletedThreads;
+			}
+			return deletedThreads;
+		}
 
 		inline int get_posts_delete_info(vector<uint64>& pids, vector<uint64>& tids, int maxCount = 50)
 		{
@@ -77,7 +148,7 @@ namespace gezi {
 			int total = std::min(pids.size(), tids.size());
 			bool needRandom = total > maxCount;
 			int len = std::min(total, maxCount);
-			
+
 			vector<string> parts;
 			if (!needRandom)
 			{
@@ -97,9 +168,9 @@ namespace gezi {
 					parts.push_back(part);
 				}
 			}
-			
+
 			boost::replace_first(url, "$input$", gezi::join(parts, ","));
-			//Pval(url);
+			PVAL(url);
 			string jsonStr = get_info(url);
 			PVAL(jsonStr);
 			bool ret = reader.parse(jsonStr, root);

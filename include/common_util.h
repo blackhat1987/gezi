@@ -16,6 +16,8 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <complex>      // std::complex, std::abs
+#include <cmath>
 
 #include <gtest/gtest.h> 
 #include <glog/logging.h>

@@ -24,8 +24,10 @@
 #include <boost/algorithm/string.hpp>
 #include <map>
 #include <set>
+#include <string>
 using std::map;
 using std::set;
+using std::string;
 namespace bfs = boost::filesystem;
 namespace bf = boost::filesystem;
 //---------------------------for file save load
@@ -98,14 +100,47 @@ namespace gezi {
 	}
 
 	//@TODO read_lines_safe
-	inline vector<string> read_lines(const std::string& infile)
+	inline vector<string> read_lines(string infile)
 	{
 		vector<string> vec;
 		std::ifstream ifs(infile.c_str());
 		string line;
 		while (getline(ifs, line))
 		{
-			//boost::trim(line);
+			vec.push_back(line);
+		}
+		return vec;
+	}
+
+	inline vector<string> read_lines_noempty(string infile)
+	{
+		vector<string> vec;
+		std::ifstream ifs(infile.c_str());
+		string line;
+		while (getline(ifs, line))
+		{
+			boost::trim(line);
+			if (!line.empty())
+			{
+				vec.push_back(line);
+			}
+		}
+		return vec;
+	}
+
+	inline vector<string> read_lines(string infile, string ignore)
+	{
+		vector<string> vec;
+		std::ifstream ifs(infile.c_str());
+		string line;
+		while (getline(ifs, line))
+		{
+			boost::trim(line);
+			if (line.empty() || startswith(line, ignore))
+			{
+				continue;
+			}
+			
 			vec.push_back(line);
 		}
 		return vec;

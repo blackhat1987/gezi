@@ -19,6 +19,9 @@
 #include <string>
 #include <algorithm>
 #include <boost/bind.hpp>
+#include <complex>      // std::complex, std::abs
+#include <cmath>
+
 namespace gezi {
 	/**如果map<string,int>注意使用的时候vector<pair<srring, int>>*/
 	template<typename Map, typename Vec>
@@ -83,6 +86,16 @@ namespace gezi {
 			boost::bind(&ValueType::second, _2));
 	}
 
+	template<typename Map, typename Vec>
+	void sort_map_by_absvalue_reverse(Map& tmap, Vec& tvec)
+	{
+		tvec.clear();
+		typedef typename Vec::value_type ValueType;
+		std::copy(tmap.begin(), tmap.end(), std::back_inserter(tvec));
+		std::sort(tvec.begin(), tvec.end(),
+			[](const ValueType& a, const ValueType&b) { return std::abs(a.second) > std::abs(b.second); });
+	}
+
 	/*template<typename Map>
 	auto sort_map_by_value_reverse(Map& tmap) -> decltype(vector<pair<Map::key_type, Map::value_type> >)
 	{
@@ -95,7 +108,7 @@ namespace gezi {
 		return tvec;
 	}*/
 
-	template<typename Map, typename Vec>
+	template<typename Map, typename Vec> 
 	void patital_sort_map_by_value(Map& tmap, Vec& tvec, int n = 10)
 	{
 		tvec.clear();

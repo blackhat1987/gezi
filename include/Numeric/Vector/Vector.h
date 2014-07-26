@@ -50,6 +50,13 @@ namespace gezi {
 			values.swap(values_);
 		}
 
+		Vector(ivec& indices_, Fvec& values_, int length_ = 1024000)
+			:length(length_)
+		{
+			indices.swap(indices_);
+			values.swap(values_);
+		}
+
 		//注意desne情况 可以直接用这个种方法产生 推荐 或者调用Add 接口，
 		//Add接口 内部不对length处理 
 		Vector(Fvec& values_)
@@ -58,7 +65,7 @@ namespace gezi {
 		}
 
 		//方便debug Vector vec("1\t3\t4\t5"); Vector vec("1:2.3\t3:4.5"); or vec("1 3") space is also ok
-		Vector(string input, int length_ = 1024000, string sep = ",\t ")
+		Vector(string input, int startIndex = 0, int length_ = 1024000, string sep = ",\t ")
 		{
 			boost::trim(input); //需要注意 因为DOUBLE采用atof快速但是不安全 可能输入是一个空格 导致有问题
 			//注意split("",sep)得到不是空结果 而是有1个空元素的vector c# python	也是		
@@ -73,7 +80,7 @@ namespace gezi {
 					{
 						string index_, val_;
 						split(part, ':', index_, val_);
-						int index = INT(index_);
+						int index = INT(index_) + startIndex;
 						maxIndex = index;
 						double val = DOUBLE(val_);
 						Add(index, val);

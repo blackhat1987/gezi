@@ -384,6 +384,9 @@
     <ClInclude Include="include\openmp_util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\feature\gain_summary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
