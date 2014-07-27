@@ -38,12 +38,12 @@ namespace gezi {
 		{
 		}
 
-		Vector(int length_, Float value_)
+		Vector(Float value_, int length_)
 			: length(length_), _zeroValue(value_)
 		{
 		}
 
-		Vector(Float value_, int length_)
+		Vector(int length_, Float value_)
 		{
 			values.resize(length_, value_);
 			length = length_;

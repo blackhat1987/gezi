@@ -44,7 +44,7 @@ namespace gezi {
 		{
 		}
 
-		TVector(int length_, ValueType value_)
+		TVector(ValueType value_, int length_)
 			: length(length_), _zeroValue(value_)
 		{
 		}
