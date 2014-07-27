@@ -45,7 +45,11 @@ namespace gezi {
 		if (!bfs::exists(dir))
 		{
 			LOG(WARNING) << dir << " not exitst, will create first";
+#ifdef __GNUC__
+			mkdir(dir.c_str());            //boost create_directories 是跨平台 但是当前版本有bug
+#else
 			bfs::create_directories(dir); //@FIXME以前没遇到 现在需要 export LC_ALL="C"
+#endif // __GNUC__
 		}
 	}
 
