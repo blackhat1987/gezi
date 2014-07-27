@@ -43,6 +43,25 @@ namespace gezi {
 		{
 		}
 
+		Vector(Float value_, int length_)
+		{
+			values.resize(length_, value_);
+			length = length_;
+			indices.clear();
+		}
+
+		void Resize(int length_, Float value_ = 0)
+		{
+			values.resize(length_, value_);
+			length = length_;
+			indices.clear();
+		}
+
+		void resize(int length_, Float value_ = 0)
+		{
+			Resize(length_, value_);
+		}
+
 		Vector(int length_, ivec& indices_, Fvec& values_)
 			:length(length_)
 		{
