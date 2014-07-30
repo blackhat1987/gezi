@@ -31,7 +31,7 @@ using namespace std;
 	VLOG(u) << #s <<" --- [" << s << "]"
 
 #define PVAL(s)\
-	VLOG(4) << #s <<" --- [" << s << "]"
+	VLOG(4) << setprecision(16) << #s <<" --- [" << s << "]"
 
 #define PVAL_(s, u)\
 	VLOG(4) << u << " " << #s <<" --- [" << s << "]"
@@ -249,7 +249,7 @@ void WPvec(const T&vec, std::wostream& out = std::wcout, const wstring& end = L"
 #define PrintVecTopN(vec, arg1, n) \
 	for (size_t i = 0; i < n; i++) \
 {  \
-	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << vec[i].arg1; \
+	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1; \
 }
 
 #define PrintVec2TopN(vec, arg1, arg2, n) \

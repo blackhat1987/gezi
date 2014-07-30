@@ -89,6 +89,20 @@ TEST(test_shared_ptr, func)
 	}
 }
 
+void play(vector<int>*& vec)
+{
+	shared_ptr<vector<int> > p = make_shared<vector<int> >(100, 2);
+	Pval((*p)[3]);
+	vec = p.get();
+}
+
+TEST(test_shared_ptr, return_func)
+{
+	vector<int> *pvec;
+	play(pvec);
+	Pval((*pvec)[3]);
+	Pval(pvec->size());
+}
 int main(int argc, char *argv[])
 {
   testing::InitGoogleTest(&argc, argv);

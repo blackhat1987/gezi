@@ -520,6 +520,7 @@ bp::scope Vector_scope( Vector_exposer );
 Vector_exposer.def( bp::init< gezi::Vector const & >(( bp::arg("arg0") )) );
 Vector_exposer.def( bp::init< int >(( bp::arg("length_") )) );
 bp::implicitly_convertible< int, gezi::Vector >();
+Vector_exposer.def( bp::init< Float, int >(( bp::arg("value_"), bp::arg("length_") )) );
 Vector_exposer.def( bp::init< int, Float >(( bp::arg("length_"), bp::arg("value_") )) );
 Vector_exposer.def( bp::init< int, ivec &, Fvec & >(( bp::arg("length_"), bp::arg("indices_"), bp::arg("values_") )) );
 Vector_exposer.def( bp::init< ivec &, Fvec &, bp::optional< int > >(( bp::arg("indices_"), bp::arg("values_"), bp::arg("length_")=(int)(1024000) )) );
@@ -753,6 +754,16 @@ Vector_exposer.def(
 , PrepareDense_function_type( &::gezi::Vector::PrepareDense ) );
 
 }
+{ //::gezi::Vector::Resize
+
+typedef void ( ::gezi::Vector::*Resize_function_type )( int,::Float ) ;
+
+Vector_exposer.def(
+"Resize"
+, Resize_function_type( &::gezi::Vector::Resize )
+, ( bp::arg("length_"), bp::arg("value_")=0 ) );
+
+}
 { //::gezi::Vector::ScaleBy
 
 typedef void ( ::gezi::Vector::*ScaleBy_function_type )( ::Float ) ;
@@ -921,6 +932,16 @@ Vector_exposer.def(
 , __getitem___function_type( &::gezi::Vector::operator[] )
 , ( bp::arg("i") )
 , bp::return_value_policy< bp::copy_non_const_reference >() );
+
+}
+{ //::gezi::Vector::resize
+
+typedef void ( ::gezi::Vector::*resize_function_type )( int,::Float ) ;
+
+Vector_exposer.def(
+"resize"
+, resize_function_type( &::gezi::Vector::resize )
+, ( bp::arg("length_"), bp::arg("value_")=0 ) );
 
 }
 { //::gezi::Vector::size
@@ -1549,31 +1570,6 @@ bp::class_< gezi::ValueIdentifer< int >, bp::bases< gezi::Identifer > >( "IntIde
 
 bp::class_< gezi::PyIntIndentifer, bp::bases< gezi::ValueIdentifer< int > > >( "PyIntIndentifer" );
 
-bp::class_< gezi::PyPredictor >( "PyPredictor" )
-.def(
-"Normalize"
-, (::gezi::Vector ( ::gezi::PyPredictor::* )( ::gezi::Vector & ) )( &::gezi::PyPredictor::Normalize )
-, ( bp::arg("features") ) )
-.def(
-"Output"
-, (::Float ( ::gezi::PyPredictor::* )( ::gezi::Vector & ) )( &::gezi::PyPredictor::Output )
-, ( bp::arg("features") ) )
-.def(
-"Predict"
-, (::Float ( ::gezi::PyPredictor::* )( ::gezi::Vector & ) )( &::gezi::PyPredictor::Predict )
-, ( bp::arg("features") ) )
-.def(
-"Predict"
-, (::Float ( ::gezi::PyPredictor::* )( ::gezi::Vector &,::Float & ) )( &::gezi::PyPredictor::Predict )
-, ( bp::arg("features"), bp::arg("output") ) );
-
-bp::class_< gezi::PyPredictorFactory >( "PyPredictorFactory" )
-.def(
-"LoadPredictor"
-, (::gezi::PyPredictor (*)( ::std::string ))( &::gezi::PyPredictorFactory::LoadPredictor )
-, ( bp::arg("path") ) )
-.staticmethod( "LoadPredictor" );
-
 { //::gezi::SegHandle
 typedef bp::class_< SegHandle_wrapper > SegHandle_exposer_t;
 SegHandle_exposer_t SegHandle_exposer = SegHandle_exposer_t( "SegHandle", bp::init< >() );
@@ -1860,6 +1856,31 @@ VecWriter_exposer.def(
 
 }
 }
+
+bp::class_< gezi::py::Predictor >( "Predictor" )
+.def(
+"Normalize"
+, (::gezi::Vector ( ::gezi::py::Predictor::* )( ::gezi::Vector & ) )( &::gezi::py::Predictor::Normalize )
+, ( bp::arg("features") ) )
+.def(
+"Output"
+, (::Float ( ::gezi::py::Predictor::* )( ::gezi::Vector & ) )( &::gezi::py::Predictor::Output )
+, ( bp::arg("features") ) )
+.def(
+"Predict"
+, (::Float ( ::gezi::py::Predictor::* )( ::gezi::Vector & ) )( &::gezi::py::Predictor::Predict )
+, ( bp::arg("features") ) )
+.def(
+"Predict"
+, (::Float ( ::gezi::py::Predictor::* )( ::gezi::Vector &,::Float & ) )( &::gezi::py::Predictor::Predict )
+, ( bp::arg("features"), bp::arg("output") ) );
+
+bp::class_< gezi::py::PredictorFactory >( "PredictorFactory" )
+.def(
+"LoadPredictor"
+, (::gezi::py::Predictor (*)( ::std::string ))( &::gezi::py::PredictorFactory::LoadPredictor )
+, ( bp::arg("path") ) )
+.staticmethod( "LoadPredictor" );
 
 { //::gezi::all_en
 
