@@ -74,7 +74,7 @@ namespace gezi {
 
 	inline Vector to_features(string sparseFeatureStr)
 	{
-		libsvm_normalize(sparseFeatureStr);
+		normalize_feature_str(sparseFeatureStr);
 		Vector features;
 		vector<string> vec;
 		boost::split(vec, sparseFeatureStr, is_any_of("\t "));

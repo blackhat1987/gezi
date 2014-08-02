@@ -621,7 +621,7 @@ namespace gezi {
 
 
 	//@TODO move to some where else
-	inline void libsvm_normalize(string& feature_str)
+	inline void normalize_feature_str(string& feature_str)
 	{
 		boost::trim(feature_str);
 		feature_str = gezi::remove_dupspace(feature_str);

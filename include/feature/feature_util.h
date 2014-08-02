@@ -77,7 +77,7 @@ namespace gezi
 	inline Feature to_feature(string feature_str_)
 	{
 		string feature_str = feature_str_;
-		libsvm_normalize(feature_str);
+		normalize_feature_str(feature_str);
 		Feature feature;
 		vector<string> vec;
 		boost::split(vec, feature_str, is_any_of("\t "));
