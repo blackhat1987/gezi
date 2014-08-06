@@ -96,12 +96,33 @@ void play(vector<int>*& vec)
 	vec = p.get();
 }
 
+//vector<int>*& play2()
+//{
+//	shared_ptr<vector<int> > p = make_shared<vector<int> >(100, 3);
+//	Pval((*p)[3]);
+//	return p.get();
+//}
+
+vector<int>* play3()
+{
+	shared_ptr<vector<int> > p = make_shared<vector<int> >(100, 4);
+	Pval((*p)[3]);
+	vector<int>* vec = p.get();
+	return vec;
+}
+
 TEST(test_shared_ptr, return_func)
 {
 	vector<int> *pvec;
 	play(pvec);
 	Pval((*pvec)[3]);
 	Pval(pvec->size());
+
+	//pvec = play2();
+	//Pval((*pvec)[3]);
+	
+	pvec = play3();
+	Pval((*pvec)[4]);
 }
 int main(int argc, char *argv[])
 {

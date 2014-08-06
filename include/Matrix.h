@@ -62,7 +62,28 @@ namespace gezi {
 				}
 			}
 
-			inline T operator()(int rowIdx, int colIdx)
+			void zeroset()
+			{
+				for (int i = 0; i < _nrow; i++)
+				{
+					std::fill(_mat[i].begin(), _mat[i].end(), 0);
+				}
+			}
+
+			void set_zero()
+			{
+				for (int i = 0; i < _nrow; i++)
+				{
+					std::fill(_mat[i].begin(), _mat[i].end(), 0);
+				}
+			}
+
+			inline const T& operator()(int rowIdx, int colIdx) const
+			{
+				return _mat[rowIdx][colIdx];
+			}
+
+			inline  T& operator()(int rowIdx, int colIdx)
 			{
 				return _mat[rowIdx][colIdx];
 			}

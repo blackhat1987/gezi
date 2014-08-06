@@ -179,6 +179,12 @@ namespace gezi {
 		std::fill(vec.begin(), vec.end(), 0);
 	}
 
+	template<typename Container>
+	void set_zero(Container& vec)
+	{
+		std::fill(vec.begin(), vec.end(), 0);
+	}
+
 	template<typename Iter, typename Iter2>
 	void fill_range(Iter dest, Iter2 src, int len)
 	{
