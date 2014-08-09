@@ -46,8 +46,31 @@ namespace gezi {
 			vector<string>& vec = _identifer.words();
 			for (size_t i = 0; i < len; i++)
 			{
-				double idf = log(_instanceNum / (double)_featureCounts[i]);
-				ofs << vec[i] << "\t" << idf << endl;
+				double idf = log((double) _instanceNum / _featureCounts[i]);
+				ofs << vec[i] << "\t" << idf << "\t" << _featureCounts[i] << endl;
+			}
+		}
+
+		void save(string file, int minCount, int minIdf)
+		{
+			ofstream ofs(file.c_str());
+			size_t len = _identifer.size();
+			vector<string>& vec = _identifer.words();
+			for (size_t i = 0; i < len; i++)
+			{
+				if (_featureCounts[i] < minCount)
+				{
+					continue;
+				}
+				
+				double idf = log((double)_instanceNum / _featureCounts[i]);
+
+				if (idf < minIdf)
+				{
+					continue;
+				}
+				
+				ofs << vec[i] << "\t" << idf << "\t" << _featureCounts[i] << endl;
 			}
 		}
 
