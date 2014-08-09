@@ -217,7 +217,7 @@ namespace gezi {
 		{
 			if (name.empty())
 			{
-				name = (format("%s%d") % _sectionNames.back() % _idx).str();
+				name = (format("%s_%d") % _sectionNames.back() % _idx).str();
 			}
 			else if (_useSectionName && !_sectionNames.empty())
 			{
