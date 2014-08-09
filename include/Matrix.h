@@ -15,6 +15,7 @@
 #define MATRIX_H_
 #include <vector>
 #include "common_def.h"
+#include "serialize_util.h"
 namespace gezi {
 	namespace ufo {
 
@@ -107,6 +108,16 @@ namespace gezi {
 			{
 				return _ncol;
 			}
+
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & _mat;
+				ar & _nrow;
+				ar & _ncol;
+			}
+
 		private:
 			std::vector<std::vector<T> > _mat;
 			int _nrow = 0;

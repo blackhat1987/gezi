@@ -88,6 +88,7 @@ namespace gezi {
 			{
 				scores[i] = log(_instanceNum / (double) _featureCounts[i]);
 			}
+
 			vector<int> ranks;
 		
 			gezi::sort(scores, ranks, maxNum);
