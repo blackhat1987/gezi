@@ -41,6 +41,13 @@ namespace gezi {
 			return get_info(url);
 		}
 
+		inline string get_thread_info(svec tids)
+		{
+			string tids_ = gezi::join(tids, ",");
+			string url = "http://service.tieba.baidu.com/service/post?method=mgetThread&format=json&need_abstract=0&forum_id=0&need_photo_pic=0&need_user_data=0&icon_size=0&need_forum_name=0&call_from=pc&thread_ids=[" + tids_ + "]";
+			return get_info(url);
+		}
+
 		inline bool get_post_info(uint64 pid, string& title, string& content)
 		{
 			Json::Reader reader;
@@ -124,8 +131,8 @@ namespace gezi {
 
 			try
 			{
-				auto tds = root["output"]["delthread_res"];
-				auto member = tds.getMemberNames();
+				auto& tds = root["output"]["delthread_res"];
+				const auto& member = tds.getMemberNames();
 				for (auto iter = member.begin(); iter != member.end(); ++iter)
 				{
 					deletedThreads.insert(UINT64(*(iter)));
@@ -271,6 +278,8 @@ namespace gezi {
 			}
 			return true;
 		}
+
+		
 	}  //----end of namespace tieba
 }  //----end of namespace gezi
 #endif  //----end of TIEBA_GET_INFO_H_

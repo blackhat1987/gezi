@@ -1424,6 +1424,10 @@ bp::class_< gezi::Idf >( "Idf", bp::init< >() )
 , (void ( ::gezi::Idf::* )( ::std::string ) )( &::gezi::Idf::save )
 , ( bp::arg("file") ) )
 .def(
+"save"
+, (void ( ::gezi::Idf::* )( ::std::string,int,int ) )( &::gezi::Idf::save )
+, ( bp::arg("file"), bp::arg("minCount"), bp::arg("minIdf") ) )
+.def(
 "show"
 , (void ( ::gezi::Idf::* )( int ) )( &::gezi::Idf::show )
 , ( bp::arg("maxNum")=(int)(1024) ) );
@@ -2322,17 +2326,6 @@ bp::def(
 
 }
 
-{ //::gezi::libsvm_normalize
-
-typedef void ( *libsvm_normalize_function_type )( ::std::string & );
-
-bp::def(
-"libsvm_normalize"
-, libsvm_normalize_function_type( &::gezi::libsvm_normalize )
-, ( bp::arg("feature_str") ) );
-
-}
-
 { //::gezi::max
 
 typedef ::std::string ( *max_function_type )( ::std::string,int );
@@ -2363,6 +2356,17 @@ bp::def(
 "mutual_info2"
 , mutual_info2_function_type( &::gezi::mutual_info2 )
 , ( bp::arg("nfc"), bp::arg("nf"), bp::arg("nc"), bp::arg("n") ) );
+
+}
+
+{ //::gezi::normalize_feature_str
+
+typedef void ( *normalize_feature_str_function_type )( ::std::string & );
+
+bp::def(
+"normalize_feature_str"
+, normalize_feature_str_function_type( &::gezi::normalize_feature_str )
+, ( bp::arg("feature_str") ) );
 
 }
 

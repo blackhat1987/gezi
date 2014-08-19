@@ -27,87 +27,87 @@ class CurlUtil
 {
 public:
 
-  CurlUtil()
-  {
-    _curl = curl_easy_init();
+	CurlUtil()
+	{
+		_curl = curl_easy_init();
 
-  }
+	}
 
-  ~CurlUtil()
-  {
-    curl_easy_cleanup(_curl);
-  }
+	~CurlUtil()
+	{
+		curl_easy_cleanup(_curl);
+	}
 
-  void setTimeout(int timeout)
-  {
-    curl_easy_setopt(_curl, CURLOPT_TIMEOUT_MS, timeout);
-  }
+	void setTimeout(int timeout)
+	{
+		curl_easy_setopt(_curl, CURLOPT_TIMEOUT_MS, timeout);
+	}
 
-  struct Chunk
-  {
-    char *memory;
-    size_t size;
-  };
+	struct Chunk
+	{
+		char *memory;
+		size_t size;
+	};
 
-  static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
-  {
+	static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
+	{
 
-    size_t realsize = size * nmemb;
-    struct Chunk *mem = (struct Chunk *) userp;
+		size_t realsize = size * nmemb;
+		struct Chunk *mem = (struct Chunk *) userp;
 
-    mem->memory = (char*) realloc(mem->memory, mem->size + realsize + 1);
-    if (mem->memory == NULL)
-    {
-      /* out of memory! */
-      ul_writelog(UL_LOG_WARNING, "can not malloc memory");
-      exit(1);
-    }
+		mem->memory = (char*) realloc(mem->memory, mem->size + realsize + 1);
+		if (mem->memory == NULL)
+		{
+			/* out of memory! */
+			ul_writelog(UL_LOG_WARNING, "can not malloc memory");
+			exit(1);
+		}
 
-    memcpy(&(mem->memory[mem->size]), contents, realsize);
-    mem->size += realsize;
-    mem->memory[mem->size] = 0;
+		memcpy(&(mem->memory[mem->size]), contents, realsize);
+		mem->size += realsize;
+		mem->memory[mem->size] = 0;
 
-    return realsize;
+		return realsize;
 
-  }
+	}
 
-  char* easy_escape(const char * url)
-  {
-    return curl_easy_escape(_curl, url, 0);
-  }
+	char* easy_escape(const char * url)
+	{
+		return curl_easy_escape(_curl, url, 0);
+	}
 
-  CURLcode post(const char* url, char* data, string& resStr)
-  {
-    gezi::Timer timer;
-    Chunk chunk;
-    chunk.memory = (char*) malloc(1);
-    chunk.size = 0;
-    curl_easy_setopt(_curl, CURLOPT_URL, url);
-    curl_easy_setopt(_curl, CURLOPT_POST, 1);
-    curl_easy_setopt(_curl, CURLOPT_POSTFIELDS, data);
-    curl_easy_setopt(_curl, CURLOPT_WRITEDATA, (void*) &chunk);
-    curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
-    curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
-    curl_easy_setopt(_curl, CURLOPT_FORBID_REUSE, 1);
-    CURLcode res = curl_easy_perform(_curl);
-    if (res != CURLE_OK)
-    {
-      LOG_WARNING(" curl_easy_perform err[%d]", res);
-    }
-    else
-    {
-      resStr = string(chunk.memory);
-      ul_writelog(UL_LOG_DEBUG, "[EasyCurl] resp: %s", resStr.c_str());
-    }
+	CURLcode post(const char* url, char* data, string& resStr)
+	{
+		gezi::Timer timer;
+		Chunk chunk;
+		chunk.memory = (char*) malloc(1);
+		chunk.size = 0;
+		curl_easy_setopt(_curl, CURLOPT_URL, url);
+		curl_easy_setopt(_curl, CURLOPT_POST, 1);
+		curl_easy_setopt(_curl, CURLOPT_POSTFIELDS, data);
+		curl_easy_setopt(_curl, CURLOPT_WRITEDATA, (void*) &chunk);
+		curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
+		curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
+		curl_easy_setopt(_curl, CURLOPT_FORBID_REUSE, 1);
+		CURLcode res = curl_easy_perform(_curl);
+		if (res != CURLE_OK)
+		{
+			LOG_WARNING(" curl_easy_perform err[%d]", res);
+		}
+		else
+		{
+			resStr = string(chunk.memory);
+			ul_writelog(UL_LOG_DEBUG, "[EasyCurl] resp: %s", resStr.c_str());
+		}
 
-    if (chunk.memory)
-    {
-      free(chunk.memory);
-    }
+		if (chunk.memory)
+		{
+			free(chunk.memory);
+		}
 
-    ul_writelog(UL_LOG_TRACE, "[EasyCurl]within time [%d]ms code[%d]  post[%s] [%s]", timer.elapsed_ms(), res, url, data);
-    return res;
-  }
+		ul_writelog(UL_LOG_TRACE, "[EasyCurl]within time [%d]ms code[%d]  post[%s] [%s]", timer.elapsed_ms(), res, url, data);
+		return res;
+	}
 
 	string get(string url)
 	{
@@ -119,38 +119,38 @@ public:
 	{
 		return get(url.c_str(), resStr);
 	}
-  CURLcode get(const char* url, string&resStr)
-  {
-    //		MicrosecTimer timer;
-    Chunk chunk;
+	CURLcode get(const char* url, string&resStr)
+	{
+		//		MicrosecTimer timer;
+		Chunk chunk;
 
-    chunk.memory = (char*) malloc(1);
-    chunk.size = 0;
-    curl_easy_setopt(_curl, CURLOPT_URL, url);
-    curl_easy_setopt(_curl, CURLOPT_WRITEDATA, (void*) &chunk);
-    curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
-    curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
-    curl_easy_setopt(_curl, CURLOPT_FORBID_REUSE, 1);
-    CURLcode res = curl_easy_perform(_curl);
-    if (res != CURLE_OK)
-    {
-      LOG_WARNING(" curl_easy_perform err[%d]", res);
-    }
-    else
-    {
-      resStr = string(chunk.memory);
-    }
+		chunk.memory = (char*) malloc(1);
+		chunk.size = 0;
+		curl_easy_setopt(_curl, CURLOPT_URL, url);
+		curl_easy_setopt(_curl, CURLOPT_WRITEDATA, (void*) &chunk);
+		curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
+		curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
+		curl_easy_setopt(_curl, CURLOPT_FORBID_REUSE, 1);
+		CURLcode res = curl_easy_perform(_curl);
+		if (res != CURLE_OK)
+		{
+			LOG_WARNING(" curl_easy_perform err[%d]", res);
+		}
+		else
+		{
+			resStr = string(chunk.memory);
+		}
 
-    if (chunk.memory)
-    {
-      free(chunk.memory);
-    }
+		if (chunk.memory)
+		{
+			free(chunk.memory);
+		}
 
-    //ul_writelog(UL_LOG_TRACE,"[EasyCurl]  within time [%d]s code[%d] get [%s]",timer.elapsed_ms(),res,url);
-    return res;
-  }
+		//ul_writelog(UL_LOG_TRACE,"[EasyCurl]  within time [%d]s code[%d] get [%s]",timer.elapsed_ms(),res,url);
+		return res;
+	}
 private:
-  CURL* _curl;
+	CURL* _curl;
 
 };
 

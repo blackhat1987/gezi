@@ -203,7 +203,8 @@ namespace gezi {
 	}
 
 	//注意不要单独使用 一般是在类似下面 情况使用
-	inline void write_table(const Features& features, string label, ofstream& ofs, string name = "")
+	template<typename T>
+	inline void write_table(const Features& features, T label, ofstream& ofs, string name = "")
 	{
 		if (!name.empty())
 			ofs << "_" << name << "\t" << label;
