@@ -51,26 +51,28 @@ namespace gezi {
 	template<typename Map, typename T>
 	void add_one(Map& map, T name, int count = 1)
 	{
-		if (!map.count(name))
+		auto iter = map.find(name);
+		if (iter == map.end())
 		{
 			map[name] = count;
 		}
 		else
 		{
-			map[name] += count;
+			iter->second += count;
 		}
 	}
 
 	template<typename Map, typename T, typename U>
 	void add_value(Map& map, T name, U value)
 	{
-		if (!map.count(name))
+		auto iter = map.find(name);
+		if (iter == map.end())
 		{
 			map[name] = value;
 		}
 		else
 		{
-			map[name] += value;
+			iter->second += value;
 		}
 	}
 

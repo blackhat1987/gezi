@@ -77,7 +77,7 @@ namespace gezi {
 		return (format("{%1%}") % join(rvec, ",")).str();
 	}
 
-	
+
 
 	inline vector<string> to_vec(string input_, string sep = ",")
 	{
@@ -95,15 +95,15 @@ namespace gezi {
 	//@TODO trim好像很慢 回头把依赖 需要trim的代码 改为使用 split_safe
 	/*inline vector<string> split(string input_, string sep = "\t ")
 	{
-		vector<string> vec;
-		string input = boost::trim_copy(input_);
-		boost::split(vec, input, is_any_of(sep));
+	vector<string> vec;
+	string input = boost::trim_copy(input_);
+	boost::split(vec, input, is_any_of(sep));
 
-		foreach(string str, vec)
-		{
-			boost::trim(str);
-		}
-		return vec;
+	foreach(string str, vec)
+	{
+	boost::trim(str);
+	}
+	return vec;
 	}*/
 
 	//this one is speed similar to boost::split(container, str, std::bind1st(std::equal_to<char>(), ','));
@@ -135,6 +135,27 @@ namespace gezi {
 		return vec;
 	}
 
+	template<typename Vec>
+	inline vector<Vec> split(const Vec& input, int length)
+	{
+		vector<Vec> result;
+		Vec temp;
+		for (int i = 0; i < input.size(); i++)
+		{
+			if (i % length == 0 && i)
+			{
+				result.push_back(temp);
+				temp.clear();
+			}
+			temp.push_back(input[i]);
+		}
+		if (!temp.empty())
+		{
+			result.push_back(temp);
+		}
+		return result;
+	}
+
 	inline vector<string> split(string input, string sep = "\t ")
 	{
 		vector<string> vec;
@@ -151,20 +172,20 @@ namespace gezi {
 
 	inline vector<string> splits(string s, string delim, bool keep_empty = true)
 	{
-			vector<string> result;
-			string::iterator substart = s.begin(), subend;
-			while (true) {
-				subend = search(substart, s.end(), delim.begin(), delim.end());
-				string temp(substart, subend);
-				if (keep_empty || !temp.empty()) {
-					result.push_back(temp);
-				}
-				if (subend == s.end()) {
-					break;
-				}
-				substart = subend + delim.size();
+		vector<string> result;
+		string::iterator substart = s.begin(), subend;
+		while (true) {
+			subend = search(substart, s.end(), delim.begin(), delim.end());
+			string temp(substart, subend);
+			if (keep_empty || !temp.empty()) {
+				result.push_back(temp);
 			}
-			return result;
+			if (subend == s.end()) {
+				break;
+			}
+			substart = subend + delim.size();
+		}
+		return result;
 	}
 
 	inline bool split(string input, string sep, string& first, string& second)
@@ -174,7 +195,7 @@ namespace gezi {
 		{
 			return false;
 		}
-		
+
 		first = input.substr(0, index);
 		second = input.substr(index + sep.size());
 		return true;
@@ -216,7 +237,7 @@ namespace gezi {
 			ovec.push_back(boost::lexical_cast<T>(item));
 		}
 	}
-	
+
 	template<typename T>
 	int compare(T a, T b)
 	{

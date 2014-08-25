@@ -41,10 +41,20 @@ namespace gezi {
 			return get_info(url);
 		}
 
-		inline string get_thread_info(svec tids)
+		inline string get_thread_info(svec tids, int need_abstract = 0)
 		{
 			string tids_ = gezi::join(tids, ",");
-			string url = "http://service.tieba.baidu.com/service/post?method=mgetThread&format=json&need_abstract=0&forum_id=0&need_photo_pic=0&need_user_data=0&icon_size=0&need_forum_name=0&call_from=pc&thread_ids=[" + tids_ + "]";
+			string url;
+			//@FIXME
+			if (!need_abstract)
+			{
+				url = "http://service.tieba.baidu.com/service/post?method=mgetThread&format=json&need_abstract=0&forum_id=0&need_photo_pic=0&need_user_data=0&icon_size=0&need_forum_name=1&call_from=pc&thread_ids=[" + tids_ + "]";
+			}
+			else
+			{
+				url = "http://service.tieba.baidu.com/service/post?method=mgetThread&format=json&need_abstract=1&forum_id=0&need_photo_pic=0&need_user_data=0&icon_size=0&need_forum_name=1&call_from=pc&thread_ids=[" + tids_ + "]";
+			}
+		
 			return get_info(url);
 		}
 
@@ -249,7 +259,8 @@ namespace gezi {
 		inline string get_user_fans(uint64 uid)
 		{
 			string section = "tieba.user_fans";
-			string url = SCONF_(url, (format("http://service.tieba.baidu.com/service/user?method=getUserinfo&user_id=%s&format=json&get_sign=0") % uid).str());
+			/*	string url = SCONF_(url, (format("http://service.tieba.baidu.com/service/user?method=getUserinfo&user_id=%s&format=json&get_sign=0") % uid).str());*/
+			string url = (format("http://service.tieba.baidu.com/service/user?method=getUserinfo&user_id=%s&format=json&get_sign=0") % uid).str();
 			return get_info(url);
 		}
 
@@ -279,7 +290,34 @@ namespace gezi {
 			return true;
 		}
 
-		
+
+		inline bool get_user_fans(uint64 uid, int& follow_count, int& followed_count)
+		{
+			Json::Reader reader;
+			Json::Value root;
+			string json_str = get_user_fans(uid);
+			bool ret = reader.parse(json_str, root);
+			if (!ret)
+			{
+				LOG(WARNING) << "json parse fail: " << json_str;
+				return false;
+			}
+
+			try
+			{
+				Json::Value& uinfo = root["user_info"][0];
+				follow_count = uinfo["follow_count"].asInt();
+				followed_count = uinfo["followed_count"].asInt();
+			}
+			catch (...)
+			{
+				LOG(WARNING) << "get json value fail";
+				return false;
+			}
+			return true;
+		}
+
+
 	}  //----end of namespace tieba
 }  //----end of namespace gezi
 #endif  //----end of TIEBA_GET_INFO_H_

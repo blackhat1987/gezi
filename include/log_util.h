@@ -91,53 +91,56 @@ namespace gezi
 class LogHelper
 {
 public:
-  LogHelper(int log_level = 16)
-  { //设置16是打印debug的 8一般OK 没有debug,有trace warning
-    com_device_t dev[1];
-    com_logstat_t logstat;
-    logstat.sysevents = log_level;
-    strcpy(dev[0].type, "TTY");
-    COMLOG_SETSYSLOG(dev[0]);
-    com_openlog("test", dev, 1, &logstat);
-  }
+	LogHelper(int log_level = 16)
+	{ //设置16是打印debug的 8一般OK 没有debug,有trace warning
+		VLOG(0) << "Log to tty with log_level " << 16;
+		com_device_t dev[1];
+		com_logstat_t logstat;
+		logstat.sysevents = log_level;
+		strcpy(dev[0].type, "TTY");
+		COMLOG_SETSYSLOG(dev[0]);
+		com_openlog("test", dev, 1, &logstat);
+	}
 
-  static void set_level(int log_level)
-  {
-    // 直接调用下面的函数，传入一个新的logstat
-    com_logstat_t logstat;
-    logstat.sysevents = log_level;
-    com_changelogstat(&logstat);
-  }
+	static void set_level(int log_level)
+	{
+		// 直接调用下面的函数，传入一个新的logstat
+		com_logstat_t logstat;
+		logstat.sysevents = log_level;
+		com_changelogstat(&logstat);
+	}
 
-  LogHelper(bool with_conf)
-  {
-    //cout << "Open log use conf" << endl;
-  }
+	//LogHelper(bool with_conf)
+	//{
+	//	//cout << "Open log use conf" << endl;
+	//}
 
-  LogHelper(const std::string& conf_path, const std::string& conf_file)
-  {
-    com_loadlog(conf_path.c_str(), conf_file.c_str());
-  }
+	LogHelper(const std::string& conf_file, const std::string& conf_path = "./conf")
+	{
+		int ret = com_loadlog(conf_path.c_str(), conf_file.c_str());
+		VLOG(0) << "comlog load status " << ret;
+		CHECK_EQ(ret, 0);
+	}
 
-  ~LogHelper()
-  {
-    com_closelog();
-  }
+	~LogHelper()
+	{
+		com_closelog();
+	}
 };
 
 class ThreadLogHelper
 {
 public:
 
-  ThreadLogHelper()
-  {
-    com_openlog_r();
-  }
+	ThreadLogHelper()
+	{
+		com_openlog_r();
+	}
 
-  ~ThreadLogHelper()
-  {
-    com_closelog_r();
-  }
+	~ThreadLogHelper()
+	{
+		com_closelog_r();
+	}
 };
 }
 #endif  //----end of LOG_UTIL_H_

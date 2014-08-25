@@ -73,6 +73,8 @@
     <ClInclude Include="include\common_def.h" />
     <ClInclude Include="include\common_util.h" />
     <ClInclude Include="include\conf_util.h" />
+    <ClInclude Include="include\container\LruMap.h" />
+    <ClInclude Include="include\container\LruSet.h" />
     <ClInclude Include="include\container\RegressionTree.h" />
     <ClInclude Include="include\convert_type.h" />
     <ClInclude Include="include\curl_util.h" />

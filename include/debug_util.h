@@ -38,6 +38,10 @@ using namespace std;
 
 #define Pval(s)\
 	VLOG(0) << #s <<" --- [" << s << "]"
+
+#define Pval_2(s)\
+	VLOG(2) << #s <<" --- [" << s << "]"
+
 #define Pval_(s, u)\
 	VLOG(0)  << u << " " << #s <<" --- [" << s << "]"
 
@@ -59,11 +63,35 @@ using namespace std;
 #define Pval4(a, b, c, d)\
 	VLOG(0) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "] " << #d <<" -- [" << d << "]"
 
+#define Pval4_2(a, b, c, d)\
+	VLOG(2) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "] " << #d <<" -- [" << d << "]"
+
 #define PVAL5(a, b, c, d, e)\
 	VLOG(4) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "] " << #d <<" -- [" << d << "] " << #e <<" -- [" << e << "]"
 
 #define Pval5(a, b, c, d, e)\
 	VLOG(0) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "] " << #d <<" -- [" << d << "] " << #e <<" -- [" << e << "]"
+
+#define Pval6(a, b, c, d, e, f)\
+	VLOG(0) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "] " << #d <<" -- [" << d << "] " << #e <<" -- [" << e << "] " <<  #f <<" -- [" << f << "]"
+
+#define PVAL6(a, b, c, d, e, f)\
+	VLOG(4) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "] " << #d <<" -- [" << d << "] " << #e <<" -- [" << e << "] " <<  #f <<" -- [" << f << "]"
+
+#define Pval7(a, b, c, d, e, f, g)\
+	VLOG(0) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "] " << #d <<" -- [" << d << "] " << #e <<" -- [" << e << "] " <<  #f <<" -- [" << f << "] " <<  #g <<" -- [" << g << "]";
+
+#define Log7(a, b, c, d, e, f, g)\
+	VLOG(0) << #a <<":" << a << "\t" << #b << ":" << b << "\t"  << #c << ":" << c << "\t" << #d <<":" << d << "\t" << #e <<":" << e << "\t" <<  #f << ":" << f << "\t" <<  #g << ":" << g;
+
+#define Log8(a, b, c, d, e, f, g, h)\
+	VLOG(0) << #a <<":" << a << "\t" << #b << ":" << b << "\t"  << #c << ":" << c << "\t" << #d <<":" << d << "\t" << #e <<":" << e << "\t" <<  #f << ":" << f << "\t" <<  #g << ":" << g << "\t" << #h << ":" << h;
+
+#define Log9(a, b, c, d, e, f, g, h, i)\
+	VLOG(0) << #a <<":" << a << "\t" << #b << ":" << b << "\t"  << #c << ":" << c << "\t" << #d <<":" << d << "\t" << #e <<":" << e << "\t" <<  #f << ":" << f << "\t" <<  #g << ":" << g << "\t" << #h << ":" << h << "\t" << #i << ":" << i;
+
+#define Log10(a, b, c, d, e, f, g, h, i, j)\
+	VLOG(0) << #a <<":" << a << "\t" << #b << ":" << b << "\t"  << #c << ":" << c << "\t" << #d <<":" << d << "\t" << #e <<":" << e << "\t" <<  #f << ":" << f << "\t" <<  #g << ":" << g << "\t" << #h << ":" << h << "\t" << #i << ":" << i << "\t" << #j << ":" << j;
 
 #define PvalFile(s, ofs)\
 	ofs << #s <<" --- " << s << endl
@@ -169,52 +197,52 @@ void PRange(Iter begin, Iter end, std::ostream& out = std::cout, string sep = "\
 	stringstream ss;\
 	ss << #v << ":";\
 	for (size_t i_ = 0; i_ < v.size(); i_++)\
-{\
+		{\
 	if (v.size() > 3)\
-{\
+		{\
 	ss << i_ << ":";\
-}\
+		}\
 	ss << v[i_] << " ";\
-}\
+		}\
 	VLOG(5) << ss.str();\
 }
-	
+
 
 #define Pvector(v)\
 {\
 	stringstream ss;\
 	ss << #v << ":";\
 	for (size_t i_ = 0; i_ < v.size(); i_++)\
-{\
+		{\
 	if (v.size() > 3)\
-	{\
+			{\
 		ss << i_ << ":";\
-	}\
+			}\
 	ss << v[i_] << " ";\
-}\
+		}\
 	VLOG(0) << ss.str();\
 }
 
 #define PVEC(v)\
 	VLOG(5) << #v <<" --- " << v.size();\
 	for (size_t i_ = 0; i_ < v.size(); i_++)\
-{\
+		{\
 	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
-}
+		}
 
 #define PVEC_TOPN(v, n)\
 	VLOG(5) << #v <<" --- " << v.size();\
 	for (size_t i_ = 0; i_ < v.size() && i_ < n; i_++)\
-{\
+		{\
 	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
-}
+		}
 
 #define Pvec(v)\
 	VLOG(0) << #v <<" --- " << v.size();\
 	for (size_t i_ = 0; i_ < v.size(); i_++)\
-{\
+		{\
 	VLOG(0) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
-}
+		}
 
 
 #define PRANGE(s, e)\
@@ -236,9 +264,9 @@ void WPvec(const T&vec, std::wostream& out = std::wcout, const wstring& end = L"
 #define PrintVec(vec, arg1) \
 	VLOG(5) << #vec <<" --- " << vec.size();\
 	for (size_t i = 0; i < vec.size(); i++) \
-{  \
+		{  \
 	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(4) << i << vec[i].arg1; \
-}
+		}
 /**
  * 该函数可以打印数据类型为简单类型
  * (int,long,long long,float,double,char,unsigned char, __int64, unsigned int, char*)struct的数组
@@ -248,142 +276,142 @@ void WPvec(const T&vec, std::wostream& out = std::wcout, const wstring& end = L"
  **/
 #define PrintVecTopN(vec, arg1, n) \
 	for (size_t i = 0; i < n; i++) \
-{  \
+		{  \
 	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1; \
-}
+		}
 
 #define PrintVec2TopN(vec, arg1, arg2, n) \
 	for (size_t i = 0; i < n; i++) \
-{  \
+		{  \
 	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << vec[i].arg1 << " " \
 	<< vec[i].arg2; \
-}
+		}
 
 #define PrintVec2(vec, arg1, arg2) \
 	VLOG(5) << #vec <<" --- " << vec.size();\
 	for (size_t i = 0; i < vec.size(); i++) \
-{  \
+		{  \
 	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1 << " " \
 	<< vec[i].arg2; \
-}
+		}
 
 #define PrintVec_(vec, arg1, file) \
 	std::ofstream out##file(#file); \
 	for (size_t i = 0; i < vec.size(); i++) \
-{  \
+		{  \
 	out##file << setiosflags(ios::left) << setw(10) << vec[i].arg1; \
 	out##file << std::endl; \
-}\
+		}\
 	out##file << std::endl; \
 	out##file.close()
 
 #define PrintVec2_(vec, arg1, arg2, file) \
 	std::ofstream out##file(#file); \
 	for (size_t i = 0; i < vec.size(); i++) \
-{  \
+		{  \
 	out##file << setiosflags(ios::left) << setw(10) << vec[i].arg1 << " " \
 	<< vec[i].arg2; \
 	out##file << std::endl; \
-}\
+		}\
 	out##file << std::endl; \
 	out##file.close()
 
 #define PrintVec3(vec, arg1, arg2, arg3) \
 	VLOG(5) << #vec <<" --- " << vec.size();\
 	for (size_t i = 0; i < vec.size(); i++) \
-{  \
+		{  \
 	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1 << " " \
 	<< vec[i].arg2 << " " << vec[i].arg3; \
-}
+		}
 
 #define PrintVec4(vec, arg1, arg2, arg3, arg4) \
 	VLOG(5) << #vec <<" --- " << vec.size();\
 	for (size_t i = 0; i < vec.size(); i++) \
-{  \
+		{  \
 	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1 << " " \
 	<< vec[i].arg2 << " " << vec[i].arg3 << " " << vec[i].arg4; \
-}
+		}
 
 #define PrintVec3_(vec, arg1, arg2, arg3, file) \
 	std::ofstream out##file(#file); \
 	for (size_t i = 0; i < vec.size(); i++) \
-{  \
+		{  \
 	out##file << setiosflags(ios::left) << setw(10) << vec[i].arg1 << " " \
 	<< vec[i].arg2 << " " << vec[i].arg3; \
 	out##file << std::endl; \
-}\
+		}\
 	out##file << std::endl; \
 	out##file.close()
 
 #define PrintVecAdd2(vec, arg1, arg2) \
 	for (size_t i = 0; i < vec.size(); i++) \
-{  \
+		{  \
 	out << setiosflags(ios::left) << setw(10) << vec[i].arg1 << " " \
 	<< vec[i].arg2; \
 	out << std::endl; \
-}
+		}
 
 
 #define PrintVecFunc(vec, arg1, func1, file) \
 	std::ofstream out##file(#file); \
 	for (size_t i = 0; i < vec.size(); i++) \
-{  \
+		{  \
 	out##file << setiosflags(ios::left) << setw(40) << func1(vec[i].arg1); \
 	out##file << std::endl; \
-}\
+		}\
 	out##file << std::endl; \
 	out##file.close()
 
 #define PrintVecFunc2(vec, arg1, func1, arg2, func2, file) \
 	std::ofstream out##file(#file); \
 	for (size_t i = 0; i < vec.size(); i++) \
-{  \
+		{  \
 	out##file << setiosflags(ios::left) << setw(40) << func1(vec[i].arg1) << " " << func2(vec[i].arg2); \
 	out##file << std::endl; \
-}\
+		}\
 	out##file << std::endl; \
 	out##file.close()
 
 
 #define PrintRange(begin, end, arg1, file) \
 	std::ofstream out##file(#file); \
-while(begin != end) \
-{  \
+		while(begin != end) \
+			{  \
 	out##file << setiosflags(ios::left) << setw(10) << (*begin).arg1; \
 	out##file << std::endl; \
 	++begin; \
-}\
+			}\
 	out##file << std::endl; \
 	out##file.close()
 
 #define PrintRange2(begin, end, arg1, arg2, file) \
 	std::ofstream out##file(#file); \
-while(begin != end) \
-{  \
+		while(begin != end) \
+			{  \
 	out##file << setiosflags(ios::left) << setw(10) << (*begin).arg1 << " " << (*begin).arg2; \
 	out##file << std::endl; \
 	++begin; \
-}\
+			}\
 	out##file << std::endl; \
 	out##file.close()
 
 #define printRange2(begin, end, arg1, arg2, file) \
-while(begin != end) \
-{  \
+		while(begin != end) \
+			{  \
 	out << setiosflags(ios::left) << setw(10) << (*begin).arg1 << " " << (*begin).arg2; \
 	out << std::endl; \
 	++begin; \
-}\
+			}\
 	out << std::endl; \
 	out.close()
 
 #define printRangeFunc2(begin, end, arg1, func1, arg2, func2, file) \
-while(begin != end) \
-{  \
+		while(begin != end) \
+			{  \
 	out << setiosflags(ios::left) << setw(10) << func1((*begin).arg1) << " " << func2((*begin).arg2); \
 	out << std::endl; \
 	++begin; \
-}\
+			}\
 	out << std::endl; \
 	out.close()
 

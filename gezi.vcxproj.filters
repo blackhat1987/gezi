@@ -387,6 +387,12 @@
     <ClInclude Include="include\feature\gain_summary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\container\LruSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\container\LruMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
