@@ -27,7 +27,15 @@ namespace gezi {
 	inline string get_now_time_str()
 	{
 		namespace pt = boost::posix_time;
-		return pt::to_iso_string(pt::second_clock::local_time());
+		return pt::to_simple_string(pt::second_clock::local_time());
+	}
+
+	inline string get_time_str(uint64 time)
+	{
+		namespace pt = boost::posix_time;
+		using namespace boost::gregorian;
+		using namespace boost::posix_time;
+		return pt::to_simple_string(from_time_t(time) + hours(8));
 	}
 
 	class MicrosecTimer

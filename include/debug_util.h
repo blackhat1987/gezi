@@ -51,6 +51,9 @@ using namespace std;
 #define Pval2(a, b)\
 	VLOG(0) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "]"
 
+#define Pval2_2(a, b)\
+	VLOG(2) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "]"
+
 #define PVAL3(a, b, c)\
 	VLOG(4) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "] "  << #c <<" -- [" << c << "]"
 
