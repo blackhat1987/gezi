@@ -29,6 +29,16 @@ public:
 
 	}
 
+	LruSet()
+	{
+
+	}
+
+	void set_capacity(int maxNum)
+	{
+		_maxNum = maxNum;
+	}
+
 	bool empty()
 	{
 		return _set.empty();
@@ -60,6 +70,11 @@ public:
 	int size()
 	{
 		return _set.size();
+	}
+
+	int capacity()
+	{
+		return _maxNum;
 	}
 
 protected:
