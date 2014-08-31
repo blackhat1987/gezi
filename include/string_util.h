@@ -570,6 +570,7 @@ namespace gezi {
 	{
 		return input.find(part) != string::npos;
 	}
+
 	inline bool contains(string input, string part)
 	{
 		return input.find(part) != string::npos;
@@ -578,6 +579,16 @@ namespace gezi {
 	inline string max(string input, int length)
 	{
 		return input.length() <= length ? input : input.substr(0, length);
+	}
+
+	inline string first(string input, int length)
+	{
+		return input.length() <= length ? input : input.substr(0, length);
+	}
+
+	inline string last(string input, int length)
+	{
+		return input.length() <= length ? input : input.substr(input.length() - length, length);
 	}
 
 	//去掉一些特定的char 更复杂的比如去掉多个string 使用reg_remove

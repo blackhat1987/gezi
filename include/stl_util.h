@@ -276,6 +276,17 @@ namespace gezi {
 	{
 		return ((&l == &r) || (l.empty() && r.empty()));
 	}
+
+	//两个vector合并结果存储到第一个vector
+	template<typename T>
+	void merge(vector<T>& dest, vector<T>& src)
+	{
+		dest.insert(
+			dest.end(),
+			std::make_move_iterator(src.begin()),
+			std::make_move_iterator(src.end())
+			);
+	}
 }  //----end of namespace gezi
 
 #endif  //----end of STL_UTIL_H_
