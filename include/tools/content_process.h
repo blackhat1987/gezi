@@ -42,6 +42,13 @@ namespace gezi {
 		return !urls.empty();
 	}
 
+	//@TODO check
+	inline bool contains_general_url(string src)
+	{
+		src = strip_html(src);
+		return gezi::contains(src, "http://");
+	}
+
 	inline bool contains_num(string src)
 	{
 		string skipreg_str("([ *,\\.,!\\(\\)]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");

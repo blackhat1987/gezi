@@ -1443,9 +1443,7 @@ typedef bp::class_< gezi::LogHelper > LogHelper_exposer_t;
 LogHelper_exposer_t LogHelper_exposer = LogHelper_exposer_t( "LogHelper", bp::init< bp::optional< int > >(( bp::arg("log_level")=(int)(16) )) );
 bp::scope LogHelper_scope( LogHelper_exposer );
 bp::implicitly_convertible< int, gezi::LogHelper >();
-LogHelper_exposer.def( bp::init< bool >(( bp::arg("with_conf") )) );
-bp::implicitly_convertible< bool, gezi::LogHelper >();
-LogHelper_exposer.def( bp::init< std::string const &, std::string const & >(( bp::arg("conf_path"), bp::arg("conf_file") )) );
+LogHelper_exposer.def( bp::init< std::string const &, bp::optional< std::string const & > >(( bp::arg("conf_file"), bp::arg("conf_path")="./conf" )) );
 { //::gezi::LogHelper::set_level
 
 typedef void ( *set_level_function_type )( int );
@@ -3224,17 +3222,6 @@ typedef void ( *write_sparse_function_type )( ::gezi::Features const &,::std::st
 bp::def(
 "write_sparse"
 , write_sparse_function_type( &::gezi::write_sparse )
-, ( bp::arg("features"), bp::arg("label"), bp::arg("ofs"), bp::arg("name")="" ) );
-
-}
-
-{ //::gezi::write_table
-
-typedef void ( *write_table_function_type )( ::gezi::Features const &,::std::string,::std::ofstream &,::std::string );
-
-bp::def(
-"write_table"
-, write_table_function_type( &::gezi::write_table )
 , ( bp::arg("features"), bp::arg("label"), bp::arg("ofs"), bp::arg("name")="" ) );
 
 }

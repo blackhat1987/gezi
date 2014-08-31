@@ -79,7 +79,7 @@ public:
 
 protected:
 private:
-	set<T> _set;
+	unordered_set<T> _set;
 	deque<T> _queue; 
 	int _maxNum;
 };
