@@ -30,7 +30,7 @@ namespace gezi {
 		return pt::to_simple_string(pt::second_clock::local_time());
 	}
 
-	inline string get_time_str(uint64 time)
+	inline string to_time_str(uint64 time)
 	{
 		namespace pt = boost::posix_time;
 		using namespace boost::gregorian;
