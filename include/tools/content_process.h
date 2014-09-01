@@ -22,6 +22,12 @@ namespace gezi {
 		return reg_remove(src, pattern);
 	}
 
+	inline string strip_from(string src)
+	{
+		erase_from(src, "视频来自");
+		erase_from(src, "图片来自");
+	}
+
 	inline bool contains_pic(string src)
 	{
 		string picPattern = "<img.*? src=\"(.+?)\".*?>";
