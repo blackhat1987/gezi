@@ -599,12 +599,7 @@ namespace gezi {
 	}
 
 	//find part and erase from that pos
-	inline void erase_from(string& content, string part)
-	{
-		content = content.substr(0, content.find(part));
-	}
-
-	inline string erase_from_copy(string content, string part)
+	inline string erase_from(string content, string part)
 	{
 		return content.substr(0, content.find(part));
 	}

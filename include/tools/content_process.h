@@ -24,8 +24,9 @@ namespace gezi {
 
 	inline string strip_from(string src)
 	{
-		erase_from(src, "视频来自");
-		erase_from(src, "图片来自");
+		src = erase_from(src, "视频来自");
+		src = erase_from(src, "图片来自");
+		return src;
 	}
 
 	inline bool contains_pic(string src)
