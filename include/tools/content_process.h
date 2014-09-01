@@ -15,6 +15,7 @@
 #define TOOLS_CONTENT_PROCESS_H_
 #include "string_util.h"
 #include "reg_util.h"
+#include "stl_util.h"
 namespace gezi {
 	inline string strip_html(string src)
 	{
@@ -29,31 +30,51 @@ namespace gezi {
 		return src;
 	}
 
-	inline bool contains_pic(string src)
+	inline vector<string> get_pics(string src)
 	{
 		string picPattern = "<img.*? src=\"(.+?)\".*?>";
-		vector<string> pics = ufo::reg_search(src, picPattern);
-		return !pics.empty();
+		return ufo::reg_search(src, picPattern);
 	}
 
-	inline bool contains_at(string src)
+	inline bool contains_pic(string src)
+	{
+		return !get_pics(src).empty();
+	}
+
+	inline vector<string> get_ats(string src)
 	{
 		string atPattern = "class=\"at\">@(.{2,20})</a>";
-		return !(ufo::reg_search(src, atPattern)).empty();
+		return ufo::reg_search(src, atPattern);
+	}
+	inline bool contains_at(string src)
+	{
+		return !get_ats(src).empty();
+	}
+
+	inline vector<string> get_urls(string src)
+	{
+		string urlPattern = "<a.*? href=\"(.+?)\".*?>";
+		return ufo::reg_search(src, urlPattern);
 	}
 
 	inline bool contains_url(string src)
 	{
-		string urlPattern = "<a.*? href=\"(.+?)\".*?>";
-		vector<string> urls = ufo::reg_search(src, urlPattern);
-		return !urls.empty();
+		return !get_urls(src).empty();
 	}
 
-	//@TODO check
-	inline bool contains_general_url(string src)
+	inline vector<string> get_nums(string src)
 	{
-		src = strip_html(src);
-		return gezi::contains(src, "http://");
+		string skipreg_str("([ *,\\.,!\\(\\)]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
+		string reg_str("(([\x81-\xff].)|:|qq|QQ])[ ]*([0-9]){7,30}");
+
+		vector<string> contentVec = reg_split(src, skipreg_str);
+		vector<string> resultVec;
+		for (string content : contentVec)
+		{
+			vector<string> tempVec = ufo::reg_search(content, reg_str);
+			merge(resultVec, tempVec);
+		}
+		return resultVec;
 	}
 
 	inline bool contains_num(string src)
@@ -94,7 +115,7 @@ namespace gezi {
 		{
 			return contains_num(src);
 		}
-		
+
 		return false;
 	}
 }  //----end of namespace gezi

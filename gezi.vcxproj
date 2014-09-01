@@ -218,6 +218,7 @@
     <ClCompile Include="test\test_bins.cc" />
     <ClCompile Include="test\test_conf.cc" />
     <ClCompile Include="test\test_content_filter.cc" />
+    <ClCompile Include="test\test_content_process.cc" />
     <ClCompile Include="test\test_datetime.cc" />
     <ClCompile Include="test\test_encode.cc" />
     <ClCompile Include="test\test_escape.cc" />
