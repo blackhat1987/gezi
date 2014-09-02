@@ -239,6 +239,17 @@ namespace gezi {
 	}
 
 	template<typename T>
+	vector<string> convert(const vector<T>& ivec)
+	{
+		vector<string> resultVec(ivec.size());
+		for (size_t i = 0; i < ivec.size(); i++)
+		{
+			resultVec[i] = STR(ivec[i]);
+		}
+		return resultVec;
+	}
+
+	template<typename T>
 	int compare(T a, T b)
 	{
 		if (a == b)
@@ -277,7 +288,7 @@ namespace gezi {
 		return ((&l == &r) || (l.empty() && r.empty()));
 	}
 
-	//两个vector合并结果存储到第一个vector
+	//两个vector合并结果存储到第一个vector,注意第二个数组不再有效
 	template<typename T>
 	void merge(vector<T>& dest, vector<T>& src)
 	{

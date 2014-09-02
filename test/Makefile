@@ -1,8 +1,8 @@
 #COMAKE2 edit-mode: -*- Makefile -*-
 ####################64Bit Mode####################
 ifeq ($(shell uname -m),x86_64)
-CC=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/bin/x86_64-unknown-linux-gnu-g++
-CXX=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/bin/x86_64-unknown-linux-gnu-g++
+CC=../../../../../../ps/se/toolchain/gcc_only_4.8.2/bin/g++
+CXX=../../../../../../ps/se/toolchain/gcc_only_4.8.2/bin/g++
 CXXFLAGS=-g \
   -O0 \
   -pipe \
@@ -15,8 +15,7 @@ CXXFLAGS=-g \
   -fpermissive \
   -Wno-write-strings \
   -Wno-literal-suffix \
-  -Wno-unused-local-typedefs \
-  -fopenmp
+  -Wno-unused-local-typedefs
 CFLAGS=-g \
   -O0 \
   -pipe \
@@ -29,8 +28,7 @@ CFLAGS=-g \
   -fpermissive \
   -Wno-write-strings \
   -Wno-literal-suffix \
-  -Wno-unused-local-typedefs \
-  -fopenmp
+  -Wno-unused-local-typedefs
 CPPFLAGS=-D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\"
@@ -122,6 +120,10 @@ DEP_INCPATH=-I../../../../../../com/btest/gtest \
   -I../../../../../../third-64/glog/include \
   -I../../../../../../third-64/glog/output \
   -I../../../../../../third-64/glog/output/include \
+  -I../../../../../../third-64/libcurl \
+  -I../../../../../../third-64/libcurl/include \
+  -I../../../../../../third-64/libcurl/output \
+  -I../../../../../../third-64/libcurl/output/include \
   -I../../../../../../third-64/openssl \
   -I../../../../../../third-64/openssl/include \
   -I../../../../../../third-64/openssl/output \
@@ -149,11 +151,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=0b6d7bfe6e97a9518427316434641f7f  COMAKE
+COMAKE_MD5=86eb2c3fa0d4167c97f55d96a6bf47c9  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check .copy-so test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf test_random test_shared_ptr test_binfinder test_seralize test_string test_bitop test_featurevector test_split test_tieba_get_info test_content_process 
+all:comake2_makefile_check test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf test_random test_shared_ptr test_binfinder test_seralize test_string test_bitop test_featurevector test_split test_tieba_get_info test_content_process test_cached_fetcher test_bind 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -173,8 +175,6 @@ ccpclean:
 .PHONY:clean
 clean:ccpclean
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mclean[0m']"
-	rm -rf .copy-so
-	rm -rf ld-linux-x86-64.so.2
 	rm -rf test_lambda
 	rm -rf ./output/bin/test_lambda
 	rm -rf test_bins
@@ -237,6 +237,10 @@ clean:ccpclean
 	rm -rf ./output/bin/test_tieba_get_info
 	rm -rf test_content_process
 	rm -rf ./output/bin/test_content_process
+	rm -rf test_cached_fetcher
+	rm -rf ./output/bin/test_cached_fetcher
+	rm -rf test_bind
+	rm -rf ./output/bin/test_bind
 	rm -rf test_lambda_test_lambda.o
 	rm -rf test_bins_test_bins.o
 	rm -rf test_datetime_test_datetime.o
@@ -498,6 +502,28 @@ clean:ccpclean
 	rm -rf ../src/json/test_tieba_get_info_json_value.o
 	rm -rf ../src/json/test_tieba_get_info_json_writer.o
 	rm -rf test_content_process_test_content_process.o
+	rm -rf test_cached_fetcher_test_cached_fetcher.o
+	rm -rf ../src/model/test_cached_fetcher_LinearModel.o
+	rm -rf ../src/model/test_cached_fetcher_ModelFactory.o
+	rm -rf ../src/model/test_cached_fetcher_Predictor.o
+	rm -rf ../src/model/test_cached_fetcher_RandForestModel.o
+	rm -rf ../src/model/test_cached_fetcher_Score.o
+	rm -rf ../src/model/test_cached_fetcher_SharedPredictor.o
+	rm -rf ../src/model/test_cached_fetcher_SvmModel.o
+	rm -rf ../src/json/test_cached_fetcher_json_reader.o
+	rm -rf ../src/json/test_cached_fetcher_json_value.o
+	rm -rf ../src/json/test_cached_fetcher_json_writer.o
+	rm -rf test_bind_test_bind.o
+	rm -rf ../src/model/test_bind_LinearModel.o
+	rm -rf ../src/model/test_bind_ModelFactory.o
+	rm -rf ../src/model/test_bind_Predictor.o
+	rm -rf ../src/model/test_bind_RandForestModel.o
+	rm -rf ../src/model/test_bind_Score.o
+	rm -rf ../src/model/test_bind_SharedPredictor.o
+	rm -rf ../src/model/test_bind_SvmModel.o
+	rm -rf ../src/json/test_bind_json_reader.o
+	rm -rf ../src/json/test_bind_json_value.o
+	rm -rf ../src/json/test_bind_json_writer.o
 
 .PHONY:dist
 dist:
@@ -515,10 +541,6 @@ distclean:clean
 love:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlove[0m']"
 	@echo "make love done"
-
-.copy-so:
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m.copy-so[0m']"
-	ln -s ../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib//ld-linux-x86-64.so.2 ld-linux-x86-64.so.2 .
 
 test_lambda:test_lambda_test_lambda.o \
   ../include/tools/pinyin/libPYNotation.a
@@ -582,6 +604,7 @@ test_lambda:test_lambda_test_lambda.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -596,11 +619,10 @@ test_lambda:test_lambda_test_lambda.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_lambda
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_lambda
 	mkdir -p ./output/bin
 	cp -f --link test_lambda ./output/bin
 
@@ -666,6 +688,7 @@ test_bins:test_bins_test_bins.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -680,11 +703,10 @@ test_bins:test_bins_test_bins.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_bins
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_bins
 	mkdir -p ./output/bin
 	cp -f --link test_bins ./output/bin
 
@@ -750,6 +772,7 @@ test_datetime:test_datetime_test_datetime.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -764,11 +787,10 @@ test_datetime:test_datetime_test_datetime.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_datetime
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_datetime
 	mkdir -p ./output/bin
 	cp -f --link test_datetime ./output/bin
 
@@ -834,6 +856,7 @@ test_content_filter:test_content_filter_test_content_filter.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -848,11 +871,10 @@ test_content_filter:test_content_filter_test_content_filter.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_content_filter
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_content_filter
 	mkdir -p ./output/bin
 	cp -f --link test_content_filter ./output/bin
 
@@ -938,6 +960,7 @@ test_regex:test_regex_test_regex.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -952,11 +975,10 @@ test_regex:test_regex_test_regex.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_regex
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_regex
 	mkdir -p ./output/bin
 	cp -f --link test_regex ./output/bin
 
@@ -1042,6 +1064,7 @@ test_regex2:test_regex2_test_regex2.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -1056,11 +1079,10 @@ test_regex2:test_regex2_test_regex2.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_regex2
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_regex2
 	mkdir -p ./output/bin
 	cp -f --link test_regex2 ./output/bin
 
@@ -1146,6 +1168,7 @@ test_encode:test_encode_test_encode.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -1160,11 +1183,10 @@ test_encode:test_encode_test_encode.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_encode
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_encode
 	mkdir -p ./output/bin
 	cp -f --link test_encode ./output/bin
 
@@ -1250,6 +1272,7 @@ test_json:test_json_test_json.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -1264,11 +1287,10 @@ test_json:test_json_test_json.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_json
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_json
 	mkdir -p ./output/bin
 	cp -f --link test_json ./output/bin
 
@@ -1354,6 +1376,7 @@ test_escape:test_escape_test_escape.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -1368,11 +1391,10 @@ test_escape:test_escape_test_escape.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_escape
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_escape
 	mkdir -p ./output/bin
 	cp -f --link test_escape ./output/bin
 
@@ -1458,6 +1480,7 @@ test_other:test_other_test_other.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -1472,11 +1495,10 @@ test_other:test_other_test_other.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_other
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_other
 	mkdir -p ./output/bin
 	cp -f --link test_other ./output/bin
 
@@ -1562,6 +1584,7 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -1576,11 +1599,10 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_feature_selector
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_feature_selector
 	mkdir -p ./output/bin
 	cp -f --link test_feature_selector ./output/bin
 
@@ -1646,6 +1668,7 @@ openmp_hello:openmp/openmp_hello_hello.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -1660,11 +1683,10 @@ openmp_hello:openmp/openmp_hello_hello.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o openmp_hello
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o openmp_hello
 	mkdir -p ./bin
 	cp -f --link openmp_hello ./bin
 
@@ -1750,6 +1772,7 @@ openmp_test:openmp/openmp_test_test.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -1764,11 +1787,10 @@ openmp_test:openmp/openmp_test_test.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o openmp_test
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o openmp_test
 	mkdir -p ./bin
 	cp -f --link openmp_test ./bin
 
@@ -1834,6 +1856,7 @@ test_exception:test_exception_test_exception.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -1848,11 +1871,10 @@ test_exception:test_exception_test_exception.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_exception
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_exception
 	mkdir -p ./bin
 	cp -f --link test_exception ./bin
 
@@ -1918,6 +1940,7 @@ test_map_util:test_map_util_test_map_util.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -1932,11 +1955,10 @@ test_map_util:test_map_util_test_map_util.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_map_util
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_map_util
 	mkdir -p ./bin
 	cp -f --link test_map_util ./bin
 
@@ -2022,6 +2044,7 @@ test_seg:test_seg_test_seg.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -2036,11 +2059,10 @@ test_seg:test_seg_test_seg.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_seg
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_seg
 	mkdir -p ./output/bin
 	cp -f --link test_seg ./output/bin
 
@@ -2126,6 +2148,7 @@ test_identifer:test_identifer_test_identifer.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -2140,11 +2163,10 @@ test_identifer:test_identifer_test_identifer.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_identifer
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_identifer
 	mkdir -p ./output/bin
 	cp -f --link test_identifer ./output/bin
 
@@ -2230,6 +2252,7 @@ test_linear:test_linear_test_linear.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -2244,11 +2267,10 @@ test_linear:test_linear_test_linear.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_linear
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_linear
 	mkdir -p ./output/bin
 	cp -f --link test_linear ./output/bin
 
@@ -2334,6 +2356,7 @@ test_pinyin:test_pinyin_test_pinyin.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -2348,11 +2371,10 @@ test_pinyin:test_pinyin_test_pinyin.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_pinyin
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_pinyin
 	mkdir -p ./output/bin
 	cp -f --link test_pinyin ./output/bin
 
@@ -2438,6 +2460,7 @@ test_namepattern:test_namepattern_test_namepattern.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -2452,11 +2475,10 @@ test_namepattern:test_namepattern_test_namepattern.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_namepattern
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_namepattern
 	mkdir -p ./output/bin
 	cp -f --link test_namepattern ./output/bin
 
@@ -2542,6 +2564,7 @@ test_conf:test_conf_test_conf.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -2556,11 +2579,10 @@ test_conf:test_conf_test_conf.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_conf
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_conf
 	mkdir -p ./output/bin
 	cp -f --link test_conf ./output/bin
 
@@ -2646,6 +2668,7 @@ test_random:test_random_test_random.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -2660,11 +2683,10 @@ test_random:test_random_test_random.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_random
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_random
 	mkdir -p ./output/bin
 	cp -f --link test_random ./output/bin
 
@@ -2750,6 +2772,7 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -2764,11 +2787,10 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_shared_ptr
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_shared_ptr
 	mkdir -p ./output/bin
 	cp -f --link test_shared_ptr ./output/bin
 
@@ -2854,6 +2876,7 @@ test_binfinder:test_binfinder_test_binfinder.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -2868,11 +2891,10 @@ test_binfinder:test_binfinder_test_binfinder.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_binfinder
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_binfinder
 	mkdir -p ./output/bin
 	cp -f --link test_binfinder ./output/bin
 
@@ -2958,6 +2980,7 @@ test_seralize:test_seralize_test_seralize.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -2972,11 +2995,10 @@ test_seralize:test_seralize_test_seralize.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_seralize
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_seralize
 	mkdir -p ./output/bin
 	cp -f --link test_seralize ./output/bin
 
@@ -3062,6 +3084,7 @@ test_string:test_string_test_string.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -3076,11 +3099,10 @@ test_string:test_string_test_string.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_string
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_string
 	mkdir -p ./output/bin
 	cp -f --link test_string ./output/bin
 
@@ -3166,6 +3188,7 @@ test_bitop:test_bitop_test_bitop.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -3180,11 +3203,10 @@ test_bitop:test_bitop_test_bitop.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_bitop
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_bitop
 	mkdir -p ./output/bin
 	cp -f --link test_bitop ./output/bin
 
@@ -3270,6 +3292,7 @@ test_featurevector:test_featurevector_test_featurevector.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -3284,11 +3307,10 @@ test_featurevector:test_featurevector_test_featurevector.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_featurevector
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_featurevector
 	mkdir -p ./output/bin
 	cp -f --link test_featurevector ./output/bin
 
@@ -3374,6 +3396,7 @@ test_split:test_split_test_split.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -3388,11 +3411,10 @@ test_split:test_split_test_split.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_split
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_split
 	mkdir -p ./output/bin
 	cp -f --link test_split ./output/bin
 
@@ -3478,6 +3500,7 @@ test_tieba_get_info:test_tieba_get_info_test_tieba_get_info.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -3492,11 +3515,10 @@ test_tieba_get_info:test_tieba_get_info_test_tieba_get_info.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_tieba_get_info
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_tieba_get_info
 	mkdir -p ./output/bin
 	cp -f --link test_tieba_get_info ./output/bin
 
@@ -3562,6 +3584,7 @@ test_content_process:test_content_process_test_content_process.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../third-64/openssl/lib/libcrypto.a \
   ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
@@ -3576,13 +3599,220 @@ test_content_process:test_content_process_test_content_process.o \
   ../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_content_process
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_content_process
 	mkdir -p ./output/bin
 	cp -f --link test_content_process ./output/bin
+
+test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
+  ../src/model/test_cached_fetcher_LinearModel.o \
+  ../src/model/test_cached_fetcher_ModelFactory.o \
+  ../src/model/test_cached_fetcher_Predictor.o \
+  ../src/model/test_cached_fetcher_RandForestModel.o \
+  ../src/model/test_cached_fetcher_Score.o \
+  ../src/model/test_cached_fetcher_SharedPredictor.o \
+  ../src/model/test_cached_fetcher_SvmModel.o \
+  ../src/json/test_cached_fetcher_json_reader.o \
+  ../src/json/test_cached_fetcher_json_value.o \
+  ../src/json/test_cached_fetcher_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_cached_fetcher[0m']"
+	$(CXX) test_cached_fetcher_test_cached_fetcher.o \
+  ../src/model/test_cached_fetcher_LinearModel.o \
+  ../src/model/test_cached_fetcher_ModelFactory.o \
+  ../src/model/test_cached_fetcher_Predictor.o \
+  ../src/model/test_cached_fetcher_RandForestModel.o \
+  ../src/model/test_cached_fetcher_Score.o \
+  ../src/model/test_cached_fetcher_SharedPredictor.o \
+  ../src/model/test_cached_fetcher_SvmModel.o \
+  ../src/json/test_cached_fetcher_json_reader.o \
+  ../src/json/test_cached_fetcher_json_value.o \
+  ../src/json/test_cached_fetcher_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
+  ../../../../../../third-64/openssl/lib/libcrypto.a \
+  ../../../../../../third-64/openssl/lib/libssl.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
+  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  -lrt \
+  -ldl \
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_cached_fetcher
+	mkdir -p ./output/bin
+	cp -f --link test_cached_fetcher ./output/bin
+
+test_bind:test_bind_test_bind.o \
+  ../src/model/test_bind_LinearModel.o \
+  ../src/model/test_bind_ModelFactory.o \
+  ../src/model/test_bind_Predictor.o \
+  ../src/model/test_bind_RandForestModel.o \
+  ../src/model/test_bind_Score.o \
+  ../src/model/test_bind_SharedPredictor.o \
+  ../src/model/test_bind_SvmModel.o \
+  ../src/json/test_bind_json_reader.o \
+  ../src/json/test_bind_json_value.o \
+  ../src/json/test_bind_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_bind[0m']"
+	$(CXX) test_bind_test_bind.o \
+  ../src/model/test_bind_LinearModel.o \
+  ../src/model/test_bind_ModelFactory.o \
+  ../src/model/test_bind_Predictor.o \
+  ../src/model/test_bind_RandForestModel.o \
+  ../src/model/test_bind_Score.o \
+  ../src/model/test_bind_SharedPredictor.o \
+  ../src/model/test_bind_SvmModel.o \
+  ../src/json/test_bind_json_reader.o \
+  ../src/json/test_bind_json_value.o \
+  ../src/json/test_bind_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
+  ../../../../../../third-64/openssl/lib/libcrypto.a \
+  ../../../../../../third-64/openssl/lib/libssl.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
+  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  -lrt \
+  -ldl \
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_bind
+	mkdir -p ./output/bin
+	cp -f --link test_bind ./output/bin
 
 test_lambda_test_lambda.o:test_lambda.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_lambda_test_lambda.o[0m']"
@@ -4627,6 +4857,94 @@ test_tieba_get_info_test_tieba_get_info.o:test_tieba_get_info.cc
 test_content_process_test_content_process.o:test_content_process.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_content_process_test_content_process.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_content_process_test_content_process.o test_content_process.cc
+
+test_cached_fetcher_test_cached_fetcher.o:test_cached_fetcher.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_cached_fetcher_test_cached_fetcher.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_cached_fetcher_test_cached_fetcher.o test_cached_fetcher.cc
+
+../src/model/test_cached_fetcher_LinearModel.o:../src/model/LinearModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_cached_fetcher_LinearModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_cached_fetcher_LinearModel.o ../src/model/LinearModel.cpp
+
+../src/model/test_cached_fetcher_ModelFactory.o:../src/model/ModelFactory.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_cached_fetcher_ModelFactory.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_cached_fetcher_ModelFactory.o ../src/model/ModelFactory.cpp
+
+../src/model/test_cached_fetcher_Predictor.o:../src/model/Predictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_cached_fetcher_Predictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_cached_fetcher_Predictor.o ../src/model/Predictor.cpp
+
+../src/model/test_cached_fetcher_RandForestModel.o:../src/model/RandForestModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_cached_fetcher_RandForestModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_cached_fetcher_RandForestModel.o ../src/model/RandForestModel.cpp
+
+../src/model/test_cached_fetcher_Score.o:../src/model/Score.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_cached_fetcher_Score.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_cached_fetcher_Score.o ../src/model/Score.cpp
+
+../src/model/test_cached_fetcher_SharedPredictor.o:../src/model/SharedPredictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_cached_fetcher_SharedPredictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_cached_fetcher_SharedPredictor.o ../src/model/SharedPredictor.cpp
+
+../src/model/test_cached_fetcher_SvmModel.o:../src/model/SvmModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_cached_fetcher_SvmModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_cached_fetcher_SvmModel.o ../src/model/SvmModel.cpp
+
+../src/json/test_cached_fetcher_json_reader.o:../src/json/json_reader.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_cached_fetcher_json_reader.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_cached_fetcher_json_reader.o ../src/json/json_reader.cpp
+
+../src/json/test_cached_fetcher_json_value.o:../src/json/json_value.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_cached_fetcher_json_value.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_cached_fetcher_json_value.o ../src/json/json_value.cpp
+
+../src/json/test_cached_fetcher_json_writer.o:../src/json/json_writer.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_cached_fetcher_json_writer.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_cached_fetcher_json_writer.o ../src/json/json_writer.cpp
+
+test_bind_test_bind.o:test_bind.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_bind_test_bind.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_bind_test_bind.o test_bind.cc
+
+../src/model/test_bind_LinearModel.o:../src/model/LinearModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_bind_LinearModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_bind_LinearModel.o ../src/model/LinearModel.cpp
+
+../src/model/test_bind_ModelFactory.o:../src/model/ModelFactory.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_bind_ModelFactory.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_bind_ModelFactory.o ../src/model/ModelFactory.cpp
+
+../src/model/test_bind_Predictor.o:../src/model/Predictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_bind_Predictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_bind_Predictor.o ../src/model/Predictor.cpp
+
+../src/model/test_bind_RandForestModel.o:../src/model/RandForestModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_bind_RandForestModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_bind_RandForestModel.o ../src/model/RandForestModel.cpp
+
+../src/model/test_bind_Score.o:../src/model/Score.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_bind_Score.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_bind_Score.o ../src/model/Score.cpp
+
+../src/model/test_bind_SharedPredictor.o:../src/model/SharedPredictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_bind_SharedPredictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_bind_SharedPredictor.o ../src/model/SharedPredictor.cpp
+
+../src/model/test_bind_SvmModel.o:../src/model/SvmModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_bind_SvmModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_bind_SvmModel.o ../src/model/SvmModel.cpp
+
+../src/json/test_bind_json_reader.o:../src/json/json_reader.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_bind_json_reader.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_bind_json_reader.o ../src/json/json_reader.cpp
+
+../src/json/test_bind_json_value.o:../src/json/json_value.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_bind_json_value.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_bind_json_value.o ../src/json/json_value.cpp
+
+../src/json/test_bind_json_writer.o:../src/json/json_writer.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_bind_json_writer.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_bind_json_writer.o ../src/json/json_writer.cpp
 
 endif #ifeq ($(shell uname -m),x86_64)
 

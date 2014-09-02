@@ -64,12 +64,8 @@ namespace gezi {
 		else
 		{
 			auto item = make_pair(numZeros, 0.0);
-			//@TODO why fail
-			/*	auto iter = std::lower_bound(countValues.begin(), countValues.end(), item,
-			[](pair<int, Float>& l, pair<int, Float>& r) { return l.second < r.second; });*/
 			//注意不是countValues.end()因为空间复用
-			auto iter = std::lower_bound(countValues.begin(), countValues.begin() + numValues, item,
-				boost::bind(&pair<int, Float>::second, _1) < boost::bind(&pair<int, Float>::second, _2));
+			auto iter = std::lower_bound(countValues.begin(), countValues.begin() + numValues, item, CmpPairBySecond());
 			countValues.insert(iter, item); //@TODO insert ?
 			return numValues + 1;
 		}

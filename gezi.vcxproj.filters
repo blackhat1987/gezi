@@ -393,6 +393,15 @@
     <ClInclude Include="include\container\LruMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\tieba\info_def.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tieba\get_parsed_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\other\CachedFetcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -534,6 +543,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="test\test_content_process.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_cached_fetcher.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_bitop.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_string.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_seralize.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_bind.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

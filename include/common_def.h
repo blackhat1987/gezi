@@ -23,18 +23,40 @@
 #if __GNUC__ > 3
 #include <array>
 #include <memory>
+#include <thread>
+#include <omp.h> //openmp for gcc4
+using namespace std::placeholders;
 #else
 #include <boost/shared_ptr.hpp>
 #include <boost/array.hpp>
 #include <boost/ref.hpp>
 #include <boost/function.hpp>
+//boost bind定义了golobal的_1.._9 所以这里通过define去掉,避免和boost::lambda里面的冲突
+#define BOOST_BIND_PLACEHOLDERS_HPP_INCLUDED
+#include <boost/bind.hpp>
+#include <boost/lambda/lambda.hpp>
+using namespace boost::lambda;
+//using boost::bind;
+//#include <boost/spirit/include/phoenix_core.hpp>  
+//using namespace boost::phoenix;
+//using namespace boost::phoenix::arg_names;
+#define BOOST_THREAD_DONT_USE_CHRONO
+#include <boost/thread.hpp>
 namespace std {
 	using boost::array;
 	using boost::ref;
 	using boost::shared_ptr;
 	using boost::function;
+	using boost::thread;
 }
 #endif
+
+using std::bind;
+using std::function;
+using std::shared_ptr;
+using std::thread;
+using std::ref; 
+
 #include <fstream>
 #include <sstream>
 #include <sstream>
@@ -84,35 +106,16 @@ using boost::is_any_of;
 using boost::any_cast;
 typedef std::map<std::string, boost::any> AnyMap;
 
+//@TODO 确认支持regex的gcc版本
 #include <boost/regex.hpp>
 #include <boost/algorithm/string/regex.hpp>
 using boost::regex;
 using boost::algorithm::split_regex;
 
-#include <boost/function.hpp>
-using boost::function;
-
-//boost bind定义了golobal的_1.._9 所以这里通过define去掉,避免和boost::lambda里面的冲突
-#define BOOST_BIND_PLACEHOLDERS_HPP_INCLUDED
-#include <boost/bind.hpp>
-#include <boost/lambda/lambda.hpp>
-using namespace boost::lambda;
-//using boost::bind;
-//#include <boost/spirit/include/phoenix_core.hpp>  
-//using namespace boost::phoenix;
-//using namespace boost::phoenix::arg_names;
-
-#define BOOST_THREAD_DONT_USE_CHRONO
-#include <boost/thread.hpp>
-
-#if __GNUC__ > 3
-#include <omp.h>
-#endif
 
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
 	TypeName(const TypeName&); \
 	void operator=(const TypeName&)
-
 
 #define FREE(ptr) \
 {if (ptr) { delete ptr; ptr = NULL;}}

@@ -14,10 +14,10 @@
 #ifndef PYTHON_UTIL_H_
 #define PYTHON_UTIL_H_
 
-#define BOOST_BIND_PLACEHOLDERS_HPP_INCLUDED
-#include <boost/bind.hpp>
-#include <boost/lambda/lambda.hpp>
-using namespace boost::lambda;
+//#define BOOST_BIND_PLACEHOLDERS_HPP_INCLUDED
+//#include <boost/bind.hpp>
+//#include <boost/lambda/lambda.hpp>
+//using namespace boost::lambda;
 
 #include <boost/python.hpp>
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>

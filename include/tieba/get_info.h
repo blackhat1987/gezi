@@ -20,7 +20,8 @@
 
 namespace gezi {
 	namespace tieba {
-		inline string get_info(string url, int timeout = -1)
+
+		inline string get_info_str(string url, int timeout = -1)
 		{
 			if (timeout < 0)
 			{
@@ -34,14 +35,14 @@ namespace gezi {
 
 
 		//获取帖子内容
-		inline string get_posts_info(svec pids)
+		inline string get_posts_info_str(const svec& pids)
 		{
 			string pids_ = gezi::join(pids, ",");
 			string url = (format("http://service.tieba.baidu.com/service/antiserver?method=antiGetRscInfo&post_ids=%s&format=mcpackraw") % pids_).str();
-			return get_info(url);
+			return get_info_str(url);
 		}
 
-		inline string get_thread_info(svec tids, int need_abstract = 0)
+		inline string get_threads_info_str(const svec& tids, int need_abstract = 0)
 		{
 			string tids_ = gezi::join(tids, ",");
 			string url;
@@ -55,7 +56,7 @@ namespace gezi {
 				url = "http://service.tieba.baidu.com/service/post?method=mgetThread&format=json&need_abstract=1&forum_id=0&need_photo_pic=0&need_user_data=0&icon_size=0&need_forum_name=1&call_from=pc&thread_ids=[" + tids_ + "]";
 			}
 		
-			return get_info(url);
+			return get_info_str(url);
 		}
 
 		inline bool get_post_info(uint64 pid, string& title, string& content)
@@ -63,7 +64,7 @@ namespace gezi {
 			Json::Reader reader;
 			Json::Value root;
 			string url = (format("http://service.tieba.baidu.com/service/post?method=getPostInfo&post_ids=a:1:{i:0;i:%1%;}&format=mcpackraw") % pid).str();
-			string jsonStr = get_info(url);
+			string jsonStr = get_info_str(url);
 			bool ret = reader.parse(jsonStr, root);
 			if (!ret)
 			{
@@ -91,7 +92,7 @@ namespace gezi {
 			Json::Value root;
 			string url = "http://service.tieba.baidu.com/service/post?method=getDelpostInfo&post_ids=[{%22thread_id%22:$tid$,%22post_id%22:19821229}]&format=json";
 			boost::replace_first(url, "$tid$", STR(tid));
-			string jsonStr = get_info(url);
+			string jsonStr = get_info_str(url);
 			bool ret = reader.parse(jsonStr, root);
 			if (!ret)
 			{
@@ -130,7 +131,7 @@ namespace gezi {
 
 			boost::replace_first(url, "$input$", gezi::join(parts, ","));
 			PVAL(url);
-			string jsonStr = get_info(url);
+			string jsonStr = get_info_str(url);
 			PVAL(jsonStr);
 			bool ret = reader.parse(jsonStr, root);
 			if (!ret)
@@ -156,7 +157,7 @@ namespace gezi {
 			return deletedThreads;
 		}
 
-		inline int get_posts_delete_info(vector<uint64>& pids, vector<uint64>& tids, int maxCount = 50)
+		inline int get_posts_delete_info(const vector<uint64>& pids, const vector<uint64>& tids, int maxCount = 50)
 		{
 			Json::Reader reader;
 			Json::Value root;
@@ -188,7 +189,7 @@ namespace gezi {
 
 			boost::replace_first(url, "$input$", gezi::join(parts, ","));
 			PVAL(url);
-			string jsonStr = get_info(url);
+			string jsonStr = get_info_str(url);
 			PVAL(jsonStr);
 			bool ret = reader.parse(jsonStr, root);
 			if (!ret)
@@ -219,7 +220,7 @@ namespace gezi {
 			string url = "http://service.tieba.baidu.com/service/post?method=getDelpostInfo&post_ids=[{%22thread_id%22:$tid$,%22post_id%22:$pid$}]&format=json";
 			boost::replace_first(url, "$pid$", STR(pid));
 			boost::replace_first(url, "$tid$", STR(tid));
-			string jsonStr = get_info(url);
+			string jsonStr = get_info_str(url);
 			bool ret = reader.parse(jsonStr, root);
 			if (!ret)
 			{
@@ -261,7 +262,7 @@ namespace gezi {
 			string section = "tieba.user_fans";
 			/*	string url = SCONF_(url, (format("http://service.tieba.baidu.com/service/user?method=getUserinfo&user_id=%s&format=json&get_sign=0") % uid).str());*/
 			string url = (format("http://service.tieba.baidu.com/service/user?method=getUserinfo&user_id=%s&format=json&get_sign=0") % uid).str();
-			return get_info(url);
+			return get_info_str(url);
 		}
 
 		inline bool get_user_fans(uint64 uid, AnyMap& result)

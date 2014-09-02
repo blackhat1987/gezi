@@ -434,7 +434,10 @@ namespace gezi {
 		}
 
 		//另外一种设计是单独提出一个SegDict类 处理所有资源数据 然后作为Segmentor的一个static成员
-		//特别是当比如同时存在多个不同Segmentor使用不同的SegDict数据
+		//特别是当比如同时存在多个不同Segmentor使用不同的SegDict数据 不用static直接指针也可以(但是那样需要类外面将dict初始化，然后地址传到类内部，不能类内部dict初始化 否则每个线程都有一份dict数据copy)
+		//用SegDict + static 好处是不同segmentor可以不同SegDict 问题是每个线程只能一个Segmentor 不能多个不同Dict的相同类型的Segmentor因为是static 一个Segmentor类型只能对应一份资源 
+		//用SegDict + 指针 更灵活 封装性差一点 外部传入dict 一个Segmentor可以多个不同实例对应使用不同dict
+		//这里我们是只有一种Segmentor 一个共享dict 那么设计上采用了最大封装原则
 		static scw_worddict_t*& pwdict()
 		{
 			static scw_worddict_t* _pwdict = NULL;

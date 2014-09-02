@@ -147,6 +147,7 @@
     <ClInclude Include="include\Numeric\Vector\Vector.h" />
     <ClInclude Include="include\Numeric\Vector\vector_util.h" />
     <ClInclude Include="include\openmp_util.h" />
+    <ClInclude Include="include\other\CachedFetcher.h" />
     <ClInclude Include="include\ProcessorMgr.h" />
     <ClInclude Include="include\ProgressBar.h" />
     <ClInclude Include="include\PythonWrapper\Predictor.h" />
@@ -171,6 +172,8 @@
     <ClInclude Include="include\string_util.h" />
     <ClInclude Include="include\tieba\common_def.h" />
     <ClInclude Include="include\tieba\get_info.h" />
+    <ClInclude Include="include\tieba\get_parsed_info.h" />
+    <ClInclude Include="include\tieba\info_def.h" />
     <ClInclude Include="include\tieba\JsonParser.h" />
     <ClInclude Include="include\tieba\uname_util.h" />
     <ClInclude Include="include\tieba\util.h" />
@@ -214,8 +217,11 @@
     <ClCompile Include="test\linq\test.cc" />
     <ClCompile Include="test\openmp\hello.cc" />
     <ClCompile Include="test\openmp\test.cc" />
+    <ClCompile Include="test\test_bind.cc" />
     <ClCompile Include="test\test_binfinder.cc" />
     <ClCompile Include="test\test_bins.cc" />
+    <ClCompile Include="test\test_bitop.cc" />
+    <ClCompile Include="test\test_cached_fetcher.cc" />
     <ClCompile Include="test\test_conf.cc" />
     <ClCompile Include="test\test_content_filter.cc" />
     <ClCompile Include="test\test_content_process.cc" />
@@ -237,8 +243,10 @@
     <ClCompile Include="test\test_regex.cc" />
     <ClCompile Include="test\test_regex2.cc" />
     <ClCompile Include="test\test_seg.cc" />
+    <ClCompile Include="test\test_seralize.cc" />
     <ClCompile Include="test\test_shared_ptr.cc" />
     <ClCompile Include="test\test_split.cc" />
+    <ClCompile Include="test\test_string.cc" />
     <ClCompile Include="test\test_tieba_get_info.cc" />
   </ItemGroup>
   <ItemGroup>

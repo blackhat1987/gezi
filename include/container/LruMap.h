@@ -134,6 +134,17 @@ public:
 			return iter->second;
 		}
 	}
+
+	iterator find(const T& key)
+	{
+		return _map.find(key);
+	}
+
+	iterator end()
+	{
+		return _map.end();
+	}
+
 	//理想的做法是提供iterator对外接口 这样最灵活 性能更好 避免二次查询key @TODO
 	U& value(const T& key, bool& find)
 	{

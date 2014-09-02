@@ -14,255 +14,241 @@
 #ifndef SORT_UTIL_H_
 #define SORT_UTIL_H_
 
-namespace gezi
-{
+namespace gezi {
 
-/**
- * value second从大到小排序  作为默认顺序
- * index id first 从小到大排序 作为默认顺序
- */
-struct CmpNode
-{
-
-	template<typename _Node>
-					bool operator() (const _Node& left, const _Node& right)
+	/**
+	 * value second从大到小排序  作为默认顺序
+	 * index id first 从小到大排序 作为默认顺序
+	 */
+	struct CmpNode
 	{
-		return (left.second > right.second);
-	}
-};
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.second > right.second);
+		}
+	};
 
-struct CmpNodeValue
-{
-
-	template<typename _Node>
-					bool operator() (const _Node& left, const _Node& right)
+	struct CmpNodeValue
 	{
-		return (left.value > right.value);
-	}
-};
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.value > right.value);
+		}
+	};
 
-struct CmpNodeReverse
-{
-
-	template<typename _Node>
-					bool operator() (const _Node& left, const _Node& right)
+	struct CmpNodeReverse
 	{
-		return (left.second < right.second);
-	}
-};
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.second < right.second);
+		}
+	};
 
-struct CmpNodeReverseValue
-{
-
-	template<typename _Node>
-					bool operator() (const _Node& left, const _Node& right)
+	struct CmpNodeReverseValue
 	{
-		return (left.value < right.value);
-	}
-};
 
-struct CmpNodeFirst
-{
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.value < right.value);
+		}
+	};
 
-	template<typename _Node>
-					bool operator() (const _Node& left, const _Node& right)
+	struct CmpNodeFirst
 	{
-		return (left.first < right.first);
-	}
-};
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.first < right.first);
+		}
+	};
 
-struct CmpNodeReverseFirst
-{
-
-	template<typename _Node>
-	bool operator() (const _Node& left, const _Node& right)
+	struct CmpNodeReverseFirst
 	{
-		return (left.first > right.first);
-	}
-};
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.first > right.first);
+		}
+	};
 
-//--------------------------尽量使用这一组  如果是pair类型
-struct CmpPairByFirst
-{
-
-	template<typename _Node>
-	bool operator() (const _Node& left, const _Node& right)
+	//--------------------------尽量使用这一组  如果是pair类型
+	struct CmpPairByFirst
 	{
-		return (left.first < right.first);
-	}
-};
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.first < right.first);
+		}
+	};
 
-struct CmpPairBySecond
-{
-
-	template<typename _Node>
-	bool operator() (const _Node& left, const _Node& right)
+	struct CmpPairBySecond
 	{
-		return (left.second < right.second);
-	}
-};
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.second < right.second);
+		}
+	};
 
-struct CmpPairByFirstReverse
-{
-
-	template<typename _Node>
-	bool operator() (const _Node& left, const _Node& right)
+	struct CmpPairByFirstReverse
 	{
-		return (left.first > right.first);
-	}
-};
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.first > right.first);
+		}
+	};
 
-struct CmpPairBySecondReverse
-{
-
-	template<typename _Node>
-	bool operator() (const _Node& left, const _Node& right)
+	struct CmpPairBySecondReverse
 	{
-		return (left.second > right.second);
-	}
-};
 
-struct EqualPairByFirst
-{
-	template<typename _Node>
-	bool operator() (const _Node& left, const _Node& right)
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.second > right.second);
+		}
+	};
+
+	struct EqualPairByFirst
 	{
-		return (left.first == right.first);
-	}
-};
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.first == right.first);
+		}
+	};
 
-struct EqualPairBySecond
-{
-	template<typename _Node>
-	bool operator() (const _Node& left, const _Node& right)
+	struct EqualPairBySecond
 	{
-		return (left.second == right.second);
-	}
-};
-//----------------------------------------------------
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.second == right.second);
+		}
+	};
+	//----------------------------------------------------
 
-struct EqualNodeFirst
-{
-
-	template<typename _Node>
-					bool operator() (const _Node& left, const _Node& right)
+	struct EqualNodeFirst
 	{
-		return (left.first == right.first);
-	}
-};
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.first == right.first);
+		}
+	};
 
-struct EqualNodeByID
-{
-
-	template<typename _Node>
-	bool operator() (const _Node& left, const _Node& right)
+	struct EqualNodeByID
 	{
-		return (left.id == right.id);
-	}
-};
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.id == right.id);
+		}
+	};
 
-struct CmpNodeByID
-{
-
-	template<typename _Node>
-					bool operator() (const _Node& left, const _Node& right)
+	struct CmpNodeByID
 	{
-		return (left.id < right.id);
-	}
-};
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.id < right.id);
+		}
+	};
 
-struct EqualNodeByIndex
-{
-
-	template<typename _Node>
-					bool operator() (const _Node& left, const _Node& right)
+	struct EqualNodeByIndex
 	{
-		return (left.index == right.index);
-	}
-};
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.index == right.index);
+		}
+	};
 
-struct CmpNodeByIndex
-{
-
-	template<typename _Node>
-	bool operator() (const _Node& left, const _Node& right)
+	struct CmpNodeByIndex
 	{
-		return (left.index < right.index);
-	}
-};
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.index < right.index);
+		}
+	};
 
 
-template<typename ValueVec = vector<double>, typename IndexVec = vector<int> >
-struct IndexCmper
-{
-	ValueVec* valueVec;
-	typedef typename IndexVec::value_type T;
-
-	bool operator() (T left, T right)
+	template<typename ValueVec = vector<double>, typename IndexVec = vector<int> >
+	struct IndexCmper
 	{
-		return ((*valueVec)[left] > (*valueVec)[right]);
-	}
-};
+		ValueVec* valueVec;
+		typedef typename IndexVec::value_type T;
 
-template<typename ValueVec = vector<double>, typename IndexVec = vector<int> >
-struct IndexReverseCmper
-{
-	ValueVec* valueVec;
-	typedef typename IndexVec::value_type T;
+		bool operator() (T left, T right)
+		{
+			return ((*valueVec)[left] > (*valueVec)[right]);
+		}
+	};
 
-	bool operator() (T left, T right)
+	template<typename ValueVec = vector<double>, typename IndexVec = vector<int> >
+	struct IndexReverseCmper
 	{
-		return ((*valueVec)[left] < (*valueVec)[right]);
-	}
-};
+		ValueVec* valueVec;
+		typedef typename IndexVec::value_type T;
 
-template<typename ValueVec, typename IndexVec, typename Func>
-void sort(ValueVec& valueVec, IndexVec& indexVec, Func func)
-{
-	func.valueVec = &valueVec;
-	int len = valueVec.size();
-	indexVec.resize(len);
-	for (size_t i = 0; i < len; i++)
-	{
-		indexVec[i] = i;
-	}
-	std::sort(indexVec.begin(), indexVec.end(), func);
-}
+		bool operator() (T left, T right)
+		{
+			return ((*valueVec)[left] < (*valueVec)[right]);
+		}
+	};
 
-//默认是从大到小排序
-template<typename ValueVec, typename IndexVec>
-void sort(ValueVec& valueVec, IndexVec& indexVec)
-{
-	IndexCmper<ValueVec, IndexVec> func;
-	sort(valueVec, indexVec, func);
-}
-
-template<typename ValueVec, typename IndexVec, typename Func>
-void sort(ValueVec& valueVec, IndexVec& indexVec, int maxLen, Func func)
-{
-	func.valueVec = &valueVec;
-	int len = valueVec.size();
-	indexVec.resize(len);
-	for (size_t i = 0; i < len; i++)
+	template<typename ValueVec, typename IndexVec, typename Func>
+	void sort(ValueVec& valueVec, IndexVec& indexVec, Func func)
 	{
-		indexVec[i] = i;
-	}
-	if (len <= maxLen)
-	{
+		func.valueVec = &valueVec;
+		int len = valueVec.size();
+		indexVec.resize(len);
+		for (size_t i = 0; i < len; i++)
+		{
+			indexVec[i] = i;
+		}
 		std::sort(indexVec.begin(), indexVec.end(), func);
 	}
-	else
-	{
-		std::partial_sort(indexVec.begin(), indexVec.begin() + maxLen, indexVec.end(), func);
-	}
-}
 
-template<typename ValueVec, typename IndexVec>
-void sort(ValueVec& valueVec, IndexVec& indexVec, int maxLen)
-{
-	IndexCmper<ValueVec, IndexVec> func;
-	sort(valueVec, indexVec, maxLen, func);
-}
+	//默认是从大到小排序
+	template<typename ValueVec, typename IndexVec>
+	void sort(ValueVec& valueVec, IndexVec& indexVec)
+	{
+		IndexCmper<ValueVec, IndexVec> func;
+		sort(valueVec, indexVec, func);
+	}
+
+	template<typename ValueVec, typename IndexVec, typename Func>
+	void sort(ValueVec& valueVec, IndexVec& indexVec, int maxLen, Func func)
+	{
+		func.valueVec = &valueVec;
+		int len = valueVec.size();
+		indexVec.resize(len);
+		for (size_t i = 0; i < len; i++)
+		{
+			indexVec[i] = i;
+		}
+		if (len <= maxLen)
+		{
+			std::sort(indexVec.begin(), indexVec.end(), func);
+		}
+		else
+		{
+			std::partial_sort(indexVec.begin(), indexVec.begin() + maxLen, indexVec.end(), func);
+		}
+	}
+
+	template<typename ValueVec, typename IndexVec>
+	void sort(ValueVec& valueVec, IndexVec& indexVec, int maxLen)
+	{
+		IndexCmper<ValueVec, IndexVec> func;
+		sort(valueVec, indexVec, maxLen, func);
+	}
 } //----end of namespace gezi
 
 #endif  //----end of SORT_UTIL_H_

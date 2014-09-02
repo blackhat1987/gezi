@@ -298,7 +298,7 @@ namespace gezi {
 		void set(int index, Float value)
 		{
 			Iter iter = std::lower_bound(_nodes.begin(), _nodes.end(), Node(index),
-				boost::bind(&Node::index, _1) < boost::bind(&Node::index, _2));
+				[](const Node& l, const Node& r) { return l.index < r.index; });
 			if (iter != _nodes.end() && iter->index == index)
 			{
 				iter->value = value;
@@ -310,7 +310,7 @@ namespace gezi {
 		const Float value(int index) const
 		{
 			ConstIter iter = std::lower_bound(_nodes.begin(), _nodes.end(), Node(index),
-				boost::bind(&Node::index, _1) < boost::bind(&Node::index, _2));
+				[](const Node& l, const Node& r) { return l.index < r.index; });
 			if (iter != _nodes.end() && iter->index == index)
 				return iter->value;
 			else
