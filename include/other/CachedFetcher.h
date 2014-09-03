@@ -18,17 +18,31 @@
 
 namespace gezi {
 
-	template<typename Key, typename Value, 
-		template<class _Kty,
-	class _Ty,
-	class _Pr = less<_Kty>,
-	class _Alloc = allocator<pair<const _Kty, _Ty> > > class _Map = std::map>
+	template<typename _Key, typename _Value,
+		template<class _Kty, class _Ty, typename...> class _Map = std::unordered_map>
 	class CachedFetcher
 	{
 	public:
+		typedef _Key Key;
+		typedef _Value Value;
 		typedef _Map<Key, Value> Map;
 	public:
-		
+		CachedFetcher()
+		{
+
+		}
+
+		//普通map不支持设定大小 LruMap才支持设置最大容量
+		CachedFetcher(int capacity)
+		{
+			_map.set_capacity(capacity);
+		}
+
+		void set_capacity(int capacity)
+		{
+			_map.set_capacity(capacity);
+		}
+
 		Value GetValue(const Key& key, std::function<vector<Value>(const vector<Key>&)> func)
 		{
 			auto iter = _map.find(key);
@@ -44,7 +58,11 @@ namespace gezi {
 			}
 		}
 
-		vector<Value> GetValues(const vector<Key>& keys, std::function<vector<Value>(const vector<Key>&)> func)
+		//类似sort 采用template写法　template<typename Fun>  Func func 也完全ok似乎 类似sort也可以最后是普通函数
+		//@TODO 到底哪种写法更好? 效率一样？
+		//vector<Value> GetValues(const vector<Key>& keys, std::function<vector<Value>(const vector<Key>&)> func)
+		template<typename Func>
+		vector<Value> GetValues(const vector<Key>& keys, Func func)
 		{
 			vector<Value> values;
 			vector<Key> fetchKeys;

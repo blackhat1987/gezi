@@ -235,6 +235,7 @@
     <ClCompile Include="test\test_json.cc" />
     <ClCompile Include="test\test_lambda.cc" />
     <ClCompile Include="test\test_linear.cc" />
+    <ClCompile Include="test\test_lrumap.cc" />
     <ClCompile Include="test\test_map_util.cc" />
     <ClCompile Include="test\test_namepattern.cc" />
     <ClCompile Include="test\test_other.cc" />

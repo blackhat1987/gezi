@@ -56,6 +56,7 @@ using std::function;
 using std::shared_ptr;
 using std::thread;
 using std::ref; 
+using std::cref;
 
 #include <fstream>
 #include <sstream>

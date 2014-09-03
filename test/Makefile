@@ -151,11 +151,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=86eb2c3fa0d4167c97f55d96a6bf47c9  COMAKE
+COMAKE_MD5=db0d306097b19c9d2063b1fa9d640626  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf test_random test_shared_ptr test_binfinder test_seralize test_string test_bitop test_featurevector test_split test_tieba_get_info test_content_process test_cached_fetcher test_bind 
+all:comake2_makefile_check test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf test_random test_shared_ptr test_binfinder test_seralize test_string test_bitop test_featurevector test_split test_tieba_get_info test_content_process test_cached_fetcher test_bind test_lrumap 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -241,6 +241,8 @@ clean:ccpclean
 	rm -rf ./output/bin/test_cached_fetcher
 	rm -rf test_bind
 	rm -rf ./output/bin/test_bind
+	rm -rf test_lrumap
+	rm -rf ./output/bin/test_lrumap
 	rm -rf test_lambda_test_lambda.o
 	rm -rf test_bins_test_bins.o
 	rm -rf test_datetime_test_datetime.o
@@ -524,6 +526,17 @@ clean:ccpclean
 	rm -rf ../src/json/test_bind_json_reader.o
 	rm -rf ../src/json/test_bind_json_value.o
 	rm -rf ../src/json/test_bind_json_writer.o
+	rm -rf test_lrumap_test_lrumap.o
+	rm -rf ../src/model/test_lrumap_LinearModel.o
+	rm -rf ../src/model/test_lrumap_ModelFactory.o
+	rm -rf ../src/model/test_lrumap_Predictor.o
+	rm -rf ../src/model/test_lrumap_RandForestModel.o
+	rm -rf ../src/model/test_lrumap_Score.o
+	rm -rf ../src/model/test_lrumap_SharedPredictor.o
+	rm -rf ../src/model/test_lrumap_SvmModel.o
+	rm -rf ../src/json/test_lrumap_json_reader.o
+	rm -rf ../src/json/test_lrumap_json_value.o
+	rm -rf ../src/json/test_lrumap_json_writer.o
 
 .PHONY:dist
 dist:
@@ -3814,6 +3827,110 @@ test_bind:test_bind_test_bind.o \
 	mkdir -p ./output/bin
 	cp -f --link test_bind ./output/bin
 
+test_lrumap:test_lrumap_test_lrumap.o \
+  ../src/model/test_lrumap_LinearModel.o \
+  ../src/model/test_lrumap_ModelFactory.o \
+  ../src/model/test_lrumap_Predictor.o \
+  ../src/model/test_lrumap_RandForestModel.o \
+  ../src/model/test_lrumap_Score.o \
+  ../src/model/test_lrumap_SharedPredictor.o \
+  ../src/model/test_lrumap_SvmModel.o \
+  ../src/json/test_lrumap_json_reader.o \
+  ../src/json/test_lrumap_json_value.o \
+  ../src/json/test_lrumap_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_lrumap[0m']"
+	$(CXX) test_lrumap_test_lrumap.o \
+  ../src/model/test_lrumap_LinearModel.o \
+  ../src/model/test_lrumap_ModelFactory.o \
+  ../src/model/test_lrumap_Predictor.o \
+  ../src/model/test_lrumap_RandForestModel.o \
+  ../src/model/test_lrumap_Score.o \
+  ../src/model/test_lrumap_SharedPredictor.o \
+  ../src/model/test_lrumap_SvmModel.o \
+  ../src/json/test_lrumap_json_reader.o \
+  ../src/json/test_lrumap_json_value.o \
+  ../src/json/test_lrumap_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/libcurl/lib/libcurl.a \
+  ../../../../../../third-64/openssl/lib/libcrypto.a \
+  ../../../../../../third-64/openssl/lib/libssl.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
+  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  -lrt \
+  -ldl \
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_lrumap
+	mkdir -p ./output/bin
+	cp -f --link test_lrumap ./output/bin
+
 test_lambda_test_lambda.o:test_lambda.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_lambda_test_lambda.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_lambda_test_lambda.o test_lambda.cc
@@ -4945,6 +5062,50 @@ test_bind_test_bind.o:test_bind.cc
 ../src/json/test_bind_json_writer.o:../src/json/json_writer.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_bind_json_writer.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_bind_json_writer.o ../src/json/json_writer.cpp
+
+test_lrumap_test_lrumap.o:test_lrumap.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_lrumap_test_lrumap.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_lrumap_test_lrumap.o test_lrumap.cc
+
+../src/model/test_lrumap_LinearModel.o:../src/model/LinearModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_lrumap_LinearModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_lrumap_LinearModel.o ../src/model/LinearModel.cpp
+
+../src/model/test_lrumap_ModelFactory.o:../src/model/ModelFactory.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_lrumap_ModelFactory.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_lrumap_ModelFactory.o ../src/model/ModelFactory.cpp
+
+../src/model/test_lrumap_Predictor.o:../src/model/Predictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_lrumap_Predictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_lrumap_Predictor.o ../src/model/Predictor.cpp
+
+../src/model/test_lrumap_RandForestModel.o:../src/model/RandForestModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_lrumap_RandForestModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_lrumap_RandForestModel.o ../src/model/RandForestModel.cpp
+
+../src/model/test_lrumap_Score.o:../src/model/Score.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_lrumap_Score.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_lrumap_Score.o ../src/model/Score.cpp
+
+../src/model/test_lrumap_SharedPredictor.o:../src/model/SharedPredictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_lrumap_SharedPredictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_lrumap_SharedPredictor.o ../src/model/SharedPredictor.cpp
+
+../src/model/test_lrumap_SvmModel.o:../src/model/SvmModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_lrumap_SvmModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_lrumap_SvmModel.o ../src/model/SvmModel.cpp
+
+../src/json/test_lrumap_json_reader.o:../src/json/json_reader.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_lrumap_json_reader.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_lrumap_json_reader.o ../src/json/json_reader.cpp
+
+../src/json/test_lrumap_json_value.o:../src/json/json_value.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_lrumap_json_value.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_lrumap_json_value.o ../src/json/json_value.cpp
+
+../src/json/test_lrumap_json_writer.o:../src/json/json_writer.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_lrumap_json_writer.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_lrumap_json_writer.o ../src/json/json_writer.cpp
 
 endif #ifeq ($(shell uname -m),x86_64)
 
