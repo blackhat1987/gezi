@@ -33,84 +33,64 @@ namespace gezi {
 			return curl.get(url);
 		}
 
+		//获取帖子信息
+		inline string get_posts_info_str(string pids)
+		{
+			string url = "http://service.tieba.baidu.com/service/post?method=getPostInfo&format=json&post_ids=[" + pids + "]";
+			return get_info_str(url);
+		}
 
-		//获取帖子内容
+		inline string get_post_info_str(uint64 pid)
+		{
+			return get_posts_info_str(STR(pid));
+		}
+
+		inline string get_post_info_str(const svec& pids)
+		{
+			string pids_ = join(pids, ",");
+
+		}
+		
+		//批量获取帖子内容
 		inline string get_posts_info_str(const svec& pids)
 		{
-			string pids_ = gezi::join(pids, ",");
-			string url = (format("http://service.tieba.baidu.com/service/antiserver?method=antiGetRscInfo&post_ids=%s&format=mcpackraw") % pids_).str();
+			string pids_ = join(pids, ",");
+			return get_posts_info_str(pids_);
+		}
+
+		inline string get_posts_info_str(const vector<uint64>& pids)
+		{
+			return get_posts_info_str(convert(pids));
+		}
+
+		inline string get_threads_info_str(string tids_, bool need_abstract = false)
+		{
+			string url;
+			url = (format("http://service.tieba.baidu.com/service/post?method=mgetThread&format=json&need_abstract=[%d]&forum_id=0&need_photo_pic=0&need_user_data=0&icon_size=0&need_forum_name=1&call_from=pc&thread_ids=[%s]") % need_abstract % tids_).str();
 			return get_info_str(url);
 		}
 
-		inline string get_threads_info_str(const svec& tids, int need_abstract = 0)
+		inline string get_threads_info_str(const svec& tids, bool need_abstract = false)
 		{
 			string tids_ = gezi::join(tids, ",");
-			string url;
-			//@FIXME
-			if (!need_abstract)
-			{
-				url = "http://service.tieba.baidu.com/service/post?method=mgetThread&format=json&need_abstract=0&forum_id=0&need_photo_pic=0&need_user_data=0&icon_size=0&need_forum_name=1&call_from=pc&thread_ids=[" + tids_ + "]";
-			}
-			else
-			{
-				url = "http://service.tieba.baidu.com/service/post?method=mgetThread&format=json&need_abstract=1&forum_id=0&need_photo_pic=0&need_user_data=0&icon_size=0&need_forum_name=1&call_from=pc&thread_ids=[" + tids_ + "]";
-			}
-		
+			return get_threads_info_str(tids_, need_abstract);
+		}
+
+		inline string get_threads_info_str(const vector<uint64>& tids, bool need_abstract = false)
+		{
+			return get_threads_info_str(convert(tids), need_abstract);
+		}
+
+		inline string get_thread_info_str(uint64 tid, bool need_abstract = false)
+		{
+			return get_threads_info_str(STR(tid), need_abstract);
+		}
+
+		//获取删帖信息
+		inline string get_delete_info_str(string pids)
+		{
+			string url = "http://service.tieba.baidu.com/service/post?method=getDelpostInfo&format=json&post_ids=[" + pids + "]";
 			return get_info_str(url);
-		}
-
-		inline bool get_post_info(uint64 pid, string& title, string& content)
-		{
-			Json::Reader reader;
-			Json::Value root;
-			string url = (format("http://service.tieba.baidu.com/service/post?method=getPostInfo&post_ids=a:1:{i:0;i:%1%;}&format=mcpackraw") % pid).str();
-			string jsonStr = get_info_str(url);
-			bool ret = reader.parse(jsonStr, root);
-			if (!ret)
-			{
-				LOG(WARNING) << "json parse fail";
-				return false;
-			}
-
-			try
-			{
-				auto& m = root["output"][0];
-				title = m["title"].asString();
-				content = m["content"].asString();
-			}
-			catch (...)
-			{
-				LOG(WARNING) << "get json value fail";
-				return false;
-			}
-			return true;
-		}
-
-		inline bool is_thread_deleted(uint64 tid)
-		{
-			Json::Reader reader;
-			Json::Value root;
-			string url = "http://service.tieba.baidu.com/service/post?method=getDelpostInfo&post_ids=[{%22thread_id%22:$tid$,%22post_id%22:19821229}]&format=json";
-			boost::replace_first(url, "$tid$", STR(tid));
-			string jsonStr = get_info_str(url);
-			bool ret = reader.parse(jsonStr, root);
-			if (!ret)
-			{
-				LOG(WARNING) << "json parse fail";
-				return false;
-			}
-
-			bool isThreadDeleted = false;
-			try
-			{
-				isThreadDeleted = root["output"]["delthread_res"].size() > 0;
-			}
-			catch (...)
-			{
-				LOG(WARNING) << "get json value fail";
-				return false;
-			}
-			return isThreadDeleted;
 		}
 
 		template<typename Vec>
@@ -152,7 +132,6 @@ namespace gezi {
 			catch (...)
 			{
 				LOG(WARNING) << "get json value fail";
-				return deletedThreads;
 			}
 			return deletedThreads;
 		}
@@ -217,6 +196,7 @@ namespace gezi {
 		{
 			Json::Reader reader;
 			Json::Value root;
+			//@TODO 改成使用&format=json这样写起来更方便 不需要%22这些
 			string url = "http://service.tieba.baidu.com/service/post?method=getDelpostInfo&post_ids=[{%22thread_id%22:$tid$,%22post_id%22:$pid$}]&format=json";
 			boost::replace_first(url, "$pid$", STR(pid));
 			boost::replace_first(url, "$tid$", STR(tid));
@@ -256,7 +236,7 @@ namespace gezi {
 		//	return get_info(url);
 		//}
 
-		//获取用户关注数目 粉丝数目
+		//获取用户关注数目 粉丝数目 @TODO 这个接口会被废弃 采用调用统一的用户信息接口?
 		inline string get_user_fans(uint64 uid)
 		{
 			string section = "tieba.user_fans";
@@ -291,7 +271,6 @@ namespace gezi {
 			return true;
 		}
 
-
 		inline bool get_user_fans(uint64 uid, int& follow_count, int& followed_count)
 		{
 			Json::Reader reader;
@@ -318,7 +297,12 @@ namespace gezi {
 			return true;
 		}
 
-
+		//获取整楼的数据
+		inline string get_full_posts_info_str(uint64 threadId, int resNum = 100, int offset = 0, int hasComment  =0, uint64 postId = 0)
+		{
+			string url = (format("http://service.tieba.baidu.com/service/post?method=getFullPostsByThreadId&format=json&thread_id=%ld&res_num=%d&offset=%d&has_comment=%d&post_id=%ld") % threadId % resNum % offset % hasComment % postId).str();
+			return get_info_str(url);
+		}
 	}  //----end of namespace tieba
 }  //----end of namespace gezi
 #endif  //----end of TIEBA_GET_INFO_H_

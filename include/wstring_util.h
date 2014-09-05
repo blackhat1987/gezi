@@ -57,7 +57,7 @@ inline string wstr_to_str(const wchar_t *pw, int len)
     int dlen = (len + 1) * 4;
     vector<char> pc(dlen, '\0');
 
-    wcstombs(&pc[0],pw,dlen); //if fail will return (size_t)-1  all return >= 0
+    wcstombs(&pc[0], pw, dlen); //if fail will return (size_t)-1  all return >= 0
 
     string val(&pc[0]);
 

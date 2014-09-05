@@ -6,6 +6,7 @@ WORKROOT('../../../../../')
 TOOLCHAIN_ROOT='../../../../../ps/se/toolchain'
 RELATIVE_PATH='./'
 
+GCC_LEVEL=3
 #是否使用本地的gcc 比如本地安装了gcc 4.8.2使用本地的可以直接使用生成的bin文件 如./main
 GCC_LOCAL=0
 print 'GCC_LOCAL: %d'%GCC_LOCAL 
@@ -53,7 +54,7 @@ CXX(GCC_BIN)
 CPPFLAGS('-D_GNU_SOURCE -D__STDC_LIMIT_MACROS -DVERSION=\\\"1.9.8.7\\\"')
 
 #编译参数设置
-COMMON_FLAGS = '-g -O0 -pipe -W -Wall -fPIC -DHAVE_NETINET_IN_H -Wno-unused-parameter -Wno-deprecated'
+COMMON_FLAGS = '-g -O%d -pipe -W -Wall -fPIC -DHAVE_NETINET_IN_H -Wno-unused-parameter -Wno-deprecated'%GCC_LEVEL  
 
 if GCC_HIGH  == 1:
 	GCC_FLAGS += '-std=c++11 -fpermissive -Wno-write-strings -Wno-literal-suffix -Wno-unused-local-typedefs'

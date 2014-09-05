@@ -286,15 +286,23 @@ TEST(sort_ref, func)
 	}
 }
 
+CachedFetcher<uint64, tieba::ThreadInfo, LruHashMap> _threadsFetcher2;
 TEST(lrumap, func)
 {
-	CachedFetcher<uint64, tieba::ThreadInfo, LruHashMap> threadsFetcher;
-	threadsFetcher.set_capacity(2);
-	vector<uint64> tids = { 3271207055, 3271195189, 3271162283, 3271167101, 3271241387, 3271207055 };
+	_threadsFetcher2.set_capacity(1024);
+	vector<uint64> tids = { 3271207055, 3271195189, 3271162283, 3271167101, 3271241387};
 	auto func = [](const vector<uint64>& tids) { return tieba::get_threads_info(tids, true); };
-	auto tidInfos = threadsFetcher.GetValues(tids, func);
+	auto tidInfos = _threadsFetcher2.GetValues(tids, func);
 	PrintVec2(tidInfos, title, content);
-	Pval(threadsFetcher.CacheSize());
+	Pval(_threadsFetcher2.CacheSize());
+}
+TEST(lrumap, perf)
+{
+	vector<uint64> tids = { 3271207055, 3271195189, 3271162283, 3271167101, 3271241387 };
+	auto func = [](const vector<uint64>& tids) { return tieba::get_threads_info(tids, true); };
+	auto tidInfos = _threadsFetcher2.GetValues(tids, func);
+	PrintVec2(tidInfos, title, content);
+	Pval(_threadsFetcher2.CacheSize());
 }
 int main(int argc, char *argv[])
 {

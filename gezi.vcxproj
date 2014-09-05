@@ -249,6 +249,12 @@
     <ClCompile Include="test\test_split.cc" />
     <ClCompile Include="test\test_string.cc" />
     <ClCompile Include="test\test_tieba_get_info.cc" />
+    <ClCompile Include="test\tieba\test_get_delete_info.cc" />
+    <ClCompile Include="test\tieba\test_get_full_posts_info.cc" />
+    <ClCompile Include="test\tieba\test_get_posts_info.cc" />
+    <ClCompile Include="test\tieba\test_get_threads_info.cc" />
+    <ClCompile Include="test\tieba\test_get_user_posts.cc" />
+    <ClCompile Include="test\tieba\test_threads_info.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl" />
