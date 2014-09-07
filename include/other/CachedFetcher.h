@@ -90,6 +90,35 @@ namespace gezi {
 			return values;
 		}
 
+		template<typename Func>
+		map<Key, Value> GetValuesMap(const vector<Key>& keys, Func func)
+		{
+			map<Key, Value> valuesMap;
+			vector<Key> fetchKeys;
+			for (const Key& key : keys)
+			{
+				auto iter = _map.find(key);
+				if (iter != _map.end())
+				{
+					valuesMap[key] = iter->second;
+				}
+				else
+				{
+					fetchKeys.push_back(key);
+				}
+			}
+			{ //func需要确保传回value数组temp长度和输入fetchKeys长度相同
+				map<Key, Value> tempMap = func(fetchKeys);
+				//func如果错误需要内部自己抛出异常 不进行后续动作
+				for (auto& item : tempMap)
+				{
+					_map[item->first] = tempMap[item->second];
+				}
+				merge(valuesMap, tempMap);
+			}
+			return valuesMap;
+		}
+
 		Map& GetMap()
 		{
 			return _map;

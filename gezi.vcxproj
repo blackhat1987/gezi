@@ -173,6 +173,12 @@
     <ClInclude Include="include\tieba\common_def.h" />
     <ClInclude Include="include\tieba\get_info.h" />
     <ClInclude Include="include\tieba\get_parsed_info.h" />
+    <ClInclude Include="include\tieba\info\delete_info.h" />
+    <ClInclude Include="include\tieba\info\forum_info.h" />
+    <ClInclude Include="include\tieba\info\post_info.h" />
+    <ClInclude Include="include\tieba\info\thread_info.h" />
+    <ClInclude Include="include\tieba\info\url_info.h" />
+    <ClInclude Include="include\tieba\info\user_info.h" />
     <ClInclude Include="include\tieba\info_def.h" />
     <ClInclude Include="include\tieba\JsonParser.h" />
     <ClInclude Include="include\tieba\uname_util.h" />
@@ -250,9 +256,11 @@
     <ClCompile Include="test\test_string.cc" />
     <ClCompile Include="test\test_tieba_get_info.cc" />
     <ClCompile Include="test\tieba\test_get_delete_info.cc" />
+    <ClCompile Include="test\tieba\test_get_forum_info.cc" />
     <ClCompile Include="test\tieba\test_get_full_posts_info.cc" />
     <ClCompile Include="test\tieba\test_get_posts_info.cc" />
     <ClCompile Include="test\tieba\test_get_threads_info.cc" />
+    <ClCompile Include="test\tieba\test_get_user_info.cc" />
     <ClCompile Include="test\tieba\test_get_user_posts.cc" />
     <ClCompile Include="test\tieba\test_threads_info.cc" />
   </ItemGroup>

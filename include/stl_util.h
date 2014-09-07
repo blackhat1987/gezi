@@ -289,8 +289,8 @@ namespace gezi {
 	}
 
 	//两个vector合并结果存储到第一个vector,注意第二个数组不再有效
-	template<typename T>
-	void merge(vector<T>& dest, vector<T>& src)
+	template<typename Container>
+	void merge(Container& dest, Container& src)
 	{
 		dest.insert(
 			dest.end(),

@@ -23,6 +23,30 @@
 
 using namespace std;
 
+class CurlString
+{
+public:
+	CurlString(char * str)
+		:_str(str)
+	{
+
+	}
+	~CurlString()
+	{
+		free();
+	}
+	char *str()
+	{
+		return _str;
+	}
+	void free()
+	{
+		curl_free(_str);
+	}
+private:
+	char * _str;
+};
+
 class CurlUtil
 {
 public:
@@ -30,7 +54,6 @@ public:
 	CurlUtil()
 	{
 		_curl = curl_easy_init();
-
 	}
 
 	~CurlUtil()
@@ -74,6 +97,11 @@ public:
 	char* easy_escape(const char * url)
 	{
 		return curl_easy_escape(_curl, url, 0);
+	}
+
+	CurlString escape(string url)
+	{
+		return CurlString(easy_escape(url.c_str()));
 	}
 
 	CURLcode post(const char* url, char* data, string& resStr)
@@ -154,7 +182,11 @@ private:
 
 };
 
-
+inline CurlString curl_escape(string url)
+{
+	CurlUtil curl;
+	return curl.escape(url);
+}
 #endif  
 
 /* vim: set expandtab ts=4 sw=4 sts=4 tw=100: */

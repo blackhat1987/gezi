@@ -402,6 +402,24 @@
     <ClInclude Include="include\other\CachedFetcher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\tieba\info\delete_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tieba\info\post_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tieba\info\thread_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tieba\info\user_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tieba\info\forum_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tieba\info\url_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -581,7 +599,10 @@
     <ClCompile Include="test\tieba\test_get_delete_info.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test\test_seralize_xml.cc">
+    <ClCompile Include="test\tieba\test_get_user_info.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\tieba\test_get_forum_info.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

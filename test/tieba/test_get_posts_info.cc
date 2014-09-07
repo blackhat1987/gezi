@@ -41,6 +41,7 @@ TEST(get_posts_info, func)
 	auto info = infos.back();
 	Pval5(info.pid, info.forumName, info.uname, info.title, info.content);
 	Pval5(info.fid, info.tid, info.uid, info.ip, info.time);
+	PrintVec2(infos, title, content);
 }
 
 int main(int argc, char *argv[])

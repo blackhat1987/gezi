@@ -20,7 +20,7 @@
 
 using namespace std;
 using namespace gezi;
-DEFINE_int32(vl, 0, "vlog level");
+DEFINE_int32(vl, 5, "vlog level");
 DEFINE_string(i, "", "input"); 
 DEFINE_int32(res_num, 10, "return num");
 DEFINE_string(o, "", "output");
@@ -36,9 +36,9 @@ TEST(get_full_posts_info, func)
 	tieba::FullPostsInfo info = tieba::get_full_posts_info(3273051494, FLAGS_res_num);
 	Pval5(info.tid, info.title, info.fid, info.forumName, info.isDeleted);
 	Pval(info.posts.size());
-	for (auto& post : info.posts)
+	for (size_t i = 0; i < info.size(); i++)
 	{
-		Pval2(post.uname, post.content);
+		Pval2(info.unames[i], info.contents[i]);
 	}
 }
 
