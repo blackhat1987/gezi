@@ -37,10 +37,11 @@ namespace gezi {
 		inline map<string, UrlInfo> get_urls_info_map(const vector<string>& urls)
 		{
 			map<string, UrlInfo> infosMap;
+		
 			string url = "http://service.tieba.baidu.com/service/urlfeature?method=getFeature&format=json&req=";
 			url += get_url_info_params_(urls);
-
 			string jsonStr = get_info_str(url);
+			
 			PVAL(jsonStr);
 			Json::Reader reader;
 			Json::Value root;

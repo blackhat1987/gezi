@@ -55,13 +55,14 @@ namespace gezi {
 			info.fid = m["forum_id"].asUInt();
 			info.forumName = m["word"].asString();
 			info.ip = m["ip"].asUInt64();
-			//info.tid = m["thread_id"].asUInt64(); //Type is not convertible to UInt64 @TODO 按说应该支持直接转吧。。
+			//info.tid = m["thread_id"].asUInt64(); //Type is not convertible to UInt64 json里面是“”string类型
 			info.tid = UINT64(m["thread_id"].asString());
+			info.uid = m["user_id"].asUInt();
 			info.uname = m["username"].asString();
 			info.time = m["now_time"].asUInt64();
 		}
 
-		//@TODO 贴吧这个接口的has_ext获取lbs信息 省份+城市  和 或者删帖信息等等 怎么输入？
+		//没有lbs等信息
 		inline PostInfo get_post_info(uint64 pid)
 		{
 			PostInfo info;

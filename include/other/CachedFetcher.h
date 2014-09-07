@@ -59,7 +59,8 @@ namespace gezi {
 		}
 
 		//类似sort 采用template写法　template<typename Fun>  Func func 也完全ok似乎 类似sort也可以最后是普通函数
-		//@TODO 到底哪种写法更好? 效率一样？
+		//@TODO 到底哪种写法更好? 效率一样？ 
+		//注意返回结果可能少于keys另外顺序完全不保证
 		//vector<Value> GetValues(const vector<Key>& keys, std::function<vector<Value>(const vector<Key>&)> func)
 		template<typename Func>
 		vector<Value> GetValues(const vector<Key>& keys, Func func)

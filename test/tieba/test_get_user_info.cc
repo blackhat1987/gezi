@@ -21,7 +21,6 @@ using namespace std;
 using namespace gezi;
 using namespace gezi::tieba;
 DEFINE_int32(vl, 5, "vlog level");
-DEFINE_int32(n, 25, "vlog level");
 DEFINE_string(i, "", "input");
 DEFINE_string(o, "", "output");
 DEFINE_string(type, "simple", "");
@@ -76,16 +75,6 @@ TEST(get_users_info, func)
 void run()
 {
 	UserPostsInfo info = get_user_posts_info(1299045938);
-	Pval2(info.uid, info.numPosts);
-	for (size_t i = 0; i < info.size(); i++)
-	{
-		Pval5(info.fnames[i], info.titles[i], info.contents[i], info.pids[i], info.tids[i]);
-	}
-}
-
-TEST(get_user_posts_info, func)
-{
-	UserPostsInfo info = get_user_posts_info(1299045938, FLAGS_n);
 	Pval2(info.uid, info.numPosts);
 	for (size_t i = 0; i < info.size(); i++)
 	{

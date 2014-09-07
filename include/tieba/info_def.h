@@ -19,12 +19,12 @@ namespace gezi {
 
 		struct PostInfo
 		{
-			uint64 pid = 0; //@TODO 基础代码不再使用缩写
-			uint64 tid;
-			uint64 uid;
-			uint fid; //forumId
-			uint64 ip;
-			uint64 time;
+			uint64 pid = 0; //@TODO 基础代码不再使用缩写 postId
+			uint64 tid = 0; //theadId
+			uint uid = 0; //userId
+			uint fid = 0; //forumId
+			uint64 ip = 0;
+			uint64 time = 0;
 			string title;
 			string content;
 			string uname;
