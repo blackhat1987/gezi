@@ -22,7 +22,7 @@
 
 using namespace std;
 using namespace gezi;
-DEFINE_int32(vl, 0, "vlog level");
+DEFINE_int32(vl, 5, "vlog level");
 DEFINE_string(i, "", "input");
 DEFINE_string(o, "", "output");
 DEFINE_string(type, "simple", "");

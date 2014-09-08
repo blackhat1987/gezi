@@ -21,6 +21,15 @@ cd ..
 cd PythonWrapper
 gen-header-all.py 
 cd .. 
+cd tieba 
+gen-header-all.py
+cd info 
+gen-header-all.py
+cd ..
+cd urate 
+gen-header-all.py 
+cd .. 
+cd ..
 popd
 sh gen-py.sh $1
 comake2 -P

@@ -2049,6 +2049,17 @@ bp::def(
 
 }
 
+{ //::gezi::erase_from
+
+typedef ::std::string ( *erase_from_function_type )( ::std::string,::std::string );
+
+bp::def(
+"erase_from"
+, erase_from_function_type( &::gezi::erase_from )
+, ( bp::arg("content"), bp::arg("part") ) );
+
+}
+
 { //::gezi::extract_chinese
 
 typedef ::std::string ( *extract_chinese_function_type )( ::std::string );
@@ -2082,6 +2093,17 @@ bp::def(
 
 }
 
+{ //::gezi::first
+
+typedef ::std::string ( *first_function_type )( ::std::string,int );
+
+bp::def(
+"first"
+, first_function_type( &::gezi::first )
+, ( bp::arg("input"), bp::arg("length") ) );
+
+}
+
 { //::gezi::gbk_substr
 
 typedef ::std::string ( *gbk_substr_function_type )( ::std::string,int,::size_t );
@@ -2090,6 +2112,39 @@ bp::def(
 "gbk_substr"
 , gbk_substr_function_type( &::gezi::gbk_substr )
 , ( bp::arg("input"), bp::arg("start_"), bp::arg("len")=(long unsigned int)(std::basic_string<char, std::char_traits<char>, std::allocator<char> >::npos) ) );
+
+}
+
+{ //::gezi::get_ats
+
+typedef ::std::vector< std::string > ( *get_ats_function_type )( ::std::string );
+
+bp::def(
+"get_ats"
+, get_ats_function_type( &::gezi::get_ats )
+, ( bp::arg("src") ) );
+
+}
+
+{ //::gezi::get_nums
+
+typedef ::std::vector< std::string > ( *get_nums_function_type )( ::std::string );
+
+bp::def(
+"get_nums"
+, get_nums_function_type( &::gezi::get_nums )
+, ( bp::arg("src") ) );
+
+}
+
+{ //::gezi::get_pics
+
+typedef ::std::vector< std::string > ( *get_pics_function_type )( ::std::string );
+
+bp::def(
+"get_pics"
+, get_pics_function_type( &::gezi::get_pics )
+, ( bp::arg("src") ) );
 
 }
 
@@ -2123,6 +2178,17 @@ bp::def(
 "get_skipn_bigram"
 , get_skipn_bigram_function_type( &::gezi::get_skipn_bigram )
 , ( bp::arg("l"), bp::arg("li"), bp::arg("n"), bp::arg("sep")="$#$" ) );
+
+}
+
+{ //::gezi::get_urls
+
+typedef ::std::vector< std::string > ( *get_urls_function_type )( ::std::string );
+
+bp::def(
+"get_urls"
+, get_urls_function_type( &::gezi::get_urls )
+, ( bp::arg("src") ) );
 
 }
 
@@ -2321,6 +2387,28 @@ bp::def(
 "is_thread"
 , is_thread_function_type( &::gezi::is_thread )
 , ( bp::arg("title") ) );
+
+}
+
+{ //::gezi::json_empty
+
+typedef bool ( *json_empty_function_type )( ::std::string );
+
+bp::def(
+"json_empty"
+, json_empty_function_type( &::gezi::json_empty )
+, ( bp::arg("value") ) );
+
+}
+
+{ //::gezi::last
+
+typedef ::std::string ( *last_function_type )( ::std::string,int );
+
+bp::def(
+"last"
+, last_function_type( &::gezi::last )
+, ( bp::arg("input"), bp::arg("length") ) );
 
 }
 
@@ -3025,6 +3113,17 @@ bp::def(
 "str_replace_all"
 , str_replace_all_function_type( &::gezi::str_replace_all )
 , ( bp::arg("tstr"), bp::arg("old_value"), bp::arg("new_value") ) );
+
+}
+
+{ //::gezi::strip_from
+
+typedef ::std::string ( *strip_from_function_type )( ::std::string );
+
+bp::def(
+"strip_from"
+, strip_from_function_type( &::gezi::strip_from )
+, ( bp::arg("src") ) );
 
 }
 

@@ -46,6 +46,17 @@ TEST(get_user_posts_info_until, func)
 	{
 		Pval6(to_time_str(info.times[i]), info.pids[i], info.fnames[i], info.titles[i], info.contents[i], info.tids[i]);
 	}
+	serialize::save_xml(info, "./test.data/user_posts.xml");
+	{
+		VLOG(0) << "Loading info from disk";
+		UserPostsInfo info;
+		serialize::load_xml("./test.data/user_posts.xml", info);
+		Pval2(info.uid, info.numPosts);
+		for (size_t i = 0; i < info.size(); i++)
+		{
+			Pval6(to_time_str(info.times[i]), info.pids[i], info.fnames[i], info.titles[i], info.contents[i], info.tids[i]);
+		}
+	}
 }
 
 int main(int argc, char *argv[])

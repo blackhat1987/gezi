@@ -15,7 +15,7 @@ for line in open(sys.argv[1]):
 	org_line = line
 	if (line.startswith('/') or line.startswith('#') or line.startswith('*')):
 		print org_line
-		continue
+		continue 
 	end_idx = line.rfind(';')
 	if (end_idx == -1):
 		print org_line
