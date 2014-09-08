@@ -48,6 +48,8 @@ namespace std {
 	using boost::shared_ptr;
 	using boost::function;
 	using boost::thread;
+				using boost::bind;
+				using boost::cref;
 }
 #endif
 

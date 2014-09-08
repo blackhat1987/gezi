@@ -124,6 +124,8 @@ namespace gezi {
 			values.swap(values_);
 		}
 
+		//这种的问题是 外面不能够传递 Vector()临时变量进来，传临时必须只读 const Vector& 
+		//所以需要&& 这样可以传临时Vector()进来 并且转为内部使用的
 		void Swap(Vector& other)
 		{
 			length = other.length;

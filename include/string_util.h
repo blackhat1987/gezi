@@ -680,6 +680,11 @@ namespace gezi {
 			get_skipn_bigram(l, li, skip, sep);
 		}
 	}
+
+	inline bool json_empty(string value)
+	{
+		return value.empty() || value == "null";
+	}
 }
 
 #endif  //----end of STRING_UTIL_H_

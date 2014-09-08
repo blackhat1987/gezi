@@ -14,13 +14,25 @@
 #ifndef RANDOM_UTIL_H_
 #define RANDOM_UTIL_H_
 
+#if __GNUC__ > 3
 #include <random>       // std::default_random_engine
-#include <chrono>       // std::chrono::system_clock
+//#include <chrono>       // std::chrono::system_clock
+#else //for python wrapper most since gccxml does not support gcc4
+#include <boost/random.hpp>
+//#include <boost/chrono.hpp>
+namespace std {
+	using boost::random::uniform_int_distribution;
+	using boost::random::uniform_real_distribution;
+	typedef boost::random::mt19937 default_random_engine;
+	//using boost::chrono::system_clock;
+}
+#endif
 #include "common_def.h"
 namespace gezi {
 
 	inline unsigned random_seed()
 	{
+		//#include <chrono>       // std::chrono::system_clock
 		//return std::chrono::system_clock::now().time_since_epoch().count();
 		return std::random_device()();
 	}
@@ -209,6 +221,8 @@ namespace gezi {
 		shuffle(vec.begin(), vec.end(), random_engine(randSeed));
 	}
 
+#ifndef GCCXML  //@TODO GCC3不支持move语义 暂时脚本也不支持&&转成& 以及 处理方式是&&直接去掉 这种对class内部&& 构造暂时ok 但是对于普通函数的&&需要不同的处理 目前看最好是转成& 失掉临时变量的灵活性
+
 	//@FIXME 为什么不去优先匹配上面的 却匹配下面的模板报错了呢。。shuffle(vec, FLAGS_seed); ???
 	//是比较严格 需要 shuffle(vec, (unsigned)FLAGS_seed);
 	template<typename Vec, typename Rng>
@@ -224,7 +238,7 @@ namespace gezi {
 	}*/
 
 	template<typename RandomAccessIterator, typename RandomNumberEngine>
-	inline void sample(RandomAccessIterator first, RandomAccessIterator last, size_t sample_num, RandomNumberEngine&& rng)
+	void sample(RandomAccessIterator first, RandomAccessIterator last, size_t sample_num, RandomNumberEngine&& rng)
 	{
 		if (first == last)
 			return;
@@ -240,7 +254,7 @@ namespace gezi {
 	}
 
 	template<typename RandomAccessIterator, typename RandomNumberEngine>
-	inline void sample_reverse(RandomAccessIterator first, RandomAccessIterator last, size_t sample_num, RandomNumberEngine&& rng)
+	void sample_reverse(RandomAccessIterator first, RandomAccessIterator last, size_t sample_num, RandomNumberEngine&& rng)
 	{
 		if (first == last)
 			return;
@@ -258,7 +272,7 @@ namespace gezi {
 
 	//just for test
 	template<typename RandomAccessIterator, typename RandomNumberEngine>
-	inline void shuffle2(RandomAccessIterator first, RandomAccessIterator last, RandomNumberEngine&& rng)
+	void shuffle2(RandomAccessIterator first, RandomAccessIterator last, RandomNumberEngine&& rng)
 	{
 		if (first == last)
 			return;
@@ -301,6 +315,7 @@ namespace gezi {
 	//{
 	//	sample_reverse(vec.begin(), vec.end(), maxNum, rng);
 	//}
+#endif //GCCXML
 }  //----end of namespace gezi
 
 #endif  //----end of RANDOM_UTIL_H_
