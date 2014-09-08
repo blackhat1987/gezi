@@ -14,6 +14,8 @@
 #ifndef TIEBA_INFO_DEF_H_
 #define TIEBA_INFO_DEF_H_
 
+#include "common_def.h"
+
 namespace gezi {
 	namespace tieba {
 
@@ -33,6 +35,22 @@ namespace gezi {
 			bool IsThread()
 			{
 				return !startswith(title, "回复：");
+			}
+
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & BOOST_SERIALIZATION_NVP(pid);
+				ar & BOOST_SERIALIZATION_NVP(tid);
+				ar & BOOST_SERIALIZATION_NVP(uid);
+				ar & BOOST_SERIALIZATION_NVP(fid);
+				ar & BOOST_SERIALIZATION_NVP(ip);
+				ar & BOOST_SERIALIZATION_NVP(time);
+				ar & BOOST_SERIALIZATION_NVP(title);
+				ar & BOOST_SERIALIZATION_NVP(content);
+				ar & BOOST_SERIALIZATION_NVP(uname);
+				ar & BOOST_SERIALIZATION_NVP(forumName);
 			}
 		};
 
@@ -69,9 +87,28 @@ namespace gezi {
 			vector<uint64> ips;
 			vector<bool> isThreads;
 			vector<bool> isPostsDeleted;
+			
 			size_t size()
 			{
 				return pids.size();
+			}
+
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & BOOST_SERIALIZATION_NVP(uid);
+				ar & BOOST_SERIALIZATION_NVP(numPosts);
+				ar & BOOST_SERIALIZATION_NVP(pids);
+				ar & BOOST_SERIALIZATION_NVP(tids);
+				ar & BOOST_SERIALIZATION_NVP(times);
+				ar & BOOST_SERIALIZATION_NVP(fids);
+				ar & BOOST_SERIALIZATION_NVP(fnames);
+				ar & BOOST_SERIALIZATION_NVP(titles);
+				ar & BOOST_SERIALIZATION_NVP(contents);
+				ar & BOOST_SERIALIZATION_NVP(ips);
+				ar & BOOST_SERIALIZATION_NVP(isThreads);
+				ar & BOOST_SERIALIZATION_NVP(isPostsDeleted);
 			}
 		};
 
@@ -93,6 +130,24 @@ namespace gezi {
 			size_t size()
 			{
 				return pids.size();
+			}
+
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & BOOST_SERIALIZATION_NVP(tid);
+				ar & BOOST_SERIALIZATION_NVP(fid);
+				ar & BOOST_SERIALIZATION_NVP(title);
+				ar & BOOST_SERIALIZATION_NVP(forumName);
+				ar & BOOST_SERIALIZATION_NVP(isDeleted);
+				ar & BOOST_SERIALIZATION_NVP(numTotalPosts);
+				ar & BOOST_SERIALIZATION_NVP(pids);
+				ar & BOOST_SERIALIZATION_NVP(uids);
+				ar & BOOST_SERIALIZATION_NVP(ips);
+				ar & BOOST_SERIALIZATION_NVP(times);
+				ar & BOOST_SERIALIZATION_NVP(unames);
+				ar & BOOST_SERIALIZATION_NVP(contents);
 			}
 		};
 
@@ -122,15 +177,46 @@ namespace gezi {
 			int userStatus = 0; //0, 1不允许被关注
 			string userTag;
 			string userDetail;
+
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & BOOST_SERIALIZATION_NVP(uid);
+				ar & BOOST_SERIALIZATION_NVP(uname);
+				ar & BOOST_SERIALIZATION_NVP(regTime);
+				ar & BOOST_SERIALIZATION_NVP(sex);
+				ar & BOOST_SERIALIZATION_NVP(followCount);
+				ar & BOOST_SERIALIZATION_NVP(followedCount);
+				ar & BOOST_SERIALIZATION_NVP(email);
+				ar & BOOST_SERIALIZATION_NVP(mobile);
+				ar & BOOST_SERIALIZATION_NVP(birthYear);
+				ar & BOOST_SERIALIZATION_NVP(isGroupOwner);
+				ar & BOOST_SERIALIZATION_NVP(userType);
+				ar & BOOST_SERIALIZATION_NVP(userStatus);
+				ar & BOOST_SERIALIZATION_NVP(userTag);
+				ar & BOOST_SERIALIZATION_NVP(userDetail);
+			}
 		};
 
 		struct UserPostNumInfo
 		{
 			uint uid = 0;
-			int numPosts;
-			int numThreads;
-			int numGoods;
-			int numPhotos;
+			int numPosts = 0;
+			int numThreads = 0;
+			int numGoods = 0;
+			int numPhotos = 0;
+
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & BOOST_SERIALIZATION_NVP(uid);
+				ar & BOOST_SERIALIZATION_NVP(numPosts);
+				ar & BOOST_SERIALIZATION_NVP(numThreads);
+				ar & BOOST_SERIALIZATION_NVP(numGoods);
+				ar & BOOST_SERIALIZATION_NVP(numPhotos);
+			}
 		};
 
 		//用户关注吧的信息 可能有用的特征
@@ -144,6 +230,17 @@ namespace gezi {
 				int level;
 				int curScore;
 				int leftScore;
+
+				friend class boost::serialization::access;
+				template<class Archive>
+				void serialize(Archive &ar, const unsigned int version)
+				{
+					ar & BOOST_SERIALIZATION_NVP(fname);
+					ar & BOOST_SERIALIZATION_NVP(time);
+					ar & BOOST_SERIALIZATION_NVP(level);
+					ar & BOOST_SERIALIZATION_NVP(curScore);
+					ar & BOOST_SERIALIZATION_NVP(leftScore);
+				}
 			};
 
 			//获取在当前吧下的等级
@@ -157,13 +254,26 @@ namespace gezi {
 				return 0;
 			}
 
-			uint uid;
+			uint uid = 0;
 			int maxLevel = 0;
 			int numLikes = 0;
 			int sumLevels = 0;
 			map<uint, Node> infoMap;
 			vector<string> fnames;
 			vector<int> levels;
+
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & BOOST_SERIALIZATION_NVP(uid);
+				ar & BOOST_SERIALIZATION_NVP(maxLevel);
+				ar & BOOST_SERIALIZATION_NVP(numLikes);
+				ar & BOOST_SERIALIZATION_NVP(sumLevels);
+				ar & BOOST_SERIALIZATION_NVP(infoMap);
+				ar & BOOST_SERIALIZATION_NVP(fnames);
+				ar & BOOST_SERIALIZATION_NVP(levels);
+			}
 		};
 
 		struct ThreadInfo
@@ -180,6 +290,24 @@ namespace gezi {
 			string content;
 			bool isDeleted = false;
 			bool hasMedia = false; //pic,vedio 注意Url不算
+
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & BOOST_SERIALIZATION_NVP(tid);
+				ar & BOOST_SERIALIZATION_NVP(uid);
+				ar & BOOST_SERIALIZATION_NVP(pid);
+				ar & BOOST_SERIALIZATION_NVP(fid);
+				ar & BOOST_SERIALIZATION_NVP(forumName);
+				ar & BOOST_SERIALIZATION_NVP(time);
+				ar & BOOST_SERIALIZATION_NVP(ip);
+				ar & BOOST_SERIALIZATION_NVP(address);
+				ar & BOOST_SERIALIZATION_NVP(title);
+				ar & BOOST_SERIALIZATION_NVP(content);
+				ar & BOOST_SERIALIZATION_NVP(isDeleted);
+				ar & BOOST_SERIALIZATION_NVP(hasMedia);
+			}
 		};
 
 		struct DeleteInfo
@@ -190,6 +318,18 @@ namespace gezi {
 			string monitorType; //17007等 吧务删除是0
 			uint64 opTime = 0;
 			bool isDeleted = false;
+
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & BOOST_SERIALIZATION_NVP(tid);
+				ar & BOOST_SERIALIZATION_NVP(pid);
+				ar & BOOST_SERIALIZATION_NVP(opUid);
+				ar & BOOST_SERIALIZATION_NVP(monitorType);
+				ar & BOOST_SERIALIZATION_NVP(opTime);
+				ar & BOOST_SERIALIZATION_NVP(isDeleted);
+			}
 		};
 
 		//forum_dir      output{            //输出数据
@@ -204,6 +344,17 @@ namespace gezi {
 			uint hotValue;
 			string level1Name;
 			string level2Name;
+
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & BOOST_SERIALIZATION_NVP(fid);
+				ar & BOOST_SERIALIZATION_NVP(rank);
+				ar & BOOST_SERIALIZATION_NVP(hotValue);
+				ar & BOOST_SERIALIZATION_NVP(level1Name);
+				ar & BOOST_SERIALIZATION_NVP(level2Name);
+			}
 		};
 
 		struct UrlInfo
@@ -213,9 +364,20 @@ namespace gezi {
 			bool isJump = false;
 			float jumRank = 0.0;
 			string content;
+
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & BOOST_SERIALIZATION_NVP(url);
+				ar & BOOST_SERIALIZATION_NVP(rank);
+				ar & BOOST_SERIALIZATION_NVP(isJump);
+				ar & BOOST_SERIALIZATION_NVP(jumRank);
+				ar & BOOST_SERIALIZATION_NVP(content);
+			}
 		};
 
-		const int kMaxRequestCount = 100;
+		static const int kMaxRequestCount = 100;
 	}  //----end of namespace tieba
 }  //----end of namespace gezi
 
