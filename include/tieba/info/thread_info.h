@@ -68,19 +68,19 @@ namespace gezi {
 						auto& jsonInfo = m[*iter];
 						ThreadInfo node;
 						node.title = jsonInfo["title"].asString();
-						node.uid = jsonInfo["user_id"].asUInt64();
+						node.userId = jsonInfo["user_id"].asUInt64();
 						node.ip = jsonInfo["user_ip"].asUInt64();
-						node.fid = jsonInfo["forum_id"].asUInt64();
-						node.pid = jsonInfo["first_post_id"].asUInt64();
+						node.forumId = jsonInfo["forum_id"].asUInt64();
+						node.postId = jsonInfo["first_post_id"].asUInt64();
 						node.isDeleted = jsonInfo["is_deleted"].asBool();
-						node.time = jsonInfo["last_modified_time"].asUInt64();
+						node.createTime = jsonInfo["last_modified_time"].asUInt64();
 						node.forumName = jsonInfo["forum_name"].asString();
 						if (need_abstract)
 						{
 							node.content = jsonInfo["abstract"].asString();
 							node.hasMedia = !jsonInfo["media"].empty();
 						}
-						node.tid = UINT64(*iter);
+						node.threadId = UINT64(*iter);
 						resultVec.emplace_back(node);
 					}
 				}
@@ -130,20 +130,20 @@ namespace gezi {
 						auto& jsonInfo = m[*iter];
 						ThreadInfo node;
 						node.title = jsonInfo["title"].asString();
-						node.uid = jsonInfo["user_id"].asUInt64();
+						node.userId = jsonInfo["user_id"].asUInt64();
 						node.ip = jsonInfo["user_ip"].asUInt64();
-						node.fid = jsonInfo["forum_id"].asUInt64();
-						node.pid = jsonInfo["first_post_id"].asUInt64();
+						node.forumId = jsonInfo["forum_id"].asUInt64();
+						node.postId = jsonInfo["first_post_id"].asUInt64();
 						node.isDeleted = jsonInfo["is_deleted"].asBool();
-						node.time = jsonInfo["last_modified_time"].asUInt64();
+						node.createTime = jsonInfo["last_modified_time"].asUInt64();
 						node.forumName = jsonInfo["forum_name"].asString();
 						if (need_abstract)
 						{
 							node.content = jsonInfo["abstract"].asString();
 							node.hasMedia = !jsonInfo["media"].empty();
 						}
-						node.tid = UINT64(*iter);
-						threadsInfoMap[node.tid] = node;
+						node.threadId = UINT64(*iter);
+						threadsInfoMap[node.threadId] = node;
 					}
 				}
 				catch (...)
@@ -184,14 +184,14 @@ namespace gezi {
 			{
 				auto& m = root["output"]["output"][0];
 				info.isDeleted = m["is_thread_deleted"].asBool();
-				info.numTotalPosts = m["total_post_num"].asInt();
+				info.numPosts = m["total_post_num"].asInt();
 				{
 					int i = 0;
 					for (auto& post : m["post_infos"])
 					{
 						if (i == 0)
 						{
-							info.fid = post["forum_id"].asUInt();
+							info.forumId = post["forum_id"].asUInt();
 							info.forumName = post["word"].asString();
 							info.title = post["title"].asString();
 						}
@@ -202,7 +202,7 @@ namespace gezi {
 						i++;
 					}
 				}
-				info.tid = threadId; //标记数据读取成功了
+				info.threadId = threadId; //标记数据读取成功了
 			}
 			catch (...)
 			{

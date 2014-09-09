@@ -13,7 +13,8 @@
 
 #ifndef TIEBA_INFO_FORUM_INFO_H_
 #define TIEBA_INFO_FORUM_INFO_H_
-
+#include "tieba/get_info.h"
+#include "tieba/info_def.h"
 namespace gezi {
 	namespace tieba {
 

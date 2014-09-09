@@ -179,9 +179,13 @@
     <ClInclude Include="include\tieba\info\thread_info.h" />
     <ClInclude Include="include\tieba\info\url_info.h" />
     <ClInclude Include="include\tieba\info\user_info.h" />
+    <ClInclude Include="include\tieba\info\user_posts_info.h" />
     <ClInclude Include="include\tieba\info_def.h" />
     <ClInclude Include="include\tieba\JsonParser.h" />
+    <ClInclude Include="include\tieba\tieba_util.h" />
     <ClInclude Include="include\tieba\uname_util.h" />
+    <ClInclude Include="include\tieba\urate\get_urate_info.h" />
+    <ClInclude Include="include\tieba\urate\urate_info.h" />
     <ClInclude Include="include\tieba\util.h" />
     <ClInclude Include="include\time_util.h" />
     <ClInclude Include="include\tools\content_process.h" />
@@ -190,6 +194,7 @@
     <ClInclude Include="include\tools\pinyin\IPYFactory.h" />
     <ClInclude Include="include\tools\pinyin\IPYNotation.h" />
     <ClInclude Include="include\tools\pinyin\Pinyin.h" />
+    <ClInclude Include="include\tools\redis\RedisClient.h" />
     <ClInclude Include="include\tools\uname_util.h" />
     <ClInclude Include="include\undef_convert.h" />
     <ClInclude Include="include\unique_add_and_copy.h" />
@@ -223,6 +228,7 @@
     <ClCompile Include="test\linq\test.cc" />
     <ClCompile Include="test\openmp\hello.cc" />
     <ClCompile Include="test\openmp\test.cc" />
+    <ClCompile Include="test\redis\test_redis_client.cc" />
     <ClCompile Include="test\test_bind.cc" />
     <ClCompile Include="test\test_binfinder.cc" />
     <ClCompile Include="test\test_bins.cc" />
@@ -264,6 +270,7 @@
     <ClCompile Include="test\tieba\test_get_user_info.cc" />
     <ClCompile Include="test\tieba\test_get_user_posts.cc" />
     <ClCompile Include="test\tieba\test_threads_info.cc" />
+    <ClCompile Include="test\tieba\test_uname.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl" />

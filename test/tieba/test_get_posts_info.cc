@@ -32,13 +32,13 @@ TEST(get_post_info, func)
 {
 	{
 		tieba::PostInfo info = tieba::get_post_info(54648048128);
-		Pval5(info.pid, info.forumName, info.uname, info.title, info.content);
-		Pval5(info.fid, info.tid, info.uid, info.ip, info.time);
+		Pval5(info.postId, info.forumName, info.userName, info.title, info.content);
+		Pval5(info.forumId, info.threadId, info.userId, info.ip, info.createTime);
 	}
 	{
 	tieba::PostInfo info = tieba::get_post_info(57037402014);
-	Pval5(info.pid, info.forumName, info.uname, info.title, info.content);
-	Pval5(info.fid, info.tid, info.uid, info.ip, info.time);
+	Pval5(info.postId, info.forumName, info.userName, info.title, info.content);
+	Pval5(info.forumId, info.threadId, info.userId, info.ip, info.createTime);
 	}
 }
 

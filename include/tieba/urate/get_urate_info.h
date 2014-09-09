@@ -22,7 +22,7 @@ namespace tieba {
 	{
 		UrateInfo urateInfo;
 		PostInfo postInfo = get_post_info(pid);
-		uint uid = postInfo.uid;
+		uint uid = postInfo.userId;
 		urateInfo.postsInfo = get_user_posts_info_until(postInfo);
 		urateInfo.userInfo = get_user_info(uid);
 		urateInfo.userLikeForumInfo = get_user_like_forum_info(uid);

@@ -30,7 +30,7 @@ DEFINE_string(type, "simple", "");
 TEST(get_user_posts_info, func)
 {
 	UserPostsInfo info = get_user_posts_info(1299045938, FLAGS_n);
-	Pval2(info.uid, info.numPosts);
+	Pval2(info.userId, info.numPosts);
 	for (size_t i = 0; i < info.size(); i++)
 	{
 		Pval5(info.fnames[i], info.titles[i], info.contents[i], info.pids[i], info.tids[i]);
@@ -41,7 +41,7 @@ TEST(get_user_posts_info, func)
 TEST(get_user_posts_info_until, func)
 {
 	UserPostsInfo info = get_user_posts_info_until(57037402014, FLAGS_n);
-	Pval2(info.uid, info.numPosts);
+	Pval2(info.userId, info.numPosts);
 	for (size_t i = 0; i < info.size(); i++)
 	{
 		Pval6(to_time_str(info.times[i]), info.pids[i], info.fnames[i], info.titles[i], info.contents[i], info.tids[i]);
@@ -51,7 +51,7 @@ TEST(get_user_posts_info_until, func)
 		VLOG(0) << "Loading info from disk";
 		UserPostsInfo info;
 		serialize::load_xml("./test.data/user_posts.xml", info);
-		Pval2(info.uid, info.numPosts);
+		Pval2(info.userId, info.numPosts);
 		for (size_t i = 0; i < info.size(); i++)
 		{
 			Pval6(to_time_str(info.times[i]), info.pids[i], info.fnames[i], info.titles[i], info.contents[i], info.tids[i]);

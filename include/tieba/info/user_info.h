@@ -88,7 +88,7 @@ namespace gezi {
 				{
 					auto& jsonInfo = m[*iter];
 					UserLikeForumInfo::Node node;
-					node.fname = jsonInfo["forum_name"].asString();
+					node.forumName = jsonInfo["forum_name"].asString();
 					node.level = jsonInfo["level_id"].asInt();
 					node.time = jsonInfo["in_time"].asUInt64();
 					node.curScore = jsonInfo["cur_score"].asInt();
@@ -99,7 +99,7 @@ namespace gezi {
 					}
 					info.sumLevels += node.level;
 					info.infoMap[UINT(*iter)] = node;
-					info.fnames.push_back(node.fname);
+					info.forumNames.push_back(node.forumName);
 					info.levels.push_back(node.level);
 				}
 				info.uid = uid;
@@ -113,8 +113,8 @@ namespace gezi {
 
 		void parse_user_info_(const Json::Value& m, UserInfo& info, bool needFollowInfo, bool needPassInfo)
 		{
-			info.uname = m["user_name"].asString();
-			info.sex = m["user_sex"].asInt();
+			info.userName = m["user_name"].asString();
+			info.userSex = m["user_sex"].asInt();
 			info.userType = m["user_type"].asInt();
 			info.userStatus = m["user_status"].asInt();
 			info.isGroupOwner = INT(m["is_group_owner"].asString());
@@ -133,7 +133,7 @@ namespace gezi {
 				info.userDetail = puserInfo["userdetail"].asString();
 				info.userTag = puserInfo["taginfo"].asString();
 			}
-			info.uid = m["user_id"].asUInt();
+			info.userId = m["user_id"].asUInt();
 		}
 
 		inline UserInfo get_user_info(uint uid, bool needFollowInfo = true, bool needPassInfo = true)

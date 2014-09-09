@@ -108,6 +108,7 @@ TEST(extractor, func)
 	mgr.extract(fe);
 
 	Pval(fe.str());
+	Pval(fe.Str());
 	Pvec(fe.Values());
 	Pval(fe.Length());
 	Pval(fe.IsDense());

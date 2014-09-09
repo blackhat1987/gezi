@@ -14,22 +14,24 @@
 #ifndef TIEBA_INFO_DEF_H_
 #define TIEBA_INFO_DEF_H_
 
-#include "common_def.h"
+#include "../common_def.h"
+#include "serialize_util.h"
+#include "common_util.h"
 
 namespace gezi {
 	namespace tieba {
 
 		struct PostInfo
 		{
-			uint64 pid = 0; //@TODO 基础代码不再使用缩写 postId
-			uint64 tid = 0; //theadId
-			uint uid = 0; //userId
-			uint fid = 0; //forumId
+			uint64 postId = 0; 
+			uint64 threadId = 0; 
+			uint userId = 0; 
+			uint forumId = 0; 
 			uint64 ip = 0;
-			uint64 time = 0;
+			uint64 createTime = 0;
 			string title;
 			string content;
-			string uname;
+			string userName;
 			string forumName;
 
 			bool IsThread()
@@ -41,15 +43,15 @@ namespace gezi {
 			template<class Archive>
 			void serialize(Archive &ar, const unsigned int version)
 			{
-				ar & BOOST_SERIALIZATION_NVP(pid);
-				ar & BOOST_SERIALIZATION_NVP(tid);
-				ar & BOOST_SERIALIZATION_NVP(uid);
-				ar & BOOST_SERIALIZATION_NVP(fid);
+				ar & BOOST_SERIALIZATION_NVP(postId);
+				ar & BOOST_SERIALIZATION_NVP(threadId);
+				ar & BOOST_SERIALIZATION_NVP(userId);
+				ar & BOOST_SERIALIZATION_NVP(forumId);
 				ar & BOOST_SERIALIZATION_NVP(ip);
-				ar & BOOST_SERIALIZATION_NVP(time);
+				ar & BOOST_SERIALIZATION_NVP(createTime);
 				ar & BOOST_SERIALIZATION_NVP(title);
 				ar & BOOST_SERIALIZATION_NVP(content);
-				ar & BOOST_SERIALIZATION_NVP(uname);
+				ar & BOOST_SERIALIZATION_NVP(userName);
 				ar & BOOST_SERIALIZATION_NVP(forumName);
 			}
 		};
@@ -75,7 +77,7 @@ namespace gezi {
 
 		struct UserPostsInfo
 		{
-			uint uid = 0;
+			uint userId = 0;
 			int numPosts = 0;
 			vector<uint64> pids;
 			vector<uint64> tids;
@@ -97,7 +99,7 @@ namespace gezi {
 			template<class Archive>
 			void serialize(Archive &ar, const unsigned int version)
 			{
-				ar & BOOST_SERIALIZATION_NVP(uid);
+				ar & BOOST_SERIALIZATION_NVP(userId);
 				ar & BOOST_SERIALIZATION_NVP(numPosts);
 				ar & BOOST_SERIALIZATION_NVP(pids);
 				ar & BOOST_SERIALIZATION_NVP(tids);
@@ -114,12 +116,12 @@ namespace gezi {
 
 		struct FullPostsInfo
 		{
-			uint64 tid = 0; //如果是0表示没有获取到信息 FullPostInfo数据无效
-			uint fid = 0;
+			uint64 threadId = 0; //如果是0表示没有获取到信息 FullPostInfo数据无效
+			uint forumId = 0;
 			string title;
 			string forumName;
 			bool isDeleted = false;
-			int numTotalPosts = 0;
+			int numPosts = 0;
 			vector<uint64> pids;
 			vector<uint> uids;
 			vector<uint64> ips;
@@ -136,12 +138,12 @@ namespace gezi {
 			template<class Archive>
 			void serialize(Archive &ar, const unsigned int version)
 			{
-				ar & BOOST_SERIALIZATION_NVP(tid);
-				ar & BOOST_SERIALIZATION_NVP(fid);
+				ar & BOOST_SERIALIZATION_NVP(threadId);
+				ar & BOOST_SERIALIZATION_NVP(forumId);
 				ar & BOOST_SERIALIZATION_NVP(title);
 				ar & BOOST_SERIALIZATION_NVP(forumName);
 				ar & BOOST_SERIALIZATION_NVP(isDeleted);
-				ar & BOOST_SERIALIZATION_NVP(numTotalPosts);
+				ar & BOOST_SERIALIZATION_NVP(numPosts);
 				ar & BOOST_SERIALIZATION_NVP(pids);
 				ar & BOOST_SERIALIZATION_NVP(uids);
 				ar & BOOST_SERIALIZATION_NVP(ips);
@@ -153,20 +155,20 @@ namespace gezi {
 
 		struct ReplyInfo
 		{
-			uint64 tid;
-			uint64 uid;
-			uint64 pid;
-			uint fid;
+			uint64 threadId;
+			uint64 userId;
+			uint64 postId;
+			uint forumId;
 			uint64 ip;
-			uint64 time;
+			uint64 createTime;
 		};
 
 		struct UserInfo
 		{
-			uint uid = 0;
-			string uname;
+			uint userId = 0;
+			string userName;
 			uint64 regTime = 0;
-			int sex = 0; //0 没写, 1 male, 2 female
+			int userSex = 0; //0 没写, 1 male, 2 female
 			int followCount = 0; //关注数
 			int followedCount = 0; //粉丝数
 			string email;
@@ -182,10 +184,10 @@ namespace gezi {
 			template<class Archive>
 			void serialize(Archive &ar, const unsigned int version)
 			{
-				ar & BOOST_SERIALIZATION_NVP(uid);
-				ar & BOOST_SERIALIZATION_NVP(uname);
+				ar & BOOST_SERIALIZATION_NVP(userId);
+				ar & BOOST_SERIALIZATION_NVP(userName);
 				ar & BOOST_SERIALIZATION_NVP(regTime);
-				ar & BOOST_SERIALIZATION_NVP(sex);
+				ar & BOOST_SERIALIZATION_NVP(userSex);
 				ar & BOOST_SERIALIZATION_NVP(followCount);
 				ar & BOOST_SERIALIZATION_NVP(followedCount);
 				ar & BOOST_SERIALIZATION_NVP(email);
@@ -225,7 +227,7 @@ namespace gezi {
 		{
 			struct Node
 			{
-				string fname;
+				string forumName;
 				uint64 time;
 				int level;
 				int curScore;
@@ -235,7 +237,7 @@ namespace gezi {
 				template<class Archive>
 				void serialize(Archive &ar, const unsigned int version)
 				{
-					ar & BOOST_SERIALIZATION_NVP(fname);
+					ar & BOOST_SERIALIZATION_NVP(forumName);
 					ar & BOOST_SERIALIZATION_NVP(time);
 					ar & BOOST_SERIALIZATION_NVP(level);
 					ar & BOOST_SERIALIZATION_NVP(curScore);
@@ -259,7 +261,7 @@ namespace gezi {
 			int numLikes = 0;
 			int sumLevels = 0;
 			map<uint, Node> infoMap;
-			vector<string> fnames;
+			vector<string> forumNames;
 			vector<int> levels;
 
 			friend class boost::serialization::access;
@@ -271,19 +273,19 @@ namespace gezi {
 				ar & BOOST_SERIALIZATION_NVP(numLikes);
 				ar & BOOST_SERIALIZATION_NVP(sumLevels);
 				ar & BOOST_SERIALIZATION_NVP(infoMap);
-				ar & BOOST_SERIALIZATION_NVP(fnames);
+				ar & BOOST_SERIALIZATION_NVP(forumNames);
 				ar & BOOST_SERIALIZATION_NVP(levels);
 			}
 		};
 
 		struct ThreadInfo
 		{
-			uint64 tid = 0;
-			uint64 uid;
-			uint64 pid;
-			uint fid; //forum_id
+			uint64 threadId = 0;
+			uint64 userId;
+			uint64 postId;
+			uint forumId; //forum_id
 			string forumName;
-			uint64 time;
+			uint64 createTime;
 			uint64 ip;
 			string address;
 			string title;
@@ -295,12 +297,12 @@ namespace gezi {
 			template<class Archive>
 			void serialize(Archive &ar, const unsigned int version)
 			{
-				ar & BOOST_SERIALIZATION_NVP(tid);
-				ar & BOOST_SERIALIZATION_NVP(uid);
-				ar & BOOST_SERIALIZATION_NVP(pid);
-				ar & BOOST_SERIALIZATION_NVP(fid);
+				ar & BOOST_SERIALIZATION_NVP(threadId);
+				ar & BOOST_SERIALIZATION_NVP(userId);
+				ar & BOOST_SERIALIZATION_NVP(postId);
+				ar & BOOST_SERIALIZATION_NVP(forumId);
 				ar & BOOST_SERIALIZATION_NVP(forumName);
-				ar & BOOST_SERIALIZATION_NVP(time);
+				ar & BOOST_SERIALIZATION_NVP(createTime);
 				ar & BOOST_SERIALIZATION_NVP(ip);
 				ar & BOOST_SERIALIZATION_NVP(address);
 				ar & BOOST_SERIALIZATION_NVP(title);

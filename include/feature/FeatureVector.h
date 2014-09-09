@@ -166,7 +166,28 @@ namespace gezi {
 					ss << index << ":" << value << sep;
 				});
 			}
-			return ss.str().substr(0, ss.str().length() - 1);
+			return ss.str().substr(0, ss.str().length() - sep.length());
+		}
+
+		//展示name 覆盖掉Vector中的Str了 @TODO test 正确性以及对Vector的影响
+		string Str(string sep = ",")
+		{
+			std::stringstream ss;
+
+			if (_useSparseAlso && !_features.empty())
+			{
+				for (Feature& feature : _features)
+				{
+					ss << _names[feature.index] << ":" << feature.value << sep;
+				}
+			}
+			else
+			{
+				ForEachNonZero([&](int index, Float value) {
+					ss << _names[index] << ":" << value << sep;
+				});
+			}
+			return ss.str().substr(0, ss.str().length() - sep.length());
 		}
 
 		vector<string>& names()

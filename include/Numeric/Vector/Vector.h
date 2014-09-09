@@ -934,7 +934,7 @@ namespace gezi {
 			ForEachNonZero([&](int index, Float value) {
 				ss << index << ":" << value << sep;
 			});
-			return ss.str();
+			return ss.str().substr(0, ss.str().length() - sep.length());
 		}
 
 		string DenseStr(string sep = ",")

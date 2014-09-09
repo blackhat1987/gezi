@@ -34,7 +34,7 @@ void run()
 TEST(get_full_posts_info, func)
 {
 	tieba::FullPostsInfo info = tieba::get_full_posts_info(3273051494, FLAGS_res_num);
-	Pval5(info.tid, info.title, info.fid, info.forumName, info.isDeleted);
+	Pval5(info.threadId, info.title, info.forumId, info.forumName, info.isDeleted);
 	Pval(info.posts.size());
 	for (size_t i = 0; i < info.size(); i++)
 	{

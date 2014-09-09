@@ -8,6 +8,13 @@ mb = module_builder.module_builder_t(
         files=[
             './include.python/tieba/get_info.h',
             './include.python/tieba/get_parsed_info.h',
+            './include.python/tieba/info/delete_info.h',
+            './include.python/tieba/info/forum_info.h',
+            './include.python/tieba/info/post_info.h',
+            './include.python/tieba/info/thread_info.h',
+            './include.python/tieba/info/url_info.h',
+            './include.python/tieba/info/user_info.h',
+            './include.python/tieba/info/user_posts_info.h',
             './include.python/tieba/info_def.h',
             './include.python/tieba/uname_util.h',
             './include.python/tieba/common_def.h',

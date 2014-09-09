@@ -52,14 +52,14 @@ namespace gezi {
 		{
 			info.title = m["title"].asString();
 			info.content = m["content"].asString();
-			info.fid = m["forum_id"].asUInt();
+			info.forumId = m["forum_id"].asUInt();
 			info.forumName = m["word"].asString();
 			info.ip = m["ip"].asUInt64();
 			//info.tid = m["thread_id"].asUInt64(); //Type is not convertible to UInt64 json里面是“”string类型
-			info.tid = UINT64(m["thread_id"].asString());
-			info.uid = m["user_id"].asUInt();
-			info.uname = m["username"].asString();
-			info.time = m["now_time"].asUInt64();
+			info.threadId = UINT64(m["thread_id"].asString());
+			info.userId = m["user_id"].asUInt();
+			info.userName = m["username"].asString();
+			info.createTime = m["now_time"].asUInt64();
 		}
 
 		//没有lbs等信息
@@ -86,7 +86,7 @@ namespace gezi {
 				LOG(WARNING) << "get json value fail";
 				return info;
 			}
-			info.pid = pid;
+			info.postId = pid;
 			return info;
 		}
 
@@ -120,7 +120,7 @@ namespace gezi {
 					{
 						PostInfo info;
 						parse_post_info(m, info);
-						info.pid = pids[i++];
+						info.postId = pids[i++];
 						resultVec.emplace_back(info);
 					}
 				}

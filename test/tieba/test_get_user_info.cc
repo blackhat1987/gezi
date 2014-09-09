@@ -47,8 +47,8 @@ TEST(get_user_like_forum_info, func)
 TEST(get_user_info, func)
 {
 	gezi::tieba::UserInfo info = get_user_info(1324047674);
-	Pval6(info.uid, info.uname, info.sex, info.regTime, info.followCount, info.followedCount);
-	Pval5(info.uid, info.email, info.isGroupOwner, info.userTag, info.mobile);
+	Pval6(info.userId, info.userName, info.userSex, info.regTime, info.followCount, info.followedCount);
+	Pval5(info.userId, info.email, info.isGroupOwner, info.userTag, info.mobile);
 	{
 		UserInfo info = get_user_info(8219770); //"815418467"
 		Pval6(info.uid, info.uname, info.sex, info.regTime, info.followCount, info.followedCount);
@@ -75,7 +75,7 @@ TEST(get_users_info, func)
 void run()
 {
 	UserPostsInfo info = get_user_posts_info(1299045938);
-	Pval2(info.uid, info.numPosts);
+	Pval2(info.userId, info.numPosts);
 	for (size_t i = 0; i < info.size(); i++)
 	{
 		Pval5(info.fnames[i], info.titles[i], info.contents[i], info.pids[i], info.tids[i]);

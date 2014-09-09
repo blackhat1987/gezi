@@ -4,7 +4,7 @@ ifeq ($(shell uname -m),x86_64)
 CC=../../../../../ps/se/toolchain/gcc_only_4.8.2/bin/g++
 CXX=../../../../../ps/se/toolchain/gcc_only_4.8.2/bin/g++
 CXXFLAGS=-g \
-  -O0 \
+  -O3 \
   -pipe \
   -W \
   -Wall \
@@ -18,7 +18,7 @@ CXXFLAGS=-g \
   -Wno-literal-suffix \
   -Wno-unused-local-typedefs
 CFLAGS=-g \
-  -O0 \
+  -O3 \
   -pipe \
   -W \
   -Wall \
@@ -127,10 +127,6 @@ DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../third-64/libcurl/include \
   -I../../../../../third-64/libcurl/output \
   -I../../../../../third-64/libcurl/output/include \
-  -I../../../../../third-64/openssl \
-  -I../../../../../third-64/openssl/include \
-  -I../../../../../third-64/openssl/output \
-  -I../../../../../third-64/openssl/output/include \
   -I../../../../../third-64/pcre \
   -I../../../../../third-64/pcre/include \
   -I../../../../../third-64/pcre/output \
@@ -138,11 +134,7 @@ DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../third-64/tcmalloc \
   -I../../../../../third-64/tcmalloc/include \
   -I../../../../../third-64/tcmalloc/output \
-  -I../../../../../third-64/tcmalloc/output/include \
-  -I../../../../../third-64/zlib \
-  -I../../../../../third-64/zlib/include \
-  -I../../../../../third-64/zlib/output \
-  -I../../../../../third-64/zlib/output/include
+  -I../../../../../third-64/tcmalloc/output/include
 
 #============ CCP vars ============
 CCHECK=@ccheck.py
@@ -154,7 +146,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=871b10a7d06ee47def3a5ee4eea2ef43  COMAKE
+COMAKE_MD5=f301be5ec2b6c5481f3d2fbd83c2a0a1  COMAKE
 
 
 .PHONY:all

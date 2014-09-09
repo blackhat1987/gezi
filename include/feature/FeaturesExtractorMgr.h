@@ -40,19 +40,12 @@ public:
 
 	void extract(Features* features)
 	{
-#ifndef NDEBUG
 		int i = 0;
-#endif
-
 		for(FeaturesExtractor* extractor : _extractors)
 		{
-#ifndef NDEBUG
 			AutoTimer timer(STRING(i) + " " + extractor->name());
 			i++;
-#endif 
-			//      VLOG(4) << STRING(i) << " " << extractor->name() << " begin";
 			extractor->process(features);
-			//      VLOG(4) << STRING(i) << " " << extractor->name() << " end";
 		}
 		features->finalize();
 	}

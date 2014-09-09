@@ -50,7 +50,7 @@ namespace tieba {
 				info.contents.push_back(jsonInfo["content"].asString());
 				info.isPostsDeleted.push_back(false); //如果需要通过删帖接口获取
 			}
-			info.uid = uid;
+			info.userId = uid;
 		}
 		catch (...)
 		{
@@ -62,8 +62,8 @@ namespace tieba {
 	//用户的直到这个postId为止的发帖信息
 	inline UserPostsInfo get_user_posts_info_until(const PostInfo& info, int resNum = 25, bool needContent = true, int orderType = 1, int offset = 0)
 	{
-		uint uid = info.uid;
-		uint64 endTime = info.time;
+		uint uid = info.userId;
+		uint64 endTime = info.createTime;
 		PVAL3(uid, endTime, to_time_str(endTime));
 		return get_user_posts_info(uid, resNum, needContent, endTime, orderType, offset);
 	}
