@@ -435,6 +435,9 @@
     <ClInclude Include="include\tieba\tieba_util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\tieba\feature\UserInfoExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">

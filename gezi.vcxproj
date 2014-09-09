@@ -171,6 +171,7 @@
     <ClInclude Include="include\stl_util.h" />
     <ClInclude Include="include\string_util.h" />
     <ClInclude Include="include\tieba\common_def.h" />
+    <ClInclude Include="include\tieba\feature\UserInfoExtractor.h" />
     <ClInclude Include="include\tieba\get_info.h" />
     <ClInclude Include="include\tieba\get_parsed_info.h" />
     <ClInclude Include="include\tieba\info\delete_info.h" />

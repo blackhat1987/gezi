@@ -27,7 +27,7 @@ namespace gezi {
 			info.numThreads = m["thread_num"].asInt();
 			info.numGoods = m["good_num"].asInt();
 			info.numPhotos = m["photo_num"].asInt();
-			info.uid = m["user_id"].asUInt();
+			info.userId = m["user_id"].asUInt();
 		}
 
 		inline UserPostNumInfo get_user_post_num_info_(string url)
@@ -102,7 +102,7 @@ namespace gezi {
 					info.forumNames.push_back(node.forumName);
 					info.levels.push_back(node.level);
 				}
-				info.uid = uid;
+				info.userId = uid;
 			}
 			catch (...)
 			{

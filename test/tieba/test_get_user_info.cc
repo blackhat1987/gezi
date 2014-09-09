@@ -28,17 +28,17 @@ DEFINE_string(type, "simple", "");
 TEST(get_user_post_num, func)
 {
 	UserPostNumInfo info = get_user_post_num_info(1324047674);
-	Pval5(info.uid, info.numPosts, info.numThreads, info.numGoods, info.numPhotos);
+	Pval5(info.userId, info.numPosts, info.numThreads, info.numGoods, info.numPhotos);
 	{
 		info = get_user_post_num_info(1324047674, 2523743);
-		Pval5(info.uid, info.numPosts, info.numThreads, info.numGoods, info.numPhotos);
+		Pval5(info.userId, info.numPosts, info.numThreads, info.numGoods, info.numPhotos);
 	}
 }
 
 TEST(get_user_like_forum_info, func)
 {
 	UserLikeForumInfo info = get_user_like_forum_info(1324047674);
-	Pval4(info.uid, info.numLikes, info.maxLevel, info.sumLevels);
+	Pval4(info.userId, info.numLikes, info.maxLevel, info.sumLevels);
 	Pval(info.GetLevel(2523743));
 	Pval(info.GetLevel(2088641));
 	Pval(info.GetLevel(47));

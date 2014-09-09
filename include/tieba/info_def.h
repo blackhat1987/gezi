@@ -203,7 +203,7 @@ namespace gezi {
 
 		struct UserPostNumInfo
 		{
-			uint uid = 0;
+			uint userId = 0;
 			int numPosts = 0;
 			int numThreads = 0;
 			int numGoods = 0;
@@ -213,7 +213,7 @@ namespace gezi {
 			template<class Archive>
 			void serialize(Archive &ar, const unsigned int version)
 			{
-				ar & BOOST_SERIALIZATION_NVP(uid);
+				ar & BOOST_SERIALIZATION_NVP(userId);
 				ar & BOOST_SERIALIZATION_NVP(numPosts);
 				ar & BOOST_SERIALIZATION_NVP(numThreads);
 				ar & BOOST_SERIALIZATION_NVP(numGoods);
@@ -256,7 +256,7 @@ namespace gezi {
 				return 0;
 			}
 
-			uint uid = 0;
+			uint userId = 0;
 			int maxLevel = 0;
 			int numLikes = 0;
 			int sumLevels = 0;
@@ -268,7 +268,7 @@ namespace gezi {
 			template<class Archive>
 			void serialize(Archive &ar, const unsigned int version)
 			{
-				ar & BOOST_SERIALIZATION_NVP(uid);
+				ar & BOOST_SERIALIZATION_NVP(userId);
 				ar & BOOST_SERIALIZATION_NVP(maxLevel);
 				ar & BOOST_SERIALIZATION_NVP(numLikes);
 				ar & BOOST_SERIALIZATION_NVP(sumLevels);
