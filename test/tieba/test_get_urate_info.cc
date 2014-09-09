@@ -21,7 +21,7 @@ using namespace std;
 using namespace gezi;
 using namespace gezi::tieba;
 DEFINE_int32(vl, 5, "vlog level");
-DEFINE_uint64(pid, 57037402014, "vlog level");
+DEFINE_uint64(pid, 57037402014, "51605278519 51618140082");
 DEFINE_string(i, "", "input");
 DEFINE_string(o, "", "output");
 DEFINE_string(type, "simple", "");
@@ -32,6 +32,7 @@ TEST(get_urate_info, func)
 	{
 		AutoTimer timer("GetUrateInfo");
 		info = get_urate_info(FLAGS_pid);
+		Pval3(info.postId, info.postsInfo.numPosts, info.postsInfo.titles[0]);
 	}
 	{
 		AutoTimer timer("SaveXml");
@@ -45,7 +46,7 @@ TEST(get_urate_info, func)
 	{
 		UrateInfo info;
 		serialize_util::load_xml("./test.data/urate_info.xml", info);
-		Pval2(info.postId, info.postsInfo.numPosts);
+		Pval3(info.postId, info.postsInfo.numPosts, info.postsInfo.titles[0]);
 	}
 }
 

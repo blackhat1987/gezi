@@ -25,7 +25,15 @@ namespace gezi {
 			auto& m = root["count"];
 			info.numPosts = m["post_num"].asInt();
 			info.numThreads = m["thread_num"].asInt();
-			info.numGoods = m["good_num"].asInt();
+			try
+			{ //@TODO Ìù°Ébug
+				info.numGoods = m["good_num"].asInt();
+			}
+			catch (...)
+			{
+				LOG(WARNING) << "Tieba error will set good num to 0";
+				info.numGoods = 0;
+			}
 			info.numPhotos = m["photo_num"].asInt();
 			info.userId = m["user_id"].asUInt();
 		}
@@ -33,7 +41,7 @@ namespace gezi {
 		inline UserPostNumInfo get_user_post_num_info_(string url)
 		{
 			UserPostNumInfo info;
-			string jsonStr = get_info_str(url);
+			string jsonStr = get_info_str(url, 5000);
 			Json::Reader reader;
 			Json::Value root;
 			bool ret = reader.parse(jsonStr, root);
@@ -48,7 +56,7 @@ namespace gezi {
 			}
 			catch (...)
 			{
-				LOG(WARNING) << "get json value fail";
+				LOG(WARNING) << "get json value fail: " << jsonStr << " url: " << url;
 			}
 			return info;
 		}
@@ -106,7 +114,7 @@ namespace gezi {
 			}
 			catch (...)
 			{
-				LOG(WARNING) << "get json value fail";
+				LOG(WARNING) << "get json value fail: " << jsonStr << " url: " << url;
 			}
 			return info;
 		}
@@ -146,7 +154,7 @@ namespace gezi {
 			bool ret = reader.parse(jsonStr, root);
 			if (!ret)
 			{
-				LOG(WARNING) << "json parse fail";
+				LOG(WARNING) << "json parse fail: " << jsonStr << " url: " << url;
 				return info;
 			}
 			try
@@ -156,7 +164,7 @@ namespace gezi {
 			}
 			catch (...)
 			{
-				LOG(WARNING) << "get json value fail";
+				LOG(WARNING) << "get json value fail: " << jsonStr << " url: " << url;
 			}
 			return info;
 		}
@@ -203,7 +211,7 @@ namespace gezi {
 				}
 				catch (...)
 				{
-					LOG(WARNING) << "get json value fail: " << jsonStr;
+					LOG(WARNING) << "get json value fail: " << jsonStr << " url: " << url;
 				}
 			}
 			return infos;

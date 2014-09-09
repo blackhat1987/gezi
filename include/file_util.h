@@ -285,6 +285,21 @@ namespace gezi {
 		}
 	}
 
+	inline std::vector<std::string> read_to_vec(const std::string& infile, int index = 0, string sep = "\t ")
+	{
+		vector<string> container;
+		std::ifstream ifs(infile.c_str());
+		string line;
+		while (getline(ifs, line))
+		{
+			boost::trim(line);
+			vector<string> vec;
+			boost::split(vec, line, is_any_of(sep));
+			container.push_back(vec[index]);
+		}
+		return container;
+	}
+
 	template<typename Container>
 	void read_to_vec(const std::string& infile, Container& container, int index = 0, string sep = "\t ")
 	{
@@ -297,6 +312,23 @@ namespace gezi {
 			vector<string> vec;
 			boost::split(vec, line, is_any_of(sep));
 			container.push_back(boost::lexical_cast<T>(vec[index]));
+		}
+	}
+
+	template<typename Container, typename Container2>
+	void read_to_vec(const std::string& infile, Container& container, Container2& container2,int index = 0, int index2 = 1, string sep = "\t ")
+	{
+		typedef typename Container::value_type T;
+		typedef typename Container2::value_type U;
+		std::ifstream ifs(infile.c_str());
+		string line;
+		while (getline(ifs, line))
+		{
+			boost::trim(line);
+			vector<string> vec;
+			boost::split(vec, line, is_any_of(sep));
+			container.push_back(boost::lexical_cast<T>(vec[index]));
+			container2.push_back(boost::lexical_cast<U>(vec[index2]));
 		}
 	}
 	//TODO better method...

@@ -267,11 +267,15 @@
     <ClCompile Include="test\tieba\test_get_full_posts_info.cc" />
     <ClCompile Include="test\tieba\test_get_posts_info.cc" />
     <ClCompile Include="test\tieba\test_get_threads_info.cc" />
+    <ClCompile Include="test\tieba\test_get_urate_info.cc" />
     <ClCompile Include="test\tieba\test_get_url_info.cc" />
     <ClCompile Include="test\tieba\test_get_user_info.cc" />
     <ClCompile Include="test\tieba\test_get_user_posts.cc" />
     <ClCompile Include="test\tieba\test_threads_info.cc" />
     <ClCompile Include="test\tieba\test_uname.cc" />
+    <ClCompile Include="test\tieba\test_user_info_extractor.cc" />
+    <ClCompile Include="tools\tieba\urate\get_urate_infos.cc" />
+    <ClCompile Include="tools\tieba\urate\urate_train.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl" />

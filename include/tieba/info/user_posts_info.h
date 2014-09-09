@@ -24,7 +24,7 @@ namespace tieba {
 		string url = !endTime ?
 			(format("http://service.tieba.baidu.com/service/post?method=queryUserPost&format=json&input={\"user_id\":%1%,\"res_num\":%2%,\"need_content\":%3%,\"order_type\":%4%,\"offset\":%5%,\"delete_type\":2}") % uid % resNum % needContent % orderType % offset).str() :
 			(format("http://service.tieba.baidu.com/service/post?method=queryUserPost&format=json&input={\"user_id\":%1%,\"res_num\":%2%,\"need_content\":%3%,\"order_type\":%4%,\"offset\":%5%,\"delete_type\":2,\"end_time\":%6%}") % uid % resNum % needContent % orderType % offset % endTime).str();
-		string jsonStr = get_info_str(url);
+		string jsonStr = get_info_str(url, 5000);
 		Json::Reader reader;
 		Json::Value root;
 		bool ret = reader.parse(jsonStr, root);

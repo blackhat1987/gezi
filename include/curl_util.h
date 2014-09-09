@@ -162,7 +162,7 @@ public:
 		CURLcode res = curl_easy_perform(_curl);
 		if (res != CURLE_OK)
 		{
-			LOG_WARNING(" curl_easy_perform err[%d]", res);
+			LOG(WARNING) << "curl_easy_perform err[" << res << "] url: " << url;
 		}
 		else
 		{

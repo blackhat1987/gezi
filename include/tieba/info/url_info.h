@@ -37,10 +37,14 @@ namespace gezi {
 		inline map<string, UrlInfo> get_urls_info_map(const vector<string>& urls)
 		{
 			map<string, UrlInfo> infosMap;
+			if (urls.empty())
+			{
+				return infosMap;
+			}
 		
 			string url = "http://service.tieba.baidu.com/service/urlfeature?method=getFeature&format=json&req=";
 			url += get_url_info_params_(urls);
-			string jsonStr = get_info_str(url);
+			string jsonStr = get_info_str(url, 5000);
 			
 			PVAL(jsonStr);
 			Json::Reader reader;
@@ -53,6 +57,12 @@ namespace gezi {
 			}
 			try
 			{
+				if (root["res"].empty())
+				{
+					LOG(WARNING) << "No url result got: " << join(urls,",");
+					return infosMap;
+				}
+				
 				auto& urlInfo = root["res"]["url"];
 				{
 					auto& rankInfo = urlInfo["rank"];
@@ -84,7 +94,7 @@ namespace gezi {
 			}
 			catch (...)
 			{
-				LOG(WARNING) << "get json value fail";
+				LOG(WARNING) << "get json value fail: " << jsonStr;
 			}
 			return infosMap;
 		}

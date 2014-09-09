@@ -7,7 +7,13 @@
  *
  *          \date   2014-09-09 11:44:45.511761
  *
- *  \Description:   从用户基本信息抽取的基础用户画像特征
+ *  \Description:   从用户基本信息抽取的基础用户画像特征 
+										注册时间
+										喜欢的吧信息
+										用户名信息
+										历史发帖量信息
+
+										@TODO增加离线挖掘的其它用户属性 建立 UserInfoExExtractor
  *  ==============================================================================
  */
 
@@ -17,17 +23,17 @@
 #include "common_util.h"
 #include "feature/Features.h"
 #include "tieba/info_def.h"
-#include "urate/urate_info.h"
+#include "tieba/urate/urate_info.h"
 #include "tieba/tieba_util.h"
-#include "tieba/uname_util.h"
+#include "tools/uname_util.h"
 namespace gezi {
 	namespace tieba {
 
 		class UserInfoExtractor : public FeaturesExtractor
 		{
 		public:
-			UserInfoExtractor(const UrateInfo& urateInfo)
-				:FeaturesExtractor("UserInfo"), _urateInfo(urateInfo);
+			UserInfoExtractor(UrateInfo& urateInfo)
+				:FeaturesExtractor("UserInfo"), _urateInfo(urateInfo)
 			{
 
 			}
@@ -54,7 +60,7 @@ namespace gezi {
 				}
 				{ //注册时间信息
 					double regDays = reg_days(postsInfo.times[0], userInfo.regTime);
-					add(regDays, "RegDays");
+					add(regDays, "RegisterDays");
 				}
 				{//是否有生日信息
 					bool hasBirth = userInfo.birthYear != 0;
@@ -74,7 +80,7 @@ namespace gezi {
 				}
 				{ //用户名信息
 					string uname = userInfo.userName;
-					ivec unamePattern = name_pattern(uname);
+					ivec unamePattern = name_feature(uname);
 					add(unamePattern, "UnamePattern");
 					{//ed 英文加数字
 						bool unameIsEnNum = is_en_num_name(unamePattern);
@@ -119,7 +125,16 @@ namespace gezi {
 					add(userNowForumPostNumInfo.numPosts, "NowForumPostNumHistory");
 					add(userNowForumPostNumInfo.numThreads, "NowForumThreadNumHistory");
 					add(userNowForumPostNumInfo.numPhotos, "NowForumPhotoNumHistory");
-				}
+
+					double nowForumPostRatio = (userNowForumPostNumInfo.numPosts + 1) / (double)(userPostNumInfo.numPosts + 1);
+					add(nowForumPostRatio, "NowForumPostRatio");
+
+					double nowForumThreadRatio = (userNowForumPostNumInfo.numThreads + 1) / (double)(userPostNumInfo.numThreads + 1);
+					add(nowForumThreadRatio, "NowForumThreadRatio");
+
+					double nowForumPhotoRatio = (userNowForumPostNumInfo.numPhotos + 1) / (double)(userPostNumInfo.numPhotos + 1);
+					add(nowForumPhotoRatio, "NowForumPhotoRatio");
+				} 
 			}
 
 		private:

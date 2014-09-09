@@ -139,7 +139,7 @@ namespace gezi {
 		}
 
 		//非0的特征数目 注意Vector是Count()
-		int count()
+		int count() const
 		{
 			return _features.size();
 		}

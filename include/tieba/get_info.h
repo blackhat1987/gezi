@@ -27,7 +27,7 @@ namespace gezi {
 			if (timeout < 0)
 			{
 				//timeout = PSCONF_(timeout, "tieba.get_info", 1000);
-				timeout = 1000;
+				timeout = 5000;
 			}
 			CurlUtil curl;
 			curl.setTimeout(timeout);

@@ -116,13 +116,28 @@ namespace gezi {
 		{
 			vec.push_back(template_.find(c));
 		}
-#if __GNUC__ > 3
-		return std::move(vec);
-#else
 		return vec;
-#endif  
 	}
 
+	//用户名是否是带有qq联系方式这样的
+	inline bool is_qq_name(string uname)
+	{
+		string normedUname = gezi::normalize_str(uname);
+		string qname_pattern = "[[\x81-\xff].q|^q|q[\x81-\xff]|qq|加|扣|店].{0,6}([0-9]){7,30}";
+		//PSCONF(qname_pattern, name()); //@FIXME 这个宏如果配置文件里面没有数据的话 速度非常的慢。。。另外可能有多线程问题
+		return gezi::reg_find(normedUname, qname_pattern);
+	}
+
+	inline bool is_en_num_name(const vector<int>& nameFeatures)
+	{
+		return  nameFeatures[0] == 2 && nameFeatures.back() == 0;
+	}
+
+	inline bool is_en_num_name(string uname)
+	{
+		vector<int> nameFeatures = name_feature(uname);
+		return  nameFeatures[0] == 2 && nameFeatures.back() == 0;
+	}
 } //end of namespace gezi
 
 #endif  //----end of TOOLS_UNAME_UTIL_H_

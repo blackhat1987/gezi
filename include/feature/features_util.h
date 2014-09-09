@@ -179,15 +179,11 @@ namespace gezi {
 	//tlc dense 采用标准输出 第一列是名字比如pid 第二列是label 例如下面 另外输出的是原始特征 未经过normalize
 	//# 	label	JaccardSimilarity	CTR_s10_Query	CTR_s100_Query	CTR_s1000_Query	LogitCTR_s10_Query	LogitCTR_s100_Query	LogitCTR_s1000_Query	impressions_Query	clicks_Query
 	//_lottery|acute leukemia	0	0	0.013693014	0.013704492	0.013818185	-4.277081865	-4.276232328	-4.267855249	103347	1415
-	inline void write_sparse(const Features& features, string label, ofstream& ofs, string name = "")
+	
+	template<typename T>
+	inline void write_sparse(const Features& features, T label, ofstream& ofs)
 	{
-		if (!name.empty())
-			ofs << "_" << name << "\t" << label;
-		else
-			ofs << label;
-
-		ofs << "\t" << features.dimension();
-
+		ofs << label << "\t" << features.dimension();
 		if (features.count() == 0)
 		{
 			ofs << "\t" << "0:0";
@@ -201,21 +197,29 @@ namespace gezi {
 		}
 		ofs << endl;
 	}
+	template<typename T, typename U>
+	inline void write_sparse(const Features& features, T label, ofstream& ofs, U name)
+	{
+		ofs << "_" << name << "\t";
+		write_sparse(features, label, ofs);
+	}
 
 	//注意不要单独使用 一般是在类似下面 情况使用
 	template<typename T>
-	inline void write_table(const Features& features, T label, ofstream& ofs, string name = "")
+	inline void write_table(const Features& features, T label, ofstream& ofs)
 	{
-		if (!name.empty())
-			ofs << "_" << name << "\t" << label;
-		else
-			ofs << label;
-
 		foreach(double value, features.values)
 		{
-			ofs << "\t" << value;
+			ofs << label << "\t" << value;
 		}
 		ofs << endl;
+	}
+
+	template<typename T, typename U>
+	inline void write_table(const Features& features, T label, ofstream& ofs, U name)
+	{
+		ofs << "_" << name << "\t";
+		write_table(features, label, ofs);
 	}
 
 	//ofs_full << id << "\t" << label << "\t" << 1 << "\t" << 1 << "\t" << content;

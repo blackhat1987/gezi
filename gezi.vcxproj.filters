@@ -632,6 +632,18 @@
     <ClCompile Include="test\tieba\test_uname.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="test\tieba\test_get_urate_info.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\tieba\test_user_info_extractor.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\tieba\urate\get_urate_infos.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\tieba\urate\urate_train.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl">

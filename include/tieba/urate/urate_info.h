@@ -20,7 +20,7 @@ namespace tieba {
 	//Urate初始基本数据 基本都是直接获取 唯一加入处理的是url再抽取 因为要继续调用url接口获取信息
 	struct UrateInfo
 	{
-		uint64 pid = 0;
+		uint64 postId = 0;
 		UserPostsInfo postsInfo; //用户发帖历史信息
 		UserInfo userInfo; //用户基本属性信息
 		UserLikeForumInfo userLikeForumInfo; //用户喜欢的吧属性
@@ -33,7 +33,7 @@ namespace tieba {
 		template<class Archive>
 		void serialize(Archive &ar, const unsigned int version)
 		{
-			ar & BOOST_SERIALIZATION_NVP(pid);
+			ar & BOOST_SERIALIZATION_NVP(postId);
 			ar & BOOST_SERIALIZATION_NVP(postsInfo);
 			ar & BOOST_SERIALIZATION_NVP(userInfo);
 			ar & BOOST_SERIALIZATION_NVP(userLikeForumInfo);

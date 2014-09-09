@@ -123,10 +123,6 @@ DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../third-64/glog/include \
   -I../../../../../third-64/glog/output \
   -I../../../../../third-64/glog/output/include \
-  -I../../../../../third-64/libcurl \
-  -I../../../../../third-64/libcurl/include \
-  -I../../../../../third-64/libcurl/output \
-  -I../../../../../third-64/libcurl/output/include \
   -I../../../../../third-64/pcre \
   -I../../../../../third-64/pcre/include \
   -I../../../../../third-64/pcre/output \
@@ -146,7 +142,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=f301be5ec2b6c5481f3d2fbd83c2a0a1  COMAKE
+COMAKE_MD5=41f52c5a64923c052eb1de1040a31f47  COMAKE
 
 
 .PHONY:all
