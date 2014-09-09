@@ -60,7 +60,17 @@ inline Features gen_features(uint64 pid)
 	}
 	FeaturesExtractorMgr mgr;
 	mgr.add(new UserInfoExtractor(info));
-	mgr.extract(fe);
+	try
+	{
+		mgr.extract(fe);
+	}
+	catch (...)
+	{
+		Pval3(pid, info.postId, info.nowPostInfo.postId);
+		fe.clear();
+		return fe;
+	}
+
 	return fe;
 }
 
@@ -91,7 +101,6 @@ void run()
 #pragma omp parallel for
 	for (size_t j = i; j < pids.size(); j++)
 	{
-		Pval2(j, pids[j]);
 		Features fe = gen_features(pids[j]);
 #pragma  omp critical 
 		{

@@ -49,7 +49,7 @@ namespace gezi {
 				//add(isNowPostInfoValid, "IsNowPostInfoValid");
 				if (!isNowPostInfoValid)
 				{
-					THROW("now post info not valid");
+					THROW("now post info not valid: " + STR(nowPostInfo.postId));
 				}
 				/*	UserPostsInfo& postsInfo = _urateInfo.postsInfo;
 					bool isPostsInfoValid = postsInfo.userId != 0;

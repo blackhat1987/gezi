@@ -658,6 +658,11 @@ namespace gezi {
 			values.clear();
 		}
 
+		void clear()
+		{
+			Clear();
+		}
+
 		void CheckInvariants()
 		{
 			if (IsDense())

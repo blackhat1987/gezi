@@ -35,6 +35,7 @@ namespace tieba {
 		void serialize(Archive &ar, const unsigned int version)
 		{
 			ar & BOOST_SERIALIZATION_NVP(postId);
+			ar & BOOST_SERIALIZATION_NVP(nowPostInfo);
 			ar & BOOST_SERIALIZATION_NVP(postsInfo);
 			ar & BOOST_SERIALIZATION_NVP(userInfo);
 			ar & BOOST_SERIALIZATION_NVP(userLikeForumInfo);

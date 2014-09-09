@@ -208,9 +208,10 @@ namespace gezi {
 	template<typename T>
 	inline void write_table(const Features& features, T label, ofstream& ofs)
 	{
+		ofs << label;
 		foreach(double value, features.values)
 		{
-			ofs << label << "\t" << value;
+			ofs << "\t" << value;
 		}
 		ofs << endl;
 	}
