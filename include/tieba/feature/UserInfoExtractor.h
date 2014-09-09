@@ -7,13 +7,14 @@
  *
  *          \date   2014-09-09 11:44:45.511761
  *
- *  \Description:   从用户基本信息抽取的基础用户画像特征 
-										注册时间
-										喜欢的吧信息
-										用户名信息
-										历史发帖量信息
+ *  \Description:   从用户基本信息抽取的基础用户画像特征 这个是Urate角度 从当前帖子出发的
+ 注册时间
+ 喜欢的吧信息
+ 用户名信息
+ 历史发帖量信息
 
-										@TODO增加离线挖掘的其它用户属性 建立 UserInfoExExtractor
+ @TODO增加离线挖掘的其它用户属性 建立 UserInfoExExtractor
+ @TODO 仅仅从用户角度出发的特征
  *  ==============================================================================
  */
 
@@ -43,9 +44,17 @@ namespace gezi {
 				UserInfo& userInfo = _urateInfo.userInfo;
 				bool isUserInfoValid = userInfo.userId != 0;
 				add(isUserInfoValid, "IsUserInfoValid");
-				UserPostsInfo& postsInfo = _urateInfo.postsInfo;
-				bool isPostsInfoValid = postsInfo.userId != 0;
-				add(isPostsInfoValid, "IsPostsInfoValid");
+				PostInfo& nowPostInfo = _urateInfo.nowPostInfo;
+				bool isNowPostInfoValid = nowPostInfo.postId != 0;
+				//add(isNowPostInfoValid, "IsNowPostInfoValid");
+				if (!isNowPostInfoValid)
+				{
+					THROW("now post info not valid");
+				}
+				/*	UserPostsInfo& postsInfo = _urateInfo.postsInfo;
+					bool isPostsInfoValid = postsInfo.userId != 0;
+					add(isPostsInfoValid, "IsPostsInfoValid");*/
+
 				{ //关注 粉丝数目
 					int followCount = userInfo.followCount;
 					int followedCount = userInfo.followedCount;
@@ -54,12 +63,11 @@ namespace gezi {
 					double followFollowedRatio = (followCount + 1) / (double)(followedCount + 1);
 					add(followFollowedRatio, "FollowFollowedRatio");
 				}
-				if (postsInfo.numPosts == 0)
-				{
-					THROW("No posts info");
-				}
+
 				{ //注册时间信息
-					double regDays = reg_days(postsInfo.times[0], userInfo.regTime);
+					uint64 regSpan = reg_span(nowPostInfo.createTime, userInfo.regTime);
+					add(regSpan, "RegisterSpan");
+					int regDays = regSpan / kOneDay;
 					add(regDays, "RegisterDays");
 				}
 				{//是否有生日信息
@@ -87,7 +95,7 @@ namespace gezi {
 						add(unameIsEnNum, "UnameIsEnNum");
 					}
 				}
-				uint nowFourmId = postsInfo.fids[0];
+				uint nowFourmId = nowPostInfo.forumId;
 
 				{ //用户的吧等级信息
 					UserLikeForumInfo& userLikeForumInfo = _urateInfo.userLikeForumInfo;
@@ -134,7 +142,7 @@ namespace gezi {
 
 					double nowForumPhotoRatio = (userNowForumPostNumInfo.numPhotos + 1) / (double)(userPostNumInfo.numPhotos + 1);
 					add(nowForumPhotoRatio, "NowForumPhotoRatio");
-				} 
+				}
 			}
 
 		private:

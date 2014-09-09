@@ -27,10 +27,17 @@ namespace tieba {
 			LOG(WARNING) << "get_post_info fail: " << pid;
 			return urateInfo;
 		}
-		
+		urateInfo.nowPostInfo = move(postInfo);
+
 		uint uid = postInfo.userId;
 		
 		urateInfo.postsInfo = get_user_posts_info_until(postInfo);
+
+		if (urateInfo.postsInfo.userId != uid)
+		{ //没有帖子信息是不行的 因为用到当前帖子信息
+			LOG(WARNING) << "get_user_posts_info_until fail: " << pid;
+		}
+
 		urateInfo.userInfo = get_user_info(uid);
 		urateInfo.userLikeForumInfo = get_user_like_forum_info(uid);
 		urateInfo.userPostNumInfo = get_user_post_num_info(uid);

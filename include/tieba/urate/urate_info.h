@@ -21,6 +21,7 @@ namespace tieba {
 	struct UrateInfo
 	{
 		uint64 postId = 0;
+		PostInfo nowPostInfo; //当前帖的信息
 		UserPostsInfo postsInfo; //用户发帖历史信息
 		UserInfo userInfo; //用户基本属性信息
 		UserLikeForumInfo userLikeForumInfo; //用户喜欢的吧属性

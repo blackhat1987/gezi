@@ -91,8 +91,12 @@ void run()
 #pragma omp parallel for
 	for (size_t j = i; j < pids.size(); j++)
 	{
+		Pval2(j, pids[j]);
 		Features fe = gen_features(pids[j]);
-		write_table(fe, labels[j], ofsFeatures, pids[j]);
+#pragma  omp critical 
+		{
+			write_table(fe, labels[j], ofsFeatures, pids[j]);
+		}
 	}
 }
 

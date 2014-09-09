@@ -19,8 +19,7 @@
 namespace gezi {
 namespace tieba {
 	
-	//用户当当前位置注册多少天？ 
-	inline int reg_days(uint64 nowTime, uint64 regTime)
+	inline uint64 reg_span(uint64 nowTime, uint64 regTime)
 	{
 		uint64 default_regtime = 1071666302; //贴吧大概初始时间
 
@@ -28,13 +27,20 @@ namespace tieba {
 		{
 			regTime = default_regtime;
 		}
-		
+
 		if (nowTime < regTime)
 		{
 			regTime = nowTime;
 		}
-		
+
 		uint64 span = nowTime - regTime;
+		return span;
+	}
+
+	//用户当当前位置注册多少天？ 
+	inline int reg_days(uint64 nowTime, uint64 regTime)
+	{
+		uint64 span = reg_span(nowTime, regTime);
 		uint64 spanDays = span / kOneDay;
 		return spanDays;
 	}

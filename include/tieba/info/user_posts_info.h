@@ -36,7 +36,6 @@ namespace tieba {
 		try
 		{
 			auto& m = root["post"]["post"];
-			info.numPosts = m.size();
 			for (auto& jsonInfo : m)
 			{
 				info.pids.push_back(UINT64(jsonInfo["post_id"].asString()));
@@ -50,11 +49,15 @@ namespace tieba {
 				info.contents.push_back(jsonInfo["content"].asString());
 				info.isPostsDeleted.push_back(false); //如果需要通过删帖接口获取
 			}
-			info.userId = uid;
+			info.numPosts = m.size(); //前面出现任何差错都不允许 
+			if (info.numPosts > 0)
+			{
+				info.userId = uid;
+			}
 		}
 		catch (...)
 		{
-			LOG(WARNING) << "get json value fail";
+			LOG(WARNING) << "get json value fail " << jsonStr << " url: " << url;
 		}
 		return info;
 	}
