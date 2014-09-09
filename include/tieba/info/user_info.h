@@ -47,7 +47,7 @@ namespace gezi {
 			bool ret = reader.parse(jsonStr, root);
 			if (!ret)
 			{
-				LOG(WARNING) << "json parse fail";
+				LOG(WARNING) << "json parse fail: " << jsonStr << " url: " << url;
 				return info;
 			}
 			try

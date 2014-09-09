@@ -34,7 +34,7 @@ namespace tieba {
 		urateInfo.postsInfo = get_user_posts_info_until(postInfo);
 
 		if (urateInfo.postsInfo.userId != uid)
-		{ //没有帖子信息是不行的 因为用到当前帖子信息
+		{ //没有帖子信息
 			LOG(WARNING) << "get_user_posts_info_until fail: " << pid;
 		}
 
