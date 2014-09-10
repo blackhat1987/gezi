@@ -498,19 +498,22 @@ namespace gezi {
 			static int _strategy = 0; //是否使用pos tag 等等
 			return _strategy;
 		}
-	private:
-		//scw_conf_t* pgconf;
-		SegHandle _handle;
+		
 		static SegHandle& handle()
 		{
 			static SegHandle _handle;
 			return _handle;
 		}
+
 		static int& flag(int flag_ = 0)
 		{//dynfloag 是否开启crf等 当前主要考虑设置是否开启crf
 			static int _flag = flag_;
 			return _flag;
 		}
+
+	private:
+		//scw_conf_t* pgconf;
+		SegHandle _handle;
 	};
 
 	//util
