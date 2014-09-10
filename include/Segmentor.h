@@ -501,7 +501,7 @@ namespace gezi {
 		
 		static SegHandle& handle()
 		{
-			static SegHandle _handle;
+			static thread_local SegHandle _handle;
 			return _handle;
 		}
 
