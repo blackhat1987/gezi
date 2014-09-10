@@ -92,7 +92,7 @@ namespace gezi {
 		int length;
 		int offset;
 		int weight;
-		SegNode() = default;	
+		SegNode() = default;
 		SegNode(string word_, int length_, int offset_, int weight_)
 			:word(word_), length(length_), offset(offset_), weight(weight_)
 		{
@@ -125,9 +125,8 @@ namespace gezi {
 		//保留 不初始化资源的初始接口 好处是比如需要读取配置文件后再初始Segmentor 如果没有
 		//需要使用shared_ptr方式用指针 达到延迟初始化 这样不方便SharedSegmentor设计
 		Segmentor(int seg_buff_size = SegHandle::SEG_BUFF_SIZE)
-			:_buf_size(seg_buff_size)
 		{
-			_handle.init(_buf_size); //在这之前需要先调用 Segmentor::init
+			_handle.init(seg_buff_size); //在这之前需要先调用 Segmentor::init
 			VLOG(3) << "Segmentor handle init ok";
 		}
 
@@ -156,17 +155,23 @@ namespace gezi {
 				split_dict() = NULL;
 			}
 		}
-		//理论上通过这个 可以配置CRF开关 覆盖配置文件中的crf开关 但是测试无效　TRACE: 04-16 13:38:28:   * 0 Do not load CRF model, please check scw.conf-->Scw_crf = 1? 原因是要设置1 然后这里可以屏蔽crf
-		Segmentor& set_flag(int flag)
+		static void Uninit()
 		{
-			_flag = flag;
+			handle().clear();
+			uninit();
+		}
+		//理论上通过这个 可以配置CRF开关 覆盖配置文件中的crf开关 但是测试无效　TRACE: 04-16 13:38:28:   * 0 Do not load CRF model, please check scw.conf-->Scw_crf = 1? 原因是要设置1 然后这里可以屏蔽crf
+		Segmentor& set_flag(int flag_)
+		{
+			flag() = flag_;
+			PVAL(flag());
 			return *this;
 		}
 
-		Segmentor& set_buff_size(int buff_size)
+		static void SegFlag(int flag_)
 		{
-			_buf_size = buff_size;
-			return *this;
+			flag() = flag_;
+			PVAL(flag());
 		}
 
 		static bool init(string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
@@ -174,12 +179,20 @@ namespace gezi {
 			return init(data_dir.c_str(), type, conf_path.c_str());
 		}
 
+		static bool Init(int seg_buff_size = SegHandle::SEG_BUFF_SIZE, string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
+		{
+			bool ret = init(data_dir.c_str(), type, conf_path.c_str());
+			handle().init(seg_buff_size);
+			return ret;
+		}
+
+
 		//输入是带有SegHandle的 可以作为static其实 static bool seg_words(string input, SegHandle& handle)
 		//Segmentor::segment(input, handle) @TODO
-		bool seg_words(string input, SegHandle& handle)
+		static bool seg_words(string input, SegHandle& handle)
 		{
 			//---------分词
-			if (scw_segment_words(pwdict(), handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)_flag) < 0)
+			if (scw_segment_words(pwdict(), handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)flag()) < 0)
 			{
 				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
 				return false;
@@ -216,10 +229,10 @@ namespace gezi {
 		}
 
 		//@TODO can be static with handle outside Segmentor
-		bool segment(string input, SegHandle& handle, int type = SEG_WPCOMP)
+		static bool segment(string input, SegHandle& handle, int type = SEG_WPCOMP)
 		{
 			//---------分词
-			int* pflag = _flag == 0 ? NULL : &_flag;
+			int* pflag = flag() == 0 ? NULL : &flag();
 			if (scw_segment_words(pwdict(), handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)pflag) < 0)
 			{
 				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
@@ -247,7 +260,7 @@ namespace gezi {
 			return true;
 		}
 
-		bool segment(string input, SegHandle& handle, vector<string>& result,
+		static bool segment(string input, SegHandle& handle, vector<string>& result,
 			int type = SEG_WPCOMP)
 		{
 			bool ret = segment(input, handle, type);
@@ -262,7 +275,7 @@ namespace gezi {
 			}
 		}
 
-		string segment(string input, SegHandle& handle, string sep, int type = SEG_WPCOMP)
+		static string segment(string input, SegHandle& handle, string sep, int type = SEG_WPCOMP)
 		{
 			bool ret = segment(input, handle, type);
 			if (!ret || handle.nresult < 1)
@@ -277,12 +290,20 @@ namespace gezi {
 			}
 			return ss.str();
 		}
+
 		//快捷接口
 		vector<string> segment(string input, int type = SEG_WPCOMP)
 		{
 			vector<string> result;
-			//segment(input, GetSegHandle(), result, type);
 			segment(input, _handle, result, type);
+			return result;
+		}
+
+		//快捷接口
+		static vector<string> Segment(string input, int type = SEG_WPCOMP)
+		{
+			vector<string> result;
+			segment(input, handle(), result, type);
 			return result;
 		}
 
@@ -291,10 +312,19 @@ namespace gezi {
 			return segment(input, _handle, result, type);
 		}
 
+		static bool Segment(string input, vector<string>& result, int type = SEG_WPCOMP)
+		{
+			return segment(input, handle(), result, type);
+		}
+
 		string segment(string input, string sep, int type = SEG_WPCOMP)
 		{
-			//return segment(input, GetSegHandle(), sep, type);
 			return segment(input, _handle, sep, type);
+		}
+
+		static string Segment(string input, string sep, int type = SEG_WPCOMP)
+		{
+			return segment(input, handle(), sep, type);
 		}
 
 		//主要为了python封装的分词获取offset,weight信息
@@ -310,6 +340,19 @@ namespace gezi {
 			}
 			return true;
 		}
+
+		static bool Segment(string input, vector<SegNode>& result, int type = SEG_WPCOMP)
+		{
+			bool ret = segment(input, handle(), type);
+			if (!ret)
+				return false;
+			for (int i = 0; i < handle().nresult; i++)
+			{
+				result.push_back(SegNode(handle().tokens[i].buffer, handle().tokens[i].length,
+					handle().tokens[i].offset, handle().tokens[i].weight));
+			}
+			return true;
+		}
 		/*vector<string> segment(string input, )*/
 		//  //返回按照unicode的切分长度序列
 		//  vector<int> segment_w(string input, SegHandle& handle, int type = SEG_WPCOMP)
@@ -318,7 +361,7 @@ namespace gezi {
 		//    
 		//  }
 
-		SegHandle& handle()
+		SegHandle& get_handle()
 		{
 			return _handle;
 		}
@@ -383,7 +426,7 @@ namespace gezi {
 			return _handle;
 			}*/
 
-		int merge_newword(SegHandle& handle)
+		static int merge_newword(SegHandle& handle)
 		{
 			scw_newword_t* pnewword = handle.pout->pnewword;
 			scw_out_t* pout = handle.pout;
@@ -458,8 +501,16 @@ namespace gezi {
 	private:
 		//scw_conf_t* pgconf;
 		SegHandle _handle;
-		int _flag = 0; //dynfloag 是否开启crf等 当前主要考虑设置是否开启crf
-		int _buf_size = SegHandle::SEG_BUFF_SIZE;
+		static SegHandle& handle()
+		{
+			static SegHandle _handle;
+			return _handle;
+		}
+		static int& flag(int flag_ = 0)
+		{//dynfloag 是否开启crf等 当前主要考虑设置是否开启crf
+			static int _flag = flag_;
+			return _flag;
+		}
 	};
 
 	//util

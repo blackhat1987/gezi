@@ -33,12 +33,13 @@ void run()
 
 TEST(get_full_posts_info, func)
 {
-	tieba::FullPostsInfo info = tieba::get_full_posts_info(3273051494, FLAGS_res_num);
+	tieba::FullPostsInfo info = tieba::get_full_posts_info(3286155511, FLAGS_res_num, 0, 1);
 	Pval5(info.threadId, info.title, info.forumId, info.forumName, info.isDeleted);
-	Pval(info.posts.size());
+	Pval(info.numPosts);
 	for (size_t i = 0; i < info.size(); i++)
 	{
 		Pval2(info.unames[i], info.contents[i]);
+		PrintVec(info.commentsVec[i], content);
 	}
 }
 

@@ -199,6 +199,25 @@ namespace gezi {
 						info.uids.push_back(post["user_id"].asUInt());
 						info.unames.push_back(post["username"].asString());
 						info.ips.push_back(post["ip"].asUInt64());
+						info.pids.push_back(post["post_id"].asUInt64());
+						info.times.push_back(post["now_time"].asUInt64());
+						info.commentsVec.push_back(vector<CommentInfo>());
+						if (post.isMember("comment_info"))
+						{
+							for (auto& jsonComment : post["comment_info"])
+							{
+								CommentInfo commentInfo;
+								commentInfo.threadId = UINT64(jsonComment["thread_id"].asString());
+								commentInfo.postId = UINT64(jsonComment["post_id"].asString());
+								commentInfo.commentId = UINT64(jsonComment["comment_id"].asString());
+								commentInfo.userName = jsonComment["username"].asString();
+								commentInfo.userId = UINT(jsonComment["user_id"].asString());
+								commentInfo.ip = jsonComment["ip"].asUInt64();
+								commentInfo.createTime = jsonComment["now_time"].asUInt64();
+								commentInfo.content = jsonComment["content"].asString();
+								info.commentsVec.back().emplace_back(commentInfo);
+							}
+						}
 						i++;
 					}
 				}

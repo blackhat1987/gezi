@@ -17,56 +17,82 @@
 #include "tieba/get_parsed_info.h"
 #include "tools/content_process.h"
 namespace gezi {
-namespace tieba {
-	inline UrateInfo get_urate_info(uint64 pid, int historyNum = 25, bool needUrlInfo = true)
-	{
-		UrateInfo urateInfo;
-		PostInfo postInfo = get_post_info(pid);
-		if (postInfo.postId != pid)
+	namespace tieba {
+
+		inline void get_urate_info_from_uid(uint64 uid, UrateInfo& urateInfo)
 		{
-			LOG(WARNING) << "get_post_info fail: " << pid;
+			urateInfo.userInfo = get_user_info(uid);
+			urateInfo.userLikeForumInfo = get_user_like_forum_info(uid);
+			urateInfo.userPostNumInfo = get_user_post_num_info(uid);
+		}
+
+		inline UrateInfo get_urate_info_from_uid(uint64 uid)
+		{
+			UrateInfo urateInfo;
+			get_urate_info_from_uid(uid, urateInfo);
 			return urateInfo;
 		}
-		urateInfo.nowPostInfo = move(postInfo);
 
-		uint uid = postInfo.userId;
-		
-		urateInfo.postsInfo = get_user_posts_info_until(postInfo);
-
-		if (urateInfo.postsInfo.userId != uid)
-		{ //没有帖子信息
-			LOG(WARNING) << "get_user_posts_info_until fail: " << pid;
-		}
-
-		urateInfo.userInfo = get_user_info(uid);
-		urateInfo.userLikeForumInfo = get_user_like_forum_info(uid);
-		urateInfo.userPostNumInfo = get_user_post_num_info(uid);
-		
-		set<uint> fids(urateInfo.postsInfo.fids.begin(), urateInfo.postsInfo.fids.end());
-		for (uint fid : fids)
+		inline UrateInfo get_urate_info(uint64 pid, bool needHistory = true, int historyNum = 25, bool needUrlInfo = true)
 		{
-			urateInfo.userPostNumInForum[fid] = get_user_post_num_info(uid, fid);
-		}
-		
-		if (needUrlInfo)
-		{
-			vector<string> urlVec;
-			for (auto& content : urateInfo.postsInfo.contents)
+			UrateInfo urateInfo;
+			PostInfo postInfo = get_post_info(pid);
+			if (postInfo.postId != pid)
 			{
-				vector<string> urls = get_urls(content);
-				for (auto url : urls)
-				{
-					urlVec.push_back(url);
-				}
-				urateInfo.urlsVec.emplace_back(urls);
+				LOG(WARNING) << "get_post_info fail: " << pid;
+				return urateInfo;
 			}
-			urateInfo.urlInfoMap = get_urls_info_map(urlVec);
+			urateInfo.nowPostInfo = move(postInfo);
+
+			uint uid = postInfo.userId;
+
+			get_urate_info_from_uid(uid, urateInfo);
+
+			if (!needHistory)
+			{
+				urateInfo.postId = pid;
+				return urateInfo;
+			}
+
+			urateInfo.postsInfo = get_user_posts_info_until(postInfo);
+
+			if (urateInfo.postsInfo.userId != uid)
+			{ //没有帖子信息
+				LOG(WARNING) << "get_user_posts_info_until fail: " << pid;
+			}
+
+			set<uint> fids(urateInfo.postsInfo.fids.begin(), urateInfo.postsInfo.fids.end());
+			for (uint fid : fids)
+			{
+				urateInfo.userPostNumInForum[fid] = get_user_post_num_info(uid, fid);
+			}
+
+			if (needUrlInfo)
+			{
+				vector<string> urlVec;
+				for (auto& content : urateInfo.postsInfo.contents)
+				{
+					vector<string> urls = get_urls(content);
+					for (auto url : urls)
+					{
+						urlVec.push_back(url);
+					}
+					urateInfo.urlsVec.emplace_back(urls);
+				}
+				urateInfo.urlInfoMap = get_urls_info_map(urlVec);
+			}
+
+			urateInfo.postId = pid;
+			return urateInfo;
 		}
 
-		urateInfo.postId = pid;
-		return urateInfo;
-	}
-}  //----end of namespace tieba
+		inline UrateInfo get_full_urate_info(uint64 pid, int historyNum = 25, bool needUrl = true)
+		{
+			return get_urate_info(pid, true, historyNum, needUrl);
+		}
+
+
+	}  //----end of namespace tieba
 }  //----end of namespace gezi
 
 #endif  //----end of TIEBA_URATE_GET_URATE_INFO_H_

@@ -7,7 +7,7 @@
  *
  *          \date   2014-03-03 09:59:08.057036
  *
- *  \Description:  主要针对贴吧文本
+ *  \Description:  主要针对贴吧文本 @TODO 应该是content_parse
  *  ==============================================================================
  */
 
@@ -46,9 +46,32 @@ namespace gezi {
 		string atPattern = "class=\"at\">@(.{2,20})</a>";
 		return ufo::reg_search(src, atPattern);
 	}
+
 	inline bool contains_at(string src)
 	{
 		return !get_ats(src).empty();
+	}
+
+	inline vector<string> get_videos(string src)
+	{
+		string videoPattern = "<embed.*? src=\"(. + ? )\".*?>";
+		return ufo::reg_search(src, videoPattern);
+	}
+
+	inline bool contains_video(string src)
+	{
+		return !get_videos(src).empty();
+	}
+
+	inline vector<string> get_emails(string src)
+	{
+		string emailPattern = "[a-zA-Z0-9]+@[a-zA-Z0-9\-\_]{2,}\.(com|cn|tk|biz|org|edu|net|tw|us|info|gov)";
+		return ufo::reg_search(src, emailPattern);
+	}
+
+	inline bool contains_emails(string src)
+	{
+		return !get_emails(src).empty();
 	}
 
 	inline vector<string> get_urls(string src)

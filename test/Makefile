@@ -120,14 +120,6 @@ DEP_INCPATH=-I../../../../../../com/btest/gtest \
   -I../../../../../../third-64/glog/include \
   -I../../../../../../third-64/glog/output \
   -I../../../../../../third-64/glog/output/include \
-  -I../../../../../../third-64/libcurl \
-  -I../../../../../../third-64/libcurl/include \
-  -I../../../../../../third-64/libcurl/output \
-  -I../../../../../../third-64/libcurl/output/include \
-  -I../../../../../../third-64/openssl \
-  -I../../../../../../third-64/openssl/include \
-  -I../../../../../../third-64/openssl/output \
-  -I../../../../../../third-64/openssl/output/include \
   -I../../../../../../third-64/pcre \
   -I../../../../../../third-64/pcre/include \
   -I../../../../../../third-64/pcre/output \
@@ -135,11 +127,7 @@ DEP_INCPATH=-I../../../../../../com/btest/gtest \
   -I../../../../../../third-64/tcmalloc \
   -I../../../../../../third-64/tcmalloc/include \
   -I../../../../../../third-64/tcmalloc/output \
-  -I../../../../../../third-64/tcmalloc/output/include \
-  -I../../../../../../third-64/zlib \
-  -I../../../../../../third-64/zlib/include \
-  -I../../../../../../third-64/zlib/output \
-  -I../../../../../../third-64/zlib/output/include
+  -I../../../../../../third-64/tcmalloc/output/include
 
 #============ CCP vars ============
 CCHECK=@ccheck.py
@@ -151,11 +139,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=0139bc70b8423fbfae852165bc42edba  COMAKE
+COMAKE_MD5=d59bef5c7ef3c741e8e8d44350b15b29  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf test_random test_shared_ptr test_binfinder test_seralize test_string test_bitop test_featurevector test_split test_tieba_get_info test_content_process test_cached_fetcher test_bind test_lrumap test_seralize_xml 
+all:comake2_makefile_check test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf test_random test_shared_ptr test_binfinder test_seralize test_string test_bitop test_featurevector test_split test_tieba_get_info test_content_process test_cached_fetcher test_bind test_lrumap test_seralize_xml test_thread_local 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -245,6 +233,8 @@ clean:ccpclean
 	rm -rf ./output/bin/test_lrumap
 	rm -rf test_seralize_xml
 	rm -rf ./output/bin/test_seralize_xml
+	rm -rf test_thread_local
+	rm -rf ./output/bin/test_thread_local
 	rm -rf test_lambda_test_lambda.o
 	rm -rf test_bins_test_bins.o
 	rm -rf test_datetime_test_datetime.o
@@ -550,6 +540,17 @@ clean:ccpclean
 	rm -rf ../src/json/test_seralize_xml_json_reader.o
 	rm -rf ../src/json/test_seralize_xml_json_value.o
 	rm -rf ../src/json/test_seralize_xml_json_writer.o
+	rm -rf test_thread_local_test_thread_local.o
+	rm -rf ../src/model/test_thread_local_LinearModel.o
+	rm -rf ../src/model/test_thread_local_ModelFactory.o
+	rm -rf ../src/model/test_thread_local_Predictor.o
+	rm -rf ../src/model/test_thread_local_RandForestModel.o
+	rm -rf ../src/model/test_thread_local_Score.o
+	rm -rf ../src/model/test_thread_local_SharedPredictor.o
+	rm -rf ../src/model/test_thread_local_SvmModel.o
+	rm -rf ../src/json/test_thread_local_json_reader.o
+	rm -rf ../src/json/test_thread_local_json_value.o
+	rm -rf ../src/json/test_thread_local_json_writer.o
 
 .PHONY:dist
 dist:
@@ -630,9 +631,6 @@ test_lambda:test_lambda_test_lambda.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -641,10 +639,9 @@ test_lambda:test_lambda_test_lambda.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -714,9 +711,6 @@ test_bins:test_bins_test_bins.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -725,10 +719,9 @@ test_bins:test_bins_test_bins.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -798,9 +791,6 @@ test_datetime:test_datetime_test_datetime.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -809,10 +799,9 @@ test_datetime:test_datetime_test_datetime.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -882,9 +871,6 @@ test_content_filter:test_content_filter_test_content_filter.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -893,10 +879,9 @@ test_content_filter:test_content_filter_test_content_filter.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -986,9 +971,6 @@ test_regex:test_regex_test_regex.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -997,10 +979,9 @@ test_regex:test_regex_test_regex.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -1090,9 +1071,6 @@ test_regex2:test_regex2_test_regex2.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -1101,10 +1079,9 @@ test_regex2:test_regex2_test_regex2.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -1194,9 +1171,6 @@ test_encode:test_encode_test_encode.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -1205,10 +1179,9 @@ test_encode:test_encode_test_encode.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -1298,9 +1271,6 @@ test_json:test_json_test_json.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -1309,10 +1279,9 @@ test_json:test_json_test_json.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -1402,9 +1371,6 @@ test_escape:test_escape_test_escape.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -1413,10 +1379,9 @@ test_escape:test_escape_test_escape.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -1506,9 +1471,6 @@ test_other:test_other_test_other.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -1517,10 +1479,9 @@ test_other:test_other_test_other.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -1610,9 +1571,6 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -1621,10 +1579,9 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -1694,9 +1651,6 @@ openmp_hello:openmp/openmp_hello_hello.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -1705,10 +1659,9 @@ openmp_hello:openmp/openmp_hello_hello.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -1798,9 +1751,6 @@ openmp_test:openmp/openmp_test_test.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -1809,10 +1759,9 @@ openmp_test:openmp/openmp_test_test.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -1882,9 +1831,6 @@ test_exception:test_exception_test_exception.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -1893,10 +1839,9 @@ test_exception:test_exception_test_exception.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -1966,9 +1911,6 @@ test_map_util:test_map_util_test_map_util.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -1977,10 +1919,9 @@ test_map_util:test_map_util_test_map_util.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -2070,9 +2011,6 @@ test_seg:test_seg_test_seg.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -2081,10 +2019,9 @@ test_seg:test_seg_test_seg.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -2174,9 +2111,6 @@ test_identifer:test_identifer_test_identifer.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -2185,10 +2119,9 @@ test_identifer:test_identifer_test_identifer.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -2278,9 +2211,6 @@ test_linear:test_linear_test_linear.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -2289,10 +2219,9 @@ test_linear:test_linear_test_linear.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -2382,9 +2311,6 @@ test_pinyin:test_pinyin_test_pinyin.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -2393,10 +2319,9 @@ test_pinyin:test_pinyin_test_pinyin.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -2486,9 +2411,6 @@ test_namepattern:test_namepattern_test_namepattern.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -2497,10 +2419,9 @@ test_namepattern:test_namepattern_test_namepattern.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -2590,9 +2511,6 @@ test_conf:test_conf_test_conf.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -2601,10 +2519,9 @@ test_conf:test_conf_test_conf.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -2694,9 +2611,6 @@ test_random:test_random_test_random.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -2705,10 +2619,9 @@ test_random:test_random_test_random.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -2798,9 +2711,6 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -2809,10 +2719,9 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -2902,9 +2811,6 @@ test_binfinder:test_binfinder_test_binfinder.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -2913,10 +2819,9 @@ test_binfinder:test_binfinder_test_binfinder.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -3006,9 +2911,6 @@ test_seralize:test_seralize_test_seralize.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -3017,10 +2919,9 @@ test_seralize:test_seralize_test_seralize.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -3110,9 +3011,6 @@ test_string:test_string_test_string.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -3121,10 +3019,9 @@ test_string:test_string_test_string.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -3214,9 +3111,6 @@ test_bitop:test_bitop_test_bitop.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -3225,10 +3119,9 @@ test_bitop:test_bitop_test_bitop.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -3318,9 +3211,6 @@ test_featurevector:test_featurevector_test_featurevector.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -3329,10 +3219,9 @@ test_featurevector:test_featurevector_test_featurevector.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -3422,9 +3311,6 @@ test_split:test_split_test_split.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -3433,10 +3319,9 @@ test_split:test_split_test_split.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -3526,9 +3411,6 @@ test_tieba_get_info:test_tieba_get_info_test_tieba_get_info.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -3537,10 +3419,9 @@ test_tieba_get_info:test_tieba_get_info_test_tieba_get_info.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -3610,9 +3491,6 @@ test_content_process:test_content_process_test_content_process.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -3621,10 +3499,9 @@ test_content_process:test_content_process_test_content_process.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -3714,9 +3591,6 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -3725,10 +3599,9 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -3818,9 +3691,6 @@ test_bind:test_bind_test_bind.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -3829,10 +3699,9 @@ test_bind:test_bind_test_bind.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -3922,9 +3791,6 @@ test_lrumap:test_lrumap_test_lrumap.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -3933,10 +3799,9 @@ test_lrumap:test_lrumap_test_lrumap.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
@@ -4026,9 +3891,6 @@ test_seralize_xml:test_seralize_xml_test_seralize_xml.o \
   ../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../third-64/libcurl/lib/libcurl.a \
-  ../../../../../../third-64/openssl/lib/libcrypto.a \
-  ../../../../../../third-64/openssl/lib/libssl.a \
   ../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -4037,16 +3899,115 @@ test_seralize_xml:test_seralize_xml_test_seralize_xml.o \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
-  ../../../../../../third-64/zlib/lib/libz.a -lpthread \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
   -lrt \
-  -ldl \
   -lldap \
   -lcurl \
   -static-libgcc \
   -static-libstdc++ -Xlinker "-)" -o test_seralize_xml
 	mkdir -p ./output/bin
 	cp -f --link test_seralize_xml ./output/bin
+
+test_thread_local:test_thread_local_test_thread_local.o \
+  ../src/model/test_thread_local_LinearModel.o \
+  ../src/model/test_thread_local_ModelFactory.o \
+  ../src/model/test_thread_local_Predictor.o \
+  ../src/model/test_thread_local_RandForestModel.o \
+  ../src/model/test_thread_local_Score.o \
+  ../src/model/test_thread_local_SharedPredictor.o \
+  ../src/model/test_thread_local_SvmModel.o \
+  ../src/json/test_thread_local_json_reader.o \
+  ../src/json/test_thread_local_json_value.o \
+  ../src/json/test_thread_local_json_writer.o \
+  ../include/tools/pinyin/libPYNotation.a
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_thread_local[0m']"
+	$(CXX) test_thread_local_test_thread_local.o \
+  ../src/model/test_thread_local_LinearModel.o \
+  ../src/model/test_thread_local_ModelFactory.o \
+  ../src/model/test_thread_local_Predictor.o \
+  ../src/model/test_thread_local_RandForestModel.o \
+  ../src/model/test_thread_local_Score.o \
+  ../src/model/test_thread_local_SharedPredictor.o \
+  ../src/model/test_thread_local_SvmModel.o \
+  ../src/json/test_thread_local_json_reader.o \
+  ../src/json/test_thread_local_json_value.o \
+  ../src/json/test_thread_local_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
+  -lrt \
+  -lldap \
+  -lcurl \
+  -static-libgcc \
+  -static-libstdc++ -Xlinker "-)" -o test_thread_local
+	mkdir -p ./output/bin
+	cp -f --link test_thread_local ./output/bin
 
 test_lambda_test_lambda.o:test_lambda.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_lambda_test_lambda.o[0m']"
@@ -5267,6 +5228,50 @@ test_seralize_xml_test_seralize_xml.o:test_seralize_xml.cc
 ../src/json/test_seralize_xml_json_writer.o:../src/json/json_writer.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_seralize_xml_json_writer.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_seralize_xml_json_writer.o ../src/json/json_writer.cpp
+
+test_thread_local_test_thread_local.o:test_thread_local.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_thread_local_test_thread_local.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_thread_local_test_thread_local.o test_thread_local.cc
+
+../src/model/test_thread_local_LinearModel.o:../src/model/LinearModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_thread_local_LinearModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_thread_local_LinearModel.o ../src/model/LinearModel.cpp
+
+../src/model/test_thread_local_ModelFactory.o:../src/model/ModelFactory.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_thread_local_ModelFactory.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_thread_local_ModelFactory.o ../src/model/ModelFactory.cpp
+
+../src/model/test_thread_local_Predictor.o:../src/model/Predictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_thread_local_Predictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_thread_local_Predictor.o ../src/model/Predictor.cpp
+
+../src/model/test_thread_local_RandForestModel.o:../src/model/RandForestModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_thread_local_RandForestModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_thread_local_RandForestModel.o ../src/model/RandForestModel.cpp
+
+../src/model/test_thread_local_Score.o:../src/model/Score.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_thread_local_Score.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_thread_local_Score.o ../src/model/Score.cpp
+
+../src/model/test_thread_local_SharedPredictor.o:../src/model/SharedPredictor.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_thread_local_SharedPredictor.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_thread_local_SharedPredictor.o ../src/model/SharedPredictor.cpp
+
+../src/model/test_thread_local_SvmModel.o:../src/model/SvmModel.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/model/test_thread_local_SvmModel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/model/test_thread_local_SvmModel.o ../src/model/SvmModel.cpp
+
+../src/json/test_thread_local_json_reader.o:../src/json/json_reader.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_thread_local_json_reader.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_thread_local_json_reader.o ../src/json/json_reader.cpp
+
+../src/json/test_thread_local_json_value.o:../src/json/json_value.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_thread_local_json_value.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_thread_local_json_value.o ../src/json/json_value.cpp
+
+../src/json/test_thread_local_json_writer.o:../src/json/json_writer.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m../src/json/test_thread_local_json_writer.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o ../src/json/test_thread_local_json_writer.o ../src/json/json_writer.cpp
 
 endif #ifeq ($(shell uname -m),x86_64)
 

@@ -8,7 +8,6 @@
  *          \date   2014-09-04 08:05:51.995543
  *
  *  \Description: 根据pid获取帖子信息
- *
  *  ==============================================================================
  */
 
@@ -40,14 +39,29 @@ TEST(get_post_info, func)
 	Pval5(info.postId, info.forumName, info.userName, info.title, info.content);
 	Pval5(info.forumId, info.threadId, info.userId, info.ip, info.createTime);
 	}
+
+	{
+		tieba::PostInfo info = tieba::get_post_info(57218425529);
+		Pval5(info.postId, info.forumName, info.userName, info.title, info.content);
+		Pval5(info.forumId, info.threadId, info.userId, info.ip, info.createTime);
+		Pval2(info.quoteInfo.postId, info.quoteInfo.content);
+	}
+	{
+		tieba::PostInfo info = tieba::get_post_info(57218499162);
+		Pval5(info.postId, info.forumName, info.userName, info.title, info.content);
+		Pval5(info.forumId, info.threadId, info.userId, info.ip, info.createTime);
+		Pval2(info.quoteInfo.postId, info.quoteInfo.content);
+	}
 }
 
 TEST(get_posts_info, func)
 {
 	auto infos = tieba::get_posts_info(vector<uint64>({ 54648048128, 54648202523 }));
-	auto info = infos.back();
-	Pval5(info.pid, info.forumName, info.uname, info.title, info.content);
-	Pval5(info.fid, info.tid, info.uid, info.ip, info.time);
+	for (auto& info : infos)
+	{
+		Pval5(info.forumId, info.threadId, info.userId, info.ip, info.createTime);
+	}
+	
 	PrintVec2(infos, title, content);
 }
 

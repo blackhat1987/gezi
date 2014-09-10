@@ -21,6 +21,32 @@
 namespace gezi {
 	namespace tieba {
 
+		//楼中楼信息 PostInfo使用, 后面CommentInfo也是楼中楼信息 在FullPost楼信息里面使用
+		struct QuoteInfo
+		{
+			uint64 postId = 0; //指的是楼中楼对应的回复的pid
+			uint userId = 0;
+			string userName;
+			uint64 ip = 0;
+			string content; //楼中楼对应回复的内容
+		/*	'post_id' = > '57218429704',
+			'uname' = > '馄饨哥s',
+			'uid' = > 672041209,
+			'ip' = > 2365012337,
+			'content' = > '[图片]  单排  ds？',
+			'post_type' = > 1,*/
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & BOOST_SERIALIZATION_NVP(postId);
+				ar & BOOST_SERIALIZATION_NVP(userId);
+				ar & BOOST_SERIALIZATION_NVP(userName);
+				ar & BOOST_SERIALIZATION_NVP(ip);
+				ar & BOOST_SERIALIZATION_NVP(content);
+			}
+		};
+
 		struct PostInfo
 		{
 			uint64 postId = 0; 
@@ -33,10 +59,16 @@ namespace gezi {
 			string content;
 			string userName;
 			string forumName;
+			QuoteInfo quoteInfo;
 
 			bool IsThread()
 			{
 				return !startswith(title, "回复：");
+			}
+
+			bool IsQuote()
+			{
+				return quoteInfo.postId != 0;
 			}
 
 			friend class boost::serialization::access;
@@ -53,6 +85,22 @@ namespace gezi {
 				ar & BOOST_SERIALIZATION_NVP(content);
 				ar & BOOST_SERIALIZATION_NVP(userName);
 				ar & BOOST_SERIALIZATION_NVP(forumName);
+				ar & BOOST_SERIALIZATION_NVP(quoteInfo);
+			}
+		};
+
+		struct UrlInfo;
+		struct ExtendedPostInfo : public PostInfo
+		{
+			map<string, UrlInfo> urlInfoMap; //url信息  url->UrlInfo
+			vector<string> urls;
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(PostInfo);
+				ar & BOOST_SERIALIZATION_NVP(urlInfoMap);
+				ar & BOOST_SERIALIZATION_NVP(urls);
 			}
 		};
 
@@ -114,6 +162,51 @@ namespace gezi {
 			}
 		};
 
+		struct CommentInfo
+		{
+			uint64 threadId = 0;
+			uint64 postId = 0;    //楼中楼对应回复的pid
+			uint64 commentId = 0; //楼中楼本身的pid
+			string userName;
+			uint64 userId = 0;
+			uint64 ip = 0;
+			uint64 createTime = 0;
+			string content;
+			/*'thread_id' = > '3286155511',
+			'post_id' = > '57218429704',
+			'comment_id' = > '57218499162',
+			'username' = > 'Km消失',
+			'user_id' = > '157505881',
+			'ip' = > 1330276779,
+			'now_time' = > 1410312338,
+			'content' = > '现在也可以单排啊，难道是可以一人排进去？',
+			'ptype' = > 0,*/
+			bool operator == (const CommentInfo& other)
+			{ //for python wrapper 应该是boost.python的问题 vector<vector<CommentInfo> >需要
+				return commentId == other.commentId;
+			}
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & BOOST_SERIALIZATION_NVP(threadId);
+				ar & BOOST_SERIALIZATION_NVP(postId);
+				ar & BOOST_SERIALIZATION_NVP(commentId);
+				ar & BOOST_SERIALIZATION_NVP(userName);
+				ar & BOOST_SERIALIZATION_NVP(userId);
+				ar & BOOST_SERIALIZATION_NVP(ip);
+				ar & BOOST_SERIALIZATION_NVP(createTime);
+				ar & BOOST_SERIALIZATION_NVP(content);
+			}
+		};
+		typedef vector<CommentInfo> Comments;
+#ifdef GCCXML
+		struct PyHack_Comments
+		{
+			Comments comments; //hack for vector<Comments>  vector<vector
+		};
+#endif
+
 		struct FullPostsInfo
 		{
 			uint64 threadId = 0; //如果是0表示没有获取到信息 FullPostInfo数据无效
@@ -128,10 +221,15 @@ namespace gezi {
 			vector<uint64> times;
 			vector<string> unames;
 			vector<string> contents;
-
+			vector<Comments> commentsVec;
 			size_t size()
 			{
 				return pids.size();
+			}
+
+			const Comments& GetComments(int idx) const
+			{
+				return commentsVec[idx];
 			}
 
 			friend class boost::serialization::access;
@@ -150,6 +248,7 @@ namespace gezi {
 				ar & BOOST_SERIALIZATION_NVP(times);
 				ar & BOOST_SERIALIZATION_NVP(unames);
 				ar & BOOST_SERIALIZATION_NVP(contents);
+				ar & BOOST_SERIALIZATION_NVP(commentsVec);
 			}
 		};
 

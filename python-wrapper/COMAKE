@@ -91,6 +91,8 @@ LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -lcurl -ldl -rdynamic -L./ -lpytho
 #依赖模块e
 ImportConfigsFrom('..')
 CONFIGS('third-64/libcurl@base')
+CONFIGS('app/search/ksarch/store/proxy-lib/redis@base')
+CONFIGS('public/ub')
 
 #头文件路径.
 #INCPATHS('/home/users/chenghuige/.jumbo/include/python2.7 /home/users/chenghuige/.jumbo/include/ . ./include ./utils ./output ./output/include ./include/feature ./include/model ./include/numeric'.replace('./',RELATIVE_PATH))

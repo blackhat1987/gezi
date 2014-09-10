@@ -22,7 +22,6 @@ class FeaturesExtractor
 {
 public:
  //每个FeatureExtractor类对应有一个名字
-
 	FeaturesExtractor(string name = "")
 	: _name(name)
 	{
@@ -35,14 +34,12 @@ public:
 	}
 
 	//获取资源数据或者数据预处理
-
 	virtual void init()
 	{
 
 	}
 
 	//特征抽取部分
-
 	virtual void extract()
 	{
 

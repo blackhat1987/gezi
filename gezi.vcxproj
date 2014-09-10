@@ -171,6 +171,21 @@
     <ClInclude Include="include\stl_util.h" />
     <ClInclude Include="include\string_util.h" />
     <ClInclude Include="include\tieba\common_def.h" />
+    <ClInclude Include="include\tieba\feature\DictMatchExtractor.h" />
+    <ClInclude Include="include\tieba\feature\feature_extractor_util.h" />
+    <ClInclude Include="include\tieba\feature\IpExtractor.h" />
+    <ClInclude Include="include\tieba\feature\LanguageScoreExtractor.h" />
+    <ClInclude Include="include\tieba\feature\MediaExtractor.h" />
+    <ClInclude Include="include\tieba\feature\NumberExtractor.h" />
+    <ClInclude Include="include\tieba\feature\PlsaExtractor.h" />
+    <ClInclude Include="include\tieba\feature\SequenceExtractor.h" />
+    <ClInclude Include="include\tieba\feature\SimilarityExtractor.h" />
+    <ClInclude Include="include\tieba\feature\SundryExtractor.h" />
+    <ClInclude Include="include\tieba\feature\TextScoreExtractor.h" />
+    <ClInclude Include="include\tieba\feature\TimeInfoExtractor.h" />
+    <ClInclude Include="include\tieba\feature\UnusalCharExtractor.h" />
+    <ClInclude Include="include\tieba\feature\UnusalCnExtractor.h" />
+    <ClInclude Include="include\tieba\feature\UrateExtractor.h" />
     <ClInclude Include="include\tieba\feature\UserInfoExtractor.h" />
     <ClInclude Include="include\tieba\get_info.h" />
     <ClInclude Include="include\tieba\get_parsed_info.h" />
@@ -185,6 +200,7 @@
     <ClInclude Include="include\tieba\JsonParser.h" />
     <ClInclude Include="include\tieba\tieba_util.h" />
     <ClInclude Include="include\tieba\uname_util.h" />
+    <ClInclude Include="include\tieba\urate\extended_urate_info.h" />
     <ClInclude Include="include\tieba\urate\get_urate_info.h" />
     <ClInclude Include="include\tieba\urate\urate_info.h" />
     <ClInclude Include="include\tieba\util.h" />
@@ -261,6 +277,7 @@
     <ClCompile Include="test\test_shared_ptr.cc" />
     <ClCompile Include="test\test_split.cc" />
     <ClCompile Include="test\test_string.cc" />
+    <ClCompile Include="test\test_thread_local.cc" />
     <ClCompile Include="test\test_tieba_get_info.cc" />
     <ClCompile Include="test\tieba\test_get_delete_info.cc" />
     <ClCompile Include="test\tieba\test_get_forum_info.cc" />

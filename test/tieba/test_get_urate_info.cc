@@ -17,6 +17,7 @@
 #define protected public
 #include "common_util.h"
 #include "tieba/urate/get_urate_info.h"
+#include "tieba/urate/extended_urate_info.h"
 using namespace std;
 using namespace gezi;
 using namespace gezi::tieba;
@@ -48,6 +49,12 @@ TEST(get_urate_info, func)
 		serialize_util::load_xml("./test.data/urate_info.xml", info);
 		Pval3(info.postId, info.postsInfo.numPosts, info.postsInfo.titles[0]);
 	}
+}
+
+TEST(get_extended_urate_info, func)
+{
+	ExtendedUrateInfo info = get_urate_info(FLAGS_pid);
+	Pval3(info.postId, info.postsInfo.numPosts, info.postsInfo.titles[0]);
 }
 
 int main(int argc, char *argv[])

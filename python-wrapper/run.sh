@@ -5,6 +5,9 @@ cd ../include.python/
 gen-header-all.py
 cd tools
 gen-header-all.py
+cd redis 
+gen-header-all.py 
+cd ..
 cd ..
 cd tieba
 gen-header-all.py 

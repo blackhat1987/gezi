@@ -272,9 +272,9 @@ void WPvec(const T&vec, std::wostream& out = std::wcout, const wstring& end = L"
 
 #define PrintVec(vec, arg1) \
 	VLOG(5) << #vec <<" --- " << vec.size();\
-	for (size_t i = 0; i < vec.size(); i++) \
+	for (size_t i_ = 0; i_ < vec.size(); i_++) \
 		{  \
-	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(4) << i << vec[i].arg1; \
+	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(4) << i_ << vec[i_].arg1; \
 		}
 /**
  * 该函数可以打印数据类型为简单类型
@@ -298,10 +298,10 @@ void WPvec(const T&vec, std::wostream& out = std::wcout, const wstring& end = L"
 
 #define PrintVec2(vec, arg1, arg2) \
 	VLOG(5) << #vec <<" --- " << vec.size();\
-	for (size_t i = 0; i < vec.size(); i++) \
+	for (size_t i_ = 0; i_ < vec.size(); i_++) \
 		{  \
-	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1 << " " \
-	<< vec[i].arg2; \
+	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << vec[i_].arg1 << " " \
+	<< vec[i_].arg2; \
 		}
 
 #define PrintVec_(vec, arg1, file) \

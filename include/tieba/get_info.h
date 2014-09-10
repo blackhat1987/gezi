@@ -186,7 +186,7 @@ namespace gezi {
 		}
 
 		//获取整楼的数据
-		inline string get_full_posts_info_str(uint64 threadId, int resNum = 100, int offset = 0, int hasComment  =0, uint64 postId = 0)
+		inline string get_full_posts_info_str(uint64 threadId, int resNum = 100, int offset = 0, int hasComment = 0, uint64 postId = 0)
 		{
 			string url = (format("http://service.tieba.baidu.com/service/post?method=getFullPostsByThreadId&format=json&thread_id=%ld&res_num=%d&offset=%d&has_comment=%d&post_id=%ld") % threadId % resNum % offset % hasComment % postId).str();
 			return get_info_str(url);

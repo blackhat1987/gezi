@@ -90,7 +90,8 @@ if GCC_HIGH  == 1:
 		GCC_LDFLAGS  += ' -static-libgcc -static-libstdc++'
 
 #链接参数.
-LDFLAGS('-lpthread -lrt -ldl -lldap -lcurl', GCC_LDFLAGS)
+#LDFLAGS('-lpthread -lrt -ldl -lldap -lcurl', GCC_LDFLAGS)
+LDFLAGS('-lpthread -rdynamic -lrt -lldap -lcurl', GCC_LDFLAGS)
 
 #依赖模块
 ImportConfigsFrom('../')
@@ -145,3 +146,4 @@ Application('test_cached_fetcher',Sources('test_cached_fetcher.cc', srcs))
 Application('test_bind',Sources('test_bind.cc', srcs))
 Application('test_lrumap',Sources('test_lrumap.cc', srcs))
 Application('test_seralize_xml',Sources('test_seralize_xml.cc', srcs))
+Application('test_thread_local',Sources('test_thread_local.cc', srcs))

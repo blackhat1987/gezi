@@ -59,5 +59,7 @@
 
 #include "openmp_util.h"
 
+#include "ThreadLocalAnyMap.h"
+
 namespace gz = gezi;
 #endif  //----end of COMMON_UTIL_H_

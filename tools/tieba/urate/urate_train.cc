@@ -58,18 +58,10 @@ inline Features gen_features(uint64 pid)
 		LOG(WARNING) << "Wrong urate info: " << pid;
 		return fe;
 	}
+
 	FeaturesExtractorMgr mgr;
 	mgr.add(new UserInfoExtractor(info));
-	try
-	{
-		mgr.extract(fe);
-	}
-	catch (...)
-	{
-		Pval3(pid, info.postId, info.nowPostInfo.postId);
-		fe.clear();
-		return fe;
-	}
+	mgr.extract(fe);
 
 	return fe;
 }

@@ -107,6 +107,7 @@ using boost::format;
 using boost::is_any_of;
 #include <boost/any.hpp>   
 using boost::any_cast;
+using boost::any;
 typedef std::map<std::string, boost::any> AnyMap;
 
 //@TODO 确认支持regex的gcc版本

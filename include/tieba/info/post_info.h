@@ -16,6 +16,8 @@
 
 #include "tieba/get_info.h"
 #include "tieba/info_def.h"
+#include "tools/content_process.h"
+#include "tieba/info/url_info.h"
 
 namespace gezi {
 	namespace tieba {
@@ -60,6 +62,15 @@ namespace gezi {
 			info.userId = m["user_id"].asUInt();
 			info.userName = m["username"].asString();
 			info.createTime = m["now_time"].asUInt64();
+			if (m.isMember("quote"))
+			{
+				auto& jsonQuote = m["quote"];
+				info.quoteInfo.postId = UINT64(jsonQuote["post_id"].asString());
+				info.quoteInfo.userName = jsonQuote["uname"].asString();
+				info.quoteInfo.userId = jsonQuote["uid"].asUInt();
+				info.quoteInfo.ip = jsonQuote["ip"].asUInt64();
+				info.quoteInfo.content = jsonQuote["content"].asString();
+			}
 		}
 
 		//没有lbs等信息
@@ -86,6 +97,36 @@ namespace gezi {
 				LOG(WARNING) << "get json value fail";
 				return info;
 			}
+			info.postId = pid;
+			return info;
+		}
+
+		inline ExtendedPostInfo get_extended_post_info(uint64 pid)
+		{
+			ExtendedPostInfo info;
+			string jsonStr = get_post_info_str(pid);
+
+			Json::Reader reader;
+			Json::Value root;
+			bool ret = reader.parse(jsonStr, root);
+			if (!ret)
+			{
+				LOG(WARNING) << "json parse fail";
+				return info;
+			}
+			try
+			{
+				const auto& m = root["output"][0];
+				parse_post_info(m, info);
+			}
+			catch (...)
+			{
+				LOG(WARNING) << "get json value fail";
+				return info;
+			}
+
+			info.urls = get_urls(info.content);
+			info.urlInfoMap = get_urls_info_map(info.urls);
 			info.postId = pid;
 			return info;
 		}
