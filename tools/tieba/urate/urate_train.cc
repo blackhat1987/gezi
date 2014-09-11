@@ -59,8 +59,9 @@ inline Features gen_features(uint64 pid)
 		return fe;
 	}
 
+	UrateExtractor::info() = move(info);
 	FeaturesExtractorMgr mgr;
-	mgr.add(new UserInfoExtractor(info));
+	mgr.add(new UserInfoExtractor());
 	mgr.extract(fe);
 
 	return fe;

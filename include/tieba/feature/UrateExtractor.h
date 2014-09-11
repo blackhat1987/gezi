@@ -19,13 +19,22 @@
 namespace gezi {
 namespace tieba {
 
+//@TODO 是否需要一个模板类 FeaturesWithDtaExtractor static T& info()
 class UrateExtractor : public FeaturesExtractor
 {
 public:
-	UrateExtractor() = default;
-protected:
-private:
+	UrateExtractor(string name)
+		:FeaturesExtractor(name)
+	{
 
+	}
+protected:
+	static ExtendedUrateInfo& info()
+	{
+		static thread_local ExtendedUrateInfo _urateInfo;
+		return _urateInfo;
+	}
+private:
 };
 
 }  //----end of namespace tieba

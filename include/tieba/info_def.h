@@ -29,12 +29,12 @@ namespace gezi {
 			string userName;
 			uint64 ip = 0;
 			string content; //楼中楼对应回复的内容
-		/*	'post_id' = > '57218429704',
-			'uname' = > '馄饨哥s',
-			'uid' = > 672041209,
-			'ip' = > 2365012337,
-			'content' = > '[图片]  单排  ds？',
-			'post_type' = > 1,*/
+			/*	'post_id' = > '57218429704',
+				'uname' = > '馄饨哥s',
+				'uid' = > 672041209,
+				'ip' = > 2365012337,
+				'content' = > '[图片]  单排  ds？',
+				'post_type' = > 1,*/
 			friend class boost::serialization::access;
 			template<class Archive>
 			void serialize(Archive &ar, const unsigned int version)
@@ -49,10 +49,10 @@ namespace gezi {
 
 		struct PostInfo
 		{
-			uint64 postId = 0; 
-			uint64 threadId = 0; 
-			uint userId = 0; 
-			uint forumId = 0; 
+			uint64 postId = 0;
+			uint64 threadId = 0;
+			uint userId = 0;
+			uint forumId = 0;
 			uint64 ip = 0;
 			uint64 createTime = 0;
 			string title;
@@ -111,7 +111,7 @@ namespace gezi {
 			vector<uint64> tids; //如果是楼模型这个是空 或者1 
 			vector<uint> uids; //如果是用行为模型 这个是空或者1
 			vector<uint64> times; //@TODO uint
-			vector<uint> fids; 
+			vector<uint> fids;
 			vector<string> fnames;
 			vector<string> titles;
 			vector<string> contents;
@@ -137,7 +137,7 @@ namespace gezi {
 			vector<uint64> ips;
 			vector<bool> isThreads;
 			vector<bool> isPostsDeleted;
-			
+
 			size_t size()
 			{
 				return pids.size();
@@ -200,12 +200,6 @@ namespace gezi {
 			}
 		};
 		typedef vector<CommentInfo> Comments;
-#ifdef GCCXML
-		struct PyHack_Comments
-		{
-			Comments comments; //hack for vector<Comments>  vector<vector
-		};
-#endif
 
 		struct FullPostsInfo
 		{
@@ -479,6 +473,17 @@ namespace gezi {
 		};
 
 		static const int kMaxRequestCount = 100;
+
+#ifdef GCCXML
+		struct PyHack_Comments
+		{ //hack for vector<Comments>  vector<vector 不然没有vector<Comment> 可以用Use(vector<Comment> ? @TODO
+			Comments comments;
+		};
+#include "python_util.h"
+		UseMap(map<uint, UserLikeForumInfo::Node>);
+		UseMap(map<string, UrlInfo>);
+#endif
+
 	}  //----end of namespace tieba
 }  //----end of namespace gezi
 

@@ -9,6 +9,8 @@
 
 #include "boost/python/suite/indexing/map_indexing_suite.hpp"
 
+#include "../include/tools/redis/RedisClient.h"
+
 #include "../include/PythonWrapper/Predictor.h"
 
 #include "../include/PythonWrapper/PredictorFactory.h"
@@ -34,7 +36,6 @@
 #include "../include/log_util.h"
 
 #include "../include/Segmentor.h"
-const int gezi::SegHandle::SEG_BUFF_SIZE;
 
 #include "../include/ProgressBar.h"
 
@@ -53,6 +54,34 @@ const int gezi::SegHandle::SEG_BUFF_SIZE;
 #include "../include/feature/FeaturesExtractor.h"
 
 #include "../include/feature/FeaturesExtractorMgr.h"
+
+#include "../include/tieba/get_info.h"
+
+#include "../include/tieba/get_parsed_info.h"
+
+#include "../include/tieba/info/delete_info.h"
+
+#include "../include/tieba/info/forum_info.h"
+
+#include "../include/tieba/info/post_info.h"
+
+#include "../include/tieba/info/thread_info.h"
+
+#include "../include/tieba/info/url_info.h"
+
+#include "../include/tieba/info/user_info.h"
+
+#include "../include/tieba/info/user_posts_info.h"
+
+#include "../include/tieba/info_def.h"
+
+#include "../include/tieba/uname_util.h"
+
+#include "../include/tieba/common_def.h"
+
+#include "../include/tieba/urate/get_urate_info.h"
+
+#include "../include/tieba/urate/urate_info.h"
 
 namespace bp = boost::python;
 
@@ -162,12 +191,41 @@ UseStrIntMap;
 UseStrFloatMap;
 UseStrDoubleMap;
 
+{ //::std::vector< unsigned long long >
+typedef bp::class_< std::vector< unsigned long long > > ulvec_exposer_t;
+ulvec_exposer_t ulvec_exposer = ulvec_exposer_t( "ulvec" );
+bp::scope ulvec_scope( ulvec_exposer );
+ulvec_exposer.def( bp::vector_indexing_suite< ::std::vector< unsigned long long >, true >() );
+}
+
+{ //::std::vector< unsigned int >
+typedef bp::class_< std::vector< unsigned int > > uvec_exposer_t;
+uvec_exposer_t uvec_exposer = uvec_exposer_t( "uvec" );
+bp::scope uvec_scope( uvec_exposer );
+uvec_exposer.def( bp::vector_indexing_suite< ::std::vector< unsigned int >, true >() );
+}
+
 { //::std::vector< token_t >
 typedef bp::class_< std::vector< token_t > > vector_less__token_t__greater__exposer_t;
 vector_less__token_t__greater__exposer_t vector_less__token_t__greater__exposer = vector_less__token_t__greater__exposer_t( "vector_less__token_t__greater_" );
 bp::scope vector_less__token_t__greater__scope( vector_less__token_t__greater__exposer );
 //WARNING: the next line of code will not compile, because "::token_t" does not have operator== !
 //         vector_less__token_t__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< token_t > >() );
+}
+
+{ //::std::vector< std::vector< std::string > >
+typedef bp::class_< std::vector< std::vector< std::string > > > vector_less__std_scope_vector_less__std_scope_string__greater___greater__exposer_t;
+vector_less__std_scope_vector_less__std_scope_string__greater___greater__exposer_t vector_less__std_scope_vector_less__std_scope_string__greater___greater__exposer = vector_less__std_scope_vector_less__std_scope_string__greater___greater__exposer_t( "vector_less__std_scope_vector_less__std_scope_string__greater___greater_" );
+bp::scope vector_less__std_scope_vector_less__std_scope_string__greater___greater__scope( vector_less__std_scope_vector_less__std_scope_string__greater___greater__exposer );
+//WARNING: the next line of code will not compile, because "::std::vector<std::string, std::allocator<std::string> >" does not have operator== !
+//         vector_less__std_scope_vector_less__std_scope_string__greater___greater__exposer.def( bp::vector_indexing_suite< ::std::vector< std::vector< std::string > > >() );
+}
+
+{ //::std::vector< std::vector< gezi::tieba::CommentInfo > >
+typedef bp::class_< std::vector< std::vector< gezi::tieba::CommentInfo > > > vector_less__std_scope_vector_less__gezi_scope_tieba_scope_CommentInfo__greater___greater__exposer_t;
+vector_less__std_scope_vector_less__gezi_scope_tieba_scope_CommentInfo__greater___greater__exposer_t vector_less__std_scope_vector_less__gezi_scope_tieba_scope_CommentInfo__greater___greater__exposer = vector_less__std_scope_vector_less__gezi_scope_tieba_scope_CommentInfo__greater___greater__exposer_t( "vector_less__std_scope_vector_less__gezi_scope_tieba_scope_CommentInfo__greater___greater_" );
+bp::scope vector_less__std_scope_vector_less__gezi_scope_tieba_scope_CommentInfo__greater___greater__scope( vector_less__std_scope_vector_less__gezi_scope_tieba_scope_CommentInfo__greater___greater__exposer );
+vector_less__std_scope_vector_less__gezi_scope_tieba_scope_CommentInfo__greater___greater__exposer.def( bp::vector_indexing_suite< ::std::vector< std::vector< gezi::tieba::CommentInfo > > >() );
 }
 
 { //::std::vector< std::vector< double > >
@@ -198,12 +256,58 @@ bp::class_< std::vector< std::string > >("vector_less__std_scope_string__greater
 bp::class_< std::vector< std::string > >("vector_less__std_scope_string__greater_")
 .def( bp::vector_indexing_suite< ::std::vector< std::string >, true >() );
 
+bp::class_< std::vector< long long unsigned int > >("vector_less__long_long_unsigned_int__greater_")
+.def( bp::vector_indexing_suite< ::std::vector< long long unsigned int >, true >() );
+
 { //::std::vector< int >
 typedef bp::class_< std::vector< int > > vector_less__int__greater__exposer_t;
 vector_less__int__greater__exposer_t vector_less__int__greater__exposer = vector_less__int__greater__exposer_t( "vector_less__int__greater_" );
 bp::scope vector_less__int__greater__scope( vector_less__int__greater__exposer );
 vector_less__int__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< int >, true >() );
 }
+
+{ //scope begin
+typedef bp::class_< std::vector< gezi::tieba::UserInfo > > vector_less__gezi_scope_tieba_scope_UserInfo__greater__exposer_t;
+vector_less__gezi_scope_tieba_scope_UserInfo__greater__exposer_t vector_less__gezi_scope_tieba_scope_UserInfo__greater__exposer = vector_less__gezi_scope_tieba_scope_UserInfo__greater__exposer_t("vector_less__gezi_scope_tieba_scope_UserInfo__greater_");
+bp::scope vector_less__gezi_scope_tieba_scope_UserInfo__greater__scope( vector_less__gezi_scope_tieba_scope_UserInfo__greater__exposer );
+//WARNING: the next line of code will not compile, because "::gezi::tieba::UserInfo" does not have operator== !
+//         vector_less__gezi_scope_tieba_scope_UserInfo__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< gezi::tieba::UserInfo > >() );
+} //scope end
+
+{ //scope begin
+typedef bp::class_< std::vector< gezi::tieba::UrlInfo > > vector_less__gezi_scope_tieba_scope_UrlInfo__greater__exposer_t;
+vector_less__gezi_scope_tieba_scope_UrlInfo__greater__exposer_t vector_less__gezi_scope_tieba_scope_UrlInfo__greater__exposer = vector_less__gezi_scope_tieba_scope_UrlInfo__greater__exposer_t("vector_less__gezi_scope_tieba_scope_UrlInfo__greater_");
+bp::scope vector_less__gezi_scope_tieba_scope_UrlInfo__greater__scope( vector_less__gezi_scope_tieba_scope_UrlInfo__greater__exposer );
+//WARNING: the next line of code will not compile, because "::gezi::tieba::UrlInfo" does not have operator== !
+//         vector_less__gezi_scope_tieba_scope_UrlInfo__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< gezi::tieba::UrlInfo > >() );
+} //scope end
+
+{ //scope begin
+typedef bp::class_< std::vector< gezi::tieba::ThreadInfo > > vector_less__gezi_scope_tieba_scope_ThreadInfo__greater__exposer_t;
+vector_less__gezi_scope_tieba_scope_ThreadInfo__greater__exposer_t vector_less__gezi_scope_tieba_scope_ThreadInfo__greater__exposer = vector_less__gezi_scope_tieba_scope_ThreadInfo__greater__exposer_t("vector_less__gezi_scope_tieba_scope_ThreadInfo__greater_");
+bp::scope vector_less__gezi_scope_tieba_scope_ThreadInfo__greater__scope( vector_less__gezi_scope_tieba_scope_ThreadInfo__greater__exposer );
+//WARNING: the next line of code will not compile, because "::gezi::tieba::ThreadInfo" does not have operator== !
+//         vector_less__gezi_scope_tieba_scope_ThreadInfo__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< gezi::tieba::ThreadInfo > >() );
+} //scope end
+
+{ //scope begin
+typedef bp::class_< std::vector< gezi::tieba::PostInfo > > vector_less__gezi_scope_tieba_scope_PostInfo__greater__exposer_t;
+vector_less__gezi_scope_tieba_scope_PostInfo__greater__exposer_t vector_less__gezi_scope_tieba_scope_PostInfo__greater__exposer = vector_less__gezi_scope_tieba_scope_PostInfo__greater__exposer_t("vector_less__gezi_scope_tieba_scope_PostInfo__greater_");
+bp::scope vector_less__gezi_scope_tieba_scope_PostInfo__greater__scope( vector_less__gezi_scope_tieba_scope_PostInfo__greater__exposer );
+//WARNING: the next line of code will not compile, because "::gezi::tieba::PostInfo" does not have operator== !
+//         vector_less__gezi_scope_tieba_scope_PostInfo__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< gezi::tieba::PostInfo > >() );
+} //scope end
+
+{ //scope begin
+typedef bp::class_< std::vector< gezi::tieba::ForumInfo > > vector_less__gezi_scope_tieba_scope_ForumInfo__greater__exposer_t;
+vector_less__gezi_scope_tieba_scope_ForumInfo__greater__exposer_t vector_less__gezi_scope_tieba_scope_ForumInfo__greater__exposer = vector_less__gezi_scope_tieba_scope_ForumInfo__greater__exposer_t("vector_less__gezi_scope_tieba_scope_ForumInfo__greater_");
+bp::scope vector_less__gezi_scope_tieba_scope_ForumInfo__greater__scope( vector_less__gezi_scope_tieba_scope_ForumInfo__greater__exposer );
+//WARNING: the next line of code will not compile, because "::gezi::tieba::ForumInfo" does not have operator== !
+//         vector_less__gezi_scope_tieba_scope_ForumInfo__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< gezi::tieba::ForumInfo > >() );
+} //scope end
+
+bp::class_< std::vector< gezi::tieba::CommentInfo > >("vector_less__gezi_scope_tieba_scope_CommentInfo__greater_")
+.def( bp::vector_indexing_suite< ::std::vector< gezi::tieba::CommentInfo > >() );
 
 { //scope begin
 typedef bp::class_< std::vector< gezi::SegNode > > vector_less__gezi_scope_SegNode__greater__exposer_t;
@@ -228,11 +332,55 @@ bp::scope vector_less__gezi_scope_FeatureVector_scope_Feature__greater__scope( v
 //         vector_less__gezi_scope_FeatureVector_scope_Feature__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< gezi::FeatureVector::Feature > >() );
 }
 
+bp::class_< std::vector< double > >("vector_less__double__greater_")
+.def( bp::vector_indexing_suite< ::std::vector< double >, true >() );
+
 { //::std::vector< double >
 typedef bp::class_< std::vector< double > > vector_less__double__greater__exposer_t;
 vector_less__double__greater__exposer_t vector_less__double__greater__exposer = vector_less__double__greater__exposer_t( "vector_less__double__greater_" );
 bp::scope vector_less__double__greater__scope( vector_less__double__greater__exposer );
 vector_less__double__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< double >, true >() );
+}
+
+{ //::std::vector< bool >
+typedef bp::class_< std::vector< bool > > BitArray_exposer_t;
+BitArray_exposer_t BitArray_exposer = BitArray_exposer_t( "BitArray" );
+bp::scope BitArray_scope( BitArray_exposer );
+BitArray_exposer.def( bp::vector_indexing_suite< ::std::vector< bool >, true >() );
+}
+
+bp::class_< std::map< unsigned int, std::string > >("map_less__unsigned_int_comma__std_scope_string__greater_")
+.def( bp::map_indexing_suite< ::std::map< unsigned int, std::string >, true >() );
+
+{ //scope begin
+typedef bp::class_< std::map< unsigned int, gezi::tieba::ForumInfo > > map_less__unsigned_int_comma__gezi_scope_tieba_scope_ForumInfo__greater__exposer_t;
+map_less__unsigned_int_comma__gezi_scope_tieba_scope_ForumInfo__greater__exposer_t map_less__unsigned_int_comma__gezi_scope_tieba_scope_ForumInfo__greater__exposer = map_less__unsigned_int_comma__gezi_scope_tieba_scope_ForumInfo__greater__exposer_t("map_less__unsigned_int_comma__gezi_scope_tieba_scope_ForumInfo__greater_");
+bp::scope map_less__unsigned_int_comma__gezi_scope_tieba_scope_ForumInfo__greater__scope( map_less__unsigned_int_comma__gezi_scope_tieba_scope_ForumInfo__greater__exposer );
+//WARNING: the next line of code will not compile, because "::gezi::tieba::ForumInfo" does not have operator== !
+//         map_less__unsigned_int_comma__gezi_scope_tieba_scope_ForumInfo__greater__exposer.def( bp::map_indexing_suite< ::std::map< unsigned int, gezi::tieba::ForumInfo > >() );
+} //scope end
+
+{ //::std::map< unsigned int, gezi::tieba::UserPostNumInfo >
+typedef bp::class_< std::map< unsigned int, gezi::tieba::UserPostNumInfo > > map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserPostNumInfo__greater__exposer_t;
+map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserPostNumInfo__greater__exposer_t map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserPostNumInfo__greater__exposer = map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserPostNumInfo__greater__exposer_t( "map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserPostNumInfo__greater_" );
+bp::scope map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserPostNumInfo__greater__scope( map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserPostNumInfo__greater__exposer );
+//WARNING: the next line of code will not compile, because "::gezi::tieba::UserPostNumInfo" does not have operator== !
+//         map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserPostNumInfo__greater__exposer.def( bp::map_indexing_suite< ::std::map< unsigned int, gezi::tieba::UserPostNumInfo > >() );
+}
+
+{ //::std::map< unsigned int, gezi::tieba::UserLikeForumInfo::Node >
+typedef bp::class_< std::map< unsigned int, gezi::tieba::UserLikeForumInfo::Node > > map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserLikeForumInfo_scope_Node__greater__exposer_t;
+map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserLikeForumInfo_scope_Node__greater__exposer_t map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserLikeForumInfo_scope_Node__greater__exposer = map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserLikeForumInfo_scope_Node__greater__exposer_t( "map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserLikeForumInfo_scope_Node__greater_" );
+bp::scope map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserLikeForumInfo_scope_Node__greater__scope( map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserLikeForumInfo_scope_Node__greater__exposer );
+//WARNING: the next line of code will not compile, because "::gezi::tieba::UserLikeForumInfo::Node" does not have operator== !
+//         map_less__unsigned_int_comma__gezi_scope_tieba_scope_UserLikeForumInfo_scope_Node__greater__exposer.def( bp::map_indexing_suite< ::std::map< unsigned int, gezi::tieba::UserLikeForumInfo::Node > >() );
+}
+
+{ //::std::map< std::string, unsigned int >
+typedef bp::class_< std::map< std::string, unsigned int > > map_less__std_scope_string_comma__unsigned_int__greater__exposer_t;
+map_less__std_scope_string_comma__unsigned_int__greater__exposer_t map_less__std_scope_string_comma__unsigned_int__greater__exposer = map_less__std_scope_string_comma__unsigned_int__greater__exposer_t( "map_less__std_scope_string_comma__unsigned_int__greater_" );
+bp::scope map_less__std_scope_string_comma__unsigned_int__greater__scope( map_less__std_scope_string_comma__unsigned_int__greater__exposer );
+map_less__std_scope_string_comma__unsigned_int__greater__exposer.def( bp::map_indexing_suite< ::std::map< std::string, unsigned int >, true >() );
 }
 
 { //::std::map< std::string, std::string >
@@ -241,6 +389,38 @@ map_less__std_scope_string_comma__std_scope_string__greater__exposer_t map_less_
 bp::scope map_less__std_scope_string_comma__std_scope_string__greater__scope( map_less__std_scope_string_comma__std_scope_string__greater__exposer );
 map_less__std_scope_string_comma__std_scope_string__greater__exposer.def( bp::map_indexing_suite< ::std::map< std::string, std::string >, true >() );
 }
+
+{ //::std::map< std::string, gezi::tieba::UrlInfo >
+typedef bp::class_< std::map< std::string, gezi::tieba::UrlInfo > > map_less__std_scope_string_comma__gezi_scope_tieba_scope_UrlInfo__greater__exposer_t;
+map_less__std_scope_string_comma__gezi_scope_tieba_scope_UrlInfo__greater__exposer_t map_less__std_scope_string_comma__gezi_scope_tieba_scope_UrlInfo__greater__exposer = map_less__std_scope_string_comma__gezi_scope_tieba_scope_UrlInfo__greater__exposer_t( "map_less__std_scope_string_comma__gezi_scope_tieba_scope_UrlInfo__greater_" );
+bp::scope map_less__std_scope_string_comma__gezi_scope_tieba_scope_UrlInfo__greater__scope( map_less__std_scope_string_comma__gezi_scope_tieba_scope_UrlInfo__greater__exposer );
+//WARNING: the next line of code will not compile, because "::gezi::tieba::UrlInfo" does not have operator== !
+//         map_less__std_scope_string_comma__gezi_scope_tieba_scope_UrlInfo__greater__exposer.def( bp::map_indexing_suite< ::std::map< std::string, gezi::tieba::UrlInfo > >() );
+}
+
+{ //scope begin
+typedef bp::class_< std::map< std::string, boost::any > > map_less__std_scope_string_comma__boost_scope_any__greater__exposer_t;
+map_less__std_scope_string_comma__boost_scope_any__greater__exposer_t map_less__std_scope_string_comma__boost_scope_any__greater__exposer = map_less__std_scope_string_comma__boost_scope_any__greater__exposer_t("map_less__std_scope_string_comma__boost_scope_any__greater_");
+bp::scope map_less__std_scope_string_comma__boost_scope_any__greater__scope( map_less__std_scope_string_comma__boost_scope_any__greater__exposer );
+//WARNING: the next line of code will not compile, because "::boost::any" does not have operator== !
+//         map_less__std_scope_string_comma__boost_scope_any__greater__exposer.def( bp::map_indexing_suite< ::std::map< std::string, boost::any > >() );
+} //scope end
+
+{ //scope begin
+typedef bp::class_< std::map< long long unsigned int, gezi::tieba::ThreadInfo > > map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_ThreadInfo__greater__exposer_t;
+map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_ThreadInfo__greater__exposer_t map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_ThreadInfo__greater__exposer = map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_ThreadInfo__greater__exposer_t("map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_ThreadInfo__greater_");
+bp::scope map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_ThreadInfo__greater__scope( map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_ThreadInfo__greater__exposer );
+//WARNING: the next line of code will not compile, because "::gezi::tieba::ThreadInfo" does not have operator== !
+//         map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_ThreadInfo__greater__exposer.def( bp::map_indexing_suite< ::std::map< long long unsigned int, gezi::tieba::ThreadInfo > >() );
+} //scope end
+
+{ //scope begin
+typedef bp::class_< std::map< long long unsigned int, gezi::tieba::DeleteInfo > > map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_DeleteInfo__greater__exposer_t;
+map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_DeleteInfo__greater__exposer_t map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_DeleteInfo__greater__exposer = map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_DeleteInfo__greater__exposer_t("map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_DeleteInfo__greater_");
+bp::scope map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_DeleteInfo__greater__scope( map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_DeleteInfo__greater__exposer );
+//WARNING: the next line of code will not compile, because "::gezi::tieba::DeleteInfo" does not have operator== !
+//         map_less__long_long_unsigned_int_comma__gezi_scope_tieba_scope_DeleteInfo__greater__exposer.def( bp::map_indexing_suite< ::std::map< long long unsigned int, gezi::tieba::DeleteInfo > >() );
+} //scope end
 
 bp::enum_< gezi::collocation::Method>("Method")
 .value("CHI", gezi::collocation::CHI)
@@ -881,6 +1061,15 @@ Vector_exposer.def(
 , bp::return_internal_reference<>());
 
 }
+{ //::gezi::Vector::clear
+
+typedef void ( ::gezi::Vector::*clear_function_type )(  ) ;
+
+Vector_exposer.def(
+"clear"
+, clear_function_type( &::gezi::Vector::clear ) );
+
+}
 { //::gezi::Vector::empty
 
 typedef bool ( ::gezi::Vector::*empty_function_type )(  ) const;
@@ -990,6 +1179,16 @@ FeatureVector_exposer.def( bp::init< bp::optional< bool > >(( bp::arg("useSparse
 bp::implicitly_convertible< bool, gezi::FeatureVector >();
 FeatureVector_exposer.def( bp::init< int >(( bp::arg("length_") )) );
 bp::implicitly_convertible< int, gezi::FeatureVector >();
+{ //::gezi::FeatureVector::Str
+
+typedef ::std::string ( ::gezi::FeatureVector::*Str_function_type )( ::std::string ) ;
+
+FeatureVector_exposer.def(
+"Str"
+, Str_function_type( &::gezi::FeatureVector::Str )
+, ( bp::arg("sep")="," ) );
+
+}
 { //::gezi::FeatureVector::add
 
 typedef void ( ::gezi::FeatureVector::*add_function_type )( ::Float,::std::string ) ;
@@ -1042,7 +1241,7 @@ FeatureVector_exposer.def(
 }
 { //::gezi::FeatureVector::count
 
-typedef int ( ::gezi::FeatureVector::*count_function_type )(  ) ;
+typedef int ( ::gezi::FeatureVector::*count_function_type )(  ) const;
 
 FeatureVector_exposer.def(
 "count"
@@ -1572,6 +1771,76 @@ bp::class_< gezi::ValueIdentifer< int >, bp::bases< gezi::Identifer > >( "IntIde
 
 bp::class_< gezi::PyIntIndentifer, bp::bases< gezi::ValueIdentifer< int > > >( "PyIntIndentifer" );
 
+bp::class_< gezi::RedisClient, boost::noncopyable >( "RedisClient", bp::init< >() )
+.def( bp::init< std::string, bp::optional< std::string > >(( bp::arg("confFile"), bp::arg("confDir")="./conf" )) )
+.def(
+"Get"
+, (int ( ::gezi::RedisClient::* )( ::std::string,::std::string & ) const)( &::gezi::RedisClient::Get )
+, ( bp::arg("key"), bp::arg("value") ) )
+.def(
+"GetClient"
+, (::store::RedisClient * ( ::gezi::RedisClient::* )(  ) )( &::gezi::RedisClient::GetClient )
+, bp::return_internal_reference<>())
+.def(
+"Init"
+, (int ( ::gezi::RedisClient::* )( ::std::string,::std::string ) )( &::gezi::RedisClient::Init )
+, ( bp::arg("confFile")="redis_client.conf", bp::arg("confDir")="./conf" ) )
+.def(
+"Zrange"
+, (int ( ::gezi::RedisClient::* )( ::std::string,int,int,::std::vector< std::string > & ) )( &::gezi::RedisClient::Zrange )
+, ( bp::arg("key"), bp::arg("first"), bp::arg("last"), bp::arg("values") ) )
+.def(
+"Zrange"
+, (::std::vector< std::string > ( ::gezi::RedisClient::* )( ::std::string,int,int ) )( &::gezi::RedisClient::Zrange )
+, ( bp::arg("key"), bp::arg("first"), bp::arg("last") ) )
+.def(
+"ZrangeFirstNElement"
+, (int ( ::gezi::RedisClient::* )( ::std::string,int,::std::vector< std::string > &,int,bool ) )( &::gezi::RedisClient::ZrangeFirstNElement )
+, ( bp::arg("key"), bp::arg("num"), bp::arg("values"), bp::arg("step")=(int)(200), bp::arg("allowError")=(bool)(true) ) )
+.def(
+"ZrangeFirstNElement"
+, (::std::vector< std::string > ( ::gezi::RedisClient::* )( ::std::string,int,int,bool ) )( &::gezi::RedisClient::ZrangeFirstNElement )
+, ( bp::arg("key"), bp::arg("num"), bp::arg("step")=(int)(200), bp::arg("allowError")=(bool)(true) ) )
+.def(
+"ZrangeFirstNElementWithScores"
+, (int ( ::gezi::RedisClient::* )( ::std::string,int,::std::vector< std::string > &,::std::vector< double > &,int,bool ) )( &::gezi::RedisClient::ZrangeFirstNElementWithScores )
+, ( bp::arg("key"), bp::arg("num"), bp::arg("values"), bp::arg("scores"), bp::arg("step")=(int)(200), bp::arg("allowError")=(bool)(true) ) )
+.def(
+"ZrangeWithScores"
+, (int ( ::gezi::RedisClient::* )( ::std::string,int,int,::std::vector< std::string > &,::std::vector< double > & ) )( &::gezi::RedisClient::ZrangeWithScores )
+, ( bp::arg("key"), bp::arg("first"), bp::arg("last"), bp::arg("values"), bp::arg("scores") ) )
+.def(
+"at"
+, (::std::string ( ::gezi::RedisClient::* )( ::std::string const & ) const)( &::gezi::RedisClient::at )
+, ( bp::arg("key") ) )
+.def(
+"count"
+, (int ( ::gezi::RedisClient::* )( ::std::string ) const)( &::gezi::RedisClient::count )
+, ( bp::arg("key") ) )
+.def(
+"end"
+, (::std::pair< std::string, std::string > * ( ::gezi::RedisClient::* )(  ) )( &::gezi::RedisClient::end )
+, bp::return_internal_reference<>())
+.def(
+"find"
+, (::std::pair< std::string, std::string > * ( ::gezi::RedisClient::* )( ::std::string const & ) )( &::gezi::RedisClient::find )
+, ( bp::arg("key") )
+, bp::return_internal_reference<>())
+.def(
+"init"
+, (::store::RedisClient * ( ::gezi::RedisClient::* )( ::std::string,::std::string ) )( &::gezi::RedisClient::init )
+, ( bp::arg("confFile")="redis_client.conf", bp::arg("confDir")="./conf" )
+, bp::return_internal_reference<>())
+.def(
+"__getitem__"
+, (::std::string & ( ::gezi::RedisClient::* )( ::std::string const & ) )( &::gezi::RedisClient::operator[] )
+, ( bp::arg("key") )
+, bp::return_value_policy< bp::copy_non_const_reference >() )
+.def(
+"__getitem__"
+, (::std::string ( ::gezi::RedisClient::* )( ::std::string const & ) const)( &::gezi::RedisClient::operator[] )
+, ( bp::arg("key") ) );
+
 { //::gezi::SegHandle
 typedef bp::class_< SegHandle_wrapper > SegHandle_exposer_t;
 SegHandle_exposer_t SegHandle_exposer = SegHandle_exposer_t( "SegHandle", bp::init< >() );
@@ -1621,6 +1890,85 @@ typedef bp::class_< gezi::Segmentor > Segmentor_exposer_t;
 Segmentor_exposer_t Segmentor_exposer = Segmentor_exposer_t( "Segmentor", bp::init< bp::optional< int > >(( bp::arg("seg_buff_size")=(int)(gezi::SegHandle::SEG_BUFF_SIZE) )) );
 bp::scope Segmentor_scope( Segmentor_exposer );
 bp::implicitly_convertible< int, gezi::Segmentor >();
+{ //::gezi::Segmentor::Init
+
+typedef bool ( *Init_function_type )( int,::std::string,int,::std::string );
+
+Segmentor_exposer.def(
+"Init"
+, Init_function_type( &::gezi::Segmentor::Init )
+, ( bp::arg("seg_buff_size")=(int)(gezi::SegHandle::SEG_BUFF_SIZE), bp::arg("data_dir")="./data/wordseg", bp::arg("type")=(int)(gezi::SEG_USE_DEFAULT), bp::arg("conf_path")="./conf/scw.conf" ) );
+
+}
+{ //::gezi::Segmentor::SegFlag
+
+typedef void ( *SegFlag_function_type )( int );
+
+Segmentor_exposer.def(
+"SegFlag"
+, SegFlag_function_type( &::gezi::Segmentor::SegFlag )
+, ( bp::arg("flag_") ) );
+
+}
+{ //::gezi::Segmentor::Segment
+
+typedef ::std::vector< std::string > ( *Segment_function_type )( ::std::string,int );
+
+Segmentor_exposer.def(
+"Segment"
+, Segment_function_type( &::gezi::Segmentor::Segment )
+, ( bp::arg("input"), bp::arg("type")=(int)(gezi::SEG_WPCOMP) ) );
+
+}
+{ //::gezi::Segmentor::Segment
+
+typedef bool ( *Segment_function_type )( ::std::string,::std::vector< std::string > &,int );
+
+Segmentor_exposer.def(
+"Segment"
+, Segment_function_type( &::gezi::Segmentor::Segment )
+, ( bp::arg("input"), bp::arg("result"), bp::arg("type")=(int)(gezi::SEG_WPCOMP) ) );
+
+}
+{ //::gezi::Segmentor::Segment
+
+typedef ::std::string ( *Segment_function_type )( ::std::string,::std::string,int );
+
+Segmentor_exposer.def(
+"Segment"
+, Segment_function_type( &::gezi::Segmentor::Segment )
+, ( bp::arg("input"), bp::arg("sep"), bp::arg("type")=(int)(gezi::SEG_WPCOMP) ) );
+
+}
+{ //::gezi::Segmentor::Segment
+
+typedef bool ( *Segment_function_type )( ::std::string,::std::vector< gezi::SegNode > &,int );
+
+Segmentor_exposer.def(
+"Segment"
+, Segment_function_type( &::gezi::Segmentor::Segment )
+, ( bp::arg("input"), bp::arg("result"), bp::arg("type")=(int)(gezi::SEG_WPCOMP) ) );
+
+}
+{ //::gezi::Segmentor::Uninit
+
+typedef void ( *Uninit_function_type )(  );
+
+Segmentor_exposer.def(
+"Uninit"
+, Uninit_function_type( &::gezi::Segmentor::Uninit ) );
+
+}
+{ //::gezi::Segmentor::get_handle
+
+typedef ::gezi::SegHandle & ( ::gezi::Segmentor::*get_handle_function_type )(  ) ;
+
+Segmentor_exposer.def(
+"get_handle"
+, get_handle_function_type( &::gezi::Segmentor::get_handle )
+, bp::return_internal_reference<>());
+
+}
 { //::gezi::Segmentor::get_segnodes
 
 typedef ::std::vector< gezi::SegNode > ( *get_segnodes_function_type )( ::gezi::SegHandle & );
@@ -1660,16 +2008,6 @@ Segmentor_exposer.def(
 , ( bp::arg("type")=(int)(gezi::SEG_WPCOMP) ) );
 
 }
-{ //::gezi::Segmentor::handle
-
-typedef ::gezi::SegHandle & ( ::gezi::Segmentor::*handle_function_type )(  ) ;
-
-Segmentor_exposer.def(
-"handle"
-, handle_function_type( &::gezi::Segmentor::handle )
-, bp::return_internal_reference<>());
-
-}
 { //::gezi::Segmentor::init
 
 typedef bool ( *init_function_type )( ::std::string,int,::std::string );
@@ -1682,7 +2020,7 @@ Segmentor_exposer.def(
 }
 { //::gezi::Segmentor::seg_words
 
-typedef bool ( ::gezi::Segmentor::*seg_words_function_type )( ::std::string,::gezi::SegHandle & ) ;
+typedef bool ( *seg_words_function_type )( ::std::string,::gezi::SegHandle & );
 
 Segmentor_exposer.def(
 "seg_words"
@@ -1692,7 +2030,7 @@ Segmentor_exposer.def(
 }
 { //::gezi::Segmentor::segment
 
-typedef bool ( ::gezi::Segmentor::*segment_function_type )( ::std::string,::gezi::SegHandle &,int ) ;
+typedef bool ( *segment_function_type )( ::std::string,::gezi::SegHandle &,int );
 
 Segmentor_exposer.def(
 "segment"
@@ -1702,7 +2040,7 @@ Segmentor_exposer.def(
 }
 { //::gezi::Segmentor::segment
 
-typedef bool ( ::gezi::Segmentor::*segment_function_type )( ::std::string,::gezi::SegHandle &,::std::vector< std::string > &,int ) ;
+typedef bool ( *segment_function_type )( ::std::string,::gezi::SegHandle &,::std::vector< std::string > &,int );
 
 Segmentor_exposer.def(
 "segment"
@@ -1712,7 +2050,7 @@ Segmentor_exposer.def(
 }
 { //::gezi::Segmentor::segment
 
-typedef ::std::string ( ::gezi::Segmentor::*segment_function_type )( ::std::string,::gezi::SegHandle &,::std::string,int ) ;
+typedef ::std::string ( *segment_function_type )( ::std::string,::gezi::SegHandle &,::std::string,int );
 
 Segmentor_exposer.def(
 "segment"
@@ -1760,17 +2098,6 @@ Segmentor_exposer.def(
 , ( bp::arg("input"), bp::arg("result"), bp::arg("type")=(int)(gezi::SEG_WPCOMP) ) );
 
 }
-{ //::gezi::Segmentor::set_buff_size
-
-typedef ::gezi::Segmentor & ( ::gezi::Segmentor::*set_buff_size_function_type )( int ) ;
-
-Segmentor_exposer.def(
-"set_buff_size"
-, set_buff_size_function_type( &::gezi::Segmentor::set_buff_size )
-, ( bp::arg("buff_size") )
-, bp::return_internal_reference<>());
-
-}
 { //::gezi::Segmentor::set_flag
 
 typedef ::gezi::Segmentor & ( ::gezi::Segmentor::*set_flag_function_type )( int ) ;
@@ -1778,7 +2105,7 @@ typedef ::gezi::Segmentor & ( ::gezi::Segmentor::*set_flag_function_type )( int 
 Segmentor_exposer.def(
 "set_flag"
 , set_flag_function_type( &::gezi::Segmentor::set_flag )
-, ( bp::arg("flag") )
+, ( bp::arg("flag_") )
 , bp::return_internal_reference<>());
 
 }
@@ -1791,9 +2118,15 @@ Segmentor_exposer.def(
 , uninit_function_type( &::gezi::Segmentor::uninit ) );
 
 }
+Segmentor_exposer.staticmethod( "Init" );
+Segmentor_exposer.staticmethod( "SegFlag" );
+Segmentor_exposer.staticmethod( "Segment" );
+Segmentor_exposer.staticmethod( "Uninit" );
 Segmentor_exposer.staticmethod( "get_segnodes" );
 Segmentor_exposer.staticmethod( "get_tokens" );
 Segmentor_exposer.staticmethod( "init" );
+Segmentor_exposer.staticmethod( "seg_words" );
+Segmentor_exposer.staticmethod( "segment" );
 Segmentor_exposer.staticmethod( "uninit" );
 }
 
@@ -1884,6 +2217,209 @@ bp::class_< gezi::py::PredictorFactory >( "PredictorFactory" )
 , ( bp::arg("path") ) )
 .staticmethod( "LoadPredictor" );
 
+bp::class_< gezi::tieba::CommentInfo >( "CommentInfo" )
+.def( bp::self == bp::self )
+.def_readwrite( "commentId", &gezi::tieba::CommentInfo::commentId )
+.def_readwrite( "content", &gezi::tieba::CommentInfo::content )
+.def_readwrite( "createTime", &gezi::tieba::CommentInfo::createTime )
+.def_readwrite( "ip", &gezi::tieba::CommentInfo::ip )
+.def_readwrite( "postId", &gezi::tieba::CommentInfo::postId )
+.def_readwrite( "threadId", &gezi::tieba::CommentInfo::threadId )
+.def_readwrite( "userId", &gezi::tieba::CommentInfo::userId )
+.def_readwrite( "userName", &gezi::tieba::CommentInfo::userName );
+
+bp::class_< gezi::tieba::DeleteInfo >( "DeleteInfo" )
+.def_readwrite( "isDeleted", &gezi::tieba::DeleteInfo::isDeleted )
+.def_readwrite( "monitorType", &gezi::tieba::DeleteInfo::monitorType )
+.def_readwrite( "opTime", &gezi::tieba::DeleteInfo::opTime )
+.def_readwrite( "opUid", &gezi::tieba::DeleteInfo::opUid )
+.def_readwrite( "pid", &gezi::tieba::DeleteInfo::pid )
+.def_readwrite( "tid", &gezi::tieba::DeleteInfo::tid );
+
+bp::class_< gezi::tieba::PostInfo >( "PostInfo" )
+.def(
+"IsQuote"
+, (bool ( ::gezi::tieba::PostInfo::* )(  ) )( &::gezi::tieba::PostInfo::IsQuote ) )
+.def(
+"IsThread"
+, (bool ( ::gezi::tieba::PostInfo::* )(  ) )( &::gezi::tieba::PostInfo::IsThread ) )
+.def_readwrite( "content", &gezi::tieba::PostInfo::content )
+.def_readwrite( "createTime", &gezi::tieba::PostInfo::createTime )
+.def_readwrite( "forumId", &gezi::tieba::PostInfo::forumId )
+.def_readwrite( "forumName", &gezi::tieba::PostInfo::forumName )
+.def_readwrite( "ip", &gezi::tieba::PostInfo::ip )
+.def_readwrite( "postId", &gezi::tieba::PostInfo::postId )
+.def_readwrite( "quoteInfo", &gezi::tieba::PostInfo::quoteInfo )
+.def_readwrite( "threadId", &gezi::tieba::PostInfo::threadId )
+.def_readwrite( "title", &gezi::tieba::PostInfo::title )
+.def_readwrite( "userId", &gezi::tieba::PostInfo::userId )
+.def_readwrite( "userName", &gezi::tieba::PostInfo::userName );
+
+bp::class_< gezi::tieba::ExtendedPostInfo, bp::bases< gezi::tieba::PostInfo > >( "ExtendedPostInfo" )
+.def_readwrite( "urlInfoMap", &gezi::tieba::ExtendedPostInfo::urlInfoMap )
+.def_readwrite( "urls", &gezi::tieba::ExtendedPostInfo::urls );
+
+bp::class_< gezi::tieba::ForumInfo >( "ForumInfo" )
+.def_readwrite( "fid", &gezi::tieba::ForumInfo::fid )
+.def_readwrite( "hotValue", &gezi::tieba::ForumInfo::hotValue )
+.def_readwrite( "level1Name", &gezi::tieba::ForumInfo::level1Name )
+.def_readwrite( "level2Name", &gezi::tieba::ForumInfo::level2Name )
+.def_readwrite( "rank", &gezi::tieba::ForumInfo::rank );
+
+bp::class_< gezi::tieba::FullPostsInfo >( "FullPostsInfo" )
+.def(
+"GetComments"
+, (::gezi::tieba::Comments const & ( ::gezi::tieba::FullPostsInfo::* )( int ) const)( &::gezi::tieba::FullPostsInfo::GetComments )
+, ( bp::arg("idx") )
+, bp::return_value_policy< bp::copy_const_reference >() )
+.def(
+"size"
+, (::size_t ( ::gezi::tieba::FullPostsInfo::* )(  ) )( &::gezi::tieba::FullPostsInfo::size ) )
+.def_readwrite( "commentsVec", &gezi::tieba::FullPostsInfo::commentsVec )
+.def_readwrite( "contents", &gezi::tieba::FullPostsInfo::contents )
+.def_readwrite( "forumId", &gezi::tieba::FullPostsInfo::forumId )
+.def_readwrite( "forumName", &gezi::tieba::FullPostsInfo::forumName )
+.def_readwrite( "ips", &gezi::tieba::FullPostsInfo::ips )
+.def_readwrite( "isDeleted", &gezi::tieba::FullPostsInfo::isDeleted )
+.def_readwrite( "numPosts", &gezi::tieba::FullPostsInfo::numPosts )
+.def_readwrite( "pids", &gezi::tieba::FullPostsInfo::pids )
+.def_readwrite( "threadId", &gezi::tieba::FullPostsInfo::threadId )
+.def_readwrite( "times", &gezi::tieba::FullPostsInfo::times )
+.def_readwrite( "title", &gezi::tieba::FullPostsInfo::title )
+.def_readwrite( "uids", &gezi::tieba::FullPostsInfo::uids )
+.def_readwrite( "unames", &gezi::tieba::FullPostsInfo::unames );
+
+bp::class_< gezi::tieba::PostsInfo >( "PostsInfo" )
+.def(
+"size"
+, (::size_t ( ::gezi::tieba::PostsInfo::* )(  ) )( &::gezi::tieba::PostsInfo::size ) )
+.def_readwrite( "contents", &gezi::tieba::PostsInfo::contents )
+.def_readwrite( "fids", &gezi::tieba::PostsInfo::fids )
+.def_readwrite( "fnames", &gezi::tieba::PostsInfo::fnames )
+.def_readwrite( "ips", &gezi::tieba::PostsInfo::ips )
+.def_readwrite( "isThreads", &gezi::tieba::PostsInfo::isThreads )
+.def_readwrite( "pids", &gezi::tieba::PostsInfo::pids )
+.def_readwrite( "tids", &gezi::tieba::PostsInfo::tids )
+.def_readwrite( "times", &gezi::tieba::PostsInfo::times )
+.def_readwrite( "titles", &gezi::tieba::PostsInfo::titles )
+.def_readwrite( "uids", &gezi::tieba::PostsInfo::uids );
+
+bp::class_< gezi::tieba::QuoteInfo >( "QuoteInfo" )
+.def_readwrite( "content", &gezi::tieba::QuoteInfo::content )
+.def_readwrite( "ip", &gezi::tieba::QuoteInfo::ip )
+.def_readwrite( "postId", &gezi::tieba::QuoteInfo::postId )
+.def_readwrite( "userId", &gezi::tieba::QuoteInfo::userId )
+.def_readwrite( "userName", &gezi::tieba::QuoteInfo::userName );
+
+bp::class_< gezi::tieba::ReplyInfo >( "ReplyInfo" )
+.def_readwrite( "createTime", &gezi::tieba::ReplyInfo::createTime )
+.def_readwrite( "forumId", &gezi::tieba::ReplyInfo::forumId )
+.def_readwrite( "ip", &gezi::tieba::ReplyInfo::ip )
+.def_readwrite( "postId", &gezi::tieba::ReplyInfo::postId )
+.def_readwrite( "threadId", &gezi::tieba::ReplyInfo::threadId )
+.def_readwrite( "userId", &gezi::tieba::ReplyInfo::userId );
+
+bp::class_< gezi::tieba::ThreadInfo >( "ThreadInfo" )
+.def_readwrite( "address", &gezi::tieba::ThreadInfo::address )
+.def_readwrite( "content", &gezi::tieba::ThreadInfo::content )
+.def_readwrite( "createTime", &gezi::tieba::ThreadInfo::createTime )
+.def_readwrite( "forumId", &gezi::tieba::ThreadInfo::forumId )
+.def_readwrite( "forumName", &gezi::tieba::ThreadInfo::forumName )
+.def_readwrite( "hasMedia", &gezi::tieba::ThreadInfo::hasMedia )
+.def_readwrite( "ip", &gezi::tieba::ThreadInfo::ip )
+.def_readwrite( "isDeleted", &gezi::tieba::ThreadInfo::isDeleted )
+.def_readwrite( "postId", &gezi::tieba::ThreadInfo::postId )
+.def_readwrite( "threadId", &gezi::tieba::ThreadInfo::threadId )
+.def_readwrite( "title", &gezi::tieba::ThreadInfo::title )
+.def_readwrite( "userId", &gezi::tieba::ThreadInfo::userId );
+
+bp::class_< gezi::tieba::UrateInfo >( "UrateInfo" )
+.def_readwrite( "nowPostInfo", &gezi::tieba::UrateInfo::nowPostInfo )
+.def_readwrite( "postId", &gezi::tieba::UrateInfo::postId )
+.def_readwrite( "postsInfo", &gezi::tieba::UrateInfo::postsInfo )
+.def_readwrite( "urlInfoMap", &gezi::tieba::UrateInfo::urlInfoMap )
+.def_readwrite( "urlsVec", &gezi::tieba::UrateInfo::urlsVec )
+.def_readwrite( "userInfo", &gezi::tieba::UrateInfo::userInfo )
+.def_readwrite( "userLikeForumInfo", &gezi::tieba::UrateInfo::userLikeForumInfo )
+.def_readwrite( "userPostNumInForum", &gezi::tieba::UrateInfo::userPostNumInForum )
+.def_readwrite( "userPostNumInfo", &gezi::tieba::UrateInfo::userPostNumInfo );
+
+bp::class_< gezi::tieba::UrlInfo >( "UrlInfo" )
+.def_readwrite( "content", &gezi::tieba::UrlInfo::content )
+.def_readwrite( "isJump", &gezi::tieba::UrlInfo::isJump )
+.def_readwrite( "jumRank", &gezi::tieba::UrlInfo::jumRank )
+.def_readwrite( "rank", &gezi::tieba::UrlInfo::rank )
+.def_readwrite( "url", &gezi::tieba::UrlInfo::url );
+
+bp::class_< gezi::tieba::UserInfo >( "UserInfo" )
+.def_readwrite( "birthYear", &gezi::tieba::UserInfo::birthYear )
+.def_readwrite( "email", &gezi::tieba::UserInfo::email )
+.def_readwrite( "followCount", &gezi::tieba::UserInfo::followCount )
+.def_readwrite( "followedCount", &gezi::tieba::UserInfo::followedCount )
+.def_readwrite( "isGroupOwner", &gezi::tieba::UserInfo::isGroupOwner )
+.def_readwrite( "mobile", &gezi::tieba::UserInfo::mobile )
+.def_readwrite( "regTime", &gezi::tieba::UserInfo::regTime )
+.def_readwrite( "userDetail", &gezi::tieba::UserInfo::userDetail )
+.def_readwrite( "userId", &gezi::tieba::UserInfo::userId )
+.def_readwrite( "userName", &gezi::tieba::UserInfo::userName )
+.def_readwrite( "userSex", &gezi::tieba::UserInfo::userSex )
+.def_readwrite( "userStatus", &gezi::tieba::UserInfo::userStatus )
+.def_readwrite( "userTag", &gezi::tieba::UserInfo::userTag )
+.def_readwrite( "userType", &gezi::tieba::UserInfo::userType );
+
+{ //::gezi::tieba::UserLikeForumInfo
+typedef bp::class_< gezi::tieba::UserLikeForumInfo > UserLikeForumInfo_exposer_t;
+UserLikeForumInfo_exposer_t UserLikeForumInfo_exposer = UserLikeForumInfo_exposer_t( "UserLikeForumInfo" );
+bp::scope UserLikeForumInfo_scope( UserLikeForumInfo_exposer );
+bp::class_< gezi::tieba::UserLikeForumInfo::Node >( "Node" )
+.def_readwrite( "curScore", &gezi::tieba::UserLikeForumInfo::Node::curScore )
+.def_readwrite( "forumName", &gezi::tieba::UserLikeForumInfo::Node::forumName )
+.def_readwrite( "leftScore", &gezi::tieba::UserLikeForumInfo::Node::leftScore )
+.def_readwrite( "level", &gezi::tieba::UserLikeForumInfo::Node::level )
+.def_readwrite( "time", &gezi::tieba::UserLikeForumInfo::Node::time );
+{ //::gezi::tieba::UserLikeForumInfo::GetLevel
+
+typedef int ( ::gezi::tieba::UserLikeForumInfo::*GetLevel_function_type )( ::uint ) ;
+
+UserLikeForumInfo_exposer.def(
+"GetLevel"
+, GetLevel_function_type( &::gezi::tieba::UserLikeForumInfo::GetLevel )
+, ( bp::arg("forumId") ) );
+
+}
+UserLikeForumInfo_exposer.def_readwrite( "forumNames", &gezi::tieba::UserLikeForumInfo::forumNames );
+UserLikeForumInfo_exposer.def_readwrite( "infoMap", &gezi::tieba::UserLikeForumInfo::infoMap );
+UserLikeForumInfo_exposer.def_readwrite( "levels", &gezi::tieba::UserLikeForumInfo::levels );
+UserLikeForumInfo_exposer.def_readwrite( "maxLevel", &gezi::tieba::UserLikeForumInfo::maxLevel );
+UserLikeForumInfo_exposer.def_readwrite( "numLikes", &gezi::tieba::UserLikeForumInfo::numLikes );
+UserLikeForumInfo_exposer.def_readwrite( "sumLevels", &gezi::tieba::UserLikeForumInfo::sumLevels );
+UserLikeForumInfo_exposer.def_readwrite( "userId", &gezi::tieba::UserLikeForumInfo::userId );
+}
+
+bp::class_< gezi::tieba::UserPostNumInfo >( "UserPostNumInfo" )
+.def_readwrite( "numGoods", &gezi::tieba::UserPostNumInfo::numGoods )
+.def_readwrite( "numPhotos", &gezi::tieba::UserPostNumInfo::numPhotos )
+.def_readwrite( "numPosts", &gezi::tieba::UserPostNumInfo::numPosts )
+.def_readwrite( "numThreads", &gezi::tieba::UserPostNumInfo::numThreads )
+.def_readwrite( "userId", &gezi::tieba::UserPostNumInfo::userId );
+
+bp::class_< gezi::tieba::UserPostsInfo >( "UserPostsInfo" )
+.def(
+"size"
+, (::size_t ( ::gezi::tieba::UserPostsInfo::* )(  ) )( &::gezi::tieba::UserPostsInfo::size ) )
+.def_readwrite( "contents", &gezi::tieba::UserPostsInfo::contents )
+.def_readwrite( "fids", &gezi::tieba::UserPostsInfo::fids )
+.def_readwrite( "fnames", &gezi::tieba::UserPostsInfo::fnames )
+.def_readwrite( "ips", &gezi::tieba::UserPostsInfo::ips )
+.def_readwrite( "isPostsDeleted", &gezi::tieba::UserPostsInfo::isPostsDeleted )
+.def_readwrite( "isThreads", &gezi::tieba::UserPostsInfo::isThreads )
+.def_readwrite( "numPosts", &gezi::tieba::UserPostsInfo::numPosts )
+.def_readwrite( "pids", &gezi::tieba::UserPostsInfo::pids )
+.def_readwrite( "tids", &gezi::tieba::UserPostsInfo::tids )
+.def_readwrite( "times", &gezi::tieba::UserPostsInfo::times )
+.def_readwrite( "titles", &gezi::tieba::UserPostsInfo::titles )
+.def_readwrite( "userId", &gezi::tieba::UserPostsInfo::userId );
+
 { //::gezi::all_en
 
 typedef bool ( *all_en_function_type )( ::std::string );
@@ -1961,6 +2497,17 @@ bp::def(
 
 }
 
+{ //::gezi::contains_emails
+
+typedef bool ( *contains_emails_function_type )( ::std::string );
+
+bp::def(
+"contains_emails"
+, contains_emails_function_type( &::gezi::contains_emails )
+, ( bp::arg("src") ) );
+
+}
+
 { //::gezi::contains_num
 
 typedef bool ( *contains_num_function_type )( ::std::string );
@@ -1990,6 +2537,17 @@ typedef bool ( *contains_url_function_type )( ::std::string );
 bp::def(
 "contains_url"
 , contains_url_function_type( &::gezi::contains_url )
+, ( bp::arg("src") ) );
+
+}
+
+{ //::gezi::contains_video
+
+typedef bool ( *contains_video_function_type )( ::std::string );
+
+bp::def(
+"contains_video"
+, contains_video_function_type( &::gezi::contains_video )
 , ( bp::arg("src") ) );
 
 }
@@ -2126,6 +2684,325 @@ bp::def(
 
 }
 
+{ //::gezi::tieba::get_delete_info
+
+typedef ::gezi::tieba::DeleteInfo ( *get_delete_info_function_type )( ::uint64,::std::string );
+
+bp::def(
+"get_delete_info"
+, get_delete_info_function_type( &::gezi::tieba::get_delete_info )
+, ( bp::arg("id"), bp::arg("type") ) );
+
+}
+
+{ //::gezi::tieba::get_delete_info_str
+
+typedef ::std::string ( *get_delete_info_str_function_type )( ::std::string );
+
+bp::def(
+"get_delete_info_str"
+, get_delete_info_str_function_type( &::gezi::tieba::get_delete_info_str )
+, ( bp::arg("pids") ) );
+
+}
+
+{ //::gezi::tieba::get_deleted_posts
+
+typedef ::std::set< long long unsigned int > ( *get_deleted_posts_function_type )( ::std::vector< unsigned long long > const &,bool );
+
+bp::def(
+"get_deleted_posts"
+, get_deleted_posts_function_type( &::gezi::tieba::get_deleted_posts )
+, ( bp::arg("pids"), bp::arg("allowError")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_deleted_threads
+
+typedef ::std::set< long long unsigned int > ( *get_deleted_threads_function_type )( ::std::vector< unsigned long long > const &,bool );
+
+bp::def(
+"get_deleted_threads"
+, get_deleted_threads_function_type( &::gezi::tieba::get_deleted_threads )
+, ( bp::arg("tids"), bp::arg("allowError")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_deletes_info
+
+typedef ::std::map< long long unsigned int, gezi::tieba::DeleteInfo > ( *get_deletes_info_function_type )( ::std::vector< unsigned long long > const &,::std::string,bool );
+
+bp::def(
+"get_deletes_info"
+, get_deletes_info_function_type( &::gezi::tieba::get_deletes_info )
+, ( bp::arg("ids_"), bp::arg("type"), bp::arg("allowError")=(bool)(true) ) );
+
+}
+
+{ //::gezi::get_emails
+
+typedef ::std::vector< std::string > ( *get_emails_function_type )( ::std::string );
+
+bp::def(
+"get_emails"
+, get_emails_function_type( &::gezi::get_emails )
+, ( bp::arg("src") ) );
+
+}
+
+{ //::gezi::tieba::get_extended_post_info
+
+typedef ::gezi::tieba::ExtendedPostInfo ( *get_extended_post_info_function_type )( ::uint64 );
+
+bp::def(
+"get_extended_post_info"
+, get_extended_post_info_function_type( &::gezi::tieba::get_extended_post_info )
+, ( bp::arg("pid") ) );
+
+}
+
+{ //::gezi::tieba::get_forum_id
+
+typedef ::uint ( *get_forum_id_function_type )( ::std::string );
+
+bp::def(
+"get_forum_id"
+, get_forum_id_function_type( &::gezi::tieba::get_forum_id )
+, ( bp::arg("forumName") ) );
+
+}
+
+{ //::gezi::tieba::get_forum_id_str
+
+typedef ::std::string ( *get_forum_id_str_function_type )( ::std::string );
+
+bp::def(
+"get_forum_id_str"
+, get_forum_id_str_function_type( &::gezi::tieba::get_forum_id_str )
+, ( bp::arg("forumNames") ) );
+
+}
+
+{ //::gezi::tieba::get_forum_ids
+
+typedef ::std::vector< unsigned int > ( *get_forum_ids_function_type )( ::svec const &,bool );
+
+bp::def(
+"get_forum_ids"
+, get_forum_ids_function_type( &::gezi::tieba::get_forum_ids )
+, ( bp::arg("forumNames_"), bp::arg("allowError")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_forum_ids_map
+
+typedef ::std::map< std::string, unsigned int > ( *get_forum_ids_map_function_type )( ::svec const & );
+
+bp::def(
+"get_forum_ids_map"
+, get_forum_ids_map_function_type( &::gezi::tieba::get_forum_ids_map )
+, ( bp::arg("forumNames_") ) );
+
+}
+
+{ //::gezi::tieba::get_forum_info
+
+typedef ::gezi::tieba::ForumInfo ( *get_forum_info_function_type )( ::std::string );
+
+bp::def(
+"get_forum_info"
+, get_forum_info_function_type( &::gezi::tieba::get_forum_info )
+, ( bp::arg("forumName") ) );
+
+}
+
+{ //::gezi::tieba::get_forum_info
+
+typedef ::gezi::tieba::ForumInfo ( *get_forum_info_function_type )( ::uint );
+
+bp::def(
+"get_forum_info"
+, get_forum_info_function_type( &::gezi::tieba::get_forum_info )
+, ( bp::arg("forumId") ) );
+
+}
+
+{ //::gezi::tieba::get_forum_info_str
+
+typedef ::std::string ( *get_forum_info_str_function_type )( ::uint );
+
+bp::def(
+"get_forum_info_str"
+, get_forum_info_str_function_type( &::gezi::tieba::get_forum_info_str )
+, ( bp::arg("forumId") ) );
+
+}
+
+{ //::gezi::tieba::get_forum_info_str
+
+typedef ::std::string ( *get_forum_info_str_function_type )( ::std::string );
+
+bp::def(
+"get_forum_info_str"
+, get_forum_info_str_function_type( &::gezi::tieba::get_forum_info_str )
+, ( bp::arg("params") ) );
+
+}
+
+{ //::gezi::tieba::get_forum_name
+
+typedef ::std::string ( *get_forum_name_function_type )( ::uint );
+
+bp::def(
+"get_forum_name"
+, get_forum_name_function_type( &::gezi::tieba::get_forum_name )
+, ( bp::arg("forumId") ) );
+
+}
+
+{ //::gezi::tieba::get_forum_name_str
+
+typedef ::std::string ( *get_forum_name_str_function_type )( ::std::vector< unsigned int > const & );
+
+bp::def(
+"get_forum_name_str"
+, get_forum_name_str_function_type( &::gezi::tieba::get_forum_name_str )
+, ( bp::arg("forumIds") ) );
+
+}
+
+{ //::gezi::tieba::get_forum_name_str
+
+typedef ::std::string ( *get_forum_name_str_function_type )( ::uint );
+
+bp::def(
+"get_forum_name_str"
+, get_forum_name_str_function_type( &::gezi::tieba::get_forum_name_str )
+, ( bp::arg("forumId") ) );
+
+}
+
+{ //::gezi::tieba::get_forum_name_str
+
+typedef ::std::string ( *get_forum_name_str_function_type )( ::std::string );
+
+bp::def(
+"get_forum_name_str"
+, get_forum_name_str_function_type( &::gezi::tieba::get_forum_name_str )
+, ( bp::arg("params") ) );
+
+}
+
+{ //::gezi::tieba::get_forum_names
+
+typedef ::std::vector< std::string > ( *get_forum_names_function_type )( ::std::vector< unsigned int > const & );
+
+bp::def(
+"get_forum_names"
+, get_forum_names_function_type( &::gezi::tieba::get_forum_names )
+, ( bp::arg("forumIds") ) );
+
+}
+
+{ //::gezi::tieba::get_forum_names_map
+
+typedef ::std::map< unsigned int, std::string > ( *get_forum_names_map_function_type )( ::std::vector< unsigned int > const & );
+
+bp::def(
+"get_forum_names_map"
+, get_forum_names_map_function_type( &::gezi::tieba::get_forum_names_map )
+, ( bp::arg("forumIds_") ) );
+
+}
+
+{ //::gezi::tieba::get_forums_info
+
+typedef ::std::vector< gezi::tieba::ForumInfo > ( *get_forums_info_function_type )( ::std::vector< unsigned int >,bool );
+
+bp::def(
+"get_forums_info"
+, get_forums_info_function_type( &::gezi::tieba::get_forums_info )
+, ( bp::arg("forumIds_"), bp::arg("allowError")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_forums_info_map
+
+typedef ::std::map< unsigned int, gezi::tieba::ForumInfo > ( *get_forums_info_map_function_type )( ::std::vector< unsigned int > );
+
+bp::def(
+"get_forums_info_map"
+, get_forums_info_map_function_type( &::gezi::tieba::get_forums_info_map )
+, ( bp::arg("forumIds_") ) );
+
+}
+
+{ //::gezi::tieba::get_forums_info_str
+
+typedef ::std::string ( *get_forums_info_str_function_type )( ::std::vector< unsigned int > const & );
+
+bp::def(
+"get_forums_info_str"
+, get_forums_info_str_function_type( &::gezi::tieba::get_forums_info_str )
+, ( bp::arg("forumIds") ) );
+
+}
+
+{ //::gezi::tieba::get_full_posts_info
+
+typedef ::gezi::tieba::FullPostsInfo ( *get_full_posts_info_function_type )( ::uint64,int,int,int,::uint64 );
+
+bp::def(
+"get_full_posts_info"
+, get_full_posts_info_function_type( &::gezi::tieba::get_full_posts_info )
+, ( bp::arg("threadId"), bp::arg("resNum")=(int)(100), bp::arg("offset")=(int)(0), bp::arg("hasComment")=(int)(0), bp::arg("postId")=(long long unsigned int)(0) ) );
+
+}
+
+{ //::gezi::tieba::get_full_posts_info_str
+
+typedef ::std::string ( *get_full_posts_info_str_function_type )( ::uint64,int,int,int,::uint64 );
+
+bp::def(
+"get_full_posts_info_str"
+, get_full_posts_info_str_function_type( &::gezi::tieba::get_full_posts_info_str )
+, ( bp::arg("threadId"), bp::arg("resNum")=(int)(100), bp::arg("offset")=(int)(0), bp::arg("hasComment")=(int)(0), bp::arg("postId")=(long long unsigned int)(0) ) );
+
+}
+
+{ //::gezi::tieba::get_full_urate_info
+
+typedef ::gezi::tieba::UrateInfo ( *get_full_urate_info_function_type )( ::uint64,int,bool );
+
+bp::def(
+"get_full_urate_info"
+, get_full_urate_info_function_type( &::gezi::tieba::get_full_urate_info )
+, ( bp::arg("pid"), bp::arg("historyNum")=(int)(25), bp::arg("needUrl")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_info_str
+
+typedef ::std::string ( *get_info_str_function_type )( ::CurlUtil &,::std::string,int );
+
+bp::def(
+"get_info_str"
+, get_info_str_function_type( &::gezi::tieba::get_info_str )
+, ( bp::arg("curl"), bp::arg("url"), bp::arg("timeout")=(int)(-0x00000000000000001) ) );
+
+}
+
+{ //::gezi::tieba::get_info_str
+
+typedef ::std::string ( *get_info_str_function_type )( ::std::string,int );
+
+bp::def(
+"get_info_str"
+, get_info_str_function_type( &::gezi::tieba::get_info_str )
+, ( bp::arg("url"), bp::arg("timeout")=(int)(-0x00000000000000001) ) );
+
+}
+
 { //::gezi::get_nums
 
 typedef ::std::vector< std::string > ( *get_nums_function_type )( ::std::string );
@@ -2145,6 +3022,149 @@ bp::def(
 "get_pics"
 , get_pics_function_type( &::gezi::get_pics )
 , ( bp::arg("src") ) );
+
+}
+
+{ //::gezi::tieba::get_post_delete_info
+
+typedef ::gezi::tieba::DeleteInfo ( *get_post_delete_info_function_type )( ::uint64 );
+
+bp::def(
+"get_post_delete_info"
+, get_post_delete_info_function_type( &::gezi::tieba::get_post_delete_info )
+, ( bp::arg("pid") ) );
+
+}
+
+{ //::gezi::tieba::get_post_deleted_info
+
+typedef bool ( *get_post_deleted_info_function_type )( ::uint64,::uint64,bool &,bool & );
+
+bp::def(
+"get_post_deleted_info"
+, get_post_deleted_info_function_type( &::gezi::tieba::get_post_deleted_info )
+, ( bp::arg("pid"), bp::arg("tid"), bp::arg("isPostDeleted"), bp::arg("isThreadDeleted") ) );
+
+}
+
+{ //::gezi::tieba::get_post_info
+
+typedef ::gezi::tieba::PostInfo ( *get_post_info_function_type )( ::uint64 );
+
+bp::def(
+"get_post_info"
+, get_post_info_function_type( &::gezi::tieba::get_post_info )
+, ( bp::arg("pid") ) );
+
+}
+
+{ //::gezi::tieba::get_post_info
+
+typedef bool ( *get_post_info_function_type )( ::uint64,::std::string &,::std::string & );
+
+bp::def(
+"get_post_info"
+, get_post_info_function_type( &::gezi::tieba::get_post_info )
+, ( bp::arg("pid"), bp::arg("title"), bp::arg("content") ) );
+
+}
+
+{ //::gezi::tieba::get_post_info_str
+
+typedef ::std::string ( *get_post_info_str_function_type )( ::svec const & );
+
+bp::def(
+"get_post_info_str"
+, get_post_info_str_function_type( &::gezi::tieba::get_post_info_str )
+, ( bp::arg("pids") ) );
+
+}
+
+{ //::gezi::tieba::get_post_info_str
+
+typedef ::std::string ( *get_post_info_str_function_type )( ::uint64 );
+
+bp::def(
+"get_post_info_str"
+, get_post_info_str_function_type( &::gezi::tieba::get_post_info_str )
+, ( bp::arg("pid") ) );
+
+}
+
+{ //::gezi::tieba::get_posts_delete_info
+
+typedef int ( *get_posts_delete_info_function_type )( ::std::vector< unsigned long long > const &,::std::vector< unsigned long long > const &,int );
+
+bp::def(
+"get_posts_delete_info"
+, get_posts_delete_info_function_type( &::gezi::tieba::get_posts_delete_info )
+, ( bp::arg("pids"), bp::arg("tids"), bp::arg("maxCount")=(int)(50) ) );
+
+}
+
+{ //::gezi::tieba::get_posts_delete_info
+
+typedef ::std::map< long long unsigned int, gezi::tieba::DeleteInfo > ( *get_posts_delete_info_function_type )( ::std::vector< unsigned long long > const &,bool );
+
+bp::def(
+"get_posts_delete_info"
+, get_posts_delete_info_function_type( &::gezi::tieba::get_posts_delete_info )
+, ( bp::arg("pids"), bp::arg("allowError")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_posts_info
+
+typedef ::std::vector< gezi::tieba::PostInfo > ( *get_posts_info_function_type )( ::std::vector< unsigned long long > const &,bool );
+
+bp::def(
+"get_posts_info"
+, get_posts_info_function_type( &::gezi::tieba::get_posts_info )
+, ( bp::arg("pids_"), bp::arg("allowError")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_posts_info_str
+
+typedef ::std::string ( *get_posts_info_str_function_type )( ::std::vector< long long unsigned int > const & );
+
+bp::def(
+"get_posts_info_str"
+, get_posts_info_str_function_type( &::gezi::tieba::get_posts_info_str )
+, ( bp::arg("pids") ) );
+
+}
+
+{ //::gezi::tieba::get_posts_info_str
+
+typedef ::std::string ( *get_posts_info_str_function_type )( ::svec const & );
+
+bp::def(
+"get_posts_info_str"
+, get_posts_info_str_function_type( &::gezi::tieba::get_posts_info_str )
+, ( bp::arg("pids") ) );
+
+}
+
+{ //::gezi::tieba::get_posts_info_str
+
+typedef ::std::string ( *get_posts_info_str_function_type )( ::std::string );
+
+bp::def(
+"get_posts_info_str"
+, get_posts_info_str_function_type( &::gezi::tieba::get_posts_info_str )
+, ( bp::arg("pids") ) );
+
+}
+
+{ //::gezi::tieba::get_posts_info_str
+
+typedef ::std::string ( *get_posts_info_str_function_type )( ::std::vector< unsigned long long > const & );
+
+bp::def(
+"get_posts_info_str"
+, get_posts_info_str_function_type( &::gezi::tieba::get_posts_info_str )
+, ( bp::arg("pids") ) );
 
 }
 
@@ -2181,6 +3201,182 @@ bp::def(
 
 }
 
+{ //::gezi::tieba::get_thread_delete_info
+
+typedef ::gezi::tieba::DeleteInfo ( *get_thread_delete_info_function_type )( ::uint64 );
+
+bp::def(
+"get_thread_delete_info"
+, get_thread_delete_info_function_type( &::gezi::tieba::get_thread_delete_info )
+, ( bp::arg("tid") ) );
+
+}
+
+{ //::gezi::tieba::get_thread_info
+
+typedef ::gezi::tieba::ThreadInfo ( *get_thread_info_function_type )( ::uint64,bool,bool );
+
+bp::def(
+"get_thread_info"
+, get_thread_info_function_type( &::gezi::tieba::get_thread_info )
+, ( bp::arg("threadId"), bp::arg("need_abstract")=(bool)(false), bp::arg("allowError")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_thread_info_str
+
+typedef ::std::string ( *get_thread_info_str_function_type )( ::uint64,bool );
+
+bp::def(
+"get_thread_info_str"
+, get_thread_info_str_function_type( &::gezi::tieba::get_thread_info_str )
+, ( bp::arg("tid"), bp::arg("need_abstract")=(bool)(false) ) );
+
+}
+
+{ //::gezi::tieba::get_threads_delete_info
+
+typedef ::std::map< long long unsigned int, gezi::tieba::DeleteInfo > ( *get_threads_delete_info_function_type )( ::std::vector< unsigned long long > const &,bool );
+
+bp::def(
+"get_threads_delete_info"
+, get_threads_delete_info_function_type( &::gezi::tieba::get_threads_delete_info )
+, ( bp::arg("tids"), bp::arg("allowError")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_threads_info
+
+typedef ::std::vector< gezi::tieba::ThreadInfo > ( *get_threads_info_function_type )( ::std::vector< unsigned long long > const &,bool,bool );
+
+bp::def(
+"get_threads_info"
+, get_threads_info_function_type( &::gezi::tieba::get_threads_info )
+, ( bp::arg("tidVec"), bp::arg("need_abstract")=(bool)(false), bp::arg("allowError")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_threads_info
+
+typedef ::std::vector< gezi::tieba::ThreadInfo > ( *get_threads_info_function_type )( ::svec const &,bool,bool );
+
+bp::def(
+"get_threads_info"
+, get_threads_info_function_type( &::gezi::tieba::get_threads_info )
+, ( bp::arg("tidVec"), bp::arg("need_abstract")=(bool)(false), bp::arg("allowError")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_threads_info_map
+
+typedef ::std::map< long long unsigned int, gezi::tieba::ThreadInfo > ( *get_threads_info_map_function_type )( ::std::vector< unsigned long long > const &,bool );
+
+bp::def(
+"get_threads_info_map"
+, get_threads_info_map_function_type( &::gezi::tieba::get_threads_info_map )
+, ( bp::arg("tidVec"), bp::arg("need_abstract")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_threads_info_str
+
+typedef ::std::string ( *get_threads_info_str_function_type )( ::std::vector< long long unsigned int > const &,bool );
+
+bp::def(
+"get_threads_info_str"
+, get_threads_info_str_function_type( &::gezi::tieba::get_threads_info_str )
+, ( bp::arg("tids"), bp::arg("need_abstract")=(bool)(false) ) );
+
+}
+
+{ //::gezi::tieba::get_threads_info_str
+
+typedef ::std::string ( *get_threads_info_str_function_type )( ::svec const &,bool );
+
+bp::def(
+"get_threads_info_str"
+, get_threads_info_str_function_type( &::gezi::tieba::get_threads_info_str )
+, ( bp::arg("tids"), bp::arg("need_abstract")=(bool)(false) ) );
+
+}
+
+{ //::gezi::tieba::get_threads_info_str
+
+typedef ::std::string ( *get_threads_info_str_function_type )( ::std::string,bool );
+
+bp::def(
+"get_threads_info_str"
+, get_threads_info_str_function_type( &::gezi::tieba::get_threads_info_str )
+, ( bp::arg("tids_"), bp::arg("need_abstract")=(bool)(false) ) );
+
+}
+
+{ //::gezi::tieba::get_threads_info_str
+
+typedef ::std::string ( *get_threads_info_str_function_type )( ::std::vector< unsigned long long > const &,bool );
+
+bp::def(
+"get_threads_info_str"
+, get_threads_info_str_function_type( &::gezi::tieba::get_threads_info_str )
+, ( bp::arg("tids"), bp::arg("need_abstract")=(bool)(false) ) );
+
+}
+
+{ //::gezi::tieba::get_urate_info
+
+typedef ::gezi::tieba::UrateInfo ( *get_urate_info_function_type )( ::uint64,bool,int,bool );
+
+bp::def(
+"get_urate_info"
+, get_urate_info_function_type( &::gezi::tieba::get_urate_info )
+, ( bp::arg("pid"), bp::arg("needHistory")=(bool)(true), bp::arg("historyNum")=(int)(25), bp::arg("needUrlInfo")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_urate_info_from_uid
+
+typedef ::gezi::tieba::UrateInfo ( *get_urate_info_from_uid_function_type )( ::uint64 );
+
+bp::def(
+"get_urate_info_from_uid"
+, get_urate_info_from_uid_function_type( &::gezi::tieba::get_urate_info_from_uid )
+, ( bp::arg("uid") ) );
+
+}
+
+{ //::gezi::tieba::get_urate_info_from_uid
+
+typedef void ( *get_urate_info_from_uid_function_type )( ::uint64,::gezi::tieba::UrateInfo & );
+
+bp::def(
+"get_urate_info_from_uid"
+, get_urate_info_from_uid_function_type( &::gezi::tieba::get_urate_info_from_uid )
+, ( bp::arg("uid"), bp::arg("urateInfo") ) );
+
+}
+
+{ //::gezi::tieba::get_url_info
+
+typedef ::gezi::tieba::UrlInfo ( *get_url_info_function_type )( ::std::string );
+
+bp::def(
+"get_url_info"
+, get_url_info_function_type( &::gezi::tieba::get_url_info )
+, ( bp::arg("url") ) );
+
+}
+
+{ //::gezi::tieba::get_url_info_params_
+
+typedef ::std::string ( *get_url_info_params__function_type )( ::std::vector< std::string > const & );
+
+bp::def(
+"get_url_info_params_"
+, get_url_info_params__function_type( &::gezi::tieba::get_url_info_params_ )
+, ( bp::arg("urls") ) );
+
+}
+
 { //::gezi::get_urls
 
 typedef ::std::vector< std::string > ( *get_urls_function_type )( ::std::string );
@@ -2189,6 +3385,160 @@ bp::def(
 "get_urls"
 , get_urls_function_type( &::gezi::get_urls )
 , ( bp::arg("src") ) );
+
+}
+
+{ //::gezi::tieba::get_urls_info
+
+typedef ::std::vector< gezi::tieba::UrlInfo > ( *get_urls_info_function_type )( ::std::vector< std::string > const & );
+
+bp::def(
+"get_urls_info"
+, get_urls_info_function_type( &::gezi::tieba::get_urls_info )
+, ( bp::arg("urls") ) );
+
+}
+
+{ //::gezi::tieba::get_urls_info_map
+
+typedef ::std::map< std::string, gezi::tieba::UrlInfo > ( *get_urls_info_map_function_type )( ::std::vector< std::string > const & );
+
+bp::def(
+"get_urls_info_map"
+, get_urls_info_map_function_type( &::gezi::tieba::get_urls_info_map )
+, ( bp::arg("urls") ) );
+
+}
+
+{ //::gezi::tieba::get_user_fans
+
+typedef bool ( *get_user_fans_function_type )( ::uint64,int &,int & );
+
+bp::def(
+"get_user_fans"
+, get_user_fans_function_type( &::gezi::tieba::get_user_fans )
+, ( bp::arg("uid"), bp::arg("follow_count"), bp::arg("followed_count") ) );
+
+}
+
+{ //::gezi::tieba::get_user_fans
+
+typedef bool ( *get_user_fans_function_type )( ::uint64,::AnyMap & );
+
+bp::def(
+"get_user_fans"
+, get_user_fans_function_type( &::gezi::tieba::get_user_fans )
+, ( bp::arg("uid"), bp::arg("result") ) );
+
+}
+
+{ //::gezi::tieba::get_user_fans
+
+typedef ::std::string ( *get_user_fans_function_type )( ::uint64 );
+
+bp::def(
+"get_user_fans"
+, get_user_fans_function_type( &::gezi::tieba::get_user_fans )
+, ( bp::arg("uid") ) );
+
+}
+
+{ //::gezi::tieba::get_user_info
+
+typedef ::gezi::tieba::UserInfo ( *get_user_info_function_type )( ::uint,bool,bool );
+
+bp::def(
+"get_user_info"
+, get_user_info_function_type( &::gezi::tieba::get_user_info )
+, ( bp::arg("uid"), bp::arg("needFollowInfo")=(bool)(true), bp::arg("needPassInfo")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_user_like_forum_info
+
+typedef ::gezi::tieba::UserLikeForumInfo ( *get_user_like_forum_info_function_type )( ::uint );
+
+bp::def(
+"get_user_like_forum_info"
+, get_user_like_forum_info_function_type( &::gezi::tieba::get_user_like_forum_info )
+, ( bp::arg("uid") ) );
+
+}
+
+{ //::gezi::tieba::get_user_post_num_info
+
+typedef ::gezi::tieba::UserPostNumInfo ( *get_user_post_num_info_function_type )( ::uint,::uint );
+
+bp::def(
+"get_user_post_num_info"
+, get_user_post_num_info_function_type( &::gezi::tieba::get_user_post_num_info )
+, ( bp::arg("uid"), bp::arg("forumId") ) );
+
+}
+
+{ //::gezi::tieba::get_user_post_num_info
+
+typedef ::gezi::tieba::UserPostNumInfo ( *get_user_post_num_info_function_type )( ::uint );
+
+bp::def(
+"get_user_post_num_info"
+, get_user_post_num_info_function_type( &::gezi::tieba::get_user_post_num_info )
+, ( bp::arg("uid") ) );
+
+}
+
+{ //::gezi::tieba::get_user_post_num_info_
+
+typedef ::gezi::tieba::UserPostNumInfo ( *get_user_post_num_info__function_type )( ::std::string );
+
+bp::def(
+"get_user_post_num_info_"
+, get_user_post_num_info__function_type( &::gezi::tieba::get_user_post_num_info_ )
+, ( bp::arg("url") ) );
+
+}
+
+{ //::gezi::tieba::get_user_posts_info
+
+typedef ::gezi::tieba::UserPostsInfo ( *get_user_posts_info_function_type )( ::uint,int,bool,::uint64,int,int );
+
+bp::def(
+"get_user_posts_info"
+, get_user_posts_info_function_type( &::gezi::tieba::get_user_posts_info )
+, ( bp::arg("uid"), bp::arg("resNum")=(int)(25), bp::arg("needContent")=(bool)(true), bp::arg("endTime")=(long long unsigned int)(0), bp::arg("orderType")=(int)(1), bp::arg("offset")=(int)(0) ) );
+
+}
+
+{ //::gezi::tieba::get_user_posts_info_until
+
+typedef ::gezi::tieba::UserPostsInfo ( *get_user_posts_info_until_function_type )( ::uint64,int,bool,int,int );
+
+bp::def(
+"get_user_posts_info_until"
+, get_user_posts_info_until_function_type( &::gezi::tieba::get_user_posts_info_until )
+, ( bp::arg("pid"), bp::arg("resNum")=(int)(25), bp::arg("needContent")=(bool)(true), bp::arg("orderType")=(int)(1), bp::arg("offset")=(int)(0) ) );
+
+}
+
+{ //::gezi::tieba::get_user_posts_info_until
+
+typedef ::gezi::tieba::UserPostsInfo ( *get_user_posts_info_until_function_type )( ::gezi::tieba::PostInfo const &,int,bool,int,int );
+
+bp::def(
+"get_user_posts_info_until"
+, get_user_posts_info_until_function_type( &::gezi::tieba::get_user_posts_info_until )
+, ( bp::arg("info"), bp::arg("resNum")=(int)(25), bp::arg("needContent")=(bool)(true), bp::arg("orderType")=(int)(1), bp::arg("offset")=(int)(0) ) );
+
+}
+
+{ //::gezi::tieba::get_users_info
+
+typedef ::std::vector< gezi::tieba::UserInfo > ( *get_users_info_function_type )( ::std::vector< unsigned int >,bool,bool );
+
+bp::def(
+"get_users_info"
+, get_users_info_function_type( &::gezi::tieba::get_users_info )
+, ( bp::arg("uids_"), bp::arg("needFollowInfo")=(bool)(true), bp::arg("needPassInfo")=(bool)(true) ) );
 
 }
 
@@ -2302,6 +3652,17 @@ bp::def(
 
 }
 
+{ //::gezi::get_videos
+
+typedef ::std::vector< std::string > ( *get_videos_function_type )( ::std::string );
+
+bp::def(
+"get_videos"
+, get_videos_function_type( &::gezi::get_videos )
+, ( bp::arg("src") ) );
+
+}
+
 { //::gezi::get_words
 
 typedef ::std::vector< std::string > ( *get_words_function_type )( ::std::vector< std::string > &,int,::std::string );
@@ -2332,6 +3693,28 @@ bp::def(
 "is_alpha_only"
 , is_alpha_only_function_type( &::gezi::is_alpha_only )
 , ( bp::arg("input") ) );
+
+}
+
+{ //::gezi::tieba::is_deleted
+
+typedef bool ( *is_deleted_function_type )( ::uint64,::std::string );
+
+bp::def(
+"is_deleted"
+, is_deleted_function_type( &::gezi::tieba::is_deleted )
+, ( bp::arg("id"), bp::arg("type") ) );
+
+}
+
+{ //::gezi::tieba::is_deletes
+
+typedef ::std::set< long long unsigned int > ( *is_deletes_function_type )( ::std::vector< unsigned long long > const &,::std::string,bool );
+
+bp::def(
+"is_deletes"
+, is_deletes_function_type( &::gezi::tieba::is_deletes )
+, ( bp::arg("ids_"), bp::arg("type"), bp::arg("allowError")=(bool)(true) ) );
 
 }
 
@@ -2379,6 +3762,28 @@ bp::def(
 
 }
 
+{ //::gezi::tieba::is_post_deleted
+
+typedef bool ( *is_post_deleted_function_type )( ::uint64 );
+
+bp::def(
+"is_post_deleted"
+, is_post_deleted_function_type( &::gezi::tieba::is_post_deleted )
+, ( bp::arg("pid") ) );
+
+}
+
+{ //::gezi::tieba::is_posts_deleted
+
+typedef ::std::set< long long unsigned int > ( *is_posts_deleted_function_type )( ::std::vector< unsigned long long > const &,bool );
+
+bp::def(
+"is_posts_deleted"
+, is_posts_deleted_function_type( &::gezi::tieba::is_posts_deleted )
+, ( bp::arg("pids"), bp::arg("allowError")=(bool)(true) ) );
+
+}
+
 { //::gezi::is_thread
 
 typedef bool ( *is_thread_function_type )( ::std::string );
@@ -2387,6 +3792,28 @@ bp::def(
 "is_thread"
 , is_thread_function_type( &::gezi::is_thread )
 , ( bp::arg("title") ) );
+
+}
+
+{ //::gezi::tieba::is_thread_deleted
+
+typedef bool ( *is_thread_deleted_function_type )( ::uint64 );
+
+bp::def(
+"is_thread_deleted"
+, is_thread_deleted_function_type( &::gezi::tieba::is_thread_deleted )
+, ( bp::arg("tid") ) );
+
+}
+
+{ //::gezi::tieba::is_threads_deleted
+
+typedef ::std::set< long long unsigned int > ( *is_threads_deleted_function_type )( ::std::vector< unsigned long long > const &,bool );
+
+bp::def(
+"is_threads_deleted"
+, is_threads_deleted_function_type( &::gezi::tieba::is_threads_deleted )
+, ( bp::arg("tids"), bp::arg("allowError")=(bool)(true) ) );
 
 }
 
@@ -2445,6 +3872,17 @@ bp::def(
 
 }
 
+{ //::gezi::tieba::name_pattern
+
+typedef ::std::string ( *name_pattern_function_type )( ::std::string );
+
+bp::def(
+"name_pattern"
+, name_pattern_function_type( &::gezi::tieba::name_pattern )
+, ( bp::arg("uname") ) );
+
+}
+
 { //::gezi::normalize_feature_str
 
 typedef void ( *normalize_feature_str_function_type )( ::std::string & );
@@ -2478,6 +3916,17 @@ bp::def(
 
 }
 
+{ //::gezi::tieba::parse_delete_info_
+
+typedef void ( *parse_delete_info__function_type )( ::Json::Value const &,::gezi::tieba::DeleteInfo &,::std::string );
+
+bp::def(
+"parse_delete_info_"
+, parse_delete_info__function_type( &::gezi::tieba::parse_delete_info_ )
+, ( bp::arg("jsonDelInfo"), bp::arg("deleteInfo"), bp::arg("type") ) );
+
+}
+
 { //::gezi::parse_double_param
 
 typedef double ( *parse_double_param_function_type )( ::std::string,::std::string );
@@ -2500,6 +3949,17 @@ bp::def(
 
 }
 
+{ //::gezi::tieba::parse_post_info
+
+typedef void ( *parse_post_info_function_type )( ::Json::Value const &,::gezi::tieba::PostInfo & );
+
+bp::def(
+"parse_post_info"
+, parse_post_info_function_type( &::gezi::tieba::parse_post_info )
+, ( bp::arg("m"), bp::arg("info") ) );
+
+}
+
 { //::gezi::parse_string_param
 
 typedef ::std::string ( *parse_string_param_function_type )( ::std::string,::std::string );
@@ -2508,6 +3968,28 @@ bp::def(
 "parse_string_param"
 , parse_string_param_function_type( &::gezi::parse_string_param )
 , ( bp::arg("name"), bp::arg("line") ) );
+
+}
+
+{ //::gezi::tieba::parse_user_info_
+
+typedef void ( *parse_user_info__function_type )( ::Json::Value const &,::gezi::tieba::UserInfo &,bool,bool );
+
+bp::def(
+"parse_user_info_"
+, parse_user_info__function_type( &::gezi::tieba::parse_user_info_ )
+, ( bp::arg("m"), bp::arg("info"), bp::arg("needFollowInfo"), bp::arg("needPassInfo") ) );
+
+}
+
+{ //::gezi::tieba::parse_user_post_num_info_
+
+typedef void ( *parse_user_post_num_info__function_type )( ::Json::Value const &,::gezi::tieba::UserPostNumInfo & );
+
+bp::def(
+"parse_user_post_num_info_"
+, parse_user_post_num_info__function_type( &::gezi::tieba::parse_user_post_num_info_ )
+, ( bp::arg("root"), bp::arg("info") ) );
 
 }
 
@@ -2700,12 +4182,34 @@ bp::def(
 
 { //::gezi::read_to_vec
 
+typedef ::std::vector< std::string > ( *read_to_vec_function_type )( ::std::string const &,int,::std::string );
+
+bp::def(
+"read_to_vec"
+, read_to_vec_function_type( &::gezi::read_to_vec )
+, ( bp::arg("infile"), bp::arg("index")=(int)(0), bp::arg("sep")="\011 " ) );
+
+}
+
+{ //::gezi::read_to_vec
+
 typedef void ( *read_to_vec_function_type )( ::std::string const &,::std::vector< std::string > &,int,::std::string );
 
 bp::def(
 "read_to_vec"
 , read_to_vec_function_type( &::gezi::read_to_vec )
 , ( bp::arg("infile"), bp::arg("container"), bp::arg("index")=(int)(0), bp::arg("sep")="\011 " ) );
+
+}
+
+{ //::gezi::read_to_vec
+
+typedef ::std::vector< std::string > ( *read_to_vec_function_type )( ::std::string const &,int,::std::string );
+
+bp::def(
+"read_to_vec"
+, read_to_vec_function_type( &::gezi::read_to_vec )
+, ( bp::arg("infile"), bp::arg("index")=(int)(0), bp::arg("sep")="\011 " ) );
 
 }
 
@@ -3083,6 +4587,17 @@ bp::def(
 
 }
 
+{ //::gezi::tieba::sget_info_str
+
+typedef ::std::string ( *sget_info_str_function_type )( ::std::string,int );
+
+bp::def(
+"sget_info_str"
+, sget_info_str_function_type( &::gezi::tieba::sget_info_str )
+, ( bp::arg("url"), bp::arg("timeout")=(int)(-0x00000000000000001) ) );
+
+}
+
 { //::gezi::startswith
 
 typedef bool ( *startswith_function_type )( ::std::string,char );
@@ -3314,17 +4829,6 @@ bp::def(
 
 }
 
-{ //::gezi::write_sparse
-
-typedef void ( *write_sparse_function_type )( ::gezi::Features const &,::std::string,::std::ofstream &,::std::string );
-
-bp::def(
-"write_sparse"
-, write_sparse_function_type( &::gezi::write_sparse )
-, ( bp::arg("features"), bp::arg("label"), bp::arg("ofs"), bp::arg("name")="" ) );
-
-}
-
 { //::gezi::write_table_feature
 
 typedef void ( *write_table_feature_function_type )( ::gezi::Features const &,::std::ofstream & );
@@ -3366,4 +4870,6 @@ bp::scope().attr("SEG_USE_SPLIT") = gezi::SEG_USE_SPLIT;
 bp::scope().attr("SEG_USE_TRIE") = gezi::SEG_USE_TRIE;
 
 bp::scope().attr("SEG_WPCOMP") = gezi::SEG_WPCOMP;
+
+bp::scope().attr("kMaxRequestCount") = gezi::tieba::kMaxRequestCount;
 }

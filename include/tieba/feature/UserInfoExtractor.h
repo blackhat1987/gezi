@@ -27,30 +27,25 @@
 #include "tieba/urate/urate_info.h"
 #include "tieba/tieba_util.h"
 #include "tools/uname_util.h"
+#include "tieba/feature/UrateExtractor.h"
 namespace gezi {
 	namespace tieba {
-
-		class UserInfoExtractor : public FeaturesExtractor
+		//@TODO need template<typename Base> class UserPostsInfoEtractor : public Base
+		class UserInfoExtractor : public UrateExtractor
 		{
 		public:
-			UserInfoExtractor(UrateInfo& urateInfo, bool useNowPostInfo = true)
-				:FeaturesExtractor("UserInfo"), _urateInfo(&urateInfo), _useNowPostInfo(useNowPostInfo)
-			{
-
-			}
-
 			UserInfoExtractor(bool useNowPostInfo = true)
-				:FeaturesExtractor("UserInfo"), _useNowPostInfo(useNowPostInfo)
+				:UrateExtractor("UserInfo"), _useNowPostInfo(useNowPostInfo)
 			{
 
 			}
 
 			virtual void extract() override
 			{
-				UserInfo& userInfo = _urateInfo->userInfo;
+				UserInfo& userInfo = info().userInfo;
 				bool isUserInfoValid = userInfo.userId != 0;
 				add(isUserInfoValid, "IsUserInfoValid");
-				PostInfo& nowPostInfo = _urateInfo->nowPostInfo;
+				PostInfo& nowPostInfo = info().nowPostInfo;
 				bool isNowPostInfoValid = nowPostInfo.postId != 0;
 				add(isNowPostInfoValid, "IsNowPostInfoValid");
 
@@ -100,7 +95,7 @@ namespace gezi {
 				uint nowFourmId = nowPostInfo.forumId;
 
 				{ //用户的吧等级信息
-					UserLikeForumInfo& userLikeForumInfo = _urateInfo->userLikeForumInfo;
+					UserLikeForumInfo& userLikeForumInfo = info().userLikeForumInfo;
 					bool isUserLikeForumInfoValid = userLikeForumInfo.userId;
 					add(isUserLikeForumInfoValid, "IsUserLikeForumInfoValid");
 					add(userLikeForumInfo.maxLevel, "ForumMaxLevel");
@@ -113,7 +108,7 @@ namespace gezi {
 				}
 
 				{ //用户的发帖历史记录信息
-					UserPostNumInfo& userPostNumInfo = _urateInfo->userPostNumInfo;
+					UserPostNumInfo& userPostNumInfo = info().userPostNumInfo;
 					bool isUserPostNumInfoValid = userPostNumInfo.userId != 0;
 					add(isUserPostNumInfoValid, "IsUserPostNumInfoValid");
 					add(userPostNumInfo.numGoods, "GoodPostNumHistory");
@@ -123,10 +118,10 @@ namespace gezi {
 
 					if (_useNowPostInfo)
 					{//用户在当前吧的发帖历史信息
-						auto iter = _urateInfo->userPostNumInForum.find(nowFourmId);
+						auto iter = info().userPostNumInForum.find(nowFourmId);
 						UserPostNumInfo userNowForumPostNumInfo;
 						bool isUserNowForumPostNumInfoValid = true;
-						if (iter == _urateInfo->userPostNumInForum.end() || (iter->second).userId == 0)
+						if (iter == info().userPostNumInForum.end() || (iter->second).userId == 0)
 						{
 							isUserNowForumPostNumInfoValid = false;
 						}
@@ -153,7 +148,6 @@ namespace gezi {
 			}
 
 		private:
-			UrateInfo* _urateInfo;
 			bool _useNowPostInfo = true;
 		};
 

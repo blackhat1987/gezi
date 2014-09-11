@@ -367,6 +367,7 @@ namespace gezi {
 				return ret;
 			}
 			value = svalue.str;
+			return ret;
 		}
 
 		int count(string key) const

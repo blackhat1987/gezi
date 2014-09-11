@@ -43,9 +43,10 @@ void run()
 			serialize::save_xml(info, urateFile);
 		}
 	}
+	UrateExtractor::info() = move(info);
 	FeaturesExtractorMgr mgr;
 	Features fe;
-	mgr.add(new UserInfoExtractor(info));
+	mgr.add(new UserInfoExtractor());
 	mgr.extract(fe);
 	Pval(fe.Str());
 	debug_print(fe, std::cout);
