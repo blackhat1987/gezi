@@ -26,8 +26,8 @@ namespace gezi {
 		class UserInfoExtractor : public UrateExtractor
 		{
 		public:
-			UserInfoExtractor(bool useNowPostInfo = true)
-				:UrateExtractor("UserInfo"), _useNowPostInfo(useNowPostInfo)
+			UserInfoExtractor(bool useNowPostInfo = true, string name = "UserInfo")
+				:UrateExtractor(name), _useNowPostInfo(useNowPostInfo)
 			{
 
 			}
