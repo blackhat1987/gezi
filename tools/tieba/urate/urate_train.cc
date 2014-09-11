@@ -19,6 +19,7 @@
 #include "feature/Features.h"
 #include "tieba/urate/get_urate_info.h"
 #include "tieba/feature/urate/UserInfoExtractor.h"
+#include "tieba/feature/urate/SundryExtractor.h"
 using namespace std;
 using namespace gezi;
 using namespace gezi::tieba;
@@ -62,6 +63,7 @@ inline Features gen_features(uint64 pid)
 	UrateExtractor::info() = move(info);
 	FeaturesExtractorMgr mgr;
 	mgr.add(new UserInfoExtractor());
+	mgr.add(new SundryExtractor());
 	mgr.extract(fe);
 
 	return fe;
