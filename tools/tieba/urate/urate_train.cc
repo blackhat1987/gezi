@@ -18,7 +18,7 @@
 #include "common_util.h"
 #include "feature/Features.h"
 #include "tieba/urate/get_urate_info.h"
-#include "tieba/feature/UserInfoExtractor.h"
+#include "tieba/feature/urate/UserInfoExtractor.h"
 using namespace std;
 using namespace gezi;
 using namespace gezi::tieba;

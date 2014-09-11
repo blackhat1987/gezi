@@ -16,7 +16,7 @@
 #define private public
 #define protected public
 #include "common_util.h"
-#include "tieba/feature/UserInfoExtractor.h"
+#include "tieba/feature/urate/UserInfoExtractor.h"
 #include "tieba/urate/get_urate_info.h"
 using namespace std;
 using namespace gezi;

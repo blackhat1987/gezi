@@ -1,33 +1,25 @@
 /**
  *  ==============================================================================
  *
- *          \file   tieba/feature/UserInfoExtractor.h
+ *          \file   tieba/feature/urate/UserInfoExtractor.h
  *
  *        \author   chenghuige
  *
- *          \date   2014-09-09 11:44:45.511761
+ *          \date   2014-09-11 11:48:49.699004
  *
- *  \Description:   从用户基本信息抽取的基础用户画像特征 这个是Urate角度 从当前帖子出发的
- 注册时间
- 喜欢的吧信息
- 用户名信息
- 历史发帖量信息
-
- @TODO增加离线挖掘的其它用户属性 建立 UserInfoExExtractor
- @TODO 仅仅从用户角度出发的特征
+ *  \Description:
  *  ==============================================================================
  */
 
-#ifndef TIEBA_FEATURE__USER_INFO_EXTRACTOR_H_
-#define TIEBA_FEATURE__USER_INFO_EXTRACTOR_H_
-
+#ifndef TIEBA_FEATURE_URATE__USER_INFO_EXTRACTOR_H_
+#define TIEBA_FEATURE_URATE__USER_INFO_EXTRACTOR_H_
 #include "common_util.h"
 #include "feature/Features.h"
 #include "tieba/info_def.h"
 #include "tieba/urate/urate_info.h"
 #include "tieba/tieba_util.h"
 #include "tools/uname_util.h"
-#include "tieba/feature/UrateExtractor.h"
+#include "tieba/feature/urate/UrateExtractor.h"
 namespace gezi {
 	namespace tieba {
 		//@TODO need template<typename Base> class UserPostsInfoEtractor : public Base
@@ -58,7 +50,7 @@ namespace gezi {
 					add(followFollowedRatio, "FollowFollowedRatio");
 				}
 				{ //注册时间信息
-					uint64 nowTime =  _useNowPostInfo && isNowPostInfoValid ? nowPostInfo.createTime : (uint64)time(NULL);
+					uint64 nowTime = _useNowPostInfo && isNowPostInfoValid ? nowPostInfo.createTime : (uint64)time(NULL);
 					uint64 regSpan = reg_span(nowTime, userInfo.regTime);
 					add(regSpan, "RegisterSpan");
 					int regDays = regSpan / kOneDay;
@@ -154,4 +146,4 @@ namespace gezi {
 	}  //----end of namespace tieba
 }  //----end of namespace gezi
 
-#endif  //----end of TIEBA_FEATURE__USER_INFO_EXTRACTOR_H_
+#endif  //----end of TIEBA_FEATURE_URATE__USER_INFO_EXTRACTOR_H_

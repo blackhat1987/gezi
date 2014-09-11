@@ -486,6 +486,12 @@
     <ClInclude Include="include\tieba\urate\extended_urate_info.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\tieba\feature\urate\UrateExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tieba\feature\urate\UserInfoExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
