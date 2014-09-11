@@ -325,6 +325,11 @@ namespace gezi {
 				int level;
 				int curScore;
 				int leftScore;
+				//for python wrapp @FIXME 为何不能去掉  当前看来作为map的value 需要定义== 才能封装python自动
+				bool operator == (const Node& other)
+				{
+					return forumName == other.forumName;
+				}
 
 				friend class boost::serialization::access;
 				template<class Archive>
@@ -460,6 +465,12 @@ namespace gezi {
 			float jumRank = 0.0;
 			string content;
 
+			//for python wrapp @FIXME 为何不能去掉 
+			bool operator == (const UrlInfo& other)
+			{
+				return url == other.url;
+			}
+
 			friend class boost::serialization::access;
 			template<class Archive>
 			void serialize(Archive &ar, const unsigned int version)
@@ -477,11 +488,10 @@ namespace gezi {
 #ifdef GCCXML
 		struct PyHack_Comments
 		{ //hack for vector<Comments>  vector<vector 不然没有vector<Comment> 可以用Use(vector<Comment> ? @TODO
+			//很奇怪的是 生成的tieba_py.cc里面没有PyHack_Comments 。。。 但是这里还是不能少这个否则无法访问vector<Comment>
 			Comments comments;
 		};
-#include "python_util.h"
-		UseMap(map<uint, UserLikeForumInfo::Node>);
-		UseMap(map<string, UrlInfo>);
+
 #endif
 
 	}  //----end of namespace tieba
