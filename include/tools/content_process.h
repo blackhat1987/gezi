@@ -54,7 +54,7 @@ namespace gezi {
 
 	inline vector<string> get_videos(string src)
 	{
-		string videoPattern = "<embed.*? src=\"(. + ? )\".*?>";
+		string videoPattern = "<embed.*? src=\"(.+?)\".*?>";
 		return ufo::reg_search(src, videoPattern);
 	}
 
@@ -63,9 +63,11 @@ namespace gezi {
 		return !get_videos(src).empty();
 	}
 
+	//@FIXME why R"abc@3" fail with @..? raw string bug?
 	inline vector<string> get_emails(string src)
 	{
-		string emailPattern = "[a-zA-Z0-9]+@[a-zA-Z0-9\-\_]{2,}\.(com|cn|tk|biz|org|edu|net|tw|us|info|gov)";
+		//string emailPattern = R"[a-zA-Z0-9]+@[a-zA-Z0-9\-\_]{2,}\.(com|cn|tk|biz|org|edu|net|tw|us|info|gov)";
+		string emailPattern = "[a-zA-Z0-9]+@[a-zA-Z0-9\\-\\_]{2,}\\.(com|cn|tk|biz|org|edu|net|tw|us|info|gov)";
 		return ufo::reg_search(src, emailPattern);
 	}
 
@@ -86,7 +88,7 @@ namespace gezi {
 	}
 
 	inline vector<string> get_nums(string src)
-	{
+	{ //@TODO 验证是否ok 和配置文件完全一样 不需要Raw string?
 		string skipreg_str("([ *,\\.,!\\(\\)]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
 		string reg_str("(([\x81-\xff].)|:|qq|QQ])[ ]*([0-9]){7,30}");
 

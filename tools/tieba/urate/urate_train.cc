@@ -20,6 +20,7 @@
 #include "tieba/urate/get_urate_info.h"
 #include "tieba/feature/urate/UserInfoExtractor.h"
 #include "tieba/feature/urate/SundryExtractor.h"
+#include "tieba/feature/urate/MediaExtractor.h"
 using namespace std;
 using namespace gezi;
 using namespace gezi::tieba;
@@ -34,11 +35,14 @@ DEFINE_string(i, "./data/pid.txt", "input file");
 DEFINE_string(o, "feature.txt", "output file");
 DEFINE_int32(nt, 12, "thread num");
 
-inline UrateInfo get_urate_info(uint64 pid, string historyDir)
+inline UrateInfo get_urate_info(uint64 pid, string historyDir, bool forceFetch = false)
 {
 	UrateInfo info;
 	string historyFile = historyDir + "/" + STR(pid) + ".xml";
-	serialize::load_xml(historyFile, info);
+	if (!forceFetch)
+	{
+		serialize::load_xml(historyFile, info);
+	}
 	if (info.postId != pid)
 	{
 		info = get_urate_info(pid);
@@ -54,16 +58,23 @@ inline Features gen_features(uint64 pid)
 {
 	Features fe;
 	UrateInfo info = get_urate_info(pid, FLAGS_history);
-	if (info.postId != pid)
+	
+	UrateExtractor::info() = move(info);
+
+	if (!UrateExtractor::info().IsValid())
 	{
 		LOG(WARNING) << "Wrong urate info: " << pid;
-		return fe;
+		VLOG(0) << "Will fetch again: " << pid;
+		UrateExtractor::info() = get_urate_info(pid, FLAGS_history, true);
+		if (!UrateExtractor::info().IsValid())
+		{
+			LOG(WARNING) << "Still wrong urate info: " << pid;
+		}
 	}
-
-	UrateExtractor::info() = move(info);
 	FeaturesExtractorMgr mgr;
-	mgr.add(new UserInfoExtractor());
-	mgr.add(new SundryExtractor());
+	mgr.add(new UserInfoExtractor);
+	mgr.add(new SundryExtractor);
+	mgr.add(new MediaExtractor);
 	mgr.extract(fe);
 
 	return fe;
@@ -98,6 +109,7 @@ void run()
 	{
 		Features fe = gen_features(pids[j]);
 #pragma  omp critical 
+		if (!fe.empty())
 		{
 			write_table(fe, labels[j], ofsFeatures, pids[j]);
 		}

@@ -95,6 +95,8 @@ protected:
 	Features* _features;
 };
 
+#define ADD_FEATURE(value)\
+	_features->add(value, #value);
 }  //----end of namespace gezi
 
 #endif  //----end of FEATURE__FEATURES_EXTRACTOR_H_

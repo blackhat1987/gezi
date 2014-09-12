@@ -26,8 +26,12 @@ namespace gezi {
 		class UserInfoExtractor : public UrateExtractor
 		{
 		public:
-			UserInfoExtractor(bool useNowPostInfo = true, string name = "UserInfo")
-				:UrateExtractor(name), _useNowPostInfo(useNowPostInfo)
+			UserInfoExtractor(bool useNowPostInfo = true, 
+				bool useHistoryPostNum = true,
+				string name = "UserInfo")
+				:UrateExtractor(name), 
+				_useNowPostInfo(useNowPostInfo),
+				_useHistoryPostNum(useHistoryPostNum)
 			{
 
 			}
@@ -36,52 +40,53 @@ namespace gezi {
 			{
 				UserInfo& userInfo = info().userInfo;
 				bool isUserInfoValid = userInfo.userId != 0;
-				add(isUserInfoValid, "IsUserInfoValid");
+				ADD_FEATURE(isUserInfoValid);
 				PostInfo& nowPostInfo = info().nowPostInfo;
 				bool isNowPostInfoValid = nowPostInfo.postId != 0;
-				add(isNowPostInfoValid, "IsNowPostInfoValid");
+				ADD_FEATURE(isNowPostInfoValid);
 
 				{ //关注 粉丝数目
 					int followCount = userInfo.followCount;
 					int followedCount = userInfo.followedCount;
-					add(followCount, "FollowCount");
-					add(followedCount, "FollowedCount");
+					ADD_FEATURE(followCount);
+					ADD_FEATURE(followedCount);
 					double followFollowedRatio = (followCount + 1) / (double)(followedCount + 1);
-					add(followFollowedRatio, "FollowFollowedRatio");
+					ADD_FEATURE(followFollowedRatio);
 				}
 				{ //注册时间信息
 					uint64 nowTime = _useNowPostInfo && isNowPostInfoValid ? nowPostInfo.createTime : (uint64)time(NULL);
 					uint64 regSpan = reg_span(nowTime, userInfo.regTime);
-					add(regSpan, "RegisterSpan");
+					ADD_FEATURE(regSpan);
 					int regDays = regSpan / kOneDay;
-					add(regDays, "RegisterDays");
+					ADD_FEATURE(regDays);
 				}
 				{//是否有生日信息
 					bool hasBirth = userInfo.birthYear != 0;
-					add(hasBirth, "HasBirth");
+					ADD_FEATURE(hasBirth);
 				}
 				{ //是否有性别信息 
 					bool hasSex = userInfo.userSex != 0;
-					add(hasSex, "HasSex");
+					ADD_FEATURE(hasSex);
 					bool isMale = userInfo.userSex == 1;
-					add(isMale, "IsMale");
+					ADD_FEATURE(isMale);
 					bool isFemale = userInfo.userSex == 2;
-					add(isFemale, "IsFemale");
+					ADD_FEATURE(isFemale);
 				}
 				{ //是否是管理员
 					bool isGroupOwner = userInfo.isGroupOwner != 0;
-					add(isGroupOwner, "IsGroupOwner");
+					ADD_FEATURE(isGroupOwner);
 				}
 				{ //用户名信息
 					string uname = userInfo.userName;
 					ivec unamePattern = name_feature(uname);
-					add(unamePattern, "UnamePattern");
+					ADD_FEATURE(unamePattern);
 					{//ed 英文加数字
 						bool unameIsEnNum = is_en_num_name(unamePattern);
-						add(unameIsEnNum, "UnameIsEnNum");
+						ADD_FEATURE(unameIsEnNum);
 					}
 					//是否是qq名字
-					add(is_qq_name(uname), "IsQQName");
+					bool isQQName = is_qq_name(uname);
+					ADD_FEATURE(isQQName);
 				}
 
 				uint nowFourmId = nowPostInfo.forumId;
@@ -89,24 +94,25 @@ namespace gezi {
 				{ //用户的吧等级信息
 					UserLikeForumInfo& userLikeForumInfo = info().userLikeForumInfo;
 					bool isUserLikeForumInfoValid = userLikeForumInfo.userId;
-					add(isUserLikeForumInfoValid, "IsUserLikeForumInfoValid");
-					add(userLikeForumInfo.maxLevel, "ForumMaxLevel");
-					add(userLikeForumInfo.numLikes, "ForumLikesNum");
-					add(userLikeForumInfo.sumLevels, "ForumLevelsSum");
+					ADD_FEATURE(isUserLikeForumInfoValid);
+					add(userLikeForumInfo.maxLevel, "forumMaxLevel");
+					add(userLikeForumInfo.numLikes, "forumLikesNum");
+					add(userLikeForumInfo.sumLevels, "forumLevelsSum");
 					if (_useNowPostInfo)
 					{
-						add(userLikeForumInfo.GetLevel(nowFourmId), "NowForumLevel");
+						add(userLikeForumInfo.GetLevel(nowFourmId), "nowForumLevel");
 					}
 				}
 
+				if (_useHistoryPostNum)
 				{ //用户的发帖历史记录信息
 					UserPostNumInfo& userPostNumInfo = info().userPostNumInfo;
 					bool isUserPostNumInfoValid = userPostNumInfo.userId != 0;
-					add(isUserPostNumInfoValid, "IsUserPostNumInfoValid");
-					add(userPostNumInfo.numGoods, "GoodPostNumHistory");
-					add(userPostNumInfo.numPosts, "PostNumHistory");
-					add(userPostNumInfo.numThreads, "ThreadNumHistory");
-					add(userPostNumInfo.numPhotos, "PhotoNumHistory");
+					ADD_FEATURE(isUserPostNumInfoValid);
+					add(userPostNumInfo.numGoods, "goodPostNumHistory");
+					add(userPostNumInfo.numPosts, "postNumHistory");
+					add(userPostNumInfo.numThreads, "threadNumHistory");
+					add(userPostNumInfo.numPhotos, "photoNumHistory");
 
 					if (_useNowPostInfo)
 					{//用户在当前吧的发帖历史信息
@@ -121,26 +127,27 @@ namespace gezi {
 						{
 							userNowForumPostNumInfo = iter->second;
 						}
-						add(isUserNowForumPostNumInfoValid, "IsUserNowForumPostNumInfoValid");
-						add(userNowForumPostNumInfo.numGoods, "NowForumGoodPostNumHistory");
-						add(userNowForumPostNumInfo.numPosts, "NowForumPostNumHistory");
-						add(userNowForumPostNumInfo.numThreads, "NowForumThreadNumHistory");
-						add(userNowForumPostNumInfo.numPhotos, "NowForumPhotoNumHistory");
+						ADD_FEATURE(isUserNowForumPostNumInfoValid);
+						add(userNowForumPostNumInfo.numGoods, "nowForumGoodPostNumHistory");
+						add(userNowForumPostNumInfo.numPosts, "nowForumPostNumHistory");
+						add(userNowForumPostNumInfo.numThreads, "nowForumThreadNumHistory");
+						add(userNowForumPostNumInfo.numPhotos, "nowForumPhotoNumHistory");
 
 						double nowForumPostRatio = (userNowForumPostNumInfo.numPosts + 1) / (double)(userPostNumInfo.numPosts + 1);
-						add(nowForumPostRatio, "NowForumPostRatio");
+						ADD_FEATURE(nowForumPostRatio);
 
 						double nowForumThreadRatio = (userNowForumPostNumInfo.numThreads + 1) / (double)(userPostNumInfo.numThreads + 1);
-						add(nowForumThreadRatio, "NowForumThreadRatio");
+						ADD_FEATURE(nowForumThreadRatio);
 
 						double nowForumPhotoRatio = (userNowForumPostNumInfo.numPhotos + 1) / (double)(userPostNumInfo.numPhotos + 1);
-						add(nowForumPhotoRatio, "NowForumPhotoRatio");
+						ADD_FEATURE(nowForumPhotoRatio);
 					}
 				}
 			}
 
 		private:
 			bool _useNowPostInfo = true;
+			bool _useHistoryPostNum = true;
 		};
 
 	}  //----end of namespace tieba

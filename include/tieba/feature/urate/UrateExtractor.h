@@ -28,15 +28,22 @@ namespace gezi {
 			{
 
 			}
-		protected:
+			static size_t size()
+			{
+				return info().size();
+			}
+
+			static int type()
+			{
+				return info().type();
+			}
+		public:
 			static ExtendedUrateInfo& info()
 			{
-				static thread_local ExtendedUrateInfo _urateInfo;
-				return _urateInfo;
+				static thread_local ExtendedUrateInfo _info;
+				return _info;
 			}
-		private:
 		};
-
 	}  //----end of namespace tieba
 }  //----end of namespace gezi
 

@@ -180,12 +180,13 @@
     <ClInclude Include="include\tieba\feature\PlsaExtractor.h" />
     <ClInclude Include="include\tieba\feature\SequenceExtractor.h" />
     <ClInclude Include="include\tieba\feature\SimilarityExtractor.h" />
-    <ClInclude Include="include\tieba\feature\SundryExtractor.h" />
     <ClInclude Include="include\tieba\feature\TextScoreExtractor.h" />
     <ClInclude Include="include\tieba\feature\TimeInfoExtractor.h" />
     <ClInclude Include="include\tieba\feature\UnusalCharExtractor.h" />
     <ClInclude Include="include\tieba\feature\UnusalCnExtractor.h" />
     <ClInclude Include="include\tieba\feature\UrateExtractor.h" />
+    <ClInclude Include="include\tieba\feature\urate\MediaExtractor.h" />
+    <ClInclude Include="include\tieba\feature\urate\NumberExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\SundryExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\UrateExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\UserInfoExtractor.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="include\tieba\urate\urate_info.h" />
     <ClInclude Include="include\tieba\util.h" />
     <ClInclude Include="include\time_util.h" />
+    <ClInclude Include="include\tools\contents_process.h" />
     <ClInclude Include="include\tools\content_process.h" />
     <ClInclude Include="include\tools\ip.h" />
     <ClInclude Include="include\tools\IpFinder.h" />

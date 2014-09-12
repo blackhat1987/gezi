@@ -288,7 +288,7 @@ namespace gezi {
 		return ((&l == &r) || (l.empty() && r.empty()));
 	}
 
-	//两个vector合并结果存储到第一个vector,注意第二个数组不再有效
+	//两个vector合并结果存储到第一个vector,注意第二个数组不再有效 @TODO验证对map正确
 	template<typename Container>
 	void merge(Container& dest, Container& src)
 	{
@@ -298,6 +298,36 @@ namespace gezi {
 			std::make_move_iterator(src.end())
 			);
 	}
+
+	template<typename Vec>
+	int non_empty_count(const Vec& vecs)
+	{
+		int count = 0;
+		for (auto& vec : vecs)
+		{
+			if (!vec.empty())
+			{
+				count++;
+			}
+		}
+		return count;
+	}
+
+	template<typename Vec>
+	int distinct_count_vec2d(const Vec& vecs)
+	{
+		typedef typename Vec::value_type::value_type Value;
+		set<Value> set_;
+		for (const auto& vec : vecs)
+		{
+			for (const auto& item : vec)
+			{
+				set_.insert(item);
+			}
+		}
+		return set_.size();
+	}
+
 }  //----end of namespace gezi
 
 #endif  //----end of STL_UTIL_H_

@@ -79,10 +79,23 @@ namespace gezi {
 	template<typename ValueType, typename KeyType, typename Map>
 	ValueType get_value(const Map& m, KeyType key, const ValueType& default_value)
 	{
-		if (m.count(key))
-			return m[key];
-		else
-			return default_value;
+		auto iter = m.find(key);
+		if (iter != m.end())
+		{
+			return iter->second;
+		}
+		return default_value;
+	}
+
+	template<typename ValueType, typename KeyType, typename Map, typename Func>
+	ValueType get_value(const Map& m, KeyType key, Func func, const ValueType& default_value)
+	{
+		auto iter = m.find(key);
+		if (iter != m.end())
+		{
+			return func(iter->second);
+		}
+		return default_value;
 	}
 
 	template<typename ValueType, typename KeyType, typename Map>

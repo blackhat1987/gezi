@@ -36,7 +36,6 @@
 //#include <boost/accumulators/statistics/moment.hpp>
 namespace gezi {
 	static const Float EPSILON = (Float)1e-15;
-	typedef double ValType;
 	//namespace ba = boost::accumulators;
 	//using boost::bind;
 	//using boost::ref;
@@ -59,13 +58,13 @@ namespace gezi {
 	}
 
 	template<typename Iter>
-	ValType sum(Iter start, Iter end)
+	double sum(Iter start, Iter end)
 	{
 		return std::accumulate(start, end, 0.0);
 	}
 
 	template<typename Container>
-	ValType sum(const Container& vec)
+	double sum(const Container& vec)
 	{
 		return sum(vec.begin(), vec.end());
 	}
@@ -97,21 +96,21 @@ namespace gezi {
 	}
 
 	template<typename Iter>
-	ValType mean(Iter start, Iter end)
+	double mean(Iter start, Iter end)
 	{
-		return std::accumulate(start, end, 0.0) / (ValType)(end - start);
+		return std::accumulate(start, end, 0.0) / (double)(end - start);
 	}
 
 	template<typename Container>
-	ValType mean(const Container& vec)
+	double mean(const Container& vec)
 	{
-		return std::accumulate(vec.begin(), vec.end(), 0.0) / (ValType)vec.size();
+		return std::accumulate(vec.begin(), vec.end(), 0.0) / (double)vec.size();
 	}
 
 	template<typename Container>
-	ValType mean(const Container& vec, int n)
+	double mean(const Container& vec, int n)
 	{
-		return std::accumulate(vec.begin(), vec.end(), 0.0) / (ValType)n;
+		return std::accumulate(vec.begin(), vec.end(), 0.0) / (double)n;
 	}
 
 	template<typename Container, typename T>
@@ -122,9 +121,31 @@ namespace gezi {
 
 	namespace ufo {
 
+		//注意如果在相同namespace mean(vec, 0) 会去调用mean(Iter, Iter) mean(vec, 0.0) ok
 		template<typename Container>
-		ValType min(const Container& vec)
+		double mean(const Container& vec, double defaultValue)
 		{
+			if (vec.empty())
+			{
+				return defaultValue;
+			}
+			return std::accumulate(vec.begin(), vec.end(), 0.0) / (double)vec.size();
+		}
+
+		template<typename Container>
+		//double min(const Container& vec)
+		auto min(const Container& vec) -> decltype(*vec.begin())
+		{
+			return *(std::min_element(vec.begin(), vec.end()));
+		}
+
+		template<typename Container, typename T>
+		T min(const Container& vec, T defaultValue) 
+		{
+			if (vec.empty())
+			{
+				return defaultValue;
+			}
 			return *(std::min_element(vec.begin(), vec.end()));
 		}
 
@@ -136,8 +157,19 @@ namespace gezi {
 
 
 		template<typename Container>
-		ValType max(const Container& vec)
+		//double max(const Container& vec)
+		auto max(const Container& vec) ->decltype(*vec.begin())
 		{
+			return *(std::max_element(vec.begin(), vec.end()));
+		}
+
+		template<typename Container, typename T>
+		T max(const Container& vec, T defaultValue)
+		{
+			if (vec.empty())
+			{
+				return defaultValue;
+			}
 			return *(std::max_element(vec.begin(), vec.end()));
 		}
 
@@ -209,58 +241,58 @@ namespace gezi {
 	 * 注意方差是/(n - 1)的 这个才是无偏估计
 	 */
 	template<typename Container>
-	ValType var(const Container& vec)
+	double var(const Container& vec)
 	{
 		int n = vec.size();
-		ValType x = std::pow(mean(vec), 2);
-		ValType y = std::accumulate(vec.begin(), vec.end(), 0.0, sd_op()) / (n - 1);
-		return y - (x * n / ValType(n - 1));
+		double x = std::pow(mean(vec), 2);
+		double y = std::accumulate(vec.begin(), vec.end(), 0.0, sd_op()) / (n - 1);
+		return y - (x * n / double(n - 1));
 	}
 
 	template<typename Container>
-	ValType var(const Container& vec, int n)
+	double var(const Container& vec, int n)
 	{
-		ValType x = std::pow(mean(vec, n), 2);
-		ValType y = std::accumulate(vec.begin(), vec.end(), 0.0, sd_op()) / (n - 1);
-		return y - (x * n / ValType(n - 1));
+		double x = std::pow(mean(vec, n), 2);
+		double y = std::accumulate(vec.begin(), vec.end(), 0.0, sd_op()) / (n - 1);
+		return y - (x * n / double(n - 1));
 	}
 
 	template<typename Iter>
-	ValType var(Iter start, Iter end)
+	double var(Iter start, Iter end)
 	{
 		int n = end - start;
-		ValType x = std::pow(mean(start, end), 2);
-		ValType y = std::accumulate(start, end, 0.0, sd_op()) / (ValType)(n - 1);
-		return y - (x * n / ValType(n - 1));
+		double x = std::pow(mean(start, end), 2);
+		double y = std::accumulate(start, end, 0.0, sd_op()) / (double)(n - 1);
+		return y - (x * n / double(n - 1));
 	}
 
-	template<typename Iter, typename ValType>
-	void mean_var(Iter start, Iter end, ValType& mean_, ValType& var_)
+	template<typename Iter>
+	void mean_var(Iter start, Iter end, double& mean_, double& var_)
 	{
 		int n = end - start;
 		mean_ = mean(start, end);
-		ValType x = std::pow(mean_, 2);
-		ValType y = std::accumulate(start, end, 0.0, sd_op()) / (ValType)(n - 1);
-		var_ = y - (x * n / ValType(n - 1));
+		double x = std::pow(mean_, 2);
+		double y = std::accumulate(start, end, 0.0, sd_op()) / (double)(n - 1);
+		var_ = y - (x * n / double(n - 1));
 	}
 
-	template<typename Container, typename ValType>
-	void mean_var(const Container& vec, ValType& mean_, ValType& var_)
+	template<typename Container>
+	void mean_var(const Container& vec, double& mean_, double& var_)
 	{
 		int n = vec.size();
 		mean_ = mean(vec);
-		ValType x = std::pow(mean(vec), 2);
-		ValType y = std::accumulate(vec.begin(), vec.end(), 0.0, sd_op()) / (n - 1);
-		var_ = y - (x * n / ValType(n - 1));
+		double x = std::pow(mean(vec), 2);
+		double y = std::accumulate(vec.begin(), vec.end(), 0.0, sd_op()) / (n - 1);
+		var_ = y - (x * n / double(n - 1));
 	}
 
 	template<typename Iter>
-	ValType var(Iter start, Iter end, ValType mean)
+	double var(Iter start, Iter end, double mean)
 	{
 		int n = end - start;
-		ValType x = std::pow(mean, 2);
-		ValType y = std::accumulate(start, end, 0.0, sd_op()) / (ValType)(n - 1);
-		return y - (x * n / ValType(n - 1));
+		double x = std::pow(mean, 2);
+		double y = std::accumulate(start, end, 0.0, sd_op()) / (double)(n - 1);
+		return y - (x * n / double(n - 1));
 	}
 	//struct sd_op_
 	//{
@@ -272,74 +304,74 @@ namespace gezi {
 	//};
 
 	template<typename Container>
-	ValType var(const Container& vec, ValType mean)
+	double var(const Container& vec, double mean)
 	{
-		ValType sum = 0.0;
+		double sum = 0.0;
 		size_t n = vec.size();
 		for (size_t i = 0; i < n; i++)
 		{
 			sum += std::pow(vec[i] - mean, 2);
 		}
-		return sum / (ValType)(n - 1);
+		return sum / (double)(n - 1);
 	}
 
 	template<typename Container>
-	ValType var(const Container& vec, ValType mean, int n)
+	double var(const Container& vec, double mean, int n)
 	{
-		ValType sum = 0.0;
+		double sum = 0.0;
 		int len = vec.size();
 		for (int i = 0; i < len; i++)
 		{
 			sum += std::pow(vec[i] - mean, 2);
 		}
 		sum += (n - len) * std::pow(mean, 2);
-		return sum / (ValType)(n - 1);
+		return sum / (double)(n - 1);
 	}
 
 	template<typename Container>
-	ValType var_(const Container& vec)
+	double var_(const Container& vec)
 	{
-		ValType x = mean(vec);
+		double x = mean(vec);
 
 		//TODO how to here??
-		//    return std::accumulate(vec.begin(), vec.end(), 0.0, boost::bind(sd_op_(_1, _2, x))) / (ValType) vec.size();
-		ValType sum = 0.0;
+		//    return std::accumulate(vec.begin(), vec.end(), 0.0, boost::bind(sd_op_(_1, _2, x))) / (double) vec.size();
+		double sum = 0.0;
 		int n = vec.size();
 		for (size_t i = 0; i < n; i++)
 		{
 			sum += std::pow(vec[i] - x, 2);
 		}
-		return sum / (ValType)(n - 1);
+		return sum / (double)(n - 1);
 	}
 
 	template<typename Container>
-	ValType sd(const Container& vec)
+	double sd(const Container& vec)
 	{
 		return sqrt(var(vec));
 	}
 
 	template<typename Iter>
-	ValType sd(Iter start, Iter end)
+	double sd(Iter start, Iter end)
 	{
 		return sqrt(var(start, end));
 	}
 
 	namespace x2 {
 
-		inline ValType get_val(int n00, int n01, int n10, int n11)
+		inline double get_val(int n00, int n01, int n10, int n11)
 		{
 			int n = n00 + n01 + n10 + n11;
 			int a = n11 * n00 - n10 * n01;
-			//    return (long long)n * ((long long)(a * a) / ValType((n11 + n01) * (n11 + n10) * (n10 + n00) * (n01 + n00)));
-			return (n / ValType(n11 + n01)) * (a / ValType(n11 + n10)) * (a / ValType(n10 + n00)) / ValType(n01 + n00);
+			//    return (long long)n * ((long long)(a * a) / double((n11 + n01) * (n11 + n10) * (n10 + n00) * (n01 + n00)));
+			return (n / double(n11 + n01)) * (a / double(n11 + n10)) * (a / double(n10 + n00)) / double(n01 + n00);
 		}
 
-		inline ValType get_val(int n, int n00, int n01, int n10, int n11)
+		inline double get_val(int n, int n00, int n01, int n10, int n11)
 		{
 			int a = n11 * n00 - n10 * n01;
 			//TODO 这样可以避免大整数* 超过long long 如何大整数计算呢
-			//    return (long long)n * ((long long)(a * a) / ValType((n11 + n01) * (n11 + n10) * (n10 + n00) * (n01 + n00)));
-			return (n / ValType(n11 + n01)) * (a / ValType(n11 + n10)) * (a / ValType(n10 + n00)) / ValType(n01 + n00);
+			//    return (long long)n * ((long long)(a * a) / double((n11 + n01) * (n11 + n10) * (n10 + n00) * (n01 + n00)));
+			return (n / double(n11 + n01)) * (a / double(n11 + n10)) * (a / double(n10 + n00)) / double(n01 + n00);
 		}
 
 	}
@@ -352,19 +384,19 @@ namespace gezi {
 		 * 获取t值 参考概率课本p248
 		 */
 		template<typename Iter>
-		ValType get_val(Iter start, Iter end, ValType u)
+		double get_val(Iter start, Iter end, double u)
 		{
 			int n = end - start;
-			ValType m = mean(start, end);
-			ValType x = std::pow(mean(start, end), 2);
-			ValType y = std::accumulate(start, end, 0.0, sd_op()) / (ValType)(n - 1);
-			ValType deno = sqrt((y - (x * n / ValType(n - 1))) / (ValType)n);
-			ValType nume = m - u;
+			double m = mean(start, end);
+			double x = std::pow(mean(start, end), 2);
+			double y = std::accumulate(start, end, 0.0, sd_op()) / (double)(n - 1);
+			double deno = sqrt((y - (x * n / double(n - 1))) / (double)n);
+			double nume = m - u;
 			return nume / deno;
 		}
 
 		template<typename Container>
-		ValType get_val(const Container& vec, ValType u)
+		double get_val(const Container& vec, double u)
 		{
 			return get_val(vec.begin(), vec.end(), u);
 		}
@@ -377,10 +409,10 @@ namespace gezi {
 		 * @param u 假设均值
 		 * @return
 		 */
-		inline ValType get_val(int n, ValType e, ValType v, ValType u)
+		inline double get_val(int n, double e, double v, double u)
 		{
-			ValType deno = sqrt(v / (ValType)n);
-			ValType nume = e - u;
+			double deno = sqrt(v / (double)n);
+			double nume = e - u;
 			return nume / deno;
 		}
 
@@ -388,10 +420,10 @@ namespace gezi {
 		 * 根据t 值的bound范围 给出原始观测均值需要在的范围
 		 * 这个是观测的中心偏离了底下的区间 就拒绝~
 		 */
-		inline std::pair<ValType, ValType> get_bound(const std::pair<ValType, ValType>& bound, int n, ValType e, ValType v, ValType u)
+		inline std::pair<double, double> get_bound(const std::pair<double, double>& bound, int n, double e, double v, double u)
 		{
-			std::pair<ValType, ValType> p;
-			ValType deno = sqrt(v / (ValType)n);
+			std::pair<double, double> p;
+			double deno = sqrt(v / (double)n);
 			p.first = bound.first * deno + u;
 			p.second = bound.second * deno + u;
 			return p;
@@ -400,10 +432,10 @@ namespace gezi {
 		/**
 		 *  这个其实很灵活，也可以观测的中心判断，如果假设的值 偏离了 这个底下的区间 就拒绝~~
 		 */
-		inline std::pair<ValType, ValType> get_bound2(const std::pair<ValType, ValType>& bound, int n, ValType e, ValType v, ValType u)
+		inline std::pair<double, double> get_bound2(const std::pair<double, double>& bound, int n, double e, double v, double u)
 		{
-			std::pair<ValType, ValType> p;
-			ValType deno = sqrt(v / (ValType)n);
+			std::pair<double, double> p;
+			double deno = sqrt(v / (double)n);
 			p.first = e - bound.second * deno;
 			p.second = e - bound.first * deno;
 			return p;
@@ -567,7 +599,7 @@ namespace gezi {
 	template<typename ValueType, typename Iter, typename Func>
 	std::size_t distinct_count(Iter begin, Iter end, Func func)
 	{
-		unordered_set<ValueType> vset;
+		set<ValueType> vset;
 		for (Iter it = begin; it != end; ++it)
 		{
 			vset.insert(func(*it));
@@ -586,7 +618,7 @@ namespace gezi {
 	std::size_t distinct_count(Iter begin, Iter end)
 	{
 		typedef typename Iter::value_type ValueType;
-		unordered_set<ValueType> vset;
+		set<ValueType> vset;
 		for (Iter it = begin; it != end; ++it)
 		{
 			vset.insert(*it);

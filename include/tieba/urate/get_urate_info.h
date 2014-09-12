@@ -69,17 +69,17 @@ namespace gezi {
 
 			if (needUrlInfo)
 			{
-				vector<string> urlVec;
+				set<string> urlSet;
 				for (auto& content : urateInfo.postsInfo.contents)
 				{
-					vector<string> urls = get_urls(content);
+					auto urls = get_urls(content);
 					for (auto url : urls)
 					{
-						urlVec.push_back(url);
+						urlSet.insert(url);
 					}
 					urateInfo.urlsVec.emplace_back(urls);
 				}
-				urateInfo.urlInfoMap = get_urls_info_map(urlVec);
+				urateInfo.urlInfoMap = get_urls_info_map(vector<string>(urlSet.begin(), urlSet.end()));
 			}
 
 			urateInfo.postId = pid;
