@@ -33,6 +33,21 @@ namespace gezi {
 				info().ExtractNormedNumbers();
 			}
 
+			virtual void extract() override
+			{
+				int numNmbers = non_empty_count(info().numbersVec);
+				int numNormedNumbers = non_empty_count(info().normedNumbersVec);
+				ADD_FEATURE(numNmbers);
+				ADD_FEATURE(numNormedNumbers);
+				double normedNumberRatio = (1 + numNmbers) / (double)(1 + numNormedNumbers);
+				ADD_FEATURE(normedNumberRatio);
+				double numberRatio = numNormedNumbers / (double)size();
+				ADD_FEATURE(numberRatio);
+				int numDistinctNumbers = distinct_count_vec2d(info().normedNumbersVec);
+				ADD_FEATURE(numDistinctNumbers);
+				double distinctNumberRatio = (1 + numDistinctNumbers) / (double)(1 + numNormedNumbers);
+				ADD_FEATURE(distinctNumberRatio);
+			}
 		protected:
 		private:
 

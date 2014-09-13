@@ -21,6 +21,8 @@
 #include "tieba/feature/urate/UserInfoExtractor.h"
 #include "tieba/feature/urate/SundryExtractor.h"
 #include "tieba/feature/urate/MediaExtractor.h"
+#include "tieba/feature/urate/NumberExtractor.h"
+#include "tieba//feature/urate/IpExtractor.h"
 using namespace std;
 using namespace gezi;
 using namespace gezi::tieba;
@@ -31,7 +33,7 @@ DEFINE_string(type, "simple", "");
 DEFINE_bool(perf, false, "");
 DEFINE_int32(num, 1, "");
 DEFINE_string(history, "./history", "");
-DEFINE_string(i, "./data/pid.txt", "input file");
+DEFINE_string(i, "./test.data/pid.txt", "input file");
 DEFINE_string(o, "feature.txt", "output file");
 DEFINE_int32(nt, 12, "thread num");
 
@@ -69,12 +71,16 @@ inline Features gen_features(uint64 pid)
 		if (!UrateExtractor::info().IsValid())
 		{
 			LOG(WARNING) << "Still wrong urate info: " << pid;
+			return fe;
 		}
 	}
+	
 	FeaturesExtractorMgr mgr;
 	mgr.add(new UserInfoExtractor);
 	mgr.add(new SundryExtractor);
 	mgr.add(new MediaExtractor);
+	mgr.add(new NumberExtractor);
+	mgr.add(new IpExtractor);
 	mgr.extract(fe);
 
 	return fe;

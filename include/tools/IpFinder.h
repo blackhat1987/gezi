@@ -18,24 +18,26 @@
 
 #include <string.h>
 #include <string>
-
+#include "common_util.h"
 namespace gezi {
 	class IpFinder
 	{
 	public:
 		IpFinder()
-			:m_fpIpDataFile(NULL)
 		{
 		}
+		IpFinder(string file)
+		{
+			this->Open(file.c_str());
+		}
 		IpFinder(const char* pszFileName)
-			:m_fpIpDataFile(NULL)
 		{
 			this->Open(pszFileName);
 		}
 		~IpFinder()
 		{
-			if (m_fpIpDataFile)
-				fclose(m_fpIpDataFile);
+			if (_fpIpDataFile)
+				fclose(_fpIpDataFile);
 		}
 		const static int INDEX_LENGTH = 7;        // 一个索引包含4字节的起始IP和3字节的IP记录偏移，共7字节
 		const static int IP_LENGTH = 4;
@@ -73,17 +75,17 @@ namespace gezi {
 		//ulOffset为Ip记录偏移量
 		void GetAddressByOffset(unsigned long ulOffset, std::string& strCountry, std::string& strLocation) const
 		{
-			if (!m_fpIpDataFile) {
+			if (!_fpIpDataFile) {
 				return;
 			}
 
 			// 略去4字节Ip地址
 			ulOffset += IP_LENGTH;
-			fseek(m_fpIpDataFile, ulOffset, SEEK_SET);
+			fseek(_fpIpDataFile, ulOffset, SEEK_SET);
 
 			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			// 读取首地址的值
-			int nVal = (fgetc(m_fpIpDataFile) & 0x000000FF);
+			int nVal = (fgetc(_fpIpDataFile) & 0x000000FF);
 			unsigned long ulCountryOffset = 0;    // 真实国家名偏移
 			unsigned long ulLocationOffset = 0; // 真实地区名偏移
 			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -97,9 +99,9 @@ namespace gezi {
 				///
 				//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-				fseek(m_fpIpDataFile, ulRedirect, SEEK_SET);
+				fseek(_fpIpDataFile, ulRedirect, SEEK_SET);
 
-				if ((fgetc(m_fpIpDataFile) & 0x000000FF) == REDIRECT_MODE_2) {
+				if ((fgetc(_fpIpDataFile) & 0x000000FF) == REDIRECT_MODE_2) {
 
 					// 混合类型1，重定向1类型进入后遇到重定向2类型 
 					// 0x01 1字节
@@ -143,9 +145,9 @@ namespace gezi {
 			}
 
 			// 读取地区
-			fseek(m_fpIpDataFile, ulLocationOffset, SEEK_SET);
-			if ((fgetc(m_fpIpDataFile) & 0x000000FF) == REDIRECT_MODE_2
-				|| (fgetc(m_fpIpDataFile) & 0x000000FF) == REDIRECT_MODE_1) {
+			fseek(_fpIpDataFile, ulLocationOffset, SEEK_SET);
+			if ((fgetc(_fpIpDataFile) & 0x000000FF) == REDIRECT_MODE_2
+				|| (fgetc(_fpIpDataFile) & 0x000000FF) == REDIRECT_MODE_1) {
 
 				// 混合类型2(最复杂的情形，地区也重定向)
 				// 0x01 1字节
@@ -162,15 +164,15 @@ namespace gezi {
 		//从指定位置获取字符串
 		unsigned long GetString(std::string& str, unsigned long indexStart) const
 		{
-			if (!m_fpIpDataFile) {
+			if (!_fpIpDataFile) {
 				return 0;
 			}
 
 			str.erase(0, str.size());
 
-			fseek(m_fpIpDataFile, indexStart, SEEK_SET);
+			fseek(_fpIpDataFile, indexStart, SEEK_SET);
 			//~~~~~~~~~~~~~~~~~~~~~~
-			int nChar = fgetc(m_fpIpDataFile);
+			int nChar = fgetc(_fpIpDataFile);
 			unsigned long ulCount = 1;
 			// 读取字符串，直到遇到0x00为止
 			while (nChar != 0x00) {
@@ -178,7 +180,7 @@ namespace gezi {
 				// 依次放入用来存储的字符串空间中
 				str += static_cast<char>(nChar);
 				++ulCount;
-				nChar = fgetc(m_fpIpDataFile);
+				nChar = fgetc(_fpIpDataFile);
 			}
 
 			// 返回字符串长度
@@ -188,7 +190,7 @@ namespace gezi {
 		//从指定位置获取一个十六进制的数 (读取3个字节， 主要用于获取偏移量， 与效率紧密相关的函数，尽可能优化）
 		unsigned long GetValue3(unsigned long indexStart) const
 		{
-			if (!m_fpIpDataFile) {
+			if (!_fpIpDataFile) {
 				return 0;
 			}
 
@@ -197,11 +199,11 @@ namespace gezi {
 			unsigned long ulValue = 0;
 			//~~~~~~~~~~~~~~~~~~~~
 
-			fseek(m_fpIpDataFile, indexStart, SEEK_SET);
+			fseek(_fpIpDataFile, indexStart, SEEK_SET);
 			for (int i = 0; i < 3; i++) {
 
 				// 过滤高位，一次读取一个字符
-				nVal[i] = fgetc(m_fpIpDataFile) & 0x000000FF;
+				nVal[i] = fgetc(_fpIpDataFile) & 0x000000FF;
 			}
 
 			for (int j = 2; j >= 0; --j) {
@@ -215,7 +217,7 @@ namespace gezi {
 		//从指定位置获取一个十六进制的数 (读取4个字节， 主要用于获取IP值， 与效率紧密相关的函数，尽可能优化）
 		unsigned long GetValue4(unsigned long indexStart) const
 		{
-			if (!m_fpIpDataFile) {
+			if (!_fpIpDataFile) {
 				return 0;
 			}
 
@@ -224,11 +226,11 @@ namespace gezi {
 			unsigned long ulValue = 0;
 			//~~~~~~~~~~~~~~~~~~~~
 
-			fseek(m_fpIpDataFile, indexStart, SEEK_SET);
+			fseek(_fpIpDataFile, indexStart, SEEK_SET);
 			for (int i = 0; i < 4; i++) {
 
 				// 过滤高位，一次读取一个字符
-				nVal[i] = fgetc(m_fpIpDataFile) & 0x000000FF;
+				nVal[i] = fgetc(_fpIpDataFile) & 0x000000FF;
 			}
 
 			for (int j = 3; j >= 0; --j) {
@@ -320,7 +322,7 @@ namespace gezi {
 		//将ip数据导出，start和end界定导出范围， 可通过SearchIp来获取
 		unsigned long OutputData(const char* pszFileName, unsigned long indexStart = 0, unsigned long indexEnd = 0) const
 		{
-			if (!m_fpIpDataFile || !pszFileName) {
+			if (!_fpIpDataFile || !pszFileName) {
 				return 0;
 			}
 
@@ -333,11 +335,11 @@ namespace gezi {
 			}
 
 			if (0 == indexStart) {
-				indexStart = m_indexStart;
+				indexStart = _indexStart;
 			}
 
 			if (0 == indexEnd) {
-				indexEnd = m_indexEnd;
+				indexEnd = _indexEnd;
 			}
 
 			//~~~~~~~~~~~~~~~~~~~~~~~~
@@ -389,16 +391,16 @@ namespace gezi {
 		//ulIndexStart和ulIndexEnd可以指定搜索范围 均为0表示搜索全部
 		unsigned long SearchIp(unsigned long ipValue, unsigned long indexStart = 0, unsigned long indexEnd = 0) const
 		{
-			if (!m_fpIpDataFile) {
+			if (!_fpIpDataFile) {
 				return 0;
 			}
 
 			if (0 == indexStart) {
-				indexStart = m_indexStart;
+				indexStart = _indexStart;
 			}
 
 			if (0 == indexEnd) {
-				indexEnd = m_indexEnd;
+				indexEnd = _indexEnd;
 			}
 
 			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -439,25 +441,26 @@ namespace gezi {
 
 		bool Open(string file)
 		{
+			PVAL(file);
 			return Open(file.c_str());
 		}
 
 		bool Open(const char* pszFileName)
 		{
-			m_fpIpDataFile = fopen(pszFileName, "rb");
-			if (!m_fpIpDataFile) {
+			_fpIpDataFile = fopen(pszFileName, "rb");
+			if (!_fpIpDataFile) {
 				return false;
 			}
 
 			// IP头由两个十六进制4字节偏移量构成，分别为索引开始，和索引结束
-			m_indexStart = this->GetValue4(0);
-			m_indexEnd = this->GetValue4(4);
+			_indexStart = this->GetValue4(0);
+			_indexEnd = this->GetValue4(4);
 			return true;
 		}
 	private:
-		FILE *m_fpIpDataFile;            // IP数据库文件
-		unsigned long m_indexStart;    // 起始索引偏移
-		unsigned long m_indexEnd;        // 结束索引偏移
+		FILE *_fpIpDataFile = NULL;            // IP数据库文件
+		unsigned long _indexStart;    // 起始索引偏移
+		unsigned long _indexEnd;        // 结束索引偏移
 	};
 
 }  //----end of namespace gezi

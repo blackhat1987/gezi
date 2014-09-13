@@ -49,6 +49,35 @@ TEST(content_process, func)
 	test("<img class = \"BDE_Image\" pic_type=\"1\" width=\"560\" height=\"413\" src=\"http://imgsrc.baidu.com/forum/pic/item/76436b87e950352a9bb173185043fbf2b3118b7a.jpg\" pic_ext=\"jpeg\"  >");
 }
 
+void test_num(string content)
+{
+	Pval(content);
+	Pval(contains_num(content));
+	Pvec(get_nums(content)); 
+}
+
+TEST(num, func)
+{
+	test_num("abcd efg");
+	test_num("29109317 在哪里");
+	test_num("我q29109317");
+	test_num("29109317@qq.com 楼主.加油.哈哈");
+}
+
+void test_email(string content)
+{
+	Pval(content);
+	Pval(contains_emails(content));
+	Pvec(get_emails(content));
+}
+
+TEST(email, func)
+{
+	test_email("29109317@qq.com楼主好人");
+	test_email("感谢楼主 chenghuige@gmail.com");
+	test_email("邮箱 chenghuige@pku.edu.cn");
+}
+
 int main(int argc, char *argv[])
 {
 	testing::InitGoogleTest(&argc, argv);

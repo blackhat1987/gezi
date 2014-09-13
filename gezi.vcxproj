@@ -185,6 +185,7 @@
     <ClInclude Include="include\tieba\feature\UnusalCharExtractor.h" />
     <ClInclude Include="include\tieba\feature\UnusalCnExtractor.h" />
     <ClInclude Include="include\tieba\feature\UrateExtractor.h" />
+    <ClInclude Include="include\tieba\feature\urate\IpExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\MediaExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\NumberExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\SundryExtractor.h" />

@@ -37,7 +37,7 @@ namespace gezi {
 
 			size_t size()
 			{
-				return postsInfo.size();
+				return postsInfo.numPosts;
 			}
 
 			friend class boost::serialization::access;

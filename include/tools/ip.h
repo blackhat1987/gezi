@@ -40,14 +40,32 @@ namespace gezi
 		vec[1] = (ipl % (256 * 256 * 256)) / (256 * 256);
 		vec[2] = (ipl % (256 * 256)) / 256;
 		vec[3] = ipl % 256;
-#if __GNUC__ > 3
-		return std::move(vec);
-#else
 		return vec;
-#endif  
+	}
+
+	//n 只能取3,2,1
+	inline uint64 get_topn_ipgroup(uint64 ipl, int n)
+	{
+		return ipl % (uint64)pow(256, n);
+	}
+
+	//输入ip数据输出 ip前三位，ip前两位，ip首位
+	inline void get_ipgroups(uint64 ipl, uint64& top3, uint64& top2, uint64& top1)
+	{
+		top3 = ipl % (256 * 256 * 256);
+		top2 = ipl % (256 * 256);
+		top1 = ipl % 256;
 	}
 
 	inline string get_address(IpFinder& ipFinder, uint64 ipl)
+	{
+		string country, location;
+		ipFinder.GetAddressByIp(to_ipstr(ipl), country, location);
+		string result = country.size() < 4 ? country : country.substr(0, 4);
+		return result;
+	}
+
+	inline string get_location(IpFinder& ipFinder, uint64 ipl)
 	{
 		string country, location;
 		ipFinder.GetAddressByIp(to_ipstr(ipl), country, location);

@@ -63,11 +63,11 @@ namespace gezi {
 		return !get_videos(src).empty();
 	}
 
-	//@FIXME why R"abc@3" fail with @..? raw string bug?
+	//@FIXME why R"abc@3" fail with @..? raw string bug? raw string似乎不支持@
 	inline vector<string> get_emails(string src)
 	{
 		//string emailPattern = R"[a-zA-Z0-9]+@[a-zA-Z0-9\-\_]{2,}\.(com|cn|tk|biz|org|edu|net|tw|us|info|gov)";
-		string emailPattern = "[a-zA-Z0-9]+@[a-zA-Z0-9\\-\\_]{2,}\\.(com|cn|tk|biz|org|edu|net|tw|us|info|gov)";
+		string emailPattern = "([a-zA-Z0-9]+@[a-zA-Z0-9\\-\\_]{2,}\\.(com|cn|tk|biz|org|edu|net|tw|us|info|gov))";
 		return ufo::reg_search(src, emailPattern);
 	}
 
@@ -89,29 +89,40 @@ namespace gezi {
 
 	inline vector<string> get_nums(string src)
 	{ //@TODO 验证是否ok 和配置文件完全一样 不需要Raw string?
-		string skipreg_str("([ *,\\.,!\\(\\)]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
-		string reg_str("(([\x81-\xff].)|:|qq|QQ])[ ]*([0-9]){7,30}");
+		//string skipRegStr("([ *,\\.,!\\(\\)]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
+		string skipRegStr("([,\\.,!]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
+		string regStr("(^|[\\x81-\\xff]|:|q|qq|Q|QQ|\\(|\\[)[ ]*([0-9]{7,15})");
+		int matchIndex = 2;
+		PVAL(skipRegStr);
+		PVAL(regStr);
 
-		vector<string> contentVec = reg_split(src, skipreg_str);
+		svec contentVec = reg_split(src, skipRegStr);
+		PVEC(contentVec);
+		//PVEC(ufo::reg_search(src, skipRegStr));
 		vector<string> resultVec;
 		for (string content : contentVec)
 		{
-			vector<string> tempVec = ufo::reg_search(content, reg_str);
+			vector<string> tempVec = ufo::reg_search(content, regStr, matchIndex);
+			PVEC(tempVec);
 			merge(resultVec, tempVec);
+			PVEC(resultVec);
 		}
 		return resultVec;
 	}
 
 	inline bool contains_num(string src)
-	{
-		string skipreg_str("([ *,\\.,!\\(\\)]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
-		string reg_str("(([\x81-\xff].)|:|qq|QQ])[ ]*([0-9]){7,30}");
+	{//@TODO 使用raw string
+		//string skipRegStr("([ *,\\.,!\\(\\)]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
+		string skipRegStr("([,\\.,!]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
+		string regStr("(^|[\\x81-\\xff]|:|q|qq|Q|QQ|\\(|\\[)[ ]*([0-9]{7,15})");
+		int matchIndex = 2;
+		PVAL(skipRegStr);
+		PVAL(regStr);
 
-		vector<string> vec = reg_split(src, skipreg_str);
-
+		svec vec = reg_split(src, skipRegStr);
 		for (string content : vec)
 		{
-			if (!(ufo::reg_search(content, reg_str).empty()))
+			if (!(ufo::reg_search(content, regStr, matchIndex).empty()))
 			{
 				return true;
 			}
