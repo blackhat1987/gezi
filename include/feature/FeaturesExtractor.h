@@ -25,7 +25,8 @@ public:
 	FeaturesExtractor(string name = "")
 	: _name(name)
 	{
-
+		NPSCONF(_isFiltered, _name, "FeaturesExtractor");
+		PVAL2(_name, _isFiltered);
 	}
 
 	virtual ~FeaturesExtractor()
@@ -45,6 +46,11 @@ public:
 
 	}
 
+	bool is_filtered()
+	{
+		return _isFiltered;
+	}
+
 	void bind(Features* features)
 	{
 		_features = features;
@@ -52,6 +58,12 @@ public:
 
 	virtual void process(Features* features)
 	{
+		if (_isFiltered)
+		{
+			VLOG(4) << "Extractor " << _name << " is filtered";
+			return;
+		}
+		
 		bind(features);
 		_features->add_section(_name);
 		init();
@@ -93,6 +105,7 @@ public:
 protected:
 	string _name;
 	Features* _features;
+	bool _isFiltered = false;
 };
 
 #define ADD_FEATURE(value)\

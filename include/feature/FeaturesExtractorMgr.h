@@ -30,6 +30,10 @@ public:
 
 	void add(FeaturesExtractor* extractor)
 	{
+		if (extractor->is_filtered())
+		{
+			return;
+		}
 		_extractors.push_back(extractor);
 	}
 	

@@ -30,12 +30,12 @@ namespace gezi {
 			}
 			static size_t size()
 			{
-				return info().size();
+				return info().historySize;
 			}
 
 			static int type()
 			{
-				return info().type();
+				return info().Type();
 			}
 		public:
 			static ExtendedUrateInfo& info()

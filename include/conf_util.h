@@ -93,11 +93,11 @@ namespace gezi
 			int ret = conf().load(dir.c_str(), config_file.c_str());
 			if (ret != 0)
 			{
-				LOG_TRACE("SharedConf init with %s/%s fail", dir.c_str(), config_file.c_str());
+				//LOG_TRACE("SharedConf init with %s/%s fail", dir.c_str(), config_file.c_str());
 			}
 			else
 			{
-				LOG_TRACE("SharedConf init ok %s/%s", dir.c_str(), config_file.c_str());
+				//LOG_TRACE("SharedConf init ok %s/%s", dir.c_str(), config_file.c_str());
 			}
 			return ret == 0;
 		}
@@ -112,11 +112,11 @@ namespace gezi
 		if (ret == 0)
 		{
 			val = buf;
-			LOG_TRACE("Get config %s : %s", key.c_str(), val.c_str());
+			//LOG_TRACE("Get config %s : %s", key.c_str(), val.c_str());
 		}
 		else
 		{
-			LOG_TRACE("Using default %s : %s", key.c_str(), val.c_str());
+			//LOG_TRACE("Using default %s : %s", key.c_str(), val.c_str());
 		}
 	}
 
@@ -134,11 +134,11 @@ namespace gezi
 		if (ret == 0)
 		{
 			val = buf;
-			LOG_TRACE("Get config %s::%s : %s", field.c_str(), key.c_str(), val.c_str());
+			//LOG_TRACE("Get config %s::%s : %s", field.c_str(), key.c_str(), val.c_str());
 		}
 		else
 		{
-			LOG_TRACE("Using default %s::%s : %s", field.c_str(), key.c_str(), val.c_str());
+			//LOG_TRACE("Using default %s::%s : %s", field.c_str(), key.c_str(), val.c_str());
 			set_val(conf, key, val);
 		}
 	}
@@ -150,12 +150,12 @@ namespace gezi
 		int ret = conf[key.c_str()].get_cstr(buf, 1024, "");
 		if (ret == 0)
 		{
-			LOG_TRACE("Get config %s : %s", key.c_str(), val.c_str());
+			//LOG_TRACE("Get config %s : %s", key.c_str(), val.c_str());
 		}
 		else
 		{
 			val = default_val;
-			LOG_TRACE("Using default %s : %s", key.c_str(), val.c_str());
+			//LOG_TRACE("Using default %s : %s", key.c_str(), val.c_str());
 		}
 		return val;
 	}
@@ -171,12 +171,12 @@ namespace gezi
 		int ret = conf[field.c_str()][key.c_str()].get_cstr(buf, 1024, "");
 		if (ret == 0)
 		{
-			LOG_TRACE("Get config %s::%s : %s", field.c_str(), key.c_str(), val.c_str());
+			//LOG_TRACE("Get config %s::%s : %s", field.c_str(), key.c_str(), val.c_str());
 		}
 		else
 		{
 			val = default_val;
-			LOG_TRACE("Using default %s::%s : %s", field.c_str(), key.c_str(), val.c_str());
+			//LOG_TRACE("Using default %s::%s : %s", field.c_str(), key.c_str(), val.c_str());
 			set_val(conf, key, val);
 		}
 		return val;
@@ -189,11 +189,11 @@ namespace gezi
 		int ret = conf[key.c_str()].get_int32(&val, ori_val);
 		if (ret == 0)
 		{
-			LOG_TRACE("Get config %s : %d", key.c_str(), val);
+			//LOG_TRACE("Get config %s : %d", key.c_str(), val);
 		}
 		else
 		{
-			LOG_TRACE("Using default %s : %d", key.c_str(), val);
+			//LOG_TRACE("Using default %s : %d", key.c_str(), val);
 		}
 	}
 
@@ -208,11 +208,11 @@ namespace gezi
 		int ret = conf[field.c_str()][key.c_str()].get_int32(&val, ori_val);
 		if (ret == 0)
 		{
-			LOG_TRACE("Get config %s::%s : %d", field.c_str(), key.c_str(), val);
+			//LOG_TRACE("Get config %s::%s : %d", field.c_str(), key.c_str(), val);
 		}
 		else
 		{
-			LOG_TRACE("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
+			//LOG_TRACE("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
 			set_val(conf, key, val);
 		}
 	}
@@ -223,11 +223,11 @@ namespace gezi
 		int ret = conf[key.c_str()].get_int32(&val, default_val);
 		if (ret == 0)
 		{
-			LOG_TRACE("Get config %s : %d", key.c_str(), val);
+			//LOG_TRACE("Get config %s : %d", key.c_str(), val);
 		}
 		else
 		{
-			LOG_TRACE("Using default %s : %d", key.c_str(), val);
+			//LOG_TRACE("Using default %s : %d", key.c_str(), val);
 		}
 		return val;
 	}
@@ -242,11 +242,11 @@ namespace gezi
 		int ret = conf[field.c_str()][key.c_str()].get_int32(&val, default_val);
 		if (ret == 0)
 		{
-			LOG_TRACE("Get config %s::%s : %d", field.c_str(), key.c_str(), val);
+			//LOG_TRACE("Get config %s::%s : %d", field.c_str(), key.c_str(), val);
 		}
 		else
 		{
-			LOG_TRACE("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
+			//LOG_TRACE("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
 			set_val(conf, key, val);
 		}
 		return val;
@@ -261,11 +261,11 @@ namespace gezi
 		if (ret == 0)
 		{
 			val = val_;
-			LOG_TRACE("Get config %s : %d", key.c_str(), val);
+			//LOG_TRACE("Get config %s : %d", key.c_str(), val);
 		}
 		else
 		{
-			LOG_TRACE("Using default %s : %d", key.c_str(), val);
+			//LOG_TRACE("Using default %s : %d", key.c_str(), val);
 		}
 	}
 
@@ -281,11 +281,11 @@ namespace gezi
 		if (ret == 0)
 		{
 			val = val_;
-			LOG_TRACE("Get config %s::%s : %d", field.c_str(), key.c_str(), val);
+			//LOG_TRACE("Get config %s::%s : %d", field.c_str(), key.c_str(), val);
 		}
 		else
 		{
-			LOG_TRACE("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
+			//LOG_TRACE("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
 			set_val(conf, key, val);
 		}
 	}
@@ -296,12 +296,12 @@ namespace gezi
 	//  try
 	//  {
 	//    val = conf[key.c_str()].to_int32();
-	//    LOG_TRACE("Get config %s : %d", key.c_str(), val);
+	//    //LOG_TRACE("Get config %s : %d", key.c_str(), val);
 	//  }
 	//  catch (...)
 	//  {
 	//    val = default_val;
-	//    LOG_TRACE("Using default %s : %d", key.c_str(), val);
+	//    //LOG_TRACE("Using default %s : %d", key.c_str(), val);
 	//  }
 	//  return (bool)val;
 	//}
@@ -316,12 +316,12 @@ namespace gezi
 	//  try
 	//  {
 	//    val = conf[field.c_str()][key.c_str()].to_int32();
-	//    LOG_TRACE("Get config %s::%s : %d", field.c_str(), key.c_str(), val);
+	//    //LOG_TRACE("Get config %s::%s : %d", field.c_str(), key.c_str(), val);
 	//  }
 	//  catch (...)
 	//  {
 	//    val = default_val;
-	//    LOG_TRACE("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
+	//    //LOG_TRACE("Using default %s::%s : %d", field.c_str(), key.c_str(), val);
 	//    set_val(conf, key, val);
 	//  }
 	//  return (bool)val;
@@ -335,11 +335,11 @@ namespace gezi
 		int ret = conf[key.c_str()].get_int64(&val, ori_val);
 		if (ret == 0)
 		{
-			LOG_TRACE("Get config %s : %lld", key.c_str(), val);
+			//LOG_TRACE("Get config %s : %lld", key.c_str(), val);
 		}
 		else
 		{
-			LOG_TRACE("Using default %s : %lld", key.c_str(), val);
+			//LOG_TRACE("Using default %s : %lld", key.c_str(), val);
 		}
 	}
 
@@ -354,11 +354,11 @@ namespace gezi
 		int ret = conf[field.c_str()][key.c_str()].get_int64(&val, ori_val);
 		if (ret == 0)
 		{
-			LOG_TRACE("Using default %s::%s : %lld", field.c_str(), key.c_str(), val);
+			//LOG_TRACE("Using default %s::%s : %lld", field.c_str(), key.c_str(), val);
 		}
 		else
 		{
-			LOG_TRACE("Using default %s::%s : %lld", field.c_str(), key.c_str(), val);
+			//LOG_TRACE("Using default %s::%s : %lld", field.c_str(), key.c_str(), val);
 			set_val(conf, key, val);
 		}
 	}
@@ -369,11 +369,11 @@ namespace gezi
 		int ret = conf[key.c_str()].get_int64(&val, default_val);
 		if (ret == 0)
 		{
-			LOG_TRACE("Get config %s : %lld", key.c_str(), val);
+			//LOG_TRACE("Get config %s : %lld", key.c_str(), val);
 		}
 		else
 		{
-			LOG_TRACE("Using default %s : %lld", key.c_str(), val);
+			//LOG_TRACE("Using default %s : %lld", key.c_str(), val);
 		}
 		return val;
 	}
@@ -388,11 +388,11 @@ namespace gezi
 		int ret = conf[field.c_str()][key.c_str()].get_int64(&val, default_val);
 		if (ret == 0)
 		{
-			LOG_TRACE("Using default %s::%s : %lld", field.c_str(), key.c_str(), val);
+			//LOG_TRACE("Using default %s::%s : %lld", field.c_str(), key.c_str(), val);
 		}
 		else
 		{
-			LOG_TRACE("Using default %s::%s : %lld", field.c_str(), key.c_str(), val);
+			//LOG_TRACE("Using default %s::%s : %lld", field.c_str(), key.c_str(), val);
 			set_val(conf, key, val);
 		}
 		return val;
@@ -406,11 +406,11 @@ namespace gezi
 		int ret = conf[key.c_str()].get_double(&val, ori_val);
 		if (ret == 0)
 		{
-			LOG_TRACE("Get config %s : %f", key.c_str(), val);
+			//LOG_TRACE("Get config %s : %f", key.c_str(), val);
 		}
 		else
 		{
-			LOG_TRACE("Using default %s : %f", key.c_str(), val);
+			//LOG_TRACE("Using default %s : %f", key.c_str(), val);
 		}
 	}
 	//key not const, default_val const double will cause always ????double  WHY?
@@ -427,14 +427,14 @@ namespace gezi
 		int ret = conf[field.c_str()][key.c_str()].get_double(&val, ori_val);
 		if (ret == 0)
 		{
-			LOG_TRACE("Using default %s::%s : %f", field.c_str(), key.c_str(), val);
+			//LOG_TRACE("Using default %s::%s : %f", field.c_str(), key.c_str(), val);
 		}
 		else 
 		{
 			/*Pval2(ori_val, val);
 			conf[field.c_str()][key.c_str()].get_double(&val, 3.1415926);
 			Pval2(ori_val, val);*/
-			LOG_TRACE("Using default %s::%s : %f", field.c_str(), key.c_str(), val);
+			//LOG_TRACE("Using default %s::%s : %f", field.c_str(), key.c_str(), val);
 			set_val(conf, key, val);
 		}
 	}
@@ -445,11 +445,11 @@ namespace gezi
 		int ret = conf[key.c_str()].get_double(&val, default_val);
 		if (ret == 0)
 		{
-			LOG_TRACE("Get config %s : %f", key.c_str(), val);
+			//LOG_TRACE("Get config %s : %f", key.c_str(), val);
 		}
 		else
 		{
-			LOG_TRACE("Using default %s : %f", key.c_str(), val);
+			//LOG_TRACE("Using default %s : %f", key.c_str(), val);
 		}
 		return val;
 	}
@@ -465,11 +465,11 @@ namespace gezi
 		int ret = conf[field.c_str()][key.c_str()].get_double(&val, default_val);
 		if (ret == 0)
 		{
-			LOG_TRACE("Using default %s::%s : %f", field.c_str(), key.c_str(), val);
+			//LOG_TRACE("Using default %s::%s : %f", field.c_str(), key.c_str(), val);
 		}
 		else
 		{
-			LOG_TRACE("Using default %s::%s : %f", field.c_str(), key.c_str(), val);
+			//LOG_TRACE("Using default %s::%s : %f", field.c_str(), key.c_str(), val);
 			set_val(conf, key, val);
 		}
 		return val;
@@ -493,8 +493,7 @@ namespace gezi
 
 }
 
-
-//@FIXME 如果配置文件里面不存在的话 速度非常慢。。。
+//@TODO 以后外部都用宏调用 如果#define 。。 可以下面所有变为空去掉对conf的依赖 即代码没有配置完全是默认
 #define SCONF(s)\
 	gezi::set_val(gezi::SharedConf::conf(), section, gezi::conf_trim(#s), s)
 #define SCONF_CLASS(root,s)\
@@ -537,6 +536,9 @@ namespace gezi
 
 #define PCONF2_CLASS(root, s,field, default_value)\
 	root.s = gezi::get_val(conf, field, gezi::conf_trim(#s), default_value)
+
+#define NPSCONF(s, name, field)\
+	gezi::set_val(gezi::SharedConf::conf(), field, name + "_" + gezi::conf_trim(#s), s)
 
 #define CONF_TRY_VAL(s)\
 	gezi::set_val(conf, gezi::conf_trim(#s), s)

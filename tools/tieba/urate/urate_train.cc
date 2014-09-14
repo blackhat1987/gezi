@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
 	FLAGS_minloglevel = FLAGS_level;
 	if (FLAGS_v == 0)
 		FLAGS_v = FLAGS_vl;
-
+	SharedConf::init("urate_strategy.conf");
 	run();
 
 	return 0;

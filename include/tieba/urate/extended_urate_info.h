@@ -19,7 +19,7 @@
 namespace gezi {
 	namespace tieba {
 
-		class ExtendedUrateInfo : public UrateInfo
+		struct ExtendedUrateInfo : public UrateInfo
 		{
 		public:
 			ExtendedUrateInfo() = default;
@@ -27,13 +27,24 @@ namespace gezi {
 			ExtendedUrateInfo(const UrateInfo& urateInfo)
 				:UrateInfo(urateInfo)
 			{
-
+				Init();
 			}
 
 			ExtendedUrateInfo(UrateInfo&& urateInfo)
 				:UrateInfo(urateInfo)
 			{
+				Init();
+			}
 
+			void Init()
+			{
+				SetHistorySize();
+				SetType();
+			}
+
+			string name()
+			{
+				return "ExtendedUrateInfo";
 			}
 
 			bool IsValid()
@@ -149,6 +160,81 @@ namespace gezi {
 				}
 			}
 
+			static string FilterContent(string content)
+			{
+				int max_content_length = 1024;
+				PSCONF(max_content_length, name());
+				string new_content = strip_from(content);
+				if (new_content.size() > max_content_length + 10)
+				{
+					int len = max_content_length / 2;
+					if (new_content[len] < 0)
+					{
+						len++;
+					}
+					string new_content1 = gezi::gbk_substr(new_content, 0, len);
+					int start = new_content.size() - len - 1;
+
+					if (new_content[start - 1] < 0)
+					{
+						start--;
+					}
+
+					string new_content2 = gezi::gbk_substr(new_content, start);
+					new_content = new_content1 + new_content2;
+				}
+				return new_content;
+			}
+
+			void ExtractFilteredContents()
+			{
+				if (filteredContents.empty())
+				{
+					bool needFilterContent = true;
+					PSCONF(needFilterContent, name());
+					//如果c#同时 needFilterContent = false 可以避免拷贝 或者c++需要shared_ptr麻烦一些 copy吧
+					filteredContents = postsInfo.contents;
+					if (needFilterContent)
+					{
+						filteredContents = from(filteredContents)
+							>> select([this](string content) { return FilterContent(content); })
+							>> to_vector();
+					}
+				}
+			}
+
+			int Type()
+			{
+				return _type;
+			}
+		private:
+			int HistorySize()
+			{
+				int max_post_num = 25;
+				PSCONF(max_post_num, name());
+				if (size() > max_post_num)
+				{
+					return max_post_num;
+				}
+				return size();
+			}
+
+			void SetHistorySize()
+			{
+				historySize = HistorySize();
+			}
+
+			void SetType()
+			{
+				_type = this->type();
+			}
+
+			void IsHis
+			void ShrinkHistory()
+			{
+				postsInfo.pids.resize(historySize);
+
+			}
 		public:
 			//media info per content
 			vector<svec> urlsVec;
@@ -170,6 +256,10 @@ namespace gezi {
 
 			svec locations;
 
+			int historySize;
+		private:
+			bool _type; //0回复，1主题
+
 		public:
 			static InitIpFinder()
 			{
@@ -189,7 +279,7 @@ namespace gezi {
 			}
 			static bool& isIpFinderInited()
 			{
-				static thread_local bool _isIpFinderInited  = false;
+				static thread_local bool _isIpFinderInited = false;
 				return _isIpFinderInited;
 			}
 		public:
