@@ -188,7 +188,9 @@
     <ClInclude Include="include\tieba\feature\urate\IpExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\MediaExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\NumberExtractor.h" />
+    <ClInclude Include="include\tieba\feature\urate\SequenceExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\SundryExtractor.h" />
+    <ClInclude Include="include\tieba\feature\urate\TimeExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\UrateExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\UserInfoExtractor.h" />
     <ClInclude Include="include\tieba\feature\UserInfoExtractor.h" />

@@ -62,6 +62,7 @@ TEST(num, func)
 	test_num("29109317 在哪里");
 	test_num("我q29109317");
 	test_num("29109317@qq.com 楼主.加油.哈哈");
+	test_num("abc@qq.com 嘻嘻");
 }
 
 void test_email(string content)

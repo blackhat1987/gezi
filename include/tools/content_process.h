@@ -27,6 +27,7 @@ namespace gezi {
 	{
 		src = erase_from(src, "视频来自");
 		src = erase_from(src, "图片来自");
+		src = erase_from(src, "内容来自");
 		return src;
 	}
 
@@ -90,7 +91,8 @@ namespace gezi {
 	inline vector<string> get_nums(string src)
 	{ //@TODO 验证是否ok 和配置文件完全一样 不需要Raw string?
 		//string skipRegStr("([ *,\\.,!\\(\\)]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
-		string skipRegStr("([,\\.,!]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
+		//string skipRegStr("([,\\.,!]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
+		string skipRegStr("[0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3}");
 		string regStr("(^|[\\x81-\\xff]|:|q|qq|Q|QQ|\\(|\\[)[ ]*([0-9]{7,15})");
 		int matchIndex = 2;
 		PVAL(skipRegStr);

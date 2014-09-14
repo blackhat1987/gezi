@@ -37,7 +37,7 @@ using namespace std;
 	VLOG(4) << u << " " << #s <<" --- [" << s << "]"
 
 #define Pval(s)\
-	VLOG(0) << #s <<" --- [" << s << "]"
+	VLOG(0) << setprecision(16) << #s << " --- [" << s << "]"
 
 #define Pval_2(s)\
 	VLOG(2) << #s <<" --- [" << s << "]"

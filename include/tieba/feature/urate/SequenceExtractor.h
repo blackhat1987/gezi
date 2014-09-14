@@ -1,18 +1,18 @@
 /**
  *  ==============================================================================
  *
- *          \file   tieba/feature/SequenceExtractor.h
+ *          \file   tieba/feature/urate/SequenceExtractor.h
  *
  *        \author   chenghuige
  *
- *          \date   2014-09-10 11:35:31.586217
+ *          \date   2014-09-14 06:19:14.229164
  *
  *  \Description:
  *  ==============================================================================
  */
 
-#ifndef TIEBA_FEATURE__SEQUENCE_EXTRACTOR_H_
-#define TIEBA_FEATURE__SEQUENCE_EXTRACTOR_H_
+#ifndef TIEBA_FEATURE_URATE__SEQUENCE_EXTRACTOR_H_
+#define TIEBA_FEATURE_URATE__SEQUENCE_EXTRACTOR_H_
 
 namespace gezi {
 namespace tieba {
@@ -29,4 +29,4 @@ private:
 }  //----end of namespace tieba
 }  //----end of namespace gezi
 
-#endif  //----end of TIEBA_FEATURE__SEQUENCE_EXTRACTOR_H_
+#endif  //----end of TIEBA_FEATURE_URATE__SEQUENCE_EXTRACTOR_H_

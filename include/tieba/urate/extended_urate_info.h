@@ -160,10 +160,10 @@ namespace gezi {
 			vector<svec> numbersVec; //这些需要多个extractor share
 			vector<svec> normedNumbersVec; //从normalized 内容中抽取的number
 
-
 			svec htmlFilteredContents;
 			svec normalizedContents;
 			svec normalizedCnContents;
+			svec filteredContents; //在 htmlFilteredContents基础上进一步过滤后的内容
 
 			svec normalizedTitles;
 			svec normalizedCnTitles;
