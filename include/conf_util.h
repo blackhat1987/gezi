@@ -509,6 +509,8 @@ namespace gezi
 #define PSCONF(s, field)\
 	gezi::set_val(gezi::SharedConf::conf(), field, gezi::conf_trim(#s), s)
 
+#define PSCONF_WITHNAME(s, name, field)\
+	gezi::set_val(gezi::SharedConf::conf(), field, name, s)
 #define PSCONF2(s,field, default_value)\
 	s = gezi::get_val(gezi::SharedConf::conf(), field, gezi::conf_trim(#s), default_value)
 

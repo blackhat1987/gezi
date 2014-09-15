@@ -35,11 +35,11 @@ namespace gezi {
 
 			virtual void extract() override
 			{
-				int numNmbers = non_empty_count(info().numbersVec);
+				int numNumbers = non_empty_count(info().numbersVec);
 				int numNormedNumbers = non_empty_count(info().normedNumbersVec);
-				ADD_FEATURE(numNmbers);
+				ADD_FEATURE(numNumbers);
 				ADD_FEATURE(numNormedNumbers);
-				double normedNumberRatio = (1 + numNmbers) / (double)(1 + numNormedNumbers);
+				double normedNumberRatio = (1 + numNumbers) / (double)(1 + numNormedNumbers);
 				ADD_FEATURE(normedNumberRatio);
 				double numberRatio = numNormedNumbers / (double)size();
 				ADD_FEATURE(numberRatio);

@@ -54,7 +54,7 @@ namespace gezi {
 			uint userId = 0;
 			uint forumId = 0;
 			uint64 ip = 0;
-			uint64 createTime = 0;
+			int64 createTime = 0;
 			string title;
 			string content;
 			string userName;
@@ -110,7 +110,7 @@ namespace gezi {
 			vector<uint64> pids;
 			vector<uint64> tids; //如果是楼模型这个是空 或者1 
 			vector<uint> uids; //如果是用行为模型 这个是空或者1
-			vector<uint64> times; //@TODO uint
+			vector<int64> times; //@TODO int64
 			vector<uint> fids;
 			vector<string> fnames;
 			vector<string> titles;
@@ -129,7 +129,7 @@ namespace gezi {
 			int numPosts = 0;
 			vector<uint64> pids;
 			vector<uint64> tids;
-			vector<uint64> times;
+			vector<int64> times;
 			vector<uint> fids;
 			vector<string> fnames;
 			vector<string> titles;
@@ -170,7 +170,7 @@ namespace gezi {
 			string userName;
 			uint64 userId = 0;
 			uint64 ip = 0;
-			uint64 createTime = 0;
+			int64 createTime = 0;
 			string content;
 			/*'thread_id' = > '3286155511',
 			'post_id' = > '57218429704',
@@ -212,7 +212,7 @@ namespace gezi {
 			vector<uint64> pids;
 			vector<uint> uids;
 			vector<uint64> ips;
-			vector<uint64> times;
+			vector<int64> times;
 			vector<string> unames;
 			vector<string> contents;
 			vector<Comments> commentsVec;
@@ -253,14 +253,14 @@ namespace gezi {
 			uint64 postId;
 			uint forumId;
 			uint64 ip;
-			uint64 createTime;
+			int64 createTime;
 		};
 
 		struct UserInfo
 		{
 			uint userId = 0;
 			string userName;
-			uint64 regTime = 0;
+			int64 regTime = 0;
 			int userSex = 0; //0 没写, 1 male, 2 female
 			int followCount = 0; //关注数
 			int followedCount = 0; //粉丝数
@@ -321,7 +321,7 @@ namespace gezi {
 			struct Node
 			{
 				string forumName;
-				uint64 time;
+				int64 time;
 				int level;
 				int curScore;
 				int leftScore;
@@ -383,7 +383,7 @@ namespace gezi {
 			uint64 postId;
 			uint forumId; //forum_id
 			string forumName;
-			uint64 createTime;
+			int64 createTime;
 			uint64 ip;
 			string address;
 			string title;
@@ -416,7 +416,7 @@ namespace gezi {
 			uint64 pid = 0;
 			string opUid;
 			string monitorType; //17007等 吧务删除是0
-			uint64 opTime = 0;
+			int64 opTime = 0;
 			bool isDeleted = false;
 
 			friend class boost::serialization::access;

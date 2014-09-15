@@ -328,6 +328,92 @@ namespace gezi {
 		return set_.size();
 	}
 
+	template<typename Vec1, typename Vec2, typename Func>
+	void process_when_unequal(Vec1& vec, const Vec2& conditons, Func func)
+	{
+		for (size_t i = 1; i < conditons.size(); i++)
+		{
+			if (conditons[i] != conditons[i - 1])
+			{
+				func(vec[i - 1], vec[i]);
+			}
+		}
+	}
+
+	template<typename Vec1, typename Vec2, typename Func>
+	Vec1 filter_when_unequal(const Vec1& vec, const Vec2& conditons, Func func)
+	{
+		Vec1 results;
+		for (size_t i = 1; i < conditons.size(); i++)
+		{
+			if (conditons[i] == conditons[i - 1])
+			{
+				results.push_back(func(vec[i - 1], vec[i]));
+			}
+		}
+		return results;
+	}
+
+	template<typename Vec1, typename Vec2, typename Func>
+	void process_when_equal(Vec1& vec, const Vec2& conditons, Func func)
+	{
+		for (size_t i = 1; i < conditons.size(); i++)
+		{
+			if (conditons[i] == conditons[i - 1])
+			{
+				func(vec[i - 1], vec[i]);
+			}
+		}
+	}
+
+	template<typename Vec1, typename Vec2, typename Func>
+	Vec1 filter_when_equal(const Vec1& vec, const Vec2& conditons, Func func)
+	{
+		Vec1 results;
+		for (size_t i = 1; i < conditons.size(); i++)
+		{
+			if (conditons[i] != conditons[i - 1])
+			{
+				results.push_back(func(vec[i - 1], vec[i]));
+			}
+		}
+		return results;
+	}
+
+	template<typename Vec>
+	Vec to_delta_vec(const Vec& vec)
+	{
+		Vec deltaVec;
+		for (size_t i = 1; i < vec.size(); i++)
+		{
+			deltaVec.push_back(vec[i] - vec[i - 1]);
+		}
+		return deltaVec;
+	}
+
+	template<typename Vec>
+	Vec to_delta_rvec(const Vec& vec)
+	{
+		Vec deltaVec;
+		for (size_t i = 1; i < vec.size(); i++)
+		{
+			deltaVec.push_back(vec[i - 1] - vec[i]);
+		}
+		return deltaVec;
+	}
+
+	template<typename Vec, typename Func>
+	Vec to_delta_vec(const Vec& vec, Func func)
+	{
+		Vec deltaVec;
+		for (size_t i = 1; i < vec.size(); i++)
+		{
+			deltaVec.push_back(func(vec[i - 1], vec[i]));
+		}
+		return deltaVec;
+	}
+
+
 }  //----end of namespace gezi
 
 #endif  //----end of STL_UTIL_H_

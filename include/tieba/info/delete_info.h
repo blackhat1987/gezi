@@ -59,7 +59,7 @@ namespace gezi {
 		{
 			deleteInfo.monitorType = jsonDelInfo["monitor_type"].asString();
 			deleteInfo.opUid = UINT64(jsonDelInfo["op_uid"].asString());
-			deleteInfo.opTime = UINT64(jsonDelInfo["op_uid"].asString());
+			deleteInfo.opTime = INT64(jsonDelInfo["op_uid"].asString());
 			if (type == "thread")
 			{
 				deleteInfo.tid = UINT64(jsonDelInfo["thread_id"].asString());

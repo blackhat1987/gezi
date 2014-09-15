@@ -119,72 +119,7 @@ namespace gezi {
 		return std::lower_bound(vec.begin(), vec.end(), value) - vec.begin();
 	}
 
-	namespace ufo {
-
-		//注意如果在相同namespace mean(vec, 0) 会去调用mean(Iter, Iter) mean(vec, 0.0) ok
-		template<typename Container>
-		double mean(const Container& vec, double defaultValue)
-		{
-			if (vec.empty())
-			{
-				return defaultValue;
-			}
-			return std::accumulate(vec.begin(), vec.end(), 0.0) / (double)vec.size();
-		}
-
-		template<typename Container>
-		//double min(const Container& vec)
-		auto min(const Container& vec) -> decltype(*vec.begin())
-		{
-			return *(std::min_element(vec.begin(), vec.end()));
-		}
-
-		template<typename Container, typename T>
-		T min(const Container& vec, T defaultValue) 
-		{
-			if (vec.empty())
-			{
-				return defaultValue;
-			}
-			return *(std::min_element(vec.begin(), vec.end()));
-		}
-
-		template<typename Container, typename Iter>
-		Iter min_element(const Container& vec)
-		{
-			return std::min_element(vec.begin(), vec.end());
-		}
-
-
-		template<typename Container>
-		//double max(const Container& vec)
-		auto max(const Container& vec) ->decltype(*vec.begin())
-		{
-			return *(std::max_element(vec.begin(), vec.end()));
-		}
-
-		template<typename Container, typename T>
-		T max(const Container& vec, T defaultValue)
-		{
-			if (vec.empty())
-			{
-				return defaultValue;
-			}
-			return *(std::max_element(vec.begin(), vec.end()));
-		}
-
-		template<typename Container, typename Iter>
-		Iter max_element(const Container& vec)
-		{
-			return std::max_element(vec.begin(), vec.end());
-		}
-
-		template<typename Container, typename ValueType>
-		void fill(Container& vec, const ValueType& val)
-		{
-			std::fill(vec.begin(), vec.end(), val);
-		}
-	}
+	
 
 	template<typename Container>
 	size_t min_index(const Container& vec)
@@ -354,6 +289,102 @@ namespace gezi {
 	double sd(Iter start, Iter end)
 	{
 		return sqrt(var(start, end));
+	}
+
+	namespace ufo {
+
+		//注意如果在相同namespace mean(vec, 0) 会去调用mean(Iter, Iter) mean(vec, 0.0) ok
+		template<typename Container>
+		double mean(const Container& vec, double defaultValue)
+		{
+			if (vec.empty())
+			{
+				return defaultValue;
+			}
+			return std::accumulate(vec.begin(), vec.end(), 0.0) / (double)vec.size();
+		}
+
+		template<typename Container>
+		double mean(const Container& vec)
+		{
+			if (vec.empty())
+			{
+				return 0;
+			}
+			return std::accumulate(vec.begin(), vec.end(), 0.0) / (double)vec.size();
+		}
+
+		template<typename Container>
+		double var(const Container& vec)
+		{
+			if (vec.size() > 1)
+			{
+				return 0;
+			}
+			return gezi::var(vec);
+		}
+
+		template<typename Container>
+		double var(const Container& vec, double defaultValue, int minCount = 2)
+		{
+			if (vec.size() < minCount)
+			{
+				return defaultValue;
+			}
+			return gezi::var(vec);
+		}
+
+		template<typename Container>
+		auto min(const Container& vec) -> decltype(*vec.begin())
+		{
+			return *(std::min_element(vec.begin(), vec.end()));
+		}
+
+		template<typename Container, typename T>
+		T min(const Container& vec, T defaultValue)
+		{
+			if (vec.empty())
+			{
+				return defaultValue;
+			}
+			return *(std::min_element(vec.begin(), vec.end()));
+		}
+
+		template<typename Container, typename Iter>
+		Iter min_element(const Container& vec)
+		{
+			return std::min_element(vec.begin(), vec.end());
+		}
+
+
+		template<typename Container>
+		//double max(const Container& vec)
+		auto max(const Container& vec) ->decltype(*vec.begin())
+		{
+			return *(std::max_element(vec.begin(), vec.end()));
+		}
+
+		template<typename Container, typename T>
+		T max(const Container& vec, T defaultValue)
+		{
+			if (vec.empty())
+			{
+				return defaultValue;
+			}
+			return *(std::max_element(vec.begin(), vec.end()));
+		}
+
+		template<typename Container, typename Iter>
+		Iter max_element(const Container& vec)
+		{
+			return std::max_element(vec.begin(), vec.end());
+		}
+
+		template<typename Container, typename ValueType>
+		void fill(Container& vec, const ValueType& val)
+		{
+			std::fill(vec.begin(), vec.end(), val);
+		}
 	}
 
 	namespace x2 {

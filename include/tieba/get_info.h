@@ -20,46 +20,72 @@
 
 namespace gezi {
 	namespace tieba {
+		const char* const kTiebaGetInfoName = "Tieba.GetInfo";
+		inline void get_field_method(string url, string& field, string& method)
+		{
+			//http://service.tieba.baidu.com/service/post?method=mgetThread&
+			string host = "http://service.tieba.baidu.com/service/";
+			string body = url.substr(host.length());
+			body = body.substr(0, body.find('&'));
+			split(body, "?method=", field, method);
+			PVAL2(field, method);
+		}
 
 		inline string get_info_str(string url, int timeout = -1)
 		{
 			AutoTimer timer("CurlFetchUrl:" + url);
 			if (timeout < 0)
 			{
-				//timeout = PSCONF_(timeout, "tieba.get_info", 1000);
 				timeout = 5000;
+				PSCONF(timeout, kTiebaGetInfoName);
 			}
+
+			bool isOnline = false;
+			PSCONF(isOnline, "Global");
+			if (isOnline)
+			{
+				bool needFetch = false;
+				string field, method;
+				get_field_method(url, field, method);
+				string name = field + "_" + method;
+				name += "_needFetch";
+				PSCONF_WITHNAME(needFetch, name, kTiebaGetInfoName);
+				if (!needFetch)
+				{
+					return ""; //@TODO fetch from SharedJson
+				}
+			}
+
 			CurlUtil curl;
 			curl.setTimeout(timeout);
 			return curl.get(url);
 		}
-		
-		//not work don't use it use next function below
-		inline string sget_info_str(string url, int timeout = -1)
-		{
-			if (timeout < 0)
-			{
-				//timeout = PSCONF_(timeout, "tieba.get_info", 1000);
-				timeout = 1000;
-			}
-			CurlUtil curl;
-			url = curl.escape(to_utf8(url)).str();
-			curl.setTimeout(timeout);
-			return curl.get(url);
-		}
+
+		////not work don't use it use next function below
+		//inline string sget_info_str(string url, int timeout = -1)
+		//{
+		//	if (timeout < 0)
+		//	{
+		//		//timeout = PSCONF_(timeout, "tieba.get_info", 1000);
+		//		timeout = 1000;
+		//	}
+		//	CurlUtil curl;
+		//	url = curl.escape(to_utf8(url)).str();
+		//	curl.setTimeout(timeout);
+		//	return curl.get(url);
+		//}
 
 
-		inline string get_info_str(CurlUtil& curl, string url, int timeout = -1)
-		{
+		/*	inline string get_info_str(CurlUtil& curl, string url, int timeout = -1)
+			{
 			if (timeout < 0)
 			{
-				//timeout = PSCONF_(timeout, "tieba.get_info", 1000);
-				timeout = 1000;
+			timeout = 1000;
 			}
-			
+
 			curl.setTimeout(timeout);
 			return curl.get(url);
-		}
+			}*/
 
 		//获取帖子信息
 		inline string get_posts_info_str(string pids)
@@ -78,7 +104,7 @@ namespace gezi {
 			string pids_ = join(pids, ",");
 
 		}
-		
+
 		//批量获取帖子内容
 		inline string get_posts_info_str(const svec& pids)
 		{
@@ -121,7 +147,7 @@ namespace gezi {
 			return get_info_str(url);
 		}
 
-		
+
 		//获取用户信息
 
 		//获取用户关注数目 粉丝数目 @TODO 这个接口会被废弃 采用调用统一的用户信息接口?
@@ -191,7 +217,7 @@ namespace gezi {
 			string url = (format("http://service.tieba.baidu.com/service/post?method=getFullPostsByThreadId&format=json&thread_id=%ld&res_num=%d&offset=%d&has_comment=%d&post_id=%ld") % threadId % resNum % offset % hasComment % postId).str();
 			return get_info_str(url);
 		}
-	
+
 		//吧相关
 		inline string get_forum_id_str(string forumNames)
 		{
@@ -218,7 +244,7 @@ namespace gezi {
 			string params = join(convert(forumIds), ",");
 			return get_forum_name_str(params);
 		}
-	
+
 
 		inline string get_forum_info_str(string params)
 		{

@@ -39,7 +39,7 @@ public:
 	}
 
 	template<typename Vec>
-	void add(const Vec& patterns, bool icase = false)
+	void add(const Vec& patterns, bool icase = true)
 	{
 		foreach(auto pattern, patterns)
 		{

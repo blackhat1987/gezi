@@ -27,30 +27,6 @@
     <ClInclude Include="include\db\otl\otlv4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\feature\Feature.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\feature\feature_selection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\feature\feature_util.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\feature\FeatureExtractor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\feature\FeatureExtractorMgr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\feature\FeatureIdentifer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\feature\FeatureNormalizer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\feature\FeatureSelector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\json\autolink.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -345,21 +321,6 @@
     <ClInclude Include="include\container\RegressionTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\feature\FeatureVector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\feature\features_util.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\feature\FeaturesExtractor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\feature\FeaturesExtractorMgr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\feature\Features.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\LoadSave.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -382,9 +343,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\openmp_util.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\feature\gain_summary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\container\LruSet.h">
@@ -508,6 +466,48 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\tieba\feature\urate\TimeExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\Feature.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\feature_selection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\feature_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\FeatureExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\FeatureExtractorMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\FeatureIdentifer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\FeatureNormalizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\Features.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\features_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\FeatureSelector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\FeaturesExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\FeaturesExtractorMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\FeatureVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\feature\gain_summary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

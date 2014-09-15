@@ -27,22 +27,21 @@ namespace gezi {
 			ExtendedUrateInfo(const UrateInfo& urateInfo)
 				:UrateInfo(urateInfo)
 			{
-				Init();
 			}
 
 			ExtendedUrateInfo(UrateInfo&& urateInfo)
 				:UrateInfo(urateInfo)
 			{
-				Init();
 			}
 
 			void Init()
 			{
 				SetHistorySize();
+				ShrinkHistory();
 				SetType();
 			}
 
-			string name()
+			static string name()
 			{
 				return "ExtendedUrateInfo";
 			}
@@ -106,8 +105,8 @@ namespace gezi {
 			{
 				if (numbersVec.empty())
 				{
-					ExtractContentNoHtmls();
-					numbersVec = from(htmlFilteredContents)
+					ExtractFilteredContents();
+					numbersVec = from(filteredContents)
 						>> select([](string content) { return get_nums(content); })
 						>> to_vector();
 				}
@@ -118,8 +117,8 @@ namespace gezi {
 			{
 				if (normedNumbersVec.empty())
 				{
-					ExtractNormalizedContents();
-					normedNumbersVec = from(normalizedContents)
+					ExtractNormalizedFilteredContents();
+					normedNumbersVec = from(normalizedFilteredContents)
 						>> select([](string content) { return get_nums(content); })
 						>> to_vector();
 				}
@@ -142,12 +141,24 @@ namespace gezi {
 			{
 				if (normalizedContents.empty())
 				{
-					ExtractContentNoHtmls();
+					ExtractFilteredContents();
 					normalizedContents = from(htmlFilteredContents)
 						>> select([](string content) { return filter_str(boost::to_lower_copy(content)); })
 						>> to_vector();
 				}
 				PVEC(normalizedContents);
+			}
+
+			void ExtractNormalizedFilteredContents()
+			{
+				if (normalizedFilteredContents.empty())
+				{
+					ExtractFilteredContents();
+					normalizedFilteredContents = from(filteredContents)
+						>> select([](string content) { return filter_str(boost::to_lower_copy(content)); })
+						>> to_vector();
+				}
+				PVEC(normalizedFilteredContents);
 			}
 
 			void ExtractLocations()
@@ -158,12 +169,12 @@ namespace gezi {
 						>> select([this](uint64 ip) { return get_location(ipFinder(), ip); })
 						>> to_vector();
 				}
+				PVEC(locations);
 			}
 
-			static string FilterContent(string content)
+			//static 意味着后续可以迁移到其它共有位置 类似自由函数
+			static string filter_content(string content, int max_content_length)
 			{
-				int max_content_length = 1024;
-				PSCONF(max_content_length, name());
 				string new_content = strip_from(content);
 				if (new_content.size() > max_content_length + 10)
 				{
@@ -190,38 +201,52 @@ namespace gezi {
 			{
 				if (filteredContents.empty())
 				{
+					ExtractContentNoHtmls();
 					bool needFilterContent = true;
 					PSCONF(needFilterContent, name());
 					//如果c#同时 needFilterContent = false 可以避免拷贝 或者c++需要shared_ptr麻烦一些 copy吧
-					filteredContents = postsInfo.contents;
+					filteredContents = htmlFilteredContents;
 					if (needFilterContent)
 					{
+						int maxContentLength = 1024;
+						PSCONF(maxContentLength, name());
 						filteredContents = from(filteredContents)
-							>> select([this](string content) { return FilterContent(content); })
+							>> select([this,&maxContentLength](string content) { return filter_content(content, maxContentLength); })
 							>> to_vector();
 					}
 				}
+				PVEC(filteredContents);
 			}
 
 			int Type()
 			{
 				return _type;
 			}
-		private:
-			int HistorySize()
-			{
-				int max_post_num = 25;
-				PSCONF(max_post_num, name());
-				if (size() > max_post_num)
-				{
-					return max_post_num;
-				}
-				return size();
-			}
 
+			int64 NowTime()
+			{
+				return postsInfo.times[0];
+			}
+		private:
 			void SetHistorySize()
 			{
-				historySize = HistorySize();
+				int maxPostNum = 25;
+				PSCONF(maxPostNum, name());
+				historySize = min((int)size(), maxPostNum);
+				int historyDay = 7;
+				PSCONF(historyDay, name());
+				int64 startTime = NowTime() - historyDay * kOneDay;
+				{
+					int i = 0;
+					for (; i < historySize; i++)
+					{
+							if (postsInfo.times[i] < startTime)
+							{
+								break;
+							}
+					}
+					historySize = i;
+				}
 			}
 
 			void SetType()
@@ -229,11 +254,17 @@ namespace gezi {
 				_type = this->type();
 			}
 
-			void IsHis
 			void ShrinkHistory()
 			{
 				postsInfo.pids.resize(historySize);
-
+				postsInfo.titles.resize(historySize);
+				postsInfo.contents.resize(historySize);
+				postsInfo.fids.resize(historySize);
+				postsInfo.fnames.resize(historySize);
+				postsInfo.ips.resize(historySize);
+				postsInfo.isPostsDeleted.resize(historySize);
+				postsInfo.isThreads.resize(historySize);
+				postsInfo.times.resize(historySize);
 			}
 		public:
 			//media info per content
@@ -250,6 +281,7 @@ namespace gezi {
 			svec normalizedContents;
 			svec normalizedCnContents;
 			svec filteredContents; //在 htmlFilteredContents基础上进一步过滤后的内容
+			svec normalizedFilteredContents;
 
 			svec normalizedTitles;
 			svec normalizedCnTitles;

@@ -98,7 +98,7 @@ namespace gezi {
 					UserLikeForumInfo::Node node;
 					node.forumName = jsonInfo["forum_name"].asString();
 					node.level = jsonInfo["level_id"].asInt();
-					node.time = jsonInfo["in_time"].asUInt64();
+					node.time = jsonInfo["in_time"].asInt64();
 					node.curScore = jsonInfo["cur_score"].asInt();
 					node.leftScore = jsonInfo["score_left"].asInt();
 					if (node.level > info.maxLevel)
@@ -135,7 +135,7 @@ namespace gezi {
 			{
 				auto& puserInfo = m["puserinfo"];
 				info.birthYear = puserInfo["birthday_year"].asInt();
-				info.regTime = puserInfo["regtime"].asUInt64();
+				info.regTime = puserInfo["regtime"].asInt64();
 				info.mobile = puserInfo["securemobil"].asString();
 				info.email = puserInfo["securemail"].asString();
 				info.userDetail = puserInfo["userdetail"].asString();

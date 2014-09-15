@@ -61,7 +61,7 @@ namespace gezi {
 			info.threadId = UINT64(m["thread_id"].asString());
 			info.userId = m["user_id"].asUInt();
 			info.userName = m["username"].asString();
-			info.createTime = m["now_time"].asUInt64();
+			info.createTime = m["now_time"].asInt64();
 			if (m.isMember("quote"))
 			{
 				auto& jsonQuote = m["quote"];

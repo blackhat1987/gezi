@@ -43,7 +43,7 @@ namespace tieba {
 				info.fids.push_back(UINT(jsonInfo["forum_id"].asString()));
 				info.fnames.push_back(jsonInfo["forum_name"].asString());
 				info.ips.push_back(UINT64(jsonInfo["ip"].asString()));
-				info.times.push_back(UINT64(jsonInfo["create_time"].asString()));
+				info.times.push_back(INT64(jsonInfo["create_time"].asString()));
 				info.isThreads.push_back(BOOL(jsonInfo["is_thread"].asString()));
 				info.titles.push_back(jsonInfo["title"].asString());
 				info.contents.push_back(jsonInfo["content"].asString());
@@ -66,7 +66,7 @@ namespace tieba {
 	inline UserPostsInfo get_user_posts_info_until(const PostInfo& info, int resNum = 25, bool needContent = true, int orderType = 1, int offset = 0)
 	{
 		uint uid = info.userId;
-		uint64 endTime = info.createTime;
+		int64 endTime = info.createTime;
 		PVAL3(uid, endTime, to_time_str(endTime));
 		return get_user_posts_info(uid, resNum, needContent, endTime, orderType, offset);
 	}

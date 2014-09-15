@@ -40,7 +40,7 @@ namespace gezi {
 			}
 
 			void Extract(const vector<uint64>& ips, const svec& locations,
-				const vector<uint64>& times, int maxSpanHours)
+				const vector<int64>& times, int maxSpanHours)
 			{
 				set<string>  locationSet;
 				set<uint64> ipSet, top3IpSet, top2IpSet, top1IpSet; //ip 前3位，前2位， 第1位
@@ -49,7 +49,7 @@ namespace gezi {
 				if (times.size() < ips.size())
 					len = times.size();
 
-				int64 startTime = (int64)times[0] - maxSpanHours * kOneHour;
+				int64 startTime = times[0] - maxSpanHours * kOneHour;
 
 				string preLocation;
 				uint64 preIp = 0, preTop3Ip = 0, preTop2Ip = 0, preTop1Ip = 0;

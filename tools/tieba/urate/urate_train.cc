@@ -22,7 +22,8 @@
 #include "tieba/feature/urate/SundryExtractor.h"
 #include "tieba/feature/urate/MediaExtractor.h"
 #include "tieba/feature/urate/NumberExtractor.h"
-#include "tieba//feature/urate/IpExtractor.h"
+#include "tieba/feature/urate/IpExtractor.h"
+#include "tieba/feature/urate/TimeExtractor.h"
 using namespace std;
 using namespace gezi;
 using namespace gezi::tieba;
@@ -75,12 +76,15 @@ inline Features gen_features(uint64 pid)
 		}
 	}
 	
+	UrateExtractor::info().Init();
+
 	FeaturesExtractorMgr mgr;
 	mgr.add(new UserInfoExtractor);
 	mgr.add(new SundryExtractor);
 	mgr.add(new MediaExtractor);
 	mgr.add(new NumberExtractor);
 	mgr.add(new IpExtractor);
+	mgr.add(new TimeExtractor);
 	mgr.extract(fe);
 
 	return fe;
