@@ -30,14 +30,14 @@ namespace gezi {
 				Init();
 			}
 
-			ExtendedUrateInfo(UrateInfo&& urateInfo)
-				:UrateInfo(urateInfo)
-			{
-				//	UrateExtractor::info() = move(info);
-				//第一次调用info()是move构造函数 会走到这里,如果第二次就会走operator =
-				VLOG(0) << "move construct";
-				Init();
-			}
+			//ExtendedUrateInfo(UrateInfo&& urateInfo)
+			//	:UrateInfo(urateInfo)
+			//{
+			//	//	UrateExtractor::info() = move(info);
+			//	//第一次调用info()是move构造函数 会走到这里,如果第二次就会走operator =
+			//	VLOG(0) << "move construct";
+			//	Init();
+			//}
 
 			//ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other)
 			//{
