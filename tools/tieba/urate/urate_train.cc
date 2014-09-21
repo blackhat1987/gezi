@@ -39,9 +39,9 @@ inline Features gen_features(uint64 pid)
 	UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);
 	if (info.IsValid())
 	{
-		VLOG(0) << "Before move";
+		//VLOG(0) << "Before move";
 		UrateExtractor::info() = move(info);
-		VLOG(0) << "After move";
+		//VLOG(0) << "After move";
 		FeaturesExtractorMgr mgr;
 		add_urate_features(mgr);
 		mgr.extract(fe);
