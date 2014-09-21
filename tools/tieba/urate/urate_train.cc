@@ -40,9 +40,7 @@ inline Features gen_features(uint64 pid)
 	if (info.IsValid())
 	{
 		VLOG(0) << "Before move";
-		UrateInfo info2 = info;
 		UrateExtractor::info() = move(info);
-		UrateExtractor::info() = move(info2);
 		VLOG(0) << "After move";
 		FeaturesExtractorMgr mgr;
 		add_urate_features(mgr);
