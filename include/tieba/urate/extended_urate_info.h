@@ -41,6 +41,8 @@ namespace gezi {
 
 			ExtendedUrateInfo(ExtendedUrateInfo&& other) = default;
 			ExtendedUrateInfo(const ExtendedUrateInfo& other) = default;
+			ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other) = default;
+			ExtendedUrateInfo& operator = (const ExtendedUrateInfo& other) = default;
 
 			//ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other)
 			//{
@@ -73,7 +75,7 @@ namespace gezi {
 				return *this;
 			}
 
-			//ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other) = default;
+			
 
 			void Init()
 			{
