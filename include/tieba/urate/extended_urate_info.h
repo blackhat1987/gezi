@@ -29,7 +29,7 @@ namespace gezi {
 			{
 				Init();
 			}
-			
+
 			ExtendedUrateInfo(UrateInfo&& urateInfo)
 				:UrateInfo(urateInfo)
 			{
@@ -39,18 +39,19 @@ namespace gezi {
 				Init();
 			}
 
-			ExtendedUrateInfo& operator = (ExtendedUrateInfo&&)
+			ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other)
 			{
 				VLOG(0) << "move assignment";
+				swap(other);
 				Init();
 				return *this;
 			}
-		/*	ExtendedUrateInfo& operator = (UrateInfo&& other)
-			{
+			/*	ExtendedUrateInfo& operator = (UrateInfo&& other)
+				{
 				VLOG(0) << "move assignment from urateinfo";
 				Init();
 				return *this;
-			}*/
+				}*/
 			ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
 
 			void Init()
@@ -416,7 +417,7 @@ namespace gezi {
 						int maxContentLength = 1024;
 						PSCONF(maxContentLength, name());
 						filteredContents = from(filteredContents)
-							>> select([this,&maxContentLength](string content) { return filter_content(content, maxContentLength); })
+							>> select([this, &maxContentLength](string content) { return filter_content(content, maxContentLength); })
 							>> to_vector();
 					}
 				}
@@ -445,10 +446,10 @@ namespace gezi {
 					int i = 0;
 					for (; i < historySize; i++)
 					{
-							if (postsInfo.times[i] < startTime)
-							{
-								break;
-							}
+						if (postsInfo.times[i] < startTime)
+						{
+							break;
+						}
 					}
 					historySize = i;
 				}
@@ -542,7 +543,7 @@ namespace gezi {
 
 			svec normalizedTitles;
 			svec cnTitles;
-		
+
 			svec originalLocations;
 			svec locations;
 
@@ -557,7 +558,7 @@ namespace gezi {
 			{
 				ipFinder();
 			}
-			
+
 			//注意如果使用下面这个 需要写=函数 ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
 			// error: non-static reference member 'gezi::IpFinder& gezi::tieba::ExtendedUrateInfo::_ipFinder', can't use default assignment operator
 			//IpFinder& _ipFinder = ipFinder();
