@@ -65,8 +65,6 @@ namespace gezi
 	}
 
 	using comcfg::Configure;
-#define DECLARE_SHAREDCONF\
-	comcfg::Configure SharedConf::_conf
 
 	class SharedConf
 	{
@@ -429,7 +427,7 @@ namespace gezi
 		{
 			//LOG_TRACE("Using default %s::%s : %f", field.c_str(), key.c_str(), val);
 		}
-		else 
+		else
 		{
 			/*Pval2(ori_val, val);
 			conf[field.c_str()][key.c_str()].get_double(&val, 3.1415926);

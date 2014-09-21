@@ -236,7 +236,8 @@ namespace gezi {
 
 	//@TODO 是否允许全0的？ 这个主要是针对稠密特征的 暂时ok
 	template<typename IdVec, typename LabelVec, typename Func>
-	inline void write_features(const IdVec& ids, const LabelVec& labels, Func func, string outFile)
+	inline void write_features(const IdVec& ids, const LabelVec& labels, Func func,
+		string outFile, string idName = "id")
 	{
 		ofstream ofsFeatures(outFile);
 		//----------------先确保写入header
@@ -246,7 +247,7 @@ namespace gezi {
 			Features fe = func(ids[i]);
 			if (!fe.empty())
 			{
-				write_table_header(fe, ofsFeatures, "pid");
+				write_table_header(fe, ofsFeatures, idName);
 				write_table(fe, labels[i], ofsFeatures, ids[i]);
 				i++;
 				break;
@@ -262,6 +263,40 @@ namespace gezi {
 #pragma  omp critical
 				{
 					write_table(fe, labels[j], ofsFeatures, ids[j]);
+				}
+			}
+		}
+	}
+
+	//just for test
+	template<typename IdVec, typename LabelVec, typename Func>
+	inline void write_features(const IdVec& ids, const IdVec& ids2, const LabelVec& labels, Func func,
+		string outFile, string idName = "id")
+	{
+		ofstream ofsFeatures(outFile);
+		//----------------先确保写入header
+		size_t i = 0;
+		for (i = 0; i < ids.size(); i++)
+		{
+			Features fe = func(ids[i]);
+			if (!fe.empty())
+			{
+				write_table_header(fe, ofsFeatures, idName);
+				write_table(fe, labels[i], ofsFeatures, ids2[i]);
+				i++;
+				break;
+			}
+		}
+
+#pragma omp parallel for
+		for (size_t j = i; j < ids.size(); j++)
+		{
+			Features fe = func(ids[j]);
+			if (!fe.empty())
+			{
+#pragma  omp critical
+				{
+					write_table(fe, labels[j], ofsFeatures, ids2[j]);
 				}
 			}
 		}

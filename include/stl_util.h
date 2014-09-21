@@ -469,6 +469,20 @@ namespace gezi {
 			std::set_difference(l.begin(), l.end(), r.begin(), r.end(), std::back_inserter(results));
 			return results;
 		}
+
+		template<typename Container, typename T>
+		void erase(Container& vec, const T& value)
+		{
+			vec.erase(std::remove(vec.begin(), vec.end(), value),
+				vec.end());
+		}
+
+		template<typename Container, typename Func>
+		void erase_if(Container& vec, Func func)
+		{
+			vec.erase(std::remove_if(vec.begin(), vec.end(), func),
+				vec.end());
+		}
 	}
 }  //----end of namespace gezi
 

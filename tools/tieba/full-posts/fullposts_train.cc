@@ -61,13 +61,6 @@ inline Features gen_features(uint64 tid)
 		}
 	}
 
-	//Pval(fe.size());
-
-	if (fe.size() != 425)
-	{
-		Pval3(tid, info.pids[0], fe.size());
-	}
-	
 	return fe;
 }
 
@@ -95,7 +88,8 @@ int main(int argc, char *argv[])
 	FLAGS_minloglevel = FLAGS_level;
 	if (FLAGS_v == 0)
 		FLAGS_v = FLAGS_vl;
-	SharedConf::init("fullposts_strategy.conf");
+	//SharedConf::init("fullposts_strategy.conf");
+	SharedConf::init("urate_strategy.conf");
 	run();
 
 	return 0;
