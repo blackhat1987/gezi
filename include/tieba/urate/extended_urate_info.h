@@ -553,7 +553,7 @@ namespace gezi {
 			//	}
 			//	return _ipFinder;
 			//}
-			//IpFinder& _ipFinder = ipFinder();
+			IpFinder& _ipFinder = ipFinder();
 		public:
 			friend class boost::serialization::access;
 			template<class Archive>
