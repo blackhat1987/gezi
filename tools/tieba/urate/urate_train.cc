@@ -36,16 +36,14 @@ DEFINE_int32(nt, 12, "thread num");
 inline Features gen_features(uint64 pid)
 {
 	Features fe;
-	//UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);
-	//if (info.IsValid())
-	//{
-	//	VLOG(0) << "Before move";
-	//	UrateExtractor::info() = move(info);
-	//	VLOG(0) << "After move";
-	//	FeaturesExtractorMgr mgr;
-	//	add_urate_features(mgr);
-	//	mgr.extract(fe);
-	//}
+	UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);
+	if (info.IsValid())
+	{
+		UrateExtractor::info() = move(info);
+		FeaturesExtractorMgr mgr;
+		add_urate_features(mgr);
+		mgr.extract(fe);
+	}
 	return fe;
 }
 
