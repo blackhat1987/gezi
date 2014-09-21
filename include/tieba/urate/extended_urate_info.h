@@ -74,7 +74,7 @@ namespace gezi {
 
 			ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other)
 			{
-				move(*this, other);
+				swap(*this, other);
 				return *this;
 			}
 
