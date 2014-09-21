@@ -41,7 +41,7 @@ inline Features gen_features(uint64 pid)
 	{
 		//VLOG(0) << "Before move";
 		UrateExtractor::info() = move(info);
-		UrateExtractor::info().Init();
+		//UrateExtractor::info().Init();
 		//VLOG(0) << "After move";
 		FeaturesExtractorMgr mgr;
 		add_urate_features(mgr);
