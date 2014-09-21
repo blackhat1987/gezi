@@ -30,13 +30,16 @@ namespace gezi {
 				VLOG(0) << "copy construct ExtendedUrateInfo";
 				Init();
 			}
-	
+			
 			ExtendedUrateInfo(UrateInfo&& urateInfo)
 				:UrateInfo(urateInfo)
 			{
 				VLOG(0) << "move construct ExtendedUrateInfo";
 				Init();
 			}
+
+			ExtendedUrateInfo& operator = (ExtendedUrateInfo&&) = default;
+			ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
 
 			void Init()
 			{
