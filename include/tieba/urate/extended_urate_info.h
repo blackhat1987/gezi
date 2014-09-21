@@ -72,11 +72,7 @@ namespace gezi {
 				return *this;
 			}
 
-			ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other)
-			{
-				swap(*this, other);
-				return *this;
-			}
+			//ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other) = default;
 
 			void Init()
 			{
