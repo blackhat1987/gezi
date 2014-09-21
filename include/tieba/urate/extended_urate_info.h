@@ -43,8 +43,9 @@ namespace gezi {
 			{
 				VLOG(0) << "move assignment";
 				//*this = other;
-				UrateInfo::operator = (other);
-				Init();
+				//UrateInfo::operator = (other);
+				//Init();
+				swap(*this, other);
 				return *this;
 			}
 			/*	ExtendedUrateInfo& operator = (UrateInfo&& other)

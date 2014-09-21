@@ -37,15 +37,14 @@ inline Features gen_features(uint64 pid)
 {
 	Features fe;
 	UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);
-	UrateExtractor::info();
 	if (info.IsValid())
 	{
 		VLOG(0) << "Before move";
 		UrateExtractor::info() = move(info);
 		VLOG(0) << "After move";
-		/*FeaturesExtractorMgr mgr;
+		FeaturesExtractorMgr mgr;
 		add_urate_features(mgr);
-		mgr.extract(fe);*/
+		mgr.extract(fe);
 	}
 	return fe;
 }
