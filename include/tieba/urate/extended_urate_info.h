@@ -32,8 +32,8 @@ namespace gezi {
 			//	Init();
 			//}
 
-			ExtendedUrateInfo(UrateInfo&& urateInfo)
-				:UrateInfo(urateInfo)
+			ExtendedUrateInfo(UrateInfo&& other)
+				:UrateInfo(other)
 			{
 				//	UrateExtractor::info() = move(info);
 				//第一次调用info()是move构造函数 会走到这里,如果第二次就会走operator =
@@ -52,13 +52,13 @@ namespace gezi {
 			//	//_Tp __tmp = _GLIBCXX_MOVE(__a);
 			//	return *this;
 			//}
-			//ExtendedUrateInfo& operator = (UrateInfo&& other)
-			//{
-			//	//VLOG(0) << "move assignment from urateinfo";
-			//	UrateInfo::operator = (other);
-			//	Init();
-			//	return *this;
-			//}
+			ExtendedUrateInfo& operator = (UrateInfo&& other)
+			{
+				//VLOG(0) << "move assignment from urateinfo";
+				UrateInfo::operator = (other);
+				Init();
+				return *this;
+			}
 			//ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
 
 			void Init()
