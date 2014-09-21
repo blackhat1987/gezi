@@ -24,11 +24,13 @@ namespace gezi {
 		public:
 			ExtendedUrateInfo() = default;
 
-			ExtendedUrateInfo(const UrateInfo& urateInfo)
-				:UrateInfo(urateInfo)
-			{
-				Init();
-			}
+			//ExtendedUrateInfo(const UrateInfo& urateInfo)
+			//	:UrateInfo(urateInfo)
+			//{
+			//	//如果没有ExtendedUrateInfo(UrateInfo&& urateInfo) 带有moved走这里只能
+			//	VLOG(0) << "copy construct";
+			//	Init();
+			//}
 
 			//ExtendedUrateInfo(UrateInfo&& urateInfo)
 			//	:UrateInfo(urateInfo)
