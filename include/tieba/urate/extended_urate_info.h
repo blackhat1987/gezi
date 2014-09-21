@@ -239,10 +239,10 @@ namespace gezi {
 
 			void ExtractLocations()
 			{
-				CHECK_GE(originalLocations.size(), historySize);
 				if (locations.empty())
 				{
 					ExtractOriginalLocations();
+					CHECK_GE(originalLocations.size(), historySize);
 					locations.assign(originalLocations.begin(), originalLocations.begin() + historySize);
 				}
 				PVEC(locations);
