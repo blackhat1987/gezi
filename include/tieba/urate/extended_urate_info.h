@@ -39,6 +39,8 @@ namespace gezi {
 				Init();
 			}
 
+			ExtendedUrateInfo(ExtendedUrateInfo&& other) = default;
+
 			//ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other)
 			//{
 			//	VLOG(0) << "move assignment";
@@ -69,7 +71,12 @@ namespace gezi {
 				Init();
 				return *this;
 			}
-			ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
+
+			ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other)
+			{
+				move(*this, other);
+				return *this;
+			}
 
 			void Init()
 			{
