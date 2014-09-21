@@ -35,16 +35,18 @@ namespace gezi {
 			{
 				//	UrateExtractor::info() = move(info);
 				//第一次调用info()是move构造函数 会走到这里,如果第二次就会走operator =
+				VLOG(0) << "move construct";
 				Init();
 			}
 
-			ExtendedUrateInfo& operator = (ExtendedUrateInfo&&)
+			/*ExtendedUrateInfo& operator = (ExtendedUrateInfo&&)
 			{
 			}
-			ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
+			ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;*/
 
 			void Init()
 			{
+				Pval(size());
 				SetHistorySize();
 				ShrinkHistory();
 				SetType();
@@ -549,7 +551,7 @@ namespace gezi {
 			
 			//注意如果使用下面这个 需要写=函数 ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
 			// error: non-static reference member 'gezi::IpFinder& gezi::tieba::ExtendedUrateInfo::_ipFinder', can't use default assignment operator
-			IpFinder& _ipFinder = ipFinder();
+			//IpFinder& _ipFinder = ipFinder();
 		public:
 			friend class boost::serialization::access;
 			template<class Archive>
