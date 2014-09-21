@@ -39,10 +39,10 @@ namespace gezi {
 				Init();
 			}
 
-			ExtendedUrateInfo(ExtendedUrateInfo&& other) = default;
+		/*	ExtendedUrateInfo(ExtendedUrateInfo&& other) = default;
 			ExtendedUrateInfo(const ExtendedUrateInfo& other) = default;
 			ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other) = default;
-			ExtendedUrateInfo& operator = (const ExtendedUrateInfo& other) = default;
+			ExtendedUrateInfo& operator = (const ExtendedUrateInfo& other) = default;*/
 
 			//ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other)
 			//{
@@ -66,16 +66,16 @@ namespace gezi {
 			//	return *this;
 			//}
 
-			//ExtendedUrateInfo& operator = (UrateInfo&& other)
-			//{
-			//	//VLOG(0) << "move assignment from urateinfo";
-			//	//*this = ExtendedUrateInfo(); //通过这样先强制都clear
-			//	ExtendedUrateInfo info(other);
-			//	//UrateInfo::operator = (other);
-			//	*this = move(info);
-			//	Init();
-			//	return *this;
-			//}
+			ExtendedUrateInfo& operator = (UrateInfo&& other)
+			{
+				VLOG(1) << "move assignment from urateinfo";
+				*this = ExtendedUrateInfo(); //通过这样先强制都clear 也不行 没找到好的方法
+				//ExtendedUrateInfo info(other);
+				UrateInfo::operator = (other);
+				//*this = move(info);
+				Init();
+				return *this;
+			}
 
 			
 
