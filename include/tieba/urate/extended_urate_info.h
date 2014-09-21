@@ -40,6 +40,7 @@ namespace gezi {
 			}
 
 			ExtendedUrateInfo(ExtendedUrateInfo&& other) = default;
+			ExtendedUrateInfo(const ExtendedUrateInfo& other) = default;
 
 			//ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other)
 			//{
