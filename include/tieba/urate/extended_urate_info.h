@@ -32,12 +32,12 @@ namespace gezi {
 			//	Init();
 			//}
 
-			ExtendedUrateInfo(UrateInfo&& other)
-				:UrateInfo(other)
-			{
-				//VLOG(0) << "move construct";
-				Init();
-			}
+			//ExtendedUrateInfo(UrateInfo&& other)
+			//	:UrateInfo(other)
+			//{
+			//	//VLOG(0) << "move construct";
+			//	Init();
+			//}
 
 			ExtendedUrateInfo(ExtendedUrateInfo&& other) = default;
 			ExtendedUrateInfo(const ExtendedUrateInfo& other) = default;
