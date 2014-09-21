@@ -35,7 +35,7 @@ namespace gezi {
 			ExtendedUrateInfo(UrateInfo&& other)
 				:UrateInfo(other)
 			{
-				VLOG(0) << "move construct";
+				VLOG(1) << "move construct";
 				Init();
 			}
 
