@@ -36,7 +36,9 @@ DEFINE_int32(nt, 12, "thread num");
 inline Features gen_features(uint64 pid)
 {
 	Features fe;
-	UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);
+	/*UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);*/
+
+	ExtendedUrateInfo info = try_get_info<ExtendedUrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);
 	if (info.IsValid())
 	{
 		//VLOG(0) << "Before move";
