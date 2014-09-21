@@ -225,7 +225,7 @@ namespace gezi {
 				if (originalLocations.empty())
 				{
 					originalLocations = from(originalPostsInfo.ips)
-						>> select([this](uint64 ip) { return get_location(ipFinder(), ip); })
+						>> select([this](uint64 ip) { return get_location(_ipFinder, ip); })
 						>> to_vector();
 				}
 				PVEC(originalLocations);
@@ -536,23 +536,21 @@ namespace gezi {
 			{
 				ipFinder();
 			}
-			static IpFinder& ipFinder() //不使用static thread_local 每次ipfinder会被重置重新加载 ExtendedUrateInfo a = b;
-			{
-				static thread_local IpFinder _ipFinder;
-				if (!isIpFinderInited())
-				{
-					string ipData = "./data/qqwry.dat";
-					bool ret = _ipFinder.Open(ipData);
-					CHECK_EQ(ret, true);
-					isIpFinderInited() = true;
-				}
-				return _ipFinder;
-			}
-			static bool& isIpFinderInited()
-			{
-				static thread_local bool _isIpFinderInited = false;
-				return _isIpFinderInited;
-			}
+			//static IpFinder& ipFinder() //不使用static thread_local 每次ipfinder会被重置重新加载 ExtendedUrateInfo a = b;
+			//{
+			//	static thread_local IpFinder _ipFinder;
+			//	static thread_local bool _isIpFinderInited = false;
+			//	if (!_isIpFinderInited)
+			//	{
+			//		string ipDataPath = "./data/qqwry.dat";
+			//		PSCONF(ipDataPath, "Global");
+			//		bool ret = _ipFinder.Open(ipDataPath);
+			//		CHECK_EQ(ret, true);
+			//		_isIpFinderInited = true;
+			//	}
+			//	return _ipFinder;
+			//}
+			IpFinder& _ipFinder = ipFinder();
 		public:
 			friend class boost::serialization::access;
 			template<class Archive>
