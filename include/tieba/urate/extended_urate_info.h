@@ -224,8 +224,11 @@ namespace gezi {
 			{
 				if (originalLocations.empty())
 				{
-					originalLocations = from(originalPostsInfo.ips)
+					/*originalLocations = from(originalPostsInfo.ips)
 						>> select([this](uint64 ip) { return get_location(_ipFinder, ip); })
+						>> to_vector();*/
+					originalLocations = from(originalPostsInfo.ips)
+						>> select([this](uint64 ip) { return get_location(ipFinder(), ip); })
 						>> to_vector();
 				}
 				PVEC(originalLocations);
@@ -550,7 +553,7 @@ namespace gezi {
 				}
 				return _ipFinder;
 			}
-			IpFinder& _ipFinder = ipFinder();
+			//IpFinder& _ipFinder = ipFinder();
 		public:
 			friend class boost::serialization::access;
 			template<class Archive>
