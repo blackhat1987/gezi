@@ -23,11 +23,6 @@ namespace gezi {
 		class UrateExtractor : public FeaturesExtractor
 		{
 		public:
-			/*	UrateExtractor(string name)
-					:FeaturesExtractor(name)
-					{
-
-					}*/
 			using FeaturesExtractor::FeaturesExtractor;
 			static size_t size()
 			{
