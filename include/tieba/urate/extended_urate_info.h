@@ -39,21 +39,24 @@ namespace gezi {
 				Init();
 			}
 
-			ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other)
+			//ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other)
+			//{
+			//	VLOG(0) << "move assignment";
+			//	//*this = other;
+			//	//UrateInfo::operator = (other);
+			//	//Init();
+			//	swap(*this, other); 
+			//	// error: use of deleted function 'gezi::tieba::ExtendedUrateInfo::ExtendedUrateInfo(const gezi::tieba::ExtendedUrateInfo&)'
+			//	//_Tp __tmp = _GLIBCXX_MOVE(__a);
+			//	return *this;
+			//}
+			ExtendedUrateInfo& operator = (UrateInfo&& other)
 			{
-				VLOG(0) << "move assignment";
-				//*this = other;
-				//UrateInfo::operator = (other);
-				//Init();
-				swap(*this, other);
-				return *this;
-			}
-			/*	ExtendedUrateInfo& operator = (UrateInfo&& other)
-				{
 				VLOG(0) << "move assignment from urateinfo";
+				UrateInfo::operator = (other);
 				Init();
 				return *this;
-				}*/
+			}
 			//ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
 
 			void Init()
