@@ -64,7 +64,7 @@ namespace gezi {
 
 			void Init()
 			{
-				//Pval(size());
+				Pval(size());
 				SetHistorySize();
 				ShrinkHistory();
 				SetType();
@@ -74,6 +74,7 @@ namespace gezi {
 				{
 					AdjustLikedForums();
 				}
+				Pval(historySize);
 			}
 
 			static string name()
@@ -242,7 +243,6 @@ namespace gezi {
 				if (locations.empty())
 				{
 					ExtractOriginalLocations();
-					CHECK_GE(originalLocations.size(), historySize);
 					locations.assign(originalLocations.begin(), originalLocations.begin() + historySize);
 				}
 				PVEC(locations);
