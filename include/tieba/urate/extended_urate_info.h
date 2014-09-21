@@ -64,7 +64,7 @@ namespace gezi {
 			ExtendedUrateInfo& operator = (UrateInfo&& other)
 			{
 				//VLOG(0) << "move assignment from urateinfo";
-				*this = ExtendedUrateInfo();
+				*this = ExtendedUrateInfo(); //通过这样先强制都clear
 				UrateInfo::operator = (other);
 				Init();
 				return *this;
@@ -580,7 +580,7 @@ namespace gezi {
 
 			//注意如果使用下面这个 需要写=函数 ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
 			// error: non-static reference member 'gezi::IpFinder& gezi::tieba::ExtendedUrateInfo::_ipFinder', can't use default assignment operator
-			//IpFinder& _ipFinder = ipFinder();
+			IpFinder& _ipFinder = ipFinder();
 		public:
 			friend class boost::serialization::access;
 			template<class Archive>
