@@ -52,14 +52,15 @@ namespace gezi {
 			//	//_Tp __tmp = _GLIBCXX_MOVE(__a);
 			//	return *this;
 			//}
-			//按理说这个也是正确的 但是很奇怪的是多线程下可能有问题。。 那上面的是不是也可能没触发bug呢 @TODO @FIXME
-			ExtendedUrateInfo& operator = (UrateInfo&& other)
-			{
-				//VLOG(0) << "move assignment from urateinfo";
-				UrateInfo::operator = (move(other));
-				Init();
-				return *this;
-			}
+			//按理说这个也是正确的 但是很奇怪的是多线程下可能有问题。。 那上面的是不是也可能没触发bug呢 @TODO @FIXME, 如果不是向base部分copy不会有问题？ 
+			//还是底下UrateInfo::operator = (other); 这样写有问题呢
+			//ExtendedUrateInfo& operator = (UrateInfo&& other)
+			//{
+			//	//VLOG(0) << "move assignment from urateinfo";
+			//	UrateInfo::operator = (other);
+			//	Init();
+			//	return *this;
+			//}
 			//ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
 
 			void Init()
