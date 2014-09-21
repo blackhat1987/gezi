@@ -37,7 +37,6 @@ inline Features gen_features(uint64 pid)
 {
 	Features fe;
 	UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);
-	ExtendedUrateInfo uinfo = move(info);
 	if (info.IsValid())
 	{
 		VLOG(0) << "Before move";

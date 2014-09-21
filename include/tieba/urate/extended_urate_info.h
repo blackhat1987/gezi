@@ -39,18 +39,18 @@ namespace gezi {
 				Init();
 			}
 
-		/*	ExtendedUrateInfo& operator = (ExtendedUrateInfo&&)
+			ExtendedUrateInfo& operator = (ExtendedUrateInfo&&)
 			{
 				VLOG(0) << "move assignment";
 				Init();
 				return *this;
-			}*/
-			ExtendedUrateInfo& operator = (UrateInfo&& other)
+			}
+		/*	ExtendedUrateInfo& operator = (UrateInfo&& other)
 			{
 				VLOG(0) << "move assignment from urateinfo";
 				Init();
 				return *this;
-			}
+			}*/
 			ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
 
 			void Init()
