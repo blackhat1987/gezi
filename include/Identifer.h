@@ -208,6 +208,8 @@ namespace gezi {
 		vector<string> _index; //kid->key
 	};
 
+	typedef vector<Identifer> Identifers;
+
 	template<typename T>
 	class ValueIdentifer : public Identifer
 	{
@@ -258,7 +260,7 @@ namespace gezi {
 		{
 			VLOG(0) << "Identifer Loading " << file;
 			serialize_util::load(*this, file);
-			VLOG(0) << "Identifer Loading Done";
+			VLOG(0) << "Identifer Loading Done size: " << size();
 		}
 
 		T value(int index)
@@ -287,6 +289,7 @@ namespace gezi {
 	typedef ValueIdentifer<int> IntIdentifer;
 	typedef ValueIdentifer<double> DoubleIdentifer;
 
+#ifdef GCCXML
 	//py++ work around py++≤ª¥¶¿Ìtypedef
 	class PyIntIndentifer : public IntIdentifer
 	{
@@ -296,6 +299,8 @@ namespace gezi {
 	{
 
 	};
+#endif
+	
 } //----end of namespace gezi
 
 #endif  //----end of IDENTIFER_H_

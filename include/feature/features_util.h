@@ -234,6 +234,40 @@ namespace gezi {
 		ofs << endl;
 	}
 
+	//@TODO 是否允许全0的？ 这个主要是针对稠密特征的 暂时ok
+	template<typename IdVec, typename LabelVec, typename Func>
+	inline void write_features(const IdVec& ids, const LabelVec& labels, Func func, string outFile)
+	{
+		ofstream ofsFeatures(outFile);
+		//----------------先确保写入header
+		size_t i = 0;
+		for (i = 0; i < ids.size(); i++)
+		{
+			Features fe = func(ids[i]);
+			if (!fe.empty())
+			{
+				write_table_header(fe, ofsFeatures, "pid");
+				write_table(fe, labels[i], ofsFeatures, ids[i]);
+				i++;
+				break;
+			}
+		}
+
+#pragma omp parallel for
+		for (size_t j = i; j < ids.size(); j++)
+		{
+			Features fe = func(ids[j]);
+			if (!fe.empty())
+			{
+#pragma  omp critical
+				{
+					write_table(fe, labels[j], ofsFeatures, ids[j]);
+				}
+			}
+		}
+	}
+
+	//--下面废弃
 	template<typename Vec>
 	inline void add_mean_var(Features* fe, const Vec& vec,
 		const string mean_name = "", const string var_name = "")

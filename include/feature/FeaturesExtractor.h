@@ -109,7 +109,14 @@ protected:
 };
 
 #define ADD_FEATURE(value)\
-	_features->add(value, #value);
+	_features->add(value, #value)
+
+#define ADD_FEATURE_WITH_PREFIX(value, name)\
+if (!name.empty())\
+	_features->add(value, name + "_" + #value);\
+else\
+	ADD_FEATURE(value)
+
 }  //----end of namespace gezi
 
 #endif  //----end of FEATURE__FEATURES_EXTRACTOR_H_

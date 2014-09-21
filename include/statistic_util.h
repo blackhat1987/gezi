@@ -58,13 +58,15 @@ namespace gezi {
 	}
 
 	template<typename Iter>
-	double sum(Iter start, Iter end)
+	//auto sum(Iter start, Iter end) -> decltype(*start) 
+	// In instantiation of 'decltype (* start) gezi::sum(Iter, Iter) [with Iter = __gnu_cxx::__normal_iterator<const int*, std::vector<int> >; decltype (* start) = const int&]':
+	typename Iter::value_type sum(Iter start, Iter end)
 	{
-		return std::accumulate(start, end, 0.0);
+		return std::accumulate(start, end, 0);
 	}
 
 	template<typename Container>
-	double sum(const Container& vec)
+	typename Container::value_type sum(const Container& vec)
 	{
 		return sum(vec.begin(), vec.end());
 	}
@@ -216,16 +218,16 @@ namespace gezi {
 	{
 		int n = vec.size();
 		mean_ = mean(vec);
-		double x = std::pow(mean(vec), 2);
+		double x = std::pow(mean_, 2);
 		double y = std::accumulate(vec.begin(), vec.end(), 0.0, sd_op()) / (n - 1);
 		var_ = y - (x * n / double(n - 1));
 	}
 
 	template<typename Iter>
-	double var(Iter start, Iter end, double mean)
+	double var(Iter start, Iter end, double meanVal)
 	{
 		int n = end - start;
-		double x = std::pow(mean, 2);
+		double x = std::pow(meanVal, 2);
 		double y = std::accumulate(start, end, 0.0, sd_op()) / (double)(n - 1);
 		return y - (x * n / double(n - 1));
 	}
@@ -239,27 +241,27 @@ namespace gezi {
 	//};
 
 	template<typename Container>
-	double var(const Container& vec, double mean)
+	double var(const Container& vec, double meanVal)
 	{
 		double sum = 0.0;
 		size_t n = vec.size();
 		for (size_t i = 0; i < n; i++)
 		{
-			sum += std::pow(vec[i] - mean, 2);
+			sum += std::pow(vec[i] - meanVal, 2);
 		}
 		return sum / (double)(n - 1);
 	}
 
 	template<typename Container>
-	double var(const Container& vec, double mean, int n)
+	double var(const Container& vec, double meanVal, int n)
 	{
 		double sum = 0.0;
 		int len = vec.size();
 		for (int i = 0; i < len; i++)
 		{
-			sum += std::pow(vec[i] - mean, 2);
+			sum += std::pow(vec[i] - meanVal, 2);
 		}
-		sum += (n - len) * std::pow(mean, 2);
+		sum += (n - len) * std::pow(meanVal, 2);
 		return sum / (double)(n - 1);
 	}
 
@@ -335,7 +337,24 @@ namespace gezi {
 		}
 
 		template<typename Container>
-		auto min(const Container& vec) -> decltype(*vec.begin())
+		void mean_var(const Container& vec, double& meanVal, double& varVal, int minCount = 2)
+		{
+			if (vec.empty())
+			{
+				return;
+			}
+			meanVal = std::accumulate(vec.begin(), vec.end(), 0.0) / (double)vec.size();
+
+			if (vec.size() < minCount)
+			{
+				return;
+			}
+			varVal = gezi::var(vec, meanVal);
+		}
+
+		template<typename Container>
+		//auto min(const Container& vec) -> decltype(*vec.begin()) //show decltype also work
+		typename Container::value_type min(const Container& vec)
 		{
 			return *(std::min_element(vec.begin(), vec.end()));
 		}
@@ -359,7 +378,8 @@ namespace gezi {
 
 		template<typename Container>
 		//double max(const Container& vec)
-		auto max(const Container& vec) ->decltype(*vec.begin())
+		//auto max(const Container& vec) ->decltype(*vec.begin()) //暂时python wrapper无法处理
+		typename Container::value_type max(const Container& vec)
 		{
 			return *(std::max_element(vec.begin(), vec.end()));
 		}
@@ -374,8 +394,8 @@ namespace gezi {
 			return *(std::max_element(vec.begin(), vec.end()));
 		}
 
-		template<typename Container, typename Iter>
-		Iter max_element(const Container& vec)
+		template<typename Container>
+		typename Container::const_iterator max_element(const Container& vec)
 		{
 			return std::max_element(vec.begin(), vec.end());
 		}
@@ -590,16 +610,16 @@ namespace gezi {
 	inline double information(Iter begin, Iter end)
 	{
 		typedef typename Iter::value_type KeyType;
-		std::unordered_map<KeyType, int> m;
+		std::map<KeyType, int> m;
 		for (Iter it = begin; it != end; ++it)
 		{
-			add_one(m, *it);
+			m[*it] += 1;
 		}
 		typedef std::pair<const KeyType, int> Pair;
 		double res = 0;
 		int total = end - begin;
 
-		foreach(Pair& item, m)
+		for(Pair& item : m)
 		{
 			double prob = item.second / (double)total;
 			res += -prob * log(prob);

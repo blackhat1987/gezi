@@ -20,7 +20,7 @@
 
 namespace gezi {
 	namespace tieba {
-		const char* const kTiebaGetInfoName = "Tieba.GetInfo";
+		static const char* const kTiebaGetInfoName = "Tieba.GetInfo";
 		inline void get_field_method(string url, string& field, string& method)
 		{
 			//http://service.tieba.baidu.com/service/post?method=mgetThread&
@@ -267,6 +267,44 @@ namespace gezi {
 			string url = "http://service.tieba.baidu.com/service/forum?method=mgetForumDir&format=json&forum_id=[" + params + "]";
 			PVAL(url);
 			return get_info_str(url);
+		}
+
+		template<typename InfoType, typename Func>
+		inline InfoType try_get_info(uint64 id, Func func, string historyDir, bool forceFetch = false, 
+			string suffix = "", bool retry = true)
+		{
+			InfoType info;
+			string end = suffix.empty() ? ".xml" : "." + suffix + ".xml";
+			string historyFile = historyDir + "/" + STR(id) +  end;
+			if (!forceFetch)
+			{
+				serialize::load_xml(historyFile, info);
+			}
+			if (!info.IsValid())
+			{
+				info = func(id);
+				if (info.IsValid())
+				{
+					serialize::save_xml(info, historyFile);
+				}
+				else
+				{ //尝试再一次获取
+					LOG(WARNING) << "Fetch info fail try to fetch again";
+					if (retry)
+					{
+						info = func(id);
+						if (info.IsValid())
+						{
+							serialize::save_xml(info, historyFile);
+						}
+						else
+						{
+							LOG(WARNING) << "Retry still fail";
+						}
+					}
+				}
+			}
+			return info;
 		}
 	}  //----end of namespace tieba
 }  //----end of namespace gezi

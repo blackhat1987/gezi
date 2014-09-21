@@ -108,18 +108,18 @@ namespace gezi {
 				ADD_FEATURE(numDistinctVediosRatio);
 			}
 
-			void ExtractPicsCountInOnePost()
+			void ExtractCountInOnePost(const vector<svec>& inVec, string name)
 			{
-				auto picCountsVec = from(info().picsVec)
-					>> where([](const svec& pics) { return !pics.empty(); })
+				auto countsVec = from(inVec)
+					>> where([](const svec& items) { return !items.empty(); })
 					>> select([](const svec& vec) { return vec.size(); })
 					>> to_vector();
-					double avgPicCountPerPost = ufo::mean(picCountsVec, 0.0); 
-					double maxPicCountPerPost = ufo::max(picCountsVec, 0);
-					double nowPicCount = info().picsVec[0].size();
-					ADD_FEATURE(avgPicCountPerPost);
-					ADD_FEATURE(maxPicCountPerPost);
-					ADD_FEATURE(nowPicCount);
+					double avgCountPerPost = ufo::mean(countsVec, 0.0); 
+					double maxCountPerPost = ufo::max(countsVec, 0);
+					double nowCount = inVec[0].size();
+					ADD_FEATURE_WITH_PREFIX(avgCountPerPost, name);
+					ADD_FEATURE_WITH_PREFIX(maxCountPerPost, name);
+					ADD_FEATURE_WITH_PREFIX(nowCount, name);
 			}
 
 			void ExtractUrlHostRank()
@@ -144,7 +144,8 @@ namespace gezi {
 				ExtractCount();
 				ExtractUrlHostRank();
 				ExtractCurrentPost();
-				ExtractPicsCountInOnePost();
+				ExtractCountInOnePost(info().picsVec, "Pic");
+				ExtractCountInOnePost(info().atsVec, "At");
 			}
 		protected:
 		private:

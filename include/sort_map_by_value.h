@@ -24,6 +24,45 @@
 #include "sort_util.h"
 
 namespace gezi {
+
+	//auto sort_map(const Map& tmap) -> decltype(vector<decltype(*tmap.begin())>()) //@TODO
+	//vector<Map::value_type> sort_map(Map& tmap) //value_type 是<const key_type, mapped_type>
+	template <typename Map>
+	vector<std::pair<typename Map::key_type, typename Map::mapped_type> > sort_map(Map& tmap)
+	{
+		vector<std::pair<typename Map::key_type, typename Map::mapped_type> > results(tmap.begin(), tmap.end());
+		sort(results.begin(), results.end(), CmpPairBySecond());
+		return results;
+	}
+
+	template < typename Map, typename Func>
+	vector<std::pair<typename Map::key_type, typename Map::mapped_type> > sort_map(Map& tmap, int n, Func func)
+	{
+		//warning: to refer to a type member of a template parameter, use 'typename Map:: mapped_type'[-fpermissive]
+		vector<std::pair<typename Map::key_type, typename Map::mapped_type> > results(tmap.begin(), tmap.end());
+		partial_sort(results.begin(), results.begin() + n, results.end(), func);
+		return results;
+	}
+
+	template < typename Map, typename Func>
+	vector<std::pair<typename Map::key_type, typename Map::mapped_type> > partial_sort_map(Map& tmap, Func func)
+	{
+		vector<std::pair<typename Map::key_type, typename Map::mapped_type> > results(tmap.begin(), tmap.end());
+		partial_sort(results.begin(), results.end(), func);
+		return results;
+	}
+
+	template <typename Map>
+	vector<std::pair<typename Map::key_type, typename Map::mapped_type> > partial_sort_map(Map& tmap, int n)
+	{
+		vector<std::pair<typename Map::key_type, typename Map::mapped_type> > results(tmap.begin(), tmap.end());
+		partial_sort(results.begin(), results.begin() + n, results.end(), CmpPairBySecond());
+		return results;
+	}
+
+
+	//--------------------已下老接口 可废弃
+
 	/**如果map<string,int>注意使用的时候vector<pair<srring, int>>*/
 	template<typename Map, typename Vec>
 	void sort_map_by_value(Map& tmap, Vec& tvec)

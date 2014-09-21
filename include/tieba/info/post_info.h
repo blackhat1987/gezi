@@ -71,6 +71,7 @@ namespace gezi {
 				info.quoteInfo.ip = jsonQuote["ip"].asUInt64();
 				info.quoteInfo.content = jsonQuote["content"].asString();
 			}
+			info.postId = UINT64(m["post_id"].asString());
 		}
 
 		//没有lbs等信息
@@ -135,7 +136,7 @@ namespace gezi {
 		{
 			vector<PostInfo> resultVec;
 
-			auto pidsVec = gezi::split(pids_, kMaxRequestCount);
+			auto pidsVec = gezi::split(pids_, kMaxRequestCount * 0.5);
 
 			for (auto& pids : pidsVec)
 			{
@@ -161,7 +162,7 @@ namespace gezi {
 					{
 						PostInfo info;
 						parse_post_info(m, info);
-						info.postId = pids[i++];
+						//info.postId = pids[i++];
 						resultVec.emplace_back(info);
 					}
 				}
@@ -176,6 +177,43 @@ namespace gezi {
 				}
 			}
 			return resultVec;
+		}
+
+		inline map<uint64, PostInfo> get_posts_info_map(const vector<uint64>& pids_)
+		{
+			map<uint64, PostInfo> resultMap;
+
+			auto pidsVec = gezi::split(pids_, kMaxRequestCount * 0.5);
+
+			for (auto& pids : pidsVec)
+			{
+				string jsonStr = get_posts_info_str(pids);
+
+				Json::Reader reader;
+				Json::Value root;
+				bool ret = reader.parse(jsonStr, root);
+				if (!ret)
+				{
+					LOG(WARNING) << "json parse fail: " << jsonStr;
+					continue;
+				}
+				try
+				{
+					int i = 0;
+					for (const auto& m : root["output"])
+					{
+						PostInfo info;
+						parse_post_info(m, info);
+						//info.postId = pids[i++];
+						resultMap[info.postId] = info;
+					}
+				}
+				catch (...)
+				{
+					LOG(WARNING) << "get json value fail: " << jsonStr;
+				}
+			}
+			return resultMap;
 		}
 	} //----end of namespace tieba
 }  //----end of namespace gezi

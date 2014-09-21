@@ -27,11 +27,13 @@ namespace gezi {
 			ExtendedUrateInfo(const UrateInfo& urateInfo)
 				:UrateInfo(urateInfo)
 			{
+				Init();
 			}
-
+	
 			ExtendedUrateInfo(UrateInfo&& urateInfo)
 				:UrateInfo(urateInfo)
 			{
+				Init();
 			}
 
 			void Init()
@@ -39,16 +41,17 @@ namespace gezi {
 				SetHistorySize();
 				ShrinkHistory();
 				SetType();
+				bool isOnline = false;
+				PSCONF(isOnline, "Global");
+				if (!isOnline)
+				{
+					AdjustLikedForums();
+				}
 			}
 
 			static string name()
 			{
 				return "ExtendedUrateInfo";
-			}
-
-			bool IsValid()
-			{
-				return postId != 0 && size() > 0;
 			}
 
 			void ExtractUrls()
@@ -125,7 +128,7 @@ namespace gezi {
 				PVEC(normedNumbersVec[0]);
 			}
 
-			void ExtractContentNoHtmls()
+			void ExtractHtmlFilteredContents()
 			{
 				if (htmlFilteredContents.empty())
 				{
@@ -135,6 +138,18 @@ namespace gezi {
 				}
 				PVEC(postsInfo.contents);
 				PVEC(htmlFilteredContents);
+			}
+
+			void ExtractGbkDualContents()
+			{
+				if (gbkDualContents.empty())
+				{
+					ExtractHtmlFilteredContents();
+					gbkDualContents = from(htmlFilteredContents)
+						>> select([](string content) { return extract_gbk_dual(content); })
+						>> to_vector();
+				}
+				PVEC(gbkDualContents);
 			}
 
 			void ExtractNormalizedContents()
@@ -147,6 +162,40 @@ namespace gezi {
 						>> to_vector();
 				}
 				PVEC(normalizedContents);
+			}
+
+			void ExtractCnContents()
+			{
+				if (cnContents.empty())
+				{
+					ExtractNormalizedContents();
+					cnContents = from(normalizedContents)
+						>> select([](string content) { return extract_chinese(content); })
+						>> to_vector();
+				}
+				PVEC(cnContents);
+			}
+
+			void ExtractNormalizedTitles()
+			{
+				if (normalizedTitles.empty())
+				{
+					normalizedTitles = from(postsInfo.titles)
+						>> select([](string title) { return filter_str(boost::to_lower_copy(title)); })
+						>> to_vector();
+				}
+				PVEC(normalizedTitles);
+			}
+
+			void ExtractCnTitles()
+			{
+				if (cnTitles.empty())
+				{
+					cnTitles = from(normalizedTitles)
+						>> select([](string  title) { return extract_chinese(title); })
+						>> to_vector();
+				}
+				PVEC(cnTitles);
 			}
 
 			void ExtractNormalizedFilteredContents()
@@ -165,11 +214,146 @@ namespace gezi {
 			{
 				if (locations.empty())
 				{
-					locations = from(postsInfo.ips)
+					ExtractOriginalLocations();
+					locations.assign(originalLocations.begin(), originalLocations.begin() + historySize);
+				}
+				PVEC(locations);
+			}
+
+			void ExtractOriginalLocations()
+			{
+				if (originalLocations.empty())
+				{
+					originalLocations = from(originalPostsInfo.ips)
 						>> select([this](uint64 ip) { return get_location(ipFinder(), ip); })
 						>> to_vector();
 				}
-				PVEC(locations);
+				PVEC(originalLocations);
+			}
+
+			void ExtractThreadReplyHtmlFilteredContents()
+			{
+				if (threadHtmlFilteredContents.empty())
+				{
+					ExtractHtmlFilteredContents();
+					for (int i = 0; i < historySize; i++)
+					{
+						if (postsInfo.isThreads[i])
+						{
+							threadHtmlFilteredContents.push_back(htmlFilteredContents[i]);
+						}
+						else
+						{
+							replyHtmlFilteredContents.push_back(htmlFilteredContents[i]);
+						}
+					}
+				}
+				PVEC(threadHtmlFilteredContents);
+				PVEC(replyHtmlFilteredContents);
+			}
+
+			void ExtractThreadReplyNormalizedContents()
+			{
+				if (threadNormalizedContents.empty())
+				{
+					ExtractNormalizedContents();
+					for (int i = 0; i < historySize; i++)
+					{
+						if (postsInfo.isThreads[i])
+						{
+							threadNormalizedContents.push_back(normalizedContents[i]);
+						}
+						else
+						{
+							replyNormalizedContents.push_back(normalizedContents[i]);
+						}
+					}
+				}
+				PVEC(threadNormalizedContents);
+				PVEC(replyNormalizedContents);
+			}
+
+			void ExtractThreadReplyCnContents()
+			{
+				if (threadCnContents.empty())
+				{
+					ExtractCnContents();
+					for (int i = 0; i < historySize; i++)
+					{
+						if (postsInfo.isThreads[i])
+						{
+							threadCnContents.push_back(cnContents[i]);
+						}
+						else
+						{
+							replyCnContents.push_back(cnContents[i]);
+						}
+					}
+				}
+				PVEC(threadCnContents);
+				PVEC(replyCnContents);
+			}
+
+			void ExtractThreadReplyTitles()
+			{
+				if (threadTitles.empty())
+				{
+					for (int i = 0; i < historySize; i++)
+					{
+						if (postsInfo.isThreads[i])
+						{
+							threadTitles.push_back(postsInfo.titles[i]);
+						}
+						else
+						{
+							replyTitles.push_back(postsInfo.titles[i]);
+						}
+					}
+				}
+				PVEC(threadTitles);
+				PVEC(replyTitles);
+			}
+
+			void ExtractThreadReplyNormalizedTitles()
+			{
+				if (threadNormalizedTitles.empty())
+				{
+					ExtractNormalizedTitles();
+					for (int i = 0; i < historySize; i++)
+					{
+						if (postsInfo.isThreads[i])
+						{
+							threadNormalizedTitles.push_back(normalizedTitles[i]);
+						}
+						else
+						{
+							replyNormalizedTitles.push_back(normalizedTitles[i]);
+						}
+					}
+				}
+				PVEC(threadNormalizedTitles);
+				PVEC(replyNormalizedTitles);
+			}
+
+			void ExtractThreadReplyCnTitles()
+			{
+				if (threadCnTitles.empty())
+				{
+					ExtractCnTitles();
+					for (int i = 0; i < historySize; i++)
+					{
+						if (postsInfo.isThreads[i])
+						{
+							threadCnTitles.push_back(cnTitles[i]);
+						}
+						else
+						{
+							replyCnTitles.push_back(cnTitles[i]);
+						}
+					}
+				}
+				PVEC(threadCnTitles);
+				PVEC(replyCnTitles);
 			}
 
 			//static 意味着后续可以迁移到其它共有位置 类似自由函数
@@ -201,7 +385,7 @@ namespace gezi {
 			{
 				if (filteredContents.empty())
 				{
-					ExtractContentNoHtmls();
+					ExtractHtmlFilteredContents();
 					bool needFilterContent = true;
 					PSCONF(needFilterContent, name());
 					//如果c#同时 needFilterContent = false 可以避免拷贝 或者c++需要shared_ptr麻烦一些 copy吧
@@ -256,7 +440,9 @@ namespace gezi {
 
 			void ShrinkHistory()
 			{
+				originalPostsInfo = postsInfo;
 				postsInfo.pids.resize(historySize);
+				postsInfo.tids.resize(historySize);
 				postsInfo.titles.resize(historySize);
 				postsInfo.contents.resize(historySize);
 				postsInfo.fids.resize(historySize);
@@ -265,6 +451,36 @@ namespace gezi {
 				postsInfo.isPostsDeleted.resize(historySize);
 				postsInfo.isThreads.resize(historySize);
 				postsInfo.times.resize(historySize);
+				postsInfo.level1Names.resize(historySize);
+				postsInfo.level2Names.resize(historySize);
+				postsInfo.ranks.resize(historySize);
+				postsInfo.hotValues.resize(historySize);
+			}
+
+			//由于空间限制线上只传递关注的前10的吧
+			void AdjustLikedForums()
+			{
+				int maxForumNum = 10;
+				PSCONF(maxForumNum, name());
+				int size = std::min((size_t)maxForumNum, userLikeForumInfo.levels.size());
+
+				auto& tmap = userLikeForumInfo.infoMap;
+				auto vec = partial_sort_map(tmap, size);
+				decltype(userLikeForumInfo.infoMap) newMap;
+				ivec newLevels;
+				svec newForumNames;
+				for (size_t i = 0; i < size; i++)
+				{
+					newMap[vec[i].first] = vec[i].second;
+					newLevels.push_back(vec[i].second.level);
+					newForumNames.push_back(vec[i].second.forumName);
+				}
+
+				userLikeForumInfo.sumLevels = sum(newLevels);
+				userLikeForumInfo.infoMap = move(newMap);
+				userLikeForumInfo.numLikes = size;
+				userLikeForumInfo.levels = move(newLevels);
+				userLikeForumInfo.forumNames = move(newForumNames);
 			}
 		public:
 			//media info per content
@@ -278,17 +494,40 @@ namespace gezi {
 			vector<svec> normedNumbersVec; //从normalized 内容中抽取的number
 
 			svec htmlFilteredContents;
+			svec& GetHtmlFilteredContents()
+			{
+				ExtractHtmlFilteredContents();
+				return htmlFilteredContents;
+			}
 			svec normalizedContents;
-			svec normalizedCnContents;
+			svec cnContents;
 			svec filteredContents; //在 htmlFilteredContents基础上进一步过滤后的内容
 			svec normalizedFilteredContents;
+			svec gbkDualContents;
+
+			svec threadHtmlFilteredContents;
+			svec threadCnContents;
+			svec threadNormalizedContents;
+			svec replyHtmlFilteredContents;
+			svec replyCnContents;
+			svec replyNormalizedContents;
+
+			svec threadTitles;
+			svec threadNormalizedTitles;
+			svec threadCnTitles;
+			svec replyTitles;
+			svec replyNormalizedTitles;
+			svec replyCnTitles;
 
 			svec normalizedTitles;
-			svec normalizedCnTitles;
-
+			svec cnTitles;
+		
+			svec originalLocations;
 			svec locations;
 
 			int historySize;
+
+			UserPostsInfo originalPostsInfo; 	//原始数据备份 
 		private:
 			bool _type; //0回复，1主题
 
@@ -297,7 +536,7 @@ namespace gezi {
 			{
 				ipFinder();
 			}
-			static IpFinder& ipFinder()
+			static IpFinder& ipFinder() //不使用static thread_local 每次ipfinder会被重置重新加载 ExtendedUrateInfo a = b;
 			{
 				static thread_local IpFinder _ipFinder;
 				if (!isIpFinderInited())

@@ -1,23 +1,23 @@
 /**
  *  ==============================================================================
  *
- *          \file   tieba/feature/UnusalCnExtractor.h
+ *          \file   tieba/feature/fullposts/MediaExtractor.h
  *
  *        \author   chenghuige
  *
- *          \date   2014-09-10 11:39:21.791345
+ *          \date   2014-09-19 22:50:29.575270
  *
  *  \Description:
  *  ==============================================================================
  */
 
-#ifndef TIEBA_FEATURE__UNUSAL_CN_EXTRACTOR_H_
-#define TIEBA_FEATURE__UNUSAL_CN_EXTRACTOR_H_
+#ifndef TIEBA_FEATURE_FULLPOSTS__MEDIA_EXTRACTOR_H_
+#define TIEBA_FEATURE_FULLPOSTS__MEDIA_EXTRACTOR_H_
 
 namespace gezi {
 namespace tieba {
 
-class UnusalCnExtractor 
+class MediaExtractor 
 {
 public:
 
@@ -29,4 +29,4 @@ private:
 }  //----end of namespace tieba
 }  //----end of namespace gezi
 
-#endif  //----end of TIEBA_FEATURE__UNUSAL_CN_EXTRACTOR_H_
+#endif  //----end of TIEBA_FEATURE_FULLPOSTS__MEDIA_EXTRACTOR_H_

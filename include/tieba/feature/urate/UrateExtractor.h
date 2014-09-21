@@ -37,12 +37,23 @@ namespace gezi {
 			{
 				return info().Type();
 			}
+
+			bool IsThread()
+			{
+				return info().Type() == 1;
+			}
+
+			static size_t original_size()
+			{
+				return info().size();
+			}
 		public:
 			static ExtendedUrateInfo& info()
 			{
 				static thread_local ExtendedUrateInfo _info;
 				return _info;
 			}
+			ExtendedUrateInfo& _info = info(); //can simply use this
 		};
 	}  //----end of namespace tieba
 }  //----end of namespace gezi

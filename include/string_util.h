@@ -96,31 +96,27 @@ namespace gezi {
 		return en_count > cn_count * var;
 	}
 
-	//提取中文
-	//inline string extract_chinese(string temp)
-	//{
-	//  vector<char> out(temp.size() + 1, 0);
-	//  int index = 0;
-	//  for (size_t i = 0; i < temp.size(); i++)
-	//  {
-	//    unsigned high = (unsigned) (0xff & temp[i]);
-	//    if (high >= 0x81)
-	//    {
-	//      if ((high > 0xa9 || high <= 0xa0) && i < temp.size() - 1)
-	//      {
-	//        out[index] = temp[i];
-	//        out[index + 1] = temp[i + 1];
-	//        index += 2;
-	//      }
-	//      i++;
-	//    }
-	//
-	//  }
-	//  string ret(&out[0]);
-	//  return ret;
-	//}
-	//提取符号
+	//提取 high>0x81 的字
+	inline string extract_gbk_dual(string temp)
+	{
+		vector<char> out(temp.size() + 1, 0);
+		int index = 0;
+		for (size_t i = 0; i < temp.size(); i++)
+		{
+			unsigned high = (unsigned)(0xff & temp[i]);
+			if (high >= 0x81)
+			{
+				out[index] = temp[i];
+				out[index + 1] = temp[i + 1];
+				index += 2;
+				i++;
+			}
 
+		}
+		string ret(&out[0]);
+		return ret;
+	}
+	//提取符号
 	inline string extract_suspect_symb(string temp)
 	{
 		//char out[temp.size() + 1];
@@ -684,6 +680,45 @@ namespace gezi {
 	inline bool json_empty(string value)
 	{
 		return value.empty() || value == "null";
+	}
+
+	//@TODO 遍历gbk string的iterator? 区分单字节 双字节
+	template<typename Func>
+	void gbk_foreach(string input, Func func)
+	{
+
+	}
+
+	template<typename Func>
+	void gbk_foreach_dual(string input, Func func)
+	{
+		for (size_t i = 0; i < input.size();)
+		{
+			if (((unsigned char)input[i]) >= 0x80 && i + 1 < input.size())
+			{
+				func(string(input.begin() + i, input.begin() + i + 2));
+				i += 2;
+			}
+			else
+			{
+				i++;
+			}
+		}
+	}
+
+	template<typename Func>
+	void gbk_dual_foreach(string input, Func func)
+	{
+		for (size_t i = 0; i < input.size(); i += 2)
+		{
+			func(string(input.begin() + i, input.begin() + i + 2));
+		}
+	}
+
+	template<typename Func>
+	void gbk_foreach_single(string input, Func func)
+	{
+
 	}
 }
 

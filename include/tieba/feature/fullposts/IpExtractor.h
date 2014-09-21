@@ -1,23 +1,23 @@
 /**
  *  ==============================================================================
  *
- *          \file   tieba/feature/UnusalCharExtractor.h
+ *          \file   tieba/feature/fullposts/IpExtractor.h
  *
  *        \author   chenghuige
  *
- *          \date   2014-09-10 11:39:16.402203
+ *          \date   2014-09-19 22:47:32.347328
  *
  *  \Description:
  *  ==============================================================================
  */
 
-#ifndef TIEBA_FEATURE__UNUSAL_CHAR_EXTRACTOR_H_
-#define TIEBA_FEATURE__UNUSAL_CHAR_EXTRACTOR_H_
+#ifndef TIEBA_FEATURE_FULLPOSTS__IP_EXTRACTOR_H_
+#define TIEBA_FEATURE_FULLPOSTS__IP_EXTRACTOR_H_
 
 namespace gezi {
 namespace tieba {
 
-class UnusalCharExtractor 
+class IpExtractor 
 {
 public:
 
@@ -29,4 +29,4 @@ private:
 }  //----end of namespace tieba
 }  //----end of namespace gezi
 
-#endif  //----end of TIEBA_FEATURE__UNUSAL_CHAR_EXTRACTOR_H_
+#endif  //----end of TIEBA_FEATURE_FULLPOSTS__IP_EXTRACTOR_H_

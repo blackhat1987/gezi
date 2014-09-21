@@ -15,6 +15,7 @@
 #define TIEBA_INFO_USER_POSTS_INFO_H_
 #include "tieba/get_info.h"
 #include "tieba/info_def.h"
+#include "tieba/info/forum_info.h"
 namespace gezi {
 namespace tieba {
 	//用户的最近发帖信息
@@ -48,11 +49,29 @@ namespace tieba {
 				info.titles.push_back(jsonInfo["title"].asString());
 				info.contents.push_back(jsonInfo["content"].asString());
 				info.isPostsDeleted.push_back(false); //如果需要通过删帖接口获取
+				info.level1Names.push_back("");
+				info.level2Names.push_back("");
+				info.ranks.push_back(0);
+				info.hotValues.push_back(0);
 			}
 			info.numPosts = m.size(); //前面出现任何差错都不允许 
 			if (info.numPosts > 0)
 			{
 				info.userId = uid;
+			}
+			{//获取level1,level2信息 允许出错 出错为空
+				auto levelMap = get_forums_info_map(info.fids);
+				for (size_t i = 0; i < info.numPosts; i++)
+				{
+					auto iter = levelMap.find(info.fids[i]);
+					if (iter != levelMap.end())
+					{
+						info.level1Names[i] = (iter->second).level1Name;
+						info.level2Names[i] = (iter->second).level2Name;
+						info.ranks[i] = (iter->second).rank;
+						info.hotValues[i] = (iter->second).hotValue;
+					}
+				}
 			}
 		}
 		catch (...)

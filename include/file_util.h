@@ -145,7 +145,7 @@ namespace gezi {
 			{
 				continue;
 			}
-			
+
 			vec.push_back(line);
 		}
 		return vec;
@@ -200,6 +200,8 @@ namespace gezi {
 		}
 	}
 
+	/*namespace file
+	{*/
 	inline set<string> to_set(string infile)
 	{
 		set<string> container;
@@ -212,8 +214,9 @@ namespace gezi {
 		}
 		return container;
 	}
+	//}
 
-	inline unordered_set<string> to_uset(string infile)
+	inline unordered_set<string> to_hashset(string infile)
 	{
 		unordered_set<string> container;
 		std::ifstream ifs(infile.c_str());
@@ -315,8 +318,24 @@ namespace gezi {
 		}
 	}
 
+	template<typename T>
+	vector<T> read_to_vec(const std::string& infile, int index = 0, string sep = "\t ")
+	{
+		vector<T> container;
+		std::ifstream ifs(infile.c_str());
+		string line;
+		while (getline(ifs, line))
+		{
+			boost::trim(line);
+			vector<string> vec;
+			boost::split(vec, line, is_any_of(sep));
+			container.push_back(boost::lexical_cast<T>(vec[index]));
+		}
+		return container;
+	}
+
 	template<typename Container, typename Container2>
-	void read_to_vec(const std::string& infile, Container& container, Container2& container2,int index = 0, int index2 = 1, string sep = "\t ")
+	void read_to_vec(const std::string& infile, Container& container, Container2& container2, int index = 0, int index2 = 1, string sep = "\t ")
 	{
 		typedef typename Container::value_type T;
 		typedef typename Container2::value_type U;
@@ -379,13 +398,26 @@ namespace gezi {
 		}
 	}
 
-	inline unordered_map<string, int> to_identifer_map(string infile, int start = 0)
+	inline unordered_map<string, int> to_identifer_hashmap(string infile, int start = 0)
 	{
 		unordered_map<string, int> m;
 		std::ifstream ifs(infile.c_str());
 		string line;
 		while (getline(ifs, line))
 		{
+			boost::trim(line);
+			m[line] = start++;
+		}
+		return m;
+	}
+
+	inline map<string, int> to_identifer_map(string infile, int start = 0)
+	{
+		map<string, int> m;
+		std::ifstream ifs(infile.c_str());
+		string line;
+		while (getline(ifs, line))
+		{ 
 			boost::trim(line);
 			m[line] = start++;
 		}

@@ -1,23 +1,23 @@
 /**
  *  ==============================================================================
  *
- *          \file   tieba/feature/DictMatchExtractor.h
+ *          \file   tieba/feature/fullposts/SequenceExtractor.h
  *
  *        \author   chenghuige
  *
- *          \date   2014-09-10 11:38:22.360287
+ *          \date   2014-09-19 22:48:39.220269
  *
  *  \Description:
  *  ==============================================================================
  */
 
-#ifndef TIEBA_FEATURE__DICT_MATCH_EXTRACTOR_H_
-#define TIEBA_FEATURE__DICT_MATCH_EXTRACTOR_H_
+#ifndef TIEBA_FEATURE_FULLPOSTS__SEQUENCE_EXTRACTOR_H_
+#define TIEBA_FEATURE_FULLPOSTS__SEQUENCE_EXTRACTOR_H_
 
 namespace gezi {
 namespace tieba {
 
-class DictMatchExtractor 
+class SequenceExtractor 
 {
 public:
 
@@ -29,4 +29,4 @@ private:
 }  //----end of namespace tieba
 }  //----end of namespace gezi
 
-#endif  //----end of TIEBA_FEATURE__DICT_MATCH_EXTRACTOR_H_
+#endif  //----end of TIEBA_FEATURE_FULLPOSTS__SEQUENCE_EXTRACTOR_H_

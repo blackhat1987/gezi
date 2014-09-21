@@ -44,6 +44,11 @@ namespace gezi {
 			return true;
 		}
 
+		bool Load(string file)
+		{
+			return init(file);
+		}
+
 		int search(string text, dm_pack_t* result)
 		{
 			//return dm_search(dict_, result, text.c_str(), text.length(), DM_OUT_FMM, DM_CHARSET_GB18030);
@@ -97,9 +102,20 @@ namespace gezi {
 			static thread_local dm_pack_t* _result = NULL;
 			if (_result == NULL)
 			{
+				VLOG(3) << "creating dm pack";
 				_result = dm_pack_create(maxMatchCount);
 			}
 			return _result;
+		}
+
+		static void free_dm_pack()
+		{
+			dm_pack_t* buff = dm_pack();
+			if (buff)
+			{
+				VLOG(3) << "del dm pack";
+				dm_pack_del(buff);
+			}
 		}
 	private:
 		dm_dict_t* _dict;

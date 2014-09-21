@@ -25,7 +25,7 @@ DEFINE_int32(nt, 12, "thread num");
 DEFINE_string(type, "simple", "");
 DEFINE_bool(perf,false, "");
 DEFINE_int32(num, 25, "");
-DEFINE_string(i, "./data/pid.txt", "input file");
+DEFINE_string(i, "./test.data/pid.txt", "input file");
 DEFINE_string(history, "./history", "");
 DEFINE_string(o, "", "output file");
 

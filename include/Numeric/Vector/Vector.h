@@ -50,6 +50,11 @@ namespace gezi {
 			indices.clear();
 		}
 
+		Vector(const map<int, double>& m)
+		{
+			AddRange(m);
+		}
+
 		void Resize(int length_, Float value_ = 0)
 		{
 			values.resize(length_, value_);
@@ -200,6 +205,15 @@ namespace gezi {
 			{
 				indices.push_back(index);
 				values.push_back(value);
+			}
+		}
+
+		template<typename Range>
+		void AddRange(const Range& m)
+		{
+			for (auto& item : m)
+			{
+				Add(item.first, item.second);
 			}
 		}
 
@@ -1008,6 +1022,15 @@ namespace gezi {
 
 	typedef shared_ptr<Vector> VectorPtr;
 
+	//主要是稀疏矩阵构建通过输入map内容(保证key排序好)
+	template<typename Map>
+	void add(Vector& fe, const Map& m)
+	{
+		for (auto& item : m)
+		{
+			fe.Add(item.first, item.second);
+		}
+	}
 	//@TODO generic for Vector or IntArray
 	inline Float dot(const Vector& a, const Vector& b)
 	{

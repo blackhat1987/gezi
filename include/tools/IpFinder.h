@@ -275,6 +275,7 @@ namespace gezi {
 				return;
 			}
 
+			//../../../include/tools/IpFinder.h:279:84: warning: format '%d' expects argument of type 'int', but argument 5 has type 'long unsigned int' [-Wformat=]
 			snprintf(pszIpAddress, nMaxCount, "%d.%d.%d.%d", (ipValue & 0xFF000000) >> 24,
 				(ipValue & 0x00FF0000) >> 16, (ipValue & 0x0000FF00) >> 8, ipValue & 0x000000FF);
 			pszIpAddress[nMaxCount - 1] = 0;

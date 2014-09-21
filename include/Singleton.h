@@ -1,23 +1,22 @@
 /**
  *  ==============================================================================
  *
- *          \file   tieba/feature/PlsaExtractor.h
+ *          \file   Singleton.h
  *
  *        \author   chenghuige
  *
- *          \date   2014-09-10 11:36:51.518395
+ *          \date   2014-09-18 19:00:14.948371
  *
  *  \Description:
  *  ==============================================================================
  */
 
-#ifndef TIEBA_FEATURE__PLSA_EXTRACTOR_H_
-#define TIEBA_FEATURE__PLSA_EXTRACTOR_H_
+#ifndef SINGLETON_H_
+#define SINGLETON_H_
 
 namespace gezi {
-namespace tieba {
 
-class PlsaExtractor 
+class Singleton 
 {
 public:
 
@@ -26,7 +25,6 @@ private:
 
 };
 
-}  //----end of namespace tieba
 }  //----end of namespace gezi
 
-#endif  //----end of TIEBA_FEATURE__PLSA_EXTRACTOR_H_
+#endif  //----end of SINGLETON_H_

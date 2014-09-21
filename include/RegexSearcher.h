@@ -112,6 +112,11 @@ public:
 		return init2(file.c_str(), icase);
 	}
 
+	bool Load(string file, bool icase = true)
+	{
+		return init2(file, icase);
+	}
+
 	int count(const string & src)
 	{
 		int sum = 0;

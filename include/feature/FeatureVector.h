@@ -149,6 +149,12 @@ namespace gezi {
 			return _names.empty();
 		}
 
+		void clear()
+		{
+			Vector::Clear();
+			_names.clear();
+		}
+
 		string str(string sep = ",")
 		{
 			std::stringstream ss;

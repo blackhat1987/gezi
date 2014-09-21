@@ -106,6 +106,7 @@ namespace gezi {
 	static const int SEG_USE_TRIE = 4;
 	static const int SEG_USE_ALL = 255;
 
+	//@TODO 可以使用enum class SegType,当前是c style利用名字前缀
 	//混排合并新词
 	static const int SEG_MERGE_NEWWORD = SCW_OUT_WPCOMP | SCW_OUT_NEWWORD;
 	//混排粒度
@@ -176,13 +177,34 @@ namespace gezi {
 
 		static bool init(string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
 		{
-			return init(data_dir.c_str(), type, conf_path.c_str());
+			bool ret = true;
+			if (!isInited())
+			{
+				ret = init(data_dir.c_str(), type, conf_path.c_str());
+				isInited() = true;
+			}
+			return ret;
 		}
 
 		static bool Init(int seg_buff_size = SegHandle::SEG_BUFF_SIZE, string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
 		{
-			bool ret = init(data_dir.c_str(), type, conf_path.c_str());
-			handle().init(seg_buff_size);
+			bool ret = true;
+			if (!isInited())
+			{
+				ret = init(data_dir.c_str(), type, conf_path.c_str());
+				if (!ret)
+				{
+					return false;
+				}
+				isInited() = true;
+			}
+
+			if (!isHandleInited())
+			{
+				handle().init(seg_buff_size);
+				isHandleInited() = true;
+			}
+			
 			return ret;
 		}
 
@@ -505,12 +527,23 @@ namespace gezi {
 			return _handle;
 		}
 
+		static bool& isHandleInited()
+		{
+			static thread_local bool _isHandleInited = false;
+			return _isHandleInited;
+		}
+
 		static int& flag(int flag_ = 0)
 		{//dynfloag 是否开启crf等 当前主要考虑设置是否开启crf
 			static int _flag = flag_;
 			return _flag;
 		}
 
+		static bool& isInited()
+		{
+			static bool _isInited = false;
+			return _isInited;
+		}
 	private:
 		//scw_conf_t* pgconf;
 		SegHandle _handle;

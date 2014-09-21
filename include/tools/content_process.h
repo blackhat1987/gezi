@@ -88,8 +88,10 @@ namespace gezi {
 		return !get_urls(src).empty();
 	}
 
+	//@FIXME python h2cc.py不能处理 { //注释写在一行的情况。。
 	inline vector<string> get_nums(string src)
-	{ //@TODO 验证是否ok 和配置文件完全一样 不需要Raw string?
+	{ 
+		//@TODO 验证是否ok 和配置文件完全一样 不需要Raw string?
 		//string skipRegStr("([ *,\\.,!\\(\\)]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
 		//string skipRegStr("([,\\.,!]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
 		string skipRegStr("[0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3}");
@@ -113,7 +115,8 @@ namespace gezi {
 	}
 
 	inline bool contains_num(string src)
-	{//@TODO 使用raw string
+	{ 
+		//@TODO 使用raw string
 		//string skipRegStr("([ *,\\.,!\\(\\)]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
 		string skipRegStr("([,\\.,!]+)|([0-9\\w]{5,20}@[0-9a-zA-Z]+(\\.[a-z,A-Z]{1,4}){1,3})|(@.{10})");
 		string regStr("(^|[\\x81-\\xff]|:|q|qq|Q|QQ|\\(|\\[)[ ]*([0-9]{7,15})");

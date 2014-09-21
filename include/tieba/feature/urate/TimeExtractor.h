@@ -67,6 +67,46 @@ public:
 		ADD_FEATURE(binValues);
 	}
 
+	void ExtractHoursCovered()
+	{
+		auto& times = info().originalPostsInfo.times; //不考虑时间限制 总数不超过25个
+		int hoursCovered = distinct_count(times, get_hour);
+		double hoursCoveredRatio = hoursCovered / (double)times.size();
+
+		ADD_FEATURE(hoursCovered);
+		ADD_FEATURE(hoursCoveredRatio);
+	}
+
+	static void calc_delta_count(const vector<int64>& deltas, const ivec& intervals, 
+		ivec& counts)
+	{
+		counts.resize(intervals.size(), 0);
+		for (auto delta : deltas)
+		{
+			for (size_t i = 0; i < intervals.size(); i++)
+			{
+				if (delta <= intervals[i])
+				{
+					for (size_t j = i; j < intervals.size(); j++)
+					{
+						counts[j]++;
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	void ExtractDeltaCount(const vector<int64>& deltas, string name = "")
+	{
+		ivec intervals = { 1, 2, 5, 10, 50, 100 };
+		ivec deltaCounts;
+		calc_delta_count(deltas, intervals, deltaCounts);
+		dvec deltaRatios = from(deltaCounts) >> select([this](int a) { return a / (double)size(); }) >> to_vector();
+		ADD_FEATURE_WITH_PREFIX(deltaCounts, name);
+		ADD_FEATURE_WITH_PREFIX(deltaRatios, name);
+	}
+
 	void ExtractDeltas()
 	{
 		auto& times = info().postsInfo.times;
@@ -74,19 +114,95 @@ public:
 		auto& tids = info().postsInfo.tids;
 
 		auto deltas = to_delta_rvec(times);
-		double mean = ufo::mean(deltas, 0);
-		double defaultVar = 10240;
+		//double deltasMean = ufo::mean(deltas, 0);
+		double defaultVar = 1e+10;
 		PSCONF(defaultVar, name());
-		double var = ufo::var(deltas, defaultVar);
+		//double deltasVar = ufo::var(deltas, defaultVar);
+		double  deltasMean = 0, deltasVar = defaultVar;
+		ufo::mean_var(deltas, deltasMean, deltasVar);
+		double deltasMin = ufo::min(deltas, kOneHour);
 
-		ADD_FEATURE(mean);
-		ADD_FEATURE(var);
+		auto threadDeltas = to_delta_rvec_when_unequal(times, tids);
+		//double threadDeltasMean = ufo::mean(threadDeltas, 0);
+		//double threadDeltasVar = ufo::var(threadDeltas, defaultVar);
+		double threadDeltasMean = 0, threadDeltasVar = defaultVar;
+		ufo::mean_var(threadDeltas, threadDeltasMean, threadDeltasVar);
+		double threadDeltasMin = ufo::min(threadDeltas, kOneHour);
+
+		auto forumDeltas = to_delta_rvec_when_unequal(times, forums);
+		//double forumDeltasMean = ufo::mean(forumDeltas, 0);
+		//double forumDeltasVar = ufo::var(forumDeltas, defaultVar); 
+		double forumDeltasMean = 0, forumDeltasVar = defaultVar;
+		ufo::mean_var(forumDeltas, forumDeltasMean, forumDeltasVar);
+		double forumDeltasMin = ufo::min(forumDeltas, kOneHour);
+		
+		ADD_FEATURE(deltasMean);
+		ADD_FEATURE(deltasVar);
+		ADD_FEATURE(deltasMin);
+
+		ADD_FEATURE(threadDeltasMean);
+		ADD_FEATURE(threadDeltasVar);
+		ADD_FEATURE(threadDeltasMin);
+
+		ADD_FEATURE(forumDeltasMean);
+		ADD_FEATURE(forumDeltasVar);
+		ADD_FEATURE(forumDeltasMin);
+
+		ExtractDeltaCount(deltas);
+		ExtractDeltaCount(threadDeltas, "Thread");
+		ExtractDeltaCount(forumDeltas, "Forum");
+
+		int distinctDeltaCount = distinct_count(deltas);
+		double distinctDeltaRatio = distinctDeltaCount / (double)size();
+		ADD_FEATURE(distinctDeltaCount);
+		ADD_FEATURE(distinctDeltaRatio);
+	}
+
+	//最大时间间隔前后的行为变化 盗号特征
+	void ExtractBehaviorChanges()
+	{
+		auto& times = info().originalPostsInfo.times;
+		auto& forumIds = info().originalPostsInfo.fids;
+		info().ExtractOriginalLocations();
+		auto& locations = info().originalLocations;
+
+		auto deltas = to_delta_rvec(times);
+		//minmax quick but no need..
+		int maxDelta = ufo::max(deltas, kOneHour);
+
+		ADD_FEATURE(maxDelta);
+
+		auto iter = ufo::max_element(deltas);
+		int maxDeltaPos = iter - deltas.begin() + 1;
+
+		set<uint> forumsAfter, forumsBefore;
+		set<string> locationsAfter, locationsBefore;
+
+		for (int i = 0; i < maxDeltaPos; i++)
+		{
+			forumsAfter.insert(forumIds[i]);
+			locationsAfter.insert(locations[i]);
+		}
+
+		for (int i = maxDeltaPos; i < (int)original_size(); i++)
+		{
+			forumsBefore.insert(forumIds[i]);
+			locationsBefore.insert(locations[i]);
+		}
+
+		int numForumDiffs = ufo::set_symmetric_difference(forumsAfter, forumsBefore).size();
+		int numLocationDiffs = ufo::set_symmetric_difference(locationsAfter, locationsBefore).size();
+
+		ADD_FEATURE(numForumDiffs);
+		ADD_FEATURE(numLocationDiffs);
 	}
 
 	virtual void extract() override
 	{
 		ExtractBins();
 		ExtractDeltas();
+		ExtractHoursCovered();
+		ExtractBehaviorChanges();
 	}
 
 protected:

@@ -17,7 +17,7 @@
 #include "../common_def.h"
 #include "serialize_util.h"
 #include "common_util.h"
-
+//注意 确认不参与 - 计算 比如var等等的才能用unsigned 否则结果可预期错误
 namespace gezi {
 	namespace tieba {
 
@@ -35,6 +35,12 @@ namespace gezi {
 				'ip' = > 2365012337,
 				'content' = > '[图片]  单排  ds？',
 				'post_type' = > 1,*/
+
+			bool operator == (const QuoteInfo& other) const
+			{
+				return postId == other.postId;
+			}
+
 			friend class boost::serialization::access;
 			template<class Archive>
 			void serialize(Archive &ar, const unsigned int version)
@@ -60,6 +66,16 @@ namespace gezi {
 			string userName;
 			string forumName;
 			QuoteInfo quoteInfo;
+
+			bool operator == (const PostInfo& other) const
+			{
+				return postId == other.postId;
+			}
+
+			bool operator < (const PostInfo& other) const
+			{
+				return postId < other.postId;
+			}
 
 			bool IsThread()
 			{
@@ -130,13 +146,18 @@ namespace gezi {
 			vector<uint64> pids;
 			vector<uint64> tids;
 			vector<int64> times;
-			vector<uint> fids;
-			vector<string> fnames;
 			vector<string> titles;
 			vector<string> contents;
 			vector<uint64> ips;
 			vector<bool> isThreads;
 			vector<bool> isPostsDeleted;
+			//吧相关
+			vector<uint> fids;
+			vector<string> fnames;
+			vector<string> level1Names;
+			vector<string> level2Names;
+			vector<int64> ranks;
+			vector<int64> hotValues;
 
 			size_t size()
 			{
@@ -159,6 +180,10 @@ namespace gezi {
 				ar & BOOST_SERIALIZATION_NVP(ips);
 				ar & BOOST_SERIALIZATION_NVP(isThreads);
 				ar & BOOST_SERIALIZATION_NVP(isPostsDeleted);
+				ar & BOOST_SERIALIZATION_NVP(level1Names);
+				ar & BOOST_SERIALIZATION_NVP(level2Names);
+				ar & BOOST_SERIALIZATION_NVP(ranks);
+				ar & BOOST_SERIALIZATION_NVP(hotValues);
 			}
 		};
 
@@ -220,6 +245,12 @@ namespace gezi {
 			{
 				return pids.size();
 			}
+
+			bool IsValid()
+			{
+				return threadId != 0 && size() > 0;
+			}
+
 
 			const Comments& GetComments(int idx) const
 			{
@@ -326,9 +357,15 @@ namespace gezi {
 				int curScore;
 				int leftScore;
 				//for python wrapp @FIXME 为何不能去掉  当前看来作为map的value 需要定义== 才能封装python自动
-				bool operator == (const Node& other)
+				bool operator == (const Node& other) const
 				{
 					return forumName == other.forumName;
+				}
+
+				//默认排序为从大到小
+				bool operator < (const Node& other) const
+				{
+					return level > other.level;
 				}
 
 				friend class boost::serialization::access;
@@ -391,6 +428,11 @@ namespace gezi {
 			bool isDeleted = false;
 			bool hasMedia = false; //pic,vedio 注意Url不算
 
+			bool operator == (const ThreadInfo& other) const
+			{
+				return threadId == other.threadId;
+			}
+
 			friend class boost::serialization::access;
 			template<class Archive>
 			void serialize(Archive &ar, const unsigned int version)
@@ -419,6 +461,11 @@ namespace gezi {
 			int64 opTime = 0;
 			bool isDeleted = false;
 
+			bool operator == (const DeleteInfo& other) const
+			{
+				return pid == other.pid && tid == other.tid;
+			}
+
 			friend class boost::serialization::access;
 			template<class Archive>
 			void serialize(Archive &ar, const unsigned int version)
@@ -440,10 +487,15 @@ namespace gezi {
 		struct ForumInfo
 		{
 			uint fid = 0;
-			uint rank;
-			uint hotValue;
+			uint rank = 0;
+			uint hotValue = 0;
 			string level1Name;
 			string level2Name;
+
+			bool operator == (const ForumInfo& other) const
+			{
+				return fid == other.fid;
+			}
 
 			friend class boost::serialization::access;
 			template<class Archive>

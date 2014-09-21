@@ -313,6 +313,7 @@ namespace gezi {
 		return count;
 	}
 
+	//类似vector<vector<>>遍历计数
 	template<typename Vec>
 	int distinct_count_vec2d(const Vec& vecs)
 	{
@@ -328,8 +329,18 @@ namespace gezi {
 		return set_.size();
 	}
 
+
+	template<typename Vec, typename Func>
+	void process_adjacent(Vec& vec, Func func)
+	{
+		for (size_t i = 1; i < vec.size(); i++)
+		{
+			func(vec[i - 1], vec[i]);
+		}
+	}
+
 	template<typename Vec1, typename Vec2, typename Func>
-	void process_when_unequal(Vec1& vec, const Vec2& conditons, Func func)
+	void process_adjacent_when_unequal(Vec1& vec, const Vec2& conditons, Func func)
 	{
 		for (size_t i = 1; i < conditons.size(); i++)
 		{
@@ -341,7 +352,7 @@ namespace gezi {
 	}
 
 	template<typename Vec1, typename Vec2, typename Func>
-	Vec1 filter_when_unequal(const Vec1& vec, const Vec2& conditons, Func func)
+	Vec1 filter_adjacent_when_unequal(const Vec1& vec, const Vec2& conditons, Func func)
 	{
 		Vec1 results;
 		for (size_t i = 1; i < conditons.size(); i++)
@@ -355,7 +366,7 @@ namespace gezi {
 	}
 
 	template<typename Vec1, typename Vec2, typename Func>
-	void process_when_equal(Vec1& vec, const Vec2& conditons, Func func)
+	void process_adjacent_when_equal(Vec1& vec, const Vec2& conditons, Func func)
 	{
 		for (size_t i = 1; i < conditons.size(); i++)
 		{
@@ -367,7 +378,7 @@ namespace gezi {
 	}
 
 	template<typename Vec1, typename Vec2, typename Func>
-	Vec1 filter_when_equal(const Vec1& vec, const Vec2& conditons, Func func)
+	Vec1 filter_adjacent_when_equal(const Vec1& vec, const Vec2& conditons, Func func)
 	{
 		Vec1 results;
 		for (size_t i = 1; i < conditons.size(); i++)
@@ -391,6 +402,20 @@ namespace gezi {
 		return deltaVec;
 	}
 
+	template<typename Vec, typename Vec2>
+	Vec to_delta_vec_when_unequal(const Vec& vec, const Vec2& vec2)
+	{
+		Vec deltaVec;
+		for (size_t i = 1; i < vec2.size(); i++)
+		{
+			if (vec2[i -1] != vec2[i])
+			{
+				deltaVec.push_back(vec[i] - vec[i - 1]);
+			}
+		}
+		return deltaVec;
+	}
+
 	template<typename Vec>
 	Vec to_delta_rvec(const Vec& vec)
 	{
@@ -398,6 +423,20 @@ namespace gezi {
 		for (size_t i = 1; i < vec.size(); i++)
 		{
 			deltaVec.push_back(vec[i - 1] - vec[i]);
+		}
+		return deltaVec;
+	}
+
+	template<typename Vec, typename Vec2>
+	Vec to_delta_rvec_when_unequal(const Vec& vec, const Vec2& vec2)
+	{
+		Vec deltaVec;
+		for (size_t i = 1; i < vec2.size(); i++)
+		{
+			if (vec2[i - 1] != vec2[i])
+			{
+				deltaVec.push_back(vec[i - 1] - vec[i]);
+			}
 		}
 		return deltaVec;
 	}
@@ -412,8 +451,25 @@ namespace gezi {
 		}
 		return deltaVec;
 	}
+	
+	namespace ufo
+	{
+		template<typename Container>
+		vector<typename Container::value_type> set_symmetric_difference(const Container& l, const Container& r)
+		{
+			vector<typename Container::value_type> results;
+			std::set_symmetric_difference(l.begin(), l.end(), r.begin(), r.end(), std::back_inserter(results));
+			return results;
+		}
 
-
+		template<typename Container>
+		vector<typename Container::value_type> set_difference(const Container& l, const Container& r)
+		{
+			vector<typename Container::value_type> results;
+			std::set_difference(l.begin(), l.end(), r.begin(), r.end(), std::back_inserter(results));
+			return results;
+		}
+	}
 }  //----end of namespace gezi
 
 #endif  //----end of STL_UTIL_H_

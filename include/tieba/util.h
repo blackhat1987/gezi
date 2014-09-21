@@ -7,7 +7,7 @@
  *
  *          \date   2014-03-05 20:48:02.058450
  *
- *  \Description:
+ *  \Description:   @TODO move to tieba_util.h
  *  ==============================================================================
  */
 
@@ -17,7 +17,7 @@
 #include <boost/algorithm/string.hpp>
 using std::string;
 namespace gezi {
-		inline bool is_thread(string title)
+	/*	inline bool is_thread(string title)
 		{
 			return boost::trim_copy(title).find("»Ø¸´£º") != 0;
 		}
@@ -34,7 +34,7 @@ namespace gezi {
 			{
 				return title_;
 			}
-		}
+		}*/
 }  //----end of namespace gezi
 
 #endif  //----end of TIEBA_UTIL_H_

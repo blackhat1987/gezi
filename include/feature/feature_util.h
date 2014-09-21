@@ -238,6 +238,7 @@ namespace gezi
 		ofs << endl;
 	}
 
+	//ÏÂÃæµÄ·ÏÆú
 	template<typename Vec>
 	inline void add_mean_var(Feature* fe, const Vec& vec,
 		const string mean_name = "", const string var_name = "")
