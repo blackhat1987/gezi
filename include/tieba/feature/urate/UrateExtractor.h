@@ -48,6 +48,8 @@ namespace gezi {
 				return info().size();
 			}
 		public:
+
+			//::info() = 第一次会调用拷贝构造函数还是operator =呢
 			static ExtendedUrateInfo& info()
 			{
 				static thread_local ExtendedUrateInfo _info;
