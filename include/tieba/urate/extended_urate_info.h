@@ -536,20 +536,20 @@ namespace gezi {
 			{
 				ipFinder();
 			}
-			//static IpFinder& ipFinder() //不使用static thread_local 每次ipfinder会被重置重新加载 ExtendedUrateInfo a = b;
-			//{
-			//	static thread_local IpFinder _ipFinder;
-			//	static thread_local bool _isIpFinderInited = false;
-			//	if (!_isIpFinderInited)
-			//	{
-			//		string ipDataPath = "./data/qqwry.dat";
-			//		PSCONF(ipDataPath, "Global");
-			//		bool ret = _ipFinder.Open(ipDataPath);
-			//		CHECK_EQ(ret, true);
-			//		_isIpFinderInited = true;
-			//	}
-			//	return _ipFinder;
-			//}
+			static IpFinder& ipFinder() //不使用static thread_local 每次ipfinder会被重置重新加载 ExtendedUrateInfo a = b;
+			{
+				static thread_local IpFinder _ipFinder;
+				static thread_local bool _isIpFinderInited = false;
+				if (!_isIpFinderInited)
+				{
+					string ipDataPath = "./data/qqwry.dat";
+					PSCONF(ipDataPath, "Global");
+					bool ret = _ipFinder.Open(ipDataPath);
+					CHECK_EQ(ret, true);
+					_isIpFinderInited = true;
+				}
+				return _ipFinder;
+			}
 			IpFinder& _ipFinder = ipFinder();
 		public:
 			friend class boost::serialization::access;

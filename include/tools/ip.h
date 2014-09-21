@@ -73,21 +73,21 @@ namespace gezi
 		return result;
 	}
 
-	//单例模式也可以写到IpFinder类里面 static IpFinder& Instance()
-	inline static IpFinder& ipFinder() //不使用static thread_local 每次ipfinder会被重置重新加载 ExtendedUrateInfo a = b;
-	{
-		static thread_local IpFinder _ipFinder;
-		static thread_local bool _isIpFinderInited = false;
-		if (!_isIpFinderInited)
-		{
-			string ipFinderPath = "./data/qqwry.dat";
-			PSCONF(ipFinderPath, "Global");
-			bool ret = _ipFinder.Open(ipFinderPath);
-			CHECK_EQ(ret, true);
-			_isIpFinderInited = true;
-		}
-		return _ipFinder;
-	}
+	////单例模式也可以写到IpFinder类里面 static IpFinder& Instance()
+	//inline static IpFinder& ipFinder() //不使用static thread_local 每次ipfinder会被重置重新加载 ExtendedUrateInfo a = b;
+	//{
+	//	static thread_local IpFinder _ipFinder;
+	//	static thread_local bool _isIpFinderInited = false;
+	//	if (!_isIpFinderInited)
+	//	{
+	//		string ipFinderPath = "./data/qqwry.dat";
+	//		PSCONF(ipFinderPath, "Global");
+	//		bool ret = _ipFinder.Open(ipFinderPath);
+	//		CHECK_EQ(ret, true);
+	//		_isIpFinderInited = true;
+	//	}
+	//	return _ipFinder;
+	//}
 }
 
 #endif  //----end of TOOLS_IP_H_

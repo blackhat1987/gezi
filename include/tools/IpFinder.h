@@ -34,6 +34,7 @@ namespace gezi {
 		{
 			this->Open(pszFileName);
 		}
+
 		~IpFinder()
 		{
 			if (_fpIpDataFile)
@@ -449,14 +450,19 @@ namespace gezi {
 		bool Open(const char* pszFileName)
 		{
 			_fpIpDataFile = fopen(pszFileName, "rb");
-			if (!_fpIpDataFile) {
+			if (!_fpIpDataFile)
+			{
 				return false;
 			}
-
 			// IP头由两个十六进制4字节偏移量构成，分别为索引开始，和索引结束
 			_indexStart = this->GetValue4(0);
 			_indexEnd = this->GetValue4(4);
 			return true;
+		}
+
+		bool Init(string file)
+		{
+			return Open(file);
 		}
 	private:
 		FILE *_fpIpDataFile = NULL;            // IP数据库文件
