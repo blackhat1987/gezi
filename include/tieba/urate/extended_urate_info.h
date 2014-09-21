@@ -47,6 +47,7 @@ namespace gezi {
 
 			void Init()
 			{
+				Pval(size());
 				SetHistorySize();
 				ShrinkHistory();
 				SetType();
