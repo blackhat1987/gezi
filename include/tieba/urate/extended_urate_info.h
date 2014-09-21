@@ -37,7 +37,7 @@ namespace gezi {
 			{
 				//	UrateExtractor::info() = move(info);
 				//第一次调用info()是move构造函数 会走到这里,如果第二次就会走operator =
-				//VLOG(0) << "move construct";
+				 VLOG(0) << "move construct";
 				Init();
 			}
 
@@ -55,9 +55,9 @@ namespace gezi {
 			//按理说这个也是正确的 但是很奇怪的是多线程下可能有问题。。 那上面的是不是也可能没触发bug呢 @TODO @FIXME
 			ExtendedUrateInfo& operator = (UrateInfo&& other)
 			{
-				//VLOG(0) << "move assignment from urateinfo";
+				VLOG(0) << "move assignment from urateinfo";
 				//UrateInfo::operator = (other);
-				*this = move(other);
+				(UrateInfo)*this = move(other);
 				Init();
 				return *this;
 			}
