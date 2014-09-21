@@ -14,7 +14,7 @@
 #ifndef TIEBA_FEATURE_FULLPOSTS__DINGTIE_EXTRACTOR_H_
 #define TIEBA_FEATURE_FULLPOSTS__DINGTIE_EXTRACTOR_H_
 #include "FullPostsExtractor.h"
-#include "tools/ip.h"
+
 namespace gezi {
 namespace tieba {
 
@@ -25,6 +25,10 @@ public:
 		:FullPostsExtractor(name)
 	{
 
+	}
+	virtual void init() override
+	{
+		info().ExtractLocations();
 	}
 
 	virtual void extract() override
@@ -59,8 +63,10 @@ public:
 			}
 		}
 
+		double locationInformation = gezi::information(info().locations);
 		ADD_FEATURE(hasUidsWithSameIp);
 		ADD_FEATURE(hasSameIpWithLouzhu);
+		ADD_FEATURE(locationInformation);
 	}
 protected:
 private:

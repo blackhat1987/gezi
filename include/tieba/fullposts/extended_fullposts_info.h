@@ -63,8 +63,20 @@ namespace gezi {
 				return numConsideredPosts;
 			}
 
+			void ExtractLocations()
+			{
+				if (locations.empty())
+				{
+					locations = from(ips)
+						>> select([](uint64 ip) { return get_location(ipFinder(), ip); })
+						>> to_vector();
+				}
+			}
+
 			int numConsideredPosts = 0;
 			uint64 postId = 0;
+
+			svec locations;
 		};
 	}  //----end of namespace tieba
 }  //----end of namespace gezi

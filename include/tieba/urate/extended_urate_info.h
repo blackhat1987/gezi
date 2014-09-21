@@ -61,14 +61,16 @@ namespace gezi {
 			//	return *this;
 			//}
 
-			ExtendedUrateInfo& operator = (UrateInfo&& other)
-			{
-				VLOG(1) << "move assignment from urateinfo";
-				*this = ExtendedUrateInfo(); //通过这样先强制都clear 
-				UrateInfo::operator = (other);
-				Init();
-				return *this;
-			}
+			//下面这样ok 就不走move construct了直接走这里 不过对于IpFinder& 这样的引用无效
+			//有了= 就不要考虑用引用了。。 
+			//ExtendedUrateInfo& operator = (UrateInfo&& other)
+			//{
+			//	VLOG(1) << "move assignment from urateinfo";
+			//	*this = ExtendedUrateInfo(); //通过这样先强制都clear 
+			//	UrateInfo::operator = (other);
+			//	Init();
+			//	return *this;
+			//}
 
 			void Init()
 			{
@@ -260,11 +262,8 @@ namespace gezi {
 			{
 				if (originalLocations.empty())
 				{
-					/*originalLocations = from(originalPostsInfo.ips)
-						>> select([this](uint64 ip) { return get_location(_ipFinder, ip); })
-						>> to_vector();*/
 					originalLocations = from(originalPostsInfo.ips)
-						>> select([this](uint64 ip) { return get_location(ipFinder(), ip); })
+						>> select([](uint64 ip) { return get_location(ipFinder(), ip); })
 						>> to_vector();
 				}
 				PVEC(originalLocations);
@@ -578,7 +577,7 @@ namespace gezi {
 
 			//注意如果使用下面这个 需要写=函数 ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
 			// error: non-static reference member 'gezi::IpFinder& gezi::tieba::ExtendedUrateInfo::_ipFinder', can't use default assignment operator
-			//IpFinder& _ipFinder = ipFinder();
+			//IpFinder& _ipFinder = ipFinder(); //有= 不要用& 可以用* 或者干脆直接访问
 		public:
 			friend class boost::serialization::access;
 			template<class Archive>
