@@ -35,8 +35,6 @@ namespace gezi {
 			ExtendedUrateInfo(UrateInfo&& other)
 				:UrateInfo(other)
 			{
-				//	UrateExtractor::info() = move(info);
-				//第一次调用info()是move构造函数 会走到这里,如果第二次就会走operator =
 				//VLOG(0) << "move construct";
 				Init();
 			}
@@ -52,9 +50,9 @@ namespace gezi {
 			//	//_Tp __tmp = _GLIBCXX_MOVE(__a);
 			//	return *this;
 			//}
-			//按理说这个也是正确的 但是很奇怪的是多线程下可能有问题。。 那上面的是不是也可能没触发bug呢 @TODO @FIXME, 如果不是向base部分copy不会有问题？ 
-			//感觉没有=完 就Init了？ 但是Init移除也不行 无解了  为了安全只能不用了。。
-			//如果需要有= 尽量避免使用引用的成员变量吧
+			//这个会出问题 原因是每次assignment的时候 Extended新添加的这些变量没有清空恢复初始的
+			//而不提供这个函数 就强迫走move构造函数 就不存在这个问题了。。
+			//或者另外比较好的办法 使用shared_ptr/unique_ptr进行reset
 			//ExtendedUrateInfo& operator = (UrateInfo&& other)
 			//{
 			//	//VLOG(0) << "move assignment from urateinfo";
@@ -63,22 +61,14 @@ namespace gezi {
 			//	return *this;
 			//}
 
-			//这样也不行。。。确定是多线程问题 就是没初始化好 就Init了
-			//ExtendedUrateInfo& operator = (UrateInfo&& other)
-			//{
-			//	//VLOG(0) << "move assignment from urateinfo";
-			//	this->postId = other.postId;
-			//	this->nowPostInfo = other.nowPostInfo;
-			//	this->postsInfo = other.postsInfo;
-			//	this->userInfo = other.userInfo;
-			//	this->userLikeForumInfo = other.userLikeForumInfo;
-			//	this->userPostNumInfo = other.userPostNumInfo;
-			//	this->userPostNumInForum = other.userPostNumInForum;
-			//	this->urlInfoMap = other.urlInfoMap;
-			//	this->urlsVec = other.urlsVec;
-			//	Init();
-			//	return *this;
-			//}
+			ExtendedUrateInfo& operator = (UrateInfo&& other)
+			{
+				//VLOG(0) << "move assignment from urateinfo";
+				*this = ExtendedUrateInfo();
+				UrateInfo::operator = (other);
+				Init();
+				return *this;
+			}
 
 			//ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
 

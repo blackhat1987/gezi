@@ -14,6 +14,7 @@
 #ifndef TIEBA_FULLPOSTS_EXTENDED_FULLPOSTS_INFO_H_
 #define TIEBA_FULLPOSTS_EXTENDED_FULLPOSTS_INFO_H_
 #include "tieba/info_def.h"
+#include "tools/ip.h"
 namespace gezi {
 	namespace tieba {
 

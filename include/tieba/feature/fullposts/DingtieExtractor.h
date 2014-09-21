@@ -14,6 +14,7 @@
 #ifndef TIEBA_FEATURE_FULLPOSTS__DINGTIE_EXTRACTOR_H_
 #define TIEBA_FEATURE_FULLPOSTS__DINGTIE_EXTRACTOR_H_
 #include "FullPostsExtractor.h"
+#include "tools/ip.h"
 namespace gezi {
 namespace tieba {
 
