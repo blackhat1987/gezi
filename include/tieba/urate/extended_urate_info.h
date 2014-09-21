@@ -53,7 +53,7 @@ namespace gezi {
 				Init();
 				return *this;
 				}*/
-			ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
+			//ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
 
 			void Init()
 			{
