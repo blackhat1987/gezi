@@ -53,7 +53,7 @@ namespace gezi {
 			//	return *this;
 			//}
 			//按理说这个也是正确的 但是很奇怪的是多线程下可能有问题。。 那上面的是不是也可能没触发bug呢 @TODO @FIXME, 如果不是向base部分copy不会有问题？ 
-			//还是底下UrateInfo::operator = (other); 这样写有问题呢
+			//还是底下UrateInfo::operator = (other); 这样写有问题呢 感觉没有=完 就Init了？
 			//ExtendedUrateInfo& operator = (UrateInfo&& other)
 			//{
 			//	//VLOG(0) << "move assignment from urateinfo";
@@ -61,6 +61,23 @@ namespace gezi {
 			//	Init();
 			//	return *this;
 			//}
+
+			ExtendedUrateInfo& operator = (UrateInfo&& other)
+			{
+				//VLOG(0) << "move assignment from urateinfo";
+				this->postId = other.postId;
+				this->nowPostInfo = other.nowPostInfo;
+				this->postsInfo = other.postsInfo;
+				this->userInfo = other.userInfo;
+				this->userLikeForumInfo = other.userLikeForumInfo;
+				this->userPostNumInfo = other.userPostNumInfo;
+				this->userPostNumInForum = other.userPostNumInForum;
+				this->urlInfoMap = other.urlInfoMap;
+				this->urlsVec = other.urlsVec;
+				Init();
+				return *this;
+			}
+
 			//ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
 
 			void Init()

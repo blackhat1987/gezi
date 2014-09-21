@@ -24,6 +24,7 @@ namespace gezi {
 		{
 		public:
 			using FeaturesExtractor::FeaturesExtractor;
+
 			static size_t size()
 			{
 				return info().historySize;
