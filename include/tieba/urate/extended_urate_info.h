@@ -69,7 +69,7 @@ namespace gezi {
 			ExtendedUrateInfo& operator = (UrateInfo&& other)
 			{
 				//VLOG(0) << "move assignment from urateinfo";
-				*this = ExtendedUrateInfo(); //通过这样先强制都clear
+				//*this = ExtendedUrateInfo(); //通过这样先强制都clear
 				UrateInfo::operator = (other);
 				Init();
 				return *this;
