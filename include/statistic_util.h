@@ -628,9 +628,26 @@ namespace gezi {
 	}
 
 	template<typename T>
-	inline double information(vector<T>& vec)
+	inline double information(const vector<T>& vec)
 	{
 		return information(vec.begin(), vec.end());
+	}
+
+	template<typename KeyType>
+	inline double information(const map<KeyType, int>& m)
+	{
+		double res = 0, total = 0;
+		for (auto& item : m)
+		{
+			total += item.second;
+		}
+
+		for (auto& item : m)
+		{
+			double prob = item.second / (double)total;
+			res += -prob * log(prob);
+		}
+		return res;
 	}
 
 	//TODO 如何直接推导ValueType 下面这种不行 得到的是比如const long long &

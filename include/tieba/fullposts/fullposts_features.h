@@ -16,12 +16,14 @@
 
 #include "feature/Features.h"
 #include "tieba/feature/fullposts/DingtieExtractor.h"
+#include "tieba/feature/fullposts/SequenceExtractor.h"
 
 namespace gezi {
 namespace tieba {
 	inline void add_fullposts_features(FeaturesExtractorMgr& mgr)
 	{
 		mgr.add(new DingtieExtractor);
+		mgr.add(new FPSequenceExtractor);
 	}
 }  //----end of namespace tieba
 }  //----end of namespace gezi

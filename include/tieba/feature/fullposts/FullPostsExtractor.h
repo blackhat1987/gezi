@@ -21,11 +21,7 @@ namespace gezi {
 		class FullPostsExtractor : public FeaturesExtractor
 		{
 		public:
-			FullPostsExtractor(string name)
-				:FeaturesExtractor(name)
-			{
-
-			}
+			using FeaturesExtractor::FeaturesExtractor;
 		public:
 			static ExtendedFullPostsInfo& info()
 			{
@@ -33,6 +29,11 @@ namespace gezi {
 				return _info;
 			}
 			ExtendedFullPostsInfo& _info = info();
+
+			size_t size()
+			{
+				return info().size();
+			}
 		};
 
 	}  //----end of namespace tieba

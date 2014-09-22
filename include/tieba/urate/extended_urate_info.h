@@ -15,6 +15,7 @@
 #define TIEBA_URATE_EXTENDED_URATE_INFO_H_
 
 #include "tieba/urate/urate_info.h"
+#include "tieba/feature/feature_extractor_util.h"
 #include "tools/ip.h"
 namespace gezi {
 	namespace tieba {
@@ -24,57 +25,20 @@ namespace gezi {
 		public:
 			ExtendedUrateInfo() = default;
 
-			//ExtendedUrateInfo(const UrateInfo& urateInfo)
-			//	:UrateInfo(urateInfo)
-			//{
-			//	//如果没有ExtendedUrateInfo(UrateInfo&& urateInfo) 带有moved走这里只能
-			//	VLOG(0) << "copy construct";
-			//	Init();
-			//}
-
-			ExtendedUrateInfo(UrateInfo&& other)
-				:UrateInfo(other)
+			ExtendedUrateInfo(const UrateInfo& urateInfo)
+				:UrateInfo(urateInfo)
 			{
-				VLOG(1) << "move construct";
+				Init();
+			}
+	
+			ExtendedUrateInfo(UrateInfo&& urateInfo)
+				:UrateInfo(urateInfo)
+			{
 				Init();
 			}
 
-			//ExtendedUrateInfo& operator = (ExtendedUrateInfo&& other)
-			//{
-			//	VLOG(0) << "move assignment";
-			//	//*this = other;
-			//	//UrateInfo::operator = (other);
-			//	//Init();
-			//	swap(*this, other); 
-			//	// error: use of deleted function 'gezi::tieba::ExtendedUrateInfo::ExtendedUrateInfo(const gezi::tieba::ExtendedUrateInfo&)'
-			//	//_Tp __tmp = _GLIBCXX_MOVE(__a);
-			//	return *this;
-			//}
-			//这个会出问题 原因是每次assignment的时候 Extended新添加的这些变量没有清空恢复初始的
-			//而不提供这个函数 就强迫走move构造函数 就不存在这个问题了。。
-			//或者另外比较好的办法 使用shared_ptr/unique_ptr进行reset
-			//ExtendedUrateInfo& operator = (UrateInfo&& other)
-			//{
-			//	//VLOG(0) << "move assignment from urateinfo";
-			//	UrateInfo::operator = (other);
-			//	Init();
-			//	return *this;
-			//}
-
-			//下面这样ok 就不走move construct了直接走这里 不过对于IpFinder& 这样的引用无效
-			//有了= 就不要考虑用引用了。。 
-			//ExtendedUrateInfo& operator = (UrateInfo&& other)
-			//{
-			//	VLOG(1) << "move assignment from urateinfo";
-			//	*this = ExtendedUrateInfo(); //通过这样先强制都clear 
-			//	UrateInfo::operator = (other);
-			//	Init();
-			//	return *this;
-			//}
-
 			void Init()
 			{
-				//Pval(size());
 				SetHistorySize();
 				ShrinkHistory();
 				SetType();
@@ -84,7 +48,6 @@ namespace gezi {
 				{
 					AdjustLikedForums();
 				}
-				//Pval(historySize);
 			}
 
 			static string name()
@@ -194,7 +157,7 @@ namespace gezi {
 			{
 				if (normalizedContents.empty())
 				{
-					ExtractFilteredContents();
+					ExtractHtmlFilteredContents();
 					normalizedContents = from(htmlFilteredContents)
 						>> select([](string content) { return filter_str(boost::to_lower_copy(content)); })
 						>> to_vector();
@@ -263,7 +226,7 @@ namespace gezi {
 				if (originalLocations.empty())
 				{
 					originalLocations = from(originalPostsInfo.ips)
-						>> select([](uint64 ip) { return get_location(ipFinder(), ip); })
+						>> select([this](uint64 ip) { return get_location(ipFinder(), ip); })
 						>> to_vector();
 				}
 				PVEC(originalLocations);
@@ -394,31 +357,6 @@ namespace gezi {
 				PVEC(replyCnTitles);
 			}
 
-			//static 意味着后续可以迁移到其它共有位置 类似自由函数
-			static string filter_content(string content, int max_content_length)
-			{
-				string new_content = strip_from(content);
-				if (new_content.size() > max_content_length + 10)
-				{
-					int len = max_content_length / 2;
-					if (new_content[len] < 0)
-					{
-						len++;
-					}
-					string new_content1 = gezi::gbk_substr(new_content, 0, len);
-					int start = new_content.size() - len - 1;
-
-					if (new_content[start - 1] < 0)
-					{
-						start--;
-					}
-
-					string new_content2 = gezi::gbk_substr(new_content, start);
-					new_content = new_content1 + new_content2;
-				}
-				return new_content;
-			}
-
 			void ExtractFilteredContents()
 			{
 				if (filteredContents.empty())
@@ -433,7 +371,7 @@ namespace gezi {
 						int maxContentLength = 1024;
 						PSCONF(maxContentLength, name());
 						filteredContents = from(filteredContents)
-							>> select([this, &maxContentLength](string content) { return filter_content(content, maxContentLength); })
+							>> select([this,&maxContentLength](string content) { return filter_content(content, maxContentLength); })
 							>> to_vector();
 					}
 				}
@@ -462,10 +400,10 @@ namespace gezi {
 					int i = 0;
 					for (; i < historySize; i++)
 					{
-						if (postsInfo.times[i] < startTime)
-						{
-							break;
-						}
+							if (postsInfo.times[i] < startTime)
+							{
+								break;
+							}
 					}
 					historySize = i;
 				}
@@ -559,7 +497,7 @@ namespace gezi {
 
 			svec normalizedTitles;
 			svec cnTitles;
-
+		
 			svec originalLocations;
 			svec locations;
 
@@ -574,10 +512,23 @@ namespace gezi {
 			{
 				ipFinder();
 			}
-
-			//注意如果使用下面这个 需要写=函数 ExtendedUrateInfo& operator = (const ExtendedUrateInfo&) = default;
-			// error: non-static reference member 'gezi::IpFinder& gezi::tieba::ExtendedUrateInfo::_ipFinder', can't use default assignment operator
-			//IpFinder& _ipFinder = ipFinder(); //有= 不要用& 可以用* 或者干脆直接访问
+			static IpFinder& ipFinder() //不使用static thread_local 每次ipfinder会被重置重新加载 ExtendedUrateInfo a = b;
+			{
+				static thread_local IpFinder _ipFinder;
+				if (!isIpFinderInited())
+				{
+					string ipData = "./data/qqwry.dat";
+					bool ret = _ipFinder.Open(ipData);
+					CHECK_EQ(ret, true);
+					isIpFinderInited() = true;
+				}
+				return _ipFinder;
+			}
+			static bool& isIpFinderInited()
+			{
+				static thread_local bool _isIpFinderInited = false;
+				return _isIpFinderInited;
+			}
 		public:
 			friend class boost::serialization::access;
 			template<class Archive>

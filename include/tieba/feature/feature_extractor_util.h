@@ -125,6 +125,30 @@ namespace tieba {
 		}
 		return false;
 	}
+
+	inline string filter_content(string content, int max_content_length)
+	{
+		string new_content = strip_from(content);
+		if (new_content.size() > max_content_length + 10)
+		{
+			int len = max_content_length / 2;
+			if (new_content[len] < 0)
+			{
+				len++;
+			}
+			string new_content1 = gezi::gbk_substr(new_content, 0, len);
+			int start = new_content.size() - len - 1;
+
+			if (new_content[start - 1] < 0)
+			{
+				start--;
+			}
+
+			string new_content2 = gezi::gbk_substr(new_content, start);
+			new_content = new_content1 + new_content2;
+		}
+		return new_content;
+	}
 }  //----end of namespace tieba
 }  //----end of namespace gezi
 
