@@ -304,6 +304,11 @@ namespace gezi {
 			string userTag;
 			string userDetail;
 
+			bool operator == (const UserInfo& other) const
+			{
+				return userId == other.userId;
+			}
+
 			friend class boost::serialization::access;
 			template<class Archive>
 			void serialize(Archive &ar, const unsigned int version)

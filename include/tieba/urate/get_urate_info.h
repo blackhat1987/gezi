@@ -54,7 +54,7 @@ namespace gezi {
 				return urateInfo;
 			}
 
-			urateInfo.postsInfo = get_user_posts_info_until(postInfo);
+			urateInfo.postsInfo = get_user_posts_info_until(postInfo, historyNum);
 
 			if (urateInfo.postsInfo.userId != uid)
 			{ //没有帖子信息

@@ -33,6 +33,10 @@ namespace gezi {
 
 			virtual void extract() override
 			{
+
+				int numFloors = size();
+				ADD_FEATURE(numFloors);
+
 				bool hasUidsWithSameIp = false;
 				bool hasSameIpWithLouzhu = false;
 
@@ -81,6 +85,10 @@ namespace gezi {
 				int louzhuIpCount = from(info().ips) >> where([&](uint64 ip) { return ip == louzhuIp; }) >> count();
 				double louzhuIpRatio = louzhuIpCount / (double)size();
 
+
+				int maxIpsPerUid = max_count_by(ips, uids);
+				int maxUidsPerIp = max_count_by(uids, ips);
+
 				ADD_FEATURE(hasUidsWithSameIp);
 				ADD_FEATURE(hasSameIpWithLouzhu);
 				ADD_FEATURE(ipsInformation);
@@ -91,6 +99,8 @@ namespace gezi {
 				ADD_FEATURE(louzhuUidRatio);
 				ADD_FEATURE(louzhuIpCount);
 				ADD_FEATURE(louzhuIpRatio);
+				ADD_FEATURE(maxIpsPerUid);
+				ADD_FEATURE(maxUidsPerIp);
 			}
 		protected:
 		private:

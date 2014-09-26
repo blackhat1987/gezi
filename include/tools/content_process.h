@@ -77,8 +77,14 @@ namespace gezi {
 		return !get_emails(src).empty();
 	}
 
+	/*<a href = \"http://tieba.baidu.com/i/sys/jump?un=%D7%ED%BE%C6%CF%B7%C1%F7%C4%EA%D8%BC\" onclick=\"Stats.sendRequest('fr=tb0_forum&st_mod=pb&st_value=atlink');\" onmouseover=\"showattip(this)\" onmouseout=\"hideattip(this)\" username=\"%D7%ED%BE%C6%CF%B7%C1%F7%C4%EA%D8%BC\" target=\"_blank\" class=\"at\">@醉酒戏流年丶</a>*/
 	inline vector<string> get_urls(string src)
 	{
+		if (contains_at(src))
+		{ //@TODO 多判断一次at？ 不匹配 class=\"at\"> 写到url pattern中？
+			return vector<string>();
+		}
+		
 		string urlPattern = "<a.*? href=\"(.+?)\".*?>";
 		return ufo::reg_search(src, urlPattern);
 	}

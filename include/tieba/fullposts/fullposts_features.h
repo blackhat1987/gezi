@@ -17,15 +17,78 @@
 #include "feature/Features.h"
 #include "tieba/feature/fullposts/DingtieExtractor.h"
 #include "tieba/feature/fullposts/SequenceExtractor.h"
+#include "tieba/urate/urate_features.h"
+#include "tieba/get_info.h"
+#include "other/CachedFetcher.h"
 
 namespace gezi {
-namespace tieba {
-	inline void add_fullposts_features(FeaturesExtractorMgr& mgr)
-	{
-		mgr.add(new DingtieExtractor);
-		mgr.add(new FPSequenceExtractor);
-	}
-}  //----end of namespace tieba
+	namespace tieba {
+		inline void add_fullposts_features(FeaturesExtractorMgr& mgr)
+		{
+			mgr.add(new DingtieExtractor);
+			mgr.add(new FPSequenceExtractor);
+		}
+
+		inline Features gen_fullposts_features(uint64 tid, int num, string historyPath, string urateHistoryPath)
+		{
+			Features fe;
+			FullPostsInfo info = try_get_info<FullPostsInfo>(tid,
+				[&](uint64 tid) { return get_full_posts_info(tid, num, 0, 1); }, historyPath);
+			if (info.IsValid())
+			{
+				FullPostsExtractor::info() = move(info);
+				FeaturesExtractorMgr mgr;
+				add_fullposts_features(mgr);
+				mgr.extract(fe);
+				{
+					UrateInfo uinfo = try_get_info<UrateInfo>(info.pids.front(), [](uint64 pid) { return get_urate_info(pid); }, urateHistoryPath);
+					if (uinfo.IsValid())
+					{
+						UrateExtractor::info() = move(uinfo);
+						FeaturesExtractorMgr mgr;
+						add_urate_features(mgr);
+						mgr.extract(fe);
+					}
+					else
+					{
+						fe.clear();
+					}
+				}
+			}
+			return fe;
+		}
+
+		template<typename Fetcher>
+		inline Features gen_fullposts_features(uint64 tid, int num,  
+			Fetcher& fetcher)
+		{
+			Features fe;
+			FullPostsInfo info = get_full_posts_info(tid, num, 0, 0); //ÔÝÊ±Ã»¿¼ÂÇcommentÂ¥ÖÐÂ¥
+			VLOG(0) << tid << "\t" << info.title << "\t" << info.contents.front();
+			if (info.IsValid())
+			{
+				FullPostsExtractor::info() = move(info);
+				FeaturesExtractorMgr mgr;
+				add_fullposts_features(mgr);
+				mgr.extract(fe);
+				{
+					UrateInfo uinfo = fetcher.GetValue(info.pids.front(), [](uint64 pid) { return get_urate_info(pid); });
+					if (uinfo.IsValid())
+					{
+						UrateExtractor::info() = move(uinfo);
+						FeaturesExtractorMgr mgr;
+						add_urate_features(mgr);
+						mgr.extract(fe);
+					}
+					else
+					{
+						fe.clear();
+					}
+				}
+			}
+			return fe;
+		}
+	}  //----end of namespace tieba
 }  //----end of namespace gezi
 
 #endif  //----end of TIEBA_FULLPOSTS_FULLPOSTS_FEATURES_H_

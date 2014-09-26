@@ -289,7 +289,7 @@ namespace gezi {
 	typedef ValueIdentifer<int> IntIdentifer;
 	typedef ValueIdentifer<double> DoubleIdentifer;
 
-#ifdef GCCXML
+//#ifdef GCCXML  //奇怪。。 GCCXML没有认出来？ GXXML起不起作用？@FIXME ndef GCCXM起作用 但是def不起作用？
 	//py++ work around py++不处理typedef
 	class PyIntIndentifer : public IntIdentifer
 	{
@@ -299,7 +299,7 @@ namespace gezi {
 	{
 
 	};
-#endif
+//#endif
 	
 } //----end of namespace gezi
 

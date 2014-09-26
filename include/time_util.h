@@ -146,6 +146,91 @@ namespace gezi {
 		Timer _timer;
 		int _level;
 	};
+
+#include "datetime_util.h"
+#ifndef GCCXML
+	template<typename _Key,
+		template<class _Kty, class _Ty, typename...> class _Map = std::unordered_map>
+	class TimerMap
+	{
+	public:
+		typedef _Key Key;
+		typedef _Map<Key, int64> Map;
+	public:
+		TimerMap()
+		{
+
+		}
+
+		TimerMap(int64 span)
+			:_span(span)
+		{
+
+		}
+
+		//普通map不支持设定大小 LruMap才支持设置最大容量
+		TimerMap(int capacity)
+		{
+			_map.set_capacity(capacity);
+		}
+
+		TimerMap(int64 span, int capacity)
+			:_span(span)
+		{
+			_map.set_capacity(capacity);
+		}
+
+		void set_capacity(int capacity)
+		{
+			_map.set_capacity(capacity);
+		}
+
+		void SetCapacity(int capacity)
+		{
+			_map.set_capacity(capacity);
+		}
+
+		void SetSpan(int span)
+		{
+			_span = span;
+		}
+
+		bool count(const Key& key)
+		{
+			auto iter = _map.find(key);
+			int64 nowTime = now_time();
+
+			if (iter == _map.end())
+			{
+#pragma  omp critical
+				{
+					_map[key] = nowTime;
+				}
+				return false;
+			}
+			else
+			{
+				int64 oldTime = iter->second;
+				if (nowTime - oldTime >= _span)
+				{
+#pragma  omp critical
+					{
+						iter->second = nowTime;
+					}
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+		}
+
+	private:
+		Map _map;
+		int64 _span;
+	};
+#endif //GCCXML
 } //----end of namespace gezi
 
 #endif  //----end of TIME_UTIL_H_

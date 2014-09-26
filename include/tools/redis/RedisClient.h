@@ -164,6 +164,44 @@ namespace gezi {
 			return finalRet;
 		}
 
+		template<typename Func>
+		int ZrangeFirstNElementWithScoresIf(string key, int num, Func func, int step = 200, bool allowError = true)
+		{
+			store::ss* valueVec;
+			double* scoreVec;
+			int ret = 0, outNum = 0, finalRet;
+			bool needStop = false;
+			for (int start = 0; start < num; start += step)
+			{
+				int nowCount = std::min(step, num - start);
+				ret = _client->zrange_withscores(key.c_str(), start, start + nowCount - 1, valueVec, scoreVec, outNum);
+				if (ret != 0)
+				{
+					finalRet = ret;
+					if (!allowError)
+					{
+						return ret;
+					}
+					continue;
+				}
+				for (int i = 0; i < outNum; i++)
+				{
+					string value = valueVec[i].str;
+					double score = scoreVec[i];
+					if (!func(value, score))
+					{
+						needStop = true;
+						break;
+					}
+				}
+				if (needStop || outNum < nowCount)
+				{
+					break;
+				}
+			}
+			return finalRet;
+		}
+
 		int ZrangeWithScores(string key, int first, int last, vector<string>& values, vector<double>& scores)
 		{
 			store::ss* valueVec;

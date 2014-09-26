@@ -331,8 +331,12 @@ bp::scope vector_less__gezi_scope_FeatureVector_scope_Feature__greater__scope( v
 //         vector_less__gezi_scope_FeatureVector_scope_Feature__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< gezi::FeatureVector::Feature > >() );
 }
 
-bp::class_< std::vector< double > >("vector_less__double__greater_")
-.def( bp::vector_indexing_suite< ::std::vector< double >, true >() );
+{ //::std::vector< double >
+typedef bp::class_< std::vector< double > > vector_less__double__greater__exposer_t;
+vector_less__double__greater__exposer_t vector_less__double__greater__exposer = vector_less__double__greater__exposer_t( "vector_less__double__greater_" );
+bp::scope vector_less__double__greater__scope( vector_less__double__greater__exposer );
+vector_less__double__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< double >, true >() );
+}
 
 { //::std::vector< double >
 typedef bp::class_< std::vector< double > > vector_less__double__greater__exposer_t;
@@ -1232,6 +1236,15 @@ FeatureVector_exposer.def(
 , ( bp::arg("index") ) );
 
 }
+{ //::gezi::FeatureVector::clear
+
+typedef void ( ::gezi::FeatureVector::*clear_function_type )(  ) ;
+
+FeatureVector_exposer.def(
+"clear"
+, clear_function_type( &::gezi::FeatureVector::clear ) );
+
+}
 { //::gezi::FeatureVector::count
 
 typedef int ( ::gezi::FeatureVector::*count_function_type )(  ) const;
@@ -1723,7 +1736,55 @@ ProgressBar_exposer.def(
 }
 }
 
+bp::class_< gezi::ValueIdentifer< double >, bp::bases< gezi::Identifer > >( "DoubleIdentifer" )
+.def(
+"Load"
+, (void ( ::gezi::ValueIdentifer<double>::* )( ::std::string ) )( &::gezi::ValueIdentifer< double >::Load )
+, ( bp::arg("file") ) )
+.def(
+"Save"
+, (void ( ::gezi::ValueIdentifer<double>::* )( ::std::string ) )( &::gezi::ValueIdentifer< double >::Save )
+, ( bp::arg("file") ) )
+.def(
+"get_value"
+, (double ( ::gezi::ValueIdentifer<double>::* )( ::std::string ) )( &::gezi::ValueIdentifer< double >::get_value )
+, ( bp::arg("key") ) )
+.def(
+"load"
+, (bool ( ::gezi::ValueIdentifer<double>::* )( ::std::string,int,::std::string ) )( &::gezi::ValueIdentifer< double >::load )
+, ( bp::arg("file"), bp::arg("index")=(int)(1), bp::arg("sep")="\011" ) )
+.def(
+"value"
+, (double ( ::gezi::ValueIdentifer<double>::* )( int ) )( &::gezi::ValueIdentifer< double >::value )
+, ( bp::arg("index") ) );
+
+bp::class_< gezi::PyDoubleIdentifer, bp::bases< gezi::ValueIdentifer< double > > >( "PyDoubleIdentifer" );
+
 bp::class_< gezi::PyFeatures, bp::bases< gezi::FeatureVector > >( "PyFeatures" );
+
+bp::class_< gezi::ValueIdentifer< int >, bp::bases< gezi::Identifer > >( "IntIdentifer" )
+.def(
+"Load"
+, (void ( ::gezi::ValueIdentifer<int>::* )( ::std::string ) )( &::gezi::ValueIdentifer< int >::Load )
+, ( bp::arg("file") ) )
+.def(
+"Save"
+, (void ( ::gezi::ValueIdentifer<int>::* )( ::std::string ) )( &::gezi::ValueIdentifer< int >::Save )
+, ( bp::arg("file") ) )
+.def(
+"get_value"
+, (int ( ::gezi::ValueIdentifer<int>::* )( ::std::string ) )( &::gezi::ValueIdentifer< int >::get_value )
+, ( bp::arg("key") ) )
+.def(
+"load"
+, (bool ( ::gezi::ValueIdentifer<int>::* )( ::std::string,int,::std::string ) )( &::gezi::ValueIdentifer< int >::load )
+, ( bp::arg("file"), bp::arg("index")=(int)(1), bp::arg("sep")="\011" ) )
+.def(
+"value"
+, (int ( ::gezi::ValueIdentifer<int>::* )( int ) )( &::gezi::ValueIdentifer< int >::value )
+, ( bp::arg("index") ) );
+
+bp::class_< gezi::PyIntIndentifer, bp::bases< gezi::ValueIdentifer< int > > >( "PyIntIndentifer" );
 
 bp::class_< gezi::RedisClient, boost::noncopyable >( "RedisClient", bp::init< >() )
 .def( bp::init< std::string, bp::optional< std::string > >(( bp::arg("confFile"), bp::arg("confDir")="./conf" )) )

@@ -1616,6 +1616,9 @@
     <ClCompile Include="tools\tieba\full-posts\fullposts_train.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tools\tieba\full-posts\fullposts.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl">

@@ -49,7 +49,10 @@ namespace gezi {
 				if (times.size() < ips.size())
 					len = times.size();
 
-				int64 startTime = times[0] - maxSpanHours * kOneHour;
+				int64 totalTimeSpan = times.front() - times.back();
+				ADD_FEATURE(totalTimeSpan);
+
+				int64 startTime = times.front() - maxSpanHours * kOneHour;
 
 				string preLocation;
 				uint64 preIp = 0, preTop3Ip = 0, preTop2Ip = 0, preTop1Ip = 0;
@@ -155,7 +158,7 @@ namespace gezi {
 				auto& ips = info().postsInfo.ips;
 				auto& times = info().postsInfo.times;
 				auto& locations = info().locations;
-				int maxSpanHours = 72;
+				int maxSpanHours = 240;
 				Extract(ips, locations, times, maxSpanHours);
 			}
 

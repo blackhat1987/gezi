@@ -18,72 +18,73 @@
 
 namespace gezi {
 
-//TODO both support set and unoredered_set
-template<typename T>
-class LruSet 
-{
-public:
-	LruSet(int maxNum)
-		:_maxNum(maxNum)
+	template<typename Key, template<class _Kty, typename...> class _Set = std::set>
+	class LruSet
 	{
-
-	}
-
-	LruSet()
-	{
-
-	}
-
-	void set_capacity(int maxNum)
-	{
-		_maxNum = maxNum;
-	}
-
-	bool empty()
-	{
-		return _set.empty();
-	}
-
-	bool insert(const T& item)
-	{ 
-		auto iter = _set.find(item);
-		if (iter == _set.end())
+	public:
+		typedef _Set<Key> Set;
+		LruSet(int maxNum)
+			:_capacity(maxNum)
 		{
-			if (_set.size() == _maxNum)
-			{
-				T& oldItem = _queue.front();
-				_set.erase(oldItem);
-				_queue.pop_front();
-			}
-			_set.insert(iter, item);
-			_queue.push_back(item);
-			return true;
+
 		}
-		return false;
-	}
 
-	bool count(const T& item)
-	{
-		return _set.count(item);
-	}
+		LruSet()
+		{
 
-	int size()
-	{
-		return _set.size();
-	}
+		}
 
-	int capacity()
-	{
-		return _maxNum;
-	}
+		void set_capacity(int maxNum)
+		{
+			_capacity = maxNum;
+		}
 
-protected:
-private:
-	unordered_set<T> _set;
-	deque<T> _queue; 
-	int _maxNum;
-};
+		bool empty()
+		{
+			return _set.empty();
+		}
 
+		bool insert(const Key& item)
+		{
+			auto iter = _set.find(item);
+			if (iter == _set.end())
+			{
+				if (_set.size() == _capacity)
+				{
+					Key& oldItem = _queue.front();
+					_set.erase(oldItem);
+					_queue.pop_front();
+				}
+				_set.insert(iter, item);
+				_queue.push_back(item);
+				return true;
+			}
+			return false;
+		}
+
+		bool count(const Key& item)
+		{
+			return _set.count(item);
+		}
+
+		int size()
+		{
+			return _set.size();
+		}
+
+		int capacity()
+		{
+			return _capacity;
+		}
+
+	protected:
+	private:
+		Set _set;
+		deque<Key> _queue;
+		int _capacity;
+	};
+	template <typename Key, typename...>
+	using LruHashSet = LruSet<Key, std::unordered_set>;
 }  //----end of namespace gezi
 
 #endif  //----end of LRU_SET_H_

@@ -24,17 +24,21 @@ using namespace boost::posix_time;
 namespace gezi
 {
 
-inline int get_hour(int64 timestamp)
-{
-  ptime pt = from_time_t(timestamp);
-  tm t = to_tm(pt);
-  return t.tm_hour + 8;
-}
+	inline int get_hour(int64 timestamp)
+	{
+		ptime pt = from_time_t(timestamp);
+		tm t = to_tm(pt);
+		return t.tm_hour + 8;
+	}
 
-static const int kOneDay = 86400; //24 * 60 * 60
-static const int kOneHour = 3600;
-static const int kOneMinute = 60;
+	inline int64 now_time()
+	{
+		return time(NULL);
+	}
 
+	static const int kOneDay = 86400; //24 * 60 * 60
+	static const int kOneHour = 3600;
+	static const int kOneMinute = 60;
 }
 
 #endif  //----end of DATETIME_UTIL_H_

@@ -597,6 +597,7 @@
     <ClCompile Include="test\tieba\test_threads_info.cc" />
     <ClCompile Include="test\tieba\test_uname.cc" />
     <ClCompile Include="test\tieba\test_user_info_extractor.cc" />
+    <ClCompile Include="tools\tieba\full-posts\fullposts.cc" />
     <ClCompile Include="tools\tieba\full-posts\fullposts_train.cc" />
     <ClCompile Include="tools\tieba\urate\get_urate_infos.cc" />
     <ClCompile Include="tools\tieba\urate\urate_train.cc" />

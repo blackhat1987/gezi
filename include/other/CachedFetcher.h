@@ -43,7 +43,13 @@ namespace gezi {
 			_map.set_capacity(capacity);
 		}
 
-		Value GetValue(const Key& key, std::function<vector<Value>(const vector<Key>&)> func)
+		void SetCapacity(int capacity)
+		{
+			_map.set_capacity(capacity);
+		}
+
+		template<typename Func>
+		Value GetValue(const Key& key, Func func)
 		{
 			auto iter = _map.find(key);
 			if (iter != _map.end())
@@ -53,7 +59,10 @@ namespace gezi {
 			else
 			{//func如果错误需要内部自己抛出异常 不进行后续动作
 				Value value = func(key);
-				_map[key] = value;
+#pragma  omp critical
+				{
+					_map[key] = value;
+				}
 				return value;
 			}
 		}

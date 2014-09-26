@@ -14,6 +14,7 @@
 #ifndef TIEBA_FEATURE_FEATURE_EXTRACTOR_UTIL_H_
 #define TIEBA_FEATURE_FEATURE_EXTRACTOR_UTIL_H_
 #include "common_util.h"
+#include "tools/content_process.h"
 namespace gezi {
 namespace tieba {
 

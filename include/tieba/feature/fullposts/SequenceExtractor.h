@@ -54,7 +54,7 @@ namespace gezi {
 
 				//@TODO 当前的行为序列 只考虑楼信息下面的楼主行为模式 没有考虑跨主题行为模式
 				int noPic2PicCount = 0;
-				int pic2UrlOrAtCount = 0;
+				int pic2UrlCount = 0, pic2AtCount = 0;
 				int secondFloor2PicOrUrlOrAt = 0;
 
 				ThreadNode threadNode;
@@ -69,27 +69,36 @@ namespace gezi {
 				uint louzhuUid = uids[0];
 				for (size_t i = 1; i < size(); i++)
 				{
-					bool hasPic = !picsVec[i].empty();
-					bool hasUrl = !urlsVec[i].empty();
-					bool hasAt = !atsVec[i].empty();
 					if (uids[i] == louzhuUid)
 					{
+						bool hasPic = !picsVec[i].empty();
+						bool hasUrl = !urlsVec[i].empty();
+						bool hasAt = !atsVec[i].empty();
 						if (!threadNode.hasPic && hasPic)
 						{
 							noPic2PicCount++;
 						}
-						if (threadNode.hasPic && (hasUrl || hasAt))
+						if (threadNode.hasPic)
 						{
-							pic2UrlOrAtCount++;
+							if (hasUrl)
+							{
+								pic2UrlCount++;
+							}
+							if (hasAt)
+							{
+								pic2AtCount++;
+							}
 						}
 						if (threadNode.hasSecondFloor && (hasUrl || hasAt || hasPic))
 						{
 							secondFloor2PicOrUrlOrAt++;
 						}
+						break;
 					}
 				}
 				ADD_FEATURE(noPic2PicCount);
-				ADD_FEATURE(pic2UrlOrAtCount);
+				ADD_FEATURE(pic2UrlCount);
+				ADD_FEATURE(pic2AtCount);
 				ADD_FEATURE(secondFloor2PicOrUrlOrAt);
 				//1楼有url  文本内容< 5个汉字 10个字符
 

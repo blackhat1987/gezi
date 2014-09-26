@@ -169,7 +169,8 @@ namespace gezi {
 			return info;
 		}
 
-		inline vector<UserInfo> get_users_info(vector<uint> uids_, bool needFollowInfo = true, bool needPassInfo = true)
+		inline vector<UserInfo> get_users_info(const vector<uint> uids_, 
+			bool needFollowInfo = true, bool needPassInfo = true)
 		{
 			vector<UserInfo> infos;
 			auto uidsVec = gezi::split(uids_, kMaxRequestCount);

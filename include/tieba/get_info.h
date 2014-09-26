@@ -270,7 +270,7 @@ namespace gezi {
 		}
 
 		template<typename InfoType, typename Func>
-		inline InfoType try_get_info(uint64 id, Func func, string historyDir, bool forceFetch = false, 
+		inline InfoType try_get_info(uint64 id, Func func, string historyDir, bool forceFetch = false, bool useFetch = true,
 			string suffix = "", bool retry = true)
 		{
 			InfoType info;
@@ -280,26 +280,29 @@ namespace gezi {
 			{
 				serialize::load_xml(historyFile, info);
 			}
-			if (!info.IsValid())
+			if (useFetch)
 			{
-				info = func(id);
-				if (info.IsValid())
+				if (!info.IsValid())
 				{
-					serialize::save_xml(info, historyFile);
-				}
-				else
-				{ //尝试再一次获取
-					LOG(WARNING) << "Fetch info fail try to fetch again";
-					if (retry)
+					info = func(id);
+					if (info.IsValid())
 					{
-						info = func(id);
-						if (info.IsValid())
+						serialize::save_xml(info, historyFile);
+					}
+					else
+					{ //尝试再一次获取
+						LOG(WARNING) << "Fetch info fail try to fetch again";
+						if (retry)
 						{
-							serialize::save_xml(info, historyFile);
-						}
-						else
-						{
-							LOG(WARNING) << "Retry still fail";
+							info = func(id);
+							if (info.IsValid())
+							{
+								serialize::save_xml(info, historyFile);
+							}
+							else
+							{
+								LOG(WARNING) << "Retry still fail";
+							}
 						}
 					}
 				}

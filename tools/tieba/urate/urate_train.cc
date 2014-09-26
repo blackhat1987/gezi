@@ -33,24 +33,6 @@ DEFINE_string(i, "./test.data/pid.txt", "input file");
 DEFINE_string(o, "feature.txt", "output file");
 DEFINE_int32(nt, 12, "thread num");
 
-inline Features gen_features(uint64 pid)
-{
-	Features fe;
-	/*UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);*/
-
-	UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);
-	if (info.IsValid())
-	{
-		//VLOG(0) << "Before move";
-		UrateExtractor::info() = move(info);
-		//VLOG(0) << "After move";
-		FeaturesExtractorMgr mgr;
-		add_urate_features(mgr);
-		mgr.extract(fe);
-	}
-	return fe;
-}
-
 void run()
 {
 	try_create_dir(FLAGS_history);
@@ -61,7 +43,8 @@ void run()
 	vector<int> labels;
 	read_to_vec(FLAGS_i, pids, labels);
 	Pval2(pids.size(), pids[0]);
-	write_features(pids, labels, gen_features, FLAGS_o);
+	write_features(pids, labels, 
+		[&](uint64 tid) { return gen_urate_features(tid, FLAGS_history); }, FLAGS_o);
 }
 
 int main(int argc, char *argv[])

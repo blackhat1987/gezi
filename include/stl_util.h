@@ -408,7 +408,7 @@ namespace gezi {
 		Vec deltaVec;
 		for (size_t i = 1; i < vec2.size(); i++)
 		{
-			if (vec2[i -1] != vec2[i])
+			if (vec2[i - 1] != vec2[i])
 			{
 				deltaVec.push_back(vec[i] - vec[i - 1]);
 			}
@@ -451,7 +451,40 @@ namespace gezi {
 		}
 		return deltaVec;
 	}
-	
+
+	//例如一组数据中对应uid最多的ip的uid数目
+	template<typename DestVec, typename RefVec>
+	int max_count_by(const DestVec& uids, const RefVec& ips)
+	{
+		typedef typename RefVec::value_type KeyType;
+		typedef typename DestVec::value_type ValueType;
+		map<KeyType, set<ValueType> > m;
+		typedef typename map<KeyType, set<ValueType> >::value_type ItemType;
+		int len = std::min(uids.size(), ips.size());
+		for (int i = 0; i < len; i++)
+		{
+			m[ips[i]].insert(uids[i]);
+		}
+
+		return (*max_element(m.begin(), m.end(), [](const ItemType& l, const ItemType& r) { return l.second.size() < r.second.size(); })).second.size();
+	}
+
+	template<typename DestVec, typename RefVec>
+	int min_count_by(const DestVec& uids, const RefVec& ips)
+	{
+		typedef typename RefVec::value_type KeyType;
+		typedef typename DestVec::value_type ValueType;
+		map<KeyType, set<ValueType> > m;
+		typedef typename map<KeyType, set<ValueType> >::value_type ItemType;
+		int len = std::min(uids.size(), ips.size());
+		for (int i = 0; i < len; i++)
+		{
+			m[ips[i]].insert(uids[i]);
+		}
+
+		return (*min_element(m.begin(), m.end(), [](const ItemType& l, const ItemType& r) { return l.second.size() < r.second.size(); })).second.size();
+	}
+
 	namespace ufo
 	{
 		template<typename Container>
@@ -483,7 +516,9 @@ namespace gezi {
 			vec.erase(std::remove_if(vec.begin(), vec.end(), func),
 				vec.end());
 		}
-	}
+	}//---- end of namespace ufo
+
+	
 }  //----end of namespace gezi
 
 #endif  //----end of STL_UTIL_H_

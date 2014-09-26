@@ -18,8 +18,8 @@
 #include "feature/Features.h"
 #include "tieba/get_parsed_info.h"
 #include "tieba/fullposts/fullposts_features.h"
-
 #include "tieba/urate/urate_features.h"
+
 using namespace std;
 using namespace gezi;
 using namespace gezi::tieba;
@@ -27,41 +27,19 @@ DEFINE_int32(vl, 0, "vlog level");
 DEFINE_int32(level, 0, "min log level");
 DEFINE_string(type, "simple", "");
 DEFINE_bool(perf, false, "");
+DEFINE_bool(gf, false, "gen feature");
+DEFINE_int32(predict, 0, "1 predict, 2 predicts");
+DEFINE_uint64(tid, 0, "");
 DEFINE_int32(num, 20, "");
 DEFINE_string(history, "./history", "");
+DEFINE_string(urate_history, "./urate.history", "");
 DEFINE_string(i, "./test.data/tid.txt", "input file");
 DEFINE_string(o, "feature.txt", "output file");
 DEFINE_int32(nt, 12, "thread num");
 
-DEFINE_string(urate_history, "./urate.history", "");
-
-inline Features gen_features(uint64 tid)
+Features gen_features(uint64 tid)
 {
-	Features fe;
-	FullPostsInfo info = try_get_info<FullPostsInfo>(tid, [](uint64 tid) { return get_full_posts_info(tid, FLAGS_num, 0, 1); }, FLAGS_history);
-	if (info.IsValid())
-	{
-		FullPostsExtractor::info() = move(info);
-		FeaturesExtractorMgr mgr;
-		add_fullposts_features(mgr);
-		mgr.extract(fe);
-		{
-			UrateInfo uinfo = try_get_info<UrateInfo>(info.pids[0], [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);
-			if (uinfo.IsValid())
-			{
-				UrateExtractor::info() = move(uinfo);
-				FeaturesExtractorMgr mgr;
-				add_urate_features(mgr);
-				mgr.extract(fe);
-			}
-			else
-			{
-				fe.clear();
-			}
-		}
-	}
-
-	return fe;
+	return gen_fullposts_features(tid, FLAGS_num, FLAGS_history, FLAGS_urate_history);
 }
 
 void run()
@@ -77,6 +55,37 @@ void run()
 	write_features(tids, labels, gen_features, FLAGS_o);
 }
 
+void run_gen_feature()
+{
+	Features fe = gen_features(FLAGS_tid);
+	Pval(fe.str());
+}
+
+void run_predict()
+{
+	Features fe = gen_features(FLAGS_tid);
+	Pval(fe.str());
+	string fullpostsModelPath = "./model";
+	PSCONF(fullpostsModelPath, "Global");
+	auto& predictor = SharedPredictors::Instance(fullpostsModelPath);
+	Pval(predictor->Predict(fe));
+}
+
+void run_predicts()
+{
+	string fullpostsModelPath = "./model";
+	PSCONF(fullpostsModelPath, "Global");
+	auto& predictor = SharedPredictors::Instance(fullpostsModelPath);
+	uint64 tid;
+	while (true)
+	{
+		cin >> tid;
+		Pval(tid);
+		Features fe = gen_features(tid);
+		Pval(fe.str());
+		Pval(predictor->Predict(fe));
+	}
+}
 
 int main(int argc, char *argv[])
 {
@@ -90,7 +99,23 @@ int main(int argc, char *argv[])
 		FLAGS_v = FLAGS_vl;
 	//SharedConf::init("fullposts_strategy.conf");
 	SharedConf::init("urate_strategy.conf");
-	run();
+
+	if (FLAGS_gf)
+	{
+		run_gen_feature();
+	}
+	else if (FLAGS_predict == 1)
+	{
+		run_predict();
+	}
+	else if (FLAGS_predict == 2)
+	{
+		run_predicts();
+	}
+	else
+	{ //Ä¬ÈÏÑµÁ·Ä£Ê½
+		run();
+	}
 
 	return 0;
 }

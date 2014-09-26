@@ -56,6 +56,25 @@ namespace tieba {
 		mgr.add(new SequenceExtractor);
 		mgr.add(new DictMatchExtractor);
 	}
+
+	inline Features gen_urate_features(uint64 pid, string historyPath)
+	{
+		Features fe;
+		/*UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);*/
+		int historyNum = 25;
+		PSCONF(historyNum, "Urate");
+		UrateInfo info = try_get_info<UrateInfo>(pid, [&](uint64 pid) { return get_urate_info(pid, true, historyNum); }, historyPath);
+		if (info.IsValid())
+		{
+			//VLOG(0) << "Before move";
+			UrateExtractor::info() = move(info);
+			//VLOG(0) << "After move";
+			FeaturesExtractorMgr mgr;
+			add_urate_features(mgr);
+			mgr.extract(fe);
+		}
+		return fe;
+	}
 }  //----end of namespace tieba
 }  //----end of namespace gezi
 
