@@ -11,6 +11,8 @@
 
 #include "../include/tools/redis/RedisClient.h"
 
+#include "../include/ProgressBar.h"
+
 #include "../include/Identifer.h"
 
 #include "../include/SharedIdentifers.h"
@@ -41,8 +43,6 @@
 
 #include "../include/Segmentor.h"
 const int gezi::SegHandle::SEG_BUFF_SIZE;
-
-#include "../include/ProgressBar.h"
 
 #include "../include/tools/content_process.h"
 
@@ -285,13 +285,8 @@ bp::scope vector_less__int__greater__scope( vector_less__int__greater__exposer )
 vector_less__int__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< int >, true >() );
 }
 
-{ //scope begin
-typedef bp::class_< std::vector< gezi::tieba::UserInfo > > vector_less__gezi_scope_tieba_scope_UserInfo__greater__exposer_t;
-vector_less__gezi_scope_tieba_scope_UserInfo__greater__exposer_t vector_less__gezi_scope_tieba_scope_UserInfo__greater__exposer = vector_less__gezi_scope_tieba_scope_UserInfo__greater__exposer_t("vector_less__gezi_scope_tieba_scope_UserInfo__greater_");
-bp::scope vector_less__gezi_scope_tieba_scope_UserInfo__greater__scope( vector_less__gezi_scope_tieba_scope_UserInfo__greater__exposer );
-//WARNING: the next line of code will not compile, because "::gezi::tieba::UserInfo" does not have operator== !
-//         vector_less__gezi_scope_tieba_scope_UserInfo__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< gezi::tieba::UserInfo > >() );
-} //scope end
+bp::class_< std::vector< gezi::tieba::UserInfo > >("vector_less__gezi_scope_tieba_scope_UserInfo__greater_")
+.def( bp::vector_indexing_suite< ::std::vector< gezi::tieba::UserInfo > >() );
 
 bp::class_< std::vector< gezi::tieba::UrlInfo > >("vector_less__gezi_scope_tieba_scope_UrlInfo__greater_")
 .def( bp::vector_indexing_suite< ::std::vector< gezi::tieba::UrlInfo > >() );
@@ -2404,6 +2399,7 @@ bp::class_< gezi::tieba::UrlInfo >( "UrlInfo" )
 .def_readwrite( "url", &gezi::tieba::UrlInfo::url );
 
 bp::class_< gezi::tieba::UserInfo >( "UserInfo" )
+.def( bp::self == bp::self )
 .def_readwrite( "birthYear", &gezi::tieba::UserInfo::birthYear )
 .def_readwrite( "email", &gezi::tieba::UserInfo::email )
 .def_readwrite( "followCount", &gezi::tieba::UserInfo::followCount )
@@ -3613,7 +3609,7 @@ bp::def(
 
 { //::gezi::tieba::get_users_info
 
-typedef ::std::vector< gezi::tieba::UserInfo > ( *get_users_info_function_type )( ::std::vector< unsigned int >,bool,bool );
+typedef ::std::vector< gezi::tieba::UserInfo > ( *get_users_info_function_type )( ::std::vector< unsigned int > const,bool,bool );
 
 bp::def(
 "get_users_info"

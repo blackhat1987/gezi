@@ -540,6 +540,14 @@
     <ClCompile Include="src\SharedSegmentor.cpp" />
     <ClCompile Include="src\word_seg.cpp" />
     <ClCompile Include="test\linq\test.cc" />
+    <ClCompile Include="test\mpi\boost_broadcast.cc" />
+    <ClCompile Include="test\mpi\boost_gather.cc" />
+    <ClCompile Include="test\mpi\boost_hello_world.cc" />
+    <ClCompile Include="test\mpi\boost_hello_world_noblocking.cc" />
+    <ClCompile Include="test\mpi\boost_mpi.cc" />
+    <ClCompile Include="test\mpi\boost_reduce.cc" />
+    <ClCompile Include="test\mpi\hellow.cc" />
+    <ClCompile Include="test\mpi\simple.cc" />
     <ClCompile Include="test\openmp\hello.cc" />
     <ClCompile Include="test\openmp\test.cc" />
     <ClCompile Include="test\redis\test_redis_client.cc" />
