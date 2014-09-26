@@ -15,7 +15,6 @@
 #define FILE_UTIL_H_
 #include "common_def.h"
 #include "hashmap_util.h"
-#include "log_util.h"
 #include <glog/logging.h>
 #define  BOOST_NO_CXX11_SCOPED_ENUMS
 #include <boost/filesystem.hpp> //@TODO 尽管define仍然c++0x会造成copy_file失败

@@ -16,13 +16,17 @@
 #include <string>
 #include <vector>
 #include <iconv.h>
-#include "log_util.h"
+
+//@TODO baidu depend will move to LOCAL
+#ifndef NO_BAIDU_DEP
 #include "chinese.h"
+#include "encoding_convert.h"
+#endif
+
 #include <boost/algorithm/string.hpp>
 #include <boost/range/algorithm/remove_if.hpp>
 
 #include "wstring_util.h"
-#include "encoding_convert.h"
 #include "common_def.h"
 #include "reg_util.h"
 #include "stl_util.h"

@@ -147,8 +147,8 @@ namespace gezi {
 		int _level;
 	};
 
-#include "datetime_util.h"
 #ifndef GCCXML
+#include "datetime_util.h" //ºÍgccxml³åÍ»
 	template<typename _Key,
 		template<class _Kty, class _Ty, typename...> class _Map = std::unordered_map>
 	class TimerMap

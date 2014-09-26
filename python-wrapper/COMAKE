@@ -88,8 +88,11 @@ if GCC_HIGH  == 1:
 #LDFLAGS('-ldl -lpthread -lrt -rdynamic', GCC_LDFLAGS)
 LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -lcurl -ldl -rdynamic -L./ -lpython2.7 -lboost_python -Wl,-rpath=./', GCC_LDFLAGS)
 
-#ÒÀÀµÄ£¿ée
+#ÒÀÀµÄ£¿é
 ImportConfigsFrom('..')
+CONFIGS('third-64/boost.1.53')
+
+#add these----
 CONFIGS('third-64/libcurl@base')
 CONFIGS('app/search/ksarch/store/proxy-lib/redis@base')
 CONFIGS('public/ub')
@@ -105,7 +108,7 @@ headers=''
 LIBS('./libpython2.7.so ./libboost_python.so ../include/tools/pinyin/libPYNotation.a ../libgezi_json.a')
 #SharedLibrary('wordseg',Sources('wordseg_py.cc', srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),LinkDeps(True))
 srcs=GLOB('../src/*.cpp ../src/PythonWrapper/*.cpp')
-SharedLibrary('gezi',Sources('gezi_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
+#SharedLibrary('gezi',Sources('gezi_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 SharedLibrary('segmentor',Sources('segmentor_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 #SharedLibrary('feature',Sources('feature_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 SharedLibrary('tieba',Sources('tieba_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))

@@ -10,7 +10,7 @@
 
 #include <string>
 #include <vector>
-#include "log_util.h"
+//#include "log_util.h"
 #include "uconv.h"
 
 namespace gezi
@@ -23,7 +23,7 @@ inline std::string gbk_to_utf8(const std::string & src, int flags = UCONV_INVCHA
 
   if (::gbk_to_utf8(src.c_str(), src.length(), &outbuf[0], outlen, flags) < 0)
   {
-    LOG_WARNING("Convert from gbk_to_utf8 fail:%s", src.c_str());
+    //LOG_WARNING("Convert from gbk_to_utf8 fail:%s", src.c_str());
     return "";
   }
 
@@ -38,7 +38,7 @@ inline std::string utf8_to_gbk(const std::string & src, int flags = UCONV_INVCHA
 
   if (::utf8_to_gbk(src.c_str(), src.length(), &outbuf[0], outlen, flags) < 0)
   {
-    LOG_WARNING("Convert from utf8_to_gbk fail:%s", src.c_str());
+    //LOG_WARNING("Convert from utf8_to_gbk fail:%s", src.c_str());
     return "";
   }
 
