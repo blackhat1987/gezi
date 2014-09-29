@@ -200,8 +200,10 @@ namespace gezi {
 		template<class Archive>
 		void serialize(Archive &ar, const unsigned int version)
 		{
-			ar & _hashdict;
-			ar & _index;
+		/*	ar & _hashdict;
+			ar & _index;*/
+			ar & BOOST_SERIALIZATION_NVP(_hashdict);
+			ar & BOOST_SERIALIZATION_NVP(_index);
 		}
 	protected:
 		HashMap _hashdict;
@@ -278,8 +280,10 @@ namespace gezi {
 		template<class Archive>
 		void serialize(Archive &ar, const unsigned int version)
 		{
-			ar & boost::serialization::base_object<Identifer>(*this);
-			ar & _values;
+			/*	ar & boost::serialization::base_object<Identifer>(*this);
+				ar & _values;*/
+			ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Identifer);
+			ar & BOOST_SERIALIZATION_NVP(_values);
 		}
 
 	private:

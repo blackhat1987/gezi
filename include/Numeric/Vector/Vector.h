@@ -150,6 +150,7 @@ namespace gezi {
 			indices.clear();
 		}
 
+		//ToDesnse和ToSparse尽量不用 使用MakeDesne MakeSparse 
 		void ToDense()
 		{
 			Fvec vec(length, _zeroValue);
@@ -980,7 +981,7 @@ namespace gezi {
 		template<class Archive>
 		void serialize(Archive &ar, const unsigned int version)
 		{
-			ar & indices;
+			/*ar & indices;
 			ar & values;
 			ar & length;
 			ar & sparsityRatio;
@@ -988,7 +989,17 @@ namespace gezi {
 			ar & keepSparse;
 			ar & normalized;
 			ar & numNonZeros;
-			ar & _zeroValue;
+			ar & _zeroValue;*/
+
+			ar & BOOST_SERIALIZATION_NVP(indices);
+			ar & BOOST_SERIALIZATION_NVP(values);
+			ar & BOOST_SERIALIZATION_NVP(length);
+			ar & BOOST_SERIALIZATION_NVP(sparsityRatio);
+			ar & BOOST_SERIALIZATION_NVP(keepDense);
+			ar & BOOST_SERIALIZATION_NVP(keepSparse);
+			ar & BOOST_SERIALIZATION_NVP(normalized);
+			ar & BOOST_SERIALIZATION_NVP(numNonZeros);
+			ar & BOOST_SERIALIZATION_NVP(_zeroValue);
 		}
 	private:
 		//获取dense格式表示结构中的非0数目

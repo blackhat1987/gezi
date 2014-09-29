@@ -87,6 +87,8 @@ if GCC_HIGH  == 1:
 #链接参数.
 #LDFLAGS('-ldl -lpthread -lrt -rdynamic', GCC_LDFLAGS)
 LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -lcurl -ldl -rdynamic -L./ -lpython2.7 -lboost_python -Wl,-rpath=./', GCC_LDFLAGS)
+#LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -lcurl -ldl -rdynamic -L./ -lpython2.7 -lboost_python -Wl,-rpath=/home/users/chenghuige/rsc/app/search/sep/anti-spam/gezi/python-wrapper', GCC_LDFLAGS)
+#LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -lcurl -ldl -rdynamic -L./ -lpython2.7 -lboost_python -Wl,-rpath=/home/users/chenghuige/.jumbo/lib', GCC_LDFLAGS)
 
 #依赖模块
 ImportConfigsFrom('..')

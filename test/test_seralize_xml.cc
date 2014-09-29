@@ -49,7 +49,34 @@ struct Node
 	}
 #endif
 	
+	void Save(string path)
+	{
+		//serialize_util::save_xml(*this, path); //基类这样 子类调用Save没办法保存子类的任何信息
+		Save_(path);
+	}
+
+	virtual void Save_(string path)
+	{
+		
+	}
 };
+
+struct ChildNode : public Node
+{
+	int height = 178;
+	template<class Archive>
+	void serialize(Archive &ar, const unsigned int version)
+	{
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Node);
+		ar & BOOST_SERIALIZATION_NVP(height);
+	}
+
+	virtual void Save_(string path) override
+	{
+		serialize_util::save_xml(*this, path);
+	}
+};
+
 TEST(serialize_vector, func)
 {
 	vector<uint64> pids = { 56934773506, 56929671202, 56921814305, 56921851753, 56921859840 };
@@ -134,6 +161,42 @@ TEST(seralize_text_map_struct, func)
 
 }
 #else
+//看上去写成xml格式最好的选择 然后仍然可以写binary和 text 
+//但是写成普通格式就损失了xml格式的可能了 @TODO binary,text,xml的性能对比
+TEST(seralize_text_vector_struct, func)
+{
+	Node node;
+	vector<Node> vec;
+	vec.push_back(node);
+	node.name = "meixi";
+	node.age = 27;
+	vec.push_back(node);
+	serialize::save_text(vec, "./test.data/nodeVec.txt");
+	{
+		vector<Node> vec;
+		serialize::load_text("./test.data/nodeVec.txt", vec);
+		Pval(vec.size());
+		PrintVec2(vec, name, age);
+	}
+}
+
+TEST(seralize_binary_vector_struct, func)
+{
+	Node node;
+	vector<Node> vec;
+	vec.push_back(node);
+	node.name = "meixi";
+	node.age = 27;
+	vec.push_back(node);
+	serialize::save(vec, "./test.data/nodeVec.bin");
+	{
+		vector<Node> vec;
+		serialize::load("./test.data/nodeVec.bin", vec);
+		Pval(vec.size());
+		PrintVec2(vec, name, age);
+	}
+}
+
 TEST(seralize_xml_vector_struct, func)
 {
 	Node node;
@@ -169,6 +232,12 @@ TEST(seralize_xml_map_struct, func)
 }
 #endif
 
+
+TEST(seralize_derived, func)
+{
+	ChildNode cnode;
+	cnode.Save("./test.data/cnode.xml");
+}
 
 int main(int argc, char *argv[])
 {

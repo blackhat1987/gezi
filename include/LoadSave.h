@@ -40,6 +40,16 @@ namespace gezi {
 			VLOG(0) << Name() << " load as text from " << file;
 		}
 
+		virtual void SaveXml(string file)
+		{
+			VLOG(0) << Name() << " save as xml to " << file;
+		}
+
+		virtual void LoadXml(string file)
+		{
+			VLOG(0) << Name() << " load as xml from " << file;
+		}
+
 		virtual string Name()
 		{
 			return "";

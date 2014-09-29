@@ -36,8 +36,7 @@ cd ..
 popd
 sh gen-py.sh $1
 comake2 -P
-./fix-makefile.py ./Makefile ./Makefile.bak 
-cp ./Makefile.bak ./Makefile
+sh ./fix-makefile.sh 
 make clean
 time make -j12 2>&1 | tee make-result.txt
 grep --color=auto -B 1  error:  make-result.txt

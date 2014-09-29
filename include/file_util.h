@@ -623,6 +623,16 @@ namespace gezi {
 			obj->SaveText(name);
 		}
 	}
+
+	template<typename T>
+	inline void save_shared_ptr_asxml(T obj, string name)
+	{
+		if (obj != nullptr)
+		{
+			obj->SaveXml(name);
+		}
+	}
+
 } //----end of namespace gezi
 
 #define SAVE_SHARED_PTR(obj)\
@@ -630,6 +640,9 @@ namespace gezi {
 
 #define SAVE_SHARED_PTR_ASTEXT(obj)\
 	gezi::save_shared_ptr_astext(obj, _path + "/" + gezi::conf_trim(#obj) + ".txt")
+
+#define SAVE_SHARED_PTR_ASXML(obj)\
+	gezi::save_shared_ptr_asxml(obj, _path + "/" + gezi::conf_trim(#obj) + ".xml")
 
 #define OBJ_PATH(obj)\
 	string(path + "/" + gezi::conf_trim(#obj))
