@@ -48,7 +48,7 @@ namespace serialize_util {
 	void save_xml(const T& data, string file)
 	{
 		std::ofstream ofs(file.c_str());
-		 oa(ofs); //文本的输出归档类，使用一个ostream来构造
+		 cereal::XMLOutputArchive oa(ofs); //文本的输出归档类，使用一个ostream来构造
 		 oa(CEREAL_NVP(data));
 	}
 	
