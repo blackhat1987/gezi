@@ -28,11 +28,8 @@
 #include "hashmap_util.h"
 
 #include "string_util.h" //will remove baidu dependence 
-//@OTDO baidu dependence
-#ifndef NO_BAIDU_DEP
 #include "log_util.h"
 #include "conf_util.h"
-#endif
 
 #include "debug_util.h"
 #include "serialize_util.h"

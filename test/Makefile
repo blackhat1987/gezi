@@ -1,8 +1,8 @@
 #COMAKE2 edit-mode: -*- Makefile -*-
 ####################64Bit Mode####################
 ifeq ($(shell uname -m),x86_64)
-CC=../../../../../../ps/se/toolchain/gcc_only_4.8.2/bin/g++
-CXX=../../../../../../ps/se/toolchain/gcc_only_4.8.2/bin/g++
+CC=g++
+CXX=g++
 CXXFLAGS=-g \
   -O0 \
   -pipe \
@@ -15,7 +15,8 @@ CXXFLAGS=-g \
   -fpermissive \
   -Wno-write-strings \
   -Wno-literal-suffix \
-  -Wno-unused-local-typedefs
+  -Wno-unused-local-typedefs \
+  -fopenmp
 CFLAGS=-g \
   -O0 \
   -pipe \
@@ -28,7 +29,8 @@ CFLAGS=-g \
   -fpermissive \
   -Wno-write-strings \
   -Wno-literal-suffix \
-  -Wno-unused-local-typedefs
+  -Wno-unused-local-typedefs \
+  -fopenmp
 CPPFLAGS=-D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\"
@@ -139,11 +141,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=e87c3ce94227d26fcd89f8333a722bed  COMAKE
+COMAKE_MD5=3a409f330c20846143e75896031ebafb  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf test_random test_shared_ptr test_binfinder test_seralize test_string test_bitop test_featurevector test_split test_tieba_get_info test_content_process test_cached_fetcher test_bind test_lrumap test_seralize_xml test_thread_local test_configure test_static test_cpplinq test_partial_sort test_string_util test_mean_var test_const test_matchdict test_sharedobjects test_matchdict test_erase test_max_count_by test_informaiton test_information 
+all:comake2_makefile_check .copy-so test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf test_random test_shared_ptr test_binfinder test_seralize test_string test_bitop test_featurevector test_split test_tieba_get_info test_content_process test_cached_fetcher test_bind test_lrumap test_seralize_xml test_thread_local test_configure test_static test_cpplinq test_partial_sort test_string_util test_mean_var test_const test_matchdict test_sharedobjects test_matchdict test_erase test_max_count_by test_informaiton test_information 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -163,6 +165,8 @@ ccpclean:
 .PHONY:clean
 clean:ccpclean
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mclean[0m']"
+	rm -rf .copy-so
+	rm -rf ld-linux-x86-64.so.2
 	rm -rf test_lambda
 	rm -rf ./output/bin/test_lambda
 	rm -rf test_bins
@@ -650,6 +654,10 @@ love:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlove[0m']"
 	@echo "make love done"
 
+.copy-so:
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m.copy-so[0m']"
+	ln -s ../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib//ld-linux-x86-64.so.2 ld-linux-x86-64.so.2 .
+
 test_lambda:test_lambda_test_lambda.o \
   ../include/tools/pinyin/libPYNotation.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_lambda[0m']"
@@ -683,7 +691,9 @@ test_lambda:test_lambda_test_lambda.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -695,6 +705,8 @@ test_lambda:test_lambda_test_lambda.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -725,8 +737,9 @@ test_lambda:test_lambda_test_lambda.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_lambda
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_lambda
 	mkdir -p ./output/bin
 	cp -f --link test_lambda ./output/bin
 
@@ -763,7 +776,9 @@ test_bins:test_bins_test_bins.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -775,6 +790,8 @@ test_bins:test_bins_test_bins.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -805,8 +822,9 @@ test_bins:test_bins_test_bins.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_bins
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_bins
 	mkdir -p ./output/bin
 	cp -f --link test_bins ./output/bin
 
@@ -843,7 +861,9 @@ test_datetime:test_datetime_test_datetime.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -855,6 +875,8 @@ test_datetime:test_datetime_test_datetime.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -885,8 +907,9 @@ test_datetime:test_datetime_test_datetime.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_datetime
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_datetime
 	mkdir -p ./output/bin
 	cp -f --link test_datetime ./output/bin
 
@@ -923,7 +946,9 @@ test_content_filter:test_content_filter_test_content_filter.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -935,6 +960,8 @@ test_content_filter:test_content_filter_test_content_filter.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -965,8 +992,9 @@ test_content_filter:test_content_filter_test_content_filter.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_content_filter
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_content_filter
 	mkdir -p ./output/bin
 	cp -f --link test_content_filter ./output/bin
 
@@ -1023,7 +1051,9 @@ test_regex:test_regex_test_regex.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -1035,6 +1065,8 @@ test_regex:test_regex_test_regex.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -1065,8 +1097,9 @@ test_regex:test_regex_test_regex.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_regex
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_regex
 	mkdir -p ./output/bin
 	cp -f --link test_regex ./output/bin
 
@@ -1123,7 +1156,9 @@ test_regex2:test_regex2_test_regex2.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -1135,6 +1170,8 @@ test_regex2:test_regex2_test_regex2.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -1165,8 +1202,9 @@ test_regex2:test_regex2_test_regex2.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_regex2
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_regex2
 	mkdir -p ./output/bin
 	cp -f --link test_regex2 ./output/bin
 
@@ -1223,7 +1261,9 @@ test_encode:test_encode_test_encode.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -1235,6 +1275,8 @@ test_encode:test_encode_test_encode.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -1265,8 +1307,9 @@ test_encode:test_encode_test_encode.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_encode
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_encode
 	mkdir -p ./output/bin
 	cp -f --link test_encode ./output/bin
 
@@ -1323,7 +1366,9 @@ test_json:test_json_test_json.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -1335,6 +1380,8 @@ test_json:test_json_test_json.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -1365,8 +1412,9 @@ test_json:test_json_test_json.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_json
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_json
 	mkdir -p ./output/bin
 	cp -f --link test_json ./output/bin
 
@@ -1423,7 +1471,9 @@ test_escape:test_escape_test_escape.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -1435,6 +1485,8 @@ test_escape:test_escape_test_escape.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -1465,8 +1517,9 @@ test_escape:test_escape_test_escape.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_escape
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_escape
 	mkdir -p ./output/bin
 	cp -f --link test_escape ./output/bin
 
@@ -1523,7 +1576,9 @@ test_other:test_other_test_other.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -1535,6 +1590,8 @@ test_other:test_other_test_other.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -1565,8 +1622,9 @@ test_other:test_other_test_other.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_other
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_other
 	mkdir -p ./output/bin
 	cp -f --link test_other ./output/bin
 
@@ -1623,7 +1681,9 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -1635,6 +1695,8 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -1665,8 +1727,9 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_feature_selector
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_feature_selector
 	mkdir -p ./output/bin
 	cp -f --link test_feature_selector ./output/bin
 
@@ -1703,7 +1766,9 @@ openmp_hello:openmp/openmp_hello_hello.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -1715,6 +1780,8 @@ openmp_hello:openmp/openmp_hello_hello.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -1745,8 +1812,9 @@ openmp_hello:openmp/openmp_hello_hello.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o openmp_hello
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o openmp_hello
 	mkdir -p ./bin
 	cp -f --link openmp_hello ./bin
 
@@ -1803,7 +1871,9 @@ openmp_test:openmp/openmp_test_test.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -1815,6 +1885,8 @@ openmp_test:openmp/openmp_test_test.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -1845,8 +1917,9 @@ openmp_test:openmp/openmp_test_test.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o openmp_test
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o openmp_test
 	mkdir -p ./bin
 	cp -f --link openmp_test ./bin
 
@@ -1883,7 +1956,9 @@ test_exception:test_exception_test_exception.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -1895,6 +1970,8 @@ test_exception:test_exception_test_exception.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -1925,8 +2002,9 @@ test_exception:test_exception_test_exception.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_exception
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_exception
 	mkdir -p ./bin
 	cp -f --link test_exception ./bin
 
@@ -1963,7 +2041,9 @@ test_map_util:test_map_util_test_map_util.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -1975,6 +2055,8 @@ test_map_util:test_map_util_test_map_util.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -2005,8 +2087,9 @@ test_map_util:test_map_util_test_map_util.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_map_util
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_map_util
 	mkdir -p ./bin
 	cp -f --link test_map_util ./bin
 
@@ -2063,7 +2146,9 @@ test_seg:test_seg_test_seg.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -2075,6 +2160,8 @@ test_seg:test_seg_test_seg.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -2105,8 +2192,9 @@ test_seg:test_seg_test_seg.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_seg
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_seg
 	mkdir -p ./output/bin
 	cp -f --link test_seg ./output/bin
 
@@ -2163,7 +2251,9 @@ test_identifer:test_identifer_test_identifer.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -2175,6 +2265,8 @@ test_identifer:test_identifer_test_identifer.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -2205,8 +2297,9 @@ test_identifer:test_identifer_test_identifer.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_identifer
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_identifer
 	mkdir -p ./output/bin
 	cp -f --link test_identifer ./output/bin
 
@@ -2263,7 +2356,9 @@ test_linear:test_linear_test_linear.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -2275,6 +2370,8 @@ test_linear:test_linear_test_linear.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -2305,8 +2402,9 @@ test_linear:test_linear_test_linear.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_linear
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_linear
 	mkdir -p ./output/bin
 	cp -f --link test_linear ./output/bin
 
@@ -2363,7 +2461,9 @@ test_pinyin:test_pinyin_test_pinyin.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -2375,6 +2475,8 @@ test_pinyin:test_pinyin_test_pinyin.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -2405,8 +2507,9 @@ test_pinyin:test_pinyin_test_pinyin.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_pinyin
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_pinyin
 	mkdir -p ./output/bin
 	cp -f --link test_pinyin ./output/bin
 
@@ -2463,7 +2566,9 @@ test_namepattern:test_namepattern_test_namepattern.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -2475,6 +2580,8 @@ test_namepattern:test_namepattern_test_namepattern.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -2505,8 +2612,9 @@ test_namepattern:test_namepattern_test_namepattern.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_namepattern
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_namepattern
 	mkdir -p ./output/bin
 	cp -f --link test_namepattern ./output/bin
 
@@ -2563,7 +2671,9 @@ test_conf:test_conf_test_conf.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -2575,6 +2685,8 @@ test_conf:test_conf_test_conf.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -2605,8 +2717,9 @@ test_conf:test_conf_test_conf.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_conf
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_conf
 	mkdir -p ./output/bin
 	cp -f --link test_conf ./output/bin
 
@@ -2663,7 +2776,9 @@ test_random:test_random_test_random.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -2675,6 +2790,8 @@ test_random:test_random_test_random.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -2705,8 +2822,9 @@ test_random:test_random_test_random.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_random
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_random
 	mkdir -p ./output/bin
 	cp -f --link test_random ./output/bin
 
@@ -2763,7 +2881,9 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -2775,6 +2895,8 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -2805,8 +2927,9 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_shared_ptr
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_shared_ptr
 	mkdir -p ./output/bin
 	cp -f --link test_shared_ptr ./output/bin
 
@@ -2863,7 +2986,9 @@ test_binfinder:test_binfinder_test_binfinder.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -2875,6 +3000,8 @@ test_binfinder:test_binfinder_test_binfinder.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -2905,8 +3032,9 @@ test_binfinder:test_binfinder_test_binfinder.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_binfinder
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_binfinder
 	mkdir -p ./output/bin
 	cp -f --link test_binfinder ./output/bin
 
@@ -2963,7 +3091,9 @@ test_seralize:test_seralize_test_seralize.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -2975,6 +3105,8 @@ test_seralize:test_seralize_test_seralize.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -3005,8 +3137,9 @@ test_seralize:test_seralize_test_seralize.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_seralize
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_seralize
 	mkdir -p ./output/bin
 	cp -f --link test_seralize ./output/bin
 
@@ -3063,7 +3196,9 @@ test_string:test_string_test_string.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -3075,6 +3210,8 @@ test_string:test_string_test_string.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -3105,8 +3242,9 @@ test_string:test_string_test_string.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_string
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_string
 	mkdir -p ./output/bin
 	cp -f --link test_string ./output/bin
 
@@ -3163,7 +3301,9 @@ test_bitop:test_bitop_test_bitop.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -3175,6 +3315,8 @@ test_bitop:test_bitop_test_bitop.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -3205,8 +3347,9 @@ test_bitop:test_bitop_test_bitop.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_bitop
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_bitop
 	mkdir -p ./output/bin
 	cp -f --link test_bitop ./output/bin
 
@@ -3263,7 +3406,9 @@ test_featurevector:test_featurevector_test_featurevector.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -3275,6 +3420,8 @@ test_featurevector:test_featurevector_test_featurevector.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -3305,8 +3452,9 @@ test_featurevector:test_featurevector_test_featurevector.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_featurevector
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_featurevector
 	mkdir -p ./output/bin
 	cp -f --link test_featurevector ./output/bin
 
@@ -3363,7 +3511,9 @@ test_split:test_split_test_split.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -3375,6 +3525,8 @@ test_split:test_split_test_split.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -3405,8 +3557,9 @@ test_split:test_split_test_split.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_split
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_split
 	mkdir -p ./output/bin
 	cp -f --link test_split ./output/bin
 
@@ -3463,7 +3616,9 @@ test_tieba_get_info:test_tieba_get_info_test_tieba_get_info.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -3475,6 +3630,8 @@ test_tieba_get_info:test_tieba_get_info_test_tieba_get_info.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -3505,8 +3662,9 @@ test_tieba_get_info:test_tieba_get_info_test_tieba_get_info.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_tieba_get_info
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_tieba_get_info
 	mkdir -p ./output/bin
 	cp -f --link test_tieba_get_info ./output/bin
 
@@ -3543,7 +3701,9 @@ test_content_process:test_content_process_test_content_process.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -3555,6 +3715,8 @@ test_content_process:test_content_process_test_content_process.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -3585,8 +3747,9 @@ test_content_process:test_content_process_test_content_process.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_content_process
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_content_process
 	mkdir -p ./output/bin
 	cp -f --link test_content_process ./output/bin
 
@@ -3643,7 +3806,9 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -3655,6 +3820,8 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -3685,8 +3852,9 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_cached_fetcher
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_cached_fetcher
 	mkdir -p ./output/bin
 	cp -f --link test_cached_fetcher ./output/bin
 
@@ -3743,7 +3911,9 @@ test_bind:test_bind_test_bind.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -3755,6 +3925,8 @@ test_bind:test_bind_test_bind.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -3785,8 +3957,9 @@ test_bind:test_bind_test_bind.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_bind
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_bind
 	mkdir -p ./output/bin
 	cp -f --link test_bind ./output/bin
 
@@ -3843,7 +4016,9 @@ test_lrumap:test_lrumap_test_lrumap.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -3855,6 +4030,8 @@ test_lrumap:test_lrumap_test_lrumap.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -3885,8 +4062,9 @@ test_lrumap:test_lrumap_test_lrumap.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_lrumap
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_lrumap
 	mkdir -p ./output/bin
 	cp -f --link test_lrumap ./output/bin
 
@@ -3943,7 +4121,9 @@ test_seralize_xml:test_seralize_xml_test_seralize_xml.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -3955,6 +4135,8 @@ test_seralize_xml:test_seralize_xml_test_seralize_xml.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -3985,8 +4167,9 @@ test_seralize_xml:test_seralize_xml_test_seralize_xml.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_seralize_xml
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_seralize_xml
 	mkdir -p ./output/bin
 	cp -f --link test_seralize_xml ./output/bin
 
@@ -4043,7 +4226,9 @@ test_thread_local:test_thread_local_test_thread_local.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -4055,6 +4240,8 @@ test_thread_local:test_thread_local_test_thread_local.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -4085,8 +4272,9 @@ test_thread_local:test_thread_local_test_thread_local.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_thread_local
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_thread_local
 	mkdir -p ./output/bin
 	cp -f --link test_thread_local ./output/bin
 
@@ -4143,7 +4331,9 @@ test_configure:test_configure_test_configure.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -4155,6 +4345,8 @@ test_configure:test_configure_test_configure.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -4185,8 +4377,9 @@ test_configure:test_configure_test_configure.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_configure
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_configure
 	mkdir -p ./output/bin
 	cp -f --link test_configure ./output/bin
 
@@ -4243,7 +4436,9 @@ test_static:test_static_test_static.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -4255,6 +4450,8 @@ test_static:test_static_test_static.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -4285,8 +4482,9 @@ test_static:test_static_test_static.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_static
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_static
 	mkdir -p ./output/bin
 	cp -f --link test_static ./output/bin
 
@@ -4343,7 +4541,9 @@ test_cpplinq:test_cpplinq_test_cpplinq.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -4355,6 +4555,8 @@ test_cpplinq:test_cpplinq_test_cpplinq.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -4385,8 +4587,9 @@ test_cpplinq:test_cpplinq_test_cpplinq.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_cpplinq
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_cpplinq
 	mkdir -p ./output/bin
 	cp -f --link test_cpplinq ./output/bin
 
@@ -4443,7 +4646,9 @@ test_partial_sort:test_partial_sort_test_partial_sort.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -4455,6 +4660,8 @@ test_partial_sort:test_partial_sort_test_partial_sort.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -4485,8 +4692,9 @@ test_partial_sort:test_partial_sort_test_partial_sort.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_partial_sort
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_partial_sort
 	mkdir -p ./output/bin
 	cp -f --link test_partial_sort ./output/bin
 
@@ -4523,7 +4731,9 @@ test_string_util:test_string_util_test_string_util.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -4535,6 +4745,8 @@ test_string_util:test_string_util_test_string_util.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -4565,8 +4777,9 @@ test_string_util:test_string_util_test_string_util.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_string_util
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_string_util
 	mkdir -p ./output/bin
 	cp -f --link test_string_util ./output/bin
 
@@ -4603,7 +4816,9 @@ test_mean_var:test_mean_var_test_mean_var.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -4615,6 +4830,8 @@ test_mean_var:test_mean_var_test_mean_var.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -4645,8 +4862,9 @@ test_mean_var:test_mean_var_test_mean_var.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_mean_var
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_mean_var
 	mkdir -p ./output/bin
 	cp -f --link test_mean_var ./output/bin
 
@@ -4683,7 +4901,9 @@ test_const:test_const_test_const.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -4695,6 +4915,8 @@ test_const:test_const_test_const.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -4725,8 +4947,9 @@ test_const:test_const_test_const.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_const
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_const
 	mkdir -p ./output/bin
 	cp -f --link test_const ./output/bin
 
@@ -4763,7 +4986,9 @@ test_matchdict:test_matchdict.h \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -4775,6 +5000,8 @@ test_matchdict:test_matchdict.h \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -4805,8 +5032,9 @@ test_matchdict:test_matchdict.h \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_matchdict
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_matchdict
 	mkdir -p ./output/bin
 	cp -f --link test_matchdict ./output/bin
 
@@ -4843,7 +5071,9 @@ test_sharedobjects:test_sharedobjects_test_sharedobjects.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -4855,6 +5085,8 @@ test_sharedobjects:test_sharedobjects_test_sharedobjects.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -4885,8 +5117,9 @@ test_sharedobjects:test_sharedobjects_test_sharedobjects.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_sharedobjects
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_sharedobjects
 	mkdir -p ./output/bin
 	cp -f --link test_sharedobjects ./output/bin
 
@@ -4923,7 +5156,9 @@ test_matchdict:test_matchdict_test_matchdict.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -4935,6 +5170,8 @@ test_matchdict:test_matchdict_test_matchdict.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -4965,8 +5202,9 @@ test_matchdict:test_matchdict_test_matchdict.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_matchdict
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_matchdict
 	mkdir -p ./output/bin
 	cp -f --link test_matchdict ./output/bin
 
@@ -5003,7 +5241,9 @@ test_erase:test_erase_test_erase.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -5015,6 +5255,8 @@ test_erase:test_erase_test_erase.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -5045,8 +5287,9 @@ test_erase:test_erase_test_erase.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_erase
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_erase
 	mkdir -p ./output/bin
 	cp -f --link test_erase ./output/bin
 
@@ -5083,7 +5326,9 @@ test_max_count_by:test_max_count_by_test_max_count_by.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -5095,6 +5340,8 @@ test_max_count_by:test_max_count_by_test_max_count_by.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -5125,8 +5372,9 @@ test_max_count_by:test_max_count_by_test_max_count_by.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_max_count_by
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_max_count_by
 	mkdir -p ./output/bin
 	cp -f --link test_max_count_by ./output/bin
 
@@ -5163,7 +5411,9 @@ test_informaiton:test_informaiton_test_informaiton.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -5175,6 +5425,8 @@ test_informaiton:test_informaiton_test_informaiton.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -5205,8 +5457,9 @@ test_informaiton:test_informaiton_test_informaiton.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_informaiton
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_informaiton
 	mkdir -p ./output/bin
 	cp -f --link test_informaiton ./output/bin
 
@@ -5243,7 +5496,9 @@ test_information:test_information_test_information.o \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -5255,6 +5510,8 @@ test_information:test_information_test_information.o \
   ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../third-64/boost/lib/libboost_python.a \
@@ -5285,8 +5542,9 @@ test_information:test_information_test_information.o \
   -lrt \
   -lldap \
   -lcurl \
-  -static-libgcc \
-  -static-libstdc++ -Xlinker "-)" -o test_information
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_information
 	mkdir -p ./output/bin
 	cp -f --link test_information ./output/bin
 

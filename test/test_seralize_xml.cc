@@ -239,6 +239,14 @@ TEST(seralize_derived, func)
 	cnode.Save("./test.data/cnode.xml");
 }
 
+TEST(seralize_as_conf, func)
+{
+	ChildNode cnode;
+	serialize_util::load_xml("./test.data/cnode2.xml", cnode);
+	Pval3(cnode.name, cnode.age, cnode.height);
+}
+
+
 int main(int argc, char *argv[])
 {
 	testing::InitGoogleTest(&argc, argv);

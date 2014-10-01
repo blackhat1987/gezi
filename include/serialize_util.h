@@ -199,6 +199,13 @@ namespace serialize_util {
 	}
 
 }
-namespace serialize = serialize_util;
+
+#include "conf_util.h"
+#include <boost/serialization/nvp.hpp>
+#define GEZI_SERIALIZATION_NVP(name)\
+	boost::serialization::make_nvp(gezi::conf_trim(#name).c_str(), name)
+//namespace serialize = serialize_util;  //这个地方会和creal冲突。。。 尽量不用这种namespace和函数名容易混淆冲突？
+//.. / .. / include / cereal / cereal.hpp : 378 : 18 : error : expected primary - expression before '(' token
+//serialize(*self, const_cast<T &>(t));
 namespace ser = serialize_util;
 #endif  //----end of SERIALIZE_UTIL_H_

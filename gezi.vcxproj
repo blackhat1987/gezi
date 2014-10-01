@@ -539,6 +539,7 @@
     <ClCompile Include="src\Seg.cpp" />
     <ClCompile Include="src\SharedSegmentor.cpp" />
     <ClCompile Include="src\word_seg.cpp" />
+    <ClCompile Include="test\cereal\test_cereal.cc" />
     <ClCompile Include="test\linq\test.cc" />
     <ClCompile Include="test\mpi\boost_broadcast.cc" />
     <ClCompile Include="test\mpi\boost_gather.cc" />
@@ -550,6 +551,7 @@
     <ClCompile Include="test\mpi\simple.cc" />
     <ClCompile Include="test\openmp\hello.cc" />
     <ClCompile Include="test\openmp\test.cc" />
+    <ClCompile Include="test\python-embedding\simple_py_embedding.cc" />
     <ClCompile Include="test\redis\test_redis_client.cc" />
     <ClCompile Include="test\test_bind.cc" />
     <ClCompile Include="test\test_binfinder.cc" />

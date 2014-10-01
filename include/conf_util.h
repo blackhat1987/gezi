@@ -19,13 +19,17 @@
 #define CONF_UTIL_H_
 
 #include <string>
+#ifndef NO_BAIDU_DEP
 #include "Configure.h"
+#endif
 #include "log_util.h"
 #include "debug_util.h" //common util 里面已经有debug util了。。 为啥还需要 @TODO FIXME
 #include "common_util.h" 
 #include "Exception.h"
 #include "string_util.h"
+#ifndef NO_BAIDU_DEP
 #include "convert_type.h"
+#endif
 namespace gezi
 {
 	inline int parse_int_param(string name, string line)
@@ -63,7 +67,7 @@ namespace gezi
 		}
 		return INT(line.substr(name.size()));
 	}
-
+#ifndef NO_BAIDU_DEP
 	using comcfg::Configure;
 
 	class SharedConf
@@ -488,8 +492,10 @@ namespace gezi
 		strncpy(dest, tmp.c_str(), tmp.length());
 		dest[tmp.length()] = '\0';
 	}
-
+#endif
 }
+
+#ifndef NO_BAIDU_DEP
 
 //@TODO 以后外部都用宏调用 如果#define 。。 可以下面所有变为空去掉对conf的依赖 即代码没有配置完全是默认
 #define SCONF(s)\
@@ -572,4 +578,5 @@ namespace gezi
 	PROP_STRCPY_##s##result = gezi::get_val(conf, field, gezi::conf_trim(#s), default_value); \
 	strncpy(root, PROP_STRCPY_##s##result.c_str(), PROP_STRCPY_##s##result.length()); \
 	root[PROP_STRCPY_##s##result.length()] = '\0'
+#endif //NO_BAIDU_DEP
 #endif  //----end of CONF_UTIL_H_

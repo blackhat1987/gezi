@@ -1,12 +1,12 @@
-/** 
+/**
  *  ==============================================================================
- * 
+ *
  *          \file   log_util
  *
- *        \author   chenghuige  
- *          
+ *        \author   chenghuige
+ *
  *          \date   2011-04-02 09:36:45.642369
- *  
+ *
  *  \Description:   com log wrapper
  *  ==============================================================================
  */
@@ -15,6 +15,8 @@
 #define LOG_UTIL_H_
 #include <string>
 #include <glog/logging.h>
+#ifndef NO_BAIDU_DEP
+
 #include "com_log.h" 
 #include "ul_log.h"
 
@@ -41,7 +43,7 @@
 #define FILE__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
 #define LOG_FATAL(fmt, arg...) do { \
-	com_writelog(COMLOG_FATAL, "[%d]: " fmt,  __LINE__, ## arg); \
+	com_writelog(COMLOG_FATAL, "[%d]: " fmt, __LINE__, ## arg); \
 } while (0)
 
 #define LOG_ERROR(fmt, arg...) do { \
@@ -61,12 +63,12 @@
 //} while (0)
 
 #define LOG_NOTICE(fmt, arg...) do { \
-	com_writelog(COMLOG_NOTICE, "[%s:%d:%s]: " fmt,  FILE__, __LINE__, __FUNCTION__, ## arg); \
+	com_writelog(COMLOG_NOTICE, "[%s:%d:%s]: " fmt, FILE__, __LINE__, __FUNCTION__, ## arg); \
 } while (0)
 
 
 #define LOG_TRACE(fmt, arg...) do { \
-	com_writelog(COMLOG_TRACE, "[%s:%d:%s]: " fmt,  FILE__, __LINE__, __FUNCTION__, ## arg); \
+	com_writelog(COMLOG_TRACE, "[%s:%d:%s]: " fmt, FILE__, __LINE__, __FUNCTION__, ## arg); \
 } while (0)
 
 #define LOG_DEBUG(fmt, arg...) do { \
@@ -88,59 +90,60 @@
 
 namespace gezi
 {
-class LogHelper
-{
-public:
-	LogHelper(int log_level = 16)
-	{ //设置16是打印debug的 8一般OK 没有debug,有trace warning
-		VLOG(0) << "Log to tty with log_level " << 16;
-		com_device_t dev[1];
-		com_logstat_t logstat;
-		logstat.sysevents = log_level;
-		strcpy(dev[0].type, "TTY");
-		COMLOG_SETSYSLOG(dev[0]);
-		com_openlog("test", dev, 1, &logstat);
-	}
-
-	static void set_level(int log_level)
+	class LogHelper
 	{
-		// 直接调用下面的函数，传入一个新的logstat
-		com_logstat_t logstat;
-		logstat.sysevents = log_level;
-		com_changelogstat(&logstat);
-	}
+	public:
+		LogHelper(int log_level = 16)
+		{ //设置16是打印debug的 8一般OK 没有debug,有trace warning
+			VLOG(0) << "Log to tty with log_level " << 16;
+			com_device_t dev[1];
+			com_logstat_t logstat;
+			logstat.sysevents = log_level;
+			strcpy(dev[0].type, "TTY");
+			COMLOG_SETSYSLOG(dev[0]);
+			com_openlog("test", dev, 1, &logstat);
+		}
 
-	//LogHelper(bool with_conf)
-	//{
-	//	//cout << "Open log use conf" << endl;
-	//}
+		static void set_level(int log_level)
+		{
+			// 直接调用下面的函数，传入一个新的logstat
+			com_logstat_t logstat;
+			logstat.sysevents = log_level;
+			com_changelogstat(&logstat);
+		}
 
-	LogHelper(const std::string& conf_file, const std::string& conf_path = "./conf")
+		//LogHelper(bool with_conf)
+		//{
+		//	//cout << "Open log use conf" << endl;
+		//}
+
+		LogHelper(const std::string& conf_file, const std::string& conf_path = "./conf")
+		{
+			int ret = com_loadlog(conf_path.c_str(), conf_file.c_str());
+			VLOG(0) << "comlog load status " << ret;
+			CHECK_EQ(ret, 0);
+		}
+
+		~LogHelper()
+		{
+			com_closelog();
+		}
+	};
+
+	class ThreadLogHelper
 	{
-		int ret = com_loadlog(conf_path.c_str(), conf_file.c_str());
-		VLOG(0) << "comlog load status " << ret;
-		CHECK_EQ(ret, 0);
-	}
+	public:
 
-	~LogHelper()
-	{
-		com_closelog();
-	}
-};
+		ThreadLogHelper()
+		{
+			com_openlog_r();
+		}
 
-class ThreadLogHelper
-{
-public:
-
-	ThreadLogHelper()
-	{
-		com_openlog_r();
-	}
-
-	~ThreadLogHelper()
-	{
-		com_closelog_r();
-	}
-};
-}
+		~ThreadLogHelper()
+		{
+			com_closelog_r();
+		}
+	};
+} //gezi
+#endif //NO_BAID_DEP
 #endif  //----end of LOG_UTIL_H_

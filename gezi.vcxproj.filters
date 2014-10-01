@@ -1643,6 +1643,12 @@
     <ClCompile Include="test\mpi\simple.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="test\python-embedding\simple_py_embedding.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\cereal\test_cereal.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl">

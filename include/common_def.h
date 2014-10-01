@@ -25,7 +25,7 @@
 #include <memory>
 #include <thread>
 #include <omp.h> //openmp for gcc4
-using namespace std::placeholders;
+//using namespace std::placeholders; //去掉这个一个测试lambda bind的测试会有问题 但是一般ok 使用lambda不用bind 将_1等留给boost也避免冲突
 #else
 #include <boost/shared_ptr.hpp>
 #include <boost/array.hpp>
