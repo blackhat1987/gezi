@@ -14,6 +14,7 @@
 #ifndef IDENTIFER_H_
 #define IDENTIFER_H_
 #include "common_util.h"
+#include "seralize_cereal.h"
 namespace gezi {
 
 	class Identifer
