@@ -20,13 +20,11 @@
 #include <complex>      // std::complex, std::abs
 #include <cmath>
 
+#define NO_BAIDU_DEP
 #define USE_CEREAL
 #include "serialize_util.h"
 
 #include "common_util.h"
-
-#include "debug_util.h"
-
 
 using namespace std;
 //using namespace gezi;
