@@ -23,11 +23,7 @@
 #define USE_CEREAL
 #include "serialize_util.h"
 
-//#include "common_util.h"
-
-#include <gtest/gtest.h> 
-#include <glog/logging.h>
-#include <gflags/gflags.h>
+#include "common_util.h"
 
 #include "debug_util.h"
 
