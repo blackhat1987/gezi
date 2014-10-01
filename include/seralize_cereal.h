@@ -33,7 +33,7 @@
 #include <cereal/archives/json.hpp>
 #include <cereal/archives/xml.hpp>
 
-namespace gezi {
+namespace serialize_util {
 	using std::string;
 	/**将data序列化输出到file*/
 	template<typename T>
