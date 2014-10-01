@@ -50,6 +50,10 @@
 #include "seralize_cereal.h"
 #endif
 
+namespace serialize_util {
+
+}
+
 namespace ser = serialize_util;
 
 #endif  //----end of SERIALIZE_UTIL_H_
