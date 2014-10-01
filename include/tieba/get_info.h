@@ -278,7 +278,7 @@ namespace gezi {
 			string historyFile = historyDir + "/" + STR(id) +  end;
 			if (!forceFetch)
 			{
-				serialize::load_xml(historyFile, info);
+				serialize_util::load_xml(historyFile, info);
 			}
 			if (useFetch)
 			{
@@ -287,7 +287,7 @@ namespace gezi {
 					info = func(id);
 					if (info.IsValid())
 					{
-						serialize::save_xml(info, historyFile);
+						serialize_util::save_xml(info, historyFile);
 					}
 					else
 					{ //尝试再一次获取
@@ -297,7 +297,7 @@ namespace gezi {
 							info = func(id);
 							if (info.IsValid())
 							{
-								serialize::save_xml(info, historyFile);
+								serialize_util::save_xml(info, historyFile);
 							}
 							else
 							{

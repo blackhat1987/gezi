@@ -34,7 +34,7 @@ void run_get_urate_info(uint64 pid)
 	auto info = get_urate_info(pid, FLAGS_num);
 	Pval2_1(info.postId, info.postsInfo.numPosts);
 	string historyPath = FLAGS_history + "/" + STR(pid) + ".xml";
-	serialize::save_xml(info, historyPath);
+	serialize_util::save_xml(info, historyPath);
 }
 
 void run()

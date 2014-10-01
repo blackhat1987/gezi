@@ -33,14 +33,14 @@ void run()
 	UrateInfo info;
 	{
 		AutoTimer timer("Loading info");
-		serialize::load_xml(urateFile, info);
+		serialize_util::load_xml(urateFile, info);
 		Pval2(info.postId, info.postsInfo.numPosts);
 		if (info.postId == 0)
 		{
 			AutoTimer timer("GetUrateInfo");
 			info = get_urate_info(FLAGS_pid);
 			Pval2(info.postId, info.postsInfo.numPosts);
-			serialize::save_xml(info, urateFile);
+			serialize_util::save_xml(info, urateFile);
 		}
 	}
 	UrateExtractor::info() = move(info);

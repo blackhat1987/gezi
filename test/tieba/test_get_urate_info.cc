@@ -37,7 +37,7 @@ TEST(get_urate_info, func)
 	}
 	{
 		AutoTimer timer("SaveXml");
-		serialize::save_xml(info, "./test.data/urate_info.xml");
+		serialize_util::save_xml(info, "./test.data/urate_info.xml");
 	}
 	{
 		UrateInfo info;

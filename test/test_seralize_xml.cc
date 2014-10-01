@@ -80,10 +80,10 @@ struct ChildNode : public Node
 TEST(serialize_vector, func)
 {
 	vector<uint64> pids = { 56934773506, 56929671202, 56921814305, 56921851753, 56921859840 };
-	serialize::save(pids, "./test.data/pids.bin");
+	serialize_util::save(pids, "./test.data/pids.bin");
 	{
 		vector<uint64> pids;
-		serialize::load("./test.data/pids.bin", pids);
+		serialize_util::load("./test.data/pids.bin", pids);
 		Pvec(pids);
 	}
 }
@@ -91,10 +91,10 @@ TEST(serialize_vector, func)
 TEST(serialize_text_vector, func)
 {
 	vector<uint64> pids = { 56934773506, 56929671202, 56921814305, 56921851753, 56921859840 };
-	serialize::save_text(pids, "./test.data/pids.txt");
+	serialize_util::save_text(pids, "./test.data/pids.txt");
 	{
 		vector<uint64> pids;
-		serialize::load_text("./test.data/pids.txt", pids);
+		serialize_util::load_text("./test.data/pids.txt", pids);
 		Pvec(pids);
 	}
 }
@@ -102,10 +102,10 @@ TEST(serialize_text_vector, func)
 TEST(seralize_xml_vector, func)
 {
 	vector<uint64> pids = { 56934773506, 56929671202, 56921814305, 56921851753, 56921859840 };
-	serialize::save_xml(pids, "./test.data/pids.xml");
+	serialize_util::save_xml(pids, "./test.data/pids.xml");
 	{
 		vector<uint64> pids;
-		serialize::load_xml("./test.data/pids.xml", pids);
+		serialize_util::load_xml("./test.data/pids.xml", pids);
 		Pvec(pids);
 	}
 }
@@ -113,10 +113,10 @@ TEST(seralize_xml_vector, func)
 TEST(seralize_text_map, func)
 {
 	map<string, uint64> m = { { "abc" , 3 }, { "def" , 4 } };
-	serialize::save_text(m, "./test.data/map.txt");
+	serialize_util::save_text(m, "./test.data/map.txt");
 	{
 		map<string, uint64> m;
-		serialize::load_text("./test.data/map.txt", m);
+		serialize_util::load_text("./test.data/map.txt", m);
 		for (auto& item : m)
 		{
 			Pval2(item.first, item.second);
@@ -127,10 +127,10 @@ TEST(seralize_text_map, func)
 TEST(seralize_xml_map, func)
 {
 	map<string, uint64> m = { { "abc" , 3 }, { "def" , 4 } };
-	serialize::save_xml(m, "./test.data/map.xml");
+	serialize_util::save_xml(m, "./test.data/map.xml");
 	{
 		map<string, uint64> m;
-		serialize::load_xml("./test.data/map.xml", m);
+		serialize_util::load_xml("./test.data/map.xml", m);
 		for (auto& item : m)
 		{
 			Pval2(item.first, item.second);
@@ -147,10 +147,10 @@ TEST(seralize_text_vector_struct, func)
 	node.name = "meixi";
 	node.age = 27;
 	vec.push_back(node);
-	serialize::save_text(vec, "./test.data/nodeVec.txt");
+	serialize_util::save_text(vec, "./test.data/nodeVec.txt");
 	{
 		vector<Node> vec;
-		serialize::load_text("./test.data/nodeVec.txt", vec);
+		serialize_util::load_text("./test.data/nodeVec.txt", vec);
 		Pval(vec.size());
 		PrintVec2(vec, name, age);
 	}
@@ -171,10 +171,10 @@ TEST(seralize_text_vector_struct, func)
 	node.name = "meixi";
 	node.age = 27;
 	vec.push_back(node);
-	serialize::save_text(vec, "./test.data/nodeVec.txt");
+	serialize_util::save_text(vec, "./test.data/nodeVec.txt");
 	{
 		vector<Node> vec;
-		serialize::load_text("./test.data/nodeVec.txt", vec);
+		serialize_util::load_text("./test.data/nodeVec.txt", vec);
 		Pval(vec.size());
 		PrintVec2(vec, name, age);
 	}
@@ -188,10 +188,10 @@ TEST(seralize_binary_vector_struct, func)
 	node.name = "meixi";
 	node.age = 27;
 	vec.push_back(node);
-	serialize::save(vec, "./test.data/nodeVec.bin");
+	serialize_util::save(vec, "./test.data/nodeVec.bin");
 	{
 		vector<Node> vec;
-		serialize::load("./test.data/nodeVec.bin", vec);
+		serialize_util::load("./test.data/nodeVec.bin", vec);
 		Pval(vec.size());
 		PrintVec2(vec, name, age);
 	}
@@ -205,10 +205,10 @@ TEST(seralize_xml_vector_struct, func)
 	node.name = "meixi";
 	node.age = 27;
 	vec.push_back(node);
-	serialize::save_xml(vec, "./test.data/nodeVec.xml");
+	serialize_util::save_xml(vec, "./test.data/nodeVec.xml");
 	{
 		vector<Node> vec;
-		serialize::load_xml("./test.data/nodeVec.xml", vec);
+		serialize_util::load_xml("./test.data/nodeVec.xml", vec);
 		PrintVec2(vec, name, age);
 	}
 }
@@ -220,10 +220,10 @@ TEST(seralize_xml_map_struct, func)
 	node.name = "meixi";
 	node.age = 27;
 	m[1987] = node;
-	serialize::save_xml(m, "./test.data/nodeMap.xml");
+	serialize_util::save_xml(m, "./test.data/nodeMap.xml");
 	{
 		map<uint64, Node> m;
-		serialize::load_xml("./test.data/nodeMap.xml", m);
+		serialize_util::load_xml("./test.data/nodeMap.xml", m);
 		for (auto& item : m)
 		{
 			Pval3(item.first, item.second.name, item.second.age);
