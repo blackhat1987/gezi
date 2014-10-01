@@ -138,7 +138,7 @@ namespace serialize_util {
 		}
 		try
 		{
-			boost::archive::text_iarchive ia(ifs, std::ios::binary); //文本的输出归档类，使用一个ostream来构造
+			boost::archive::text_iarchive ia(ifs); //文本的输出归档类，使用一个ostream来构造
 			ia >> data;
 		}
 		catch (...)

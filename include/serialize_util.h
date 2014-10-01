@@ -24,7 +24,7 @@
 //.. / .. / include / cereal / cereal.hpp : 378 : 18 : error : expected primary - expression before '(' token
 //serialize(*self, const_cast<T &>(t));
 #else  //use ceral
-
+#include "seralize_cereal.h"
 #endif
 namespace ser = serialize_util;
 
