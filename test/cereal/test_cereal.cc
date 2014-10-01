@@ -20,12 +20,12 @@
 #include <complex>      // std::complex, std::abs
 #include <cmath>
 
+#define USE_CEREAL
+#include "serialize_util.h"
+
 #include "common_util.h"
 
-#include <cereal/types/unordered_map.hpp>
-#include <cereal/types/memory.hpp>
-#include <cereal/archives/binary.hpp>
-#include <fstream>
+
 
 using namespace std;
 using namespace gezi;
@@ -79,6 +79,92 @@ TEST(cereal, func)
 
 	SomeData myData;
 	archive(myData);
+}
+
+TEST(serialize_vector, func)
+{
+	vector<uint64> pids = { 56934773506, 56929671202, 56921814305, 56921851753, 56921859840 };
+	serialize_util::save(pids, "./pids.bin");
+	{
+		vector<uint64> pids;
+		serialize_util::load("./pids.bin", pids);
+		Pvec(pids);
+	}
+}
+
+TEST(serialize_text_vector, func)
+{
+	vector<uint64> pids = { 56934773506, 56929671202, 56921814305, 56921851753, 56921859840 };
+	serialize_util::save_text(pids, "./pids.txt");
+	{
+		vector<uint64> pids;
+		serialize_util::load_text("./pids.txt", pids);
+		Pvec(pids);
+	}
+}
+
+TEST(seralize_xml_vector, func)
+{
+	vector<uint64> pids = { 56934773506, 56929671202, 56921814305, 56921851753, 56921859840 };
+	serialize_util::save_xml(pids, "./pids.xml");
+	{
+		vector<uint64> pids;
+		serialize_util::load_xml("./pids.xml", pids);
+		Pvec(pids);
+	}
+}
+
+TEST(seralize_text_map, func)
+{
+	map<string, uint64> m = { { "abc", 3 }, { "def", 4 } };
+	serialize_util::save_text(m, "./map.txt");
+	{
+		map<string, uint64> m;
+		serialize_util::load_text("./map.txt", m);
+		for (auto& item : m)
+		{
+			Pval2(item.first, item.second);
+		}
+	}
+}
+
+TEST(seralize_xml_map, func)
+{
+	map<string, uint64> m = { { "abc", 3 }, { "def", 4 } };
+	serialize_util::save_xml(m, "./map.xml");
+	{
+		map<string, uint64> m;
+		serialize_util::load_xml("./map.xml", m);
+		for (auto& item : m)
+		{
+			Pval2(item.first, item.second);
+		}
+	}
+}
+
+TEST(save_load, func)
+{
+
+}
+
+TEST(save_load_json, func)
+{
+
+}
+
+TEST(json_as_conf, func)
+{
+
+}
+
+TEST(derive, func)
+{
+
+}
+
+TEST(shared_ptr, func)
+{
+
 }
 
 int main(int argc, char *argv[])
