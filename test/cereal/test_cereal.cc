@@ -24,6 +24,11 @@
 #include "serialize_util.h"
 
 //#include "common_util.h"
+
+#include <gtest/gtest.h> 
+#include <glog/logging.h>
+#include <gflags/gflags.h>
+
 #include "debug_util.h"
 
 
