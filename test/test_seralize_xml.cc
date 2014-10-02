@@ -17,6 +17,7 @@
 #define _DEBUG
 #define private public
 #define protected public
+#define  NO_CEREAL
 #include "common_util.h"
 #include "serialize_util.h"
 
@@ -161,8 +162,7 @@ TEST(seralize_text_map_struct, func)
 
 }
 #else
-//看上去写成xml格式最好的选择 然后仍然可以写binary和 text 
-//但是写成普通格式就损失了xml格式的可能了 @TODO binary,text,xml的性能对比
+
 TEST(seralize_text_vector_struct, func)
 {
 	Node node;

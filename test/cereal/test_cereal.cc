@@ -141,29 +141,148 @@ TEST(seralize_xml_map, func)
 	}
 }
 
-TEST(save_load, func)
+struct Node
 {
+	string name = "abc";
+	int age = 32;
+	int _id = 1024;
 
+	friend class boost::serialization::access;
+
+	template<class Archive>
+	void serialize(Archive &ar, const unsigned int version)
+	{
+		ar(CEREAL_NVP(name));
+		ar(CEREAL_NVP(age));
+		//ar(CEREAL_NVP(_id));
+		ar & GEZI_SERIALIZATION_NVP(_id);
+	}
+
+	void Save(string path)
+	{
+		//serialize_util::save_xml(*this, path); //基类这样 子类调用Save没办法保存子类的任何信息
+		Save_(path);
+	}
+
+	virtual void Save_(string path)
+	{
+
+	}
+	void SaveJson(string path)
+	{
+		//serialize_util::save_xml(*this, path); //基类这样 子类调用Save没办法保存子类的任何信息
+		SaveJson_(path);
+	}
+
+	virtual void SaveJson_(string path)
+	{
+
+	}
+};
+
+struct ChildNode : public Node
+{
+	int height = 178;
+	template<class Archive>
+	void serialize(Archive &ar, const unsigned int version)
+	{
+		ar(CEREAL_BASE_OBJECT_NVP(Node));
+		ar(CEREAL_NVP(height));
+	}
+
+	virtual void Save_(string path) override
+	{
+		serialize_util::save_xml(*this, path);
+	}
+
+	virtual void SaveJson_(string path) override
+	{
+		serialize_util::save_json(*this, path);
+	}
+};
+
+TEST(seralize_text_vector_struct, func)
+{
+	Node node;
+	vector<Node> vec;
+	vec.push_back(node);
+	node.name = "meixi";
+	node.age = 27;
+	vec.push_back(node);
+	serialize_util::save_text(vec, "./nodeVec.txt");
+	{
+		vector<Node> vec;
+		serialize_util::load_text("./nodeVec.txt", vec);
+		Pval(vec.size());
+		PrintVec2(vec, name, age);
+	}
 }
 
-TEST(save_load_json, func)
+TEST(seralize_binary_vector_struct, func)
 {
-
+	Node node;
+	vector<Node> vec;
+	vec.push_back(node);
+	node.name = "meixi";
+	node.age = 27;
+	vec.push_back(node);
+	serialize_util::save(vec, "./nodeVec.bin");
+	{
+		vector<Node> vec;
+		serialize_util::load("./nodeVec.bin", vec);
+		Pval(vec.size());
+		PrintVec2(vec, name, age);
+	}
 }
 
-TEST(json_as_conf, func)
+TEST(seralize_xml_vector_struct, func)
 {
-
+	Node node;
+	vector<Node> vec;
+	vec.push_back(node);
+	node.name = "meixi";
+	node.age = 27;
+	vec.push_back(node);
+	serialize_util::save_xml(vec, "./nodeVec.xml");
+	{
+		vector<Node> vec;
+		serialize_util::load_xml("./nodeVec.xml", vec);
+		PrintVec2(vec, name, age);
+	}
+}
+TEST(seralize_xml_map_struct, func)
+{
+	Node node;
+	map<uint64, Node> m;
+	m[1982] = node;
+	node.name = "meixi";
+	node.age = 27;
+	m[1987] = node;
+	serialize_util::save_xml(m, "./nodeMap.xml");
+	{
+		map<uint64, Node> m;
+		serialize_util::load_xml("./nodeMap.xml", m);
+		for (auto& item : m)
+		{
+			Pval3(item.first, item.second.name, item.second.age);
+		}
+	}
 }
 
-TEST(derive, func)
+TEST(seralize_derived, func)
 {
-
+	ChildNode cnode;
+	cnode.Save("./cnode.xml");
+	cnode.SaveJson("./cnode.json");
 }
 
-TEST(shared_ptr, func)
+TEST(seralize_as_conf, func)
 {
-
+	ChildNode cnode;
+	serialize_util::load_xml("./cnode2.xml", cnode);
+	Pval3(cnode.name, cnode.age, cnode.height);
+	serialize_util::load_json("./cnode2.json", cnode);
+	Pval3(cnode.name, cnode.age, cnode.height);
 }
 
 int main(int argc, char *argv[])
