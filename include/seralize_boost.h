@@ -39,6 +39,14 @@
 #include "serialization/unordered_map_serialize.h"
 #include "serialization/unordered_set_serialize.h"
 
+#include "string_util.h"
+#include <boost/serialization/nvp.hpp>
+#define GEZI_SERIALIZATION_NVP(name)\
+	boost::serialization::make_nvp(gezi::conf_trim(#name).c_str(), name)
+//namespace serialize = serialize_util;  //这个地方会和creal冲突。。。 尽量不用这种namespace和函数名容易混淆冲突？
+//.. / .. / include / cereal / cereal.hpp : 378 : 18 : error : expected primary - expression before '(' token
+//serialize(*self, const_cast<T &>(t));
+
 namespace serialize_util {
 	using std::string;
 	/**将data序列化输出到file*/
@@ -56,6 +64,12 @@ namespace serialize_util {
 		std::ofstream ofs(file.c_str());
 		boost::archive::xml_oarchive oa(ofs); //文本的输出归档类，使用一个ostream来构造
 		oa & BOOST_SERIALIZATION_NVP(data);
+	}
+
+	template<typename T>
+	void save_json(const T& data, string file)
+	{
+		save_xml(data, file);
 	}
 
 	//默认是存binary 如果#define XML_SERALIZE则存为xml格式
@@ -129,6 +143,12 @@ namespace serialize_util {
 	}
 
 	template<typename T>
+	bool load_json(string file, T& data)
+	{
+		return load_xml(file, data);
+	}
+
+	template<typename T>
 	bool load_text(string file, T& data)
 	{
 		std::ifstream ifs(file.c_str());
@@ -178,6 +198,12 @@ namespace serialize_util {
 	bool load_xml(T& data, string file)
 	{
 		return load_xml(file, data);
+	}
+
+	template<typename T>
+	bool load_json(T& data, string file)
+	{
+		return load_json(file, data);
 	}
 
 	template<typename T>

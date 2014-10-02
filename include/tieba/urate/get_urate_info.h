@@ -33,7 +33,7 @@ namespace gezi {
 			return urateInfo;
 		}
 
-		inline UrateInfo get_urate_info(uint64 pid, bool needHistory = true, int historyNum = 25, bool needUrlInfo = true)
+		inline UrateInfo get_urate_info(uint64 pid, bool needHistory = true, int historyNum = 25, bool needUrlInfo = true) 
 		{
 			UrateInfo urateInfo;
 			PostInfo postInfo = get_post_info(pid);
@@ -46,7 +46,7 @@ namespace gezi {
 
 			uint uid = postInfo.userId;
 
-			get_urate_info_from_uid(uid, urateInfo);
+			get_urate_info_from_uid(uid, urateInfo); 
 
 			if (!needHistory)
 			{

@@ -13,7 +13,7 @@
 
 #ifndef IDENTIFER_H_
 #define IDENTIFER_H_
-#include "common_util.h"
+#include "common_def.h"
 #include "serialize_util.h"
 namespace gezi {
 
@@ -197,15 +197,14 @@ namespace gezi {
 			serialize_util::save(*this, path);
 		}
 
-		friend class boost::serialization::access;
+		friend class cereal::access;
 		template<class Archive>
 		void serialize(Archive &ar, const unsigned int version)
 		{
-		/*	ar & _hashdict;
-			ar & _index;*/
-			ar & BOOST_SERIALIZATION_NVP(_hashdict);
-			ar & BOOST_SERIALIZATION_NVP(_index);
+			ar & CEREAL_NVP(_hashdict);
+			ar & CEREAL_NVP(_index);
 		}
+
 	protected:
 		HashMap _hashdict;
 		vector<string> _index; //kid->key
@@ -277,16 +276,13 @@ namespace gezi {
 			return _values[id(key)];
 		}
 
-		friend class boost::serialization::access;
+		friend class cereal::access;
 		template<class Archive>
 		void serialize(Archive &ar, const unsigned int version)
 		{
-			/*	ar & boost::serialization::base_object<Identifer>(*this);
-				ar & _values;*/
-			ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Identifer);
-			ar & BOOST_SERIALIZATION_NVP(_values);
+			ar & CEREAL_BASE_OBJECT_NVP(Identifer);
+			ar & CEREAL_NVP(_values); //@TODO 不需要再声明继承父类？
 		}
-
 	private:
 		vector<T> _values;
 	};
@@ -294,7 +290,7 @@ namespace gezi {
 	typedef ValueIdentifer<int> IntIdentifer;
 	typedef ValueIdentifer<double> DoubleIdentifer;
 
-//#ifdef GCCXML  //奇怪。。 GCCXML没有认出来？ GXXML起不起作用？@FIXME ndef GCCXM起作用 但是def不起作用？
+	//#ifdef GCCXML  //奇怪。。 GCCXML没有认出来？ GXXML起不起作用？@FIXME ndef GCCXM起作用 但是def不起作用？
 	//py++ work around py++不处理typedef
 	class PyIntIndentifer : public IntIdentifer
 	{
@@ -304,8 +300,8 @@ namespace gezi {
 	{
 
 	};
-//#endif
-	
+	//#endif
+
 } //----end of namespace gezi
 
 #endif  //----end of IDENTIFER_H_

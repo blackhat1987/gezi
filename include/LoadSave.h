@@ -50,6 +50,16 @@ namespace gezi {
 			VLOG(0) << Name() << " load as xml from " << file;
 		}
 
+		virtual void SaveJson(string file)
+		{
+			VLOG(0) << Name() << " save as xml to " << file;
+		}
+
+		virtual void LoadJson(string file)
+		{
+			VLOG(0) << Name() << " load as xml from " << file;
+		}
+
 		virtual string Name()
 		{
 			return "";

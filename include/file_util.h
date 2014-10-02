@@ -633,6 +633,15 @@ namespace gezi {
 		}
 	}
 
+	template<typename T>
+	inline void save_shared_ptr_asjson(T obj, string name)
+	{
+		if (obj != nullptr)
+		{
+			obj->SaveJson(name);
+		}
+	}
+
 } //----end of namespace gezi
 
 #define SAVE_SHARED_PTR(obj)\
@@ -643,6 +652,9 @@ namespace gezi {
 
 #define SAVE_SHARED_PTR_ASXML(obj)\
 	gezi::save_shared_ptr_asxml(obj, _path + "/" + gezi::conf_trim(#obj) + ".xml")
+
+#define SAVE_SHARED_PTR_ASJSON(obj)\
+	gezi::save_shared_ptr_asjson(obj, _path + "/" + gezi::conf_trim(#obj) + ".json")
 
 #define OBJ_PATH(obj)\
 	string(path + "/" + gezi::conf_trim(#obj))
