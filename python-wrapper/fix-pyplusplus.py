@@ -24,15 +24,11 @@ for line in open(sys.argv[1]):
 			find_warning = True 
 		if (find == False and line.find('BOOST_PYTHON_MODULE') >= 0):
 			find = True
-			print '''UseStrVec;
-			UseIntVec;
-			UseFloatVec;
-			UseDoubleVec;
-			UseStrStrMap;
-			UseStrIntMap;
-			//UseStrIntHashMap;
-			UseStrFloatMap;
-			UseStrDoubleMap;
+			print '''DEF_VEC(ivec);
+			DEF_VEC(dvec);
+			DEF_VEC(uvec);
+			DEF_VEC(svec);
+			DEF_VEC(ulvec);
 			'''
 	else:
 		result = '            , bp::return_internal_reference<>())'

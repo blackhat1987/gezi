@@ -1,12 +1,12 @@
-/** 
+/**
  *  ==============================================================================
- * 
+ *
  *          \file   python_util.h
  *
- *        \author   chenghuige 
- *          
+ *        \author   chenghuige
+ *
  *          \date   2010-03-22 16:42:25.635933
- *  
+ *
  *  \Description: boost.python的帮助函数
  *  ==============================================================================
  */
@@ -27,6 +27,8 @@ using namespace boost::lambda;
 #include <string>
 #include <map>
 #include <set>
+#include <iostream>
+#include <sstream>
 //#include "hashmap_util.h"
 //using namespace boost::python; //有问题 /usr/include/bits/fcntl.h:200: error: `ssize_t' does not name a type
 namespace bp = boost::python;
@@ -34,146 +36,132 @@ namespace bp = boost::python;
 
 inline void IndexError()
 {
-		PyErr_SetString(PyExc_IndexError, "Index out of range");
+	PyErr_SetString(PyExc_IndexError, "Index out of range");
 }
 
-template<class T>
+template<class Vec>
 struct std_item
 {
-		typedef typename T::value_type V;
+	typedef typename Vec::value_type ValueType;
 
-		static V & get(T & x, int i)
-		{
-				if (i < 0) i += x.size();
-				if (i >= 0 && i < x.size()) return x[i];
-				IndexError();
-		}
+	static size_t size(Vec& vec) 
+	{
+		return vec.size();
+	}
 
-		static void set(T & x, int i, V const& v)
-		{
-				if (i < 0) i += x.size();
-				if (i >= 0 && i < x.size()) x[i] = v;
-				else IndexError();
-		}
+	static void erase(Vec & vec, int i)
+	{
+		if (i < 0) i += vec.size();
+		if (i >= 0 && i < vec.size()) vec.erase(vec.begin() + i);
+		else IndexError();
+	}
 
-		static void del(T & x, int i)
-		{
-				if (i < 0) i += x.size();
-				if (i >= 0 && i < x.size()) x.erase(x.begin() + i);
-				else IndexError();
-		}
+	static void push_back(Vec & vec, const ValueType& val)
+	{
+		vec.push_back(val);
+	}
 
-		static void add(T & x, V const& v)
-		{
-				x.push_back(v);
-		}
+	static void resize(Vec & vec, int length, const ValueType & val)
+	{
+		vec.resize(length, val);
+	}
 
-		static void resize(T & x, int length, V const& v)
+	static std::string str(Vec& vec)
+	{
+		using std::stringstream;
+		stringstream ofs;
+		ofs << "[";
+		if (!vec.empty())
 		{
-			x.resize(length, v);
+			ofs << vec.front();
 		}
+		for (size_t i = 1; i < vec.size(); i++)
+		{
+			ofs << ", " << vec[i];
+		}
+		ofs << "]";
+		return ofs.str();
+	}
+
+	//print这个函数如果加入 l = dvec() l.print() python中不能运行 原因未知 不需要加入了 使用print l即可
+	//static void print(Vec & vec)
+	//{
+	//	using std::cout;
+	//	cout << "[";
+	//	if (!vec.empty())
+	//	{
+	//		cout << vec.front();
+	//	}
+	//	for (size_t i = 1; i < vec.size(); i++)
+	//	{
+	//		cout << ", " << vec[i];
+	//	}
+	//	cout << "]";
+	//}
+
+	static void init(Vec& vec, const boost::python::list& list)
+	{
+		vec.assign(boost::python::stl_input_iterator<ValueType>(list),
+			boost::python::stl_input_iterator<ValueType>());
+	}
+
+	static boost::python::list tolist(Vec& vec)
+	{
+		boost::python::list list;
+		for (auto& item : vec)
+		{
+			list.append(item);
+		}
+		return list;
+	}
 };
-
-//-----------------------helper 宏
-//#define UseVec(name)\
-// NameVec(name)\
-// DefVec(name)
-
-#define NameVec(name)\
-		typedef std::vector<name> name##Vec
-
-#define DefVec(MyVec) \
-class_<MyVec > (#MyVec) \
-.def("__len__", &MyVec::size)\
-.def("clear", &MyVec::clear)\
-.def("append", &std_item<MyVec>::add,\
-		 bp::with_custodian_and_ward <1, 2 > ()) \
-.def("__getitem__", &std_item<MyVec>::get,  \
-		 return_value_policy<bp::copy_non_const_reference > ())\
-.def("__setitem__", &std_item<MyVec>::set, \
-		 bp::with_custodian_and_ward<1, 2 >())\
-.def("__delitem__", &std_item<MyVec>::del)\
-.def("__iter__", bp::iterator<MyVec>())
-
-typedef std::vector<int> IntVec;
-typedef std::vector<float> FloatVec;
-typedef std::vector<double> DoubleVec;
-typedef std::vector<std::string> StringVec;
-typedef std::vector<std::string> StrVec;
-typedef std::vector<std::pair<std::string, int> > PairSIVec;
-typedef std::pair<std::string, int> StrIntPair;
-typedef std::map<std::string, std::string> StrStrMap;
-typedef std::map<std::string, int> StrIntMap;
-//typedef std::unordered_map<std::string, int> StrIntHashMap; //@TODO
-typedef std::map<std::string, double> StrDoubleMap;
-typedef std::map<std::string, float> StrFloatMap;
-typedef std::map<std::string, std::pair<int, int> > StrPairIIMap;
-typedef std::set<std::string> StrSet;
-//typedef std::unordered_set<std::string> StrHashSet;
-
 
 using bp::vector_indexing_suite;
 using bp::map_indexing_suite;
 using bp::class_;
-#define UseVec(X) \
-	class_<X > (#X)\
-.def(vector_indexing_suite<X> ())
 
-#define UseMap(X) \
-	class_<X > (#X)\
-.def(map_indexing_suite<X > ())
 
-#define UsePair(X) \
-		class_<X >(#X)\
-				.def_readwrite("first", &X::first)\
-				.def_readwrite("second", &X::second)
+//-----------------------helper 宏
 
-#define UseStrStrMap \
-	class_<StrStrMap > ("StrStrMap")\
-.def(map_indexing_suite< StrStrMap > ())
+//@TODO 将所有vector py++简单处理的封装都改为这样的封装
+#define VEC_METHOD(Vec)\
+	.def("__str__", &std_item<Vec>::str)\
+	.def("__delitem__", &std_item<Vec>::erase)\
+	.def("push_back", &std_item<Vec>::push_back)\
+	.def("size", &std_item<Vec>::size)\
+	.def("clear", &Vec::clear)\
+	.def("erase", &std_item<Vec>::erase)\
+	.def("resize", &std_item<Vec>::resize)\
+	.def("init", &std_item<Vec>::init)\
+	.def("tolist", &std_item<Vec>::tolist)
 
-#define UseStrIntMap \
-	class_<StrIntMap > ("StrIntMap")\
-.def(map_indexing_suite< StrIntMap > ())
+#define DEF_VEC(Vec) \
+	class_<Vec >(#Vec) \
+	.def(vector_indexing_suite<Vec, true>())\
+	VEC_METHOD(Vec)
 
-//#define UseStrIntHashMap \
-//	class_<StrIntHashMap > ("StrIntHashMap")\
-//	.def(map_indexing_suite< StrIntHashMap > ())
+#define VEC_METHOD2(Base, Vec)\
+	Base.def(map_indexing_suite<Map >())\
+	.def("__str__", &std_item<Vec>::str)\
+	.def("__delitem__", &std_item<Vec>::erase)\
+	.def("push_back", &std_item<Vec>::push_back)\ 
+	.def("size", &std_item<Vec>::size)\
+	.def("clear", &Vec::clear)\
+	.def("erase", &std_item<Vec>::erase)\
+	.def("resize", &std_item<Vec>::resize)\
+	.def("init", &std_item<Vec>::init)\
+	.def("tolist", &std_item<Vec>::tolist)
 
-#define UseStrDoubleMap \
-	class_<StrDoubleMap > ("StrDoubleMap")\
-	.def(map_indexing_suite< StrDoubleMap > ())
+#define DEF_MAP(Map) \
+	class_<Map >(#Map)\
+	.def(map_indexing_suite<Map >())
 
-#define UseStrFloatMap \
-	class_<StrFloatMap > ("StrFloatMap")\
-	.def(map_indexing_suite< StrFloatMap > ())
+#define DEF_PAIR(Pair) \
+	class_<Pair >(#Pair)\
+	.def_readwrite("first", &Pair::first)\
+	.def_readwrite("second", &Pair::second)
 
-#define UseStrPairIIMap \
-	class_<StrPairIIMap > ("StrPairIIMap")\
-.def(map_indexing_suite< StrPairIIMap > ())
 
-#define UseIntVec \
-	class_<IntVec > ("IntVec")\
-.def(vector_indexing_suite< IntVec > ())
 
-#define UseFloatVec \
-	class_<FloatVec > ("FloatVec")\
-.def(vector_indexing_suite< FloatVec > ())
-
-#define UseDoubleVec \
-	class_<DoubleVec > ("DoubleVec")\
-.def(vector_indexing_suite< DoubleVec > ())
-
-#define UseStringVec\
-	class_<StringVec > ("StringVec")\
-.def(vector_indexing_suite< StringVec > ())
-
-#define UseStrVec\
-	class_<StrVec > ("StrVec")\
-	.def(vector_indexing_suite< StrVec > ())
-
-//#define UseStrSet\
-//	class_<StrSet > ("StrSet")\
-//	.def(bp::map_indexing_suite<StrSet> ())
 
 #endif  //----end of PYTHON_UTIL_H_

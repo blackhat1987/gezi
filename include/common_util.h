@@ -25,8 +25,6 @@
 
 #include "common_def.h"
 
-#include "hashmap_util.h"
-
 #include "string_util.h" //will remove baidu dependence 
 #include "log_util.h"
 #include "conf_util.h"

@@ -15,6 +15,7 @@
 #define private public
 #define protected public
 #include "common_util.h"
+#include "Numeric/Vector/Vector.h"
 #include "Identifer.h"
 using namespace std;
 using namespace gezi;
@@ -27,18 +28,19 @@ TEST(test_identifer, func)
 {
 	DoubleIdentifer identifer;
 	identifer.load(FLAGS_i);
+	serialize_util::save_json(identifer, "test.data/identifer.json");
 }
 
 int main(int argc, char *argv[])
 {
-  testing::InitGoogleTest(&argc, argv);
-  google::InitGoogleLogging(argv[0]);
-  google::InstallFailureSignalHandler();
-  int s = google::ParseCommandLineFlags(&argc, &argv, false);
-  if (FLAGS_log_dir.empty())
-    FLAGS_logtostderr = true;
-  FLAGS_minloglevel = FLAGS_level;
-  boost::progress_timer timer;
-  
-  return RUN_ALL_TESTS();
+	testing::InitGoogleTest(&argc, argv);
+	google::InitGoogleLogging(argv[0]);
+	google::InstallFailureSignalHandler();
+	int s = google::ParseCommandLineFlags(&argc, &argv, false);
+	if (FLAGS_log_dir.empty())
+		FLAGS_logtostderr = true;
+	FLAGS_minloglevel = FLAGS_level;
+	boost::progress_timer timer;
+	
+	return RUN_ALL_TESTS();
 }

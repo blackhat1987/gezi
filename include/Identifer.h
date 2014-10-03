@@ -13,8 +13,8 @@
 
 #ifndef IDENTIFER_H_
 #define IDENTIFER_H_
-#include "common_def.h"
 #include "serialize_util.h"
+#include "common_def.h"
 namespace gezi {
 
 	class Identifer
@@ -197,12 +197,20 @@ namespace gezi {
 			serialize_util::save(*this, path);
 		}
 
-		friend class cereal::access;
+		//写成cereal形式ok 转换成boost也可以通过define NO_CEREAL完成 测试ok 但是GCCXML似乎不能处理 反馈找不到cereal 因此workaround。。
+	/*	friend class cereal::access;
 		template<class Archive>
 		void serialize(Archive &ar, const unsigned int version)
 		{
 			ar & CEREAL_NVP(_hashdict);
 			ar & CEREAL_NVP(_index);
+		}*/
+		friend class boost::serialization::access;
+		template<class Archive>
+		void serialize(Archive &ar, const unsigned int version)
+		{
+			ar & BOOST_SERIALIZATION_NVP(_hashdict);
+			ar & BOOST_SERIALIZATION_NVP(_index);
 		}
 
 	protected:
@@ -276,12 +284,19 @@ namespace gezi {
 			return _values[id(key)];
 		}
 
-		friend class cereal::access;
+		//friend class cereal::access;
+		//template<class Archive>
+		//void serialize(Archive &ar, const unsigned int version)
+		//{
+		//	ar & CEREAL_BASE_OBJECT_NVP(Identifer);
+		//	ar & CEREAL_NVP(_values); 
+		//}
+		friend class boost::serialization::access;
 		template<class Archive>
 		void serialize(Archive &ar, const unsigned int version)
 		{
-			ar & CEREAL_BASE_OBJECT_NVP(Identifer);
-			ar & CEREAL_NVP(_values); //@TODO 不需要再声明继承父类？
+			ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Identifer);
+			ar & BOOST_SERIALIZATION_NVP(_values); 
 		}
 	private:
 		vector<T> _values;
@@ -290,8 +305,8 @@ namespace gezi {
 	typedef ValueIdentifer<int> IntIdentifer;
 	typedef ValueIdentifer<double> DoubleIdentifer;
 
-	//#ifdef GCCXML  //奇怪。。 GCCXML没有认出来？ GXXML起不起作用？@FIXME ndef GCCXM起作用 但是def不起作用？
-	//py++ work around py++不处理typedef
+	#ifdef GCCXML 
+	//py++ work around py++不处理typedef,这样被继承后会被GXXCML解析 
 	class PyIntIndentifer : public IntIdentifer
 	{
 
@@ -300,7 +315,7 @@ namespace gezi {
 	{
 
 	};
-	//#endif
+	#endif //GCCXML
 
 } //----end of namespace gezi
 

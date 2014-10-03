@@ -13,9 +13,14 @@
 
 #ifndef COMMON_DEF_H_
 #define COMMON_DEF_H_
+#ifndef  BOOST_DETAIL_NO_CONTAINER_FWD
+#define BOOST_DETAIL_NO_CONTAINER_FWD
+#endif
+
 #include <stdlib.h>
 #include <string>
 #include <vector>
+#include <set>
 #include <map>
 
 #include <limits>
@@ -52,6 +57,8 @@ namespace std {
 				using boost::cref;
 }
 #endif
+
+#include "hashmap_util.h"
 
 using std::bind;
 using std::function;
@@ -90,6 +97,7 @@ typedef double Float;
 using std::array;
 using namespace std;
 typedef vector<int> ivec;
+typedef shared_ptr<ivec> ivec_ptr;
 typedef shared_ptr<ivec> IvecPtr;
 typedef vector<int64> lvec;
 typedef vector<uint> uvec;
@@ -97,9 +105,20 @@ typedef vector<uint64> ulvec;
 typedef vector<double> dvec;
 typedef vector<float> fvec;
 typedef vector<Float> Fvec;
+typedef shared_ptr<Fvec> fvec_ptr;
 typedef shared_ptr<Fvec> FvecPtr;
 typedef vector<string> svec;
+typedef vector<bool> bvec;
 typedef vector<bool> BitArray;
+typedef std::pair<std::string, int> str_int_pair;
+typedef std::vector<std::pair<std::string, int> > str_int_pair_vec;
+typedef std::map<std::string, std::string> str_str_map;
+typedef std::map<std::string, int> str_int_map;
+typedef std::unordered_map<std::string, int> str_int_hashmap;
+typedef std::map<std::string, double> str_double_map;
+typedef std::map<std::string, float> str_float_map;
+typedef std::map<std::string, std::pair<int, int> > str_iipair_map;
+typedef std::set<std::string> str_set;
 
 #include <boost/foreach.hpp>
 #define foreach BOOST_FOREACH

@@ -53,7 +53,7 @@ CXX(GCC_BIN)
 CPPFLAGS('-D_GNU_SOURCE -D__STDC_LIMIT_MACROS -DVERSION=\\\"1.9.8.7\\\"')
 
 #±‡“Î≤Œ ˝…Ë÷√
-COMMON_FLAGS = '-g -O0 -pipe -W -Wall -fPIC -DHAVE_NETINET_IN_H -Wno-unused-parameter'
+COMMON_FLAGS = '-g -O3 -pipe -W -Wall -fPIC -DPYTHON_WRAPPER -DHAVE_NETINET_IN_H -Wno-unused-parameter'
 
 if GCC_HIGH  == 1:
 	GCC_FLAGS += '-fPIC -Wl,-Bsymbolic -std=c++11 -fpermissive -Wno-write-strings -Wno-literal-suffix -Wno-unused-local-typedefs'
@@ -107,10 +107,12 @@ headers=''
 
 #æ≤Ã¨ø‚
 #LIBS('/home/users/chenghuige/.jumbo/lib/libpython2.7.so /home/users/chenghuige/.jumbo/lib/libboost_python.so')
-LIBS('./libpython2.7.so ./libboost_python.so ../include/tools/pinyin/libPYNotation.a ../libgezi_json.a')
+LIBS('./libpython2.7.so ./libboost_python.so ../include/tools/pinyin/libPYNotation.a ../libgezi_json.a ../libgezi_common.a')
 #SharedLibrary('wordseg',Sources('wordseg_py.cc', srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),LinkDeps(True))
-srcs=GLOB('../src/*.cpp ../src/PythonWrapper/*.cpp')
-SharedLibrary('gezi',Sources('gezi_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
-SharedLibrary('segmentor',Sources('segmentor_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
-#SharedLibrary('feature',Sources('feature_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
-SharedLibrary('tieba',Sources('tieba_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
+#srcs=GLOB('../src/*.cpp ../src/PythonWrapper/*.cpp')
+srcs = ''
+SharedLibrary('melt',Sources('melt_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
+#SharedLibrary('gezi',Sources('gezi_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
+#SharedLibrary('segmentor',Sources('segmentor_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
+##SharedLibrary('feature',Sources('feature_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
+#SharedLibrary('tieba',Sources('tieba_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))

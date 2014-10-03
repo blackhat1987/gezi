@@ -92,7 +92,7 @@ namespace gezi {
 		}
 
 #ifndef GCCXML
-		Float& value_at(int index) 
+		Float& value_at(int index)
 		{
 			int idx = (index + values.size()) % values.size();
 			return values[idx];
@@ -383,14 +383,14 @@ namespace gezi {
 		template<class Archive>
 		void serialize(Archive &ar, const unsigned int version)
 		{
-			ar & boost::serialization::base_object<Vector>(*this);
-			ar & _useSectionName;
-			ar & _names;
-			ar & _sectionNames;
-			ar & _nameCounts;
-			ar & _idx;
-			ar & _useSparseAlso;
-			ar & _features;
+			ar & BOOST_SERIALIZATION_BASE_OBJECT(Vector);
+			ar &  BOOST_SERIALIZATION_NVP(_useSectionName);
+			ar & BOOST_SERIALIZATION_NVP(_names);
+			ar & BOOST_SERIALIZATION_NVP(_sectionNames);
+			ar & BOOST_SERIALIZATION_NVP(_nameCounts);
+			ar & BOOST_SERIALIZATION_NVP(_idx);
+			ar & BOOST_SERIALIZATION_NVP(_useSparseAlso);
+			ar & BOOST_SERIALIZATION_NVP(_features);
 		}
 	protected:
 	private:

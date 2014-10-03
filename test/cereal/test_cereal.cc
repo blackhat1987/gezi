@@ -22,6 +22,8 @@
 
 #define NO_BAIDU_DEP
 #define USE_CEREAL
+//#define NO_CEREAL
+#include "Identifer.h"
 #include "serialize_util.h"
 
 #include "common_util.h"

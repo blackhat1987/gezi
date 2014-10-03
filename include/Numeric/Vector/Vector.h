@@ -20,7 +20,8 @@
 #include "serialize_util.h"
 namespace gezi {
 
-	//@FIXME depriciated 使用TVector<Float>替代
+	//@TODO 统一使用TVector<Float>替代
+
 	class Vector
 	{
 	public:
@@ -31,6 +32,12 @@ namespace gezi {
 		Vector(const Vector&) = default;
 		Vector& operator = (const Vector&) = default;
 
+		typedef Float value_type;
+		typedef size_t size_type;
+		typedef int  difference_type;
+		typedef vector<Float>::iterator iterator;
+		typedef vector<Float>::const_iterator const_iterator;
+
 		//需要外部注意的 初始设置length 那么如果是Add(value) dense方式 要保证values最后长度
 		//和初始设置的一样 不要Add不够 因为实际Length()函数表示向量长度 这个其实主要针对sparse
 		Vector(int length_)
@@ -38,12 +45,12 @@ namespace gezi {
 		{
 		}
 
-		Vector(Float value_, int length_)
+		Vector(value_type value_, int length_)
 			: length(length_), _zeroValue(value_)
 		{
 		}
 
-		Vector(int length_, Float value_)
+		Vector(int length_, value_type value_)
 		{
 			values.resize(length_, value_);
 			length = length_;
@@ -55,26 +62,26 @@ namespace gezi {
 			AddRange(m);
 		}
 
-		void Resize(int length_, Float value_ = 0)
+		void Resize(int length_, value_type value_ = 0)
 		{
 			values.resize(length_, value_);
 			length = length_;
 			indices.clear();
 		}
 
-		void resize(int length_, Float value_ = 0)
+		void resize(int length_, value_type value_ = 0)
 		{
 			Resize(length_, value_);
 		}
 
-		Vector(int length_, ivec& indices_, Fvec& values_)
+		Vector(int length_, ivec& indices_, vector<value_type>& values_)
 			:length(length_)
 		{
 			indices.swap(indices_);
 			values.swap(values_);
 		}
 
-		Vector(ivec& indices_, Fvec& values_, int length_ = 1024000)
+		Vector(ivec& indices_, vector<value_type>& values_, int length_ = 1024000)
 			:length(length_)
 		{
 			indices.swap(indices_);
@@ -83,7 +90,7 @@ namespace gezi {
 
 		//注意desne情况 可以直接用这个种方法产生 推荐 或者调用Add 接口，
 		//Add接口 内部不对length处理 
-		Vector(Fvec& values_)
+		Vector(vector<value_type>& values_)
 		{
 			ToDense(values_);
 		}
@@ -122,7 +129,7 @@ namespace gezi {
 			}
 		}
 
-		void Init(int length_, ivec& indices_, Fvec& values_)
+		void Init(int length_, ivec& indices_, vector<value_type>& values_)
 		{
 			length = length_;
 			indices.swap(indices_);
@@ -138,12 +145,70 @@ namespace gezi {
 			values.swap(other.values);
 		}
 
-		void Init(Fvec& values_)
+		void Init(vector<value_type>& values_)
 		{
 			ToDense(values_);
 		}
 
-		void ToDense(Fvec& values_)
+		template<typename Iter>
+		void assign(Iter begin, Iter end)
+		{
+			for (Iter it = begin; it != end; ++it)
+			{
+				values.push_back(*it);
+			}
+		}
+
+		
+		Vector(iterator first, iterator end)
+			:values(first, end)
+		{
+		}
+
+		iterator begin()
+		{
+			return values.begin();
+		}
+
+		iterator end()
+		{
+			return values.end();
+		}
+		value_type front()
+		{
+			return values.front();
+		}
+		value_type back()
+		{
+			return values.back();
+		}
+		void push_back(value_type item)
+		{
+			values.push_back(item);
+		}
+
+		template<typename Iter>
+		void insert(iterator dest, Iter begin, Iter end)
+		{
+			values.insert(dest, begin, end);
+		}
+
+		iterator insert(iterator position, const value_type& val)
+		{
+			return values.insert(position, val);
+		}
+
+		void erase(iterator pos)
+		{
+			values.erase(pos);
+		}
+
+		void erase(iterator first, iterator last)
+		{
+			values.erase(first, last);
+		}
+
+		void ToDense(vector<value_type>& values_)
 		{
 			values.swap(values_);
 			length = values.size();
@@ -153,7 +218,7 @@ namespace gezi {
 		//ToDesnse和ToSparse尽量不用 使用MakeDesne MakeSparse 
 		void ToDense()
 		{
-			Fvec vec(length, _zeroValue);
+			vector<value_type> vec(length, _zeroValue);
 			for (size_t i = 0; i < indices.size(); i++)
 			{
 				vec[indices[i]] = values[i];
@@ -167,7 +232,7 @@ namespace gezi {
 		{
 			if (!length)
 				length = values.size();  //为了安全 转sparse时候设置下length 
-			Fvec vec;
+			vector<value_type> vec;
 			for (size_t i = 0; i < values.size(); i++)
 			{
 				if (values[i] != _zeroValue) //@TODO for double may not work if not 0
@@ -195,12 +260,13 @@ namespace gezi {
 			}
 		}
 
-		void Add(Float value)
+		//@TODO 这里注意python封装后比如 l = Vector() l.Add(3.0)是ok的 l.Add(3)看上去没错 但是却实际不起作用。。 为什么vector的push_back没问题呢
+		void Add(value_type value)
 		{
 			values.push_back(value);
 		}
 
-		void Add(int index, Float value)
+		void Add(int index, value_type value)
 		{
 			if (value != _zeroValue)
 			{
@@ -223,7 +289,7 @@ namespace gezi {
 			values.reserve(length);
 		}
 
-		void Sparsify(Float maxSparsity)
+		void Sparsify(value_type maxSparsity)
 		{
 			if (!IsDense() || keepDense)
 				return;
@@ -242,7 +308,7 @@ namespace gezi {
 			Sparsify(sparsityRatio);
 		}
 
-		void Densify(Float maxSparsity)
+		void Densify(value_type maxSparsity)
 		{
 			if (length > 0 && (keepDense || Count() >= (uint64)(length * maxSparsity)))
 			{
@@ -255,7 +321,7 @@ namespace gezi {
 			Densify(sparsityRatio);
 		}
 
-		Float operator[](int i) const
+		value_type operator[](int i) const
 		{
 			if (i < 0 || i >= length)
 				return _zeroValue;
@@ -276,7 +342,7 @@ namespace gezi {
 			}
 		}
 
-		Float& operator[](int i)
+		value_type& operator[](int i)
 		{
 			/*if (i < 0 || i >= length)
 				return _value;*/
@@ -298,7 +364,7 @@ namespace gezi {
 			}
 		}
 
-		Vector& operator()(int index, Float value)
+		Vector& operator()(int index, value_type value)
 		{
 			Add(index, value);
 		}
@@ -623,7 +689,7 @@ namespace gezi {
 			return indices;
 		}
 
-		const Fvec& Values() const
+		const vector<value_type>& Values() const
 		{
 			return values;
 		}
@@ -633,7 +699,7 @@ namespace gezi {
 			return indices;
 		}
 
-		Fvec& Values()
+		vector<value_type>& Values()
 		{
 			return values;
 		}
@@ -648,22 +714,32 @@ namespace gezi {
 			return indices[index];
 		}
 
-		Float Value(int index) const
+		value_type Value(int index) const
 		{
 			return values[index];
 		}
 
-		//@FIXME why fail boost.python @TODO UseVec(Vector) ? 
-#ifndef GCCXML
-		Float& Value(int index)
-		{
-			return values[index];
-		}
-		//#else 
-		//		double& Value(int index) //这个没问题但是python里面 不能用 例如 fe.Value(3) = 4
+		//@FIXME why fail boost.python @TODO UseVec(Vector) ? 其它返回引用的 包括 operator[]都没问题 但是GCCXML都没生成__setitem__从而无法在python中写操作比如l[2]=3
+		//../../../../../../third-64/boost.1.53/include/boost/mpl/assert.hpp:223:13: error: no matching function for call to 'assertion_failed(mpl_::failed************ boost::mpl::or_<boost::is_class<double>, boost::is_union<double>, mpl_::bool_<false>, mpl_::bool_<false>, mpl_::bool_<false> >::************)'
+		//GCCXML WARNING: value_type & gezi::Vector::Value(int index) [member function]
+		//> warning W1008 : The function returns non - const reference to "Python immutable" type.The value cannot be modified from Python.
+		//很奇怪的是
+		//#ifndef GCCXML
+		//		value_type& Value(int index)
 		//		{
 		//			return values[index];
 		//		}
+		//#endif
+#ifdef PYTHON_WRAPPER
+		//double& Value(int index)
+		//{
+		//	return values[index];
+		//}
+#else 
+		value_type& Value(int index)
+		{
+			return values[index];
+		}
 #endif
 
 		void Clear()
@@ -691,14 +767,14 @@ namespace gezi {
 			}
 		}
 
-		Vector& operator *= (Float d)
+		Vector& operator *= (value_type d)
 		{
 			ScaleBy(d);
 			return *this;
 		}
 
 		/// Multiples the Vector by a real value
-		void ScaleBy(Float d)
+		void ScaleBy(value_type d)
 		{
 			if (d == 1.0)
 				return;
@@ -748,7 +824,7 @@ namespace gezi {
 			}
 			else
 			{
-				ApplyWith(a, [](int ind, Float v1, Float& v2) { v2 += v1; });
+				ApplyWith(a, [](int ind, value_type v1, value_type& v2) { v2 += v1; });
 			}
 		}
 
@@ -777,7 +853,7 @@ namespace gezi {
 				}
 				else
 				{  // this sparse, a not sparse
-					Fvec newValues(length);
+					vector<value_type> newValues(length);
 					int myI = 0;
 					for (size_t i = 0; i < newValues.size(); i++)
 					{
@@ -870,7 +946,7 @@ namespace gezi {
 				}
 				else if (newLength == a.indices.size())
 				{
-					Fvec newVals(newLength, 0);
+					vector<value_type> newVals(newLength, 0);
 
 					for (int aI = 0; aI < a.indices.size(); aI++)
 					{
@@ -889,7 +965,7 @@ namespace gezi {
 				else
 				{
 					ivec newIndices(newLength, 0);
-					Fvec newVals(newLength, 0);
+					vector<value_type> newVals(newLength, 0);
 
 					int newI = 0;
 					for (size_t aI = 0; aI < a.indices.size(); aI++)
@@ -914,7 +990,7 @@ namespace gezi {
 							break;
 						}
 
-						Float myVal = 0;
+						value_type myVal = 0;
 						if (indices[myI] == aIndex)
 						{
 							myVal = values[myI++];
@@ -943,7 +1019,7 @@ namespace gezi {
 		}
 
 		//l2norm
-		Float Norm()
+		value_type Norm()
 		{
 			return sqrt(std::accumulate(values.begin(), values.end(), 0.0, sd_op()));
 		}
@@ -951,7 +1027,7 @@ namespace gezi {
 		string Str(string sep = ",")
 		{
 			stringstream ss;
-			ForEachNonZero([&](int index, Float value) {
+			ForEachNonZero([&](int index, value_type value) {
 				ss << index << ":" << value << sep;
 			});
 			return ss.str().substr(0, ss.str().length() - sep.length());
@@ -960,7 +1036,7 @@ namespace gezi {
 		string DenseStr(string sep = ",")
 		{
 			stringstream ss;
-			ForEachAll([&](int index, Float value) {
+			ForEachAll([&](int index, value_type value) {
 				ss << index << ":" << value << sep;
 			});
 			return ss.str();
@@ -969,13 +1045,13 @@ namespace gezi {
 		string str(string sep = ",")
 		{
 			stringstream ss;
-			ForEachNonZero([&](int index, Float value) {
+			ForEachNonZero([&](int index, value_type value) {
 				ss << index << ":" << value << sep;
 			});
 			return ss.str();
 		}
 
-		friend Float dot(const Vector& l, const Vector& r);
+		friend value_type dot(const Vector& l, const Vector& r);
 
 		friend class boost::serialization::access;
 		template<class Archive>
@@ -1019,16 +1095,16 @@ namespace gezi {
 	public:
 		//@TODO 有没有必要写成shared_ptr<ivec> indices; //更加灵活 允许两个Vector相同indice 不同value 避免拷贝
 		ivec indices; //不使用Node(index,value)更加灵活 同时可以允许一项为空
-		Fvec values; //@TODO may be FvecPtr 或者加一个指针 修改代码 如果指针不是空 使用指针指向的
+		vector<value_type> values; //@TODO may be vector<value_type>Ptr 或者加一个指针 修改代码 如果指针不是空 使用指针指向的
 		//non_zero count < ratio to sparse, non_zero count >= ratio to dense
-		Float sparsityRatio = 0.25;
+		value_type sparsityRatio = 0.25;
 		bool keepDense = false;
 		bool keepSparse = false;
 		bool normalized = false;
 		int numNonZeros = -1; //-1 means unknow
 	private:
 		int length = 0;
-		Float _zeroValue = 0.0;
+		value_type _zeroValue = 0.0;
 	};
 
 	typedef shared_ptr<Vector> VectorPtr;
