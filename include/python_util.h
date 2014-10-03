@@ -141,7 +141,7 @@ using bp::class_;
 	VEC_METHOD(Vec)
 
 #define VEC_METHOD2(Base, Vec)\
-	Base.def(map_indexing_suite<Map >())\
+	Base.def(vector_indexing_suite<Vec >())\
 	.def("__str__", &std_item<Vec>::str)\
 	.def("__delitem__", &std_item<Vec>::erase)\
 	.def("push_back", &std_item<Vec>::push_back)\ 
