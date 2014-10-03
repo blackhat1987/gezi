@@ -93,7 +93,7 @@ struct PyVectorUtil
 	//	}
 	//	cout << "]";
 	//}
-
+	//这个不起作用 不弄了 在python那边写一个帮助函数 dict2map 好了
 	static void init(Vec& vec, const boost::python::list& list)
 	{
 		vec.assign(boost::python::stl_input_iterator<ValueType>(list),
@@ -114,7 +114,7 @@ struct PyVectorUtil
 template<class Map>
 struct PyMapUtil
 {
-	typedef typename Map::value_type ValueType;
+	typedef typename std::pair<typename Map::key_type, typename Map::mapped_type> ValueType;
 	static void init(Map& m, const boost::python::dict& dict_)
 	{
 		for (auto iter = boost::python::stl_input_iterator<ValueType>(dict_); iter != boost::python::stl_input_iterator<ValueType>(); ++iter)
@@ -171,7 +171,6 @@ using bp::class_;
 #define  MAP_METHOD(Map)\
 	.def("clear", &Map::clear)\
 	.def("size", &Map::size)\
-	.def("init", &PyMapUtil<Map>::init)\
 	.def("todict", &PyMapUtil<Map>::todict)
 
 #define DEF_MAP(Map) \
