@@ -40,14 +40,9 @@ inline void IndexError()
 }
 
 template<class Vec>
-struct std_item
+struct PyVectorUtil
 {
 	typedef typename Vec::value_type ValueType;
-
-	static size_t size(Vec& vec) 
-	{
-		return vec.size();
-	}
 
 	static void erase(Vec & vec, int i)
 	{
@@ -116,45 +111,73 @@ struct std_item
 	}
 };
 
+template<class Map>
+struct PyMapUtil
+{
+	typedef typename Map::value_type ValueType;
+	static void init(Map& m, const boost::python::dict& dict_)
+	{
+		for (auto iter = boost::python::stl_input_iterator<ValueType>(dict_); iter != boost::python::stl_input_iterator<ValueType>(); ++iter)
+		{
+			m.insert(*iter);
+		}
+	}
+
+	static boost::python::dict todict(Map& m)
+	{
+		boost::python::dict dict_;
+		for (auto& item : m)
+		{
+			dict_[item.first] = item.second;
+		}
+		return dict_;
+	}
+};
+
 using bp::vector_indexing_suite;
 using bp::map_indexing_suite;
 using bp::class_;
 
-
 //-----------------------helper 宏
 
-//@TODO 将所有vector py++简单处理的封装都改为这样的封装
 #define VEC_METHOD(Vec)\
-	.def("__str__", &std_item<Vec>::str)\
-	.def("__delitem__", &std_item<Vec>::erase)\
-	.def("push_back", &std_item<Vec>::push_back)\
-	.def("size", &std_item<Vec>::size)\
+	.def("__str__", &PyVectorUtil<Vec>::str)\
+	.def("__delitem__", &PyVectorUtil<Vec>::erase)\
+	.def("push_back", &PyVectorUtil<Vec>::push_back)\
+	.def("size", &Vec::size)\
 	.def("clear", &Vec::clear)\
-	.def("erase", &std_item<Vec>::erase)\
-	.def("resize", &std_item<Vec>::resize)\
-	.def("init", &std_item<Vec>::init)\
-	.def("tolist", &std_item<Vec>::tolist)
+	.def("erase", &PyVectorUtil<Vec>::erase)\
+	.def("resize", &PyVectorUtil<Vec>::resize)\
+	.def("init", &PyVectorUtil<Vec>::init)\
+	.def("tolist", &PyVectorUtil<Vec>::tolist)
 
 #define DEF_VEC(Vec) \
 	class_<Vec >(#Vec) \
-	.def(vector_indexing_suite<Vec, true>())\
+	.def(vector_indexing_suite<Vec, true>())\ 
 	VEC_METHOD(Vec)
 
 #define VEC_METHOD2(Base, Vec)\
 	Base.def(vector_indexing_suite<Vec >())\
-	.def("__str__", &std_item<Vec>::str)\
-	.def("__delitem__", &std_item<Vec>::erase)\
-	.def("push_back", &std_item<Vec>::push_back)\ 
-	.def("size", &std_item<Vec>::size)\
+	.def("__str__", &PyVectorUtil<Vec>::str)\
+	.def("__delitem__", &PyVectorUtil<Vec>::erase)\
+	.def("push_back", &PyVectorUtil<Vec>::push_back)\ 
+	.def("size", &Vec::size)\
 	.def("clear", &Vec::clear)\
-	.def("erase", &std_item<Vec>::erase)\
-	.def("resize", &std_item<Vec>::resize)\
-	.def("init", &std_item<Vec>::init)\
-	.def("tolist", &std_item<Vec>::tolist)
+	.def("erase", &PyVectorUtil<Vec>::erase)\
+	.def("resize", &PyVectorUtil<Vec>::resize)\
+	.def("init", &PyVectorUtil<Vec>::init)\
+	.def("tolist", &PyVectorUtil<Vec>::tolist)
+
+#define  MAP_METHOD(Map)\
+	.def("clear", &Map::clear)\
+	.def("size", &Map::size)\
+	.def("init", &PyMapUtil<Map>::init)\
+	.def("todict", &PyMapUtil<Map>::todict)
 
 #define DEF_MAP(Map) \
 	class_<Map >(#Map)\
-	.def(map_indexing_suite<Map >())
+	.def(map_indexing_suite<Map,true>())\
+	MAP_METHOD(Map)
 
 #define DEF_PAIR(Pair) \
 	class_<Pair >(#Pair)\
@@ -162,6 +185,8 @@ using bp::class_;
 	.def_readwrite("second", &Pair::second)
 
 
-
+#ifndef COMMOA
+#define  COMMOA ,
+#endif
 
 #endif  //----end of PYTHON_UTIL_H_

@@ -29,6 +29,9 @@ for line in open(sys.argv[1]):
 			DEF_VEC(uvec);
 			DEF_VEC(svec);
 			DEF_VEC(ulvec);
+			DEF_MAP(id_map);
+			DEF_MAP(sd_map);
+			DEF_MAP(si_map);
 			'''
 	else:
 		result = '            , bp::return_internal_reference<>())'

@@ -32,6 +32,7 @@ namespace gezi {
 		Vector(const Vector&) = default;
 		Vector& operator = (const Vector&) = default;
 
+		typedef int index_type;
 		typedef Float value_type;
 		typedef size_t size_type;
 		typedef int  difference_type;
@@ -261,11 +262,13 @@ namespace gezi {
 		}
 
 		//@TODO 这里注意python封装后比如 l = Vector() l.Add(3.0)是ok的 l.Add(3)看上去没错 但是却实际不起作用。。 为什么vector的push_back没问题呢
+#ifndef PYTHON_WRAPPER
 		void Add(value_type value)
 		{
 			values.push_back(value);
 		}
-
+#endif //PYTHON_WRAPPER
+		//这个接口在python情况下 不管 Add(3, 3.0) 还是Add(3,3)都是ok的 上面哪个神奇的bug
 		void Add(int index, value_type value)
 		{
 			if (value != _zeroValue)
@@ -277,6 +280,23 @@ namespace gezi {
 
 		template<typename Range>
 		void AddRange(const Range& m)
+		{
+			for (auto& item : m)
+			{
+				Add(item.first, item.second);
+			}
+		}
+
+		template<typename Range>
+		void AddMap(const Range& m)
+		{
+			for (auto& item : m)
+			{
+				Add(item.first, item.second);
+			}
+		}
+
+		void AddMap(const map<index_type, value_type>& m)
 		{
 			for (auto& item : m)
 			{

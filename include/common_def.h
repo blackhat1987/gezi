@@ -110,15 +110,29 @@ typedef shared_ptr<Fvec> FvecPtr;
 typedef vector<string> svec;
 typedef vector<bool> bvec;
 typedef vector<bool> BitArray;
-typedef std::pair<std::string, int> str_int_pair;
-typedef std::vector<std::pair<std::string, int> > str_int_pair_vec;
-typedef std::map<std::string, std::string> str_str_map;
-typedef std::map<std::string, int> str_int_map;
-typedef std::unordered_map<std::string, int> str_int_hashmap;
-typedef std::map<std::string, double> str_double_map;
-typedef std::map<std::string, float> str_float_map;
+
+//------------下面主要是python封装的时候使用
+typedef std::pair<std::string, int> si_pair;
+typedef std::vector<std::pair<std::string, int> > si_pair_vec;
+typedef std::map<std::string, std::string> ss_map;
+typedef std::map<std::string, int> si_map;
+typedef std::unordered_map<std::string, int> si_hashmap;
+typedef std::map<std::string, double> sd_map;
+typedef std::map<std::string, float> sf_map;
+typedef std::map<int, double> id_map;
+typedef std::map<int, float> if_map;
+typedef std::map<int, Float> iF_map;
+typedef std::map<int64, double> ld_map;
+typedef std::map<int64, float> lf_map;
+typedef std::map<int64, Float> lF_map;
+typedef std::map<uint, double> ud_map;
+typedef std::map<uint, float> uf_map;
+typedef std::map<uint, Float> uF_map;
+typedef std::map<uint64, double> uld_map;
+typedef std::map<uint64, float> ulf_map;
+typedef std::map<uint64, Float> ulF_map;
 typedef std::map<std::string, std::pair<int, int> > str_iipair_map;
-typedef std::set<std::string> str_set;
+typedef std::set<std::string> sset;
 
 #include <boost/foreach.hpp>
 #define foreach BOOST_FOREACH
