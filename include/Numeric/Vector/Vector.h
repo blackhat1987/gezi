@@ -183,6 +183,9 @@ namespace gezi {
 		{
 			return values.back();
 		}
+
+		//
+
 		void push_back(value_type item)
 		{
 			values.push_back(item);
@@ -261,13 +264,13 @@ namespace gezi {
 			}
 		}
 
-		//@TODO 这里注意python封装后比如 l = Vector() l.Add(3.0)是ok的 l.Add(3)看上去没错 但是却实际不起作用。。 为什么vector的push_back没问题呢
-#ifndef PYTHON_WRAPPER
+		//@TODO 这里注意python封装后比如 l = Vector() l.Add(3.0)是ok的 l.Add(3)看上去没错 但是却实际不起作用。。 为什么vector的push_back没问题呢 现在ok了 可能是Float typedef的原因也可能是有Add(Vector v)
+//#ifndef PYTHON_WRAPPER
 		void Add(value_type value)
 		{
 			values.push_back(value);
 		}
-#endif //PYTHON_WRAPPER
+//#endif //PYTHON_WRAPPER
 		//这个接口在python情况下 不管 Add(3, 3.0) 还是Add(3,3)都是ok的 上面哪个神奇的bug
 		void Add(int index, value_type value)
 		{
@@ -819,8 +822,9 @@ namespace gezi {
 			}
 		}
 
-		/// Adds the supplied vector to myself.  (this += a)
-		void Add(Vector a)
+		//@WARNING 下面两个函数从Vector输入改为Vector 看一下是否影响最后结果
+		/// Adds the supplied vector to myself.  (this += a) //@TODO check if can use const Vector&
+		void Add(Vector& a)
 		{
 			/*	if (a.length != length)
 				{
@@ -852,7 +856,7 @@ namespace gezi {
 		//@TODO 拷贝之痛 暂时使用swap 不保证运算后a不会被改变,如果需要提前拷贝复制a
 		//@TODO 理解两个稀疏向量相加/相乘...
 		template<typename ParallelManipulator>
-		void ApplyWith(Vector a, ParallelManipulator manip)
+		void ApplyWith(Vector& a, ParallelManipulator manip)
 		{
 			/*		if (a.length != length)
 					{
