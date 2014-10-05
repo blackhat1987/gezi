@@ -42,7 +42,8 @@ INCPATH=-I. \
   -I./include/feature \
   -I./include/numeric \
   -I./melt/include/ \
-  -I./include/serialization/
+  -I./include/serialization/ \
+  -I./include/cppformat/
 DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../com/btest/gtest/include \
   -I../../../../../com/btest/gtest/output \
@@ -142,7 +143,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=41f52c5a64923c052eb1de1040a31f47  COMAKE
+COMAKE_MD5=fff83df7c51d2f2f0b28b31dd3d6fcaf  COMAKE
 
 
 .PHONY:all
@@ -172,6 +173,8 @@ clean:ccpclean
 	rm -rf ./output/lib/libgezi_common.a
 	rm -rf libgezi_json.a
 	rm -rf ./output/lib/libgezi_json.a
+	rm -rf src/cppformat/gezi_common_format.o
+	rm -rf src/cppformat/gezi_common_posix.o
 	rm -rf src/json/gezi_json_json_reader.o
 	rm -rf src/json/gezi_json_json_value.o
 	rm -rf src/json/gezi_json_json_writer.o
@@ -198,9 +201,11 @@ copy-pinyin-lib:
 	mkdir -p output/lib
 	cp ./include/tools/pinyin/libPYNotation.a ./output/lib/
 
-libgezi_common.a:
+libgezi_common.a:src/cppformat/gezi_common_format.o \
+  src/cppformat/gezi_common_posix.o
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibgezi_common.a[0m']"
-	ar crs libgezi_common.a 
+	ar crs libgezi_common.a src/cppformat/gezi_common_format.o \
+  src/cppformat/gezi_common_posix.o
 	mkdir -p ./output/lib
 	cp -f --link libgezi_common.a ./output/lib
 
@@ -213,6 +218,22 @@ libgezi_json.a:src/json/gezi_json_json_reader.o \
   src/json/gezi_json_json_writer.o
 	mkdir -p ./output/lib
 	cp -f --link libgezi_json.a ./output/lib
+
+src/cppformat/gezi_common_format.o:src/cppformat/format.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/cppformat/gezi_common_format.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
+  -D__STDC_LIMIT_MACROS \
+  -DVERSION=\"1.9.8.7\" \
+  -O3 \
+  -DNDEBUG $(CXXFLAGS)  -o src/cppformat/gezi_common_format.o src/cppformat/format.cc
+
+src/cppformat/gezi_common_posix.o:src/cppformat/posix.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/cppformat/gezi_common_posix.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
+  -D__STDC_LIMIT_MACROS \
+  -DVERSION=\"1.9.8.7\" \
+  -O3 \
+  -DNDEBUG $(CXXFLAGS)  -o src/cppformat/gezi_common_posix.o src/cppformat/posix.cc
 
 src/json/gezi_json_json_reader.o:src/json/json_reader.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_json_reader.o[0m']"

@@ -98,10 +98,11 @@ ImportConfigsFrom('../')
 
 #头文件路径.
 INCPATHS('. ./include ./utils ./output ./output/include ./include/feature ./include/model ./include/numeric'.replace('./',RELATIVE_PATH))
-srcs=GLOB('./src/*.cpp ./src/feature/*.cpp ./src/model/*.cpp ./src/json/*.cpp'.replace('./',RELATIVE_PATH))
+#srcs=GLOB('./src/*.cpp ./src/feature/*.cpp ./src/model/*.cpp ./src/json/*.cpp'.replace('./',RELATIVE_PATH))
+srcs = ''
 headers=''
 #使用库
-LIBS('../include/tools/pinyin/libPYNotation.a')
+LIBS('../include/tools/pinyin/libPYNotation.a ../libgezi_common.a ../libgezi_json.a')
 
 #可执行文件
 #静态库
@@ -162,3 +163,5 @@ Application('test_erase',Sources('test_erase.cc', srcs))
 Application('test_max_count_by',Sources('test_max_count_by.cc', srcs))
 Application('test_informaiton',Sources('test_informaiton.cc', srcs))
 Application('test_information',Sources('test_information.cc', srcs))
+Application('simple',Sources('simple.cc',srcs), OutputPath('./bin'))
+Application('test_cppformat',Sources('test_cppformat.cc', srcs))

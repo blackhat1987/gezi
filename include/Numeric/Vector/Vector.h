@@ -99,6 +99,11 @@ namespace gezi {
 		//方便debug Vector vec("1\t3\t4\t5"); Vector vec("1:2.3\t3:4.5"); or vec("1 3") space is also ok
 		Vector(string input, int startIndex = 0, int length_ = 1024000, string sep = ",\t ")
 		{
+			Init(input, startIndex, length_, sep);
+		}
+
+		void Init(string input, int startIndex = 0, int length_ = 1024000, string sep = ",\t ")
+		{
 			boost::trim(input); //需要注意 因为DOUBLE采用atof快速但是不安全 可能输入是一个空格 导致有问题
 			//注意split("",sep)得到不是空结果 而是有1个空元素的vector c# python	也是		
 			svec inputs = from(split(input, sep)) >> where([](string a) { return !a.empty(); }) >> to_vector();

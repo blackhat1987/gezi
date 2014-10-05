@@ -35,8 +35,12 @@
 #include "sort_util.h"
 
 #include "statistic_util.h"
+
+//#ifndef GCCXML
 #include "datetime_util.h"
 #include "time_util.h"
+#include "ProgressBar.h" //use timer
+//#endif
 
 #include "file_util.h"
 
@@ -47,10 +51,10 @@
 
 #include "Exception.h"
 
-#include "ProgressBar.h"
-
 #include "LoadSave.h"
 
+
+#include "format.h" //最好在convert_type.h前面 有宏的冲突处理 不过在format.h内部已经引用convert_type.h
 #ifndef NO_GEZI_CONVERT
 #include "convert_type.h"
 #endif

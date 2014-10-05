@@ -47,7 +47,7 @@ namespace serialize_util {
 	boost::serialization::base_object<name>(*this)
 #endif
 
-#include "seralize_boost.h"
+#include "serialize_boost.h"
 
 namespace cereal { using boost::serialization::access; }
 
@@ -61,7 +61,7 @@ namespace cereal { using boost::serialization::access; }
 #undef Uint
 #endif // Uint
 
-#include "seralize_cereal.h"
+#include "serialize_cereal.h"
 
 #include "string_util.h"
 #ifdef CEREAL_NVP

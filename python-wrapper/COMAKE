@@ -110,7 +110,7 @@ headers=''
 LIBS('./libpython2.7.so ./libboost_python.so ../include/tools/pinyin/libPYNotation.a ../libgezi_json.a ../libgezi_common.a')
 #SharedLibrary('wordseg',Sources('wordseg_py.cc', srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),LinkDeps(True))
 #srcs=GLOB('../src/*.cpp ../src/PythonWrapper/*.cpp')
-srcs = ''
+srcs=GLOB('../src/PythonWrapper/*.cpp')
 SharedLibrary('melt',Sources('melt_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 #SharedLibrary('gezi',Sources('gezi_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 #SharedLibrary('segmentor',Sources('segmentor_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))

@@ -27,8 +27,8 @@
 using std::map;
 using std::set;
 using std::string;
+
 namespace bfs = boost::filesystem;
-namespace bf = boost::filesystem;
 //---------------------------for file save load
 namespace gezi {
 
@@ -603,15 +603,26 @@ namespace gezi {
 		std::ofstream _ofs;
 	};
 
+
+#define OBJ_PATH(obj, path)\
+	string(path + "/" + gezi::conf_trim(#obj) + ".bin")
+
+#include "serialize_util.h"
 	template<typename T>
 	inline void save_shared_ptr(T obj, string path, string name)
 	{
 		string outName = "";
+		string outFile = path + "/" + name + ".bin";
 		if (obj != nullptr)
 		{
-			obj->Save(path + "/" + name);
+//#ifdef NO_CEREAL
+			obj->Save(outFile);
+//#else
+//			serialize_util::save(obj, outFile);
+//#endif
 			outName = obj->Name();
 		}
+
 		write_file(outName, path + "/" + name + ".name.txt");
 	}
 
@@ -644,22 +655,19 @@ namespace gezi {
 
 } //----end of namespace gezi
 
-#define SAVE_SHARED_PTR(obj)\
+#define SAVE_SHARED_PTR(obj, path)\
 	gezi::save_shared_ptr(obj, path, gezi::conf_trim(#obj))
 
-#define SAVE_SHARED_PTR_ASTEXT(obj)\
-	gezi::save_shared_ptr_astext(obj, _path + "/" + gezi::conf_trim(#obj) + ".txt")
+#define SAVE_SHARED_PTR_ASTEXT(obj, path)\
+	gezi::save_shared_ptr_astext(obj, path + "/" + gezi::conf_trim(#obj) + ".txt")
 
-#define SAVE_SHARED_PTR_ASXML(obj)\
-	gezi::save_shared_ptr_asxml(obj, _path + "/" + gezi::conf_trim(#obj) + ".xml")
+#define SAVE_SHARED_PTR_ASXML(obj, path)\
+	gezi::save_shared_ptr_asxml(obj, path + "/" + gezi::conf_trim(#obj) + ".xml")
 
-#define SAVE_SHARED_PTR_ASJSON(obj)\
-	gezi::save_shared_ptr_asjson(obj, _path + "/" + gezi::conf_trim(#obj) + ".json")
+#define SAVE_SHARED_PTR_ASJSON(obj, path)\
+	gezi::save_shared_ptr_asjson(obj, path + "/" + gezi::conf_trim(#obj) + ".json")
 
-#define OBJ_PATH(obj)\
-	string(path + "/" + gezi::conf_trim(#obj))
-
-#define  OBJ_NAME_PATH(obj)\
+#define  OBJ_NAME_PATH(obj, path)\
 	string(path + "/" + gezi::conf_trim(#obj) + ".name.txt")
 
 #endif  //----end of FILE_UTIL_H_
