@@ -61,6 +61,7 @@ struct PyVectorUtil
 		vec.resize(length, val);
 	}
 
+	//这个目前如果对方不支持展示的话危险
 	static std::string str(Vec& vec)
 	{
 		using std::stringstream;
@@ -68,7 +69,7 @@ struct PyVectorUtil
 		ofs << "[";
 		if (!vec.empty())
 		{
-			ofs << vec.front();
+			ofs << vec[0];
 		}
 		for (size_t i = 1; i < vec.size(); i++)
 		{
@@ -93,6 +94,7 @@ struct PyVectorUtil
 	//	}
 	//	cout << "]";
 	//}
+
 	//这个不起作用 不弄了 在python那边写一个帮助函数 dict2map 好了
 	static void init(Vec& vec, const boost::python::list& list)
 	{
@@ -139,9 +141,7 @@ using bp::map_indexing_suite;
 using bp::class_;
 
 //-----------------------helper 宏
-
 #define VEC_METHOD(Vec)\
-	.def("__str__", &PyVectorUtil<Vec>::str)\
 	.def("__delitem__", &PyVectorUtil<Vec>::erase)\
 	.def("push_back", &PyVectorUtil<Vec>::push_back)\
 	.def("size", &Vec::size)\
@@ -158,7 +158,6 @@ using bp::class_;
 
 #define VEC_METHOD2(Base, Vec)\
 	Base.def(vector_indexing_suite<Vec >())\
-	.def("__str__", &PyVectorUtil<Vec>::str)\
 	.def("__delitem__", &PyVectorUtil<Vec>::erase)\
 	.def("push_back", &PyVectorUtil<Vec>::push_back)\ 
 	.def("size", &Vec::size)\

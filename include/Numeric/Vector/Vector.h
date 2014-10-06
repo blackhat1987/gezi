@@ -32,12 +32,12 @@ namespace gezi {
 		Vector(const Vector&) = default;
 		Vector& operator = (const Vector&) = default;
 
-		typedef int index_type;
+		typedef int index_type;  //@TODO 修改所有可能的int 到index_type
 		typedef Float value_type;
 		typedef size_t size_type;
 		typedef int  difference_type;
-		typedef vector<Float>::iterator iterator;
-		typedef vector<Float>::const_iterator const_iterator;
+		typedef vector<value_type>::iterator iterator;
+		typedef vector<value_type>::const_iterator const_iterator;
 
 		//需要外部注意的 初始设置length 那么如果是Add(value) dense方式 要保证values最后长度
 		//和初始设置的一样 不要Add不够 因为实际Length()函数表示向量长度 这个其实主要针对sparse
@@ -349,7 +349,7 @@ namespace gezi {
 			Densify(sparsityRatio);
 		}
 
-		value_type operator[](int i) const
+		value_type operator[](index_type i) const
 		{
 			if (i < 0 || i >= length)
 				return _zeroValue;
@@ -370,7 +370,7 @@ namespace gezi {
 			}
 		}
 
-		value_type& operator[](int i)
+		value_type& operator[](index_type i)
 		{
 			/*if (i < 0 || i >= length)
 				return _value;*/
@@ -1123,7 +1123,8 @@ namespace gezi {
 		}
 	public:
 		//@TODO 有没有必要写成shared_ptr<ivec> indices; //更加灵活 允许两个Vector相同indice 不同value 避免拷贝
-		ivec indices; //不使用Node(index,value)更加灵活 同时可以允许一项为空
+		//shared_ptr<vector<index_type>> _indices; index_type* indices; 问题是序列化麻烦些
+		vector<index_type> indices; //不使用Node(index,value)更加灵活 同时可以允许一项为空
 		vector<value_type> values; //@TODO may be vector<value_type>Ptr 或者加一个指针 修改代码 如果指针不是空 使用指针指向的
 		//non_zero count < ratio to sparse, non_zero count >= ratio to dense
 		value_type sparsityRatio = 0.25;

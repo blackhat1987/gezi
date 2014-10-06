@@ -23,6 +23,8 @@
 #include <glog/logging.h>
 #include <gflags/gflags.h>
 
+#include "format.h" //放在最前面 有和convert_type.h的宏的冲突处理 
+
 #include "common_def.h"
 
 #include "string_util.h" //will remove baidu dependence 
@@ -54,7 +56,6 @@
 #include "LoadSave.h"
 
 
-#include "format.h" //最好在convert_type.h前面 有宏的冲突处理 不过在format.h内部已经引用convert_type.h
 #ifndef NO_GEZI_CONVERT
 #include "convert_type.h"
 #endif

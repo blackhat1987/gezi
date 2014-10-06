@@ -11,4 +11,5 @@ python ./add-static-def.py $o.bak > $o
 python ./fix-constructor.py $o > $o.bak
 python ./fix-pyplusplus-stl.py $o.bak > $o
 python ./fix-pyplusplus-map.py $o > $o.bak
-mv $o.bak $o
+python ./fix-add-more-vector.py $o.bak > $o
+#mv $o.bak $o

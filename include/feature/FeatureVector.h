@@ -27,6 +27,10 @@ namespace gezi {
 		FeatureVector(const FeatureVector&) = default;
 		FeatureVector& operator = (const FeatureVector&) = default;
 
+#ifndef GCCXML
+		using Vector::Vector;
+#endif
+	
 		//在线始终是dense
 		FeatureVector(bool useSparse = true)
 			:_useSparseAlso(useSparse)
@@ -51,7 +55,7 @@ namespace gezi {
 			{
 			}
 
-			Feature(int index_, Float value_)
+			Feature(int index_, value_type value_)
 				: index(index_), value(value_)
 			{
 
@@ -63,7 +67,12 @@ namespace gezi {
 
 			}
 			int index;
-			Float value;
+			value_type value;
+
+			bool operator == (const Feature& other) const
+			{
+				return index == other.index && value == other.value;
+			}
 
 			friend class boost::serialization::access;
 			template<class Archive>
@@ -75,38 +84,38 @@ namespace gezi {
 		};
 
 		//注意非多态情况 默认按照dense 处理 但是如果是按照Vector Sparse的话 还是按照二分查找
-		Float operator[](int i) const
+		value_type operator[](index_type i) const
 		{
 			return values[i];
 		}
 
-		Float operator[](int i)
+		value_type& operator[](index_type i)
 		{
 			return values[i];
 		}
 
-		Float value_at(int index) const
+		value_type value_at(int index) const
 		{
 			int idx = (index + values.size()) % values.size();
 			return values[idx];
 		}
 
-#ifndef GCCXML
-		Float& value_at(int index)
+#ifndef PYTHON_WRAPPER
+		value_type& value_at(int index)
 		{
 			int idx = (index + values.size()) % values.size();
 			return values[idx];
 		}
 #endif
 
-		Float at(int index) const
+		value_type at(int index) const
 		{
 			int idx = (index + values.size()) % values.size();
 			return values[idx];
 		}
 
-#ifndef GCCXML
-		Float& at(int index)
+#ifndef PYTHON_WRAPPER
+		value_type& at(int index)
 		{
 			int idx = (index + values.size()) % values.size();
 			return values[idx];
@@ -168,7 +177,7 @@ namespace gezi {
 			}
 			else
 			{
-				ForEachNonZero([&](int index, Float value) {
+				ForEachNonZero([&](int index, value_type value) {
 					ss << index << ":" << value << sep;
 				});
 			}
@@ -189,7 +198,7 @@ namespace gezi {
 			}
 			else
 			{
-				ForEachNonZero([&](int index, Float value) {
+				ForEachNonZero([&](int index, value_type value) {
 					ss << _names[index] << ":" << value << sep;
 				});
 			}
@@ -226,12 +235,12 @@ namespace gezi {
 			return _nameCounts;
 		}
 
-		/*	vector<Float>& values()
+		/*	vector<value_type>& values()
 			{
 			return values;
 			}
 
-			const vector<Float>& values() const
+			const vector<value_type>& values() const
 			{
 			return values;
 			}*/
@@ -240,7 +249,7 @@ namespace gezi {
 	 * 增加特征, 注意feature Node index 是0开始 不再和libsvm保持一致 和tlc保持一致
 	 * 注意调用前 一定先要add_section
 	 */
-		void add(Float value, string name = "")
+		void add(value_type value, string name = "")
 		{
 			if (name.empty())
 			{
@@ -262,13 +271,13 @@ namespace gezi {
 		}
 
 		////hack for template match error  void add(Vec& values_, string name = "") @FIXME
-		////是c++ 11 的重载匹配变严格了吗 不会自动转float匹配？
+		////是c++ 11 的重载匹配变严格了吗 不会自动转value_type匹配？
 		//void add(int value, string name = "")
 		//{
-		//	add(Float(value), name);
+		//	add(value_type(value), name);
 		//}
 
-		void add(Float* values_, int len, string name = "")
+		void add(value_type* values_, int len, string name = "")
 		{
 			if (name.empty())
 			{
@@ -286,7 +295,7 @@ namespace gezi {
 				}
 			}
 		}
-		//c++ 貌似模板匹配的优先度太高了 add(1,"")也会匹配下面这个 而不会匹配 add(Float,"")
+		//c++ 貌似模板匹配的优先度太高了 add(1,"")也会匹配下面这个 而不会匹配 add(value_type,"")
 		//template<typename Vec> void add(Vec& values_, string name = "")
 		template<typename T>
 		void add(const vector<T>& values_, string name = "")
@@ -309,7 +318,7 @@ namespace gezi {
 			}
 		}
 
-		//@TODO 由于add(int, )不会自动转float 匹配正确重载 而是优先匹配模板 造成代码重复。。
+		//@TODO 由于add(int, )不会自动转value_type 匹配正确重载 而是优先匹配模板 造成代码重复。。
 		//可以考虑add vector 改名 adds 更清晰
 		template<typename T, size_t Len>
 		void add(std::array<T, Len>& values_, string name = "")
@@ -361,7 +370,7 @@ namespace gezi {
 		}
 
 		//慎用 仅仅获取一个sparse 独立于Vector之外 如果有这个需要一般需要用Vector 然后Add(index, value)
-		void add(int index, Float value)
+		void add(int index, value_type value)
 		{
 			if (value)
 			{
@@ -384,7 +393,7 @@ namespace gezi {
 		void serialize(Archive &ar, const unsigned int version)
 		{
 			ar & BOOST_SERIALIZATION_BASE_OBJECT(Vector);
-			ar &  BOOST_SERIALIZATION_NVP(_useSectionName);
+			ar & BOOST_SERIALIZATION_NVP(_useSectionName);
 			ar & BOOST_SERIALIZATION_NVP(_names);
 			ar & BOOST_SERIALIZATION_NVP(_sectionNames);
 			ar & BOOST_SERIALIZATION_NVP(_nameCounts);

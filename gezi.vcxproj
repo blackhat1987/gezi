@@ -407,6 +407,7 @@
     <ClInclude Include="include\feature\feature_util.h" />
     <ClInclude Include="include\feature\gain_summary.h" />
     <ClInclude Include="include\file_util.h" />
+    <ClInclude Include="include\format.h" />
     <ClInclude Include="include\hashmap_util.h" />
     <ClInclude Include="include\Identifer.h" />
     <ClInclude Include="include\IdentiferFactory.h" />
@@ -546,6 +547,7 @@
     <ClInclude Include="include\tieba\uname_util.h" />
     <ClInclude Include="include\tieba\urate\extended_urate_info.h" />
     <ClInclude Include="include\tieba\urate\get_urate_info.h" />
+    <ClInclude Include="include\tieba\urate\urate_features.h" />
     <ClInclude Include="include\tieba\urate\urate_info.h" />
     <ClInclude Include="include\tieba\util.h" />
     <ClInclude Include="include\time_util.h" />
@@ -613,6 +615,7 @@
     <ClCompile Include="test\test_const.cc" />
     <ClCompile Include="test\test_content_filter.cc" />
     <ClCompile Include="test\test_content_process.cc" />
+    <ClCompile Include="test\test_cppformat.cc" />
     <ClCompile Include="test\test_cpplinq.cc" />
     <ClCompile Include="test\test_datetime.cc" />
     <ClCompile Include="test\test_encode.cc" />

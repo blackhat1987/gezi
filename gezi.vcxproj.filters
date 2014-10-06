@@ -1527,6 +1527,12 @@
     <ClInclude Include="include\seralize_cereal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\tieba\urate\urate_features.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\format.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -1800,6 +1806,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="test\cereal\test_cereal.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_cppformat.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
