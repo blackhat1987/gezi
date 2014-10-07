@@ -338,6 +338,11 @@ namespace gezi {
 
 		void Densify(value_type maxSparsity)
 		{
+			if (!IsSparse() || keepSparse)
+			{
+				return;
+			}
+			
 			if (length > 0 && (keepDense || (uint64)Count() >= (uint64)(length * maxSparsity)))
 			{
 				ToDense();

@@ -14,6 +14,10 @@
 #ifndef OPENMP_UTIL_H_
 #define OPENMP_UTIL_H_
 
+//#ifdef _OPENMP 
+//#undef _OPENMP
+//#endif
+
 #ifdef _OPENMP
 #include <omp.h>
 #else

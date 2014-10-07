@@ -192,9 +192,23 @@ namespace gezi {
 		return result;
 	}
 
+
 	inline bool split(string input, string sep, string& first, string& second)
 	{
-		int index = sep.size() == 1 ? input.find(sep[0]) : input.find(sep);
+		size_t index = input.find(sep);
+		if (index == string::npos)
+		{
+			return false;
+		}
+
+		first = input.substr(0, index);
+		second = input.substr(index + sep.size());
+		return true;
+	}
+
+	inline bool split_first_of(string input, string sep, string& first, string& second)
+	{
+		size_t index = input.find_first_of(sep);
 		if (index == string::npos)
 		{
 			return false;
@@ -207,7 +221,7 @@ namespace gezi {
 
 	inline bool split(string input, const char sep, string& first, string& second)
 	{
-		int index = input.find(sep);
+		size_t index = input.find_first_of(sep);
 		if (index == string::npos)
 		{
 			return false;
@@ -218,9 +232,9 @@ namespace gezi {
 	}
 
 	template<typename T>
-	inline bool split(string input, const char sep, int& first, T& second)
+	bool split(string input, const char sep, int& first, T& second)
 	{
-		int index = input.find(sep);
+		size_t index = input.find(sep);
 		if (index == string::npos)
 		{
 			return false;
@@ -228,6 +242,146 @@ namespace gezi {
 		first = INT(input);
 		second = DOUBLE_(input.c_str() + index + 1);
 		return true;
+	}
+
+	//自己确保len不超过input的尾部！ 模仿string.find(char)的风格
+	inline size_t find_char(string input, const char mark, int start, int len)
+	{
+		auto begin = input.begin() + start;
+		auto end = begin + len;
+		auto it = std::find(begin, end, mark);
+		if (it != end)
+		{
+			return (size_t)(it - input.begin());
+		}
+		else
+		{
+			return string::npos;
+		}
+	}
+
+#include "debug_util.h"
+
+	inline unsigned int fast_atou(const char* str)
+	{
+		unsigned int val = 0;
+		while (*str) {
+			val = (val << 1) + (val << 3) + *(str++) - 48;
+		}
+		return val;
+	}
+
+	inline unsigned int fast_atou(const char* str, const char* end)
+	{
+		unsigned int val = 0;
+		while (str != end) {
+			val = (val << 1) + (val << 3) + *(str++) - 48;
+		}
+		return val;
+	}
+
+
+	inline int fast_atoi(const char *buff)
+	{
+		int c = 0, sign = 0, x = 0;
+		const char *p = buff;
+
+		for (c = *(p++); (c < 48 || c > 57); c = *(p++)) { if (c == 45) { sign = 1; c = *(p++); break; } }; // eat whitespaces and check sign
+		for (; c > 47 && c < 58; c = *(p++)) x = (x << 1) + (x << 3) + c - 48;
+
+		return sign ? -x : x;
+	}
+
+	//inline int fast_atoi(const char *buff, const char * end)
+	//{
+	//	int c = 0, sign = 0, x = 0;
+	//	const char *p = buff;
+
+	//	for (c = *(p++); (c < 48 || c > 57); c = *(p++)) { if (c == 45) { sign = 1; c = *(p++); break; } }; // eat whitespaces and check sign
+	//	for (; c > 47 && c < 58; c = *(p++)) x = (x << 1) + (x << 3) + c - 48;
+
+	//	return sign ? -x : x;
+	//}
+
+	//@TODO 这个版本是 uint + double 用于sparse格式的特征文件解析 InstanceParser.h 泛化或者放到其它位置
+	template<typename FindFunc, typename UnfindFunc>
+	void splits_int_double(string input, const char sep, const char inSep, FindFunc findFunc, UnfindFunc unfindFunc)
+	{
+		size_t pos = 0;
+		size_t pos2 = input.find(sep);
+		int i = 0;
+		while (pos2 != string::npos)
+		{
+			int len = pos2 - pos;
+			//why find_char so slow.... 
+			//size_t inPos = find_char(input, inSep, pos, len);
+			size_t inPos = input.find(inSep, pos);
+			//if (inPos != string::npos)
+			if (inPos < pos2) //这个查找可以优化 但是问题不大。。暂时没找到好的方法 改为find_char速度更慢很多
+			{
+				//findFunc(atoi(input.c_str() + pos), atof(input.c_str() + inPos + 1));
+				findFunc(fast_atou(input.c_str() + pos, input.c_str() + inPos), atof(input.c_str() + inPos + 1));
+			}
+			else
+			{
+				unfindFunc(i, input.substr(pos, len));
+			}
+			pos = pos2 + 1;
+			pos2 = input.find(sep, pos);
+			i++;
+		}
+		size_t inPos = input.find(inSep, pos);
+		findFunc(atoi(input.c_str() + pos), atof(input.c_str() + inPos + 1));
+	}
+
+	//@TODO rename
+	template<typename FindFunc, typename UnfindFunc>
+	void splits_string_double(string input, const char sep, const char inSep, FindFunc findFunc, UnfindFunc unfindFunc)
+	{
+		size_t pos = 0;
+		size_t pos2 = input.find(sep);
+		int i = 0;
+		while (pos2 != string::npos)
+		{
+			int len = pos2 - pos;
+			//why find_char so slow.... 
+			//size_t inPos = find_char(input, inSep, pos, len);
+			size_t inPos = input.find(inSep, pos);
+			//if (inPos != string::npos)
+			if (inPos < pos2) //这个查找可以优化 但是问题不大。。暂时没找到好的方法 改为find_char速度更慢很多
+			{
+				//findFunc(atoi(input.c_str() + pos), atof(input.c_str() + inPos + 1));
+				findFunc(input.substr(pos, inPos - pos), atof(input.c_str() + inPos + 1));
+			}
+			else
+			{
+				unfindFunc(i, input.substr(pos, len));
+			}
+			pos = pos2 + 1;
+			pos2 = input.find(sep, pos);
+			i++;
+		}
+		size_t inPos = input.find(inSep, pos);
+		findFunc(input.substr(pos, inPos - pos), atof(input.c_str() + inPos + 1));
+	}
+
+	//假设都是类似 1:3 2:6 7:9 标准样式的解析
+	template<typename FindFunc>
+	void splits_int_double(string input, const char sep, const char inSep, FindFunc findFunc)
+	{
+		size_t pos = 0;
+		size_t pos2 = input.find(sep);
+		while (pos2 != string::npos)
+		{
+			int len = pos2 - pos;
+			input[pos + len] = '\0';
+			size_t inPos = input.find(inSep, pos);
+			findFunc(atoi(input.c_str() + pos), atof(input.c_str() + inPos + 1));
+			pos = pos2 + 1;
+			pos2 = input.find(sep, pos);
+		}
+		size_t inPos = input.find(inSep, pos);
+		findFunc(atoi(input.c_str() + pos), atof(input.c_str() + inPos + 1));
 	}
 
 	//@TODO 去掉trim 带trim的统一后缀 _safe
@@ -535,7 +689,7 @@ namespace gezi {
 		}
 	}//---- end of namespace ufo
 
-	
+
 }  //----end of namespace gezi
 
 #endif  //----end of STL_UTIL_H_

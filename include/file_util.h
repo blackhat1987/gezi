@@ -104,10 +104,23 @@ namespace gezi {
 		return true;
 	}
 
-	//@TODO read_lines_safe
 	inline vector<string> read_lines(string infile)
 	{
-		AutoTimer timer("read_lines", 1);
+		AutoTimer timer("read_lines", 3);
+		vector<string> vec;
+		std::ifstream ifs(infile.c_str());
+		string line;
+		while (getline(ifs, line))
+		{
+			boost::trim(line);
+			vec.push_back(line);
+		}
+		return vec;
+	}
+
+	inline vector<string> read_lines_fast(string infile)
+	{
+		AutoTimer timer("read_lines", 3);
 		vector<string> vec;
 		std::ifstream ifs(infile.c_str());
 		string line;
@@ -143,6 +156,24 @@ namespace gezi {
 		while (getline(ifs, line))
 		{
 			boost::trim(line);
+			if (line.empty() || startswith(line, ignore))
+			{
+				continue;
+			}
+
+			vec.push_back(line);
+		}
+		return vec;
+	}
+
+	inline vector<string> read_lines_fast(string infile, string ignore)
+	{
+		AutoTimer timer("read_lines", 3);
+		vector<string> vec;
+		std::ifstream ifs(infile.c_str());
+		string line;
+		while (getline(ifs, line))
+		{
 			if (line.empty() || startswith(line, ignore))
 			{
 				continue;
@@ -667,7 +698,7 @@ namespace gezi {
 	gezi::save_shared_ptr_astext(obj, format("{}/{}.txt", path, gezi::conf_trim((#obj))))
 
 #define SAVE_SHARED_PTR_ASXML(obj, path)\
-	gezi::save_shared_ptr_asxml(obj,	format("{}/{}.xml", path, gezi::conf_trim((#obj))))
+	gezi::save_shared_ptr_asxml(obj, format("{}/{}.xml", path, gezi::conf_trim((#obj))))
 
 #define SAVE_SHARED_PTR_ASJSON(obj, path)\
 	gezi::save_shared_ptr_asjson(obj, format("{}/{}.json", path, gezi::conf_trim((#obj))))
