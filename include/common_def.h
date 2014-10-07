@@ -17,6 +17,8 @@
 #define BOOST_DETAIL_NO_CONTAINER_FWD
 #endif
 
+#include "format.h" //放在最前面 有和convert_type.h的宏的冲突处理 
+
 #include <stdlib.h>
 #include <string>
 #include <vector>
@@ -136,7 +138,10 @@ typedef std::set<std::string> sset;
 
 #include <boost/foreach.hpp>
 #define foreach BOOST_FOREACH
-using boost::format; //可能会倾向使用cppformat即 fmt::format 不过暂时很多代码使用boost 并且两者格式不一样
+
+//using boost::format; //可能会倾向使用cppformat即 fmt::format 不过暂时很多代码使用boost 并且两者格式不一样
+using fmt::format; //@TODO 也许所有using typedef 都应该放到gezi namespace内部
+
 using boost::is_any_of;
 #include <boost/any.hpp>   
 using boost::any_cast;

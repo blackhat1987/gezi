@@ -24,6 +24,7 @@
 #include <map>
 #include <set>
 #include <string>
+#include "format.h"
 using std::map;
 using std::set;
 using std::string;
@@ -46,7 +47,7 @@ namespace gezi {
 			LOG(WARNING) << dir << " not exitst, will create first";
 #ifdef __GNUC__
 			//mkdir(dir.c_str());            //boost create_directories 是跨平台 但是当前版本有bug
-			EXECUTE((format("mkdir %s") % dir).str());
+			EXECUTE(format("mkdir {}", dir));
 #else
 			bfs::create_directories(dir); //@FIXME以前没遇到 现在需要 export LC_ALL="C"
 #endif // __GNUC__
@@ -106,6 +107,7 @@ namespace gezi {
 	//@TODO read_lines_safe
 	inline vector<string> read_lines(string infile)
 	{
+		AutoTimer timer("read_lines", 1);
 		vector<string> vec;
 		std::ifstream ifs(infile.c_str());
 		string line;
@@ -134,6 +136,7 @@ namespace gezi {
 
 	inline vector<string> read_lines(string infile, string ignore)
 	{
+		AutoTimer timer("read_lines", 3);
 		vector<string> vec;
 		std::ifstream ifs(infile.c_str());
 		string line;
@@ -416,7 +419,7 @@ namespace gezi {
 		std::ifstream ifs(infile.c_str());
 		string line;
 		while (getline(ifs, line))
-		{ 
+		{
 			boost::trim(line);
 			m[line] = start++;
 		}
@@ -605,25 +608,25 @@ namespace gezi {
 
 
 #define OBJ_PATH(obj, path)\
-	string(path + "/" + gezi::conf_trim(#obj) + ".bin")
+	format("{}/{}.bin", path, gezi::conf_trim(#obj))
 
 #include "serialize_util.h"
 	template<typename T>
 	inline void save_shared_ptr(T obj, string path, string name)
 	{
 		string outName = "";
-		string outFile = path + "/" + name + ".bin";
+		string outFile = format("{}/{}.bin", path, name);
 		if (obj != nullptr)
 		{
-//#ifdef NO_CEREAL
+			//#ifdef NO_CEREAL
 			obj->Save(outFile);
-//#else
-//			serialize_util::save(obj, outFile);
-//#endif
+			//#else
+			//			serialize_util::save(obj, outFile);
+			//#endif
 			outName = obj->Name();
 		}
 
-		write_file(outName, path + "/" + name + ".name.txt");
+		write_file(outName, format("{}/{}.name.txt", path, name));
 	}
 
 	template<typename T>
@@ -655,19 +658,21 @@ namespace gezi {
 
 } //----end of namespace gezi
 
+
+
 #define SAVE_SHARED_PTR(obj, path)\
 	gezi::save_shared_ptr(obj, path, gezi::conf_trim(#obj))
 
 #define SAVE_SHARED_PTR_ASTEXT(obj, path)\
-	gezi::save_shared_ptr_astext(obj, path + "/" + gezi::conf_trim(#obj) + ".txt")
+	gezi::save_shared_ptr_astext(obj, format("{}/{}.txt", path, gezi::conf_trim((#obj))))
 
 #define SAVE_SHARED_PTR_ASXML(obj, path)\
-	gezi::save_shared_ptr_asxml(obj, path + "/" + gezi::conf_trim(#obj) + ".xml")
+	gezi::save_shared_ptr_asxml(obj,	format("{}/{}.xml", path, gezi::conf_trim((#obj))))
 
 #define SAVE_SHARED_PTR_ASJSON(obj, path)\
-	gezi::save_shared_ptr_asjson(obj, path + "/" + gezi::conf_trim(#obj) + ".json")
+	gezi::save_shared_ptr_asjson(obj, format("{}/{}.json", path, gezi::conf_trim((#obj))))
 
 #define  OBJ_NAME_PATH(obj, path)\
-	string(path + "/" + gezi::conf_trim(#obj) + ".name.txt")
+	format("{}/{}.name.txt", path, gezi::conf_trim(#obj))
 
 #endif  //----end of FILE_UTIL_H_

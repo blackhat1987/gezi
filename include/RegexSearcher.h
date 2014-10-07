@@ -136,7 +136,8 @@ public:
 		{
 			if (boost::regex_search(src, reg_list_[i]))
 			{
-				VLOG(4) << (format("%s find with %dth reg %s") % src % i % reg_list_[i].str()).str();
+				//VLOG(4) << (format("%s find with %dth reg %s") % src % i % reg_list_[i].str()).str();
+				VLOG(4) << format("{} find with {}th reg {}", src, i, reg_list_[i]);
 				return true;
 			}
 		}

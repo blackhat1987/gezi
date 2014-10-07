@@ -54,27 +54,31 @@ namespace gezi {
 	}
 
 	template<typename T>
-	std::string get_jason(const std::vector<T>& vec)
+	std::string get_json(const std::vector<T>& vec)
 	{
 		std::vector<string> rvec;
 		for (int i = 0; i < (int)vec.size(); i++)
 		{
-			string kv = (format("\"%1%\":\"%2%\"") % STR(i) % STR(vec[i])).str();
+			//string kv = (format("\"%1%\":\"%2%\"") % STR(i) % STR(vec[i])).str();
+			string kv = format("\"{}\":\"{}\"", i, vec[i]);
 			rvec.push_back(kv);
 		}
-		return (format("{%1%}") % join(rvec, ",")).str();
+		//return (format("{%1%}") % join(rvec, ",")).str();
+		return format("{{{}}}", join(rvec, ","));
 	}
 
 	template<typename T>
-	std::string get_jason(const std::vector<T>& vec, int len)
+	std::string get_json(const std::vector<T>& vec, int len)
 	{
 		std::vector<string> rvec;
 		for (int i = 0; i < len; i++)
 		{
-			string kv = (format("\"%1%\":\"%2%\"") % STR(i) % STR(vec[i])).str();
+			//string kv = (format("\"%1%\":\"%2%\"") % STR(i) % STR(vec[i])).str();
+			string kv = format("\"{}\":\"{}\"", i, vec[i]);
 			rvec.push_back(kv);
 		}
-		return (format("{%1%}") % join(rvec, ",")).str();
+		//return (format("{%1%}") % join(rvec, ",")).str();
+		return format("{{{}}}", join(rvec, ","));
 	}
 
 
@@ -210,6 +214,19 @@ namespace gezi {
 		}
 		first = input.substr(0, index);
 		second = input.substr(index + 1);
+		return true;
+	}
+
+	template<typename T>
+	inline bool split(string input, const char sep, int& first, T& second)
+	{
+		int index = input.find(sep);
+		if (index == string::npos)
+		{
+			return false;
+		}
+		first = INT(input);
+		second = DOUBLE_(input.c_str() + index + 1);
 		return true;
 	}
 

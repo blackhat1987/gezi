@@ -179,7 +179,7 @@ namespace gezi {
 			return _index[id];
 		}
 
-		const IdType& operator () (string key) const
+		const IdType operator () (string key) const
 		{
 			HashMap::const_iterator it = _hashdict.find(key);
 			if (it == _hashdict.end())

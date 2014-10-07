@@ -23,8 +23,6 @@
 #include <glog/logging.h>
 #include <gflags/gflags.h>
 
-#include "format.h" //放在最前面 有和convert_type.h的宏的冲突处理 
-
 #include "common_def.h"
 
 #include "string_util.h" //will remove baidu dependence 

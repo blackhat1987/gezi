@@ -22,8 +22,14 @@
 //#undef INT 
 //#undef UINT 
 //#undef STRING 
-//#include "format.h"
-#include "common_util.h"
+
+#include <gtest/gtest.h> 
+#include <glog/logging.h>
+#include <gflags/gflags.h>
+#include "debug_util.h"
+#include "format.h"
+
+//#include "common_util.h"
 
 using namespace std;
 using namespace gezi;
@@ -47,6 +53,8 @@ TEST(cppformat, func)
 	string a = "3";
 	string b = "5";
 	fmt::printf("%d",INT(a) + INT(b));
+	Pval(fmt::format("{{{}}}", "abc"));
+	Pval(fmt::format("\"{}\"", "abc"));
 }
 
 int main(int argc, char *argv[])

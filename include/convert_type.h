@@ -45,21 +45,38 @@
 
 #undef  STR
 #define STR boost::lexical_cast<std::string>
+//#define STR std::to_string
+
+//Defined in header <string>
+//int       stoi(const std::string& str, std::size_t* pos = 0, int base = 10);
+//int       stoi(const std::wstring& str, std::size_t* pos = 0, int base = 10);
+//(1)	(since C++11)
+//long      stol(const std::string& str, std::size_t* pos = 0, int base = 10);
+//long      stol(const std::wstring& str, std::size_t* pos = 0, int base = 10);
+//(2)	(since C++11)
+//long long stoll(const std::string& str, std::size_t* pos = 0, int base = 10);
+//long long stoll(const std::wstring& str, std::size_t* pos = 0, int base = 10);
+//(3)	(since C++11)
+//Interprets a signed integer value in the string str.
+//
+//1) calls std::strtol(str.c_str(), &ptr, base) or std::wcstol(str.c_str(), &ptr, base)
+//2) calls std::strtol(str.c_str(), &ptr, base) or std::wcstol(str.c_str(), &ptr, base)
+//3) calls std::strtoll(str.c_str(), &ptr, base) or std::wcstoll(str.c_str(), &ptr, base)
 
 #define  STR_TO_INT(a) \
-atoi(a.c_str())
+	atoi(a.c_str())
 #define STR_TO_DOUBLE(a) \
-atof(a.c_str())
+	atof(a.c_str())
 
 #define  TO_INT(a) \
-atoi(a.c_str())
+	atoi(a.c_str())
 #define TO_DOUBLE(a) \
-atof(a.c_str())
+	atof(a.c_str())
 
 #define  ATOI(a) \
-atoi(a.c_str())
+	atoi(a.c_str())
 #define ATOF(a) \
-atof(a.c_str())
+	atof(a.c_str())
 
 #define  INT_PARSE(a) \
 	atoi(a.c_str())
@@ -72,6 +89,8 @@ atof(a.c_str())
 	atoi(a)
 #define DOUBLE(a) \
 	atof(a.c_str())
+#define DOUBLE_(a) \
+	atof(a)
 
 //namespace gezi
 //{

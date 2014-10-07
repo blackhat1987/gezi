@@ -324,7 +324,7 @@ namespace gezi {
 
 			int nonZeroNum = GetNumNonZeros();
 			//@TODO 检查特征全是0的情况
-			if (nonZeroNum < (uint64)(length * maxSparsity))
+			if ((uint64)nonZeroNum < (uint64)(length * maxSparsity))
 			{
 				ToSparse();
 			}
@@ -338,7 +338,7 @@ namespace gezi {
 
 		void Densify(value_type maxSparsity)
 		{
-			if (length > 0 && (keepDense || Count() >= (uint64)(length * maxSparsity)))
+			if (length > 0 && (keepDense || (uint64)Count() >= (uint64)(length * maxSparsity)))
 			{
 				ToDense();
 			}
