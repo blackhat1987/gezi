@@ -334,6 +334,22 @@ namespace gezi {
 		findFunc(atoi(input.c_str() + pos), atof(input.c_str() + inPos + 1));
 	}
 
+	template<typename Func>
+	int split_enumerate(string input, const char sep, Func func)
+	{
+		size_t pos = 0;
+		size_t pos2 = input.find(sep);
+		int i = 0;
+		while (pos2 != string::npos)
+		{
+			func(i, pos, pos2 - pos);
+			pos = pos2 + 1;
+			pos2 = input.find(sep, pos);
+			i++;
+		}
+		func(i, pos, input.length() - pos);
+		return i + 1;
+	}
 	//@TODO rename
 	template<typename FindFunc, typename UnfindFunc>
 	void splits_string_double(string input, const char sep, const char inSep, FindFunc findFunc, UnfindFunc unfindFunc)
