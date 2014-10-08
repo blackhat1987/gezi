@@ -34,8 +34,8 @@ DEFINE_string(o, "", "output file");
 void run_get_fullposts_info(uint64 tid)
 {
 	auto info = get_full_posts_info(tid, FLAGS_num, 0, 1);
-	string historyPath = FLAGS_history + "/" + STR(tid) + ".xml";
-	serialize::save_xml(info, historyPath);
+	string historyPath = FLAGS_history + "/" + STR(tid) + ".json";
+	serialize_util::save_json(info, historyPath);
 }
 
 void run()
@@ -44,6 +44,7 @@ void run()
 	AutoTimer timer("run", 0);
 	vector<uint64> tids = read_to_vec<uint64>(FLAGS_i);
 	Pval2(tids.size(), tids[0]);
+	try_create_dir(FLAGS_history);
 #pragma omp parallel for
 	for (size_t i = 0; i < tids.size(); i++)
 	{

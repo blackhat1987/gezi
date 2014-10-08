@@ -34,7 +34,9 @@ namespace gezi {
 				add(size(), "HistorySize");
 
 				{//主题数目
-					int numThreads = from(info().postsInfo.isThreads) >> where([](bool a) { return a == true; }) >> count();
+					//vector<bool>有warning 结果不可预期,优先考虑stl的序列算法 
+					/*int numThreads = from(info().postsInfo.isThreads) >> where([](bool a) { return a == true; }) >> count();*/
+					int numThreads = gezi::sum<int>(info().postsInfo.isThreads);
 					double threadRatio = numThreads / (double)size();
 					ADD_FEATURE(numThreads);
 					ADD_FEATURE(threadRatio);

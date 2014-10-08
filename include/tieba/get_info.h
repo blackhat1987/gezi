@@ -120,7 +120,7 @@ namespace gezi {
 		inline string get_threads_info_str(string tids_, bool need_abstract = false)
 		{
 			string url;
-			url = (format("http://service.tieba.baidu.com/service/post?method=mgetThread&format=json&need_abstract=[%d]&forum_id=0&need_photo_pic=0&need_user_data=0&icon_size=0&need_forum_name=1&call_from=pc&thread_ids=[%s]") % need_abstract % tids_).str();
+			url = (boost::format("http://service.tieba.baidu.com/service/post?method=mgetThread&format=json&need_abstract=[%d]&forum_id=0&need_photo_pic=0&need_user_data=0&icon_size=0&need_forum_name=1&call_from=pc&thread_ids=[%s]") % need_abstract % tids_).str();
 			return get_info_str(url);
 		}
 
@@ -154,8 +154,8 @@ namespace gezi {
 		inline string get_user_fans(uint64 uid)
 		{
 			string section = "tieba.user_fans";
-			/*	string url = SCONF_(url, (format("http://service.tieba.baidu.com/service/user?method=getUserinfo&user_id=%s&format=json&get_sign=0") % uid).str());*/
-			string url = (format("http://service.tieba.baidu.com/service/user?method=getUserinfo&user_id=%s&format=json&get_sign=0") % uid).str();
+			/*	string url = SCONF_(url, (boost::format("http://service.tieba.baidu.com/service/user?method=getUserinfo&user_id=%s&format=json&get_sign=0") % uid).str());*/
+			string url = (boost::format("http://service.tieba.baidu.com/service/user?method=getUserinfo&user_id=%s&format=json&get_sign=0") % uid).str();
 			return get_info_str(url);
 		}
 
@@ -214,7 +214,7 @@ namespace gezi {
 		//获取整楼的数据
 		inline string get_full_posts_info_str(uint64 threadId, int resNum = 100, int offset = 0, int hasComment = 0, uint64 postId = 0)
 		{
-			string url = (format("http://service.tieba.baidu.com/service/post?method=getFullPostsByThreadId&format=json&thread_id=%ld&res_num=%d&offset=%d&has_comment=%d&post_id=%ld") % threadId % resNum % offset % hasComment % postId).str();
+			string url = (boost::format("http://service.tieba.baidu.com/service/post?method=getFullPostsByThreadId&format=json&thread_id=%ld&res_num=%d&offset=%d&has_comment=%d&post_id=%ld") % threadId % resNum % offset % hasComment % postId).str();
 			return get_info_str(url);
 		}
 
@@ -274,11 +274,11 @@ namespace gezi {
 			string suffix = "", bool retry = true)
 		{
 			InfoType info;
-			string end = suffix.empty() ? ".xml" : "." + suffix + ".xml";
+			string end = suffix.empty() ? ".json" : "." + suffix + ".json";
 			string historyFile = historyDir + "/" + STR(id) +  end;
 			if (!forceFetch)
 			{
-				serialize_util::load_xml(historyFile, info);
+				serialize_util::load_json(historyFile, info);
 			}
 			if (useFetch)
 			{
@@ -287,7 +287,7 @@ namespace gezi {
 					info = func(id);
 					if (info.IsValid())
 					{
-						serialize_util::save_xml(info, historyFile);
+						serialize_util::save_json(info, historyFile);
 					}
 					else
 					{ //尝试再一次获取
@@ -297,7 +297,7 @@ namespace gezi {
 							info = func(id);
 							if (info.IsValid())
 							{
-								serialize_util::save_xml(info, historyFile);
+								serialize_util::save_json(info, historyFile);
 							}
 							else
 							{

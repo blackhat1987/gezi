@@ -22,7 +22,7 @@ namespace gezi {
 		//-------------------------------------删帖信息
 		inline bool is_deleted(uint64 id, string type)
 		{
-			string param = (format("{%%22%s_id%%22:%ld}") % type % id).str();
+			string param = (boost::format("{%%22%s_id%%22:%ld}") % type % id).str();
 			string jsonStr = get_delete_info_str(param);
 			Json::Reader reader;
 			Json::Value root;
@@ -35,7 +35,7 @@ namespace gezi {
 			bool isDeleted = false;
 			try
 			{
-				isDeleted = root["output"][(format("del%s_res") % type).str()].size() > 0;
+				isDeleted = root["output"][(boost::format("del%s_res") % type).str()].size() > 0;
 			}
 			catch (...)
 			{
@@ -75,7 +75,7 @@ namespace gezi {
 		{
 			DeleteInfo deleteInfo;
 			//多一个%表示escape
-			string param = (format("{%%22%s_id%%22:%ld}") % type % id).str();
+			string param = (boost::format("{%%22%s_id%%22:%ld}") % type % id).str();
 			string jsonStr = get_delete_info_str(param);
 			Json::Reader reader;
 			Json::Value root;
@@ -87,7 +87,7 @@ namespace gezi {
 			}
 			try
 			{
-				auto& m = root["output"][(format("del%s_res") % type).str()];
+				auto& m = root["output"][(boost::format("del%s_res") % type).str()];
 				if (m.size() > 0)
 				{
 					auto& jsonDelInfo = m[m.getMemberNames()[0]];
@@ -119,7 +119,7 @@ namespace gezi {
 			for (auto& ids : idsVec)
 			{
 				string params = join((from(ids)
-					>> select([&type](uint64 id) { return (format("{%%22%s_id%%22:%ld}") % type % id).str(); })
+					>> select([&type](uint64 id) { return (boost::format("{%%22%s_id%%22:%ld}") % type % id).str(); })
 					>> to_vector()), ",");
 				string jsonStr = get_delete_info_str(params);
 				Json::Reader reader;
@@ -137,7 +137,7 @@ namespace gezi {
 				}
 				try
 				{
-					auto& m = root["output"][(format("del%s_res") % type).str()];
+					auto& m = root["output"][(boost::format("del%s_res") % type).str()];
 					const auto& memberNames = m.getMemberNames();
 					for (auto iter = memberNames.begin(); iter != memberNames.end(); ++iter)
 					{
@@ -184,7 +184,7 @@ namespace gezi {
 			for (auto& ids : idsVec)
 			{
 				string params = join((from(ids)
-					>> select([&type](uint64 id) { return (format("{%%22%s_id%%22:%ld}") % type % id).str(); })
+					>> select([&type](uint64 id) { return (boost::format("{%%22%s_id%%22:%ld}") % type % id).str(); })
 					>> to_vector()), ",");
 				string jsonStr = get_delete_info_str(params);
 				Json::Reader reader;
@@ -202,7 +202,7 @@ namespace gezi {
 				}
 				try
 				{
-					auto m = root["output"][(format("del%s_res") % type).str()];
+					auto m = root["output"][(boost::format("del%s_res") % type).str()];
 					const auto& memberNames = m.getMemberNames();
 					for (auto iter = memberNames.begin(); iter != memberNames.end(); ++iter)
 					{

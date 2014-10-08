@@ -305,8 +305,7 @@ namespace gezi {
 	typedef ValueIdentifer<int> IntIdentifer;
 	typedef ValueIdentifer<double> DoubleIdentifer;
 
-	#ifdef GCCXML 
-	//py++ work around py++不处理typedef,这样被继承后会被GXXCML解析 
+	#ifdef PYTHON_WRAPPER
 	class PyIntIndentifer : public IntIdentifer
 	{
 
@@ -315,7 +314,7 @@ namespace gezi {
 	{
 
 	};
-	#endif //GCCXML
+	#endif //PYTHON_WRAPPER
 
 } //----end of namespace gezi
 

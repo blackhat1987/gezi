@@ -656,7 +656,7 @@ namespace gezi {
 			//#endif
 			outName = obj->Name();
 		}
-
+		Pval_2(outName);
 		write_file(outName, format("{}/{}.name.txt", path, name));
 	}
 

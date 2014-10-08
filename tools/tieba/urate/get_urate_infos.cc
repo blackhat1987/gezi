@@ -32,9 +32,8 @@ DEFINE_string(o, "", "output file");
 void run_get_urate_info(uint64 pid)
 {
 	auto info = get_urate_info(pid, FLAGS_num);
-	Pval2_1(info.postId, info.postsInfo.numPosts);
-	string historyPath = FLAGS_history + "/" + STR(pid) + ".xml";
-	serialize_util::save_xml(info, historyPath);
+	string historyPath = FLAGS_history + "/" + STR(pid) + ".json";
+	serialize_util::save_json(info, historyPath);
 }
 
 void run()
@@ -44,6 +43,7 @@ void run()
 	vector<uint64> pids;
 	read_to_vec(FLAGS_i, pids);
 	Pval2(pids.size(), pids[0]);
+	try_create_dir(FLAGS_history);
 #pragma omp parallel for
 	for (size_t i = 0; i < pids.size(); i++)
 	{

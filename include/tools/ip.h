@@ -29,7 +29,7 @@ namespace gezi
 		int ip2 = (ipl % (256 * 256 * 256)) / (256 * 256);
 		int ip3 = (ipl % (256 * 256)) / 256;
 		int ip4 = ipl % 256;
-		return (format("%d.%d.%d.%d") % ip4 % ip3 % ip2 % ip1).str();
+		return format("{}.{}.{}.{}", ip4, ip3, ip2, ip1);
 	}
 
 	//从输入的ip数据 获取到可读的ip格式的4个int array[3] 192 array[2] 168 array[1] 32 array[0] 78

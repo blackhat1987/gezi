@@ -253,11 +253,11 @@ namespace gezi {
 		{
 			if (name.empty())
 			{
-				name = (format("%s_%d") % _sectionNames.back() % _idx).str();
+				name = format("{}_{}", _sectionNames.back(), _idx);
 			}
 			else if (_useSectionName && !_sectionNames.empty())
 			{
-				name = (format("%s_%s") % _sectionNames.back() % name).str();
+				name = format("{}_{}", _sectionNames.back(), name);
 			}
 
 			if (value != 0 && _useSparseAlso)

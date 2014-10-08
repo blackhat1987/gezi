@@ -71,6 +71,20 @@ namespace gezi {
 		return sum(vec.begin(), vec.end());
 	}
 
+	template<typename value_type, typename Iter>
+	//auto sum(Iter start, Iter end) -> decltype(*start) 
+	// In instantiation of 'decltype (* start) gezi::sum(Iter, Iter) [with Iter = __gnu_cxx::__normal_iterator<const int*, std::vector<int> >; decltype (* start) = const int&]':
+	value_type sum(Iter start, Iter end)
+	{
+		return std::accumulate(start, end, 0);
+	}
+
+	template<typename value_type, typename Container>
+	value_type sum(const Container& vec)
+	{
+		return sum<value_type>(vec.begin(), vec.end());
+	}
+
 	template<typename Iter>
 	size_t num_zeros(Iter start, Iter end)
 	{

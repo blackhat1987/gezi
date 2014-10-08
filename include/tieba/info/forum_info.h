@@ -22,7 +22,7 @@ namespace gezi {
 		inline uint get_forum_id(string forumName)
 		{
 			uint forumId = 0;
-			string jsonStr = get_forum_id_str((format("\"%s\"") % forumName).str());
+			string jsonStr = get_forum_id_str((boost::format("\"%s\"") % forumName).str());
 			Json::Reader reader;
 			Json::Value root;
 			bool ret = reader.parse(jsonStr, root);
@@ -55,7 +55,7 @@ namespace gezi {
 			for (auto& forumNames : forumNamesVec)
 			{
 				string jsonStr = get_forum_id_str(join(from(forumNames)
-					>> select([](string forumName) { return (format("\"%s\"") % forumName).str(); }) >> to_vector(),
+					>> select([](string forumName) { return (boost::format("\"%s\"") % forumName).str(); }) >> to_vector(),
 					","));
 				PVAL(jsonStr);
 				Json::Reader reader;
@@ -129,7 +129,7 @@ namespace gezi {
 			for (auto& forumNames : forumNamesVec)
 			{
 				string jsonStr = get_forum_id_str(join(from(forumNames)
-					>> select([](string forumName) { return (format("\"%s\"") % forumName).str(); }) >> to_vector(),
+					>> select([](string forumName) { return (boost::format("\"%s\"") % forumName).str(); }) >> to_vector(),
 					","));
 				PVAL(jsonStr);
 				Json::Reader reader;

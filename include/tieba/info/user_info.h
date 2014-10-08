@@ -69,7 +69,7 @@ namespace gezi {
 
 		inline UserPostNumInfo get_user_post_num_info(uint uid, uint forumId)
 		{
-			string url = (format("http://service.tieba.baidu.com/service/post?method=queryUserForumCount&format=json&user_id=%1%&forum_id=%2%") % uid % forumId).str();
+			string url = (boost::format("http://service.tieba.baidu.com/service/post?method=queryUserForumCount&format=json&user_id=%1%&forum_id=%2%") % uid % forumId).str();
 			return get_user_post_num_info_(url);
 		}
 
@@ -147,7 +147,7 @@ namespace gezi {
 		inline UserInfo get_user_info(uint uid, bool needFollowInfo = true, bool needPassInfo = true)
 		{
 			UserInfo info;
-			string url = (format("http://service.tieba.baidu.com/service/user?method=getUserDataEx&format=json&user_id=%1%&need_follow_info=%2%&need_pass_info=%3%") % uid % needFollowInfo % needPassInfo).str();
+			string url = (boost::format("http://service.tieba.baidu.com/service/user?method=getUserDataEx&format=json&user_id=%1%&need_follow_info=%2%&need_pass_info=%3%") % uid % needFollowInfo % needPassInfo).str();
 			string jsonStr = get_info_str(url);
 			Json::Reader reader;
 			Json::Value root;
@@ -176,7 +176,7 @@ namespace gezi {
 			auto uidsVec = gezi::split(uids_, kMaxRequestCount);
 			for (auto& uids : uidsVec)
 			{
-				string url = (format("http://service.tieba.baidu.com/service/user?method=mgetUserDataEx&format=json&user_id=[%1%]&need_follow_info=%2%&need_pass_info=%3%") % join(convert(uids), ",") % needFollowInfo % needPassInfo).str();
+				string url = (boost::format("http://service.tieba.baidu.com/service/user?method=mgetUserDataEx&format=json&user_id=[%1%]&need_follow_info=%2%&need_pass_info=%3%") % join(convert(uids), ",") % needFollowInfo % needPassInfo).str();
 				string jsonStr = get_info_str(url);
 				Json::Reader reader;
 				Json::Value root;
