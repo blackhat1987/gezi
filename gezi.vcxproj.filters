@@ -1811,6 +1811,9 @@
     <ClCompile Include="test\test_cppformat.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tools\tieba\full-posts\get_fullposts.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl">

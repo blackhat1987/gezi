@@ -645,19 +645,19 @@ namespace gezi {
 	template<typename T>
 	inline void save_shared_ptr(T obj, string path, string name)
 	{
-		string outName = "";
-		string outFile = format("{}/{}.bin", path, name);
 		if (obj != nullptr)
 		{
+			string outName = "";
+			string outFile = format("{}/{}.bin", path, name);
 			//#ifdef NO_CEREAL
 			obj->Save(outFile);
 			//#else
 			//			serialize_util::save(obj, outFile);
 			//#endif
 			outName = obj->Name();
+			Pval_2(outName);
+			write_file(outName, format("{}/{}.name.txt", path, name));
 		}
-		Pval_2(outName);
-		write_file(outName, format("{}/{}.name.txt", path, name));
 	}
 
 	template<typename T>

@@ -515,20 +515,21 @@ namespace gezi {
 			static IpFinder& ipFinder() //不使用static thread_local 每次ipfinder会被重置重新加载 ExtendedUrateInfo a = b;
 			{
 				static thread_local IpFinder _ipFinder;
-				if (!isIpFinderInited())
+				static thread_local bool _isIpFinderInited = false;
+				if (!_isIpFinderInited)
 				{
 					string ipData = "./data/qqwry.dat";
 					bool ret = _ipFinder.Open(ipData);
 					CHECK_EQ(ret, true);
-					isIpFinderInited() = true;
+					_isIpFinderInited = true;
 				}
 				return _ipFinder;
 			}
-			static bool& isIpFinderInited()
-			{
-				static thread_local bool _isIpFinderInited = false;
-				return _isIpFinderInited;
-			}
+			//static bool& isIpFinderInited()
+			//{
+			//	static thread_local bool _isIpFinderInited = false;
+			//	return _isIpFinderInited;
+			//}
 		public:
 			friend class boost::serialization::access;
 			template<class Archive>

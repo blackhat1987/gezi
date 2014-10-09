@@ -72,40 +72,36 @@ protected:
 private:
 	static Identifer& identifer()
 	{
-		static Identifer _identifer;
-		if (!isIdentiferInited())
+		static Identifer _identifer = ([&]()
 		{
+			static Identifer identifer;
 			string identiferPath = "./data/plsa.model/identifer.bin";
 			PSCONF(identiferPath, "PlsaTopic");
-			_identifer.Load(identiferPath);
-			isIdentiferInited() = true;
-		}
-		
+			identifer.Load(identiferPath);
+			return identifer;
+		})();
 		return _identifer;
 	}
-	static bool& isIdentiferInited()
-	{
-		static bool _isIdentiferInited = false;
-		return _isIdentiferInited;
-	}
 
+	//static plsa::PLSAModel ConstructModel()
+	//{
+	//	plsa::PLSAModel _model;
+	//	string modelPath = "./data/plsa.model/pzw.idx";
+	//	PSCONF(modelPath, "PlsaTopic");
+	//	_model.Load(modelPath);
+	//	return _model;
+	//}
 	static plsa::PLSAModel& model()
 	{
-		static plsa::PLSAModel _model;
-		if (!isModelInited())
-		{
+		/*static plsa::PLSAModel _model = ConstructModel();*/
+		static plsa::PLSAModel _model = ([&]() { 
+			plsa::PLSAModel _model;
 			string modelPath = "./data/plsa.model/pzw.idx";
 			PSCONF(modelPath, "PlsaTopic");
 			_model.Load(modelPath);
-			isModelInited() = true;
-		}
-		
+			return _model;
+		})();
 		return _model;
-	}
-	static bool& isModelInited()
-	{
-		static bool _isModelInited = false;
-		return _isModelInited;
 	}
 };
 

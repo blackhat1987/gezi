@@ -160,7 +160,7 @@ namespace gezi {
 			{
 				_index[iter->second] = iter->first;
 			}
-			VLOG(3) << "End loading " << file;
+			VLOG(3) << "End loading " << file << " size: " << size();
 			return true;
 		}
 
@@ -189,7 +189,9 @@ namespace gezi {
 
 		void Load(string path)
 		{
+			VLOG(0) << "Identifer Loading " << path;
 			serialize_util::load(*this, path);
+			VLOG(0) << "Identifer Loading Done size: " << size();
 		}
 
 		void Save(string path)
@@ -257,7 +259,7 @@ namespace gezi {
 			{
 				_index[iter->second] = iter->first;
 			}
-			VLOG(3) << "End loading " << file;
+			VLOG(0) << "End loading " << file << " size: " << size();
 			return true;
 		}
 
@@ -273,13 +275,13 @@ namespace gezi {
 			VLOG(0) << "Identifer Loading Done size: " << size();
 		}
 
-		T value(int index)
+		T value(int index) const
 		{
 			return _values[index];
 		}
 
 		//注意 可能 -1 越界
-		T get_value(string key)
+		T get_value(string key) const
 		{
 			return _values[id(key)];
 		}

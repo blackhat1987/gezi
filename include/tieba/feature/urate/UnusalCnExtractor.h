@@ -70,25 +70,29 @@ namespace gezi {
 			}
 		protected:
 		private:
+			//static set<string> ConstructCommonCns()
+			//{
+			//	set<string> _commonCns;
+			//	string filePath = "./data/commonCns.txt";
+			//	PSCONF(filePath, "UnusualCn");
+			//	_commonCns = to_set(filePath);
+			//	Pval(_commonCns.size());
+			//	LOG_IF(WARNING, _commonCns.size() == 0) << "No common cn file loading";
+			//	return _commonCns;
+			//}
 			static set<string>& commonCns()
 			{
-				static set<string> _commonCns;
-				if (!isCommonCnsInited())
-				{
+				//static set<string> _commonCns = ConstructCommonCns();
+				static set<string> _commonCns = ([&]() { 
+					set<string> _commonCns;
 					string filePath = "./data/commonCns.txt";
 					PSCONF(filePath, "UnusualCn");
 					_commonCns = to_set(filePath);
-					//CHECK_GT(_commonCns.size(), 0);
+					Pval(_commonCns.size());
 					LOG_IF(WARNING, _commonCns.size() == 0) << "No common cn file loading";
-					isCommonCnsInited() = true;
-				}
+					return _commonCns;
+				})();
 				return _commonCns;
-			}
-
-			static bool& isCommonCnsInited()
-			{
-				static bool _isCommonCnsInited = false;
-				return _isCommonCnsInited;
 			}
 		};
 

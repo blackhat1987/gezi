@@ -179,7 +179,7 @@ namespace gezi {
 	//tlc dense 采用标准输出 第一列是名字比如pid 第二列是label 例如下面 另外输出的是原始特征 未经过normalize
 	//# 	label	JaccardSimilarity	CTR_s10_Query	CTR_s100_Query	CTR_s1000_Query	LogitCTR_s10_Query	LogitCTR_s100_Query	LogitCTR_s1000_Query	impressions_Query	clicks_Query
 	//_lottery|acute leukemia	0	0	0.013693014	0.013704492	0.013818185	-4.277081865	-4.276232328	-4.267855249	103347	1415
-	
+
 	template<typename T>
 	inline void write_sparse(const Features& features, T label, ofstream& ofs)
 	{
@@ -247,6 +247,7 @@ namespace gezi {
 			Features fe = func(ids[i]);
 			if (!fe.empty())
 			{
+		
 				write_table_header(fe, ofsFeatures, idName);
 				write_table(fe, labels[i], ofsFeatures, ids[i]);
 				i++;
@@ -261,9 +262,7 @@ namespace gezi {
 			if (!fe.empty())
 			{
 #pragma  omp critical
-				{
-					write_table(fe, labels[j], ofsFeatures, ids[j]);
-				}
+				write_table(fe, labels[j], ofsFeatures, ids[j]);
 			}
 		}
 	}

@@ -165,7 +165,7 @@ namespace gezi {
 			}
 		}
 
-		
+
 		Vector(iterator first, iterator end)
 			:values(first, end)
 		{
@@ -270,12 +270,12 @@ namespace gezi {
 		}
 
 		//@TODO 这里注意python封装后比如 l = Vector() l.Add(3.0)是ok的 l.Add(3)看上去没错 但是却实际不起作用。。 为什么vector的push_back没问题呢 现在ok了 可能是Float typedef的原因也可能是有Add(Vector v)
-//#ifndef PYTHON_WRAPPER
+		//#ifndef PYTHON_WRAPPER
 		void Add(value_type value)
 		{
 			values.push_back(value);
 		}
-//#endif //PYTHON_WRAPPER
+		//#endif //PYTHON_WRAPPER
 		//这个接口在python情况下 不管 Add(3, 3.0) 还是Add(3,3)都是ok的 上面哪个神奇的bug
 		void Add(int index, value_type value)
 		{
@@ -342,7 +342,7 @@ namespace gezi {
 			{
 				return;
 			}
-			
+
 			if (length > 0 && (keepDense || (uint64)Count() >= (uint64)(length * maxSparsity)))
 			{
 				ToDense();
@@ -632,7 +632,7 @@ namespace gezi {
 			{
 				for (size_t i = 0; i < values.size(); i++)
 				{
-					if (values[i] != _zeroValue)
+					if (values[i] != _zeroValue) //@TODO use gezi::are_same(values[i], _zeroValue) ?
 					{
 						visitor(i, ref(values[i]));
 					}
@@ -1154,6 +1154,7 @@ namespace gezi {
 		}
 	}
 	//@TODO generic for Vector or IntArray
+	//@TODO dot专门一个单测文件吧
 	inline Float dot(const Vector& a, const Vector& b)
 	{
 		if (!a.Count() || !b.Count())
@@ -1161,14 +1162,16 @@ namespace gezi {
 			return 0;
 		}
 
+		//@TODO generalized_same ok &a = & b?
 		if (generalized_same(a.indices, b.indices))
-		{
+		{ //同一个Vector或者两者都是Dense(indices是空的)
 			/*if (a.Length() != b.Length())
 			{
 			THROW("Vectors must have the same dimensionality.");
 			}*/
 			Float res = 0;
-			for (size_t i = 0; i < a.values.size(); i++)
+			size_t end = std::min(a.values.size(), b.values.size());
+			for (size_t i = 0; i < end; i++)
 			{
 				res += a.values[i] * b.values[i];
 			}
@@ -1177,16 +1180,47 @@ namespace gezi {
 
 		Float result = 0;
 
-		//注意TLC对 内容为空的indices,values做了特殊处理 
+		//注意TLC对 内容为空的indices,values做了特殊处理  为了安全 检查了向量长度 如果速度需要可以不检查 
+		//目前遇到出现问题只可能是train-test模式libsvm格式不同文件读取造成的featureNum不同
 		if (b.IsDense())
 		{
-			for (size_t i = 0; i < a.indices.size(); i++)
-				result += a.values[i] * b.values[a.indices[i]];
+			//if (a.length > 0 && a.length <= b.values.size()) //this is safe if you set correct length
+			//{
+			//	for (size_t i = 0; i < a.indices.size(); i++)
+			//	{
+			//		result += a.values[i] * b.values[a.indices[i]];
+			//	}
+			//}
+			//else
+			{
+				int64 i = a.indices.size() - 1; //@TODO　int ok ?
+				while (i >= 0 && a.indices[i] >= b.values.size())
+					i--;
+				for (; i >= 0; i--)
+				{
+					result += a.values[i] * b.values[a.indices[i]];
+				}
+			}
 		}
 		else if (a.IsDense())
 		{
-			for (size_t i = 0; i < b.indices.size(); i++)
-				result += a.values[b.indices[i]] * b.values[i];
+			//if (b.length > 0 && b.Length() <= a.values.size())
+			//{
+			//	for (size_t i = 0; i < b.indices.size(); i++)
+			//	{
+			//		result += a.values[b.indices[i]] * b.values[i];
+			//	}
+			//}
+			//else
+			{
+				int64 i = b.indices.size() - 1; //@TODO　int ok ?
+				while (i >= 0 && b.indices[i] >= a.values.size())
+					i--;
+				for (; i >= 0; i--)
+				{
+					result += a.values[b.indices[i]] * b.values[i];
+				}
+			}
 		}
 		else
 		{ // both sparse

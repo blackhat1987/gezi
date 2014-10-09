@@ -177,34 +177,29 @@ namespace gezi {
 
 		static bool init(string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
 		{
-			bool ret = true;
-			if (!isInited())
-			{
-				ret = init(data_dir.c_str(), type, conf_path.c_str());
-				isInited() = true;
-			}
+			//only once init
+			static bool ret = init(data_dir.c_str(), type, conf_path.c_str());
 			return ret;
 		}
 
 		static bool Init(int seg_buff_size = SegHandle::SEG_BUFF_SIZE, string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
 		{
-			bool ret = true;
-			if (!isInited())
+			//only once init
+			static bool ret = init(data_dir.c_str(), type, conf_path.c_str());
+
+			if (!ret)
 			{
-				ret = init(data_dir.c_str(), type, conf_path.c_str());
-				if (!ret)
-				{
-					return false;
-				}
-				isInited() = true;
+				return false;
 			}
 
-			if (!isHandleInited())
+			//only once init for each thread
+			static thread_local bool isHandleInited = false;
+			if (!isHandleInited)
 			{
 				handle().init(seg_buff_size);
-				isHandleInited() = true;
+				isHandleInited = true;
 			}
-			
+
 			return ret;
 		}
 
@@ -520,17 +515,11 @@ namespace gezi {
 			static int _strategy = 0; //是否使用pos tag 等等
 			return _strategy;
 		}
-		
+
 		static SegHandle& handle()
 		{
 			static thread_local SegHandle _handle;
 			return _handle;
-		}
-
-		static bool& isHandleInited()
-		{
-			static thread_local bool _isHandleInited = false;
-			return _isHandleInited;
 		}
 
 		static int& flag(int flag_ = 0)
@@ -539,11 +528,6 @@ namespace gezi {
 			return _flag;
 		}
 
-		static bool& isInited()
-		{
-			static bool _isInited = false;
-			return _isInited;
-		}
 	private:
 		//scw_conf_t* pgconf;
 		SegHandle _handle;

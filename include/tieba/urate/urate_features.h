@@ -49,6 +49,7 @@ namespace tieba {
 		mgr.add(new UnusalCharExtractor);
 		mgr.add(new TextScoreExtractor);
 		mgr.add(new TextScoreExtractor("RscTextScore", true));
+		mgr.add(new TextScoreExtractor("RocTextScore"));
 		mgr.add(new PlsaTopicExtractor);
 		mgr.add(new TitleSimExtractor);
 		mgr.add(new ContentSimExtractor);

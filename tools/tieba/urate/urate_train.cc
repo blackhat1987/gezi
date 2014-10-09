@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
 	int s = google::ParseCommandLineFlags(&argc, &argv, false);
 	if (FLAGS_log_dir.empty())
 		FLAGS_logtostderr = true;
+	LogHelper::set_level(FLAGS_level);
 	FLAGS_minloglevel = FLAGS_level;
 	if (FLAGS_v == 0)
 		FLAGS_v = FLAGS_vl;

@@ -645,6 +645,7 @@
     <ClCompile Include="test\test_shared_ptr.cc" />
     <ClCompile Include="test\test_split.cc" />
     <ClCompile Include="test\test_static.cc" />
+    <ClCompile Include="test\test_static_thread_safe.cc" />
     <ClCompile Include="test\test_string.cc" />
     <ClCompile Include="test\test_string_util.cc" />
     <ClCompile Include="test\test_thread_local.cc" />
@@ -663,6 +664,7 @@
     <ClCompile Include="test\tieba\test_user_info_extractor.cc" />
     <ClCompile Include="tools\tieba\full-posts\fullposts.cc" />
     <ClCompile Include="tools\tieba\full-posts\fullposts_train.cc" />
+    <ClCompile Include="tools\tieba\full-posts\get_fullposts.cc" />
     <ClCompile Include="tools\tieba\urate\get_urate_infos.cc" />
     <ClCompile Include="tools\tieba\urate\urate_train.cc" />
   </ItemGroup>

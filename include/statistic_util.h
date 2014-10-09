@@ -44,12 +44,12 @@ namespace gezi {
 	//http://stackoverflow.com/questions/17333/most-effective-way-for-float-and-double-comparison 
 	inline bool are_same(double a, double b)
 	{
-		return fabs(a - b) < EPSILON;
+		return fabs(a - b) < std::numeric_limits<double>::epsilon();
 	}
 
 	inline bool is_zero(double a)
 	{
-		return fabs(a) < EPSILON;
+		return fabs(a) < std::numeric_limits<double>::epsilon();
 	}
 
 	inline double sigmoid(double score, double A, double B)

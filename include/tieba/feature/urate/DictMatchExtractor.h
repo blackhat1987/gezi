@@ -32,6 +32,16 @@ namespace gezi {
 				//_result = dm_pack_create(_maxMatchCount);
 				_result = MatchDict::dm_pack(_maxMatchCount);
 				CHECK_NOTNULL(_result);
+				//{
+				//	std::mutex m;
+				//	std::lock_guard lk(m);
+				//	blackDict();
+				//	grayDict();
+				//	whiteDict();
+				//	blackRegSearcher();
+				//	contentBlackRegSearcher();
+				//	grayRegSearcher();
+				//}
 			}
 
 			virtual ~DictMatchExtractor()
@@ -52,12 +62,12 @@ namespace gezi {
 					{
 						string black_file = "./data/wordlist/black.dm";
 						SCONF(black_file);
-						_blackDict.init(black_file);
+						blackDict().init(black_file);
 					}
 					{
 						string gray_file = "./data/wordlist/gray.dm";
 						SCONF(gray_file);
-						_grayDict.init(gray_file);
+						grayDict().init(gray_file);
 					}
 					_isInited = true;
 				}
@@ -65,42 +75,42 @@ namespace gezi {
 
 			bool ContainsBlack(string& content)
 			{
-				return _blackDict.search_count(content, _result) > 0;
+				return blackDict().search_count(content, _result) > 0;
 			}
 
 			bool ContainsGray(string& content)
 			{
-				return _grayDict.search_count(content, _result) > 0;
+				return grayDict().search_count(content, _result) > 0;
 			}
 
 			bool ContainsWhite(string& content)
 			{
-				return _whiteDict.search_count(content, _result) > 0;
+				return whiteDict().search_count(content, _result) > 0;
 			}
 
 			bool containsBlackPattern(wstring& content)
 			{
-				_blackRegSearcher.has_match(content);
+				blackRegSearcher().has_match(content);
 			}
 
 			bool ContainsContentBlackPattern(wstring& content)
 			{
-				_contentBlackRegSearcher.has_match(content);
+				contentBlackRegSearcher().has_match(content);
 			}
 
 			bool ContainsGrayPattern(wstring& content)
 			{
-				_grayRegSearcher.has_match(content);
+				grayRegSearcher().has_match(content);
 			}
 
 			int BlackCount(string& content)
 			{
-				return _blackDict.search_count(content, _result);
+				return blackDict().search_count(content, _result);
 			}
 
 			int GrayCount(string& content)
 			{
-				return _grayDict.search_count(content, _result);
+				return grayDict().search_count(content, _result);
 			}
 
 			void CalcTitleCounts(const svec& vec, int& m, int &n, int& x, int& y)
@@ -336,53 +346,85 @@ namespace gezi {
 			dm_pack_t* _result = NULL;
 			int _maxMatchCount; //最多可能匹配的个数
 
-			MatchDict& _blackDict = blackDict();
-			MatchDict& _grayDict = grayDict();
-			MatchDict& _whiteDict = whiteDict();
-			RegexSearcher& _blackRegSearcher = blackRegSearcher();
-			RegexSearcher& _contentBlackRegSearcher = contentBlackRegSearcher();
-			RegexSearcher& _grayRegSearcher = grayRegSearcher();
+			//MatchDict& _blackDict = blackDict(); //最后的设计没有线程竞争 可以使用这个引用, 暂时不用了
+			//MatchDict& _grayDict = grayDict();
+			//MatchDict& _whiteDict = whiteDict();
+			//RegexSearcher& _blackRegSearcher = blackRegSearcher();
+			//RegexSearcher& _contentBlackRegSearcher = contentBlackRegSearcher();
+			//RegexSearcher& _grayRegSearcher = grayRegSearcher();
+
 		private:
+			//or use static MatchDict _dict; return _dict; and Init in global or use mutex in constructor may be faster
+			//这个地方和TextScore那个不同没有必要使用Shared... 那个要有多个不同实例TextScore 同时又要线程读共享
+			//static MatchDict& blackDict()
+			//{ //这样写的好处可以允许多个不同DictMatch实例 拥有不同的blackDict
+			//	string blackFile = "./data/wordlist/black.dm";
+			//	PSCONF(blackFile, "DictMatch");
+			//	return SharedObjects<MatchDict>::Instance(blackFile);
+			//}
+
 			static MatchDict& blackDict()
 			{ //这样写的好处可以允许多个不同DictMatch实例 拥有不同的blackDict
-				string blackFile = "./data/wordlist/black.dm";
-				PSCONF(blackFile, "DictMatch");
-				return SharedObjects<MatchDict>::Instance(blackFile);
+				static MatchDict _dict = ConstructObj<MatchDict>([&]() {
+					string blackFile = "./data/wordlist/black.dm";
+					PSCONF(blackFile, "DictMatch");
+					return blackFile;
+				});
+				return _dict;
 			}
 
 			static MatchDict& grayDict()
 			{
-				string grayFile = "./data/wordlist/gray.dm";
-				PSCONF(grayFile, "DictMatch");
-				return SharedObjects<MatchDict>::Instance(grayFile);
+				//string grayFile = "./data/wordlist/gray.dm";
+				//PSCONF(grayFile, "DictMatch");
+				//static MatchDict _dict = ConstructObj<MatchDict>(grayFile);
+				//也可以直接 ([&](){})(MatchDict _dict; ...; return _dict;)
+				static MatchDict _dict = ConstructObj<MatchDict>([&]() {
+					string grayFile = "./data/wordlist/gray.dm";
+					PSCONF(grayFile, "DictMatch");
+					return grayFile;
+				});
+				return _dict;
 			}
 
 			static MatchDict& whiteDict()
 			{
-				string whiteFile = "./data/wordlist/white.dm";
-				PSCONF(whiteFile, "DictMatch");
-				return SharedObjects<MatchDict>::Instance(whiteFile);
+				static MatchDict _dict = ConstructObj<MatchDict>([&]() {
+					string whiteFile = "./data/wordlist/white.dm";
+					PSCONF(whiteFile, "DictMatch");
+					return whiteFile;
+				});
+				return _dict;
 			}
 
 			static RegexSearcher& blackRegSearcher()
 			{
-				string blackPatternFile = "./data/wordlist/black.pattern";
-				PSCONF(blackPatternFile, "DictMatch");
-				return SharedObjects<RegexSearcher>::Instance(blackPatternFile);
+				static RegexSearcher _dict = ConstructObj<RegexSearcher>([&]() {
+					string blackPatternFile = "./data/wordlist/black.pattern";
+					PSCONF(blackPatternFile, "DictMatch");
+					return blackPatternFile;
+				});
+				return _dict;
 			}
 
 			static RegexSearcher& contentBlackRegSearcher()
 			{
-				string contentBlackPatternFile = "./data/wordlist/content.black.pattern";
-				PSCONF(contentBlackPatternFile, "DictMatch");
-				return SharedObjects<RegexSearcher>::Instance(contentBlackPatternFile);
+				static RegexSearcher _dict = ConstructObj<RegexSearcher>([&]() {
+					string contentBlackPatternFile = "./data/wordlist/black.pattern";
+					PSCONF(contentBlackPatternFile, "DictMatch");
+					return contentBlackPatternFile;
+				});
+				return _dict;
 			}
 
 			static RegexSearcher& grayRegSearcher()
 			{
-				string grayPatternFile = "./data/wordlist/gray.pattern";
-				PSCONF(grayPatternFile, "DictMatch");
-				return SharedObjects<RegexSearcher>::Instance(grayPatternFile);
+				static RegexSearcher _dict = ConstructObj<RegexSearcher>([&]() {
+					string grayPatternFile = "./data/wordlist/gray.pattern";
+					PSCONF(grayPatternFile, "DictMatch");
+					return grayPatternFile;
+				});
+				return _dict;
 			}
 
 		};

@@ -30,6 +30,11 @@ public:
 		Init();
 	}
 
+	static mutex& theMutex()
+	{
+		static mutex m;
+		return m;
+	}
 	void Init() 
 	{
 		string identiferPath0 = "./data/ltrate.reply.model/identifer.bin";
@@ -45,6 +50,18 @@ public:
 		PSCONF(predictorPath1, name());
 		_predictorPath[0] = predictorPath0;
 		_predictorPath[1] = predictorPath1;
+		{
+			//mutex m; //local no use
+			lock_guard<mutex> lk(theMutex());
+			int len = 2; //尽管rsc只需要1个predictor 也要这么做！没办法
+			//通过在Init过程加锁的情况下初始化 加锁保证安全 而Init中只访问一次都 后续使用不需要加锁也比较安全
+			//@TODO 更好的方法？ language model nlp的实现是每次都加锁吗 访问的时候 按照path
+			for (int i = 0; i < len; i++)
+			{
+				GetIdentifer(i);
+				GetPredictor(i);
+			}
+		}
 	}
 
 	double Predict(string title, string content, int offset)

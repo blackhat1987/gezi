@@ -95,6 +95,7 @@ int main(int argc, char *argv[])
 	if (FLAGS_log_dir.empty())
 		FLAGS_logtostderr = true;
 	FLAGS_minloglevel = FLAGS_level;
+	LogHelper::set_level(FLAGS_level);
 	if (FLAGS_v == 0)
 		FLAGS_v = FLAGS_vl;
 	//SharedConf::init("fullposts_strategy.conf");

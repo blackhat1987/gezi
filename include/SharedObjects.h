@@ -16,6 +16,22 @@
 #include "common_util.h"
 namespace gezi {
 
+	template<typename Obj>
+	static Obj ConstructObj(string path)
+	{
+		Obj obj;
+		obj.Load(path);
+		return obj;
+	}
+
+	template<typename Obj, typename Func>
+	static Obj ConstructObj(Func func)
+	{
+		string path = func();
+		Obj obj;
+		obj.Load(path);
+		return obj;
+	}
 	//代价是需要一次map查询 几乎可以忽略
 	template<typename T>
 	class SharedObjects

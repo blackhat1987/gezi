@@ -67,14 +67,13 @@ void run(uint64 tid)
 	if (score >= FLAGS_thre)
 	{
 #pragma  omp critical
-		{
-			_deletedTids.insert(tid);
-		}
+		_deletedTids.insert(tid);
 	}
 }
 
 void run()
 {
+	omp_set_num_threads(FLAGS_nt);
 	while (true)
 	{
 		vector<uint64> tids;
@@ -108,11 +107,9 @@ int main(int argc, char *argv[])
 	if (FLAGS_log_dir.empty())
 		FLAGS_logtostderr = true;
 	FLAGS_minloglevel = FLAGS_level;
+	LogHelper::set_level(FLAGS_level);
 	if (FLAGS_v == 0)
 		FLAGS_v = FLAGS_vl;
-
-
-	omp_set_num_threads(FLAGS_nt);
 
 	//SharedConf::init("fullposts_strategy.conf");
 	SharedConf::init("fullposts.conf");
@@ -121,7 +118,8 @@ int main(int argc, char *argv[])
 	PSCONF(fullpostsModelPath, "Global");
 	_predictor = PredictorFactory::LoadPredictor(fullpostsModelPath);
 
-	_redisClient.Init();
+	int redisRet = _redisClient.Init();
+	CHECK_EQ(redisRet, 0);
 
 	run();
 

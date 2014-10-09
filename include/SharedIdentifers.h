@@ -16,6 +16,7 @@
 #include "Identifer.h"
 namespace gezi {
 	class Identifer;
+	//并非线程安全！ @WARNING
 	class SharedIdentifers
 	{
 	public:
