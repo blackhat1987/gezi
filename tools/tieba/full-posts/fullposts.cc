@@ -29,13 +29,19 @@ DEFINE_bool(perf, false, "");
 DEFINE_int32(num, 10, "");
 DEFINE_uint64(tid, 3301924466, "");
 DEFINE_string(i, "", "input file");
-DEFINE_string(o, "", "output file");
 
-DEFINE_double(thre, 0.5, "");
+DEFINE_double(thre, 0.85, "");
 DEFINE_string(ip_dingtie_key, "#!dt_ip!#", "相同ip不同uid");
 DEFINE_int32(max_allowed_span, 3600, "只考虑扫描最近一小时的pid");
 
+DEFINE_string(o, "fullposts.result.txt", "output file");
+DEFINE_bool(write_db, false, "");
+DEFINE_bool(multidelete, false, "");
+DEFINE_string(db_exe, "write-db.py", "");
+DEFINE_string(multidelete_exe, "multi-delete.py", "");
+
 DEFINE_int32(nt, 12, "thread num");
+
 
 const int kMaxTids = 1e+5;
 LruHashSet<uint64> _deletedTids(kMaxTids);
@@ -47,6 +53,7 @@ RedisClient _redisClient;
 
 void run(uint64 tid)
 {
+	//--------------get info
 	if (_deletedTids.count(tid) || _timerMap.count(tid))
 	{
 		VLOG(2) << "Deleted or deal this tid not long before";
@@ -61,13 +68,52 @@ void run(uint64 tid)
 		return;
 	}
 
-	double score = _predictor->Predict(fe);
-	Pval(score);
+	//----------------predict
+	double score = 0;
+	ExtendedFullPostsInfo& node = FullPostsExtractor::info();
 
+	const double deletedScore = 100;
+	if (node.isDeleted)
+	{
+		score = deletedScore;
+	}
+	else
+	{
+		score = _predictor->Predict(fe);
+	}
+	Pval(score);
+	
 	if (score >= FLAGS_thre)
 	{
 #pragma  omp critical
-		_deletedTids.insert(tid);
+		{
+			_deletedTids.insert(tid);
+		}
+		if (score <= 1)
+		{//只考虑独立召回 其它策略未删除的
+			//----------------write info
+			ofstream ofs(FLAGS_o);
+			{
+				ofs << node.threadId << "\t" << node.postId << "\t" << node.uids[0] << "\t"
+					<< node.forumId << "\t" << node.ips[0] << "\t"
+					<< node.times[0] << "\t" << score << "\t" << node.title << "\t"
+					<< gezi::erase(node.contents[0], "\n") << "\t" << node.forumName << "\t" << node.unames[0] << endl;
+			}
+
+			if (FLAGS_multidelete)
+			{
+				AutoTimer("MultiDelete");
+				string command = "python " + FLAGS_multidelete_exe + " " + FLAGS_o;
+				EXECUTE(command);
+			}
+
+			if (FLAGS_write_db)
+			{
+				AutoTimer timer("WriteDB");
+				string command = "python " + FLAGS_db_exe + " " + FLAGS_o;
+				EXECUTE(command);
+			}
+		}
 	}
 }
 
