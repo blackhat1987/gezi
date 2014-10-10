@@ -90,7 +90,7 @@ void run()
 
 		_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_ip_dingtie_key, 100, func);
 
-
+		Features::useNames() = false;
 #pragma omp parallel for
 		for (size_t i = 0; i < tids.size(); i++)
 		{

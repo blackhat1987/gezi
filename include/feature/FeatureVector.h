@@ -10,6 +10,8 @@
  *  \Description:  线上使用的特征向量表示，主要增加名字字段，针对特征不是超级多(<10^5)的情况
  *                 超级多的比如文本分类,建议直接用Vector稀疏表示即可
  *                 与Vector不同使用类stl 小写接口
+ *                 2014-10-10 增加不添加name的支持 线上预测代码或者线下训练 非第一个feature可以设置
+ *                 FeatureVector or Features::useNames() = false;
  *  ==============================================================================
  */
 
@@ -30,7 +32,7 @@ namespace gezi {
 #ifndef GCCXML
 		using Vector::Vector;
 #endif
-	
+
 		//在线始终是dense
 		FeatureVector(bool useSparse = true)
 			:_useSparseAlso(useSparse)
@@ -147,21 +149,30 @@ namespace gezi {
 			return _features;
 		}
 
-		//非0的特征数目 注意Vector是Count()
+		//非0的特征数目 注意Vector是Count() 注意如果_useSparse = false那么始终返回0了 可以调用Vector的方法获取非零数目
+		//所有特征数目调用size即可 因为是dense的
 		int count() const
 		{
-			return _features.size();
+			if (_useSparseAlso)
+			{
+				return _features.size();
+			}
+
+			return Vector::NumNonZeros();
 		}
 
 		bool empty() const
 		{
-			return _names.empty();
+			//return _names.empty();
+			return values.empty();
 		}
 
 		void clear()
 		{
 			Vector::Clear();
 			_names.clear();
+			_features.clear();
+			_idx = 0;
 		}
 
 		string str(string sep = ",")
@@ -187,6 +198,11 @@ namespace gezi {
 		//展示name 覆盖掉Vector中的Str了 @TODO test 正确性以及对Vector的影响
 		string Str(string sep = ",")
 		{
+			if (!useNames())
+			{ //no name info
+				return str(sep);
+			}
+
 			std::stringstream ss;
 
 			if (_useSparseAlso && !_features.empty())
@@ -251,23 +267,29 @@ namespace gezi {
 	 */
 		void add(value_type value, string name = "")
 		{
-			if (name.empty())
+			//@TODO may is_zero(value) ?
+			if (value != _zeroValue && _useSparseAlso)
 			{
-				name = format("{}_{}", _sectionNames.back(), _idx);
-			}
-			else if (_useSectionName && !_sectionNames.empty())
-			{
-				name = format("{}_{}", _sectionNames.back(), name);
+				//_features.push_back(Feature(_names.size(), value));
+				_features.push_back(Feature(values.size(), value));
 			}
 
-			if (value != 0 && _useSparseAlso)
-			{
-				_features.push_back(Feature(_names.size(), value));
-			}
-
-			_names.push_back(name);
-			_idx++;
 			Add(value); //Vector添加dense数据
+
+			if (useNames())
+			{
+				if (name.empty())
+				{
+					name = format("{}_{}", _sectionNames.back(), _idx);
+				}
+				else if (_useSectionName && !_sectionNames.empty())
+				{
+					name = format("{}_{}", _sectionNames.back(), name);
+				}
+
+				_names.push_back(name);
+				_idx++;
+			}
 		}
 
 		////hack for template match error  void add(Vec& values_, string name = "") @FIXME
@@ -279,19 +301,29 @@ namespace gezi {
 
 		void add(value_type* values_, int len, string name = "")
 		{
-			if (name.empty())
+			if (useNames())
 			{
-				for (int i = 0; i < len; i++)
+				if (name.empty())
 				{
-					add(values_[i]);
+					for (int i = 0; i < len; i++)
+					{
+						add(values_[i]);
+					}
+				}
+				else
+				{
+					for (int i = 0; i < len; i++)
+					{
+						string name_ = format("{}{}", name, i);
+						add(values_[i], name_);
+					}
 				}
 			}
 			else
 			{
 				for (int i = 0; i < len; i++)
 				{
-					string name_ = name + STRING(i);
-					add(values_[i], name_);
+					Vector::Add(values_[i]);
 				}
 			}
 		}
@@ -300,20 +332,29 @@ namespace gezi {
 		template<typename T>
 		void add(const vector<T>& values_, string name = "")
 		{
-			if (name.empty())
+			if (useNames())
 			{
-				for (auto value : values_)
+				if (name.empty())
 				{
-					add(value);
+					for (auto value : values_)
+					{
+						add(value);
+					}
+				}
+				else
+				{
+					for (size_t i = 0; i < values_.size(); i++)
+					{
+						string name_ = format("{}{}", name, i);
+						add(values_[i], name_);
+					}
 				}
 			}
 			else
 			{
-				int len = values_.size();
-				for (int i = 0; i < len; i++)
+				for (auto value : values_)
 				{
-					string name_ = name + STRING(i);
-					add(values_[i], name_);
+					Vector::Add(value);
 				}
 			}
 		}
@@ -323,20 +364,29 @@ namespace gezi {
 		template<typename T, size_t Len>
 		void add(std::array<T, Len>& values_, string name = "")
 		{
-			if (name.empty())
+			if (useNames())
 			{
-				for (auto value : values_)
+				if (name.empty())
 				{
-					add(value);
+					for (auto value : values_)
+					{
+						add(value);
+					}
+				}
+				else
+				{
+					for (size_t i = 0; i < values_.size(); i++)
+					{
+						string name_ = format("{}{}", name, i);
+						add(values_[i], name_);
+					}
 				}
 			}
 			else
 			{
-				int len = values_.size();
-				for (int i = 0; i < len; i++)
+				for (auto value : values_)
 				{
-					string name_ = name + STRING(i);
-					add(values_[i], name_);
+					Vector::Add(value);
 				}
 			}
 		}
@@ -345,28 +395,41 @@ namespace gezi {
 		template<typename Vec>
 		void adds(const Vec& values_, string name = "")
 		{
-			if (name.empty())
+			if (useNames())
 			{
-				for (auto value : values_)
+				if (name.empty())
 				{
-					add(value);
+					for (auto value : values_)
+					{
+						add(value);
+					}
+				}
+				else
+				{
+					int i = 0;
+					for (auto value : values_)
+					{
+						string name_ = format("{}{}", name, i++);
+						add(value, name_);
+					}
 				}
 			}
 			else
 			{
-				int len = values_.size();
-				for (int i = 0; i < len; i++)
+				for (auto value : values_)
 				{
-					string name_ = name + STRING(i);
-					add(values_[i], name_);
+					Vector::Add(value);
 				}
 			}
 		}
 
 		void add_section(string name)
 		{
-			finalize();
-			_sectionNames.push_back(name);
+			if (useNames())
+			{
+				finalize();
+				_sectionNames.push_back(name);
+			}
 		}
 
 		//慎用 仅仅获取一个sparse 独立于Vector之外 如果有这个需要一般需要用Vector 然后Add(index, value)
@@ -401,6 +464,12 @@ namespace gezi {
 			ar & BOOST_SERIALIZATION_NVP(_useSparseAlso);
 			ar & BOOST_SERIALIZATION_NVP(_features);
 		}
+	public:
+		static bool& useNames()
+		{
+			static bool _useNames = true;
+			return _useNames;
+		}
 	protected:
 	private:
 		bool _useSectionName = true;
@@ -417,10 +486,13 @@ namespace gezi {
 	typedef FeatureVector Features;
 	typedef FeatureVectorPtr FeaturesPtr;
 
+#ifdef PYTHON_WRAPPER
 	class PyFeatures : public Features
 	{
 
 	};
+#endif
+
 }  //----end of namespace gezi
 
 #endif  //----end of FEATURE__FEATURE_VECTOR_H_

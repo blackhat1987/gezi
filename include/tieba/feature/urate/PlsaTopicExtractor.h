@@ -74,7 +74,7 @@ private:
 	{
 		static Identifer _identifer = ([&]()
 		{
-			static Identifer identifer;
+			Identifer identifer;
 			string identiferPath = "./data/plsa.model/identifer.bin";
 			PSCONF(identiferPath, "PlsaTopic");
 			identifer.Load(identiferPath);

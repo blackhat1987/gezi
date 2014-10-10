@@ -254,7 +254,7 @@ namespace gezi {
 				break;
 			}
 		}
-
+		Features::useNames() = false;
 #pragma omp parallel for
 		for (size_t j = i; j < ids.size(); j++)
 		{

@@ -1118,7 +1118,7 @@ namespace gezi {
 			int nonZeroNum = 0;
 			for (auto item : values)
 			{
-				if (item != 0)
+				if (item != _zeroValue) //@TODO¡¡may be are_same(item, _zeroValue)
 				{
 					nonZeroNum++;
 				}
@@ -1137,7 +1137,7 @@ namespace gezi {
 		bool keepSparse = false;
 		bool normalized = false;
 		int numNonZeros = -1; //-1 means unknow
-	private:
+	protected:
 		int length = 0;
 		value_type _zeroValue = 0.0;
 	};
