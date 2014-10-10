@@ -112,7 +112,7 @@ namespace gezi {
 		}
 		ofs << label;
 
-		foreach(string fname, features.names())
+		for(string fname : features.names())
 		{
 			ofs << "\t" << fname;
 		}
@@ -128,7 +128,7 @@ namespace gezi {
 			ofs << "\t" << name;
 		}
 
-		foreach(string fname, features.names())
+		for(string fname : features.names())
 		{
 			ofs << "\t" << fname;
 		}
@@ -138,7 +138,7 @@ namespace gezi {
 
 	inline void write_header(const Features& features, std::ostream& ofs)
 	{
-		foreach(string name, features.names())
+		for(string name : features.names())
 		{
 			ofs << name << "," << endl;
 		}
@@ -154,7 +154,7 @@ namespace gezi {
 	{
 		ofs << "{";
 
-		foreach(const Features::Feature& node, features.features())
+		for (const Features::Feature& node : features.features())
 		{
 			ofs << node.index << " " << node.value << ",";
 		}
@@ -190,7 +190,7 @@ namespace gezi {
 		}
 		else
 		{
-			foreach(const Features::Feature& node, features.features())
+			for(const Features::Feature& node : features.features())
 			{
 				ofs << "\t" << node.index << ":" << node.value;
 			}
@@ -209,7 +209,7 @@ namespace gezi {
 	inline void write_table(const Features& features, T label, ofstream& ofs)
 	{
 		ofs << label;
-		foreach(double value, features.values)
+		for(auto value : features.values)
 		{
 			ofs << "\t" << value;
 		}
@@ -227,7 +227,7 @@ namespace gezi {
 	//write_table_feature(features, ofs_full);
 	inline void write_table_feature(const Features& features, ofstream& ofs)
 	{
-		foreach(double value, features.values)
+		for(auto value : features.values)
 		{
 			ofs << "\t" << value;
 		}

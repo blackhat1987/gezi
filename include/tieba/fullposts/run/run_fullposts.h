@@ -1,19 +1,18 @@
 /**
  *  ==============================================================================
  *
- *          \file   fullposts.cc
+ *          \file   tieba/fullposts/run/run_fullposts.h
  *
  *        \author   chenghuige
  *
- *          \date   2014-09-25 15:43:06.935509
+ *          \date   2014-10-10 16:32:44.981407
  *
  *  \Description:
- *
  *  ==============================================================================
  */
 
-#define private public
-#define protected public
+#ifndef TIEBA_FULLPOSTS_RUN_RUN_FULLPOSTS_H_
+#define TIEBA_FULLPOSTS_RUN_RUN_FULLPOSTS_H_
 
 #include "common_util.h"
 #include "tools/redis/RedisClient.h"
@@ -56,7 +55,6 @@ vector<string> _buffer;
 void run(uint64 tid)
 {
 	//--------------get info
-	//_timerMap.count非线程安全 但是内部保障openmp安全
 	if (_deletedTids.count(tid) || _timerMap.count(tid))
 	{
 		VLOG(2) << "Deleted or deal this tid not long before";
@@ -119,21 +117,19 @@ void run(uint64 tid)
 						ofs << line;
 					}
 					ofs.flush();
-
 					if (FLAGS_multidelete)
 					{
 						AutoTimer("MultiDelete");
 						string command = "python " + FLAGS_multidelete_exe + " " + FLAGS_o;
 						EXECUTE(command);
 					}
-					
+
 					if (FLAGS_write_db)
 					{
 						AutoTimer timer("WriteDB");
 						string command = "python " + FLAGS_db_exe + " " + FLAGS_o;
 						EXECUTE(command);
 					}
-
 					_buffer.clear();
 				}
 			}
@@ -185,19 +181,4 @@ void run()
 	}
 }
 
-int main(int argc, char *argv[])
-{
-	google::InitGoogleLogging(argv[0]);
-	google::InstallFailureSignalHandler();
-	int s = google::ParseCommandLineFlags(&argc, &argv, false);
-	if (FLAGS_log_dir.empty())
-		FLAGS_logtostderr = true;
-	FLAGS_minloglevel = FLAGS_level;
-	LogHelper::set_level(FLAGS_level);
-	if (FLAGS_v == 0)
-		FLAGS_v = FLAGS_vl;
-
-	run();
-
-	return 0;
-}
+#endif  //----end of TIEBA_FULLPOSTS_RUN_RUN_FULLPOSTS_H_

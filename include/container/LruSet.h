@@ -39,7 +39,7 @@ namespace gezi {
 			_capacity = maxNum;
 		}
 
-		bool empty()
+		bool empty() const
 		{
 			return _set.empty();
 		}
@@ -62,17 +62,17 @@ namespace gezi {
 			return false;
 		}
 
-		bool count(const Key& item)
+		bool count(const Key& item) const
 		{
 			return _set.count(item);
 		}
 
-		int size()
+		int size() const
 		{
 			return _set.size();
 		}
 
-		int capacity()
+		int capacity() const
 		{
 			return _capacity;
 		}

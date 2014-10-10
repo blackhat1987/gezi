@@ -177,7 +177,7 @@ namespace gezi {
 			bool ret = reader.parse(jsonResult, root);
 			if (!ret)
 			{
-				LOG(WARNING) << "json parse fail: " << jsonResult;
+				LOG(WARNING) << "json parse fail with threadId: [" << threadId << "] " << jsonResult;
 				return info;
 			}
 			try

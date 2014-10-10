@@ -156,6 +156,8 @@ namespace gezi {
 	public:
 		typedef _Key Key;
 		typedef _Map<Key, int64> Map;
+		typedef typename Map::iterator iterator;
+		typedef typename Map::const_iterator const_iterator;
 	public:
 		TimerMap()
 		{
@@ -195,9 +197,21 @@ namespace gezi {
 			_span = span;
 		}
 
+		//open mp环境下线程安全保证，其它条件不保证线程安全
 		bool count(const Key& key)
 		{
-			auto iter = _map.find(key);
+			//注意这里多线程可能会core因为 
+			//iterator find(const key_type& k); //这个应该不是线程安全的,
+			//const_iterator find(const key_type& k) const; 
+			//It should be fine.You can use const references to it if you want to document / enforce read - only behaviour.
+			//	Note that correctness isn't guaranteed (in principle the map could choose to rebalance itself on a call to find), even if you do use const methods only (a really perverse implementation could declare the tree mutable). However, this seems pretty unlikely in practise.
+			//const_iterator iter = _map.find(key);
+			//auto iter = _map.find(key) //如果机上critical 会显示error: 'iter' was not declared in this scope 下面
+			iterator iter;
+#pragma omp critical
+			{
+				iter = _map.find(key);
+			}
 			int64 nowTime = now_time();
 
 			if (iter == _map.end())

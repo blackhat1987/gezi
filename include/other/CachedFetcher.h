@@ -26,6 +26,8 @@ namespace gezi {
 		typedef _Key Key;
 		typedef _Value Value;
 		typedef _Map<Key, Value> Map;
+		typedef typename Map::iterator iterator;
+		typedef typename Map::const_iterator const_iterator;
 	public:
 		CachedFetcher()
 		{
@@ -51,7 +53,7 @@ namespace gezi {
 		template<typename Func>
 		Value GetValue(const Key& key, Func func)
 		{
-			auto iter = _map.find(key);
+			const_iterator iter = _map.find(key);
 			if (iter != _map.end())
 			{
 				return iter->second;
@@ -78,7 +80,7 @@ namespace gezi {
 			vector<Key> fetchKeys;
 			for (const Key& key : keys)
 			{
-				auto iter = _map.find(key);
+				const_iterator	iter = _map.find(key); //@TODO check if really thread safe for const
 				if (iter != _map.end())
 				{
 					values.push_back(iter->second);
@@ -91,9 +93,12 @@ namespace gezi {
 			{ //func需要确保传回value数组temp长度和输入fetchKeys长度相同
 				vector<Value> tempVec = func(fetchKeys);
 				//func如果错误需要内部自己抛出异常 不进行后续动作
-				for (size_t i = 0; i < tempVec.size(); i++)
+#pragma omp critical 
 				{
-					_map[fetchKeys[i]] = tempVec[i];
+					for (size_t i = 0; i < tempVec.size(); i++)
+					{
+						_map[fetchKeys[i]] = tempVec[i];
+					}
 				}
 				merge(values, tempVec);
 			}
@@ -107,7 +112,7 @@ namespace gezi {
 			vector<Key> fetchKeys;
 			for (const Key& key : keys)
 			{
-				auto iter = _map.find(key);
+				const_iterator iter = _map.find(key); //@TODO check thread safe
 				if (iter != _map.end())
 				{
 					valuesMap[key] = iter->second;
@@ -120,9 +125,12 @@ namespace gezi {
 			{ //func需要确保传回value数组temp长度和输入fetchKeys长度相同
 				map<Key, Value> tempMap = func(fetchKeys);
 				//func如果错误需要内部自己抛出异常 不进行后续动作
-				for (auto& item : tempMap)
+#pragma omp critical 
 				{
-					_map[item->first] = tempMap[item->second];
+					for (auto& item : tempMap)
+					{
+						_map[item->first] = tempMap[item->second];
+					}
 				}
 				merge(valuesMap, tempMap);
 			}
@@ -139,7 +147,7 @@ namespace gezi {
 			_map.clear();
 		}
 
-		int CacheSize()
+		int CacheSize() const
 		{
 			return _map.size();
 		}

@@ -31,6 +31,7 @@ namespace gezi {
 		typedef _Map<Key, Value> Map;
 		typedef deque<Key> Deque;
 		typedef typename Map::iterator iterator;
+		typedef typename Map::const_iterator const_iterator;
 
 		LruMap()
 		{
@@ -166,6 +167,11 @@ namespace gezi {
 		}
 
 		iterator find(const Key& key)
+		{
+			return _map.find(key);
+		}
+
+		const_iterator find(const Key& key) const
 		{
 			return _map.find(key);
 		}
