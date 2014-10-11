@@ -14,6 +14,8 @@
 #ifndef CONVERT_TYPE_H_
 #define CONVERT_TYPE_H_
 
+#include "format.h"
+
 #include <sstream>
 #include <string>
 #include <boost/lexical_cast.hpp>

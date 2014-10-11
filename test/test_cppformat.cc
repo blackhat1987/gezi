@@ -27,9 +27,9 @@
 #include <glog/logging.h>
 #include <gflags/gflags.h>
 #include "debug_util.h"
-#include "format.h"
+//#include "format.h"
 
-//#include "common_util.h"
+#include "common_util.h"
 
 using namespace std;
 using namespace gezi;

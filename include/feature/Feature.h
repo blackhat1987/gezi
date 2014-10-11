@@ -200,11 +200,11 @@ namespace gezi {
 		{
 			if (name.empty())
 			{
-				name = (format("%s%d") % _section_names.back() % _idx).str();
+				name = (boost::format("%s%d") % _section_names.back() % _idx).str();
 			}
 			else if (_use_section_name && !_section_names.empty())
 			{
-				name = (format("%s_%s") % _section_names.back() % name).str();
+				name = (boost::format("%s_%s") % _section_names.back() % name).str();
 			}
 
 			if (!_keep_dense && fabs(value) > _zero_thre)

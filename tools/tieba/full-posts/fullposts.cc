@@ -31,10 +31,24 @@ DEFINE_int32(num, 10, "");
 DEFINE_uint64(tid, 3301924466, "");
 DEFINE_string(i, "", "input file");
 
-DEFINE_double(thre, 0.85, "");
+DEFINE_double(thre, 0.3, "");
+DEFINE_double(thre2, 0.98, "");
+
 DEFINE_string(ip_dingtie_key, "#!dt_ip!#", "相同ip不同uid");
+DEFINE_string(uid_dingtie_key, "#!dt_uid!#", "相同uid不同ip");
+DEFINE_string(ip_self_dingtie_key, "#!dt_ip_self!#", "相同ip不同uid并且是和楼主相同ip");
+DEFINE_string(uid_self_dingtie_key, "#!dt_uid_self!#", "相同uid不同ip并且是和楼主相同uid");
+DEFINE_string(pic_key, "#!pic!#", "");
+DEFINE_string(pic_self_key, "#!pic_thread!#", "");
+DEFINE_string(url_key, "#!url!#", "");
+DEFINE_string(url_self_key, "#!url_thread!#", "");
+DEFINE_string(at_key, "#!at!#", "");
+DEFINE_string(at_self_key, "#!at_thread!#", "");
 DEFINE_int32(max_allowed_span, 3600, "只考虑扫描最近一小时的pid");
-DEFINE_int32(buffer_size, 10, "for writing to db");
+
+DEFINE_string(keys, "ip", "choose which keys to read from redis");
+
+DEFINE_int32(buffer_size, 1, "for writing to db");
 
 DEFINE_string(o, "fullposts.result.txt", "output file");
 DEFINE_bool(write_db, false, "");
@@ -51,9 +65,14 @@ TimerMap<uint64, LruHashMap> _timerMap(60, kMaxTids);
 PredictorPtr _predictor;
 RedisClient _redisClient;
 
+int _numDeals;
+int _numPredicts;
+int _numRecalls;
+int _numSelfRecalls;
+
 vector<string> _buffer;
 
-void run(uint64 tid)
+void run(uint64 tid, double thre)
 {
 	//--------------get info
 	//_timerMap.count非线程安全 但是内部保障openmp安全
@@ -63,9 +82,12 @@ void run(uint64 tid)
 		return;
 	}
 
-	Features fe = gen_fullposts_features(tid, FLAGS_num, _fetcher);
-	Pval(fe.str());
+#pragma  omp critical
+	{
+		_numDeals++;
+	}
 
+	Features fe = gen_fullposts_features(tid, FLAGS_num, _fetcher);
 	if (fe.empty())
 	{
 		return;
@@ -84,13 +106,23 @@ void run(uint64 tid)
 	{
 		score = _predictor->Predict(fe);
 	}
-	Pval(score);
 
-	if (score >= FLAGS_thre)
+	VLOG(0) << "deal: " << node.threadId << "\t" << node.title << "\t" << node.contents[0] << "\t" << node.unames[0]
+		<< "\t" << node.forumName << "\t" << node.numPosts << "\t" << gezi::to_time_str(node.times[0])
+		<< "\t" << gezi::to_time_str(node.times.back()) << "\t" << thre << "\t" << score;
+	VLOG(0) << "feature: " << node.threadId << "\t" << node.postId << "\t" << score << "\t" << fe.str();
+
+#pragma  omp critical
+	{
+		_numPredicts++;
+	}
+
+	if (score >= thre)
 	{
 #pragma  omp critical
 		{
 			_deletedTids.insert(tid);
+			_numRecalls++;
 		}
 		{
 		if (score <= 1)
@@ -101,11 +133,14 @@ void run(uint64 tid)
 				ss << node.threadId << "\t" << node.postId << "\t" << node.uids[0] << "\t"
 					<< node.forumId << "\t" << node.ips[0] << "\t"
 					<< node.times[0] << "\t" << score << "\t" << node.title << "\t"
-					<< gezi::erase(node.contents[0], "\n") << "\t" << node.forumName << "\t" << node.unames[0] << endl;
+					<< gezi::erase(node.contents[0], "\n") << "\t" << node.forumName << "\t"
+					<< node.unames[0] << "\t" << gezi::now_time() << "\t" << node.numPosts << "\t" << thre
+					<< endl;
 
 #pragma  omp critical
 				{
 					_buffer.push_back(ss.str());
+					_numSelfRecalls++;
 				}
 			}
 
@@ -126,7 +161,7 @@ void run(uint64 tid)
 						string command = "python " + FLAGS_multidelete_exe + " " + FLAGS_o;
 						EXECUTE(command);
 					}
-					
+
 					if (FLAGS_write_db)
 					{
 						AutoTimer timer("WriteDB");
@@ -144,7 +179,6 @@ void run(uint64 tid)
 
 void init()
 {
-	//SharedConf::init("fullposts_strategy.conf");
 	SharedConf::init("fullposts.conf");
 
 	string fullpostsModelPath = "./model";
@@ -162,25 +196,64 @@ void run()
 	omp_set_num_threads(FLAGS_nt);
 	while (true)
 	{
-		vector<uint64> tids;
-		auto func = [&](string value, double score)
+		//vector<uint64> tids;
+		map<uint64, double> tidMap;
+		auto func = [&](string value, double score, double thre)
 		{
 			int64 occcurTime = INT64(-score);
 			if (now_time() - occcurTime > FLAGS_max_allowed_span)
 			{
 				return false;
 			}
-			tids.push_back(UINT64(value));
+			//tids.push_back(UINT64(value));
+			//tidSet.insert(UINT64(value));
+			tidMap.insert(make_pair(UINT64(value), thre));
 			return true;
 		};
 
-		_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_ip_dingtie_key, 100, func);
-
-		Features::useNames() = false;
-#pragma omp parallel for
-		for (size_t i = 0; i < tids.size(); i++)
+		auto func1 = [&](string value, double score)
 		{
-			run(tids[i]);
+			return func(value, score, FLAGS_thre);
+		};
+
+		auto func2 = [&](string value, double score)
+		{
+			return func(value, score, FLAGS_thre2);
+		};
+
+		{
+			AutoTimer timer("redis serarch", 1);
+			if (gezi::contains(FLAGS_keys, "ip"))
+				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_ip_dingtie_key, 100, func1);
+			if (gezi::contains(FLAGS_keys, "url"))
+				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_url_self_key, 100, func2);
+			if (gezi::contains(FLAGS_keys, "at"))
+				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_at_self_key, 100, func2);
+			if (gezi::contains(FLAGS_keys, "pic"))
+				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_pic_self_key, 100, func2);
+		}
+
+		{
+			AutoTimer timer("run fullposts", 1);
+			_numDeals = _numPredicts = _numRecalls = _numSelfRecalls = 0;
+			Features::useNames() = false;
+
+			//vector<uint64> tids(tidSet.begin(), tidSet.end());
+			vector<uint64> tids;
+			vector<double> thres;
+			for (auto & item : tidMap)
+			{
+				tids.push_back(item.first);
+				thres.push_back(item.second);
+			}
+#pragma omp parallel for
+			for (size_t i = 0; i < tids.size(); i++)
+			{
+				//run(tids[i]);
+				run(tids[i], thres[i]);
+			}
+			VLOG(0) << "tidSize: [" << tids.size() << "] numDeals:[" << _numDeals << "] numPredicts: [" << _numPredicts <<
+				"] numRecalls: [" << _numRecalls << "] numSelfRecalls:[" << _numSelfRecalls << "] cacheSize:[" << _fetcher.CacheSize() << "]";
 		}
 	}
 }

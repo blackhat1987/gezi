@@ -8,7 +8,7 @@ RELATIVE_PATH='./'
 
 GCC_LEVEL=3
 #是否使用本地的gcc 比如本地安装了gcc 4.8.2使用本地的可以直接使用生成的bin文件 如./main
-GCC_LOCAL=0
+GCC_LOCAL=2   #<1 use g++ <2 use /opt/compiler/gcc-4.8.2/bin/g++  <0 will use toolchain
 print 'GCC_LOCAL: %d'%GCC_LOCAL 
 #是否使用高版本gcc 可以直接使用生成的bin文件 如./main 
 GCC_HIGH=1
@@ -46,6 +46,8 @@ print 'LIBS_DIR: %s'%LIBS_DIR
 
 if GCC_LOCAL == 1:
 	GCC_BIN = 'g++'
+elif GCC_LOCAL == 2:
+	GCC_BIN = '/opt/compiler/gcc-4.8.2/bin/g++'
 print 'GCC_BIN: %s'%GCC_BIN
 CC(GCC_BIN)
 CXX(GCC_BIN)
@@ -114,23 +116,32 @@ CONFIGS('public/uconv@1.1.3.0')
 #CONFIGS('public/myclient@1.0.8.0')
 #CONFIGS('third-64/mysql@5.0.51.2')
 
+#必须放在前面 不然会受到gezi下面的include影响 目前主要是convert_type中使用UINT等define的影响 后续考虑将应用代码统一改为TO_UINT等
+headers=''
+INCPATHS('./include/cppformat/'.replace('./',RELATIVE_PATH))
+srcs = GLOB('./src/cppformat/*.cc'.replace('./', RELATIVE_PATH))
+StaticLibrary('gezi_cppformat',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),HeaderFiles(headers))
+
 #头文件路径.
-INCPATHS('. ./include ./utils ./output ./output/include ./include/feature ./include/numeric ./melt/include/ ./include/serialization/ ./include/cppformat/'.replace('./',RELATIVE_PATH))
+INCPATHS('. ./include ./utils ./output ./output/include ./include/feature ./include/numeric ./melt/include/ ./include/serialization/'.replace('./',RELATIVE_PATH))
 #srcs=GLOB('./src/*.cpp ./src/feature/*.cpp ./src/model/*.cpp ./src/seralization/shared_ptr_helper.cpp'.replace('./',RELATIVE_PATH))
 #srcs=GLOB('./src/*.cpp ./src/feature/*.cpp ./src/model/*.cpp'.replace('./',RELATIVE_PATH))
-srcs=GLOB('./src/*.cpp ./src/cppformat/*.cc'.replace('./',RELATIVE_PATH))
-headers=''
+srcs=GLOB('./src/*.cpp'.replace('./',RELATIVE_PATH))
 #使用库
 LIBS('./include/tools/pinyin/libPYNotation.a')
 
 TARGET('copy-pinyin-lib', ShellCommands('mkdir -p output/lib','cp ./include/tools/pinyin/libPYNotation.a ./output/lib/'), CleanCommands('rm -rf ./output/lib/libPYNotation.a')) 
 
-#可执行文件
-#静态库
+
+srcs = GLOB('./src/*.cpp'.replace('./',RELATIVE_PATH))
 StaticLibrary('gezi_common',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),HeaderFiles(headers))
 
+#可执行文件
+#静态库
+#StaticLibrary('gezi_common',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),HeaderFiles(headers))
 srcs = GLOB('./src/json/*.cpp'.replace('./',RELATIVE_PATH))
 StaticLibrary('gezi_json',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),HeaderFiles(headers))
+
 
 #共享库
 #子目录

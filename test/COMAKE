@@ -102,7 +102,7 @@ INCPATHS('. ./include ./utils ./output ./output/include ./include/feature ./incl
 srcs = ''
 headers=''
 #使用库
-LIBS('../include/tools/pinyin/libPYNotation.a ../libgezi_common.a ../libgezi_json.a')
+LIBS('../include/tools/pinyin/libPYNotation.a ../libgezi_common.a ../libgezi_json.a ../libgezi_cppformat.a')
 
 #可执行文件
 #静态库

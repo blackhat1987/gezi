@@ -19,10 +19,34 @@ namespace gezi {
 	//-----------------map util
 
 	//like map<string, vector<string> >
+	//inline bool contains(string input, string part)
+	//{
+	//	return input.find(part) != string::npos;
+	//}
+	//@TODO 定义为contains fullposts.cc里面使用gezi::contains("","")仍然没有匹配上面的而是尝试匹配下面这个map的。。比较弱智，所以带模板的function
+	//名字命名长一点。。
+	//template<typename Map>
+	//inline bool contains(Map* history, string name)
+	//{
+	//	return history && history->count(name) && (*history)[name].size() > 0;
+	//}
+
+	//template<typename Map>
+	//inline bool contains(Map& history, string name)
+	//{
+	//	return contains(&history, name);
+	//}
+
 	template<typename Map>
-	inline bool contains(Map* history, string name)
+	inline bool map_contains(Map* history, string name)
 	{
 		return history && history->count(name) && (*history)[name].size() > 0;
+	}
+
+	template<typename Map>
+	inline bool map_contains(Map& history, string name)
+	{
+		return map_contains(&history, name);
 	}
 
 	template<typename Map>
@@ -34,12 +58,6 @@ namespace gezi {
 		}
 
 		return (*history)[name].size();
-	}
-
-	template<typename Map>
-	inline bool contains(Map& history, string name)
-	{
-		return contains(&history, name);
 	}
 
 	template<typename Map>

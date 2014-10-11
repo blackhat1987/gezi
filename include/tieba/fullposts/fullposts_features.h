@@ -64,7 +64,6 @@ namespace gezi {
 		{
 			Features fe;
 			FullPostsInfo info = get_full_posts_info(tid, num, 0, 0); //ÔÝÊ±Ã»¿¼ÂÇcommentÂ¥ÖÐÂ¥
-			VLOG(0) << tid << "\t" << info.title << "\t" << info.contents.front();
 			if (info.IsValid())
 			{
 				FullPostsExtractor::info() = move(info);

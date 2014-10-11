@@ -1533,6 +1533,9 @@
     <ClInclude Include="include\format.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\tieba\fullposts\run\run_fullposts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -1812,6 +1815,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tools\tieba\full-posts\get_fullposts.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_static_thread_safe.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

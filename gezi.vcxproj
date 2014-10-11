@@ -532,6 +532,7 @@
     <ClInclude Include="include\tieba\feature\UserInfoExtractor.h" />
     <ClInclude Include="include\tieba\fullposts\extended_fullposts_info.h" />
     <ClInclude Include="include\tieba\fullposts\fullposts_features.h" />
+    <ClInclude Include="include\tieba\fullposts\run\run_fullposts.h" />
     <ClInclude Include="include\tieba\get_info.h" />
     <ClInclude Include="include\tieba\get_parsed_info.h" />
     <ClInclude Include="include\tieba\info\delete_info.h" />

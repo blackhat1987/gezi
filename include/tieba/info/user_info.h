@@ -84,7 +84,7 @@ namespace gezi {
 			bool ret = reader.parse(jsonStr, root);
 			if (!ret)
 			{
-				LOG(WARNING) << "json parse fail";
+				LOG(WARNING) << "json parse fail uid:[" << uid << "]";
 				return info;
 			}
 			try

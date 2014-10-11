@@ -53,7 +53,12 @@ namespace gezi {
 		template<typename Func>
 		Value GetValue(const Key& key, Func func)
 		{
-			const_iterator iter = _map.find(key);
+			const_iterator iter = _map.find(key); //测试安全性 按照标准const应该是确保了线程安全的已经
+//			iterator iter;
+//#pragma omp critical 
+//			{
+//				iter = _map.find(key);
+//			}
 			if (iter != _map.end())
 			{
 				return iter->second;

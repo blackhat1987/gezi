@@ -141,7 +141,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=c8fafd5fabecf44ba906395e92eda88c  COMAKE
+COMAKE_MD5=8942dadad0d243811d82ec45707b6d6f  COMAKE
 
 
 .PHONY:all
@@ -356,11 +356,13 @@ love:
 test_lambda:test_lambda_test_lambda.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_lambda[0m']"
 	$(CXX) test_lambda_test_lambda.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -445,11 +447,13 @@ test_lambda:test_lambda_test_lambda.o \
 test_bins:test_bins_test_bins.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_bins[0m']"
 	$(CXX) test_bins_test_bins.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -534,11 +538,13 @@ test_bins:test_bins_test_bins.o \
 test_datetime:test_datetime_test_datetime.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_datetime[0m']"
 	$(CXX) test_datetime_test_datetime.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -623,11 +629,13 @@ test_datetime:test_datetime_test_datetime.o \
 test_content_filter:test_content_filter_test_content_filter.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_content_filter[0m']"
 	$(CXX) test_content_filter_test_content_filter.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -712,11 +720,13 @@ test_content_filter:test_content_filter_test_content_filter.o \
 test_regex:test_regex_test_regex.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_regex[0m']"
 	$(CXX) test_regex_test_regex.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -801,11 +811,13 @@ test_regex:test_regex_test_regex.o \
 test_regex2:test_regex2_test_regex2.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_regex2[0m']"
 	$(CXX) test_regex2_test_regex2.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -890,11 +902,13 @@ test_regex2:test_regex2_test_regex2.o \
 test_encode:test_encode_test_encode.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_encode[0m']"
 	$(CXX) test_encode_test_encode.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -982,14 +996,16 @@ test_json:test_json_test_json.o \
   ../src/json/test_json_json_writer.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_json[0m']"
 	$(CXX) test_json_test_json.o \
   ../src/json/test_json_json_reader.o \
   ../src/json/test_json_json_value.o \
   ../src/json/test_json_json_writer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1074,11 +1090,13 @@ test_json:test_json_test_json.o \
 test_escape:test_escape_test_escape.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_escape[0m']"
 	$(CXX) test_escape_test_escape.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1163,11 +1181,13 @@ test_escape:test_escape_test_escape.o \
 test_other:test_other_test_other.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_other[0m']"
 	$(CXX) test_other_test_other.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1252,11 +1272,13 @@ test_other:test_other_test_other.o \
 test_feature_selector:test_feature_selector_test_feature_selector.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_feature_selector[0m']"
 	$(CXX) test_feature_selector_test_feature_selector.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1341,11 +1363,13 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
 openmp_hello:openmp/openmp_hello_hello.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mopenmp_hello[0m']"
 	$(CXX) openmp/openmp_hello_hello.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1430,11 +1454,13 @@ openmp_hello:openmp/openmp_hello_hello.o \
 openmp_test:openmp/openmp_test_test.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mopenmp_test[0m']"
 	$(CXX) openmp/openmp_test_test.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1519,11 +1545,13 @@ openmp_test:openmp/openmp_test_test.o \
 test_exception:test_exception_test_exception.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_exception[0m']"
 	$(CXX) test_exception_test_exception.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1608,11 +1636,13 @@ test_exception:test_exception_test_exception.o \
 test_map_util:test_map_util_test_map_util.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_map_util[0m']"
 	$(CXX) test_map_util_test_map_util.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1697,11 +1727,13 @@ test_map_util:test_map_util_test_map_util.o \
 test_seg:test_seg_test_seg.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_seg[0m']"
 	$(CXX) test_seg_test_seg.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1786,11 +1818,13 @@ test_seg:test_seg_test_seg.o \
 test_identifer:test_identifer_test_identifer.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_identifer[0m']"
 	$(CXX) test_identifer_test_identifer.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1875,11 +1909,13 @@ test_identifer:test_identifer_test_identifer.o \
 test_linear:test_linear_test_linear.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_linear[0m']"
 	$(CXX) test_linear_test_linear.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -1964,11 +2000,13 @@ test_linear:test_linear_test_linear.o \
 test_pinyin:test_pinyin_test_pinyin.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_pinyin[0m']"
 	$(CXX) test_pinyin_test_pinyin.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -2053,11 +2091,13 @@ test_pinyin:test_pinyin_test_pinyin.o \
 test_namepattern:test_namepattern_test_namepattern.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_namepattern[0m']"
 	$(CXX) test_namepattern_test_namepattern.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -2142,11 +2182,13 @@ test_namepattern:test_namepattern_test_namepattern.o \
 test_conf:test_conf_test_conf.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_conf[0m']"
 	$(CXX) test_conf_test_conf.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -2231,11 +2273,13 @@ test_conf:test_conf_test_conf.o \
 test_random:test_random_test_random.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_random[0m']"
 	$(CXX) test_random_test_random.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -2320,11 +2364,13 @@ test_random:test_random_test_random.o \
 test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_shared_ptr[0m']"
 	$(CXX) test_shared_ptr_test_shared_ptr.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -2409,11 +2455,13 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
 test_binfinder:test_binfinder_test_binfinder.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_binfinder[0m']"
 	$(CXX) test_binfinder_test_binfinder.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -2498,11 +2546,13 @@ test_binfinder:test_binfinder_test_binfinder.o \
 test_seralize:test_seralize_test_seralize.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_seralize[0m']"
 	$(CXX) test_seralize_test_seralize.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -2587,11 +2637,13 @@ test_seralize:test_seralize_test_seralize.o \
 test_string:test_string_test_string.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_string[0m']"
 	$(CXX) test_string_test_string.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -2676,11 +2728,13 @@ test_string:test_string_test_string.o \
 test_bitop:test_bitop_test_bitop.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_bitop[0m']"
 	$(CXX) test_bitop_test_bitop.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -2765,11 +2819,13 @@ test_bitop:test_bitop_test_bitop.o \
 test_featurevector:test_featurevector_test_featurevector.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_featurevector[0m']"
 	$(CXX) test_featurevector_test_featurevector.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -2854,11 +2910,13 @@ test_featurevector:test_featurevector_test_featurevector.o \
 test_split:test_split_test_split.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_split[0m']"
 	$(CXX) test_split_test_split.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -2943,11 +3001,13 @@ test_split:test_split_test_split.o \
 test_tieba_get_info:test_tieba_get_info_test_tieba_get_info.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_tieba_get_info[0m']"
 	$(CXX) test_tieba_get_info_test_tieba_get_info.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -3032,11 +3092,13 @@ test_tieba_get_info:test_tieba_get_info_test_tieba_get_info.o \
 test_content_process:test_content_process_test_content_process.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_content_process[0m']"
 	$(CXX) test_content_process_test_content_process.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -3121,11 +3183,13 @@ test_content_process:test_content_process_test_content_process.o \
 test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_cached_fetcher[0m']"
 	$(CXX) test_cached_fetcher_test_cached_fetcher.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -3210,11 +3274,13 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
 test_bind:test_bind_test_bind.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_bind[0m']"
 	$(CXX) test_bind_test_bind.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -3299,11 +3365,13 @@ test_bind:test_bind_test_bind.o \
 test_lrumap:test_lrumap_test_lrumap.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_lrumap[0m']"
 	$(CXX) test_lrumap_test_lrumap.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -3388,11 +3456,13 @@ test_lrumap:test_lrumap_test_lrumap.o \
 test_seralize_xml:test_seralize_xml_test_seralize_xml.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_seralize_xml[0m']"
 	$(CXX) test_seralize_xml_test_seralize_xml.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -3477,11 +3547,13 @@ test_seralize_xml:test_seralize_xml_test_seralize_xml.o \
 test_thread_local:test_thread_local_test_thread_local.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_thread_local[0m']"
 	$(CXX) test_thread_local_test_thread_local.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -3566,11 +3638,13 @@ test_thread_local:test_thread_local_test_thread_local.o \
 test_configure:test_configure_test_configure.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_configure[0m']"
 	$(CXX) test_configure_test_configure.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -3655,11 +3729,13 @@ test_configure:test_configure_test_configure.o \
 test_static:test_static_test_static.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_static[0m']"
 	$(CXX) test_static_test_static.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -3744,11 +3820,13 @@ test_static:test_static_test_static.o \
 test_cpplinq:test_cpplinq_test_cpplinq.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_cpplinq[0m']"
 	$(CXX) test_cpplinq_test_cpplinq.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -3833,11 +3911,13 @@ test_cpplinq:test_cpplinq_test_cpplinq.o \
 test_partial_sort:test_partial_sort_test_partial_sort.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_partial_sort[0m']"
 	$(CXX) test_partial_sort_test_partial_sort.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -3922,11 +4002,13 @@ test_partial_sort:test_partial_sort_test_partial_sort.o \
 test_string_util:test_string_util_test_string_util.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_string_util[0m']"
 	$(CXX) test_string_util_test_string_util.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -4011,11 +4093,13 @@ test_string_util:test_string_util_test_string_util.o \
 test_mean_var:test_mean_var_test_mean_var.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_mean_var[0m']"
 	$(CXX) test_mean_var_test_mean_var.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -4100,11 +4184,13 @@ test_mean_var:test_mean_var_test_mean_var.o \
 test_const:test_const_test_const.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_const[0m']"
 	$(CXX) test_const_test_const.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -4189,11 +4275,13 @@ test_const:test_const_test_const.o \
 test_matchdict:test_matchdict.h \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_matchdict[0m']"
 	$(CXX) test_matchdict.h -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -4278,11 +4366,13 @@ test_matchdict:test_matchdict.h \
 test_sharedobjects:test_sharedobjects_test_sharedobjects.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_sharedobjects[0m']"
 	$(CXX) test_sharedobjects_test_sharedobjects.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -4367,11 +4457,13 @@ test_sharedobjects:test_sharedobjects_test_sharedobjects.o \
 test_matchdict:test_matchdict_test_matchdict.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_matchdict[0m']"
 	$(CXX) test_matchdict_test_matchdict.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -4456,11 +4548,13 @@ test_matchdict:test_matchdict_test_matchdict.o \
 test_erase:test_erase_test_erase.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_erase[0m']"
 	$(CXX) test_erase_test_erase.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -4545,11 +4639,13 @@ test_erase:test_erase_test_erase.o \
 test_max_count_by:test_max_count_by_test_max_count_by.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_max_count_by[0m']"
 	$(CXX) test_max_count_by_test_max_count_by.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -4634,11 +4730,13 @@ test_max_count_by:test_max_count_by_test_max_count_by.o \
 test_informaiton:test_informaiton_test_informaiton.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_informaiton[0m']"
 	$(CXX) test_informaiton_test_informaiton.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -4723,11 +4821,13 @@ test_informaiton:test_informaiton_test_informaiton.o \
 test_information:test_information_test_information.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_information[0m']"
 	$(CXX) test_information_test_information.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -4812,11 +4912,13 @@ test_information:test_information_test_information.o \
 simple:simple_simple.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msimple[0m']"
 	$(CXX) simple_simple.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -4901,11 +5003,13 @@ simple:simple_simple.o \
 test_cppformat:test_cppformat_test_cppformat.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_cppformat[0m']"
 	$(CXX) test_cppformat_test_cppformat.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -4990,11 +5094,13 @@ test_cppformat:test_cppformat_test_cppformat.o \
 test_string_find:test_string_find_test_string_find.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_string_find[0m']"
 	$(CXX) test_string_find_test_string_find.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -5079,11 +5185,13 @@ test_string_find:test_string_find_test_string_find.o \
 test_static_thread_safe:test_static_thread_safe_test_static_thread_safe.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_static_thread_safe[0m']"
 	$(CXX) test_static_thread_safe_test_static_thread_safe.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
-  ../libgezi_json.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
