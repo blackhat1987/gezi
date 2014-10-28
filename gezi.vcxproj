@@ -124,6 +124,7 @@
     <ClInclude Include="include\conf_util.h" />
     <ClInclude Include="include\container\LruMap.h" />
     <ClInclude Include="include\container\LruSet.h" />
+    <ClInclude Include="include\container\lru_containers.h" />
     <ClInclude Include="include\container\RegressionTree.h" />
     <ClInclude Include="include\convert_type.h" />
     <ClInclude Include="include\curl_util.h" />
@@ -503,6 +504,7 @@
     <ClInclude Include="include\tieba\feature\MediaExtractor.h" />
     <ClInclude Include="include\tieba\feature\NumberExtractor.h" />
     <ClInclude Include="include\tieba\feature\PlsaExtractor.h" />
+    <ClInclude Include="include\tieba\feature\rsc_thread\RscThreadExtractor.h" />
     <ClInclude Include="include\tieba\feature\SequenceExtractor.h" />
     <ClInclude Include="include\tieba\feature\SimilarityExtractor.h" />
     <ClInclude Include="include\tieba\feature\TextScoreExtractor.h" />
@@ -544,6 +546,8 @@
     <ClInclude Include="include\tieba\info\user_posts_info.h" />
     <ClInclude Include="include\tieba\info_def.h" />
     <ClInclude Include="include\tieba\JsonParser.h" />
+    <ClInclude Include="include\tieba\rsc\rsc_threads_info.h" />
+    <ClInclude Include="include\tieba\rsc\rsc_thread_def.h" />
     <ClInclude Include="include\tieba\tieba_util.h" />
     <ClInclude Include="include\tieba\uname_util.h" />
     <ClInclude Include="include\tieba\urate\extended_urate_info.h" />
@@ -666,6 +670,9 @@
     <ClCompile Include="tools\tieba\full-posts\fullposts.cc" />
     <ClCompile Include="tools\tieba\full-posts\fullposts_train.cc" />
     <ClCompile Include="tools\tieba\full-posts\get_fullposts.cc" />
+    <ClCompile Include="tools\tieba\rsc-thread\get_rsc_thread_infos.cc" />
+    <ClCompile Include="tools\tieba\rsc-thread\rsc_thread.cc" />
+    <ClCompile Include="tools\tieba\rsc-thread\rsc_thread_train.cc" />
     <ClCompile Include="tools\tieba\urate\get_urate_infos.cc" />
     <ClCompile Include="tools\tieba\urate\urate_train.cc" />
   </ItemGroup>

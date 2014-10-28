@@ -59,8 +59,7 @@ namespace gezi {
 		}
 
 		template<typename Fetcher>
-		inline Features gen_fullposts_features(uint64 tid, int num,  
-			Fetcher& fetcher)
+		inline Features gen_fullposts_features(uint64 tid, int num, Fetcher& fetcher)
 		{
 			Features fe;
 			FullPostsInfo info = get_full_posts_info(tid, num, 0, 0); //ÔÝÊ±Ã»¿¼ÂÇcommentÂ¥ÖÐÂ¥

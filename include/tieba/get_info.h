@@ -275,7 +275,7 @@ namespace gezi {
 		{
 			InfoType info;
 			string end = suffix.empty() ? ".json" : "." + suffix + ".json";
-			string historyFile = historyDir + "/" + STR(id) +  end;
+			string historyFile = historyDir + "/" + STR(id) + end;
 			if (!forceFetch)
 			{
 				serialize_util::load_json(historyFile, info);
@@ -309,6 +309,49 @@ namespace gezi {
 			}
 			return info;
 		}
+
+		template<typename IdType, typename InfosType, typename Func>
+		void try_get_infos_(const vector<IdType>& ids, InfosType& infos, Func func, string historyDir, string historyName,
+			bool forceFetch = false, bool useFetch = true, string suffix = "")
+		{
+			string end = suffix.empty() ? ".json" : "." + suffix + ".json";
+			string historyFile = historyDir + "/" + historyName + end;
+			if (!forceFetch)
+			{
+				serialize_util::load_json(historyFile, infos);
+			}
+			if (useFetch)
+			{
+				if (infos.empty())
+				{
+					infos = func(ids);
+					if (!infos.empty())
+					{
+						serialize_util::save_json(infos, historyFile);
+					}
+				}
+			}
+		}
+
+		template<typename InfoType, typename Func>
+		inline vector<InfoType> try_get_infos(const vector<uint64>& ids, Func func, string historyDir, string historyName,
+			bool forceFetch = false, bool useFetch = true, string suffix = "")
+		{
+			vector<InfoType> infos;
+			try_get_infos_<uint64, vector<InfoType> >(ids, infos, func, historyDir, historyName, forceFetch, useFetch, suffix);
+			return infos;
+		}
+
+		template<typename IdType, typename InfoType, typename Func>
+		inline map<IdType, InfoType> try_get_infos_map(const vector<IdType>& ids, Func func, string historyDir, string historyName,
+			bool forceFetch = false, bool useFetch = true, string suffix = "")
+		{
+			map<IdType, InfoType> infos;
+			try_get_infos_<IdType, map<IdType, InfoType> >(ids, infos, func, historyDir, historyName, forceFetch, useFetch, suffix);
+			return infos;
+		}
+
+
 	}  //----end of namespace tieba
 }  //----end of namespace gezi
 #endif  //----end of TIEBA_GET_INFO_H_

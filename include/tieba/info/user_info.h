@@ -218,6 +218,42 @@ namespace gezi {
 			return infos;
 		}
 
+		inline map<uint, UserInfo> get_users_info_map(const vector<uint> uids_, bool needFollowInfo = true, bool needPassInfo = true)
+		{
+			map<uint, UserInfo> infos;
+			auto uidsVec = gezi::split(uids_, kMaxRequestCount);
+			for (auto& uids : uidsVec)
+			{
+				string url = (boost::format("http://service.tieba.baidu.com/service/user?method=mgetUserDataEx&format=json&user_id=[%1%]&need_follow_info=%2%&need_pass_info=%3%") % join(convert(uids), ",") % needFollowInfo % needPassInfo).str();
+				string jsonStr = get_info_str(url);
+				Json::Reader reader;
+				Json::Value root;
+				bool ret = reader.parse(jsonStr, root);
+				if (!ret)
+				{
+					LOG(WARNING) << "json parse fail: " << jsonStr;
+					continue;
+				}
+				try
+				{
+					auto& m = root["user_info"];
+					const auto& memberNames = m.getMemberNames();
+					for (auto iter = memberNames.begin(); iter != memberNames.end(); ++iter)
+					{
+						auto& jsonInfo = m[*iter];
+						UserInfo info;
+						parse_user_info_(jsonInfo, info, needFollowInfo, needPassInfo);
+						infos[info.userId] = info;
+					}
+				}
+				catch (...)
+				{
+					LOG(WARNING) << "get json value fail: " << jsonStr << " url: " << url;
+				}
+			}
+			return infos;
+		}
+
 	}  //----end of namespace tieba
 }  //----end of namespace gezi
 

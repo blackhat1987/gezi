@@ -54,11 +54,11 @@ namespace gezi {
 		Value GetValue(const Key& key, Func func)
 		{
 			const_iterator iter = _map.find(key); //测试安全性 按照标准const应该是确保了线程安全的已经
-//			iterator iter;
-//#pragma omp critical 
-//			{
-//				iter = _map.find(key);
-//			}
+			//			iterator iter;
+			//#pragma omp critical 
+			//			{
+			//				iter = _map.find(key);
+			//			}
 			if (iter != _map.end())
 			{
 				return iter->second;
@@ -98,12 +98,10 @@ namespace gezi {
 			{ //func需要确保传回value数组temp长度和输入fetchKeys长度相同
 				vector<Value> tempVec = func(fetchKeys);
 				//func如果错误需要内部自己抛出异常 不进行后续动作
-#pragma omp critical 
+				for (size_t i = 0; i < tempVec.size(); i++)
 				{
-					for (size_t i = 0; i < tempVec.size(); i++)
-					{
-						_map[fetchKeys[i]] = tempVec[i];
-					}
+#pragma omp critical 
+					_map[fetchKeys[i]] = tempVec[i];
 				}
 				merge(values, tempVec);
 			}
@@ -130,14 +128,10 @@ namespace gezi {
 			{ //func需要确保传回value数组temp长度和输入fetchKeys长度相同
 				map<Key, Value> tempMap = func(fetchKeys);
 				//func如果错误需要内部自己抛出异常 不进行后续动作
+
+				merge_map(valuesMap, tempMap);
 #pragma omp critical 
-				{
-					for (auto& item : tempMap)
-					{
-						_map[item->first] = tempMap[item->second];
-					}
-				}
-				merge(valuesMap, tempMap);
+				merge_map(_map, tempMap);
 			}
 			return valuesMap;
 		}

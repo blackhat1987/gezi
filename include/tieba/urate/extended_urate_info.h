@@ -512,7 +512,8 @@ namespace gezi {
 			{
 				ipFinder();
 			}
-			static IpFinder& ipFinder() //不使用static thread_local 每次ipfinder会被重置重新加载 ExtendedUrateInfo a = b;
+			//不使用static thread_local 每次ipfinder会被重置重新加载 ExtendedUrateInfo a = b;
+			static IpFinder& ipFinder() 			
 			{
 				static thread_local IpFinder _ipFinder;
 				static thread_local bool _isIpFinderInited = false;

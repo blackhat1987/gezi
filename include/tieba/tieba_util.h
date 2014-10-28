@@ -33,7 +33,7 @@ namespace tieba {
 			regTime = nowTime;
 		}
 
-		uint64 span = nowTime - regTime;
+		uint64 span = nowTime - regTime; 
 		return span;
 	}
 
@@ -54,7 +54,7 @@ namespace tieba {
 	{
 		string title_ = boost::trim_copy(title);
 		string mark = "»Ø¸´£º";
-		int len = mark.length();
+		int len = mark.length(); 
 		if (title_.find(mark) == 0)
 		{
 			return boost::trim_left_copy(title_.substr(len));

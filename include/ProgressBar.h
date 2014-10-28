@@ -26,7 +26,7 @@ namespace gezi {
 	class ProgressBar
 	{
 	public:
-
+		
 		ProgressBar() :
 			Size(Bar.size() - 1)
 		{
@@ -36,7 +36,6 @@ namespace gezi {
 			_log_word(log_word), Size(Bar.size() - 1)
 		{
 		}
-
 
 		ProgressBar(size_t total) :
 			_total(total), Size(Bar.size() - 1)

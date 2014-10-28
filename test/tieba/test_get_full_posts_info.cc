@@ -28,7 +28,7 @@ DEFINE_string(type, "simple", "");
 
 void run()
 {
-
+	
 }
 
 TEST(get_full_posts_info, func)

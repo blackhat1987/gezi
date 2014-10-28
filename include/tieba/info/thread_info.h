@@ -167,7 +167,7 @@ namespace gezi {
 		}
 		//-------------------------------------Â¥ÐÅÏ¢
 		inline FullPostsInfo get_full_posts_info(uint64 threadId, int resNum = 100, int offset = 0, int hasComment = 0, uint64 postId = 0)
-		{
+		{ 
 			FullPostsInfo info;
 			string jsonResult = tieba::get_full_posts_info_str(threadId, resNum, offset, hasComment, postId);
 			PVAL(jsonResult);
@@ -202,7 +202,7 @@ namespace gezi {
 						info.pids.push_back(post["post_id"].asUInt64());
 						info.times.push_back(post["now_time"].asInt64());
 						info.commentsVec.push_back(vector<CommentInfo>());
-						if (post.isMember("comment_info"))
+						if (post.isMember("comment_info"))   
 						{
 							for (auto& jsonComment : post["comment_info"])
 							{

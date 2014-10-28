@@ -13,7 +13,7 @@
  */
 
 #define private public
-#define protected public
+#define protected public 
 
 #include "common_util.h"
 #include "tools/redis/RedisClient.h"
@@ -92,7 +92,7 @@ void run(uint64 tid, double thre)
 	{
 		return;
 	}
-
+	
 	//----------------predict
 	double score = 0;
 	ExtendedFullPostsInfo& node = FullPostsExtractor::info();
@@ -134,8 +134,7 @@ void run(uint64 tid, double thre)
 					<< node.forumId << "\t" << node.ips[0] << "\t"
 					<< node.times[0] << "\t" << score << "\t" << node.title << "\t"
 					<< gezi::erase(node.contents[0], "\n") << "\t" << node.forumName << "\t"
-					<< node.unames[0] << "\t" << gezi::now_time() << "\t" << node.numPosts << "\t" << thre
-					<< endl;
+					<< node.unames[0] << "\t" << gezi::now_time() << "\t" << node.numPosts << "\t" << thre << endl;
 
 #pragma  omp critical
 				{
@@ -186,7 +185,8 @@ void init()
 	_predictor = PredictorFactory::LoadPredictor(fullpostsModelPath);
 
 	int redisRet = _redisClient.Init();
-	CHECK_EQ(redisRet, 0);
+	CHECK_EQ(redisRet, 0);AutoTimer timer("WriteDB");
+
 }
 
 void run()
@@ -223,6 +223,7 @@ void run()
 
 		{
 			AutoTimer timer("redis serarch", 1);
+
 			if (gezi::contains(FLAGS_keys, "ip"))
 				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_ip_dingtie_key, 100, func1);
 			if (gezi::contains(FLAGS_keys, "url"))

@@ -1536,6 +1536,18 @@
     <ClInclude Include="include\tieba\fullposts\run\run_fullposts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\container\lru_containers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tieba\feature\rsc_thread\RscThreadExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tieba\rsc\rsc_thread_def.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tieba\rsc\rsc_threads_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -1818,6 +1830,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="test\test_static_thread_safe.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\tieba\rsc-thread\get_rsc_thread_infos.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\tieba\rsc-thread\rsc_thread.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\tieba\rsc-thread\rsc_thread_train.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

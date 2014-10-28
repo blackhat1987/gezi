@@ -75,7 +75,7 @@ public:
             //            Pval(pos);
             pos = pos % _bits_num;
             //            Pval(pos);
-            if (!_bits[pos])
+            if (!_bits[pos]) 
                 return false;
         }
         return true;

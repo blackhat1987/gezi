@@ -486,6 +486,15 @@ namespace gezi {
 			);
 	}
 
+	template<typename Container, typename Container2>
+	void merge_map(Container& dest, Container2& src)
+	{
+		for (auto& item : src)
+		{
+			dest[item.first] = item.second;
+		}
+	}
+
 	template<typename Vec>
 	int non_empty_count(const Vec& vecs)
 	{

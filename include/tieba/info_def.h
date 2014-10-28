@@ -280,7 +280,7 @@ namespace gezi {
 		struct ReplyInfo
 		{
 			uint64 threadId;
-			uint64 userId;
+			uint64 userId; //@TODO uint ?
 			uint64 postId;
 			uint forumId;
 			uint64 ip;
