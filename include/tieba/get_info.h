@@ -117,25 +117,25 @@ namespace gezi {
 			return get_posts_info_str(convert(pids));
 		}
 
-		inline string get_threads_info_str(string tids_, bool need_abstract = false)
+		inline string get_threads_info_str(string tids_, bool need_abstract = true)
 		{
 			string url;
-			url = (boost::format("http://service.tieba.baidu.com/service/post?method=mgetThread&format=json&need_abstract=[%d]&forum_id=0&need_photo_pic=0&need_user_data=0&icon_size=0&need_forum_name=1&call_from=pc&thread_ids=[%s]") % need_abstract % tids_).str();
+			url = (boost::format("http://service.tieba.baidu.com/service/post?method=mgetThread&format=json&need_abstract=%d&forum_id=0&need_photo_pic=0&need_user_data=0&icon_size=0&need_forum_name=1&call_from=pc&thread_ids=[%s]") % need_abstract % tids_).str();
 			return get_info_str(url);
 		}
 
-		inline string get_threads_info_str(const svec& tids, bool need_abstract = false)
+		inline string get_threads_info_str(const svec& tids, bool need_abstract = true)
 		{
 			string tids_ = gezi::join(tids, ",");
 			return get_threads_info_str(tids_, need_abstract);
 		}
 
-		inline string get_threads_info_str(const vector<uint64>& tids, bool need_abstract = false)
+		inline string get_threads_info_str(const vector<uint64>& tids, bool need_abstract = true)
 		{
 			return get_threads_info_str(convert(tids), need_abstract);
 		}
 
-		inline string get_thread_info_str(uint64 tid, bool need_abstract = false)
+		inline string get_thread_info_str(uint64 tid, bool need_abstract = true)
 		{
 			return get_threads_info_str(STR(tid), need_abstract);
 		}

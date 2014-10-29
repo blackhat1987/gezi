@@ -16,6 +16,7 @@
 #include "MLCore/PredictorFactory.h"
 #include "Wrapper/SharedPredictors.h"
 #include "MLCore/TextPredictor.h"
+#include "tieba/tieba_util.h"
 namespace gezi {
 	namespace tieba {
 		namespace rsc {
@@ -27,6 +28,11 @@ namespace gezi {
 				RscThreadTextScoreExtractor()
 				{
 					Init();
+				}
+
+				string name()
+				{
+					return "RscThreadTextScore";
 				}
 
 				void Init()

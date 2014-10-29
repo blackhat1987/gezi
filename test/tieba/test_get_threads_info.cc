@@ -33,13 +33,13 @@ void run()
 TEST(get_threads_info, func)
 {
 	auto infos = tieba::get_threads_info(vector<uint64>({ 3271207055, 3271195189, 3271162283, 3271167101, 3271241387 }));
-	PrintVec3(infos, tid, title, content);
+	PrintVec3(infos, threadId, title, content);
 }
 
 TEST(get_thread_info, func)
 {
 	auto info = tieba::get_thread_info(3271207055);
-	Pval3(info.tid, info.title, info.content);
+	Pval3(info.threadId, info.title, info.content);
 }
 
 int main(int argc, char *argv[])

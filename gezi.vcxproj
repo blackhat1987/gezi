@@ -505,6 +505,7 @@
     <ClInclude Include="include\tieba\feature\NumberExtractor.h" />
     <ClInclude Include="include\tieba\feature\PlsaExtractor.h" />
     <ClInclude Include="include\tieba\feature\rsc_thread\RscThreadExtractor.h" />
+    <ClInclude Include="include\tieba\feature\rsc_thread\RscThreadTextScoreExtractor.h" />
     <ClInclude Include="include\tieba\feature\SequenceExtractor.h" />
     <ClInclude Include="include\tieba\feature\SimilarityExtractor.h" />
     <ClInclude Include="include\tieba\feature\TextScoreExtractor.h" />

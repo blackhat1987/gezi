@@ -23,7 +23,7 @@ namespace gezi {
 		//批量获取主题信息 事实上只提供vector<uint64>的输入接口即可 get_info里面的接口也是 不过这个配合test_cached_fetcher.cc测试了下在重载函数的情况下 如何bind
 		//另外的之前有个问题是注意返回的结果顺序和输入的id顺序不一致 因为结果是map 虽然接口展示页面显示顺序是和输入一致 但是json内部使用类似std::map就变成按照id大小排序了
 		//失败的不加入数组！
-		inline vector<ThreadInfo> get_threads_info(const svec& tidVec, bool need_abstract = false, bool allowError = true)
+		inline vector<ThreadInfo> get_threads_info(const svec& tidVec, bool need_abstract = true, bool allowError = true)
 		{
 			vector<ThreadInfo> resultVec;
 			vector<svec> tidsVec = gezi::split(tidVec, kMaxRequestCount * 0.5);
@@ -97,7 +97,7 @@ namespace gezi {
 			return resultVec;
 		}
 
-		inline vector<ThreadInfo> get_threads_info(const vector<uint64>& tidVec, bool need_abstract = false, bool allowError = true)
+		inline vector<ThreadInfo> get_threads_info(const vector<uint64>& tidVec, bool need_abstract = true, bool allowError = true)
 		{
 			return get_threads_info(convert(tidVec), need_abstract, allowError);
 		}
@@ -130,6 +130,7 @@ namespace gezi {
 						auto& jsonInfo = m[*iter];
 						ThreadInfo node;
 						node.title = jsonInfo["title"].asString();
+						node.content = jsonInfo["content"].asString();
 						node.userId = jsonInfo["user_id"].asUInt64();
 						node.ip = jsonInfo["user_ip"].asUInt64();
 						node.forumId = jsonInfo["forum_id"].asUInt64();
@@ -154,10 +155,10 @@ namespace gezi {
 			return threadsInfoMap;
 		}
 
-		inline ThreadInfo get_thread_info(uint64 threadId, bool need_abstract = false, bool allowError = true)
+		inline ThreadInfo get_thread_info(uint64 threadId, bool need_abstract = true, bool allowError = true)
 		{
 			vector<uint64> vec = { threadId };
-			vector<ThreadInfo> results = get_threads_info(vec);
+			vector<ThreadInfo> results = get_threads_info(vec, need_abstract, allowError);
 			ThreadInfo threadInfo;
 			if (!results.empty())
 			{

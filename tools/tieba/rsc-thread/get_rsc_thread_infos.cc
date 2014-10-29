@@ -97,7 +97,7 @@ void run()
 		node.threadRatio = DOUBLE(vec[4]);
 		node.time = UINT64(vec.back());
 		node.ip = UINT64(vec[vec.size() - 2]);
-		node.uid = UINT64(vec[vec.size() - 3]);
+		node.userId = UINT64(vec[vec.size() - 3]);
 		tids.emplace_back(node);
 	}
 

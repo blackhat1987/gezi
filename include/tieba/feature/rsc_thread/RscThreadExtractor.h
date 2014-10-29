@@ -122,7 +122,7 @@ namespace gezi {
 								double val2 = textScoreExtractor().Predict(filteredTitle, filtererdContent, 0, RscThreadTextScoreExtractor::TextPredictMode::titleContentMerge);
 								feature.add(val2, "FilteredTextScore0");
 
-								feature.add(max(val1, val2), "MaxTextScore0");
+								feature.add(std::max(val1, val2), "MaxTextScore0");
 
 								double val = (1 + val1) / (1 + val2);
 								feature.add(val, "TextScoreCmp0");
@@ -136,7 +136,7 @@ namespace gezi {
 								double val2 = textScoreExtractor().Predict(node.title, 1);
 								feature.add(val2, "FilteredTextScore1");
 
-								feature.add(max(val1, val2), "MaxTextScore1");
+								feature.add(std::max(val1, val2), "MaxTextScore1");
 
 								double val = (1 + val1) / (1 + val2);
 								feature.add(val, "TextScoreCmp1");
@@ -155,6 +155,7 @@ namespace gezi {
 							val = (double)cnOnly.length() / 2 / gezi::word_count(node.title);
 							feature.add(val, "CnPartRatio");
 
+							Pval2(node.content, node.content.size());
 							feature.add(node.content.size(), "ContentLength");
 							feature.add(node.hasMedia, "HasMedia");
 						}
@@ -166,7 +167,7 @@ namespace gezi {
 						feature.add(node.userId, "Uid");
 
 
-						//---tid对应回复之间的关系特征
+						//---tid对应回复之间的关系特征	
 						feature.add_section("Reply");
 						ReplyInfo& rnode = replysInfo[tid];
 						feature.add(rnode.threadRatio, "ThreadRatio");
