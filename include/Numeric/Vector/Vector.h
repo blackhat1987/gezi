@@ -609,7 +609,7 @@ namespace gezi {
 			if (IsDense())
 			{
 				for (size_t i = 0; i < values.size(); i++)
-				{
+				{ //@TODO fixme 对于很小的浮点数？ 貌似也会自动处理成 == 0？ 造成结果不一致 参考FeatureVector的一个使用
 					if (values[i] != _zeroValue)
 					{
 						visitor(i, values[i]);

@@ -70,7 +70,7 @@ namespace gezi {
 					{//fetch user info
 						vector<uint> uids = from(tids) >> select([](const ReplyInfo& a) { return a.userId; }) >> distinct() >> to_vector();
 						userFetcher.SetCapacity(100000);
-						auto func = [](const vector<uint>& uids) { return tieba::get_users_info_map(uids, true); };
+						auto func = [](const vector<uint>& uids) { return tieba::get_users_info_map(uids, true, true); };
 						if (isOnline)
 						{
 							usersInfo = userFetcher.GetValuesMap(uids, func);

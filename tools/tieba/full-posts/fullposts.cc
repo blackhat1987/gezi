@@ -186,7 +186,6 @@ void init()
 
 	int redisRet = _redisClient.Init();
 	CHECK_EQ(redisRet, 0);AutoTimer timer("WriteDB");
-
 }
 
 void run()

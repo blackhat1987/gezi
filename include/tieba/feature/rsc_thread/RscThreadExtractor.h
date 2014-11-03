@@ -15,7 +15,11 @@
 #define TIEBA_FEATURE_RSC_THREAD__RSC_THREAD_EXTRACTOR_H_
 #include "feature/features_util.h"
 #include "tieba/rsc/rsc_threads_info.h"
-#include "tieba/feature/rsc_thread/RscThreadTextScoreExtractor.h"
+#include "RscThreadTextScoreExtractor.h"
+#include "RscThreadDictMatchExtractor.h"
+
+#include "tools/uname_util.h"
+
 namespace gezi {
 	namespace tieba {
 		namespace rsc {
@@ -133,7 +137,7 @@ namespace gezi {
 								PVAL(val1);
 								feature.add(val1, "TextScore1");
 
-								double val2 = textScoreExtractor().Predict(node.title, 1);
+								double val2 = textScoreExtractor().Predict(filteredTitle, 1);
 								feature.add(val2, "FilteredTextScore1");
 
 								feature.add(std::max(val1, val2), "MaxTextScore1");
@@ -155,17 +159,48 @@ namespace gezi {
 							val = (double)cnOnly.length() / 2 / gezi::word_count(node.title);
 							feature.add(val, "CnPartRatio");
 
-							Pval2(node.content, node.content.size());
 							feature.add(node.content.size(), "ContentLength");
 							feature.add(node.hasMedia, "HasMedia");
 						}
 
-						//	double val = (double)(1 + followCount) / (1 + followedCount);
-						//	feature.add(val, "FollowedRatio");
-						//}
+						dictMatchExtractor().getBlackMatchCount(node.content, feature);
 
+						feature.add_section("User");
 						feature.add(node.userId, "Uid");
+						UserInfo& userInfo = usersInfo[node.userId];
+	
+						int followCount = 0, followedCount = 0;
+						followCount = userInfo.followCount;
+						followedCount = userInfo.followedCount;
+						tieba::get_user_fans(node.userId, followCount, followedCount);
 
+						feature.add(followCount, "FollowCount");
+						feature.add(followedCount, "FollowedCount");
+						{
+							double val = (double)(1 + followCount) / (1 + followedCount);
+							feature.add(val, "FollowedRatio");
+						}
+
+						{ //注册时间信息
+							uint64 nowTime = node.createTime;
+							uint64 regSpan = reg_span(nowTime, userInfo.regTime);
+							feature.add(regSpan, "regSpan");
+							int regDays = regSpan / kOneDay;
+							feature.add(regDays, "regDays");
+						}
+
+						{ //用户名信息
+							string uname = userInfo.userName;
+							ivec unamePattern = name_feature(uname);
+							feature.add(unamePattern, "unamePattern");
+							{//ed 英文加数字
+								bool unameIsEnNum = is_en_num_name(unamePattern);
+								feature.add(unameIsEnNum, "unameIsEnNum");
+							}
+							//是否是qq名字
+							bool isQQName = is_qq_name(uname);
+							feature.add(isQQName, "isQQName");
+						}
 
 						//---tid对应回复之间的关系特征	
 						feature.add_section("Reply");
@@ -191,6 +226,7 @@ namespace gezi {
 					return featuresVec;
 				}
 
+			private:
 				static set<uint64>& tidSet()
 				{
 					static set<uint64> _tidSet;//离线
@@ -229,6 +265,12 @@ namespace gezi {
 				{
 					static RscThreadTextScoreExtractor _textScoreExtractor;
 					return _textScoreExtractor;
+				}
+
+				static RscThreadDictMatchExtractor& dictMatchExtractor()
+				{
+					static RscThreadDictMatchExtractor _dictMatchExtractor;
+					return _dictMatchExtractor;
 				}
 			};
 		} //----end of namespace rsc

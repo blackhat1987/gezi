@@ -323,7 +323,7 @@ namespace gezi {
 			{
 				for (int i = 0; i < len; i++)
 				{
-					Vector::Add(values_[i]);
+					add(values_[i]);
 				}
 			}
 		}
@@ -354,7 +354,7 @@ namespace gezi {
 			{
 				for (auto value : values_)
 				{
-					Vector::Add(value);
+					add(value);
 				}
 			}
 		}
@@ -386,7 +386,7 @@ namespace gezi {
 			{
 				for (auto value : values_)
 				{
-					Vector::Add(value);
+					add(value);
 				}
 			}
 		}
@@ -417,8 +417,8 @@ namespace gezi {
 			else
 			{
 				for (auto value : values_)
-				{
-					Vector::Add(value);
+				{ //之前使用add(value)这样就没有sparse存储 但是打印特征str貌似判断!=0会去掉很多很小的浮点数 然后造成那个特征向量 再预测结果不一致 这里修改
+					add(value);
 				}
 			}
 		}
