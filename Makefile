@@ -80,10 +80,6 @@ DEP_INCPATH=-I../../../../../com/btest/gtest \
   -I../../../../../lib2-64/wordseg/include \
   -I../../../../../lib2-64/wordseg/output \
   -I../../../../../lib2-64/wordseg/output/include \
-  -I../../../../../ps/se/toolchain \
-  -I../../../../../ps/se/toolchain/include \
-  -I../../../../../ps/se/toolchain/output \
-  -I../../../../../ps/se/toolchain/output/include \
   -I../../../../../public/comlog-plugin \
   -I../../../../../public/comlog-plugin/include \
   -I../../../../../public/comlog-plugin/output \
@@ -143,7 +139,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=4e57449eff7c5ad482cc018f3cd9f47e  COMAKE
+COMAKE_MD5=ad823bbb42d671809a279dba5d6bfd5d  COMAKE
 
 
 .PHONY:all
