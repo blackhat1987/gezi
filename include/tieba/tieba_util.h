@@ -11,8 +11,8 @@
  *  ==============================================================================
  */
 
-#ifndef TIEBA_UTIL_H_
-#define TIEBA_UTIL_H_
+#ifndef TIEBA__TIEBA_UTIL_H_
+#define TIEBA__TIEBA_UTIL_H_
 
 #include "common_util.h"
 
@@ -67,4 +67,4 @@ namespace tieba {
 }  //----end of namespace tieba
 }  //----end of namespace gezi
 
-#endif  //----end of TIEBA_UTIL_H_
+#endif  //----end of TIEBA__TIEBA_UTIL_H_

@@ -40,7 +40,7 @@ namespace gezi {
 	template<typename Map>
 	inline bool map_contains(Map* history, string name)
 	{
-		return history && history->count(name) && (*history)[name].size() > 0;
+		return history && history->count(name) && ((*history)[name]).size() > 0;
 	}
 
 	template<typename Map>
