@@ -90,20 +90,14 @@ namespace gezi {
 			return values[index];
 		}
 
-		using Vector::Value;
 		value_type Value(int index) const
 		{
-			Pval3(_scale, values[index], values[index] * _scale);
+			//Pval3(_scale, values[index], values[index] * _scale);
 			return values[index] * _scale;
 		}
 
-		////@TODO how to remove this for duplicate of Vector  @FIXME为什么有这个会报错 Vector.h:784:15: error: 'gezi::Vector::value_type& gezi::Vector::Value(int)' cannot be overloaded
-		//value_type& Value(int index)
-		//{
-		//	return values[index];
-		//}
-
-
+		//using Vector::Value; //这个会影响到后面的dot 里面Value 也会使用Vector::value
+	
 		//@WARNING 下面两个函数从Vector输入改为Vector 看一下是否影响最后结果
 		/// Adds the supplied vector to myself.  (this += a) //@TODO check if can use const Vector&
 		void Add(const Vector& a)
@@ -141,49 +135,49 @@ namespace gezi {
 		}
 
 		//会将自身变化 
-		Vector ToVector()
-		{
-			if (_scale == 1.0)
-			{
-				return (Vector)*this;
-			}
-			Vector vec(length, _zeroValue);
-			for (size_t i = 0; i < length; i++)
-			{
-				vec.values[i] = values[i] * _scale;
-			}
-			return vec;
-		}
-
 		//Vector ToVector()
 		//{
-		//	if (_scale != 1.0)
+		//	if (_scale == 1.0)
 		//	{
-		//		ScaleToOne();
+		//		return (Vector)*this;
 		//	}
-		//	return (Vector)*this;
+		//	Vector vec(length, _zeroValue);
+		//	for (size_t i = 0; i < length; i++)
+		//	{
+		//		vec.values[i] = values[i] * _scale;
+		//	}
+		//	return vec;
 		//}
 
+		//会将自身变化 
+		Vector ToVector()
+		{
+			if (_scale != 1.0)
+			{
+				ScaleToOne();
+			}
+			return (Vector)*this;
+		}
 
-		//注意这里dot默认后面是稀疏 其实是 dotSparse
+
+		//注意这里dot默认后面是稀疏 其实是 dotSparse,另外注意如果不加处理会调用Vector::Value 为什么呢 @FIXME @TODO
 		Float dot(const Vector& other)
 		{
+			//using WeightVector::Value; // error: 'gezi::WeightVector' is not a namespace
+			//using ::Value;
 			Float result = 0.0;
 			if (other.IsSparse())
 			{
 				for (size_t i = 0; i < other.indices.size(); i++)
 				{
 					result += Value(other.indices[i]) * other.values[i];
-					Pval5(_scale, other.indices[i], Value(other.indices[i]), other.values[i], result);
 				}
 			}
 			else
 			{
-				Pval(length);
 				for (size_t i = 0; i < length; i++)
 				{
 					result += Value(i) * other.values[i];
-					Pval(result);
 				}
 			}
 			return result;
