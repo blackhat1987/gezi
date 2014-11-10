@@ -1548,6 +1548,12 @@
     <ClInclude Include="include\tieba\rsc\rsc_threads_info.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\tieba\feature\rsc_thread\RscThreadTextScoreExtractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Numeric\Vector\WeightVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">

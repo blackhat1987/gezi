@@ -11,6 +11,7 @@
  *								 支持读写，dense and sparse
  可以增加支持binary 比如value为空表示binary @TODO
  *   @TODO 是否需要 int length , index 改为int64
+ *   @TODO 也可以提供特化的子类 DenseVector, SparseVector但是性能意义不是太大
  *  ==============================================================================
  */
 
@@ -261,6 +262,12 @@ namespace gezi {
 			}
 		}
 
+		void ForceDense()
+		{
+			MakeDense();
+			keepDense = true;
+		}
+
 		void MakeSparse()
 		{
 			if (IsDense())
@@ -354,20 +361,20 @@ namespace gezi {
 			Densify(sparsityRatio);
 		}
 
-		value_type operator[](index_type i) const
+		value_type operator[](index_type index) const
 		{
-			if (i < 0 || i >= length)
+			if (index < 0 || index >= length)
 				return _zeroValue;
 			//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
 
 			if (IsDense())
 			{
-				return values[i];
+				return values[index];
 			}
 			else
 			{
-				auto iter = std::lower_bound(indices.begin(), indices.end(), i);
-				if (iter == indices.end() || *iter != i)
+				auto iter = std::lower_bound(indices.begin(), indices.end(), index);
+				if (iter == indices.end() || *iter != index)
 				{
 					return _zeroValue;
 				}
@@ -375,20 +382,20 @@ namespace gezi {
 			}
 		}
 
-		value_type& operator[](index_type i)
+		value_type& operator[](index_type index)
 		{
 			/*if (i < 0 || i >= length)
 				return _value;*/
 			//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
 			if (IsDense())
 			{//外部确保不越界！
-				return values[i];
+				return values[index];
 			}
 			else
 			{
-				auto iter = std::lower_bound(indices.begin(), indices.end(), i);
+				auto iter = std::lower_bound(indices.begin(), indices.end(), index);
 				//hack
-				if (iter == indices.end() || *iter != i)
+				if (iter == indices.end() || *iter != index)
 				{
 					return _zeroValue;
 					//THROW((format("In sparse vector could not find the index %d") % i).str());
@@ -742,7 +749,7 @@ namespace gezi {
 			return indices[index];
 		}
 
-		int Index(int index)
+		int& Index(int index)
 		{
 			return indices[index];
 		}
@@ -845,7 +852,7 @@ namespace gezi {
 				return;
 
 			if (generalized_same(a.indices, indices))
-			{
+			{ //同一个Vector或者两者都是Dense(indices是空的)
 				for (size_t i = 0; i < values.size(); i++)
 					values[i] += a.values[i];
 			}
@@ -857,7 +864,7 @@ namespace gezi {
 				}
 			}
 			else
-			{
+			{ //这里会改变a
 				ApplyWith(a, [](int ind, value_type v1, value_type& v2) { v2 += v1; });
 			}
 		}
@@ -1052,7 +1059,7 @@ namespace gezi {
 			}
 		}
 
-		//l2norm
+		//l2norm @TODO性能优化 WeightVector特化
 		value_type Norm()
 		{
 			return sqrt(std::accumulate(values.begin(), values.end(), 0.0, sd_op()));
@@ -1085,7 +1092,7 @@ namespace gezi {
 			return ss.str();
 		}
 
-		friend value_type dot(const Vector& l, const Vector& r);
+		//friend value_type dot(const Vector& l, const Vector& r);
 
 		friend class boost::serialization::access;
 		template<class Archive>
@@ -1155,7 +1162,8 @@ namespace gezi {
 	}
 	//@TODO generic for Vector or IntArray
 	//@TODO dot专门一个单测文件吧
-	inline Float dot(const Vector& a, const Vector& b)
+	template<typename Vector_, typename Vector2_>
+	inline Float dot(const Vector_& a, const Vector2_& b)
 	{
 		if (!a.Count() || !b.Count())
 		{
@@ -1173,7 +1181,7 @@ namespace gezi {
 			size_t end = std::min(a.values.size(), b.values.size());
 			for (size_t i = 0; i < end; i++)
 			{
-				res += a.values[i] * b.values[i];
+				res += a.Value(i) * b.Value(i);
 			}
 			return res;
 		}
@@ -1198,7 +1206,7 @@ namespace gezi {
 					i--;
 				for (; i >= 0; i--)
 				{
-					result += a.values[i] * b.values[a.indices[i]];
+					result += a.Value(i) * b.Value(a.indices[i]);
 				}
 			}
 		}
@@ -1218,7 +1226,7 @@ namespace gezi {
 					i--;
 				for (; i >= 0; i--)
 				{
-					result += a.values[b.indices[i]] * b.values[i];
+					result += a.Value(b.indices[i]) * b.Value(i);
 				}
 			}
 		}
@@ -1246,6 +1254,19 @@ namespace gezi {
 		}
 		return result;
 	}
+
+	//template<typename Vector_>
+	//inline Float dot(const Vector_& a, const Vector_& b)
+	//{
+	//	return dot<Vector_, Vector_>(a, b);
+	//}
+
+	//@FIXME /home/users/chenghuige/rsc/myspace/sep/chenghuige/melt-train/test/../../../../../app/search/sep/anti-spam/melt/include/Predictors/LinearPredictor.h:122: undefined reference to `gezi::dot(gezi::Vector const&, gezi::Vector const&)'
+
+	//inline Float dot(const Vector& a, const Vector& b)
+	//{
+	//	return dot<Vector, Vector>(a, b);
+	//}
 }  //----end of namespace gezi
 
 #endif  //----end of NUMERIC__VECTOR__VECTOR_H_

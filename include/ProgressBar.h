@@ -51,6 +51,11 @@ namespace gezi {
 			_total(total), _log_word(log_word), Size(Bar.size() - 1)
 		{
 		}
+		
+		size_t counter() const
+		{
+			return _current;
+		}
 
 		void progress(size_t current)
 		{

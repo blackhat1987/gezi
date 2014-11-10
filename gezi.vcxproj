@@ -452,6 +452,7 @@
     <ClInclude Include="include\Numeric\Vector\TVector.h" />
     <ClInclude Include="include\Numeric\Vector\Vector.h" />
     <ClInclude Include="include\Numeric\Vector\vector_util.h" />
+    <ClInclude Include="include\Numeric\Vector\WeightVector.h" />
     <ClInclude Include="include\openmp_util.h" />
     <ClInclude Include="include\other\CachedFetcher.h" />
     <ClInclude Include="include\ProcessorMgr.h" />
