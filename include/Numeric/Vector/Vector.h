@@ -1222,7 +1222,7 @@ namespace gezi {
 			//else
 			{
 				int64 i = b.indices.size() - 1; //@TODO　int ok ?
-				while (i >= 0 && b.indices[i] >= a.values.size())
+				while (i >= 0 && b.indices[i] >= a.values.size()) //只有libsvm格式的时候train test最大长度信息可能不一致 为了安全,其它情况不需要
 					i--;
 				for (; i >= 0; i--)
 				{

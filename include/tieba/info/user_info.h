@@ -119,7 +119,7 @@ namespace gezi {
 			return info;
 		}
 
-		void parse_user_info_(const Json::Value& m, UserInfo& info, bool needFollowInfo, bool needPassInfo)
+		inline void parse_user_info_(const Json::Value& m, UserInfo& info, bool needFollowInfo, bool needPassInfo)
 		{
 			info.userName = m["user_name"].asString();
 			info.userSex = m["user_sex"].asInt();
