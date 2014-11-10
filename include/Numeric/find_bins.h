@@ -63,7 +63,7 @@ namespace gezi {
 		}
 		else
 		{
-			auto item = make_pair(numZeros, 0.0);
+			auto item = make_pair(numZeros, (Float)0.0); //auto item = make_pair(numZeros, 0.0); item.second会默认double类型
 			//注意不是countValues.end()因为空间复用
 			auto iter = std::lower_bound(countValues.begin(), countValues.begin() + numValues, item, CmpPairBySecond());
 			countValues.insert(iter, item); //@TODO insert ?
