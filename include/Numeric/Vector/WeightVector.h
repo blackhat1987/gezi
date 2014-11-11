@@ -96,6 +96,12 @@ namespace gezi {
 		value_type Value(int index) const
 		{
 			//Pval3(_scale, values[index], values[index] * _scale);
+			static int count = 0;
+			count++;
+			if (count % 100 == 0)
+			{
+				Pval(count);
+			}
 			return values[index] * _scale;
 		}
 
@@ -113,17 +119,18 @@ namespace gezi {
 		/// Adds the supplied vector to myself.  (this += a) //@TODO check if can use const Vector&
 		void Add(const Vector& a)
 		{
-			if (a.IsDense())
+			if (a.IsSparse())
 			{
-				for (size_t i = 0; i < values.size(); i++)
-					values[i] += a.values[i] / _scale;
-			}
-			else
-			{ // a sparse, this not sparse
 				for (int i = 0; i < a.indices.size(); i++)
 				{
 					values[a.indices[i]] += a.values[i] / _scale;
 				}
+
+			}
+			else
+			{
+				for (size_t i = 0; i < values.size(); i++)
+					values[i] += a.values[i] / _scale;
 			}
 		}
 
@@ -135,30 +142,23 @@ namespace gezi {
 			}
 		}
 
-		//a的数据*scale,假定操作的Vector a是稀疏的
-		void AddScale(Vector& a, value_type scale)
+		//a的数据*scale,假定操作的Vector a是稀疏的,不改变输入的a
+		void AddScale(const Vector& a, value_type scale)
 		{
-			for (int i = 0; i < a.indices.size(); i++)
+			if (a.IsSparse())
 			{
-				a.values[i] *= scale;
-				values[a.indices[i]] += a.values[i] / _scale;
+				for (int i = 0; i < a.indices.size(); i++)
+				{
+					values[a.indices[i]] += a.values[i] * scale / _scale;
+				}
+
+			}
+			else
+			{
+				for (size_t i = 0; i < values.size(); i++)
+					values[i] += a.values[i] * scale / _scale;
 			}
 		}
-
-		//会将自身变化 
-		//Vector ToVector()
-		//{
-		//	if (_scale == 1.0)
-		//	{
-		//		return (Vector)*this;
-		//	}
-		//	Vector vec(length, _zeroValue);
-		//	for (size_t i = 0; i < length; i++)
-		//	{
-		//		vec.values[i] = values[i] * _scale;
-		//	}
-		//	return vec;
-		//}
 
 		//会将自身变化 
 		Vector ToVector()
@@ -174,6 +174,7 @@ namespace gezi {
 		//注意这里dot默认后面是稀疏 其实是 dotSparse,另外注意如果不加处理会调用Vector::Value 为什么呢 @FIXME @TODO
 		Float dot(const Vector& other) const
 		{
+			static size_t count1 = 0, count2 = 0;
 			//using WeightVector::Value; // error: 'gezi::WeightVector' is not a namespace
 			//using ::Value;
 			Float result = 0.0;
@@ -181,17 +182,17 @@ namespace gezi {
 			{
 				for (size_t i = 0; i < other.indices.size(); i++)
 				{
-					result += Value(other.indices[i]) * other.values[i];
+					result += values[other.indices[i]] * other.values[i];
 				}
 			}
 			else
 			{
 				for (size_t i = 0; i < length; i++)
 				{
-					result += Value(i) * other.values[i];
+					result += values[i] * other.values[i];
 				}
 			}
-			return result;
+			return result * _scale;
 		}
 
 	protected:
@@ -200,7 +201,7 @@ namespace gezi {
 	};
 
 
-	//当前假定操作目标都是sparse表示
+	//当前假定操作目标都是sparse表示,未测试，暂时未使用
 	class SparseWeightVector : public WeightVector
 	{
 	public:
