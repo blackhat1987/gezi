@@ -1,8 +1,8 @@
 #COMAKE2 edit-mode: -*- Makefile -*-
 ####################64Bit Mode####################
 ifeq ($(shell uname -m),x86_64)
-CC=g++
-CXX=g++
+CC=/opt/compiler/gcc-4.8.2/bin/g++
+CXX=/opt/compiler/gcc-4.8.2/bin/g++
 CXXFLAGS=-g \
   -O3 \
   -pipe \
@@ -154,6 +154,10 @@ DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/gezi \
   -I../../../../../../../../third-64/glog/include \
   -I../../../../../../../../third-64/glog/output \
   -I../../../../../../../../third-64/glog/output/include \
+  -I../../../../../../../../third-64/libcurl \
+  -I../../../../../../../../third-64/libcurl/include \
+  -I../../../../../../../../third-64/libcurl/output \
+  -I../../../../../../../../third-64/libcurl/output/include \
   -I../../../../../../../../third-64/pcre \
   -I../../../../../../../../third-64/pcre/include \
   -I../../../../../../../../third-64/pcre/output \
@@ -173,11 +177,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=6d8efd0a88b767faa81f3197c718cc15  COMAKE
+COMAKE_MD5=fe403d0e03718493e90ddf8824106e75  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check get_urate_infos urate_train 
+all:comake2_makefile_check .copy-so get_urate_infos urate_train 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -197,6 +201,8 @@ ccpclean:
 .PHONY:clean
 clean:ccpclean
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mclean[0m']"
+	rm -rf .copy-so
+	rm -rf ld-linux-x86-64.so.2
 	rm -rf get_urate_infos
 	rm -rf ./output/bin/get_urate_infos
 	rm -rf urate_train
@@ -221,26 +227,17 @@ love:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlove[0m']"
 	@echo "make love done"
 
+.copy-so:
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m.copy-so[0m']"
+	ln -s ../../../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib//ld-linux-x86-64.so.2 ld-linux-x86-64.so.2
+
 get_urate_infos:get_urate_infos_get_urate_infos.o \
   ../../../libgezi_common.a \
   ../../../libgezi_json.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mget_urate_infos[0m']"
 	$(CXX) get_urate_infos_get_urate_infos.o -Xlinker "-(" ../../../libgezi_common.a \
-  ../../../libgezi_json.a ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/libraries/liblber/.libs/liblber.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/libraries/libldap/.libs/libldap.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/libraries/libldap_r/.libs/libldap_r.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/libraries/liblunicode/liblunicode.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/libraries/liblutil/liblutil.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/libraries/librewrite/librewrite.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/back-bdb/libback_bdb.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/back-hdb/libback_hdb.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/back-ldif/libback_ldif.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/back-mdb/libback_mdb.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/back-monitor/libback_monitor.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/back-relay/libback_relay.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/libbackends.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/liboverlays.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
+  ../../../libgezi_json.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
@@ -280,9 +277,7 @@ get_urate_infos:get_urate_infos_get_urate_infos.o \
   ../../../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../../../third-64/boost/lib/libboost_chrono.a \
-  ../../../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../../../third-64/boost/lib/libboost_context.a \
-  ../../../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -294,8 +289,6 @@ get_urate_infos:get_urate_infos_get_urate_infos.o \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
-  ../../../../../../../../third-64/boost/lib/libboost_mpi.a \
-  ../../../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../../../third-64/boost/lib/libboost_python.a \
@@ -313,6 +306,7 @@ get_urate_infos:get_urate_infos_get_urate_infos.o \
   ../../../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -329,7 +323,9 @@ get_urate_infos:get_urate_infos_get_urate_infos.o \
   -rdynamic \
   -lssl \
   -lcrypto \
-  -lgomp -Xlinker "-)" -o get_urate_infos
+  -lgomp \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o get_urate_infos
 	mkdir -p ./output/bin
 	cp -f --link get_urate_infos ./output/bin
 
@@ -338,21 +334,8 @@ urate_train:urate_train_urate_train.o \
   ../../../libgezi_json.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40murate_train[0m']"
 	$(CXX) urate_train_urate_train.o -Xlinker "-(" ../../../libgezi_common.a \
-  ../../../libgezi_json.a ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/libraries/liblber/.libs/liblber.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/libraries/libldap/.libs/libldap.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/libraries/libldap_r/.libs/libldap_r.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/libraries/liblunicode/liblunicode.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/libraries/liblutil/liblutil.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/libraries/librewrite/librewrite.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/back-bdb/libback_bdb.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/back-hdb/libback_hdb.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/back-ldif/libback_ldif.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/back-mdb/libback_mdb.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/back-monitor/libback_monitor.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/back-relay/libback_relay.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/libbackends.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/lib/bak/openldap-2.4.39/servers/slapd/liboverlays.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
+  ../../../libgezi_json.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
@@ -392,9 +375,7 @@ urate_train:urate_train_urate_train.o \
   ../../../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../../../third-64/boost/lib/libboost_chrono.a \
-  ../../../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../../../third-64/boost/lib/libboost_context.a \
-  ../../../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -406,8 +387,6 @@ urate_train:urate_train_urate_train.o \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
-  ../../../../../../../../third-64/boost/lib/libboost_mpi.a \
-  ../../../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../../../third-64/boost/lib/libboost_python.a \
@@ -425,6 +404,7 @@ urate_train:urate_train_urate_train.o \
   ../../../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -441,7 +421,9 @@ urate_train:urate_train_urate_train.o \
   -rdynamic \
   -lssl \
   -lcrypto \
-  -lgomp -Xlinker "-)" -o urate_train
+  -lgomp \
+  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
+  -L../../../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o urate_train
 	mkdir -p ./output/bin
 	cp -f --link urate_train ./output/bin
 
