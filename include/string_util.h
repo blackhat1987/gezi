@@ -17,6 +17,8 @@
 #include <vector>
 #include <iconv.h>
 
+#include "format.h" //放在最前面 有和convert_type.h的宏的冲突处理 
+
 //@TODO baidu depend will move to LOCAL
 #ifndef NO_BAIDU_DEP
 #include "chinese.h"
@@ -723,6 +725,14 @@ namespace gezi {
 	void gbk_foreach_single(string input, Func func)
 	{
 
+	}
+
+	inline string GetOutputFileName(string infile, string suffix, bool removeTxt = false)
+	{
+		if (!removeTxt)
+			return endswith(infile, ".txt") ? boost::replace_last_copy(infile, ".txt", format(".{}.txt", suffix)) : format("{}.{}", infile, suffix);
+		else
+			return endswith(infile, ".txt") ? boost::replace_last_copy(infile, ".txt", format(".{}", suffix)) : format("{}.{}", infile, suffix);
 	}
 
 }

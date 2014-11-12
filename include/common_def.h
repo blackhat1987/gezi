@@ -171,6 +171,7 @@ using boost::algorithm::split_regex;
 {if (ptr) { delete [] ptr; ptr = NULL;}}
 
 #define  EXECUTE(cmd) \
+	Pval(cmd);\
 	system((cmd).c_str())
 
 //use this or just use pair ? first as key second as value//suggested to use pair for generic
