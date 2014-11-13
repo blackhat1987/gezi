@@ -38,7 +38,7 @@ public:
   {
     std::cout << "SampleString destruct" << endl;
   }
-  virtual string process(string input)
+  virtual string process(string input) override
   {
     return "SampleStringProcessor " + input;
   }
@@ -51,7 +51,7 @@ public:
   {
     std::cout << "SampleStrings destruct" << endl;
   }
-  virtual string process(string input)
+  virtual string process(string input) override
   {
     return "SampleStringProcessor2 " + input;
   }
