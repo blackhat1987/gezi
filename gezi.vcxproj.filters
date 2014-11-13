@@ -1554,6 +1554,9 @@
     <ClInclude Include="include\Numeric\Vector\WeightVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\WithArgs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">

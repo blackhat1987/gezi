@@ -574,6 +574,7 @@
     <ClInclude Include="include\unordered_map_serialize.h" />
     <ClInclude Include="include\unordered_set_serialize.h" />
     <ClInclude Include="include\url_util.h" />
+    <ClInclude Include="include\WithArgs.h" />
     <ClInclude Include="include\word_seg.h" />
     <ClInclude Include="include\wstring_util.h" />
     <ClInclude Include="src\json\json_batchallocator.h" />

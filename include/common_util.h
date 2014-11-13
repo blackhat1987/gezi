@@ -51,7 +51,9 @@
 
 #include "Exception.h"
 
+//------------------用来被继承的
 #include "LoadSave.h"
+#include "WithArgs.h"
 
 
 #ifndef NO_GEZI_CONVERT
