@@ -54,6 +54,20 @@ namespace gezi {
 	}
 
 	template<typename T>
+	vector<T> join_vec2d(const vector<vector<T> >& input)
+	{
+		vector<T> result;
+		for (auto& vec : input)
+		{
+			for (auto& item : vec)
+			{
+				result.push_back(item);
+			}
+		}
+		return result;
+	}
+
+	template<typename T>
 	std::string get_json(const std::vector<T>& vec)
 	{
 		std::vector<string> rvec;
@@ -486,6 +500,16 @@ namespace gezi {
 			);
 	}
 
+	template<typename Container>
+	void merge(Container& dest, Container&& src)
+	{
+		dest.insert(
+			dest.end(),
+			std::make_move_iterator(src.begin()),
+			std::make_move_iterator(src.end())
+			);
+	}
+
 	template<typename Container, typename Container2>
 	void merge_map(Container& dest, Container2& src)
 	{
@@ -715,6 +739,29 @@ namespace gezi {
 	}//---- end of namespace ufo
 
 
+
+
+	//@TODO select_many cpplinq
+	//	//@TODO select_many not work as this , how to use?
+	//	//auto perInstanceColumns = from(datasetMetrics) >> select_many([](const DatasetMetricsPtr& m) { return m->PerInstanceColumnNames(); }) >>  >> to_vector();
+	template<typename T, typename U, typename Func>
+	vector<T> join_vec(const vector<U>& input, Func func)
+	{
+		vector<T> result;
+		if (input.empty())
+		{
+			return result;
+		}
+		result = func(input[0]);
+		for (size_t i = 1; i < input.size(); i++)
+		{
+			//@TODO can do this?
+			merge(result, func(input[i]));
+			//vector<T> temp = func(input[i]);
+			//merge(result, temp);
+		}
+		return result;
+	}
 }  //----end of namespace gezi
 
 #endif  //----end of STL_UTIL_H_
