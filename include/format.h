@@ -25,6 +25,21 @@
 #include "convert_type.h"
 #endif
 
+namespace fmt {
+
+	inline void print_line(StringRef format_str, ArgList args)
+	{
+		print(format("{}\n", format_str), args);
+	}
+
+	inline void print_colored_line(Color c, StringRef format_str, ArgList args)
+	{
+		print_colored(c, format("{}\n", format_str), args);
+	}
+
+	FMT_VARIADIC(void, print_line, StringRef)
+	FMT_VARIADIC(void, print_colored_line, Color, StringRef)
+}
 namespace gezi {
 
 }  //----end of namespace gezi

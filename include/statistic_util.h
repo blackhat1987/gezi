@@ -714,7 +714,6 @@ namespace gezi {
 		return distinct_count(vec.begin(), vec.end());
 	}
 
-
 #if __GNUC__ > 3
 
 	template<typename Iter, typename Func>
@@ -739,6 +738,24 @@ namespace gezi {
 	}
 #endif
 
+	inline double entropy(double prob, bool useLnNotLog2 = false)
+	{
+		return
+			useLnNotLog2
+			? -prob * log(prob) - (1 - prob) * log(1 - prob)
+			: -prob * log(prob) / log(2) - (1 - prob) * log(1 - prob) / log(2);
+	}
+
+	/// <summary>
+	/// Cross-entropy of two distributions
+	/// </summary>        
+	inline double cross_entropy(double probTrue, double probPredicted, bool useLnNotLog2 = false)
+	{
+		return
+			useLnNotLog2
+			? -probTrue * log(probPredicted) - (1 - probTrue) * log(1 - probPredicted)
+			: -probTrue * log(probPredicted) / log(2) - (1 - probTrue) * log(1 - probPredicted) / log(2);
+	}
 } //----end of namespace sta
 namespace sta = gezi; //@TODO temply now since I use many sta:: right now
 #endif  //----end of STATISTIC_UTIL_H_

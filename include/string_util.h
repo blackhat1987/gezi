@@ -735,6 +735,12 @@ namespace gezi {
 			return endswith(infile, ".txt") ? boost::replace_last_copy(infile, ".txt", format(".{}", suffix)) : format("{}.{}", infile, suffix);
 	}
 
+	inline string pad_right(string input, int count)
+	{
+		input.resize(count, ' ');
+		return input;
+	}
+
 }
 
 #endif  //----end of STRING_UTIL_H_
