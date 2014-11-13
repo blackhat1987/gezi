@@ -60,16 +60,21 @@ namespace gezi {
 		}
 
 		/// Multiples the Vector by a real value
-		void ScaleBy(value_type d)
+		void ScaleBy(value_type scalingFactor)
 		{
-			_scale *= d;
-
+			_scale *= scalingFactor;
+			squaredNorm *= (scalingFactor * scalingFactor);
 			// Take care of any numerical difficulties.
 			if (_scale < 0.00000000001)
 			{
 				//LOG(WARNING) << "scale_to_one";
 				ScaleToOne();
 			}
+		}
+
+		Float Norm()
+		{
+			return sqrt(squaredNorm);
 		}
 
 		void ScaleToOne()
@@ -109,47 +114,62 @@ namespace gezi {
 
 		//@WARNING 下面两个函数从Vector输入改为Vector 看一下是否影响最后结果
 		/// Adds the supplied vector to myself.  (this += a) //@TODO check if can use const Vector&
-		void Add(const Vector& a)
+		void Add(const Vector& other)
 		{
-			if (a.IsSparse())
+			Float innerProduct = 0;
+			if (other.IsSparse())
 			{
-				for (int i = 0; i < a.indices.size(); i++)
+				for (int i = 0; i < other.indices.size(); i++)
 				{
-					values[a.indices[i]] += a.values[i] / _scale;
+					innerProduct += values[other.indices[i]] * other.values[i];
+					values[other.indices[i]] += other.values[i] / _scale;
 				}
-
 			}
 			else
 			{
 				for (size_t i = 0; i < values.size(); i++)
-					values[i] += a.values[i] / _scale;
+				{
+					innerProduct += values[i] * other.values[i];
+					values[i] += other.values[i] / _scale;
+				}
 			}
+			squaredNorm += squaredNorm + (2.0 * _scale * innerProduct);
 		}
 
-		void AddSparse(const Vector& a)
+		void AddSparse(const Vector& other)
 		{
-			for (int i = 0; i < a.indices.size(); i++)
+			Float innerProduct = 0;
+			for (int i = 0; i < other.indices.size(); i++)
 			{
-				values[a.indices[i]] += a.values[i] / _scale;
+				innerProduct += values[other.indices[i]] * other.values[i];
+				values[other.indices[i]] += other.values[i] / _scale;
 			}
+			squaredNorm += squaredNorm + (2.0 * _scale * innerProduct);
 		}
 
 		//a的数据*scale,假定操作的Vector a是稀疏的,不改变输入的a
-		void AddScale(const Vector& a, value_type scale)
+		void AddScale(const Vector& other, value_type scale)
 		{
-			if (a.IsSparse())
+			Float innerProduct = 0;
+			if (other.IsSparse())
 			{
-				for (int i = 0; i < a.indices.size(); i++)
+				for (int i = 0; i < other.indices.size(); i++)
 				{
-					values[a.indices[i]] += a.values[i] * scale / _scale;
+					Float otherVal = other.values[i] * scale;
+					innerProduct += values[other.indices[i]] * otherVal;
+					values[other.indices[i]] += otherVal / _scale;
 				}
-
 			}
 			else
 			{
 				for (size_t i = 0; i < values.size(); i++)
-					values[i] += a.values[i] * scale / _scale;
+				{
+					Float otherVal = other.values[i] * scale;
+					innerProduct += values[i] * otherVal;
+					values[i] += other.values[i] * scale / _scale;
+				}
 			}
+			squaredNorm += squaredNorm * scale * scale + (2.0 * _scale * innerProduct);
 		}
 
 		//会将自身变化 
@@ -187,191 +207,192 @@ namespace gezi {
 			return result * _scale;
 		}
 
+	public:
+		Float squaredNorm = 0.0;
 	protected:
 		Float _scale = 1.0;
-		Float _sqaredNorm = 0.0;
 	};
 
 
 	//当前假定操作目标都是sparse表示,未测试，暂时未使用
-	//class SparseWeightVector : public WeightVector
-	//{
-	//public:
-	//	using WeightVector::WeightVector;
+	class SparseWeightVector : public WeightVector
+	{
+	public:
+		using WeightVector::WeightVector;
 
 
-	//	void Add(Vector& a)
-	//	{
-	//		WeightApplyWith(a, [this](int ind, const value_type v1, value_type& v2) { v2 += v1 / _scale; });
-	//	}
+		void Add(Vector& a)
+		{
+			WeightApplyWith(a, [this](int ind, const value_type v1, value_type& v2) { v2 += v1 / _scale; });
+		}
 
-	//	//因为目前没有用虚函数 @TODO duplicate
-	//	void Add(SparseWeightVector& a)
-	//	{
-	//		WeightApplyWith(a, [this](int ind, const value_type v1, value_type& v2) { v2 += v1 / _scale; });
-	//	}
+		//因为目前没有用虚函数 @TODO duplicate
+		void Add(SparseWeightVector& a)
+		{
+			WeightApplyWith(a, [this](int ind, const value_type v1, value_type& v2) { v2 += v1 / _scale; });
+		}
 
-	//	//a的数据不再保证
-	//	void AddScale(Vector& a, value_type scale)
-	//	{
-	//		WeightApplyWith(a, [this, &scale](int ind, const value_type v1, value_type& v2) { v2 += v1 * scale / _scale; });
-	//	}
+		//a的数据不再保证
+		void AddScale(Vector& a, value_type scale)
+		{
+			WeightApplyWith(a, [this, &scale](int ind, const value_type v1, value_type& v2) { v2 += v1 * scale / _scale; });
+		}
 
-	//	//a的数据不再保证
-	//	void AddScale(SparseWeightVector& a, value_type scale)
-	//	{
-	//		WeightApplyWith(a, [this, &scale](int ind, const value_type v1, value_type& v2) { v2 += v1 * scale / _scale; });
-	//	}
+		//a的数据不再保证
+		void AddScale(SparseWeightVector& a, value_type scale)
+		{
+			WeightApplyWith(a, [this, &scale](int ind, const value_type v1, value_type& v2) { v2 += v1 * scale / _scale; });
+		}
 
 
-	//	//@TODO  修改ApplyWith 复用
-	//	template<typename Vector_, typename ParallelManipulator>
-	//	void WeightApplyWith(Vector_& a, ParallelManipulator manip)
-	//	{
-	//		if (a.Count() == 0)
-	//			return;
+		//@TODO  修改ApplyWith 复用
+		template<typename Vector_, typename ParallelManipulator>
+		void WeightApplyWith(Vector_& a, ParallelManipulator manip)
+		{
+			if (a.Count() == 0)
+				return;
 
-	//		if (&a.indices == &indices)
-	//		{ // both sparse, same indices
-	//			for (size_t i = 0; i < values.size(); i++)
-	//			{
-	//				manip(indices[i], a.Value(i), ref(values[i]));
-	//			}
-	//		}
-	//		else if (Count() == 0)
-	//		{
-	//			values.resize(a.Count(), 0);
-	//			indices.swap(a.indices);
-	//			for (size_t i = 0; i < values.size(); i++)
-	//			{
-	//				manip(indices[i], a.Value(i), ref(values[i]));
-	//			}
-	//		}
-	//		else
-	//		{ // both sparse
-	//			size_t myI = 0;
+			if (&a.indices == &indices)
+			{ // both sparse, same indices
+				for (size_t i = 0; i < values.size(); i++)
+				{
+					manip(indices[i], a.Value(i), ref(values[i]));
+				}
+			}
+			else if (Count() == 0)
+			{
+				values.resize(a.Count(), 0);
+				indices.swap(a.indices);
+				for (size_t i = 0; i < values.size(); i++)
+				{
+					manip(indices[i], a.Value(i), ref(values[i]));
+				}
+			}
+			else
+			{ // both sparse
+				size_t myI = 0;
 
-	//			size_t newLength = indices.size();
-	//			// try to find each a index in my indices, counting how many more we'll add
-	//			for (size_t aI = 0; aI < a.indices.size(); aI++)
-	//			{
-	//				int aIndex = a.indices[aI];
-	//				while (myI < indices.size() && indices[myI] < aIndex)
-	//				{
-	//					myI++;
-	//				}
-	//				if (myI == indices.size())
-	//				{
-	//					newLength += a.indices.size() - aI;
-	//					break;
-	//				}
-	//				else if (indices[myI] == aIndex)
-	//				{
-	//					myI++;
-	//				}
-	//				else
-	//				{
-	//					newLength++;
-	//				}
-	//			}
+				size_t newLength = indices.size();
+				// try to find each a index in my indices, counting how many more we'll add
+				for (size_t aI = 0; aI < a.indices.size(); aI++)
+				{
+					int aIndex = a.indices[aI];
+					while (myI < indices.size() && indices[myI] < aIndex)
+					{
+						myI++;
+					}
+					if (myI == indices.size())
+					{
+						newLength += a.indices.size() - aI;
+						break;
+					}
+					else if (indices[myI] == aIndex)
+					{
+						myI++;
+					}
+					else
+					{
+						newLength++;
+					}
+				}
 
-	//			myI = 0;
+				myI = 0;
 
-	//			if (newLength == indices.size())
-	//			{
-	//				if (newLength == a.indices.size())
-	//				{
-	//					for (size_t i = 0; i < values.size(); i++)
-	//					{
-	//						manip(indices[i], a.Value(i), ref(values[i]));
-	//					}
-	//					//a.indices = indices;
-	//				}
-	//				else
-	//				{
-	//					for (size_t aI = 0; aI < a.indices.size(); aI++)
-	//					{
-	//						int aIndex = a.indices[aI];
-	//						while (indices[myI] < aIndex)
-	//							myI++;
-	//						manip(aIndex, a.Value(aI), ref(values[myI++]));
-	//					}
-	//				}
-	//			}
-	//			else if (newLength == a.indices.size())
-	//			{
-	//				vector<value_type> newVals(newLength, 0);
+				if (newLength == indices.size())
+				{
+					if (newLength == a.indices.size())
+					{
+						for (size_t i = 0; i < values.size(); i++)
+						{
+							manip(indices[i], a.Value(i), ref(values[i]));
+						}
+						//a.indices = indices;
+					}
+					else
+					{
+						for (size_t aI = 0; aI < a.indices.size(); aI++)
+						{
+							int aIndex = a.indices[aI];
+							while (indices[myI] < aIndex)
+								myI++;
+							manip(aIndex, a.Value(aI), ref(values[myI++]));
+						}
+					}
+				}
+				else if (newLength == a.indices.size())
+				{
+					vector<value_type> newVals(newLength, 0);
 
-	//				for (int aI = 0; aI < a.indices.size(); aI++)
-	//				{
-	//					int aIndex = a.indices[aI];
-	//					if (myI < indices.size() && indices[myI] == aIndex)
-	//					{
-	//						newVals[aI] = values[myI++];
-	//					}
+					for (int aI = 0; aI < a.indices.size(); aI++)
+					{
+						int aIndex = a.indices[aI];
+						if (myI < indices.size() && indices[myI] == aIndex)
+						{
+							newVals[aI] = values[myI++];
+						}
 
-	//					manip(aIndex, a.Value(aI), ref(newVals[aI]));
-	//				}
+						manip(aIndex, a.Value(aI), ref(newVals[aI]));
+					}
 
-	//				indices.swap(a.indices);
-	//				values.swap(newVals);
-	//			}
-	//			else
-	//			{
-	//				ivec newIndices(newLength, 0);
-	//				vector<value_type> newVals(newLength, 0);
+					indices.swap(a.indices);
+					values.swap(newVals);
+				}
+				else
+				{
+					ivec newIndices(newLength, 0);
+					vector<value_type> newVals(newLength, 0);
 
-	//				int newI = 0;
-	//				for (size_t aI = 0; aI < a.indices.size(); aI++)
-	//				{
-	//					int aIndex = a.indices[aI];
-	//					while (myI < indices.size() && indices[myI] < aIndex)
-	//					{
-	//						newVals[newI] = values[myI];
-	//						newIndices[newI] = indices[myI];
-	//						myI++;
-	//						newI++;
-	//					}
-	//					if (myI == indices.size())
-	//					{
-	//						while (aI < a.indices.size())
-	//						{
-	//							newIndices[newI] = a.indices[aI];
-	//							manip(aIndex, a.Value(aI), ref(newVals[newI]));
-	//							aI++;
-	//							newI++;
-	//						}
-	//						break;
-	//					}
+					int newI = 0;
+					for (size_t aI = 0; aI < a.indices.size(); aI++)
+					{
+						int aIndex = a.indices[aI];
+						while (myI < indices.size() && indices[myI] < aIndex)
+						{
+							newVals[newI] = values[myI];
+							newIndices[newI] = indices[myI];
+							myI++;
+							newI++;
+						}
+						if (myI == indices.size())
+						{
+							while (aI < a.indices.size())
+							{
+								newIndices[newI] = a.indices[aI];
+								manip(aIndex, a.Value(aI), ref(newVals[newI]));
+								aI++;
+								newI++;
+							}
+							break;
+						}
 
-	//					value_type myVal = 0;
-	//					if (indices[myI] == aIndex)
-	//					{
-	//						myVal = values[myI++];
-	//					}
+						value_type myVal = 0;
+						if (indices[myI] == aIndex)
+						{
+							myVal = values[myI++];
+						}
 
-	//					manip(aIndex, a.Value(aI), ref(myVal));
-	//					newVals[newI] = myVal;
-	//					newIndices[newI] = aIndex;
-	//					newI++;
-	//				}
+						manip(aIndex, a.Value(aI), ref(myVal));
+						newVals[newI] = myVal;
+						newIndices[newI] = aIndex;
+						newI++;
+					}
 
-	//				while (myI < indices.size())
-	//				{
-	//					newVals[newI] = values[myI];
-	//					newIndices[newI] = indices[myI];
-	//					myI++;
-	//					newI++;
-	//				}
+					while (myI < indices.size())
+					{
+						newVals[newI] = values[myI];
+						newIndices[newI] = indices[myI];
+						myI++;
+						newI++;
+					}
 
-	//				indices.swap(newIndices);
-	//				values.swap(newVals);
+					indices.swap(newIndices);
+					values.swap(newVals);
 
-	//				Densify();
-	//			}
-	//		}
-	//	}
-	//};
+					Densify();
+				}
+			}
+		}
+	};
 
 }  //----end of namespace gezi
 
