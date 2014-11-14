@@ -1557,6 +1557,9 @@
     <ClInclude Include="include\WithArgs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\WithHelp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -1848,6 +1851,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tools\tieba\rsc-thread\rsc_thread_train.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_erase.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_information.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_map_default.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_max_count_by.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

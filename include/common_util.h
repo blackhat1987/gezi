@@ -54,6 +54,7 @@
 //------------------用来被继承的
 #include "LoadSave.h"
 #include "WithArgs.h"
+#include "WithHelp.h"
 
 
 #ifndef NO_GEZI_CONVERT

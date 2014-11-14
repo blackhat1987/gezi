@@ -21,6 +21,101 @@
 #include "serialize_util.h"
 namespace gezi {
 
+	//@TODO generic for Vector or IntArray
+	//@TODO dot专门一个单测文件吧
+	template<typename Vector_, typename Vector2_>
+	inline Float dot(const Vector_& a, const Vector2_& b)
+	{
+		if (!a.Count() || !b.Count())
+		{
+			return 0;
+		}
+
+		//@TODO generalized_same ok &a = & b?
+		if (generalized_same(a.indices, b.indices))
+		{ //同一个Vector或者两者都是Dense(indices是空的)
+			/*if (a.Length() != b.Length())
+			{
+			THROW("Vectors must have the same dimensionality.");
+			}*/
+			Float res = 0;
+			size_t end = std::min(a.values.size(), b.values.size());
+			for (size_t i = 0; i < end; i++)
+			{
+				res += a.Value(i) * b.Value(i);
+			}
+			return res;
+		}
+
+		Float result = 0;
+
+		//注意TLC对 内容为空的indices,values做了特殊处理  为了安全 检查了向量长度 如果速度需要可以不检查 
+		//目前遇到出现问题只可能是train-test模式libsvm格式不同文件读取造成的featureNum不同
+		if (b.IsDense())
+		{
+			//if (a.length > 0 && a.length <= b.values.size()) //this is safe if you set correct length
+			//{
+			//	for (size_t i = 0; i < a.indices.size(); i++)
+			//	{
+			//		result += a.values[i] * b.values[a.indices[i]];
+			//	}
+			//}
+			//else
+			{
+				int64 i = a.indices.size() - 1; //@TODO　int ok ?
+				while (i >= 0 && a.indices[i] >= b.values.size())
+					i--;
+				for (; i >= 0; i--)
+				{
+					result += a.Value(i) * b.Value(a.indices[i]);
+				}
+			}
+		}
+		else if (a.IsDense())
+		{
+			//if (b.length > 0 && b.Length() <= a.values.size())
+			//{
+			//	for (size_t i = 0; i < b.indices.size(); i++)
+			//	{
+			//		result += a.values[b.indices[i]] * b.values[i];
+			//	}
+			//}
+			//else
+			{
+				int64 i = b.indices.size() - 1; //@TODO　int ok ?
+				while (i >= 0 && b.indices[i] >= a.values.size()) //只有libsvm格式的时候train test最大长度信息可能不一致 为了安全,其它情况不需要
+					i--;
+				for (; i >= 0; i--)
+				{
+					result += a.Value(b.indices[i]) * b.Value(i);
+				}
+			}
+		}
+		else
+		{ // both sparse
+			size_t aI = 0, bI = 0;
+			while (aI < a.indices.size() && bI < b.indices.size())
+			{
+				switch (compare(a.indices[aI], b.indices[bI]))
+				{
+				case 0:
+					result += a.Value(aI++) * b.Value(bI++);
+					PVAL(result);
+					break;
+				case -1:
+					aI++;
+					break;
+				case 1:
+					bI++;
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		return result;
+	}
+
 	//@TODO 统一使用TVector<Float>替代
 
 	class Vector
@@ -807,10 +902,35 @@ namespace gezi {
 			}
 		}
 
+		//@TODO 延迟计算的方式的 operator + - * /
 		Vector& operator *= (value_type d)
 		{
 			ScaleBy(d);
 			return *this;
+		}
+
+		Vector& operator /= (value_type d)
+		{
+			ScaleBy(1.0/d);
+			return *this;
+		}
+
+
+		Vector& operator += (Vector& other)
+		{
+			Add(other);
+			return *this;
+		}
+
+		Vector& operator -= (Vector& other)
+		{
+			Subtract(other);
+			return *this;
+		}
+
+		Float dot(const Vector& other)
+		{
+			return gezi::dot(*this, other);
 		}
 
 		/// Multiples the Vector by a real value
@@ -840,34 +960,63 @@ namespace gezi {
 		}
 
 		//@WARNING 下面两个函数从Vector输入改为Vector 看一下是否影响最后结果
-		/// Adds the supplied vector to myself.  (this += a) //@TODO check if can use const Vector&
-		void Add(Vector& a)
+		/// Adds the supplied vector to myself.  (this += a) 
+		void Add(Vector& other)
 		{
 			/*	if (a.length != length)
 				{
 				THROW("Vectors must have the same dimensionality.");
 				}*/
 
-			if (a.Count() == 0)
+			if (other.Count() == 0)
 				return;
 
-			if (generalized_same(a.indices, indices))
+			if (generalized_same(other.indices, indices))
 			{ //同一个Vector或者两者都是Dense(indices是空的)
 				for (size_t i = 0; i < values.size(); i++)
-					values[i] += a.values[i];
+					values[i] += other.values[i];
 			}
 			else if (IsDense())
 			{ // a sparse, this not sparse
-				for (int i = 0; i < a.indices.size(); i++)
+				for (int i = 0; i < other.indices.size(); i++)
 				{
-					values[a.indices[i]] += a.values[i];
+					values[other.indices[i]] += other.values[i];
 				}
 			}
 			else
-			{ //这里会改变a
-				ApplyWith(a, [](int ind, value_type v1, value_type& v2) { v2 += v1; });
+			{ //这里会改变a 非const输入有些危险 @TODO
+				ApplyWith(other, [](int ind, value_type v1, value_type& v2) { v2 += v1; });
 			}
 		}
+
+		void Subtract(Vector& other)
+		{
+			/*	if (a.length != length)
+			{
+			THROW("Vectors must have the same dimensionality.");
+			}*/
+
+			if (other.Count() == 0)
+				return;
+
+			if (generalized_same(other.indices, indices))
+			{ //同一个Vector或者两者都是Dense(indices是空的)
+				for (size_t i = 0; i < values.size(); i++)
+					values[i] -= other.values[i];
+			}
+			else if (IsDense())
+			{ // a sparse, this not sparse
+				for (int i = 0; i < other.indices.size(); i++)
+				{
+					values[other.indices[i]] -= other.values[i];
+				}
+			}
+			else
+			{ //这里会改变a 非const输入有些危险 @TODO 是否必须？ 能否改成const？
+				ApplyWith(other, [](int ind, value_type v1, value_type& v2) { v2 -= v1; });
+			}
+		}
+
 
 		/// Applies the ParallelManipulator to each corresponding pair of elements where the argument is non-zero, in order of index.
 		//@TODO 拷贝之痛 暂时使用swap 不保证运算后a不会被改变,如果需要提前拷贝复制a
@@ -1160,100 +1309,7 @@ namespace gezi {
 			fe.Add(item.first, item.second);
 		}
 	}
-	//@TODO generic for Vector or IntArray
-	//@TODO dot专门一个单测文件吧
-	template<typename Vector_, typename Vector2_>
-	inline Float dot(const Vector_& a, const Vector2_& b)
-	{
-		if (!a.Count() || !b.Count())
-		{
-			return 0;
-		}
 
-		//@TODO generalized_same ok &a = & b?
-		if (generalized_same(a.indices, b.indices))
-		{ //同一个Vector或者两者都是Dense(indices是空的)
-			/*if (a.Length() != b.Length())
-			{
-			THROW("Vectors must have the same dimensionality.");
-			}*/
-			Float res = 0;
-			size_t end = std::min(a.values.size(), b.values.size());
-			for (size_t i = 0; i < end; i++)
-			{
-				res += a.Value(i) * b.Value(i);
-			}
-			return res;
-		}
-
-		Float result = 0;
-
-		//注意TLC对 内容为空的indices,values做了特殊处理  为了安全 检查了向量长度 如果速度需要可以不检查 
-		//目前遇到出现问题只可能是train-test模式libsvm格式不同文件读取造成的featureNum不同
-		if (b.IsDense())
-		{
-			//if (a.length > 0 && a.length <= b.values.size()) //this is safe if you set correct length
-			//{
-			//	for (size_t i = 0; i < a.indices.size(); i++)
-			//	{
-			//		result += a.values[i] * b.values[a.indices[i]];
-			//	}
-			//}
-			//else
-			{
-				int64 i = a.indices.size() - 1; //@TODO　int ok ?
-				while (i >= 0 && a.indices[i] >= b.values.size())
-					i--;
-				for (; i >= 0; i--)
-				{
-					result += a.Value(i) * b.Value(a.indices[i]);
-				}
-			}
-		}
-		else if (a.IsDense())
-		{
-			//if (b.length > 0 && b.Length() <= a.values.size())
-			//{
-			//	for (size_t i = 0; i < b.indices.size(); i++)
-			//	{
-			//		result += a.values[b.indices[i]] * b.values[i];
-			//	}
-			//}
-			//else
-			{
-				int64 i = b.indices.size() - 1; //@TODO　int ok ?
-				while (i >= 0 && b.indices[i] >= a.values.size()) //只有libsvm格式的时候train test最大长度信息可能不一致 为了安全,其它情况不需要
-					i--;
-				for (; i >= 0; i--)
-				{
-					result += a.Value(b.indices[i]) * b.Value(i);
-				}
-			}
-		}
-		else
-		{ // both sparse
-			size_t aI = 0, bI = 0;
-			while (aI < a.indices.size() && bI < b.indices.size())
-			{
-				switch (compare(a.indices[aI], b.indices[bI]))
-				{
-				case 0:
-					result += a.Value(aI++) * b.Value(bI++);
-					PVAL(result);
-					break;
-				case -1:
-					aI++;
-					break;
-				case 1:
-					bI++;
-					break;
-				default:
-					break;
-				}
-			}
-		}
-		return result;
-	}
 
 	//template<typename Vector_>
 	//inline Float dot(const Vector_& a, const Vector_& b)

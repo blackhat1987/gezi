@@ -186,7 +186,6 @@ namespace gezi {
 		//注意这里dot默认后面是稀疏 其实是 dotSparse,另外注意如果不加处理会调用Vector::Value 为什么呢 @FIXME @TODO
 		Float dot(const Vector& other) const
 		{
-			static size_t count1 = 0, count2 = 0;
 			//using WeightVector::Value; // error: 'gezi::WeightVector' is not a namespace
 			//using ::Value;
 			Float result = 0.0;
@@ -205,6 +204,17 @@ namespace gezi {
 				}
 			}
 			return result * _scale;
+		}
+
+		Float dot(const Vector& other, Float scale) const
+		{
+			return dot(other) * scale;
+		}
+
+		// this dot (other1 - other2)
+		Float dotOnDifference(const Vector& other1, const Vector& other2, Float scale = 1.0) const
+		{
+			return dot(other1, scale) + dot(other2, -scale);
 		}
 
 	public:
