@@ -186,6 +186,19 @@ namespace gezi {
 		}
 	};
 
+	template<typename Container>
+	double norm(const Container& values)
+	{
+		return sqrt(std::accumulate(values.begin(), values.end(), 0.0, sd_op()));
+	}
+
+	template<typename Container>
+	double sqared_norm(const Container& values)
+	{
+		return std::accumulate(values.begin(), values.end(), 0.0, sd_op());
+	}
+
+
 	/**
 	 *  注意vec的大小如果是1就会/0 返回结果NAN 注意如果 int/int /0会core 而浮点 则是nan
 	 *  FIXME boost::optional ?

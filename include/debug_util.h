@@ -39,6 +39,9 @@ using namespace std;
 #define Pval(s)\
 	VLOG(0) << setprecision(16) << #s << " --- [" << s << "]"
 
+#define Pval_1(s)\
+	VLOG(1) << #s <<" --- [" << s << "]
+
 #define Pval_2(s)\
 	VLOG(2) << #s <<" --- [" << s << "]"
 
@@ -53,6 +56,9 @@ using namespace std;
 
 #define Pval2_2(a, b)\
 	VLOG(2) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "]"
+
+#define Pval2_4(a, b)\
+	VLOG(4) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "]"
 
 #define Pval2_1(a, b)\
 	VLOG(1) << #a <<" -- [" << a << "] " << #b <<" -- [" << b << "]"

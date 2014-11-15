@@ -928,7 +928,7 @@ namespace gezi {
 			return *this;
 		}
 
-		Float dot(const Vector& other)
+		Float dot(const Vector& other) const
 		{
 			return gezi::dot(*this, other);
 		}
@@ -1209,12 +1209,17 @@ namespace gezi {
 		}
 
 		//l2norm @TODO性能优化 WeightVector特化
-		value_type Norm()
+		value_type Norm() const
 		{
 			return sqrt(std::accumulate(values.begin(), values.end(), 0.0, sd_op()));
 		}
 
-		string Str(string sep = ",")
+		value_type SquaredNorm() const
+		{
+			return std::accumulate(values.begin(), values.end(), 0.0, sd_op());
+		}
+
+		string Str(string sep = ",") const
 		{
 			stringstream ss;
 			ForEachNonZero([&](int index, value_type value) {
@@ -1223,7 +1228,7 @@ namespace gezi {
 			return ss.str().substr(0, ss.str().length() - sep.length());
 		}
 
-		string DenseStr(string sep = ",")
+		string DenseStr(string sep = ",") const
 		{
 			stringstream ss;
 			ForEachAll([&](int index, value_type value) {
@@ -1232,7 +1237,7 @@ namespace gezi {
 			return ss.str();
 		}
 
-		string str(string sep = ",")
+		string str(string sep = ",") const
 		{
 			stringstream ss;
 			ForEachNonZero([&](int index, value_type value) {

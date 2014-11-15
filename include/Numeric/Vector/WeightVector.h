@@ -169,7 +169,7 @@ namespace gezi {
 					values[i] += other.values[i] * scale / _scale;
 				}
 			}
-			squaredNorm += squaredNorm * scale * scale + (2.0 * _scale * innerProduct);
+			squaredNorm += other.SquaredNorm() * scale * scale + (2.0 * _scale * innerProduct);
 		}
 
 		//会将自身变化 
@@ -215,6 +215,11 @@ namespace gezi {
 		Float dotOnDifference(const Vector& other1, const Vector& other2, Float scale = 1.0) const
 		{
 			return dot(other1, scale) + dot(other2, -scale);
+		}
+		
+		value_type SquaredNorm() const
+		{
+			return squaredNorm;
 		}
 
 	public:
