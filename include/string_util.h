@@ -741,6 +741,10 @@ namespace gezi {
 		return input;
 	}
 
+	inline string arg(string input)
+	{
+		return erase(boost::to_lower_copy(input), "_-");
+	}
 }
 
 #endif  //----end of STRING_UTIL_H_
