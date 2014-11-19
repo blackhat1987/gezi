@@ -170,6 +170,10 @@ using boost::algorithm::split_regex;
 #define FREE2(ptr) \
 {if (ptr) { delete [] ptr; ptr = NULL;}}
 
+#define FREE_ARRAY(ptr) \
+{if (ptr) { delete[] ptr; ptr = NULL; }}
+
+
 #define  EXECUTE(cmd) \
 	Pval(cmd);\
 	system((cmd).c_str())
