@@ -1560,6 +1560,9 @@
     <ClInclude Include="include\WithHelp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\string2argcargv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">

@@ -487,6 +487,7 @@
     <ClInclude Include="include\sort_util.h" />
     <ClInclude Include="include\statistic_util.h" />
     <ClInclude Include="include\stl_util.h" />
+    <ClInclude Include="include\string2argcargv.h" />
     <ClInclude Include="include\string_util.h" />
     <ClInclude Include="include\ThreadLocalAnyMap.h" />
     <ClInclude Include="include\tieba\common_def.h" />

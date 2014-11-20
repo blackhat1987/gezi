@@ -127,6 +127,25 @@ namespace gezi {
 		return false;
 	}
 
+
+	template<typename _Map>
+	void print_enum_map(const _Map& m)
+	{
+		for (auto item : m)
+		{
+			std::cout << setiosflags(ios::left) << setfill(' ') << setw(40)
+				<< item.first << " " << (int)item.second << std::endl;
+		}
+	}
+	template<typename _Map>
+	void print_map(const _Map& m)
+	{
+		for (auto item : m)
+		{
+			std::cout << setiosflags(ios::left) << setfill(' ') << setw(40)
+				<< item.first << " " << item.second << std::endl;
+		}
+	}
 }  //----end of namespace gezi
 
 #endif  //----end of MAP_UTIL_H_
