@@ -600,6 +600,23 @@ namespace gezi {
 		return content;
 	}
 
+	inline string erase_chars(string content, string chars)
+	{
+		content.erase(boost::remove_if(content, boost::is_any_of(chars)), content.end());
+		return content;
+	}
+
+	//@TODO better method
+	inline string replace_chars(string content, string chars, char dest)
+	{
+		for (char part : chars)
+		{
+			std::replace(content.begin(), content.end(), part, dest);
+		}
+		return content;
+	}
+
+
 	//find part and erase from that pos
 	inline string erase_from(string content, string part)
 	{
