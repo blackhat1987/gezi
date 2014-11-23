@@ -56,7 +56,7 @@ namespace gezi {
 	inline std::vector<std::string> _parse(const std::string& args);
 	inline void stringToArgcArgv(const std::string& str, int* argc, char*** argv);
 
-	inline freeArgcArgv(int argc, char**& argv)
+	inline void freeArgcArgv(int argc, char**& argv)
 	{
 		for (int i = 0; i < argc; i++)
 		{
@@ -236,6 +236,32 @@ namespace gezi {
 
 		return false;
 	}
+
+	class String2ArgcArgv
+	{
+	public:
+		String2ArgcArgv(const std::string& str)
+		{
+			stringToArgcArgv(str, &_argc, &_argv);
+		}
+		~String2ArgcArgv()
+		{
+			freeArgcArgv(_argc, _argv);
+		}
+
+		int argc() const
+		{
+			return _argc;
+		}
+		char** argv() const
+		{
+			return _argv;
+		}
+	private:
+		int _argc;
+		char** _argv;
+	};
+
 }  //----end of namespace gezi
 
 

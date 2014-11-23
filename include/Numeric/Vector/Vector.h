@@ -371,6 +371,13 @@ namespace gezi {
 			}
 		}
 
+		void ForceSparse()
+		{
+			MakeSparse();
+			keepDense = true;
+		}
+
+
 		//@TODO 这里注意python封装后比如 l = Vector() l.Add(3.0)是ok的 l.Add(3)看上去没错 但是却实际不起作用。。 为什么vector的push_back没问题呢 现在ok了 可能是Float typedef的原因也可能是有Add(Vector v)
 		//#ifndef PYTHON_WRAPPER
 		void Add(value_type value)
@@ -711,7 +718,7 @@ namespace gezi {
 			if (IsDense())
 			{
 				for (size_t i = 0; i < values.size(); i++)
-				{ //@TODO fixme 对于很小的浮点数？ 貌似也会自动处理成 == 0？ 造成结果不一致 参考FeatureVector的一个使用
+				{ //@TODO fixme 对于很小的浮点数？ 貌似也会自动处理成 == 0？ 造成结果不一致 参考FeaturesVector的一个使用
 					if (values[i] != _zeroValue)
 					{
 						visitor(i, values[i]);
@@ -1284,6 +1291,7 @@ namespace gezi {
 					nonZeroNum++;
 				}
 			}
+#pragma omp critical 
 			numNonZeros = nonZeroNum; //save non zero num
 			return numNonZeros;
 		}

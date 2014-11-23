@@ -79,9 +79,6 @@ using std::lock_guard;
 #include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
 
-#include <google/gflags.h>
-#include <glog/logging.h>
-
 typedef long long int64;
 typedef unsigned int uint;
 typedef unsigned long long uint64;
