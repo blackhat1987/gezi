@@ -1250,7 +1250,8 @@ namespace gezi {
 			ForEachNonZero([&](int index, value_type value) {
 				ss << index << ":" << value << sep;
 			});
-			return ss.str();
+			//return ss.str();
+			return ss.str().substr(0, ss.str().length() - sep.length());
 		}
 
 		//friend value_type dot(const Vector& l, const Vector& r);
