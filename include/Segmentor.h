@@ -192,7 +192,7 @@ namespace gezi {
 				return false;
 			}
 
-			//only once init for each thread
+			//only once init for each thread 或者也可以类似上面单独一个函数  static thread_local bool isHandleInted = initHandle();
 			static thread_local bool isHandleInited = false;
 			if (!isHandleInited)
 			{

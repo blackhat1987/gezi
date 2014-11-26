@@ -768,7 +768,7 @@ namespace gezi {
 			return indices.size() == values.size();
 		}
 
-		//@TODO  尽量少用length Length
+		//@TODO  尽量少用length 而是用Length or size
 		/// Gets a int value representing the dimensionality of the vector.
 		int Length() const
 		{
