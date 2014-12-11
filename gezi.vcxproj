@@ -603,6 +603,7 @@
     <ClCompile Include="src\SharedSegmentor.cpp" />
     <ClCompile Include="src\word_seg.cpp" />
     <ClCompile Include="test\cereal\test_cereal.cc" />
+    <ClCompile Include="test\identifer-text2bin.cc" />
     <ClCompile Include="test\linq\test.cc" />
     <ClCompile Include="test\mpi\boost_broadcast.cc" />
     <ClCompile Include="test\mpi\boost_gather.cc" />
@@ -676,6 +677,8 @@
     <ClCompile Include="test\tieba\test_threads_info.cc" />
     <ClCompile Include="test\tieba\test_uname.cc" />
     <ClCompile Include="test\tieba\test_user_info_extractor.cc" />
+    <ClCompile Include="tools\identifer\check-identifer.cc" />
+    <ClCompile Include="tools\identifer\identifer-text2bin.cc" />
     <ClCompile Include="tools\tieba\full-posts\fullposts.cc" />
     <ClCompile Include="tools\tieba\full-posts\fullposts_train.cc" />
     <ClCompile Include="tools\tieba\full-posts\get_fullposts.cc" />

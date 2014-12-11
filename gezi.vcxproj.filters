@@ -1868,6 +1868,15 @@
     <ClCompile Include="test\test_max_count_by.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tools\identifer\check-identifer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\identifer\identifer-text2bin.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\identifer-text2bin.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl">

@@ -91,7 +91,7 @@ namespace tieba {
 			}
 
 			uint nowFourmId = nowPostInfo.forumId;
-
+			string nowForumName = nowPostInfo.forumName;
 			{ //用户的吧等级信息
 				UserLikeForumInfo& userLikeForumInfo = info().userLikeForumInfo;
 				bool isUserLikeForumInfoValid = userLikeForumInfo.userId;
@@ -101,7 +101,7 @@ namespace tieba {
 				add(userLikeForumInfo.sumLevels, "forumLevelsSum");
 				if (_useNowPostInfo)
 				{
-					add(userLikeForumInfo.GetLevel(nowFourmId), "nowForumLevel");
+					add(userLikeForumInfo.GetLevel(nowForumName), "nowForumLevel");
 				}
 			}
 
@@ -148,7 +148,7 @@ namespace tieba {
 
 	private:
 		bool _useNowPostInfo = true;
-		bool _useHistoryPostNum = true;
+		bool _useHistoryPostNum = false; //@TODO 暂时不使用
 	};
 
 }  //----end of namespace tieba

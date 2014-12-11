@@ -30,6 +30,8 @@ namespace gezi {
 			map<string, UrlInfo> urlInfoMap; //url信息  url->UrlInfo
 			vector<vector<string> > urlsVec; //每个帖子中抽取的url数据
 
+			bool isWhiteTitle = false;
+
 			bool IsValid()
 			{
 				return postId != 0 && size() > 0;

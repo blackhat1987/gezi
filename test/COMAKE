@@ -170,3 +170,5 @@ Application('test_static_thread_safe',Sources('test_static_thread_safe.cc', srcs
 Application('test_map_default',Sources('test_map_default.cc', srcs))
 #Application('test_template_function',Sources('test_template_function.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')))
 Application('test_template_function',Sources('test_template_function.cc',srcs))
+#Application('identifer-text2bin',Sources('identifer-text2bin.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')))
+Application('identifer-text2bin',Sources('identifer-text2bin.cc',srcs))

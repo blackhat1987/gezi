@@ -16,36 +16,12 @@ print 'GCC_HIGH: %d'%GCC_HIGH
 #是否使用高版本动态链接库，即是否使用高版本libc 如果启用 可以使用openmp 但是需要设置LD_LIBRARY_PATH sh ./run.sh ./main
 GCC_DYNAMIC=1
 print 'GCC_DYNAMIC: %d'%GCC_DYNAMIC
-GCC_VERSION='3.4.5'
-if  GCC_HIGH == 1: 
-	if GCC_DYNAMIC == 1:
-		GCC_VERSION='4.8.1'
-	else:
-		GCC_VERSION='4.8.2'
-print 'GCC_VERSION: %s'%GCC_VERSION
-GLIBC_VERSION='2.9'
-BINUTILS_VERSION='2.20'
-KERNAL_VERSION='2.6.32'
 
 #使用硬链接copy.
 CopyUsingHardLink(True)
 
 GCC_BIN='g++'
 GCC_FLAGS = '' 
-TOOLCHAIN=TOOLCHAIN_ROOT
-if GCC_HIGH  == 1:
-	if GCC_DYNAMIC == 1:	
-		TOOLCHAIN += '/x86_64-unknown-linux-gnu-%s-%s-%s-%s'%(GCC_VERSION,GLIBC_VERSION,BINUTILS_VERSION,KERNAL_VERSION)
-		GCC_BIN=TOOLCHAIN + '/bin/x86_64-unknown-linux-gnu-g++'
-	else:
-		TOOLCHAIN += '/gcc_only_%s'%(GCC_VERSION)
-		GCC_BIN=TOOLCHAIN + '/bin/g++'
-#对于static方式 LIBS_DIR不起任何作用
-LIBS_DIR=TOOLCHAIN + '/x86_64-unknown-linux-gnu/lib/'
-
-if GCC_HIGH == 1:
-	content = '#!/bin/sh\nexport LD_LIBRARY_PATH=%s\n./$1\n'%LIBS_DIR
-	#open('run.sh','w').write(content)
 
 print 'LIBS_DIR: %s'%LIBS_DIR
 

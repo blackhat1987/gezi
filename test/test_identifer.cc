@@ -29,6 +29,20 @@ TEST(test_identifer, func)
 	DoubleIdentifer identifer;
 	identifer.load(FLAGS_i);
 	serialize_util::save_json(identifer, "test.data/identifer.json");
+	serialize_util::save(identifer, "test.data/identifer.bin");
+
+	{
+		DoubleIdentifer identifer;
+		serialize_util::load(identifer, "test.data/identifer.bin");
+		Pval(identifer.size());
+	}
+
+	{
+		DoubleIdentifer identifer2;
+		identifer.Save("test.data/identifer2.bin");
+		identifer2.Load("test.data/identifer2.bin");
+		Pval(identifer2.size());
+	}
 }
 
 int main(int argc, char *argv[])

@@ -386,9 +386,9 @@ namespace gezi {
 			};
 
 			//获取在当前吧下的等级
-			int GetLevel(uint forumId)
+			int GetLevel(string forumName)
 			{
-				auto iter = infoMap.find(forumId);
+				auto iter = infoMap.find(forumName);
 				if (iter != infoMap.end())
 				{
 					return (iter->second).level;
@@ -400,7 +400,7 @@ namespace gezi {
 			int maxLevel = 0;
 			int numLikes = 0;
 			int sumLevels = 0;
-			map<uint, Node> infoMap;
+			map<string, Node> infoMap;
 			vector<string> forumNames;
 			vector<int> levels;
 

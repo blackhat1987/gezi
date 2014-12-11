@@ -72,11 +72,11 @@ namespace gezi {
 				}
 				if (!_isRsc)
 				{
-					return 	TextPredictor::Predict(title, content, identifer, predictor, _segType, _ngram, _sep);
+					return 	TextPredictor::Predict(title, content, identifer, predictor, _segType, _useMedia, _ngram, _skip, _sep);
 				}
 				else
 				{
-					return TextPredictor::Predict(title + " " + content, identifer, predictor, _segType, _ngram, _sep);
+					return TextPredictor::Predict(title + " " + content, identifer, predictor, _segType, _ngram, _skip, _sep);
 				}
 			}
 
@@ -152,9 +152,11 @@ namespace gezi {
 
 		private:
 			int _ngram = 3;
+			int _skip = 2;
 			string _sep = "$#$";
 			int _segType = SEG_BASIC;
 			bool _normalize = false; //是否对title，内容进行normalize
+			bool _useMedia = false;
 
 			bool _isRsc = false; //是否是rsc模式 rsc模式title和content不区分
 

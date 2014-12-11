@@ -154,10 +154,6 @@ DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/gezi \
   -I../../../../../../../../third-64/glog/include \
   -I../../../../../../../../third-64/glog/output \
   -I../../../../../../../../third-64/glog/output/include \
-  -I../../../../../../../../third-64/libcurl \
-  -I../../../../../../../../third-64/libcurl/include \
-  -I../../../../../../../../third-64/libcurl/output \
-  -I../../../../../../../../third-64/libcurl/output/include \
   -I../../../../../../../../third-64/pcre \
   -I../../../../../../../../third-64/pcre/include \
   -I../../../../../../../../third-64/pcre/output \
@@ -165,7 +161,11 @@ DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/gezi \
   -I../../../../../../../../third-64/tcmalloc \
   -I../../../../../../../../third-64/tcmalloc/include \
   -I../../../../../../../../third-64/tcmalloc/output \
-  -I../../../../../../../../third-64/tcmalloc/output/include
+  -I../../../../../../../../third-64/tcmalloc/output/include \
+  -I../../../../../../../../third-64/zlib \
+  -I../../../../../../../../third-64/zlib/include \
+  -I../../../../../../../../third-64/zlib/output \
+  -I../../../../../../../../third-64/zlib/output/include
 
 #============ CCP vars ============
 CCHECK=@ccheck.py
@@ -177,11 +177,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=fe403d0e03718493e90ddf8824106e75  COMAKE
+COMAKE_MD5=ca18c2f0f3297dc80e3aaa6a9283cff1  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check .copy-so get_urate_infos urate_train 
+all:comake2_makefile_check get_urate_infos urate_train 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -201,8 +201,6 @@ ccpclean:
 .PHONY:clean
 clean:ccpclean
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mclean[0m']"
-	rm -rf .copy-so
-	rm -rf ld-linux-x86-64.so.2
 	rm -rf get_urate_infos
 	rm -rf ./output/bin/get_urate_infos
 	rm -rf urate_train
@@ -227,10 +225,6 @@ love:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlove[0m']"
 	@echo "make love done"
 
-.copy-so:
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m.copy-so[0m']"
-	ln -s ../../../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib//ld-linux-x86-64.so.2 ld-linux-x86-64.so.2
-
 get_urate_infos:get_urate_infos_get_urate_infos.o \
   ../../../libgezi_common.a \
   ../../../libgezi_json.a
@@ -240,8 +234,13 @@ get_urate_infos:get_urate_infos_get_urate_infos.o \
   ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl.a \
@@ -306,7 +305,6 @@ get_urate_infos:get_urate_infos_get_urate_infos.o \
   ../../../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -315,7 +313,8 @@ get_urate_infos:get_urate_infos_get_urate_infos.o \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
+  ../../../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
   -lldap \
@@ -323,9 +322,7 @@ get_urate_infos:get_urate_infos_get_urate_infos.o \
   -rdynamic \
   -lssl \
   -lcrypto \
-  -lgomp \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o get_urate_infos
+  -lgomp -Xlinker "-)" -o get_urate_infos
 	mkdir -p ./output/bin
 	cp -f --link get_urate_infos ./output/bin
 
@@ -338,8 +335,13 @@ urate_train:urate_train_urate_train.o \
   ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl.a \
@@ -404,7 +406,6 @@ urate_train:urate_train_urate_train.o \
   ../../../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -413,7 +414,8 @@ urate_train:urate_train_urate_train.o \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
+  ../../../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
   -lldap \
@@ -421,9 +423,7 @@ urate_train:urate_train_urate_train.o \
   -rdynamic \
   -lssl \
   -lcrypto \
-  -lgomp \
-  -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 \
-  -L../../../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o urate_train
+  -lgomp -Xlinker "-)" -o urate_train
 	mkdir -p ./output/bin
 	cp -f --link urate_train ./output/bin
 

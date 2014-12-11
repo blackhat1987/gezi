@@ -46,32 +46,32 @@ namespace gezi {
 
 			virtual ~DictMatchExtractor()
 			{ //使用thread local的buffer 可以不做dm_pack_del 因为只有程序结束才需要 
-			/*	if (_result)
-				{
+				/*	if (_result)
+					{
 					dm_pack_del(_result);
-				}*/
+					}*/
 			}
 
 			//这样写也ok 将Init放到构造函数 避免外部调用 这样等于资源就在内部了
-		/*	static void Init()
-			{
+			/*	static void Init()
+				{
 				static bool _isInited = false;
 				if (!_isInited)
 				{
-					string section = "DictMatch";
-					{
-						string black_file = "./data/wordlist/black.dm";
-						SCONF(black_file);
-						blackDict().init(black_file);
-					}
-					{
-						string gray_file = "./data/wordlist/gray.dm";
-						SCONF(gray_file);
-						grayDict().init(gray_file);
-					}
-					_isInited = true;
+				string section = "DictMatch";
+				{
+				string black_file = "./data/wordlist/black.dm";
+				SCONF(black_file);
+				blackDict().init(black_file);
 				}
-			}*/
+				{
+				string gray_file = "./data/wordlist/gray.dm";
+				SCONF(gray_file);
+				grayDict().init(gray_file);
+				}
+				_isInited = true;
+				}
+				}*/
 
 			bool ContainsBlack(string& content)
 			{
@@ -259,10 +259,10 @@ namespace gezi {
 				}
 
 				double white_ratio = white_title_count / (double)titles.size();
-				/*	if (white_ratio >= 0.2)
-					{
-					dao()->setWhiteTitle();
-					}*/
+				if (white_ratio >= 0.2)
+				{
+					info()->isWhiteTitle = true;
+				}
 				add(white_ratio, "whiteTitleRatio");
 
 				//black gray 1 means ori 2 means normed

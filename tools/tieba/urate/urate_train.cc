@@ -33,6 +33,9 @@ DEFINE_string(i, "./test.data/pid.txt", "input file");
 DEFINE_string(o, "feature.txt", "output file");
 DEFINE_int32(nt, 12, "thread num");
 
+DEFINE_int32(index, 0, "pid index");
+DEFINE_int32(index2, 1, "thread index");
+
 void run()
 {
 	try_create_dir(FLAGS_history);
@@ -41,7 +44,7 @@ void run()
 	AutoTimer timer("run", 0);
 	vector<uint64> pids;
 	vector<int> labels;
-	read_to_vec(FLAGS_i, pids, labels);
+	read_to_vec(FLAGS_i, pids, labels, FLAGS_index, FLAGS_index2);
 	Pval2(pids.size(), pids[0]);
 	write_features(pids, labels, 
 		[&](uint64 tid) { return gen_urate_features(tid, FLAGS_history); }, FLAGS_o);

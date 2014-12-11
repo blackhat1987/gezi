@@ -106,7 +106,8 @@ namespace gezi {
 						info.maxLevel = node.level;
 					}
 					info.sumLevels += node.level;
-					info.infoMap[UINT(*iter)] = node;
+					//info.infoMap[UINT(*iter)] = node;
+					info.infoMap[node.forumName] = node;
 					info.forumNames.push_back(node.forumName);
 					info.levels.push_back(node.level);
 				}
