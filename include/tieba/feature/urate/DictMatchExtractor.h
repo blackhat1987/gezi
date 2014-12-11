@@ -261,7 +261,7 @@ namespace gezi {
 				double white_ratio = white_title_count / (double)titles.size();
 				if (white_ratio >= 0.2)
 				{
-					info()->isWhiteTitle = true;
+					info().isWhiteTitle = true;
 				}
 				add(white_ratio, "whiteTitleRatio");
 
