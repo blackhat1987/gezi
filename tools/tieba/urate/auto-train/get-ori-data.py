@@ -21,6 +21,8 @@ reply_normal = "%s/reply_normalpid.txt"%path
 reply_pv_spam = "%s/pb_spampid.txt"%path
 reply_pv_normal = "%s/pb_normalpid.txt"%path
 
+os.system('rm reply_spampid.txt')
+os.system('rm reply_normalpid.txt')
 os.system('rm thread_spampid.txt')
 os.system('rm thread_normalpid.txt')
 os.system('rm frs_spampid.txt')
