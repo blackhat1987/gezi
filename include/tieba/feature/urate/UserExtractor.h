@@ -148,7 +148,7 @@ namespace tieba {
 
 	private:
 		bool _useNowPostInfo = true;
-		bool _useHistoryPostNum = false; //@TODO 暂时不使用
+		bool _useHistoryPostNum = true; 
 	};
 
 }  //----end of namespace tieba

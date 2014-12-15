@@ -43,6 +43,7 @@ namespace gezi {
 				}
 				return _level1Identifer;
 			}
+
 			map<string, int>& _level1Identifer = level1Identifer();
 			////@TODO 合并到一起 和 levelIdentifer? 另外也可以比如是多个static 放在统一的Init函数 然后
 			////利用一个Init函数内部static bool _isInited的确保构造一次 放到构造函数即可

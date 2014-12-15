@@ -9,8 +9,8 @@
 
 import sys,os
 
-out_threads = open('for_evaluate.thread.txt', 'w')
-out_replys = open('for_evaluate.reply.txt', 'w')
+out_threads = open(sys.argv[2], 'w')
+out_replys = open(sys.argv[3], 'w')
 for line in open(sys.argv[1]):
 	l = line.strip().split('\t')
 	title = l[-3]

@@ -32,6 +32,7 @@
 #include "tieba/feature/urate/SequenceExtractor.h"
 #include "tieba/feature/urate/DictMatchExtractor.h"
 
+
 namespace gezi {
 namespace tieba {
 
@@ -76,6 +77,41 @@ namespace tieba {
 		}
 		return fe;
 	}
+
+	inline Features gen_urate_features(uint64 pid, UrateInfo& info, string historyPath)
+	{
+		Features fe;
+		/*UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);*/
+		int historyNum = 25;
+		PSCONF(historyNum, "Urate");
+		info = try_get_info<UrateInfo>(pid, [&](uint64 pid) { return get_urate_info(pid, true, historyNum); }, historyPath);
+		if (info.IsValid())
+		{
+			//VLOG(0) << "Before move";
+			UrateExtractor::info() = move(info);
+			//VLOG(0) << "After move";
+			FeaturesExtractorMgr mgr;
+			add_urate_features(mgr);
+			mgr.extract(fe);
+		}
+		return fe;
+	}
+
+	//添加规则豁免
+	inline void adjust(double& score, const gezi::tieba::UrateInfo& uinfo)
+	{
+		static int min_posts_num = 3;
+		PSCONF(min_posts_num, "Urate");
+
+		string name = uinfo.userInfo.userName.c_str();
+		if (gezi::contains(name, "外交")
+			|| uinfo.isWhiteTitle
+			|| uinfo.size() < min_posts_num)
+		{
+			score = 0;
+		}
+	}
+
 }  //----end of namespace tieba
 }  //----end of namespace gezi
 

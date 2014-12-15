@@ -37,10 +37,10 @@ public:
 
 	virtual void extract() override
 	{
-		if (!IsThread())
-		{//@TODO 回复打分暂时不考虑topic
-			return;
-		}
+		//if (!IsThread())
+		//{//@TODO 回复打分暂时不考虑topic
+		//	return;
+		//}
 
 		auto& titles = info().normalizedTitles;
 		//auto& contents = info().normalizedContents;

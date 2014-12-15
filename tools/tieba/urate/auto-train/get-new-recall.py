@@ -20,7 +20,7 @@ for line in open(sys.argv[2]):
 		break
 	l = line.strip().split()
 	pid = l[0]
-	score = l[-2]
+	score = l[-1]
 	num += 1
 	print pid,'\t',score
 	

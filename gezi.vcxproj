@@ -686,6 +686,7 @@
     <ClCompile Include="tools\tieba\rsc-thread\rsc_thread.cc" />
     <ClCompile Include="tools\tieba\rsc-thread\rsc_thread_train.cc" />
     <ClCompile Include="tools\tieba\urate\get_urate_infos.cc" />
+    <ClCompile Include="tools\tieba\urate\urate_predicts_from_file.cc" />
     <ClCompile Include="tools\tieba\urate\urate_train.cc" />
   </ItemGroup>
   <ItemGroup>

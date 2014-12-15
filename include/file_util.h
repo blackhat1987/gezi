@@ -97,10 +97,10 @@ namespace gezi {
 		std::istream_iterator<T> data_end;
 		std::copy(data_begin, data_end, std::back_inserter(container));
 
-		foreach(T& value, container)
-		{
-			boost::trim(value);
-		}
+		//foreach(T& value, container)
+		//{
+		//	boost::trim(value);
+		//}
 		return true;
 	}
 

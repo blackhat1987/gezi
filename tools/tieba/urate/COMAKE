@@ -23,8 +23,6 @@ CopyUsingHardLink(True)
 GCC_BIN='g++'
 GCC_FLAGS = '' 
 
-print 'LIBS_DIR: %s'%LIBS_DIR
-
 if GCC_LOCAL == 1:
 	GCC_BIN = 'g++'
 elif GCC_LOCAL == 2:
@@ -86,7 +84,10 @@ LIBS('../../../libgezi_json.a')
 #¹²Ïí¿â
 #×ÓÄ¿Â¼
 #Directory('demo')
+srcs = ''
 #Application('get_urate_infos',Sources('get_urate_infos.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')))
 Application('get_urate_infos',Sources('get_urate_infos.cc'))
 #Application('urate_train',Sources('urate_train.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')))
 Application('urate_train',Sources('urate_train.cc'))
+#Application('urate_predicts_from_file',Sources('urate_predicts_from_file.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')))
+Application('urate_predicts_from_file',Sources('urate_predicts_from_file.cc',srcs))

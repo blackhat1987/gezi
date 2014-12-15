@@ -33,8 +33,18 @@ DEFINE_string(i, "./test.data/pid.txt", "input file");
 DEFINE_string(o, "feature.txt", "output file");
 DEFINE_int32(nt, 12, "thread num");
 
-DEFINE_int32(index, 0, "pid index");
-DEFINE_int32(index2, 1, "thread index");
+DEFINE_int32(index, 0, "id index");
+DEFINE_int32(index2, 1, "label index");
+
+DEFINE_uint64(pid, 0, "");
+DEFINE_bool(gf, false, "gen feature");
+DEFINE_int32(predict, 0, "1 predict, 2 predicts, 3 predicts from file");
+DEFINE_string(m, "model", "model path");
+
+Features gen_features(uint64 pid)
+{
+	return gen_urate_features(pid, FLAGS_history);
+}
 
 void run()
 {
@@ -47,7 +57,53 @@ void run()
 	read_to_vec(FLAGS_i, pids, labels, FLAGS_index, FLAGS_index2);
 	Pval2(pids.size(), pids[0]);
 	write_features(pids, labels, 
-		[&](uint64 tid) { return gen_urate_features(tid, FLAGS_history); }, FLAGS_o);
+		[&](uint64 pid) { return gen_urate_features(pid, FLAGS_history); }, FLAGS_o);
+}
+
+void run_gen_feature()
+{
+	Features fe = gen_features(FLAGS_pid);
+	Pval(fe.str());
+}
+
+void run_predict()
+{
+	Features fe = gen_features(FLAGS_pid);
+	Pval(fe.str());
+	string modelPath = FLAGS_m;
+	auto& predictor = SharedPredictors::Instance(modelPath);
+	Pval(predictor->Predict(fe));
+}
+
+void run_predicts()
+{
+	string modelPath = FLAGS_m;
+	auto& predictor = SharedPredictors::Instance(modelPath);
+	uint64 pid;
+	while (true)
+	{
+		cin >> pid;
+		Pval(pid);
+		Features fe = gen_features(pid);
+		Pval(fe.str());
+		Pval(predictor->Predict(fe));
+	}
+}
+
+void run_predicts_from_file()
+{
+	ifstream ifs(FLAGS_i);
+	string line;
+	while (getline(ifs, line))
+	{
+		uint64 pid = UINT64(line);
+		UrateInfo info;
+		Features fe = gen_urate_features(pid, info, FLAGS_history);
+		string modelPath = info.nowPostInfo.IsThread() ? "model" : "reply.model";
+		auto& predictor = SharedPredictors::Instance(modelPath);
+		double score = predictor->Predict(fe);
+		gezi::tieba::adjust(score, info);
+	}
 }
 
 int main(int argc, char *argv[])
@@ -62,7 +118,27 @@ int main(int argc, char *argv[])
 	if (FLAGS_v == 0)
 		FLAGS_v = FLAGS_vl;
 	SharedConf::init("urate_strategy.conf");
-	run();
+
+	if (FLAGS_gf)
+	{
+		run_gen_feature();
+	}
+	else if (FLAGS_predict == 1)
+	{
+		run_predict();
+	}
+	else if (FLAGS_predict == 2)
+	{
+		run_predicts();
+	}
+	else if (FLAGS_predict == 3)
+	{
+		run_predicts_from_file();
+	}
+	else
+	{ //Ä¬ÈÏÑµÁ·Ä£Ê½
+		run();
+	}
 
 	return 0;
 }
