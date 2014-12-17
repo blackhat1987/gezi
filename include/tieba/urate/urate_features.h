@@ -88,7 +88,7 @@ namespace tieba {
 		if (info.IsValid())
 		{
 			//VLOG(0) << "Before move";
-			UrateExtractor::info() = move(info);
+			UrateExtractor::info() = info;
 			//VLOG(0) << "After move";
 			FeaturesExtractorMgr mgr;
 			add_urate_features(mgr);

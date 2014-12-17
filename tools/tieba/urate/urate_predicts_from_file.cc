@@ -30,6 +30,8 @@ DEFINE_int32(num, 1, "");
 DEFINE_string(i, "", "input file");
 DEFINE_string(o, "", "output file");
 
+DEFINE_int32(nt, 12, "thread num");
+
 DEFINE_string(history, "./history", "");
 
 void run_predicts_from_file()
@@ -38,6 +40,9 @@ void run_predicts_from_file()
 	vector<uint64> pids;
 	gezi::file_to_vec(FLAGS_i, pids);
 
+	SharedPredictors::Instance("model");
+	SharedPredictors::Instance("reply.model");
+	omp_set_num_threads(FLAGS_nt);
 #pragma omp parallel for
 	for (size_t i = 0; i < pids.size(); i++)
 	{
@@ -49,7 +54,7 @@ void run_predicts_from_file()
 		double score = predictor->Predict(fe);
 		gezi::tieba::adjust(score, info);
 #pragma  omp critical
-		ofs << pid << "\t" << info.nowPostInfo.title << "\t" << info.nowPostInfo.content << "\t" << score << endl;
+		ofs << pid << "\t" << info.nowPostInfo.title << "\t" << gezi::replace(info.nowPostInfo.content, '\n', ' ') << "\t" << score << endl;
 	}
 }
 
@@ -65,6 +70,7 @@ int main(int argc, char *argv[])
 	if (FLAGS_v == 0)
 		FLAGS_v = FLAGS_vl;
 
+	SharedConf::init("urate_strategy.conf");
 	run_predicts_from_file();
 
 	return 0;
