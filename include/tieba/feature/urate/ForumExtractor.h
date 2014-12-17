@@ -28,19 +28,15 @@ namespace gezi {
 
 			static map<string, int>& level1Identifer()
 			{
-				static map<string, int> _level1Identifer;
-				static bool _isLevel1IdentiferInited = false;
-				//if (!isLevel1IdentiferInited())
-				if (!_isLevel1IdentiferInited)
-				{
+				static map<string, int> _level1Identifer = ([&](){
+					map<string, int> _level1Identifer;
 					string level1FilePath = "./data/level1.txt";
 					PSCONF(level1FilePath, "Forum");
 					_level1Identifer = gezi::to_identifer_map(level1FilePath);
 					CHECK_GT(_level1Identifer.size(), 0);
 					PVAL(_level1Identifer.size());
-					//isLevel1IdentiferInited() = true;
-					_isLevel1IdentiferInited = true;
-				}
+					return _level1Identifer;
+				})();
 				return _level1Identifer;
 			}
 
