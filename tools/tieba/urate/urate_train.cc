@@ -86,6 +86,7 @@ void run_predicts()
 		Pval(pid);
 		Features fe = gen_features(pid);
 		Pval(fe.str());
+		//Pval(fe.Str());
 		Pval(predictor->Predict(fe));
 	}
 }
