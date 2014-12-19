@@ -106,8 +106,13 @@ namespace gezi {
 				add(lscores[0], "nowFirstLmScore");
 				add(rscores[0], "nowLastLmScore");
 
+			
 				double lmScoreMean = ufo::mean(scores, _defaultValue);
 				ADD_FEATURE(lmScoreMean);
+
+				PVEC(scores);
+				PVAL2(lmScoreMean, _defaultValue);
+
 				double firstLmScoreMean = ufo::mean(lscores, _defaultValue);
 				ADD_FEATURE(firstLmScoreMean);
 				double lastLmScoreMean = ufo::mean(rscores, _defaultValue);
