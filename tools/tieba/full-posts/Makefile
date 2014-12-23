@@ -221,7 +221,11 @@ DEP_INCPATH=-I../../../../../../../../app/search/ksarch/store/proxy-lib/redis \
   -I../../../../../../../../third-64/tcmalloc \
   -I../../../../../../../../third-64/tcmalloc/include \
   -I../../../../../../../../third-64/tcmalloc/output \
-  -I../../../../../../../../third-64/tcmalloc/output/include
+  -I../../../../../../../../third-64/tcmalloc/output/include \
+  -I../../../../../../../../third-64/zlib \
+  -I../../../../../../../../third-64/zlib/include \
+  -I../../../../../../../../third-64/zlib/output \
+  -I../../../../../../../../third-64/zlib/output/include
 
 #============ CCP vars ============
 CCHECK=@ccheck.py
@@ -299,8 +303,13 @@ fullposts_train:fullposts_train_fullposts_train.o \
   ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
@@ -409,7 +418,8 @@ fullposts_train:fullposts_train_fullposts_train.o \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
+  ../../../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
   -lldap \
@@ -434,8 +444,13 @@ get_fullposts:get_fullposts_get_fullposts.o \
   ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
@@ -544,7 +559,8 @@ get_fullposts:get_fullposts_get_fullposts.o \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
+  ../../../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
   -lldap \
@@ -569,8 +585,13 @@ fullposts:fullposts_fullposts.o \
   ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
@@ -679,7 +700,8 @@ fullposts:fullposts_fullposts.o \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
+  ../../../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
   -lldap \
@@ -704,8 +726,13 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
   ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
@@ -814,7 +841,8 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
-  ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a \
+  ../../../../../../../../third-64/zlib/lib/libz.a -lpthread \
   -lrt \
   -ldl \
   -lldap \
