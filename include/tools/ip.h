@@ -19,8 +19,7 @@
 #include "common_def.h"
 #include <string>
 #include "tools/IpFinder.h"
-namespace gezi
-{
+namespace gezi {
 	//下面都按照贴吧格式ip数据处理
 	//贴吧ip数据 转换成可读的string格式 类似 1577234 -> 192.168.32.78
 	inline string to_ipstr(uint64 ipl)
@@ -74,7 +73,8 @@ namespace gezi
 	}
 
 	//单例模式也可以写到IpFinder类里面 static IpFinder& Instance()
-	inline static IpFinder& ipFinder() //不使用static thread_local 每次ipfinder会被重置重新加载 ExtendedUrateInfo a = b;
+	//不使用static thread_local 每次ipfinder会被重置重新加载 ExtendedUrateInfo a = b;
+	inline static IpFinder& ipFinder()
 	{
 		static thread_local IpFinder _ipFinder;
 		static thread_local bool _isIpFinderInited = false;

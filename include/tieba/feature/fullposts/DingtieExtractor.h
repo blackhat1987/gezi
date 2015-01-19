@@ -74,6 +74,11 @@ namespace gezi {
 					>> select([](string uname) { return name_pattern(uname); })
 					>> to_vector();
 				double namePtternsInformation = gezi::information(namePatterns);
+
+				vector<size_t> nameLengths = from(info().unames)
+					>> select([](string uname) { return uname.length(); })
+					>> to_vector();
+				double nameLengthsInformation = gezi::information(nameLengths);
 				
 				//Â¥Ö÷·¢Ìû count, ratio
 				uint louzhuUid = info().uids[0];
@@ -85,7 +90,6 @@ namespace gezi {
 				int louzhuIpCount = from(info().ips) >> where([&](uint64 ip) { return ip == louzhuIp; }) >> count();
 				double louzhuIpRatio = louzhuIpCount / (double)size();
 
-
 				int maxIpsPerUid = max_count_by(ips, uids);
 				int maxUidsPerIp = max_count_by(uids, ips);
 
@@ -95,6 +99,7 @@ namespace gezi {
 				ADD_FEATURE(locationsInformation);
 				ADD_FEATURE(uidsInformation);
 				ADD_FEATURE(namePtternsInformation);
+				ADD_FEATURE(nameLengthsInformation);
 				ADD_FEATURE(louzhuUidCount);
 				ADD_FEATURE(louzhuUidRatio);
 				ADD_FEATURE(louzhuIpCount);

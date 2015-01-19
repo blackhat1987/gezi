@@ -1880,6 +1880,12 @@
     <ClCompile Include="tools\tieba\urate\urate_predicts_from_file.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tools\tieba\trate\trate.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\tieba\get_full_posts_info.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl">

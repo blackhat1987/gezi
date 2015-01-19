@@ -357,10 +357,10 @@ namespace gezi {
 			struct Node
 			{
 				string forumName;
-				int64 time;
-				int level;
-				int curScore;
-				int leftScore;
+				int64 time = 0;
+				int level = 0;
+				int curScore = 0;
+				int leftScore = 0;
 				//for python wrapp @FIXME 为何不能去掉  当前看来作为map的value 需要定义== 才能封装python自动
 				bool operator == (const Node& other) const
 				{
@@ -540,6 +540,50 @@ namespace gezi {
 			}
 		};
 
+		//新增
+		struct ImgInfo
+		{
+			//游戏色情打分，越高嫌疑越大
+			vector<int> gameporn_rate;
+			//文本面积占图片总面积之比
+			vector<int> text_ratio;
+			//颜色打分
+			vector<int> color_rate;
+			//与作弊图片库的相似度
+			vector<int> simi_rate;
+			//文本框的数目
+			vector<int> textbox_num;
+			//图片中的文字
+			vector<string> ocr_img;
+			//色情打分
+			vector<int> porn_rate;
+			int imgCount = 0;
+			uint64 pid = 0;
+
+			size_t size()
+			{
+				return gameporn_rate.size();
+			}
+			bool operator == (const ImgInfo& other) const
+			{
+				return pid == other.pid;
+			}
+
+			friend class boost::serialization::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
+				ar & BOOST_SERIALIZATION_NVP(gameporn_rate);
+				ar & BOOST_SERIALIZATION_NVP(text_ratio);
+				ar & BOOST_SERIALIZATION_NVP(color_rate);
+				ar & BOOST_SERIALIZATION_NVP(simi_rate);
+				ar & BOOST_SERIALIZATION_NVP(textbox_num);
+				ar & BOOST_SERIALIZATION_NVP(ocr_img);
+				ar & BOOST_SERIALIZATION_NVP(porn_rate);
+				ar & BOOST_SERIALIZATION_NVP(pid);
+			}
+		};
+
 		static const int kMaxRequestCount = 100;
 
 #ifdef GCCXML
@@ -548,7 +592,6 @@ namespace gezi {
 			//很奇怪的是 生成的tieba_py.cc里面没有PyHack_Comments 。。。 但是这里还是不能少这个否则无法访问vector<Comment>
 			Comments comments;
 		};
-
 #endif
 
 	}  //----end of namespace tieba

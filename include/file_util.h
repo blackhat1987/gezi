@@ -25,6 +25,7 @@
 #include <set>
 #include <string>
 #include "format.h"
+#include "serialize_util.h"
 using std::map;
 using std::set;
 using std::string;
@@ -641,7 +642,6 @@ namespace gezi {
 #define OBJ_PATH(obj, path)\
 	format("{}/{}.bin", path, gezi::conf_trim(#obj))
 
-#include "serialize_util.h"
 	template<typename T>
 	inline void save_shared_ptr(T obj, string path, string name)
 	{

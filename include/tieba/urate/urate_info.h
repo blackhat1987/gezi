@@ -26,6 +26,7 @@ namespace gezi {
 			UserInfo userInfo; //用户基本属性信息
 			UserLikeForumInfo userLikeForumInfo; //用户喜欢的吧属性
 			UserPostNumInfo userPostNumInfo; //用户历史发帖统计信息
+			ImgInfo imginfo;//新增 帖子图片信息
 			map<uint, UserPostNumInfo> userPostNumInForum; //用户在特定吧内的历史发帖统计信息
 			map<string, UrlInfo> urlInfoMap; //url信息  url->UrlInfo
 			vector<vector<string> > urlsVec; //每个帖子中抽取的url数据

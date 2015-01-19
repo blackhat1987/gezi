@@ -441,6 +441,12 @@ namespace gezi {
 				int size = std::min((size_t)maxForumNum, userLikeForumInfo.levels.size());
 
 				auto& tmap = userLikeForumInfo.infoMap;
+
+				if (size > tmap.size())
+				{
+					LOG(WARNING) << "size: " << size << " tmap size: " << tmap.size() << " userId: " << userLikeForumInfo.userId;
+					size = tmap.size();
+				}
 				auto vec = partial_sort_map(tmap, size);
 				decltype(userLikeForumInfo.infoMap) newMap;
 				ivec newLevels;

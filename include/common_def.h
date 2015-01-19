@@ -19,7 +19,6 @@
 
 #include "format.h" //放在最前面 有和convert_type.h的宏的冲突处理 
 
-#include <mutex>
 #include <stdlib.h>
 #include <string>
 #include <vector>
@@ -29,6 +28,7 @@
 #include <limits>
 #include <cmath>
 #if __GNUC__ > 3
+#include <mutex>
 #include <array>
 #include <memory>
 #include <thread>
@@ -69,8 +69,10 @@ using std::shared_ptr;
 using std::thread;
 using std::ref; 
 using std::cref;
+#if __GNUC__ > 3
 using std::mutex;
 using std::lock_guard;
+#endif
 
 #include <fstream>
 #include <sstream>

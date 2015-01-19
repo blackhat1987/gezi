@@ -500,6 +500,7 @@ namespace gezi {
 			);
 	}
 
+#ifndef PYTHON_WRAPPER
 	template<typename Container>
 	void merge(Container& dest, Container&& src)
 	{
@@ -509,6 +510,7 @@ namespace gezi {
 			std::make_move_iterator(src.end())
 			);
 	}
+#endif
 
 	template<typename Container, typename Container2>
 	void merge_map(Container& dest, Container2& src)

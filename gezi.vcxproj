@@ -665,6 +665,7 @@
     <ClCompile Include="test\test_string_util.cc" />
     <ClCompile Include="test\test_thread_local.cc" />
     <ClCompile Include="test\test_tieba_get_info.cc" />
+    <ClCompile Include="test\tieba\get_full_posts_info.cc" />
     <ClCompile Include="test\tieba\test_get_delete_info.cc" />
     <ClCompile Include="test\tieba\test_get_forum_info.cc" />
     <ClCompile Include="test\tieba\test_get_full_posts_info.cc" />
@@ -685,6 +686,7 @@
     <ClCompile Include="tools\tieba\rsc-thread\get_rsc_thread_infos.cc" />
     <ClCompile Include="tools\tieba\rsc-thread\rsc_thread.cc" />
     <ClCompile Include="tools\tieba\rsc-thread\rsc_thread_train.cc" />
+    <ClCompile Include="tools\tieba\trate\trate.cc" />
     <ClCompile Include="tools\tieba\urate\get_urate_infos.cc" />
     <ClCompile Include="tools\tieba\urate\urate_predicts_from_file.cc" />
     <ClCompile Include="tools\tieba\urate\urate_train.cc" />

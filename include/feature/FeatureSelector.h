@@ -87,10 +87,12 @@ namespace gezi {
 				VLOG(3) << "Point Mutual Info";
 				_func = point_mutual_info;
 				break;
+#ifndef PYTHON_WRAPPER
 			case ECE:
 				VLOG(3) << "Expected Cross Entropy";
 				_func = cross_entropy;
 				break;
+#endif
 			default:
 				VLOG(3) << "Chi Square";
 				_func = chi_square;

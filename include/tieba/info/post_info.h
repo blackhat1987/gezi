@@ -215,6 +215,51 @@ namespace gezi {
 			}
 			return resultMap;
 		}
+
+		inline void parse_img_info(const Json::Value& m, ImgInfo& info)
+		{
+			info.imgCount = m.size();
+			for (int i = 0; i < m.size(); i++)
+			{
+				info.color_rate.push_back(INT(m[i]["rate_color"].asString()));
+				info.gameporn_rate.push_back(INT(m[i]["rate_gameporn"].asString()));
+				info.ocr_img.push_back(m[i]["ocr_img"].asString());
+				info.porn_rate.push_back(INT(m[i]["rate_porn_idl"].asString()));
+				info.simi_rate.push_back(INT(m[i]["rate_simi_idl"].asString()));
+				info.text_ratio.push_back(INT(m[i]["ratio_text"].asString()));
+				info.textbox_num.push_back(INT(m[i]["num_textbox"].asString()));
+			}
+		}
+
+		inline ImgInfo get_img_info(uint64 pid, int64 createTime)
+		{
+			ImgInfo info;
+			info.pid = pid;
+			string jsonStr = get_img_info_str(pid, createTime);
+			Json::Reader reader;
+			Json::Value root;
+			bool ret = reader.parse(jsonStr, root);
+			if (!ret)
+			{
+				LOG(WARNING) << "Img json parse fail";
+				return info;
+			}
+			try
+			{
+				const auto& m = root["res"]["imgfeaInfo"];
+				if (m.isNull())
+					return info;
+				else
+					parse_img_info(m, info);
+			}
+			catch (...)
+			{
+				LOG(WARNING) << "get img json value fail";
+				return info;
+			}
+			return info;
+		}
+
 	} //----end of namespace tieba
 }  //----end of namespace gezi
 

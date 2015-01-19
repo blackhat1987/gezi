@@ -31,6 +31,7 @@
 #include "tieba/feature/urate/LanguageModelExtractor.h"
 #include "tieba/feature/urate/SequenceExtractor.h"
 #include "tieba/feature/urate/DictMatchExtractor.h"
+#include "tieba/feature/urate/ImgExtrator.h" //新增
 
 
 namespace gezi {
@@ -57,6 +58,7 @@ namespace tieba {
 		mgr.add(new LanguageModelExtractor);
 		mgr.add(new SequenceExtractor);
 		mgr.add(new DictMatchExtractor);
+		mgr.add(new ImgExtractor); //新增
 	}
 
 	inline Features gen_urate_features(uint64 pid, string historyPath)

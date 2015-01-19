@@ -48,6 +48,9 @@ namespace gezi {
 
 			get_urate_info_from_uid(uid, urateInfo); 
 
+			//ÐÂÔö
+			urateInfo.imginfo = get_img_info(pid, urateInfo.nowPostInfo.createTime);
+
 			if (!needHistory)
 			{
 				urateInfo.postId = pid;

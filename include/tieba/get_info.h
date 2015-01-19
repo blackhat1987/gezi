@@ -269,6 +269,26 @@ namespace gezi {
 			return get_info_str(url);
 		}
 
+		// 新增 图片特征相关
+		inline string get_img_info_str(uint64 pid, int64 createTime)
+		{
+			string stime;
+			tm *createtime;
+			time_t ltime = createTime;
+			createtime = localtime(&ltime);
+			string month = STR(createtime->tm_mon + 1);
+			if (createtime->tm_mon < 9)
+				month = "0" + month;
+			string day = STR(createtime->tm_mday);
+			if (createtime->tm_mday < 10)
+				day = "0" + day;
+			string year = STR(createtime->tm_year + 1900);
+			stime = year + month + day;
+			string url = "http://service.tieba.baidu.com/service/uegimgfea?method=getImgByPostId&format=json&req={%22postId%22:" + STR(pid) + ",%22date%22:" + stime + "}";
+			PVAL(url);
+			return get_info_str(url);
+		}
+
 		template<typename InfoType, typename Func>
 		inline InfoType try_get_info(uint64 id, Func func, string historyDir, bool forceFetch = false, bool useFetch = true,
 			string suffix = "", bool retry = true)

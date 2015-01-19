@@ -7,6 +7,8 @@ mb = module_builder.module_builder_t(
         gccxml_path='~/.jumbo/bin/gccxml',
 				define_symbols=['GCCXML','PYTHON_WRAPPER'],
         files=[
+					  './include.python/tools/IpFinder.h',
+						'./include.python/tools/ip.h',
             './include.python/tools/redis/RedisClient.h',
 					'./include.python/ProgressBar.h',
 					'./include.python/Identifer.h',
