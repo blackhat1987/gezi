@@ -61,6 +61,7 @@ namespace gezi {
 				ar & BOOST_SERIALIZATION_NVP(userPostNumInForum);
 				ar & BOOST_SERIALIZATION_NVP(urlInfoMap);
 				ar & BOOST_SERIALIZATION_NVP(urlsVec);
+				ar & BOOST_SERIALIZATION_NVP(imginfo);
 			}
 		};
 
