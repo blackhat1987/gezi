@@ -478,7 +478,7 @@ namespace gezi {
 	{
 		//不输出长度
 		std::ofstream ofs(file.c_str(), std::ios::binary);
-		ofs.write(reinterpret_cast<const char*> (&vec[0]), sizeof (_Node)* vec.size());
+		ofs.write(reinterpret_cast<const char*> (&vec[0]), sizeof(_Node)* vec.size());
 	}
 
 	template<typename _Node>
@@ -491,7 +491,7 @@ namespace gezi {
 		ifs.seekg(0, std::ios::end);
 		int length = ifs.tellg(); //FIXME big file?
 		ifs.seekg(0, std::ios::beg);
-		vec.resize(length / sizeof (_Node));
+		vec.resize(length / sizeof(_Node));
 		ifs.read(reinterpret_cast<char*> (&vec[0]), length);
 		return true;
 	}
@@ -522,10 +522,10 @@ namespace gezi {
 		for (size_t i = 0; i < row_len; i++)
 		{
 			int len = (int)vec[i].size();
-			ofs.write(reinterpret_cast<const char*> (&len), sizeof (len));
+			ofs.write(reinterpret_cast<const char*> (&len), sizeof(len));
 			if (!len)
 				continue;
-			ofs.write(reinterpret_cast<const char*> (&vec[i][0]), sizeof (_Node)* vec[i].size());
+			ofs.write(reinterpret_cast<const char*> (&vec[i][0]), sizeof(_Node)* vec[i].size());
 		}
 	}
 
@@ -534,7 +534,7 @@ namespace gezi {
 	{
 		std::ofstream ofs(file.c_str(), std::ios::binary);
 		size_t row_len = vec.size();
-		ofs.write(reinterpret_cast<const char*> (&row_len), sizeof (row_len));
+		ofs.write(reinterpret_cast<const char*> (&row_len), sizeof(row_len));
 		write_vec2d(vec, ofs);
 	}
 
@@ -547,18 +547,18 @@ namespace gezi {
 		vec.clear();
 		//size_t total_len;
 		int total_len; //TODO check 相关词的时候write 的是int
-		ifs.read(reinterpret_cast<char*> (&total_len), sizeof (total_len));
+		ifs.read(reinterpret_cast<char*> (&total_len), sizeof(total_len));
 		if (!total_len)
 			return false;
 		vec.resize(total_len);
 		for (int i = 0; i < total_len; i++)
 		{
 			int len;
-			ifs.read(reinterpret_cast<char*> (&len), sizeof (len));
+			ifs.read(reinterpret_cast<char*> (&len), sizeof(len));
 			if (!len)
 				continue;
 			vec[i].resize(len);
-			ifs.read(reinterpret_cast<char*> (&vec[i][0]), sizeof (_Node)* len);
+			ifs.read(reinterpret_cast<char*> (&vec[i][0]), sizeof(_Node)* len);
 		}
 		return true;
 	}
@@ -576,10 +576,10 @@ namespace gezi {
 		void write(const std::vector<_Node>& vec)
 		{
 			int len = (int)vec.size();
-			_ofs.write(reinterpret_cast<const char*> (&len), sizeof (len));
+			_ofs.write(reinterpret_cast<const char*> (&len), sizeof(len));
 			if (!len)
 				return;
-			_ofs.write(reinterpret_cast<const char*> (&vec[0]), sizeof (_Node)* len);
+			_ofs.write(reinterpret_cast<const char*> (&vec[0]), sizeof(_Node)* len);
 		}
 
 		template<typename _Iter>
@@ -587,12 +587,12 @@ namespace gezi {
 		{
 			typedef typename _Iter::value_type value_type;
 			int len = std::distance(begin, end);
-			_ofs.write(reinterpret_cast<const char*> (&len), sizeof (len));
+			_ofs.write(reinterpret_cast<const char*> (&len), sizeof(len));
 			if (!len)
 				return;
 			while (begin != end)
 			{
-				_ofs.write(reinterpret_cast<const char*> (&(*begin)), sizeof (value_type));
+				_ofs.write(reinterpret_cast<const char*> (&(*begin)), sizeof(value_type));
 			}
 		}
 
@@ -617,7 +617,7 @@ namespace gezi {
 		void write(const std::vector<_Node>& vec)
 		{
 			int len = (int)vec.size();
-			_ofs.write(reinterpret_cast<const char*> (&vec[0]), sizeof (_Node)* len);
+			_ofs.write(reinterpret_cast<const char*> (&vec[0]), sizeof(_Node)* len);
 		}
 
 		template<typename _Iter>
@@ -626,7 +626,7 @@ namespace gezi {
 			typedef typename _Iter::value_type value_type;
 			while (begin != end)
 			{
-				_ofs.write(reinterpret_cast<const char*> (&(*begin)), sizeof (value_type));
+				_ofs.write(reinterpret_cast<const char*> (&(*begin)), sizeof(value_type));
 			}
 		}
 

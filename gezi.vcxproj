@@ -518,6 +518,7 @@
     <ClInclude Include="include\tieba\feature\urate\ContentSimExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\DictMatchExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\ForumExtractor.h" />
+    <ClInclude Include="include\tieba\feature\urate\ImgExtrator.h" />
     <ClInclude Include="include\tieba\feature\urate\IpExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\LanguageModelExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\MediaExtractor.h" />

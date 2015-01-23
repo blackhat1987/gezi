@@ -1563,6 +1563,9 @@
     <ClInclude Include="include\string2argcargv.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\tieba\feature\urate\ImgExtrator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">

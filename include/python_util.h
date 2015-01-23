@@ -105,9 +105,9 @@ struct PyVectorUtil
 	static boost::python::list tolist(Vec& vec)
 	{
 		boost::python::list list;
-		for (auto& item : vec)
+		for (size_t i = 1; i < vec.size(); i++)
 		{
-			list.append(item);
+			list.append(vec[i]);
 		}
 		return list;
 	}
@@ -154,18 +154,18 @@ using bp::class_;
 #define DEF_VEC(Vec) \
 	class_<Vec >(#Vec) \
 	.def(vector_indexing_suite<Vec, true>())\ 
-	VEC_METHOD(Vec)
+VEC_METHOD(Vec)
 
 #define VEC_METHOD2(Base, Vec)\
 	Base.def(vector_indexing_suite<Vec >())\
 	.def("__delitem__", &PyVectorUtil<Vec>::erase)\
 	.def("push_back", &PyVectorUtil<Vec>::push_back)\ 
-	.def("size", &Vec::size)\
-	.def("clear", &Vec::clear)\
-	.def("erase", &PyVectorUtil<Vec>::erase)\
-	.def("resize", &PyVectorUtil<Vec>::resize)\
-	.def("init", &PyVectorUtil<Vec>::init)\
-	.def("tolist", &PyVectorUtil<Vec>::tolist)
+.def("size", &Vec::size)\
+.def("clear", &Vec::clear)\
+.def("erase", &PyVectorUtil<Vec>::erase)\
+.def("resize", &PyVectorUtil<Vec>::resize)\
+.def("init", &PyVectorUtil<Vec>::init)\
+.def("tolist", &PyVectorUtil<Vec>::tolist)
 
 #define  MAP_METHOD(Map)\
 	.def("clear", &Map::clear)\
@@ -183,8 +183,8 @@ using bp::class_;
 	.def_readwrite("second", &Pair::second)
 
 
-#ifndef COMMOA
-#define  COMMOA ,
+#ifndef COMMA
+#define  COMMA ,
 #endif
 
 #endif  //----end of PYTHON_UTIL_H_

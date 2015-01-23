@@ -586,7 +586,7 @@ namespace gezi {
 
 		static const int kMaxRequestCount = 100;
 
-#ifdef GCCXML
+#ifdef PYTHON_WRAPPER
 		struct PyHack_Comments
 		{ //hack for vector<Comments>  vector<vector 不然没有vector<Comment> 可以用Use(vector<Comment> ? @TODO
 			//很奇怪的是 生成的tieba_py.cc里面没有PyHack_Comments 。。。 但是这里还是不能少这个否则无法访问vector<Comment>
