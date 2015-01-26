@@ -20,7 +20,7 @@ namespace serialize_util {
 
 //#define  NO_CEREAL  //如果希望切回使用BOOST序列化 取消这个注释
 
-#ifdef GCCXML //好像实验是def GCCXML判断不管用 但是ndef管用。。。 why？ @TODO
+#ifdef GCCXML 
 #ifndef NO_CEREAL
 #define NO_CEREAL //python封装的时候如果使用CERAL因为CERAL不兼容低版本gcc比如有#include <unordered_map> 这里是workaround
 #endif

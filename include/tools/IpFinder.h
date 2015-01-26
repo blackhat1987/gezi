@@ -387,7 +387,22 @@ namespace gezi {
 
 			return this->OutputData(pszFileName, indexStart, indexEnd);
 		}
-		unsigned long OutputDataByIp(const char* pszFileName, const char* pszStartIp, const char* pszEndIp) const;
+
+		//    通过ip字符串界定导出范围
+		unsigned long OutputDataByIp(const char* pszFileName, const char* pszStartIp, const char* pszEndIp) const
+		{
+			if (!this->IsRightIpString(pszStartIp) || !this->IsRightIpString(pszEndIp)) {
+				return 0;
+			}
+			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			unsigned long ipValueEnd = this->IpString2IpValue(pszEndIp);
+			unsigned long ipValueStart = this->IpString2IpValue(pszStartIp);
+			unsigned long indexEnd = this->SearchIp(ipValueEnd);
+			unsigned long indexStart = this->SearchIp(ipValueStart);
+			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+			return this->OutputData(pszFileName, indexStart, indexEnd);
+		}
 
 		//根据指定IP(十六进制值)，返回其在索引段中的位置(索引)
 		//ulIndexStart和ulIndexEnd可以指定搜索范围 均为0表示搜索全部

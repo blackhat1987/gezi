@@ -13,6 +13,7 @@
 
 #ifndef FILE_UTIL_H_
 #define FILE_UTIL_H_
+
 #include "common_def.h"
 #include "hashmap_util.h"
 #include <glog/logging.h>
@@ -26,13 +27,14 @@
 #include <string>
 #include "format.h"
 #include "serialize_util.h"
-using std::map;
-using std::set;
-using std::string;
 
 namespace bfs = boost::filesystem;
 //---------------------------for file save load
 namespace gezi {
+
+	using std::map;
+	using std::set;
+	using std::string;
 
 	//forced copy
 	inline void copy_file(string src, string dest)
@@ -686,7 +688,6 @@ namespace gezi {
 			obj->SaveJson(name);
 		}
 	}
-
 } //----end of namespace gezi
 
 

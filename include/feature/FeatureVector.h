@@ -465,11 +465,14 @@ namespace gezi {
 			ar & BOOST_SERIALIZATION_NVP(_features);
 		}
 	public:
+
+#ifndef GCCXML
 		static bool& useNames()
 		{
 			static bool _useNames = true;
 			return _useNames;
 		}
+#endif
 	protected:
 	private:
 		bool _useSectionName = true;

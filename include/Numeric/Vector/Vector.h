@@ -851,10 +851,13 @@ namespace gezi {
 			return indices[index];
 		}
 
+#ifndef GCCXML  
+		//the same as Value() python wrapper problem hack
 		int& Index(int index)
 		{
 			return indices[index];
 		}
+#endif
 
 		value_type Value(int index) const
 		{
@@ -866,18 +869,7 @@ namespace gezi {
 		//GCCXML WARNING: value_type & gezi::Vector::Value(int index) [member function]
 		//> warning W1008 : The function returns non - const reference to "Python immutable" type.The value cannot be modified from Python.
 		//很奇怪的是
-		//#ifndef GCCXML
-		//		value_type& Value(int index)
-		//		{
-		//			return values[index];
-		//		}
-		//#endif
-#ifdef PYTHON_WRAPPER
-		//double& Value(int index)
-		//{
-		//	return values[index];
-		//}
-#else 
+#ifndef GCCXML
 		value_type& Value(int index)
 		{
 			return values[index];
@@ -909,6 +901,7 @@ namespace gezi {
 			}
 		}
 
+#ifndef GCCXML
 		//@TODO 延迟计算的方式的 operator + - * /
 		Vector& operator *= (value_type d)
 		{
@@ -918,7 +911,7 @@ namespace gezi {
 
 		Vector& operator /= (value_type d)
 		{
-			ScaleBy(1.0/d);
+			ScaleBy(1.0 / d);
 			return *this;
 		}
 
@@ -934,6 +927,7 @@ namespace gezi {
 			Subtract(other);
 			return *this;
 		}
+#endif // GCCXML
 
 		Float dot(const Vector& other) const
 		{
