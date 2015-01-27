@@ -40,7 +40,7 @@ mb = module_builder.module_builder_t(
 					'./include.python/tools/content_process.h',
 					'./include.python/string_util.h',
 					'./include.python/reg_util.h',
-					'./include.python/file_util.h'  
+					'./include.python/file_util.h',
 					#-------------tieba utils 
 					'./include.python/tieba/tieba_util.h',
 					'./include.python/tieba/get_info.h',
