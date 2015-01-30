@@ -2187,7 +2187,7 @@ bp::class_< gezi::RedisClient, boost::noncopyable >( "RedisClient", bp::init< >(
 , ( bp::arg("key"), bp::arg("first"), bp::arg("last"), bp::arg("values"), bp::arg("scores") ) )
 .def(
 "at"
-, (::std::string ( ::gezi::RedisClient::* )( ::std::string const & ) const)( &::gezi::RedisClient::at )
+, (::std::string ( ::gezi::RedisClient::* )( ::std::string ) const)( &::gezi::RedisClient::at )
 , ( bp::arg("key") ) )
 .def(
 "count"
@@ -2199,7 +2199,7 @@ bp::class_< gezi::RedisClient, boost::noncopyable >( "RedisClient", bp::init< >(
 , bp::return_internal_reference<>())
 .def(
 "find"
-, (::std::pair< std::string, std::string > * ( ::gezi::RedisClient::* )( ::std::string const & ) )( &::gezi::RedisClient::find )
+, (::std::pair< std::string, std::string > * ( ::gezi::RedisClient::* )( ::std::string ) )( &::gezi::RedisClient::find )
 , ( bp::arg("key") )
 , bp::return_internal_reference<>())
 .def(
@@ -2209,12 +2209,12 @@ bp::class_< gezi::RedisClient, boost::noncopyable >( "RedisClient", bp::init< >(
 , bp::return_internal_reference<>())
 .def(
 "__getitem__"
-, (::std::string & ( ::gezi::RedisClient::* )( ::std::string const & ) )( &::gezi::RedisClient::operator[] )
+, (::std::string & ( ::gezi::RedisClient::* )( ::std::string ) )( &::gezi::RedisClient::operator[] )
 , ( bp::arg("key") )
 , bp::return_value_policy< bp::copy_non_const_reference >() )
 .def(
 "__getitem__"
-, (::std::string ( ::gezi::RedisClient::* )( ::std::string const & ) const)( &::gezi::RedisClient::operator[] )
+, (::std::string ( ::gezi::RedisClient::* )( ::std::string ) const)( &::gezi::RedisClient::operator[] )
 , ( bp::arg("key") ) );
 
 { //::gezi::SegHandle

@@ -17,6 +17,7 @@
 #include "feature/Features.h"
 #include "tieba/feature/fullposts/DingtieExtractor.h"
 #include "tieba/feature/fullposts/SequenceExtractor.h"
+#include "tieba/feature/fullposts/TextScoreExtractor.h"
 #include "tieba/urate/urate_features.h"
 #include "tieba/get_info.h"
 #include "other/CachedFetcher.h"
@@ -27,6 +28,9 @@ namespace gezi {
 		{
 			mgr.add(new DingtieExtractor);
 			mgr.add(new FPSequenceExtractor);
+			mgr.add(new FPTextScoreExtractor);
+			mgr.add(new FPTextScoreExtractor("FPRscTextScore", true));
+			mgr.add(new FPTextScoreExtractor("FPRocTextScore"));
 		}
 
 		inline Features gen_fullposts_features(uint64 tid, int num, string historyPath, string urateHistoryPath)
@@ -62,7 +66,7 @@ namespace gezi {
 		inline Features gen_fullposts_features(uint64 tid, int num, Fetcher& fetcher)
 		{
 			Features fe;
-			FullPostsInfo info = get_full_posts_info(tid, num, 0, 1); 
+			FullPostsInfo info = get_full_posts_info(tid, num, 0, 1);
 			if (info.IsValid())
 			{
 				FullPostsExtractor::info() = move(info);

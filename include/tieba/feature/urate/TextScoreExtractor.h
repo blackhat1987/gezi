@@ -100,7 +100,7 @@ namespace gezi {
 				{
 					textScores.push_back(Predict(titles[i], contents[i]));
 				}
-				double textScoreMean = 0, textScoreVar = 1;
+				double textScoreMean = 0.0, textScoreVar = 1.0;
 				ufo::mean_var(textScores, textScoreMean, textScoreVar);
 				double nowTextScore = textScores[0];
 				dvec threadTextScores, replyTextScores;

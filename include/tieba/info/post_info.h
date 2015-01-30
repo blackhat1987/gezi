@@ -227,7 +227,7 @@ namespace gezi {
 				info.porn_rate.push_back(INT(m[i]["rate_porn_idl"].asString()));
 				info.simi_rate.push_back(INT(m[i]["rate_simi_idl"].asString()));
 				info.text_ratio.push_back(INT(m[i]["ratio_text"].asString()));
-				info.textbox_num.push_back(INT(m[i]["num_textbox"].asString()));
+				info.textbox_num.push_back(INT(m[i]["num_textbox"].asString()) * 100); //线上数据是*100的
 			}
 		}
 

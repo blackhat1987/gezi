@@ -212,9 +212,9 @@ namespace gezi {
 			{
 				for (int i = 0; i < outNum; i++)
 				{
-						string result = valueVec[i].str;
-						values.push_back(result);
-						scores.push_back(scoreVec[i]);
+					string result = valueVec[i].str;
+					values.push_back(result);
+					scores.push_back(scoreVec[i]);
 				}
 			}
 			return ret;
@@ -396,7 +396,7 @@ namespace gezi {
 			return values;
 		}
 
-		int Get(string key, string& value) const 
+		int Get(string key, string& value) const
 		{
 			store::ss svalue;
 			int ret = _client->get(key.c_str(), svalue);
@@ -411,12 +411,12 @@ namespace gezi {
 		int count(string key) const
 		{
 			store::ss svalue;
-			return _client->get(key.c_str(), svalue) == 0;
+			return _client->get(key.c_str(), svalue) == 0 && svalue.str != NULL;
 		}
 
 		typedef pair<string, string>* iterator;
 
-		iterator find(const string& key)
+		iterator find(string key)
 		{
 			store::ss svalue;
 			int ret = _client->get(key.c_str(), svalue);
@@ -434,23 +434,24 @@ namespace gezi {
 			return NULL;
 		}
 
-		string at(const string& key) const
+		string at(string key) const
 		{
 			store::ss svalue;
 			int ret = _client->get(key.c_str(), svalue);
-			if (ret != 0)
+			if (ret != 0 || svalue.str == NULL)
 			{
-				THROW(key + " not find");
+				//THROW(key + " not find");
+				return "";
 			}
 			string value = svalue.str;
 			return value;
 		}
 
-		string& operator[] (const string& key)
+		string& operator[] (string key)
 		{
 			store::ss svalue;
 			int ret = _client->get(key.c_str(), svalue);
-			if (ret != 0)
+			if (ret != 0 || svalue.str == NULL)
 			{
 				_item.second = "";
 			}
@@ -461,11 +462,11 @@ namespace gezi {
 			return _item.second;
 		}
 
-		string operator[] (const string& key) const
+		string operator[] (string key) const
 		{
 			store::ss svalue;
 			int ret = _client->get(key.c_str(), svalue);
-			if (ret != 0)
+			if (ret != 0 || svalue.str == NULL)
 			{
 				return ""; //@TODO
 			}

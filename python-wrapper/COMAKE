@@ -103,6 +103,7 @@ LIBS('./libpython2.7.so ./libboost_python.so ../include/tools/pinyin/libPYNotati
 srcs=GLOB('../src/PythonWrapper/*.cpp')
 #SharedLibrary('melt',Sources('melt_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 SharedLibrary('gezi',Sources('gezi_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
+#SharedLibrary('redis',Sources('redis_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 #SharedLibrary('gezi_test',Sources('gezi_test_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 #SharedLibrary('segmentor',Sources('segmentor_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 ##SharedLibrary('feature',Sources('feature_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
