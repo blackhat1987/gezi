@@ -39,6 +39,11 @@ namespace gezi {
 
 			void Init()
 			{
+				if (!IsValid())
+				{ //方便解耦。。 @TODO 比如只使用ImgExtractor img_reducer.cc
+					historySize = postsInfo.pids.size();
+					return;
+				}
 				SetHistorySize();
 				ShrinkHistory();
 				SetType();

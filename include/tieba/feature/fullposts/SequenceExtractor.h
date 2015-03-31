@@ -114,6 +114,14 @@ namespace gezi {
 					}
 				}
 				ADD_FEATURE(numUrlShortContents);
+
+				//-----------为了回复的株连
+				add(threadNode.hasPic, "hasPic");
+				add(threadNode.hasAt, "hasAt");
+				add(threadNode.hasUrl, "hasUrl");
+				add(threadNode.hasAny, "hasAny");
+				add(threadNode.isShortContent, "isShortContent");
+				add(threadNode.hasSecondFloor, "hasSecondFloor");
 			}
 		protected:
 		private:

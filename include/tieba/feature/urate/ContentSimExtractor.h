@@ -113,7 +113,6 @@ namespace gezi {
 
 			double simF2(vector<string>& contents, vector<string>& vec)
 			{
-
 				vector<string> newContents;
 				for (size_t i = 0; i < contents.size() && i < vec.size(); i++)
 				{

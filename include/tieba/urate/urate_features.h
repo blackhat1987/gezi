@@ -35,86 +35,90 @@
 
 
 namespace gezi {
-namespace tieba {
+	namespace tieba {
 
-	inline void add_urate_features(FeaturesExtractorMgr& mgr)
-	{
-		mgr.add(new SundryExtractor);
-		mgr.add(new UserExtractor);
-		mgr.add(new MediaExtractor);
-		mgr.add(new NumberExtractor);
-		mgr.add(new IpExtractor);
-		mgr.add(new TimeExtractor);
-		mgr.add(new ForumExtractor);
-		mgr.add(new TextExtractor);
-		mgr.add(new UnusalCnExtractor);
-		mgr.add(new UnusalCharExtractor);
-		mgr.add(new TextScoreExtractor);
-		mgr.add(new TextScoreExtractor("RscTextScore", true));
-		mgr.add(new TextScoreExtractor("RocTextScore"));
-		mgr.add(new PlsaTopicExtractor);
-		mgr.add(new TitleSimExtractor);
-		mgr.add(new ContentSimExtractor);
-		mgr.add(new LanguageModelExtractor);
-		mgr.add(new SequenceExtractor);
-		mgr.add(new DictMatchExtractor);
-		mgr.add(new ImgExtractor); //新增
-	}
-
-	inline Features gen_urate_features(uint64 pid, string historyPath)
-	{
-		Features fe;
-		/*UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);*/
-		int historyNum = 25;
-		PSCONF(historyNum, "Urate");
-		UrateInfo info = try_get_info<UrateInfo>(pid, [&](uint64 pid) { return get_urate_info(pid, true, historyNum); }, historyPath);
-		if (info.IsValid())
+		inline void add_urate_features(FeaturesExtractorMgr& mgr)
 		{
-			//VLOG(0) << "Before move";
-			UrateExtractor::info() = move(info);
-			//VLOG(0) << "After move";
-			FeaturesExtractorMgr mgr;
-			add_urate_features(mgr);
-			mgr.extract(fe);
-		}
-		return fe;
-	}
+			mgr.add(new SundryExtractor);
+			mgr.add(new UserExtractor);
+			mgr.add(new MediaExtractor);
+			mgr.add(new NumberExtractor);
+			mgr.add(new IpExtractor);
+			mgr.add(new TimeExtractor);
+			mgr.add(new ForumExtractor);
+			mgr.add(new TextExtractor);
+			mgr.add(new UnusalCnExtractor);
+			mgr.add(new UnusalCharExtractor);
+			mgr.add(new TextScoreExtractor);
+			mgr.add(new TextScoreExtractor("RscTextScore", true));
+			mgr.add(new TextScoreExtractor("RocTextScore"));
 
-	inline Features gen_urate_features(uint64 pid, UrateInfo& info, string historyPath)
-	{
-		Features fe;
-		/*UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);*/
-		int historyNum = 25;
-		PSCONF(historyNum, "Urate");
-		info = try_get_info<UrateInfo>(pid, [&](uint64 pid) { return get_urate_info(pid, true, historyNum); }, historyPath);
-		if (info.IsValid())
+			//mgr.add(new TextScoreExtractor("TextScore2"));
+			//mgr.add(new TextScoreExtractor("RocTextScore2"));
+
+			mgr.add(new PlsaTopicExtractor);
+			mgr.add(new TitleSimExtractor);
+			mgr.add(new ContentSimExtractor);
+			mgr.add(new LanguageModelExtractor);
+			mgr.add(new SequenceExtractor);
+			mgr.add(new DictMatchExtractor);
+			mgr.add(new ImgExtractor); //新增
+		}
+
+		inline Features gen_urate_features(uint64 pid, string historyPath)
 		{
-			//VLOG(0) << "Before move";
-			UrateExtractor::info() = info;
-			//VLOG(0) << "After move";
-			FeaturesExtractorMgr mgr;
-			add_urate_features(mgr);
-			mgr.extract(fe);
+			Features fe;
+			/*UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);*/
+			int historyNum = 25;
+			PSCONF(historyNum, "Urate");
+			UrateInfo info = try_get_info<UrateInfo>(pid, [&](uint64 pid) { return get_urate_info(pid, true, historyNum); }, historyPath);
+			if (info.IsValid())
+			{
+				//VLOG(0) << "Before move";
+				UrateExtractor::info() = move(info);
+				//VLOG(0) << "After move";
+				FeaturesExtractorMgr mgr;
+				add_urate_features(mgr);
+				mgr.extract(fe);
+			}
+			return fe;
 		}
-		return fe;
-	}
 
-	//添加规则豁免
-	inline void adjust(double& score, const gezi::tieba::UrateInfo& uinfo)
-	{
-		static int min_posts_num = 3;
-		PSCONF(min_posts_num, "Urate");
-
-		string name = uinfo.userInfo.userName.c_str();
-		if (gezi::contains(name, "外交")
-			|| uinfo.isWhiteTitle
-			|| uinfo.size() < min_posts_num)
+		inline Features gen_urate_features(uint64 pid, UrateInfo& info, string historyPath)
 		{
-			score = 0;
+			Features fe;
+			/*UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);*/
+			int historyNum = 25;
+			PSCONF(historyNum, "Urate");
+			info = try_get_info<UrateInfo>(pid, [&](uint64 pid) { return get_urate_info(pid, true, historyNum); }, historyPath);
+			if (info.IsValid())
+			{
+				//VLOG(0) << "Before move";
+				UrateExtractor::info() = info;
+				//VLOG(0) << "After move";
+				FeaturesExtractorMgr mgr;
+				add_urate_features(mgr);
+				mgr.extract(fe);
+			}
+			return fe;
 		}
-	}
 
-}  //----end of namespace tieba
+		//添加规则豁免
+		inline void adjust(double& score, const gezi::tieba::UrateInfo& uinfo)
+		{
+			static int min_posts_num = 3;
+			PSCONF(min_posts_num, "Urate");
+
+			string name = uinfo.userInfo.userName.c_str();
+			if (gezi::contains(name, "外交")
+				|| uinfo.isWhiteTitle
+				|| uinfo.size() < min_posts_num)
+			{
+				score = 0;
+			}
+		}
+
+	}  //----end of namespace tieba
 }  //----end of namespace gezi
 
 #endif  //----end of TIEBA_URATE_URATE_FEATURES_H_

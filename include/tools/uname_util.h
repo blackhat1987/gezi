@@ -33,10 +33,21 @@ namespace gezi {
 			{
 				if ((high > 0xa9 || high <= 0xa0) && i < uname.size() - 1)
 				{
-					if (pre_pattern != 'c')
+					if (is_gbk_ch(uname[i], uname[i + 1]))
 					{
-						pre_pattern = 'c';
-						pattern_stream << "c";
+						if (pre_pattern != 'c')
+						{
+							pre_pattern = 'c';
+							pattern_stream << "c";
+						}
+					}
+					else
+					{
+						if (pre_pattern != 'o')
+						{
+							pre_pattern = 'o';
+							pattern_stream << "o";
+						}
 					}
 				}
 				else
@@ -135,8 +146,12 @@ namespace gezi {
 
 	inline bool is_en_num_name(string uname)
 	{
-		vector<int> nameFeatures = name_feature(uname);
-		return  nameFeatures[0] == 2 && nameFeatures.back() == 0;
+		return name_pattern(uname) == "ed";
+	}
+
+	inline bool is_en_num_simple_name_pattern(string pattern)
+	{
+		return pattern == "edd";
 	}
 } //end of namespace gezi
 

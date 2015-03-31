@@ -7,7 +7,7 @@ mb = module_builder.module_builder_t(
         gccxml_path='~/.jumbo/bin/gccxml',
 				define_symbols=['GCCXML','PYTHON_WRAPPER'],
         files=[
-					'include.python/common_util.h',  #for save let it be first for without it file_util.h or string_util.h... will fail
+					'include.python/common_util.h',  #for safe let it be first for without it file_util.h or string_util.h... will fail
 					'./include.python/Numeric/Vector/Vector.h',
 					'./include.python/feature/FeatureVector.h',
 					#------------below has been tested ok
@@ -16,11 +16,13 @@ mb = module_builder.module_builder_t(
 					'./include.python/feature/FeaturesExtractor.h',
 					'./include.python/feature/FeaturesExtractorMgr.h',
 					#-------------predictor 
+					#'./include.python/PythonWrapper/TextPredictor.h',
 					'./include.python/PythonWrapper/Predictor.h',
 					'./include.python/PythonWrapper/PredictorFactory.h',
 					#-------------ip util
 					'./include.python/tools/IpFinder.h',
 					'./include.python/tools/ip.h',
+					'./include.python/tools/uname_util.h',
 					#-------------redis util
           './include.python/tools/redis/RedisClient.h',
 					#-------------feature selector and idf 
@@ -41,6 +43,7 @@ mb = module_builder.module_builder_t(
 					'./include.python/string_util.h',
 					'./include.python/reg_util.h',
 					'./include.python/file_util.h',
+					'./include.python/encoding_convert.h',
 					#-------------tieba utils 
 					'./include.python/tieba/tieba_util.h',
 					'./include.python/tieba/get_info.h',

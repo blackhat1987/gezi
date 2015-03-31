@@ -189,6 +189,7 @@ namespace gezi {
 
 			if (!ret)
 			{
+				LOG(WARNING) << "fail load data " << data_dir << " " << conf_path;
 				return false;
 			}
 
@@ -423,7 +424,7 @@ namespace gezi {
 					split_dict() = ds_load(user_dict_path, "need_split");
 					if (!split_dict())
 					{
-						LOG_WARNING("Do not use user defined split dictionary, not find %s", user_dict_path);
+						LOG(INFO) << "Do not use user defined split dictionary, not find " << user_dict_path;
 					}
 					else
 					{

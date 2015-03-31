@@ -46,6 +46,12 @@ DEFINE_string(at_key, "#!at!#", "");
 DEFINE_string(at_self_key, "#!at_thread!#", "");
 DEFINE_int32(max_allowed_span, 3600, "只考虑扫描最近一小时的pid");
 
+DEFINE_string(all_thread_key, "#!all_thread!#", "");
+DEFINE_int32(all_threads_max_count, 101000, "");//缓存最近10w 活跃的tid
+
+DEFINE_string(special_thread_key, "#!special_thread!#", "");
+DEFINE_int32(special_threads_max_count, 101000, "");//缓存最近10w 活跃的tid
+
 DEFINE_string(keys, "ip", "choose which keys to read from redis");
 
 DEFINE_int32(buffer_size, 1, "for writing to db");
@@ -90,6 +96,7 @@ void run(uint64 tid, double thre)
 	Features fe = gen_fullposts_features(tid, FLAGS_num, _fetcher);
 	if (fe.empty())
 	{
+		LOG(WARNING) << tid << " get no feature";
 		return;
 	}
 	
@@ -222,15 +229,19 @@ void run()
 
 		{
 			AutoTimer timer("redis serarch", 1);
-
 			if (gezi::contains(FLAGS_keys, "ip"))
 				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_ip_dingtie_key, 100, func1);
+			if (gezi::contains(FLAGS_keys, "pic"))
+				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_pic_self_key, 100, func2);
 			if (gezi::contains(FLAGS_keys, "url"))
 				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_url_self_key, 100, func2);
 			if (gezi::contains(FLAGS_keys, "at"))
 				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_at_self_key, 100, func2);
-			if (gezi::contains(FLAGS_keys, "pic"))
-				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_pic_self_key, 100, func2);
+			if (gezi::contains(FLAGS_keys, "all"))
+				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_all_thread_key, 100, func2);
+			if (gezi::contains(FLAGS_keys, "specail"))
+				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_special_thread_key, 100, func2);
+
 		}
 
 		{

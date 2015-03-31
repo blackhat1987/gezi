@@ -21,12 +21,14 @@ namespace tieba {
 class PlsaTopicExtractor : public UrateExtractor
 {
 public:
-	PlsaTopicExtractor(string name = "PlsaTopic")
-		:UrateExtractor(name)
+	PlsaTopicExtractor(bool onlyNow = true, string name = "PlsaTopic")
+		:UrateExtractor(name), _onlyNow(onlyNow)
 	{
 
 	}
-	
+
+	bool _onlyNow = true;
+
 	virtual void init() override
 	{
 		Segmentor::Init();
@@ -35,20 +37,15 @@ public:
 		info().ExtractNormalizedFilteredContents();
 	}
 
-	virtual void extract() override
+	Fvec GetTopics(int i)
 	{
-		//if (!IsThread())
-		//{//@TODO 回复打分暂时不考虑topic
-		//	return;
-		//}
-
 		auto& titles = info().normalizedTitles;
 		//auto& contents = info().normalizedContents;
 		auto& contents = info().normalizedFilteredContents;
 		string content;
 		if (!titles.empty() && !contents.empty())
 		{
-			content = titles[0] + " " + contents[0];
+			content = titles[i] + " " + contents[i];
 		}
 
 		svec words = Segmentor::Segment(content);
@@ -64,6 +61,30 @@ public:
 		}
 
 		Fvec topics = model().Inference(m);
+		return topics;
+	}
+	virtual void extract() override
+	{
+		//if (!IsThread())
+		//{//@TODO 回复打分暂时不考虑topic
+		//	return;
+		//}
+
+		Fvec topics = GetTopics(0);
+
+		if (!_onlyNow)
+		{
+			for (size_t i = 1; i < size(); i++)
+			{
+				Fvec topics2 = GetTopics(i);
+				add_vec(topics, topics2);
+			}
+		}
+
+		for (auto& val : topics)
+		{
+			val /= size();
+		}
 
 		ADD_FEATURE(topics);
 	}

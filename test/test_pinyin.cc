@@ -34,6 +34,8 @@ TEST(test_pinyin, func)
 		Pval(Pinyin::Convert("abc你好"));
 		Pval(Pinyin::Convert("美女基情音乐"));
 	}
+
+	Pval(Pinyin::Convert("ab音乐乐趣12很多123"));
 	
 }
 

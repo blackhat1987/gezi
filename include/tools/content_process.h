@@ -19,7 +19,8 @@
 namespace gezi {
 	inline string strip_html(string src)
 	{
-		string pattern = "<a.*class=\"at\">@.{2,20}</a>|(<[^>]*>)|(//[^>]*>)|(&nbsp;)+";
+		/*string pattern = "<a.*class=\"at\">@.{2,20}</a>|(<[^>]*>)|(//[^>]*>)|(&nbsp;)+";*/
+		string pattern = "<a.*?>.*?</a>|(<[^>]*>)|(//[^>]*>)|(&nbsp;)+";
 		return reg_remove(src, pattern);
 	}
 

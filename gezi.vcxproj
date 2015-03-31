@@ -552,6 +552,7 @@
     <ClInclude Include="include\tieba\JsonParser.h" />
     <ClInclude Include="include\tieba\rsc\rsc_threads_info.h" />
     <ClInclude Include="include\tieba\rsc\rsc_thread_def.h" />
+    <ClInclude Include="include\tieba\TextPredictor.h" />
     <ClInclude Include="include\tieba\tieba_util.h" />
     <ClInclude Include="include\tieba\uname_util.h" />
     <ClInclude Include="include\tieba\urate\extended_urate_info.h" />
@@ -687,9 +688,16 @@
     <ClCompile Include="tools\tieba\rsc-thread\get_rsc_thread_infos.cc" />
     <ClCompile Include="tools\tieba\rsc-thread\rsc_thread.cc" />
     <ClCompile Include="tools\tieba\rsc-thread\rsc_thread_train.cc" />
+    <ClCompile Include="tools\tieba\rstree\rstree.cc" />
+    <ClCompile Include="tools\tieba\rstree\trate.cc" />
+    <ClCompile Include="tools\tieba\trate\dump_post.cc" />
+    <ClCompile Include="tools\tieba\trate\test_trate.cc" />
     <ClCompile Include="tools\tieba\trate\trate.cc" />
     <ClCompile Include="tools\tieba\urate\get_urate_infos.cc" />
+    <ClCompile Include="tools\tieba\urate\img_reducer.cc" />
+    <ClCompile Include="tools\tieba\urate\lou_reducer.cc" />
     <ClCompile Include="tools\tieba\urate\urate_predicts_from_file.cc" />
+    <ClCompile Include="tools\tieba\urate\urate_reducer.cc" />
     <ClCompile Include="tools\tieba\urate\urate_train.cc" />
   </ItemGroup>
   <ItemGroup>

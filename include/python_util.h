@@ -170,7 +170,13 @@ VEC_METHOD(Vec)
 #define  MAP_METHOD(Map)\
 	.def("clear", &Map::clear)\
 	.def("size", &Map::size)\
+	.def("init", &PyMapUtil<Map>::init)\
 	.def("todict", &PyMapUtil<Map>::todict)
+
+//#define  MAP_METHOD(Map)\
+//	.def("clear", &Map::clear)\
+//	.def("size", &Map::size)\
+//	.def("todict", &PyMapUtil<Map>::todict)
 
 #define DEF_MAP(Map) \
 	class_<Map >(#Map)\

@@ -16,7 +16,7 @@
 #include "tieba/feature/urate/UrateExtractor.h"
 #include "MLCore/PredictorFactory.h"
 #include "Wrapper/SharedPredictors.h"
-#include "MLCore/TextPredictor.h"
+#include "tieba/TextPredictor.h"
 #include "tieba/tieba_util.h"
 namespace gezi {
 	namespace tieba {
@@ -65,18 +65,14 @@ namespace gezi {
 				auto& predictor = predictors()[offset];*/
 				auto& identifer = GetIdentifer(offset);
 				auto& predictor = GetPredictor(offset);
-				title = get_real_title(title);
-				if (content.size() > 100)
-				{
-					content = gbk_substr(content, 0, 100);
-				}
+				PVAL5(name(), offset, _identiferPath[offset], identifer.size(), identifer.id("ЪЈзг"));
 				if (!_isRsc)
 				{
-					return 	TextPredictor::Predict(title, content, identifer, predictor, _segType, _useMedia, _ngram, _skip, _sep);
+					return 	tieba::TextPredictor::Predict(title, content, identifer, predictor, _segType, _useMedia, _ngram, _skip, _sep);
 				}
 				else
 				{
-					return TextPredictor::Predict(title + " " + content, identifer, predictor, _segType, _ngram, _skip, _sep);
+					return tieba::TextPredictor::Predict(title + " " + content, identifer, predictor, _segType, _ngram, _skip, _sep);
 				}
 			}
 
@@ -88,7 +84,7 @@ namespace gezi {
 
 			virtual void extract() override
 			{
-				int maxTextScoreNum = 8;
+				int maxTextScoreNum = 10;
 				PSCONF(maxTextScoreNum, name());
 				int len = std::min((int)size(), maxTextScoreNum);
 				auto& titles = info().postsInfo.titles;
@@ -115,6 +111,14 @@ namespace gezi {
 						replyTextScores.push_back(textScores[i]);
 					}
 				}
+
+				double minTextScore = gezi::ufo::min(textScores, 0.0);
+				double maxTextScore = gezi::ufo::max(textScores, 0.0);
+				double minThreadTextScore = gezi::ufo::min(threadTextScores, 0.0);
+				double maxThreadTextScore = gezi::ufo::max(threadTextScores, 0.0);
+				double minReplyTextScore = gezi::ufo::min(replyTextScores, 0.0);
+				double maxReplyTextScore = gezi::ufo::max(replyTextScores, 0.0);
+
 				int numThreadTextScores = threadTextScores.size();
 				int numReplyTextScores = replyTextScores.size();
 				double threadTextScoreMean = 0, threadTextScoreVar = 1;
@@ -131,6 +135,13 @@ namespace gezi {
 				ADD_FEATURE(replyTextScoreVar);
 				ADD_FEATURE(numThreadTextScores);
 				ADD_FEATURE(numReplyTextScores);
+
+				ADD_FEATURE(minTextScore);
+				ADD_FEATURE(maxTextScore);
+				ADD_FEATURE(minThreadTextScore);
+				ADD_FEATURE(maxThreadTextScore);
+				ADD_FEATURE(minReplyTextScore);
+				ADD_FEATURE(maxReplyTextScore);
 			}
 		protected:
 		private:

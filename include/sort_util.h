@@ -249,6 +249,33 @@ namespace gezi {
 		IndexCmper<ValueVec, IndexVec> func;
 		sort(valueVec, indexVec, maxLen, func);
 	}
+
+	template<typename Vec, typename Func>
+	void sort(Vec& vec, int maxLen, Func func)
+	{
+		if ((size_t)maxLen >= vec.size())
+		{
+			std::sort(vec.begin(), vec.end(), func);
+		}
+		else
+		{
+			std::partial_sort(vec.begin(), vec.begin() + maxLen, vec.end(), func);
+		}
+	}
+
+	/*template<typename Vec>
+	void sort(Vec& vec, int maxLen)
+	{
+		if ((size_t)maxLen >= vec.size())
+		{
+			std::sort(vec.begin(), vec.end(), std::less<>());
+		}
+		else
+		{
+			std::partial_sort(vec.begin(), vec.begin() + maxLen, vec.end(), std::less<>());
+		}
+	}*/
+
 } //----end of namespace gezi
 
 #endif  //----end of SORT_UTIL_H_

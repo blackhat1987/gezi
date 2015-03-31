@@ -15,7 +15,7 @@
 #define TIEBA_FEATURE_FULLPOSTS__TEXT_SCORE_EXTRACTOR_H_
 #include "MLCore/PredictorFactory.h"
 #include "Wrapper/SharedPredictors.h"
-#include "MLCore/TextPredictor.h"
+#include "tieba/TextPredictor.h"
 #include "tieba/tieba_util.h"
 #include "FullPostsExtractor.h"
 namespace gezi {
@@ -66,18 +66,13 @@ namespace gezi {
 				auto& predictor = predictors()[offset];*/
 				auto& identifer = GetIdentifer(offset);
 				auto& predictor = GetPredictor(offset);
-				title = get_real_title(title);
-				if (content.size() > 100)
-				{
-					content = gbk_substr(content, 0, 100);
-				}
 				if (!_isRsc)
 				{
-					return 	TextPredictor::Predict(title, content, identifer, predictor, _segType, _useMedia, _ngram, _skip, _sep);
+					return 	tieba::TextPredictor::Predict(title, content, identifer, predictor, _segType, _useMedia, _ngram, _skip, _sep);
 				}
 				else
 				{
-					return TextPredictor::Predict(title + " " + content, identifer, predictor, _segType, _ngram, _skip, _sep);
+					return tieba::TextPredictor::Predict(title + " " + content, identifer, predictor, _segType, _ngram, _skip, _sep);
 				}
 			}
 
@@ -101,18 +96,23 @@ namespace gezi {
 						textScores.push_back(Predict(info().title, contents[i]));
 					}
 				}
-				double textScoreMean = 0.0, textScoreVar = 1.0;
+				double textScoreMean = 0.0, textScoreVar = std::numeric_limits<double>::max();
 				ufo::mean_var(textScores, textScoreMean, textScoreVar);
 				double nowTextScore = textScores.size() > 0 ? textScores[0] : 0;
 				dvec threadTextScores, replyTextScores;
 				int numLouzhuReplyTextScores = textScores.size();
 				double maxTextScore = ufo::max(textScores, 0.0);
+				double minTextScore = ufo::min(textScores, 0.0);
 
 				ADD_FEATURE(nowTextScore);
 				ADD_FEATURE(maxTextScore);
+				ADD_FEATURE(minTextScore);
 				ADD_FEATURE(textScoreMean);
 				ADD_FEATURE(textScoreVar);
 				ADD_FEATURE(numLouzhuReplyTextScores);
+
+				double threadTextScore = Predict(info().title, contents[0], 1);
+				ADD_FEATURE(threadTextScore);
 			}
 		protected:
 		private:

@@ -20,12 +20,13 @@ namespace gezi {
 		class ForumExtractor : public UrateExtractor
 		{
 		public:
-			ForumExtractor(string name = "Forum")
-				:UrateExtractor(name)
+			ForumExtractor(bool isOnline = true, string name = "Forum")
+				:UrateExtractor(name), _isOnline(isOnline)
 			{
 
 			}
 
+			bool _isOnline = true;
 			static map<string, int>& level1Identifer()
 			{
 				static map<string, int> _level1Identifer = ([&](){
@@ -40,7 +41,30 @@ namespace gezi {
 				return _level1Identifer;
 			}
 
+
 			map<string, int>& _level1Identifer = level1Identifer();
+
+			static map<string, double>& rankIdentifer()
+			{
+				static map<string, double> _rankIdentifer = ([&](){
+					map<string, double> _rankIdentifer;
+					string rankFilePath = "./data/forumRank.txt";
+					PSCONF(rankFilePath, "Forum");
+					ifstream ifs(rankFilePath);
+					string line;
+					while (getline(ifs, line))
+					{
+						string fname, rank;
+						gezi::split(line, '\t', fname, rank);
+						_rankIdentifer[fname] = DOUBLE(rank);
+					}
+					CHECK_GT(_rankIdentifer.size(), 0);
+					return _rankIdentifer;
+				})();
+				return _rankIdentifer;
+			}
+
+			map<string, double>& _rankIdentifer = rankIdentifer();
 			////@TODO 合并到一起 和 levelIdentifer? 另外也可以比如是多个static 放在统一的Init函数 然后
 			////利用一个Init函数内部static bool _isInited的确保构造一次 放到构造函数即可
 			//static bool& isLevel1IdentiferInited()
@@ -65,21 +89,27 @@ namespace gezi {
 				auto& fids = info().postsInfo.fids;
 				double fourmInfo = information(fids);
 				ADD_FEATURE(fourmInfo);
+				add(gezi::distinct_count(fids), "numForums");
 
 				//一级目录信息熵
 				auto level1Names = from(info().postsInfo.level1Names) >> where([](string a) { return !json_empty(a); }) >> to_vector();
 				double level1Info = information(level1Names);
 				ADD_FEATURE(level1Info);
+				add(gezi::distinct_count(level1Names), "numLevel1Names");
 
+			
 				//二级目录信息熵
 				auto level2Names = from(info().postsInfo.level2Names) >> where([](string a) { return !json_empty(a); }) >> to_vector();
 				double level2Info = information(level2Names);
 				ADD_FEATURE(level2Info);
+				add(gezi::distinct_count(level2Names), "numLevel2Names");
 			}
 
 			void ExtractRank()
 			{ //吧热度
-				auto& ranks = info().postsInfo.ranks;
+				//auto& ranks = info().postsInfo.ranks;
+				auto ranks = from(info().postsInfo.fnames) >> select([&, this](string fname) { return _rankIdentifer[fname]; }) >> to_vector();
+
 				double rankInfo = information(ranks);
 				//double rankMean = ufo::mean(ranks, 0); //知道mean的情况可以简化var的计算 但是这里不是瓶颈 简单起见
 				//double rankVar = ufo::var(ranks, 1024);
@@ -120,19 +150,27 @@ namespace gezi {
 				auto& level1Names = info().postsInfo.level1Names;
 				if (level1Names.empty())
 				{
-					level1Vec.back() = 1.0;
+					level1Vec[len] = 1.0;
 				}
 				else
 				{
-					string level1Name = level1Names[0];
-					auto iter = level1Identifer().find(level1Name);
-					if (iter == level1Identifer().end())
+					size_t namesLen = _isOnline ? 1 : level1Names.size();
+					for (size_t i = 0; i < namesLen; i++)
 					{
-						level1Vec.back() = 1.0;
+						string level1Name = level1Names[i];
+						auto iter = level1Identifer().find(level1Name);
+						if (iter == level1Identifer().end())
+						{
+							level1Vec.back() += 1.0;
+						}
+						else
+						{
+							level1Vec[iter->second] += 1.0;
+						}
 					}
-					else
+					for (auto& val : level1Vec)
 					{
-						level1Vec[iter->second] = 1.0;
+						val /= namesLen;
 					}
 				}
 				ADD_FEATURE(level1Vec);

@@ -707,6 +707,15 @@ namespace gezi {
 		return (*min_element(m.begin(), m.end(), [](const ItemType& l, const ItemType& r) { return l.second.size() < r.second.size(); })).second.size();
 	}
 
+	template<typename Container, typename Container2>
+	void add_vec(Container& vec1, const Container2& vec2)
+	{
+		for (size_t i = 0; i < vec1.size(); i++)
+		{
+			vec1[i] += vec2[i];
+		}
+	}
+
 	namespace ufo
 	{
 		template<typename Container>

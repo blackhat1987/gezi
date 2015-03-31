@@ -98,7 +98,7 @@ namespace gezi {
 
 	public:
 		static dm_pack_t* dm_pack(int maxMatchCount = 1000)
-		{
+		{//local 线程安全
 			static thread_local dm_pack_t* _result = NULL;
 			if (_result == NULL)
 			{

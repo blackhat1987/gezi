@@ -32,6 +32,8 @@ const int gezi::IpFinder::OFFSET_LENGTH;
 
 #include "../include/tools/ip.h"
 
+#include "../include/tools/uname_util.h"
+
 #include "../include/tools/redis/RedisClient.h"
 
 #include "../include/feature/FeatureSelector.h"
@@ -64,6 +66,8 @@ const int gezi::SegHandle::SEG_BUFF_SIZE;
 #include "../include/reg_util.h"
 
 #include "../include/file_util.h"
+
+#include "../include/encoding_convert.h"
 
 #include "../include/tieba/tieba_util.h"
 
@@ -767,6 +771,16 @@ Vector_exposer.def(
 , ( bp::arg("m") ) );
 
 }
+{ //::gezi::Vector::AllStr
+
+typedef ::std::string ( ::gezi::Vector::*AllStr_function_type )( ::std::string ) const;
+
+Vector_exposer.def(
+"AllStr"
+, AllStr_function_type( &::gezi::Vector::AllStr )
+, ( bp::arg("sep")="," ) );
+
+}
 { //::gezi::Vector::CheckInvariants
 
 typedef void ( ::gezi::Vector::*CheckInvariants_function_type )(  ) ;
@@ -794,13 +808,13 @@ Vector_exposer.def(
 , Count_function_type( &::gezi::Vector::Count ) );
 
 }
-{ //::gezi::Vector::DenseStr
+{ //::gezi::Vector::DenseSr
 
-typedef ::std::string ( ::gezi::Vector::*DenseStr_function_type )( ::std::string ) const;
+typedef ::std::string ( ::gezi::Vector::*DenseSr_function_type )( ::std::string ) const;
 
 Vector_exposer.def(
-"DenseStr"
-, DenseStr_function_type( &::gezi::Vector::DenseStr )
+"DenseSr"
+, DenseSr_function_type( &::gezi::Vector::DenseSr )
 , ( bp::arg("sep")="," ) );
 
 }
@@ -3150,6 +3164,17 @@ bp::def(
 
 }
 
+{ //::gezi::gbk2utf8
+
+typedef ::std::string ( *gbk2utf8_function_type )( ::std::string const &,int );
+
+bp::def(
+"gbk2utf8"
+, gbk2utf8_function_type( &::gezi::gbk2utf8 )
+, ( bp::arg("src"), bp::arg("flags")=int(::UCONV_INVCHAR_IGNORE) ) );
+
+}
+
 { //::gezi::gbk_substr
 
 typedef ::std::string ( *gbk_substr_function_type )( ::std::string,int,::size_t );
@@ -3158,6 +3183,17 @@ bp::def(
 "gbk_substr"
 , gbk_substr_function_type( &::gezi::gbk_substr )
 , ( bp::arg("input"), bp::arg("start_"), bp::arg("len")=(long unsigned int)(std::basic_string<char, std::char_traits<char>, std::allocator<char> >::npos) ) );
+
+}
+
+{ //::gezi::gbk_to_utf8
+
+typedef ::std::string ( *gbk_to_utf8_function_type )( ::std::string const &,int );
+
+bp::def(
+"gbk_to_utf8"
+, gbk_to_utf8_function_type( &::gezi::gbk_to_utf8 )
+, ( bp::arg("src"), bp::arg("flags")=int(::UCONV_INVCHAR_IGNORE) ) );
 
 }
 
@@ -4316,6 +4352,39 @@ bp::def(
 
 }
 
+{ //::gezi::is_en_num_name
+
+typedef bool ( *is_en_num_name_function_type )( ::std::string );
+
+bp::def(
+"is_en_num_name"
+, is_en_num_name_function_type( &::gezi::is_en_num_name )
+, ( bp::arg("uname") ) );
+
+}
+
+{ //::gezi::is_en_num_name
+
+typedef bool ( *is_en_num_name_function_type )( ::std::vector< int > const & );
+
+bp::def(
+"is_en_num_name"
+, is_en_num_name_function_type( &::gezi::is_en_num_name )
+, ( bp::arg("nameFeatures") ) );
+
+}
+
+{ //::gezi::is_en_num_simple_name_pattern
+
+typedef bool ( *is_en_num_simple_name_pattern_function_type )( ::std::string );
+
+bp::def(
+"is_en_num_simple_name_pattern"
+, is_en_num_simple_name_pattern_function_type( &::gezi::is_en_num_simple_name_pattern )
+, ( bp::arg("pattern") ) );
+
+}
+
 { //::gezi::is_gb2312
 
 typedef bool ( *is_gb2312_function_type )( unsigned char,unsigned char );
@@ -4368,6 +4437,17 @@ bp::def(
 "is_posts_deleted"
 , is_posts_deleted_function_type( &::gezi::tieba::is_posts_deleted )
 , ( bp::arg("pids"), bp::arg("allowError")=(bool)(true) ) );
+
+}
+
+{ //::gezi::is_qq_name
+
+typedef bool ( *is_qq_name_function_type )( ::std::string );
+
+bp::def(
+"is_qq_name"
+, is_qq_name_function_type( &::gezi::is_qq_name )
+, ( bp::arg("uname") ) );
 
 }
 
@@ -4456,6 +4536,28 @@ bp::def(
 "mutual_info2"
 , mutual_info2_function_type( &::gezi::mutual_info2 )
 , ( bp::arg("nfc"), bp::arg("nf"), bp::arg("nc"), bp::arg("n") ) );
+
+}
+
+{ //::gezi::name_feature
+
+typedef ::std::vector< int > ( *name_feature_function_type )( ::std::string );
+
+bp::def(
+"name_feature"
+, name_feature_function_type( &::gezi::name_feature )
+, ( bp::arg("uname") ) );
+
+}
+
+{ //::gezi::name_pattern
+
+typedef ::std::string ( *name_pattern_function_type )( ::std::string );
+
+bp::def(
+"name_pattern"
+, name_pattern_function_type( &::gezi::name_pattern )
+, ( bp::arg("uname") ) );
 
 }
 
@@ -5174,6 +5276,17 @@ bp::def(
 
 }
 
+{ //::gezi::simple_name_pattern
+
+typedef ::std::string ( *simple_name_pattern_function_type )( ::std::string );
+
+bp::def(
+"simple_name_pattern"
+, simple_name_pattern_function_type( &::gezi::simple_name_pattern )
+, ( bp::arg("uname") ) );
+
+}
+
 { //::gezi::ufo::split_regex
 
 typedef ::std::vector< std::string > ( *split_regex_function_type )( ::std::string const &,::std::string );
@@ -5262,6 +5375,17 @@ bp::def(
 
 }
 
+{ //::gezi::to_gbk
+
+typedef ::std::string ( *to_gbk_function_type )( ::std::string const &,int );
+
+bp::def(
+"to_gbk"
+, to_gbk_function_type( &::gezi::to_gbk )
+, ( bp::arg("src"), bp::arg("flags")=int(::UCONV_INVCHAR_IGNORE) ) );
+
+}
+
 { //::gezi::to_hashset
 
 typedef ::std::unordered_set< std::basic_string< char, std::char_traits< char >, std::allocator< char > >, boost::hash< std::basic_string< char, std::char_traits< char >, std::allocator< char > > >, std::equal_to< std::basic_string< char, std::char_traits< char >, std::allocator< char > > >, std::allocator< std::basic_string< char, std::char_traits< char >, std::allocator< char > > > > ( *to_hashset_function_type )( ::std::string );
@@ -5339,6 +5463,17 @@ bp::def(
 
 }
 
+{ //::gezi::to_utf8
+
+typedef ::std::string ( *to_utf8_function_type )( ::std::string const &,int );
+
+bp::def(
+"to_utf8"
+, to_utf8_function_type( &::gezi::to_utf8 )
+, ( bp::arg("src"), bp::arg("flags")=int(::UCONV_INVCHAR_IGNORE) ) );
+
+}
+
 { //::gezi::try_create_dir
 
 typedef void ( *try_create_dir_function_type )( ::std::string );
@@ -5347,6 +5482,28 @@ bp::def(
 "try_create_dir"
 , try_create_dir_function_type( &::gezi::try_create_dir )
 , ( bp::arg("dir") ) );
+
+}
+
+{ //::gezi::utf82gbk
+
+typedef ::std::string ( *utf82gbk_function_type )( ::std::string const &,int );
+
+bp::def(
+"utf82gbk"
+, utf82gbk_function_type( &::gezi::utf82gbk )
+, ( bp::arg("src"), bp::arg("flags")=int(::UCONV_INVCHAR_IGNORE) ) );
+
+}
+
+{ //::gezi::utf8_to_gbk
+
+typedef ::std::string ( *utf8_to_gbk_function_type )( ::std::string const &,int );
+
+bp::def(
+"utf8_to_gbk"
+, utf8_to_gbk_function_type( &::gezi::utf8_to_gbk )
+, ( bp::arg("src"), bp::arg("flags")=int(::UCONV_INVCHAR_IGNORE) ) );
 
 }
 

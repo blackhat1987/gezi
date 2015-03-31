@@ -1229,13 +1229,24 @@ namespace gezi {
 			return ss.str().substr(0, ss.str().length() - sep.length());
 		}
 
-		string DenseStr(string sep = ",") const
+		string AllStr(string sep = ",") const
 		{
 			stringstream ss;
 			ForEachAll([&](int index, value_type value) {
 				ss << index << ":" << value << sep;
 			});
-			return ss.str();
+			//return ss.str();
+			return ss.str().substr(0, ss.str().length() - sep.length());
+		}
+
+		string DenseSr(string sep = ",") const
+		{
+			stringstream ss;
+			ForEachAll([&](int index, value_type value) {
+				ss << value << sep;
+			});
+			//return ss.str();
+			return ss.str().substr(0, ss.str().length() - sep.length());
 		}
 
 		string str(string sep = ",") const

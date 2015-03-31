@@ -1566,6 +1566,9 @@
     <ClInclude Include="include\tieba\feature\urate\ImgExtrator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\tieba\TextPredictor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -1887,6 +1890,27 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="test\tieba\get_full_posts_info.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\tieba\rstree\rstree.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\tieba\rstree\trate.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\tieba\trate\dump_post.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\tieba\urate\urate_reducer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\tieba\urate\img_reducer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\tieba\urate\lou_reducer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\tieba\trate\test_trate.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

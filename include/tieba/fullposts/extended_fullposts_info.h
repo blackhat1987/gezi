@@ -37,6 +37,11 @@ namespace gezi {
 
 			void Init()
 			{
+				if (!IsValid())
+				{
+					numConsideredPosts = (int)uids.size();
+					return;
+				}
 				postId = pids[0];
 				SetSize();
 				Shrink();
@@ -58,12 +63,12 @@ namespace gezi {
 				unames.resize(numConsideredPosts);
 				contents.resize(numConsideredPosts);
 			}
-			
+
 			static string name()
 			{
 				return "ExtendedFullPostsInfo";
 			}
-			
+
 			size_t size()
 			{
 				return numConsideredPosts;
@@ -167,6 +172,18 @@ namespace gezi {
 				PVEC(locations);
 			}
 
+			void ExtractTop2Ips()
+			{
+				if (top2Ips.empty())
+				{
+					top2Ips = from(ips)
+						>> select([this](uint64 ip) { return get_topn_ipgroup(ip, 2); })
+						>> to_vector();
+				}
+				PVEC(top2Ips);
+			}
+
+
 		public:
 			int numConsideredPosts = 0;
 			uint64 postId = 0;
@@ -176,12 +193,13 @@ namespace gezi {
 			vector<svec> atsVec;
 			vector<svec> numbersVec;
 
-			svec htmlFilteredContents; 
+			svec htmlFilteredContents;
 			svec normalizedContents;
 			svec filteredContents;
 			svec normalizedFilteredContents;
 
 			svec locations;
+			vector<uint64> top2Ips;
 		};
 	}  //----end of namespace tieba
 }  //----end of namespace gezi

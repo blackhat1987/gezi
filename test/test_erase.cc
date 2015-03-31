@@ -45,6 +45,10 @@ TEST(erase_ufo, func)
 	Pvec(vec);
 	ufo::erase(vec, 3);
 	Pvec(vec);
+
+	map<string, int> m = {{"a",3},{"b",4}};
+	Pval(m["a"]);
+	Pval(m["c"]);
 }
 
 

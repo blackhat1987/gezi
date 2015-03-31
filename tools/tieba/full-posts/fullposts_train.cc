@@ -98,8 +98,7 @@ int main(int argc, char *argv[])
 	LogHelper::set_level(FLAGS_level);
 	if (FLAGS_v == 0)
 		FLAGS_v = FLAGS_vl;
-	//SharedConf::init("fullposts_strategy.conf");
-	SharedConf::init("urate_strategy.conf");
+	SharedConf::init("fullposts.conf");
 
 	if (FLAGS_gf)
 	{

@@ -99,7 +99,7 @@ public:
 
 	void ExtractDeltaCount(const vector<int64>& deltas, string name = "")
 	{
-		ivec intervals = { 1, 2, 5, 10, 50, 100 };
+		ivec intervals = { 1, 2, 5, 10, 15, 20,50, 100 };
 		ivec deltaCounts;
 		calc_delta_count(deltas, intervals, deltaCounts);
 		dvec deltaRatios = from(deltaCounts) >> select([this](int a) { return a / (double)size(); }) >> to_vector();

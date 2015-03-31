@@ -37,6 +37,36 @@ namespace tieba {
 
 		}
 
+		static map<string, double>& nameCnFreqMap()
+		{
+			static map<string, double> _nameCnFreqMap = ([&](){
+				map<string, double> _nameCnFreqMap;
+				string nameCnFreqMapPath = "./data/nameCnFreq.txt";
+				ifstream ifs(nameCnFreqMapPath);
+				string line;
+				double maxRank = 0;
+				while (getline(ifs, line))
+				{
+					string cn, rank_;
+					gezi::split(line, '\t', cn, rank_);
+					double rank = DOUBLE(rank_);
+					_nameCnFreqMap[cn] = rank;
+					if (rank > maxRank)
+					{
+						maxRank = rank;
+					}
+				}
+				if (!_nameCnFreqMap.empty())
+				{
+					_nameCnFreqMap["default"] = maxRank;
+				}
+				return _nameCnFreqMap;
+			})();
+			return _nameCnFreqMap;
+		}
+
+		map<string, double>& _nameCnFreqMap = nameCnFreqMap();
+
 		virtual void extract() override
 		{
 			UserInfo& userInfo = info().userInfo;
@@ -55,11 +85,14 @@ namespace tieba {
 				ADD_FEATURE(followFollowedRatio);
 			}
 			{ //注册时间信息
-				uint64 nowTime = _useNowPostInfo && isNowPostInfoValid ? nowPostInfo.createTime : (uint64)time(NULL);
+				//uint64 nowTime = _useNowPostInfo && isNowPostInfoValid ? nowPostInfo.createTime : (uint64)time(NULL);
+				uint64 nowTime = _useNowPostInfo && isNowPostInfoValid ? nowPostInfo.createTime : 0;
 				uint64 regSpan = reg_span(nowTime, userInfo.regTime);
 				ADD_FEATURE(regSpan);
 				int regDays = regSpan / kOneDay;
-				ADD_FEATURE(regDays);
+				ADD_FEATURE(regDays); 
+				uint64 userId = userInfo.userId;
+				ADD_FEATURE(userId);
 			}
 			{//是否有生日信息
 				bool hasBirth = userInfo.birthYear != 0;
@@ -79,15 +112,51 @@ namespace tieba {
 			}
 			{ //用户名信息
 				string uname = userInfo.userName;
-				ivec unamePattern = name_feature(uname);
-				ADD_FEATURE(unamePattern);
+				//ivec unamePattern = name_feature(uname);
+				//ADD_FEATURE(unamePattern);
+				string unamePattern = simple_name_pattern(uname);
+				//string patterns = "dceo";
+				ivec unamePatterns = { 0, 0, 0, 0};
+				for (auto item : unamePattern)
+				{
+					if (item == 'd')
+					{
+						unamePatterns[0] = 1;
+					}
+					else if (item == 'c')
+					{
+						unamePatterns[1] = 1;
+					}
+					else if (item == 'e')
+					{
+						unamePatterns[2] = 1;
+					}
+					else
+					{
+						unamePatterns[3] = 1;
+					}
+				}
+				ADD_FEATURE(unamePatterns);
 				{//ed 英文加数字
-					bool unameIsEnNum = is_en_num_name(unamePattern);
+					bool unameIsEnNum = is_en_num_simple_name_pattern(unamePattern);
 					ADD_FEATURE(unameIsEnNum);
 				}
 				//是否是qq名字
 				bool isQQName = is_qq_name(uname);
 				ADD_FEATURE(isQQName);
+
+				//名字中文部分出现概率  @TODO 名字的概率模型？ 有点意思拼音输入法
+				if (!_nameCnFreqMap.empty())
+				{
+					svec cnName = gezi::to_cnvec(gezi::extract_chinese(uname));
+					double cnProb = 0;
+					for (string word : cnName)
+					{
+						cnProb += _nameCnFreqMap.count(word) ? _nameCnFreqMap[word] : _nameCnFreqMap["default"];
+					}
+					cnProb = cnName.empty() ? _nameCnFreqMap["default"] : cnProb / cnName.size();
+					ADD_FEATURE(cnProb);
+				}
 			}
 
 			uint nowFourmId = nowPostInfo.forumId;

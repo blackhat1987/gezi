@@ -380,6 +380,32 @@ namespace gezi {
 		}
 
 		template<typename Container>
+		void mean_min_max(const Container& vec, double& meanVal, double& minVal, double& maxVal)
+		{
+			if (vec.empty())
+			{
+				return;
+			}
+			double mean_ = 0, minVal_ = std::numeric_limits<double>::max(), maxVal_ = std::numeric_limits<double>::lowest();
+			for (auto& val : vec)
+			{
+				mean_ += vec;
+				if (val > maxVal_)
+				{
+					maxVal_ = val;
+				}
+				if (val < minVal_)
+				{
+					minVal_ = val;
+				}
+			}
+			meanVal = mean_ / vec.size();
+			minVal = minVal_;
+			maxVal = maxVal_;
+		}
+
+
+		template<typename Container>
 		//auto min(const Container& vec) -> decltype(*vec.begin()) //show decltype also work
 		typename Container::value_type min(const Container& vec)
 		{
@@ -387,7 +413,7 @@ namespace gezi {
 		}
 
 		template<typename Container, typename T>
-		T min(const Container& vec, T defaultValue)
+		typename Container::value_type  min(const Container& vec, T defaultValue)
 		{
 			if (vec.empty())
 			{
@@ -412,7 +438,7 @@ namespace gezi {
 		}
 
 		template<typename Container, typename T>
-		T max(const Container& vec, T defaultValue)
+		typename Container::value_type  max(const Container& vec, T defaultValue)
 		{
 			if (vec.empty())
 			{

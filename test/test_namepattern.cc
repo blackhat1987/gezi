@@ -38,6 +38,7 @@ TEST(test_namepattern, func)
 
 	Pval(name_pattern(""));
 	Pval(name_pattern("程惠阁"));
+	Pval(name_pattern("☆僾№懮殇★"));
 	Pval(name_pattern("jordan"));
 	Pval(name_pattern("付之q364784386"));
 	Pval(name_pattern("dsfokff16253"));
@@ -94,18 +95,38 @@ TEST(test_namepattern3, func)
 		Pval(join(name_feature("8xuxu8dan")));
 		Pval(join(name_feature("公马密码AAA123")));
 		Pval(join(name_feature("LP不是_老婆")));
+
+		dvec vec = {0.1, 0.2, 0.3};
+		double x = ufo::min(vec, 0);
+		Pval(x);
+		Pval((std::numeric_limits<double>::min()));
+		Pval((-std::numeric_limits<double>::max()));
+		Pval((std::numeric_limits<double>::lowest()));
+		Pval((-std::numeric_limits<int>::lowest()));
+		 std::cout << "Minimum value for int: " << std::numeric_limits<int>::min() << '\n';
+		   std::cout << "Maximum value for int: " << std::numeric_limits<int>::max() << '\n';
+			   std::cout << "int is signed: " << std::numeric_limits<int>::is_signed << '\n';
+				   std::cout << "Non-sign bits in int: " << std::numeric_limits<int>::digits << '\n';
+					   std::cout << "int has infinity: " << std::numeric_limits<int>::has_infinity << '\n';
+
+		dvec vec2 = {1, 2, 3};
+		std::transform(vec.begin(), vec.end(), vec2.begin(), vec2.end(),
+			plus<double>());
+
+		Pvec(vec);
+		Pvec(vec2);
 }
 
 int main(int argc, char *argv[])
 {
-  testing::InitGoogleTest(&argc, argv);
-  google::InitGoogleLogging(argv[0]);
-  google::InstallFailureSignalHandler();
-  int s = google::ParseCommandLineFlags(&argc, &argv, false);
-  if (FLAGS_log_dir.empty())
-    FLAGS_logtostderr = true;
-  FLAGS_minloglevel = FLAGS_level;
-  boost::progress_timer timer;
-  
-  return RUN_ALL_TESTS();
+	testing::InitGoogleTest(&argc, argv);
+	google::InitGoogleLogging(argv[0]);
+	google::InstallFailureSignalHandler();
+	int s = google::ParseCommandLineFlags(&argc, &argv, false);
+	if (FLAGS_log_dir.empty())
+		FLAGS_logtostderr = true;
+	FLAGS_minloglevel = FLAGS_level;
+	boost::progress_timer timer;
+	
+	return RUN_ALL_TESTS();
 }
