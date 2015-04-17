@@ -62,6 +62,8 @@ DEFINE_bool(multidelete, false, "");
 DEFINE_string(db_exe, "write-db.py", "");
 DEFINE_string(multidelete_exe, "multi-delete.py", "");
 
+DEFINE_string(m, "model", "");
+
 DEFINE_int32(nt, 12, "thread num");
 
 const int kMaxTids = 1e+5;
@@ -187,9 +189,7 @@ void init()
 {
 	SharedConf::init("fullposts.conf");
 
-	string fullpostsModelPath = "./model";
-	PSCONF(fullpostsModelPath, "Global");
-	_predictor = PredictorFactory::LoadPredictor(fullpostsModelPath);
+	_predictor = PredictorFactory::LoadPredictor(FLAGS_m);
 
 	int redisRet = _redisClient.Init();
 	CHECK_EQ(redisRet, 0);AutoTimer timer("WriteDB");
@@ -239,7 +239,7 @@ void run()
 				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_at_self_key, 100, func2);
 			if (gezi::contains(FLAGS_keys, "all"))
 				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_all_thread_key, 100, func2);
-			if (gezi::contains(FLAGS_keys, "specail"))
+			if (gezi::contains(FLAGS_keys, "special"))
 				_redisClient.ZrangeFirstNElementWithScoresIf(FLAGS_special_thread_key, 100, func2);
 
 		}

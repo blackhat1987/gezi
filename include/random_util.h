@@ -310,6 +310,88 @@ namespace gezi {
 		sample_reverse(vec.begin(), vec.end(), maxNum, rng);
 	}
 
+	//数组中找到最大的位置，只是有fraction的比例的数据被忽略，如果万一实际都被忽略 那么还是选最大的位置
+	template<typename Vec>
+	int max_pos_rand(const Vec& vec, Random& rand, double fraction)
+	{
+		if (vec.empty())
+		{
+			return -1;
+		}
+		typedef typename Vec::value_type T;
+		T maxVal = vec[0];
+		int maxPos = 0;
+		T maxVal2 = vec[0];
+		int maxPos2 = 0;
+		bool findOne = false;
+		for (int i = 0; i < (int)vec.size(); i++)
+		{
+			if (maxVal < vec[i])
+			{
+				maxVal = vec[i];
+				maxPos = i;
+			}
+
+			if (rand.NextDouble() > fraction)
+			{
+				if (findOne == false || maxVal2 < vec[i])
+				{
+					maxVal2 = vec[i];
+					maxPos2 = i;
+				}
+				findOne = true;
+			}
+		}
+		if (findOne)
+		{
+			return maxPos2;
+		}
+		else
+		{
+			return maxPos;
+		}
+	}
+
+	template<typename Vec, typename CmpFunc>
+	int max_pos_rand(const Vec& vec, Random& rand, double fraction, CmpFunc cmp)
+	{
+		if (vec.empty())
+		{
+			return -1;
+		}
+		typedef typename Vec::value_type T;
+		T maxVal = vec[0];
+		int maxPos = 0;
+		T maxVal2 = vec[0];
+		int maxPos2 = 0;
+		bool findOne = false;
+		for (int i = 0; i < (int)vec.size(); i++)
+		{
+			if (cmp(maxVal, vec[i]))
+			{
+				maxVal = vec[i];
+				maxPos = i;
+			}
+
+			if (rand.NextDouble() > fraction)
+			{
+				if (findOne == false || cmp(maxVal2, vec[i]))
+				{
+					maxVal2 = vec[i];
+					maxPos2 = i;
+				}
+				findOne = true;
+			}
+		}
+		if (findOne)
+		{
+			return maxPos2;
+		}
+		else
+		{
+			return maxPos;
+		}
+	}
 	//template<typename Vec>
 	//void sample_reverse(Vec& vec, size_t maxNum, const RandomEngine& rng)
 	//{

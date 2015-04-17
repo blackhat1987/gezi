@@ -37,6 +37,9 @@ DEFINE_string(i, "./test.data/tid.txt", "input file");
 DEFINE_string(o, "feature.txt", "output file");
 DEFINE_int32(nt, 12, "thread num");
 
+DEFINE_string(m, "model", "");
+
+
 Features gen_features(uint64 tid)
 {
 	return gen_fullposts_features(tid, FLAGS_num, FLAGS_history, FLAGS_urate_history);
@@ -73,9 +76,7 @@ void run_predict()
 
 void run_predicts()
 {
-	string fullpostsModelPath = "./model";
-	PSCONF(fullpostsModelPath, "Global");
-	auto& predictor = SharedPredictors::Instance(fullpostsModelPath);
+	auto& predictor = SharedPredictors::Instance(FLAGS_m);
 	uint64 tid;
 	while (true)
 	{

@@ -46,6 +46,8 @@ namespace gezi {
 
 			uint uid = postInfo.userId;
 
+			LOG_IF(WARNING, uid == 0) << pid;
+
 			get_urate_info_from_uid(uid, urateInfo); 
 
 			//ÐÂÔö
