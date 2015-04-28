@@ -62,6 +62,10 @@ DEP_INCPATH=-I../../../../../../com/btest/gtest \
   -I../../../../../../lib2-64/libcrf/include \
   -I../../../../../../lib2-64/libcrf/output \
   -I../../../../../../lib2-64/libcrf/output/include \
+  -I../../../../../../lib2-64/nlp/compact-trie \
+  -I../../../../../../lib2-64/nlp/compact-trie/include \
+  -I../../../../../../lib2-64/nlp/compact-trie/output \
+  -I../../../../../../lib2-64/nlp/compact-trie/output/include \
   -I../../../../../../lib2-64/others-ex \
   -I../../../../../../lib2-64/others-ex/include \
   -I../../../../../../lib2-64/others-ex/output \
@@ -70,6 +74,10 @@ DEP_INCPATH=-I../../../../../../com/btest/gtest \
   -I../../../../../../lib2-64/postag/include \
   -I../../../../../../lib2-64/postag/output \
   -I../../../../../../lib2-64/postag/output/include \
+  -I../../../../../../lib2-64/text-util \
+  -I../../../../../../lib2-64/text-util/include \
+  -I../../../../../../lib2-64/text-util/output \
+  -I../../../../../../lib2-64/text-util/output/include \
   -I../../../../../../lib2-64/ullib \
   -I../../../../../../lib2-64/ullib/include \
   -I../../../../../../lib2-64/ullib/output \
@@ -78,6 +86,14 @@ DEP_INCPATH=-I../../../../../../com/btest/gtest \
   -I../../../../../../lib2-64/wordseg/include \
   -I../../../../../../lib2-64/wordseg/output \
   -I../../../../../../lib2-64/wordseg/output/include \
+  -I../../../../../../ps/se/dict-set \
+  -I../../../../../../ps/se/dict-set/include \
+  -I../../../../../../ps/se/dict-set/output \
+  -I../../../../../../ps/se/dict-set/output/include \
+  -I../../../../../../ps/se/include \
+  -I../../../../../../ps/se/include/include \
+  -I../../../../../../ps/se/include/output \
+  -I../../../../../../ps/se/include/output/include \
   -I../../../../../../public/comlog-plugin \
   -I../../../../../../public/comlog-plugin/include \
   -I../../../../../../public/comlog-plugin/output \
@@ -102,10 +118,18 @@ DEP_INCPATH=-I../../../../../../com/btest/gtest \
   -I../../../../../../public/uconv/include \
   -I../../../../../../public/uconv/output \
   -I../../../../../../public/uconv/output/include \
+  -I../../../../../../public/urlparser \
+  -I../../../../../../public/urlparser/include \
+  -I../../../../../../public/urlparser/output \
+  -I../../../../../../public/urlparser/output/include \
   -I../../../../../../quality/autotest/reportlib/cpp \
   -I../../../../../../quality/autotest/reportlib/cpp/include \
   -I../../../../../../quality/autotest/reportlib/cpp/output \
   -I../../../../../../quality/autotest/reportlib/cpp/output/include \
+  -I../../../../../../st/nlp/lm-score \
+  -I../../../../../../st/nlp/lm-score/include \
+  -I../../../../../../st/nlp/lm-score/output \
+  -I../../../../../../st/nlp/lm-score/output/include \
   -I../../../../../../third-64/boost \
   -I../../../../../../third-64/boost/include \
   -I../../../../../../third-64/boost/output \
@@ -137,11 +161,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=838d16b832c23c0931008355eecb5407  COMAKE
+COMAKE_MD5=22e99e1e991ec319199f7b9c24ace970  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check .copy-so test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf test_random test_shared_ptr test_binfinder test_seralize test_string test_bitop test_featurevector test_split test_tieba_get_info test_content_process test_cached_fetcher test_bind test_lrumap test_seralize_xml test_thread_local test_configure test_static test_cpplinq test_partial_sort test_string_util test_mean_var test_const test_matchdict test_sharedobjects test_matchdict test_erase test_max_count_by test_informaiton test_information simple test_cppformat test_string_find test_static_thread_safe test_map_default test_template_function identifer-text2bin test_numeric_limit 
+all:comake2_makefile_check .copy-so test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf test_random test_shared_ptr test_binfinder test_seralize test_string test_bitop test_featurevector test_split test_tieba_get_info test_content_process test_cached_fetcher test_bind test_lrumap test_seralize_xml test_thread_local test_configure test_static test_cpplinq test_partial_sort test_string_util test_mean_var test_const test_matchdict test_sharedobjects test_matchdict test_erase test_max_count_by test_informaiton test_information simple test_cppformat test_string_find test_static_thread_safe test_map_default test_template_function identifer-text2bin test_numeric_limit test_langmodel 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -279,6 +303,8 @@ clean:ccpclean
 	rm -rf ./output/bin/identifer-text2bin
 	rm -rf test_numeric_limit
 	rm -rf ./output/bin/test_numeric_limit
+	rm -rf test_langmodel
+	rm -rf ./output/bin/test_langmodel
 	rm -rf test_lambda_test_lambda.o
 	rm -rf test_bins_test_bins.o
 	rm -rf test_datetime_test_datetime.o
@@ -339,6 +365,7 @@ clean:ccpclean
 	rm -rf test_template_function_test_template_function.o
 	rm -rf identifer-text2bin_identifer-text2bin.o
 	rm -rf test_numeric_limit_test_numeric_limit.o
+	rm -rf test_langmodel_test_langmodel.o
 
 .PHONY:dist
 dist:
@@ -386,10 +413,13 @@ test_lambda:test_lambda_test_lambda.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -397,7 +427,9 @@ test_lambda:test_lambda_test_lambda.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -473,10 +505,13 @@ test_bins:test_bins_test_bins.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -484,7 +519,9 @@ test_bins:test_bins_test_bins.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -560,10 +597,13 @@ test_datetime:test_datetime_test_datetime.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -571,7 +611,9 @@ test_datetime:test_datetime_test_datetime.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -647,10 +689,13 @@ test_content_filter:test_content_filter_test_content_filter.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -658,7 +703,9 @@ test_content_filter:test_content_filter_test_content_filter.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -734,10 +781,13 @@ test_regex:test_regex_test_regex.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -745,7 +795,9 @@ test_regex:test_regex_test_regex.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -821,10 +873,13 @@ test_regex2:test_regex2_test_regex2.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -832,7 +887,9 @@ test_regex2:test_regex2_test_regex2.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -908,10 +965,13 @@ test_encode:test_encode_test_encode.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -919,7 +979,9 @@ test_encode:test_encode_test_encode.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -1001,10 +1063,13 @@ test_json:test_json_test_json.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -1012,7 +1077,9 @@ test_json:test_json_test_json.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -1088,10 +1155,13 @@ test_escape:test_escape_test_escape.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -1099,7 +1169,9 @@ test_escape:test_escape_test_escape.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -1175,10 +1247,13 @@ test_other:test_other_test_other.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -1186,7 +1261,9 @@ test_other:test_other_test_other.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -1262,10 +1339,13 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -1273,7 +1353,9 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -1349,10 +1431,13 @@ openmp_hello:openmp/openmp_hello_hello.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -1360,7 +1445,9 @@ openmp_hello:openmp/openmp_hello_hello.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -1436,10 +1523,13 @@ openmp_test:openmp/openmp_test_test.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -1447,7 +1537,9 @@ openmp_test:openmp/openmp_test_test.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -1523,10 +1615,13 @@ test_exception:test_exception_test_exception.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -1534,7 +1629,9 @@ test_exception:test_exception_test_exception.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -1610,10 +1707,13 @@ test_map_util:test_map_util_test_map_util.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -1621,7 +1721,9 @@ test_map_util:test_map_util_test_map_util.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -1697,10 +1799,13 @@ test_seg:test_seg_test_seg.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -1708,7 +1813,9 @@ test_seg:test_seg_test_seg.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -1784,10 +1891,13 @@ test_identifer:test_identifer_test_identifer.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -1795,7 +1905,9 @@ test_identifer:test_identifer_test_identifer.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -1871,10 +1983,13 @@ test_linear:test_linear_test_linear.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -1882,7 +1997,9 @@ test_linear:test_linear_test_linear.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -1958,10 +2075,13 @@ test_pinyin:test_pinyin_test_pinyin.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -1969,7 +2089,9 @@ test_pinyin:test_pinyin_test_pinyin.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -2045,10 +2167,13 @@ test_namepattern:test_namepattern_test_namepattern.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -2056,7 +2181,9 @@ test_namepattern:test_namepattern_test_namepattern.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -2132,10 +2259,13 @@ test_conf:test_conf_test_conf.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -2143,7 +2273,9 @@ test_conf:test_conf_test_conf.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -2219,10 +2351,13 @@ test_random:test_random_test_random.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -2230,7 +2365,9 @@ test_random:test_random_test_random.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -2306,10 +2443,13 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -2317,7 +2457,9 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -2393,10 +2535,13 @@ test_binfinder:test_binfinder_test_binfinder.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -2404,7 +2549,9 @@ test_binfinder:test_binfinder_test_binfinder.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -2480,10 +2627,13 @@ test_seralize:test_seralize_test_seralize.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -2491,7 +2641,9 @@ test_seralize:test_seralize_test_seralize.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -2567,10 +2719,13 @@ test_string:test_string_test_string.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -2578,7 +2733,9 @@ test_string:test_string_test_string.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -2654,10 +2811,13 @@ test_bitop:test_bitop_test_bitop.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -2665,7 +2825,9 @@ test_bitop:test_bitop_test_bitop.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -2741,10 +2903,13 @@ test_featurevector:test_featurevector_test_featurevector.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -2752,7 +2917,9 @@ test_featurevector:test_featurevector_test_featurevector.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -2828,10 +2995,13 @@ test_split:test_split_test_split.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -2839,7 +3009,9 @@ test_split:test_split_test_split.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -2915,10 +3087,13 @@ test_tieba_get_info:test_tieba_get_info_test_tieba_get_info.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -2926,7 +3101,9 @@ test_tieba_get_info:test_tieba_get_info_test_tieba_get_info.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -3002,10 +3179,13 @@ test_content_process:test_content_process_test_content_process.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -3013,7 +3193,9 @@ test_content_process:test_content_process_test_content_process.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -3089,10 +3271,13 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -3100,7 +3285,9 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -3176,10 +3363,13 @@ test_bind:test_bind_test_bind.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -3187,7 +3377,9 @@ test_bind:test_bind_test_bind.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -3263,10 +3455,13 @@ test_lrumap:test_lrumap_test_lrumap.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -3274,7 +3469,9 @@ test_lrumap:test_lrumap_test_lrumap.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -3350,10 +3547,13 @@ test_seralize_xml:test_seralize_xml_test_seralize_xml.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -3361,7 +3561,9 @@ test_seralize_xml:test_seralize_xml_test_seralize_xml.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -3437,10 +3639,13 @@ test_thread_local:test_thread_local_test_thread_local.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -3448,7 +3653,9 @@ test_thread_local:test_thread_local_test_thread_local.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -3524,10 +3731,13 @@ test_configure:test_configure_test_configure.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -3535,7 +3745,9 @@ test_configure:test_configure_test_configure.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -3611,10 +3823,13 @@ test_static:test_static_test_static.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -3622,7 +3837,9 @@ test_static:test_static_test_static.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -3698,10 +3915,13 @@ test_cpplinq:test_cpplinq_test_cpplinq.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -3709,7 +3929,9 @@ test_cpplinq:test_cpplinq_test_cpplinq.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -3785,10 +4007,13 @@ test_partial_sort:test_partial_sort_test_partial_sort.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -3796,7 +4021,9 @@ test_partial_sort:test_partial_sort_test_partial_sort.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -3872,10 +4099,13 @@ test_string_util:test_string_util_test_string_util.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -3883,7 +4113,9 @@ test_string_util:test_string_util_test_string_util.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -3959,10 +4191,13 @@ test_mean_var:test_mean_var_test_mean_var.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -3970,7 +4205,9 @@ test_mean_var:test_mean_var_test_mean_var.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -4046,10 +4283,13 @@ test_const:test_const_test_const.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -4057,7 +4297,9 @@ test_const:test_const_test_const.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -4133,10 +4375,13 @@ test_matchdict:test_matchdict.h \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -4144,7 +4389,9 @@ test_matchdict:test_matchdict.h \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -4220,10 +4467,13 @@ test_sharedobjects:test_sharedobjects_test_sharedobjects.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -4231,7 +4481,9 @@ test_sharedobjects:test_sharedobjects_test_sharedobjects.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -4307,10 +4559,13 @@ test_matchdict:test_matchdict_test_matchdict.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -4318,7 +4573,9 @@ test_matchdict:test_matchdict_test_matchdict.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -4394,10 +4651,13 @@ test_erase:test_erase_test_erase.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -4405,7 +4665,9 @@ test_erase:test_erase_test_erase.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -4481,10 +4743,13 @@ test_max_count_by:test_max_count_by_test_max_count_by.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -4492,7 +4757,9 @@ test_max_count_by:test_max_count_by_test_max_count_by.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -4568,10 +4835,13 @@ test_informaiton:test_informaiton_test_informaiton.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -4579,7 +4849,9 @@ test_informaiton:test_informaiton_test_informaiton.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -4655,10 +4927,13 @@ test_information:test_information_test_information.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -4666,7 +4941,9 @@ test_information:test_information_test_information.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -4742,10 +5019,13 @@ simple:simple_simple.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -4753,7 +5033,9 @@ simple:simple_simple.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -4829,10 +5111,13 @@ test_cppformat:test_cppformat_test_cppformat.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -4840,7 +5125,9 @@ test_cppformat:test_cppformat_test_cppformat.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -4916,10 +5203,13 @@ test_string_find:test_string_find_test_string_find.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -4927,7 +5217,9 @@ test_string_find:test_string_find_test_string_find.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -5003,10 +5295,13 @@ test_static_thread_safe:test_static_thread_safe_test_static_thread_safe.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -5014,7 +5309,9 @@ test_static_thread_safe:test_static_thread_safe_test_static_thread_safe.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -5090,10 +5387,13 @@ test_map_default:test_map_default_test_map_default.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -5101,7 +5401,9 @@ test_map_default:test_map_default_test_map_default.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -5177,10 +5479,13 @@ test_template_function:test_template_function_test_template_function.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -5188,7 +5493,9 @@ test_template_function:test_template_function_test_template_function.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -5264,10 +5571,13 @@ identifer-text2bin:identifer-text2bin_identifer-text2bin.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -5275,7 +5585,9 @@ identifer-text2bin:identifer-text2bin_identifer-text2bin.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -5351,10 +5663,13 @@ test_numeric_limit:test_numeric_limit_test_numeric_limit.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../public/configure/libconfig.a \
@@ -5362,7 +5677,9 @@ test_numeric_limit:test_numeric_limit_test_numeric_limit.o \
   ../../../../../../public/odict/libodict.a \
   ../../../../../../public/spreg/libspreg.a \
   ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../third-64/boost/lib/libboost_chrono.a \
   ../../../../../../third-64/boost/lib/libboost_context.a \
@@ -5412,6 +5729,98 @@ test_numeric_limit:test_numeric_limit_test_numeric_limit.o \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_numeric_limit
 	mkdir -p ./output/bin
 	cp -f --link test_numeric_limit ./output/bin
+
+test_langmodel:test_langmodel_test_langmodel.o \
+  ../include/tools/pinyin/libPYNotation.a \
+  ../libgezi_common.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_langmodel[0m']"
+	$(CXX) test_langmodel_test_langmodel.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
+  ../libgezi_common.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
+  -lrt \
+  -lldap \
+  -lcurl \
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_langmodel
+	mkdir -p ./output/bin
+	cp -f --link test_langmodel ./output/bin
 
 test_lambda_test_lambda.o:test_lambda.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_lambda_test_lambda.o[0m']"
@@ -5652,6 +6061,10 @@ identifer-text2bin_identifer-text2bin.o:identifer-text2bin.cc
 test_numeric_limit_test_numeric_limit.o:test_numeric_limit.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_numeric_limit_test_numeric_limit.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_numeric_limit_test_numeric_limit.o test_numeric_limit.cc
+
+test_langmodel_test_langmodel.o:test_langmodel.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_langmodel_test_langmodel.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_langmodel_test_langmodel.o test_langmodel.cc
 
 endif #ifeq ($(shell uname -m),x86_64)
 

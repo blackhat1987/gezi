@@ -1913,6 +1913,9 @@
     <ClCompile Include="tools\tieba\trate\test_trate.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="test\test_langmodel.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl">

@@ -55,7 +55,17 @@ void run()
 	Pval((langModel.CalSentence("楼 主 挽 尊 好 好 学 习") / 8.0));
 	Pval((langModel.CalSentence("楼 主 尊 好 好 学 习") / 7.0));
 
+	Pval((langModel.CalSentence("这 是 怎 么 回 事") / 7.0));
+
+	Pval((langModel.CalSentence("事 这 么 是 回 怎") / 7.0));
+
 	Pval((langModel.CalSentence("浣 犲 共 娲 伙 紝 浠 栫 帺 锛 屽 弽 涔 嬩 竴 镙 风 殑 銆 傜 疮 浜 嗗 潥 镌 佷 笉 涓 嫔 幓 浜 嗗 氨 鎯 崇 偣 寮 蹇 幂 殑 銆") / 41.0));
+	Pval((langModel.CalSentence("浣 犲 娲 伙 紝 浠 栫 帺 锛 屽 弽 涔 嬩 竴 镙 殑 銆 傜 疮 浜 嗗 潥 镌 佷 笉 涓 嫔 幓 浜 嗗 氨 鎯 崇 偣 寮 蹇 殑 銆") / 38.0));
+	Pval((langModel.CalSentence("銆")));
+	Pval((langModel.CalSentence("楼")));
+	Pval((langModel.CalSentence("浣 犲 娲 伙 紝 浠") / 6.0));
+	Pval((langModel.CalSentence("浣")));
+	Pval((langModel.CalSentence("浣 犲") / 2.0));
 	Pval((langModel.CalSentence("千 诗 织 就 回 文 锦 如 此 阳 台 暮 雨 何 只 有 英 灵 苏 蕙 子 更 无 悔 过 窦 连 波") / 28.0));
 	Pval((langModel.CalSentence("很 多 网 友 的 购 物 经 历 证 明 该 楼 主 是 个 骗 子") / 18.0));
 	Pval((langModel.CalSentence("真 心 分 享 留 下 你 们 的 经 验 呢") / 12.0));

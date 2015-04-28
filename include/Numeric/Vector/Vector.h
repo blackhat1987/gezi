@@ -116,8 +116,13 @@ namespace gezi {
 		return result;
 	}
 
-	//@TODO 统一使用TVector<Float>替代
+	template<typename Vector_, typename Vector2_>
+	inline Float cos(const Vector_& a, const Vector2_& b)
+	{
+		return dot(a, b) / (sqrt(a.SquaredNorm()) * sqrt(b.SquaredNorm()));
+	}
 
+	//@TODO 统一使用TVector<Float>替代
 	class Vector
 	{
 	public:
