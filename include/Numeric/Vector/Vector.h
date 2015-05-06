@@ -99,8 +99,8 @@ namespace gezi {
 				switch (compare(a.indices[aI], b.indices[bI]))
 				{
 				case 0:
+					PVAL2(a.indices[aI], result);
 					result += a.Value(aI++) * b.Value(bI++);
-					PVAL(result);
 					break;
 				case -1:
 					aI++;
@@ -120,6 +120,12 @@ namespace gezi {
 	inline Float cos(const Vector_& a, const Vector2_& b)
 	{
 		return dot(a, b) / (sqrt(a.SquaredNorm()) * sqrt(b.SquaredNorm()));
+	}
+
+	template<typename Vector_, typename Vector2_>
+	inline Float cos(const Vector_& a, const Vector2_& b, Float l2norm1, Float l2norm2)
+	{
+		return dot(a, b) / (l2norm1 * l2norm2);
 	}
 
 	//@TODO 统一使用TVector<Float>替代

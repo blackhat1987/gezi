@@ -325,6 +325,11 @@ namespace gezi {
 			return result;
 		}
 
+		static bool Segment_(string input, int type = SEG_WPCOMP)
+		{
+			return segment(input, handle(), type);
+		}
+
 		bool segment(string input, vector<string>& result, int type = SEG_WPCOMP)
 		{
 			return segment(input, _handle, result, type);
@@ -381,6 +386,12 @@ namespace gezi {
 
 		SegHandle& get_handle()
 		{
+			return _handle;
+		}
+
+		static SegHandle& handle()
+		{
+			static thread_local SegHandle _handle;
 			return _handle;
 		}
 
@@ -517,12 +528,7 @@ namespace gezi {
 			return _strategy;
 		}
 
-		static SegHandle& handle()
-		{
-			static thread_local SegHandle _handle;
-			return _handle;
-		}
-
+	
 		static int& flag(int flag_ = 0)
 		{//dynfloag 是否开启crf等 当前主要考虑设置是否开启crf
 			static int _flag = flag_;

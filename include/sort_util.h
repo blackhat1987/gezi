@@ -263,18 +263,31 @@ namespace gezi {
 		}
 	}
 
-	/*template<typename Vec>
-	void sort(Vec& vec, int maxLen)
+	template<typename Vec, typename Func>
+	void partial_sort(Vec& vec, int maxLen, Func func)
 	{
 		if ((size_t)maxLen >= vec.size())
 		{
-			std::sort(vec.begin(), vec.end(), std::less<>());
+			std::sort(vec.begin(), vec.end(), func);
 		}
 		else
 		{
-			std::partial_sort(vec.begin(), vec.begin() + maxLen, vec.end(), std::less<>());
+			std::partial_sort(vec.begin(), vec.begin() + maxLen, vec.end(), func);
 		}
-	}*/
+	}
+
+	template<typename Vec>
+	void partial_sort(Vec& vec, int maxLen)
+	{
+		if ((size_t)maxLen >= vec.size())
+		{
+			std::sort(vec.begin(), vec.end());
+		}
+		else
+		{
+			std::partial_sort(vec.begin(), vec.begin() + maxLen, vec.end());
+		}
+	}
 
 } //----end of namespace gezi
 

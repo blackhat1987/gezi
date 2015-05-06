@@ -295,14 +295,21 @@ void WPvec(const T&vec, std::wostream& out = std::wcout, const wstring& end = L"
 #define PrintVecTopN(vec, arg1, n) \
 	for (size_t i = 0; i < n; i++) \
 		{  \
-	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1; \
+	VLOG(2) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1; \
 		}
 
 #define PrintVec2TopN(vec, arg1, arg2, n) \
 	for (size_t i = 0; i < n; i++) \
 		{  \
-	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << vec[i].arg1 << " " \
+	VLOG(2) << setiosflags(ios::left) << setfill(' ') << setw(10) << vec[i].arg1 << " " \
 	<< vec[i].arg2; \
+		}
+
+#define PrintVec3TopN(vec, arg1, arg2, arg3, n) \
+	for (size_t i = 0; i < n; i++) \
+					{  \
+	VLOG(2) << setiosflags(ios::left) << setfill(' ') << setw(10) << vec[i].arg1 << " " \
+	<< vec[i].arg2 << " " << vec[i].arg3; \
 		}
 
 #define PrintVec2(vec, arg1, arg2) \
