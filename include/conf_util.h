@@ -19,6 +19,11 @@
 #define CONF_UTIL_H_
 
 #include <string>
+
+#ifndef __GNUC__ 
+#define NO_BAIDU_DEP
+#endif //--- __GNUC__
+
 #ifndef NO_BAIDU_DEP
 #include "Configure.h"
 #endif
@@ -66,7 +71,7 @@ namespace gezi
 		{
 			THROW(line + "-- not start with " + name);
 		}
-		return INT(line.substr(name.size()));
+		return BOOL(line.substr(name.size()));
 	}
 #ifndef NO_BAIDU_DEP
 	using comcfg::Configure;

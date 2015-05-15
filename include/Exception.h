@@ -39,10 +39,10 @@ namespace gezi
 	};
 }
 
-#define  THROW(msg) do\ 
-{\
-	LOG(WARNING) << msg; \
-	throw gezi::Exception(msg); \
-} while (0)
+#define THROW(s)\
+	{\
+	LOG(WARNING) << s;\
+	throw gezi::Exception(s);\
+	}
 
 #endif  //----end of EXCEPTION_H_

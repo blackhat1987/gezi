@@ -560,7 +560,7 @@ namespace gezi {
 			return bin_num - 1;
 		}
 		double span = (max - min) / bin_num;
-		int bin_index = (value - min) / span;
+		int bin_index = (int)((value - min) / span);
 		return bin_index;
 	}
 

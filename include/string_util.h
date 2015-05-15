@@ -15,9 +15,15 @@
 #define STRING_UTIL_H_
 #include <string>
 #include <vector>
-#include <iconv.h>
-
 #include "format.h" //放在最前面 有和convert_type.h的宏的冲突处理 
+
+#ifdef WIN32
+#ifndef NO_BAIDU_DEP
+#define NO_BAIDU_DEP
+#endif //---- NO_BAIDU_DEP
+#else
+#include <iconv.h> //for safe @TODO  can remove ?
+#endif //---- WIN32
 
 //@TODO baidu depend will move to LOCAL
 #ifndef NO_BAIDU_DEP
@@ -580,17 +586,17 @@ namespace gezi {
 
 	inline string max(string input, int length)
 	{
-		return input.length() <= length ? input : input.substr(0, length);
+		return input.length() <= (size_t)length ? input : input.substr(0, length);
 	}
 
 	inline string first(string input, int length)
 	{
-		return input.length() <= length ? input : input.substr(0, length);
+		return input.length() <= (size_t)length ? input : input.substr(0, length);
 	}
 
 	inline string last(string input, int length)
 	{
-		return input.length() <= length ? input : input.substr(input.length() - length, length);
+		return input.length() <= (size_t)length ? input : input.substr(input.length() - length, length);
 	}
 
 	//去掉一些特定的char 更复杂的比如去掉多个string 使用reg_remove

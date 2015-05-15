@@ -209,7 +209,20 @@ namespace gezi {
 			Init(input, startIndex, length_, sep);
 		}
 
-		void Init(string input, int startIndex = 0, int length_ = 1024000, string sep = ",\t ")
+		Vector(iterator first, iterator end)
+			:values(first, end)
+		{
+		}
+
+#ifndef GCCXML
+		Vector(const std::initializer_list<value_type>& il)
+			: values(il)
+		{
+
+		}
+#endif
+
+		void Init(string input, int startIndex = 0, int length_ = 0, string sep = ",\t ")
 		{
 			boost::trim(input); //需要注意 因为DOUBLE采用atof快速但是不安全 可能输入是一个空格 导致有问题
 			//注意split("",sep)得到不是空结果 而是有1个空元素的vector c# python	也是		
@@ -229,7 +242,10 @@ namespace gezi {
 						double val = DOUBLE(val_);
 						Add(index, val);
 					}
-					length = std::max(maxIndex * 2, length);
+					if (length < maxIndex + 1)
+					{
+						length = maxIndex * 2;
+					}
 				}
 				else
 				{
@@ -270,12 +286,6 @@ namespace gezi {
 			{
 				values.push_back(*it);
 			}
-		}
-
-
-		Vector(iterator first, iterator end)
-			:values(first, end)
-		{
 		}
 
 		iterator begin()
@@ -927,13 +937,13 @@ namespace gezi {
 		}
 
 
-		Vector& operator += (Vector& other)
+		Vector& operator += (const Vector& other)
 		{
 			Add(other);
 			return *this;
 		}
 
-		Vector& operator -= (Vector& other)
+		Vector& operator -= (const Vector& other)
 		{
 			Subtract(other);
 			return *this;
@@ -971,75 +981,26 @@ namespace gezi {
 			}
 		}
 
-		//@WARNING 下面两个函数从Vector输入改为Vector 看一下是否影响最后结果
 		/// Adds the supplied vector to myself.  (this += a) 
-		void Add(Vector& other)
+		inline void Add(const Vector& other)
 		{
-			/*	if (a.length != length)
-				{
-				THROW("Vectors must have the same dimensionality.");
-				}*/
-
-			if (other.Count() == 0)
-				return;
-
-			if (generalized_same(other.indices, indices))
-			{ //同一个Vector或者两者都是Dense(indices是空的)
-				for (size_t i = 0; i < values.size(); i++)
-					values[i] += other.values[i];
-			}
-			else if (IsDense())
-			{ // a sparse, this not sparse
-				for (int i = 0; i < other.indices.size(); i++)
-				{
-					values[other.indices[i]] += other.values[i];
-				}
-			}
-			else
-			{ //这里会改变a 非const输入有些危险 @TODO
-				ApplyWith(other, [](int ind, value_type v1, value_type& v2) { v2 += v1; });
-			}
+			ApplyWith(other, [](value_type& v1, value_type v2) { v1 += v2; });
 		}
 
-		void Subtract(Vector& other)
+		inline void Subtract(const Vector& other)
 		{
-			/*	if (a.length != length)
-			{
-			THROW("Vectors must have the same dimensionality.");
-			}*/
-
-			if (other.Count() == 0)
-				return;
-
-			if (generalized_same(other.indices, indices))
-			{ //同一个Vector或者两者都是Dense(indices是空的)
-				for (size_t i = 0; i < values.size(); i++)
-					values[i] -= other.values[i];
-			}
-			else if (IsDense())
-			{ // a sparse, this not sparse
-				for (int i = 0; i < other.indices.size(); i++)
-				{
-					values[other.indices[i]] -= other.values[i];
-				}
-			}
-			else
-			{ //这里会改变a 非const输入有些危险 @TODO 是否必须？ 能否改成const？
-				ApplyWith(other, [](int ind, value_type v1, value_type& v2) { v2 -= v1; });
-			}
+			ApplyWith(other, [](value_type& v1, value_type v2) { v1 -= v2; });
 		}
 
 
 		/// Applies the ParallelManipulator to each corresponding pair of elements where the argument is non-zero, in order of index.
-		//@TODO 拷贝之痛 暂时使用swap 不保证运算后a不会被改变,如果需要提前拷贝复制a
-		//@TODO 理解两个稀疏向量相加/相乘...
 		template<typename ParallelManipulator>
-		void ApplyWith(Vector& a, ParallelManipulator manip)
+		void ApplyWith(const Vector& a, ParallelManipulator manip)
 		{
-			/*		if (a.length != length)
-					{
-					THROW("Vectors must have the same dimensionality.");
-					}*/
+			/*if (a.length != length)
+			{
+			THROW("Vectors must have the same dimensionality.");
+			}*/
 
 			if (a.Count() == 0)
 				return;
@@ -1047,10 +1008,10 @@ namespace gezi {
 			if (a.IsDense())
 			{
 				if (IsDense())
-				{
+				{ // both dense
 					for (size_t i = 0; i < values.size(); i++)
 					{
-						manip(i, a.values[i], ref(values[i]));
+						manip(ref(values[i]), a.Value(i)); //ref这里主要为了可读性 另外manip可以使用值类型传递
 					}
 				}
 				else
@@ -1063,7 +1024,7 @@ namespace gezi {
 						{
 							newValues[i] = values[myI++];
 						} // else, newValues[i] is already zero
-						manip(i, a.values[i], ref(newValues[i]));
+						manip(ref(newValues[i]), a.Value(i));
 					}
 
 					indices.clear();
@@ -1075,148 +1036,217 @@ namespace gezi {
 			{ // a sparse, this not sparse
 				for (size_t i = 0; i < a.indices.size(); i++)
 				{
-					int index = a.indices[i];
-					manip(index, a.values[i], ref(values[index]));
+					manip(ref(values[a.indices[i]]), a.Value(i));
 				}
 			}
 			else if (&a.indices == &indices)
 			{ // both sparse, same indices
 				for (size_t i = 0; i < values.size(); i++)
 				{
-					manip(indices[i], a.values[i], ref(values[i]));
+					manip(ref(values[i]), a.Value(i));
 				}
 			}
 			else if (Count() == 0)
 			{
 				values.resize(a.Count(), 0);
-				indices.swap(a.indices);
+				//indices.swap(a.indices);
+				//拷贝代价 如果有必要 可以考虑indices用shared ptr 不过由于indices一般比较小。
+				//另外此类情况不常见
+				indices = a.indices;
 				for (size_t i = 0; i < values.size(); i++)
 				{
-					manip(indices[i], a.values[i], ref(values[i]));
+					manip(ref(values[i]), a.Value(i));
 				}
 			}
 			else
 			{ // both sparse
-				size_t myI = 0;
-
-				size_t newLength = indices.size();
-				// try to find each a index in my indices, counting how many more we'll add
-				for (size_t aI = 0; aI < a.indices.size(); aI++)
+				vector<index_type> newIndices;
+				vector<value_type> newValues;
+				size_t myI = 0, aI = 0;
+				for (; myI < indices.size() && aI < a.indices.size();)
 				{
-					int aIndex = a.indices[aI];
-					while (myI < indices.size() && indices[myI] < aIndex)
+					if (indices[myI] == a.indices[aI])
 					{
+						value_type val = values[myI];
+						manip(ref(val), a.Value(aI));
+						if (val != 0)
+						{
+							newIndices.push_back(indices[myI]);
+							newValues.push_back(val);
+						}
 						myI++;
+						aI++;
 					}
-					if (myI == indices.size())
+					else if (indices[myI] < a.indices[aI])
 					{
-						newLength += a.indices.size() - aI;
-						break;
-					}
-					else if (indices[myI] == aIndex)
-					{
+						value_type val = values[myI];
+						manip(ref(val), 0);
+						if (val != 0)
+						{
+							newIndices.push_back(indices[myI]);
+							newValues.push_back(val);
+						}
 						myI++;
 					}
 					else
 					{
-						newLength++;
+						value_type val = 0;
+						manip(ref(val), a.Value(aI));
+						if (val != 0)
+						{
+							newIndices.push_back(a.indices[aI]);
+							newValues.push_back(val);
+						}
+						aI++;
 					}
 				}
 
-				myI = 0;
-
-				if (newLength == indices.size())
+				for (; myI < indices.size(); myI++)
 				{
-					if (newLength == a.indices.size())
+					value_type val = values[myI];
+					manip(ref(val), 0);
+					if (val != 0)
 					{
-						for (size_t i = 0; i < values.size(); i++)
-						{
-							manip(indices[i], a.values[i], ref(values[i]));
-						}
-						//a.indices = indices;
-					}
-					else
-					{
-						for (size_t aI = 0; aI < a.indices.size(); aI++)
-						{
-							int aIndex = a.indices[aI];
-							while (indices[myI] < aIndex)
-								myI++;
-							manip(aIndex, a.Value(aI), ref(values[myI++]));
-						}
+						newIndices.push_back(indices[myI]);
+						newValues.push_back(values[myI]);
 					}
 				}
-				else if (newLength == a.indices.size())
+
+				for (; aI < a.indices.size(); aI++)
 				{
-					vector<value_type> newVals(newLength, 0);
-
-					for (int aI = 0; aI < a.indices.size(); aI++)
+					value_type val = 0;
+					manip(ref(val), a.Value(aI));
+					if (val != 0)
 					{
-						int aIndex = a.indices[aI];
-						if (myI < indices.size() && indices[myI] == aIndex)
-						{
-							newVals[aI] = values[myI++];
-						}
-
-						manip(aIndex, a.Value(aI), ref(newVals[aI]));
+						newIndices.push_back(indices[aI]);
+						newValues.push_back(values[aI]);
 					}
-
-					indices.swap(a.indices);
-					values.swap(newVals);
 				}
-				else
-				{
-					ivec newIndices(newLength, 0);
-					vector<value_type> newVals(newLength, 0);
 
-					int newI = 0;
-					for (size_t aI = 0; aI < a.indices.size(); aI++)
-					{
-						int aIndex = a.indices[aI];
-						while (myI < indices.size() && indices[myI] < aIndex)
-						{
-							newVals[newI] = values[myI];
-							newIndices[newI] = indices[myI];
-							myI++;
-							newI++;
-						}
-						if (myI == indices.size())
-						{
-							while (aI < a.indices.size())
-							{
-								newIndices[newI] = a.indices[aI];
-								manip(aIndex, a.Value(aI), ref(newVals[newI]));
-								aI++;
-								newI++;
-							}
-							break;
-						}
+				indices.swap(newIndices);
+				values.swap(newValues);
+				Densify();
 
-						value_type myVal = 0;
-						if (indices[myI] == aIndex)
-						{
-							myVal = values[myI++];
-						}
+				//---TLC的做法 增加一次遍历先确定indice长度 开辟好空间,再判断是否是相同的indices等等
+				//size_t myI = 0;
+				//size_t newLength = indices.size();
+				//// try to find each a index in my indices, counting how many more we'll add
+				//for (size_t aI = 0; aI < a.indices.size(); aI++)
+				//{
+				//	int aIndex = a.indices[aI];
+				//	while (myI < indices.size() && indices[myI] < aIndex)
+				//	{
+				//		myI++;
+				//	}
+				//	if (myI == indices.size())
+				//	{
+				//		newLength += a.indices.size() - aI;
+				//		break;
+				//	}
+				//	else if (indices[myI] == aIndex)
+				//	{
+				//		myI++;
+				//	}
+				//	else
+				//	{
+				//		newLength++;
+				//	}
+				//}
 
-						manip(aIndex, a.Value(aI), ref(myVal));
-						newVals[newI] = myVal;
-						newIndices[newI] = aIndex;
-						newI++;
-					}
+				//myI = 0;
 
-					while (myI < indices.size())
-					{
-						newVals[newI] = values[myI];
-						newIndices[newI] = indices[myI];
-						myI++;
-						newI++;
-					}
+				//if (newLength == indices.size())
+				//{
+				//	if (newLength == a.indices.size())
+				//	{ // we actually have the same indices!
+				//		for (size_t i = 0; i < values.size(); i++)
+				//		{
+				//			manip(ref(values[i]), a.Value(i));
+				//		}
+				//	}
+				//	else
+				//	{
+				//		for (size_t aI = 0; aI < a.indices.size(); aI++)
+				//		{
+				//			int aIndex = a.indices[aI];
+				//			while (indices[myI] < aIndex)
+				//				myI++;
+				//			manip(ref(values[myI++]), a.Value(aI));
+				//		}
+				//	}
+				//}
+				//else if (newLength == a.indices.size())
+				//{
+				//	vector<value_type> newVals(newLength, 0);
 
-					indices.swap(newIndices);
-					values.swap(newVals);
+				//	for (int aI = 0; aI < a.indices.size(); aI++)
+				//	{
+				//		int aIndex = a.indices[aI];
+				//		if (myI < indices.size() && indices[myI] == aIndex)
+				//		{
+				//			newVals[aI] = values[myI++];
+				//		}
 
-					Densify();
-				}
+				//		manip(ref(newVals[aI]), a.Value(aI));
+				//	}
+
+				//	//indices.swap(a.indices);
+				//	indices = a.indices;
+				//	values.swap(newVals);
+				//}
+				//else
+				//{
+				//	ivec newIndices(newLength, 0);
+				//	vector<value_type> newVals(newLength, 0);
+
+				//	int newI = 0;
+				//	for (size_t aI = 0; aI < a.indices.size(); aI++)
+				//	{
+				//		int aIndex = a.indices[aI];
+				//		while (myI < indices.size() && indices[myI] < aIndex)
+				//		{
+				//			newVals[newI] = values[myI];
+				//			newIndices[newI] = indices[myI];
+				//			myI++;
+				//			newI++;
+				//		}
+				//		if (myI == indices.size())
+				//		{
+				//			while (aI < a.indices.size())
+				//			{
+				//				newIndices[newI] = a.indices[aI];
+				//				manip(ref(newVals[newI]), a.Value(aI));
+				//				aI++;
+				//				newI++;
+				//			}
+				//			break;
+				//		}
+
+				//		value_type myVal = 0;
+				//		if (indices[myI] == aIndex)
+				//		{
+				//			myVal = values[myI++];
+				//		}
+
+				//		manip(ref(myVal), a.Value(aI));
+				//		newVals[newI] = myVal;
+				//		newIndices[newI] = aIndex;
+				//		newI++;
+				//	}
+
+				//	while (myI < indices.size())
+				//	{
+				//		newVals[newI] = values[myI];
+				//		newIndices[newI] = indices[myI];
+				//		myI++;
+				//		newI++;
+				//	}
+
+				//	indices.swap(newIndices);
+				//	values.swap(newVals);
+
+				//	Densify();
+				//}
 			}
 		}
 
@@ -1250,7 +1280,7 @@ namespace gezi {
 			return ss.str().substr(0, ss.str().length() - sep.length());
 		}
 
-		string DenseSr(string sep = ",") const
+		string DenseStr(string sep = ",") const
 		{
 			stringstream ss;
 			ForEachAll([&](int index, value_type value) {
@@ -1353,6 +1383,15 @@ namespace gezi {
 	//{
 	//	return dot<Vector, Vector>(a, b);
 	//}
+
+#ifndef GCCXML
+	inline Vector operator+(const Vector& l, const Vector& r)
+	{
+		Vector vec(l);
+		vec += r;
+		return vec;
+	}
+#endif
 }  //----end of namespace gezi
 
 #endif  //----end of NUMERIC__VECTOR__VECTOR_H_

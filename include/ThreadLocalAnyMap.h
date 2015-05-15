@@ -16,18 +16,21 @@
 
 namespace gezi {
 
-class ThreadLocalAnyMap 
-{
-public:
-	static AnyMap& Instance()
+#ifdef __GNUC__   //@TODO VS2015 support thread local
+
+	class ThreadLocalAnyMap
 	{
-		static thread_local AnyMap _map;
-		return _map;
-	}
-};
+	public:
+		static AnyMap& Instance()
+		{
+			static thread_local AnyMap _map;
+			return _map;
+		}
+	};
 
-typedef ThreadLocalAnyMap ThreadLocalData;
+	typedef ThreadLocalAnyMap ThreadLocalData;
 
+#endif //-- __GNUC__ 
 }  //----end of namespace gezi
 
 #endif  //----end of THREAD_LOCAL_ANY_MAP_H_

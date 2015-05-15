@@ -45,6 +45,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>.\include</AdditionalIncludeDirectories>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -605,6 +606,10 @@
     <ClCompile Include="src\SharedSegmentor.cpp" />
     <ClCompile Include="src\word_seg.cpp" />
     <ClCompile Include="test\cereal\test_cereal.cc" />
+    <ClCompile Include="test\expression-template\exp_template.cc" />
+    <ClCompile Include="test\expression-template\test_simple.cc" />
+    <ClCompile Include="test\expression-template\test_vector.cc" />
+    <ClCompile Include="test\expression-template\vector_simple.cc" />
     <ClCompile Include="test\identifer-text2bin.cc" />
     <ClCompile Include="test\linq\test.cc" />
     <ClCompile Include="test\mpi\boost_broadcast.cc" />

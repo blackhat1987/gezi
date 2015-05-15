@@ -1916,6 +1916,18 @@
     <ClCompile Include="test\test_langmodel.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="test\expression-template\test_simple.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\expression-template\test_vector.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\expression-template\vector_simple.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\expression-template\exp_template.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl">

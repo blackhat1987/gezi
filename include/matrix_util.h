@@ -30,7 +30,7 @@ typedef Matrix< int, Dynamic, Dynamic > IMat;
 
 typedef Matrix< double, Dynamic, 1 > Vec;
 typedef Matrix< float, Dynamic, 1 > FlVec;
-typedef Matrix< Float, Dynamic, 1 > FlVec;
+typedef Matrix< Float, Dynamic, 1 > FLVec;
 typedef Matrix< int, Dynamic, 1 > IVec;
 
 typedef Matrix< double, 1, Dynamic> RVec;

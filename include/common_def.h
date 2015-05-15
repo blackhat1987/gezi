@@ -27,7 +27,7 @@
 
 #include <limits>
 #include <cmath>
-#if __GNUC__ > 3
+#if __GNUC__ > 3 || defined(WIN32)
 #include <mutex>
 #include <array>
 #include <memory>
@@ -69,7 +69,7 @@ using std::shared_ptr;
 using std::thread;
 using std::ref; 
 using std::cref;
-#if __GNUC__ > 3
+#if __GNUC__ > 3 || defined(WIN32)
 using std::mutex;
 using std::lock_guard;
 #endif
@@ -200,5 +200,10 @@ struct KeyValuePair
 		key < other.key;
 	}
 };
+
+
+#ifndef __VERSION_ID__
+#define  __VERSION_ID__ "unknown"
+#endif
 
 #endif  //----end of COMMON_DEF_H_

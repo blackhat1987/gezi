@@ -22,7 +22,6 @@
 #define VLOG(5) cout
 #else
 #include <glog/logging.h>
-#include <gflags/gflags.h>
 #endif
 
 using namespace std;
@@ -40,10 +39,10 @@ using namespace std;
 	VLOG(0) << setprecision(16) << #s << " --- [" << s << "]"
 
 #define Pval_1(s)\
-	VLOG(1) << #s <<" --- [" << s << "]
+	VLOG(1) << #s << " --- [" << s << "]"
 
 #define Pval_2(s)\
-	VLOG(2) << #s <<" --- [" << s << "]"
+	VLOG(2) << #s << " --- [" << s << "]"
 
 #define Pval_(s, u)\
 	VLOG(0)  << u << " " << #s <<" --- [" << s << "]"
@@ -295,20 +294,20 @@ void WPvec(const T&vec, std::wostream& out = std::wcout, const wstring& end = L"
 #define PrintVecTopN(vec, arg1, n) \
 	for (size_t i = 0; i < n; i++) \
 		{  \
-	VLOG(2) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1; \
+	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i << vec[i].arg1; \
 		}
 
 #define PrintVec2TopN(vec, arg1, arg2, n) \
 	for (size_t i = 0; i < n; i++) \
 		{  \
-	VLOG(2) << setiosflags(ios::left) << setfill(' ') << setw(10) << vec[i].arg1 << " " \
+	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << vec[i].arg1 << " " \
 	<< vec[i].arg2; \
 		}
 
 #define PrintVec3TopN(vec, arg1, arg2, arg3, n) \
 	for (size_t i = 0; i < n; i++) \
 					{  \
-	VLOG(2) << setiosflags(ios::left) << setfill(' ') << setw(10) << vec[i].arg1 << " " \
+	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << vec[i].arg1 << " " \
 	<< vec[i].arg2 << " " << vec[i].arg3; \
 		}
 

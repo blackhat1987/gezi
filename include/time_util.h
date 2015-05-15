@@ -59,8 +59,7 @@ namespace gezi {
 		double elapsed()
 		{
 			boost::posix_time::time_duration d = boost::posix_time::microsec_clock::local_time() - _start_time;
-			double result = d.ticks();
-			return result /= d.ticks_per_second();
+			return d.ticks() / (double)d.ticks_per_second();
 		}
 
 		double elapsed_ms()

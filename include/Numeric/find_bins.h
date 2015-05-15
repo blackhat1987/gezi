@@ -143,14 +143,14 @@ namespace gezi {
 		vector<pair<int, Float> >& countValues)
 	{
 		// check whether to allocate datastructures
-		size_t sampleSize = values.size();
-		size_t allocSize = sampleSize < maxBins ? sampleSize : maxBins;
+		int sampleSize = values.size();
+		int allocSize = sampleSize < maxBins ? sampleSize : maxBins;
 
-		if (allocSize > binLowerUpperBounds.size())
+		if (allocSize > (int)binLowerUpperBounds.size())
 		{
 			binLowerUpperBounds.resize(allocSize, make_pair(0.0, 0.0));
 		}
-		if (sampleSize > countValues.size())
+		if (sampleSize > (int)countValues.size())
 		{
 			countValues.resize(sampleSize, make_pair(0, 0.0));
 		}
@@ -166,14 +166,14 @@ namespace gezi {
 		vector<pair<int, Float> >& countValues)
 	{
 		// check whether to allocate datastructures
-		size_t sampleSize = len;
-		size_t allocSize = sampleSize < maxBins ? sampleSize : maxBins;
+		int sampleSize = len;
+		int allocSize = sampleSize < maxBins ? sampleSize : maxBins;
 
-		if (allocSize > binLowerUpperBounds.size())
+		if ((size_t)allocSize > binLowerUpperBounds.size())
 		{
 			binLowerUpperBounds.resize(allocSize, make_pair(0.0, 0.0));
 		}
-		if (sampleSize > countValues.size())
+		if ((size_t)sampleSize > countValues.size())
 		{
 			countValues.resize(sampleSize, make_pair(0, 0.0));
 		}
@@ -243,14 +243,14 @@ namespace gezi {
 		Fvec& binUpperBounds, Fvec& binMedians)
 	{
 		// check whether to allocate datastructures
-		size_t sampleSize = values.size();
-		size_t allocSize = sampleSize < maxBins ? sampleSize : maxBins;
+		int sampleSize = values.size();
+		int allocSize = sampleSize < maxBins ? sampleSize : maxBins;
 
-		if (allocSize > binLowerUpperBounds.size())
+		if (allocSize > (int)binLowerUpperBounds.size())
 		{
 			binLowerUpperBounds.resize(allocSize, make_pair(0.0, 0.0));
 		}
-		if (sampleSize > countValues.size())
+		if (sampleSize > (int)countValues.size())
 		{
 			countValues.resize(sampleSize, make_pair(0, 0.0));
 		}
@@ -267,14 +267,14 @@ namespace gezi {
 		Fvec& binUpperBounds, Fvec& binMedians)
 	{
 		// check whether to allocate datastructures
-		size_t sampleSize = len;
-		size_t allocSize = sampleSize < maxBins ? sampleSize : maxBins;
+		int sampleSize = len;
+		int allocSize = sampleSize < maxBins ? sampleSize : maxBins;
 
-		if (allocSize > binLowerUpperBounds.size())
+		if (allocSize > (int)binLowerUpperBounds.size())
 		{
 			binLowerUpperBounds.resize(allocSize, make_pair(0.0, 0.0));
 		}
-		if (sampleSize > countValues.size())
+		if (sampleSize > (int)countValues.size())
 		{
 			countValues.resize(sampleSize, make_pair(0, 0.0)); //注意这个可能coutValues.size > sampleSize!
 		}
