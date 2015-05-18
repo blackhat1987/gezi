@@ -24,7 +24,7 @@
 //#define USE_CEREAL
 //#define NO_CEREAL
 #include "Matrix.h"
-//#include "Identifer.h"
+#include "Identifer.h"
 #include "serialize_util.h"
 
 #include "common_util.h"
