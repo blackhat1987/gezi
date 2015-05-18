@@ -207,7 +207,7 @@ namespace gezi {
 			//const_iterator iter = _map.find(key);
 			//auto iter = _map.find(key) //如果机上critical 会显示error: 'iter' was not declared in this scope 下面
 			iterator iter;
-#pragma omp critical
+#pragma  omp critical
 			{
 				iter = _map.find(key);
 			}
