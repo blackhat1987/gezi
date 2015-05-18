@@ -74,6 +74,8 @@ using std::mutex;
 using std::lock_guard;
 #endif
 
+#include <iostream>     // std::cout, std::hex, std::endl
+#include <iomanip>      // std::setiosflags
 #include <fstream>
 #include <sstream>
 #include <sstream>

@@ -1,12 +1,12 @@
-/** 
+/**
  *  ==============================================================================
- * 
+ *
  *          \file   test_cereal.cc
  *
- *        \author   chenghuige   
+ *        \author   chenghuige
  *
  *          \date   2014-10-01 20:02:57.824999
- *  
+ *
  *  \Description:
  *
  *  ==============================================================================
@@ -20,11 +20,11 @@
 #include <complex>      // std::complex, std::abs
 #include <cmath>
 
-#define NO_BAIDU_DEP
-#define USE_CEREAL
+//#define NO_BAIDU_DEP
+//#define USE_CEREAL
 //#define NO_CEREAL
 #include "Identifer.h"
-#include "serialize_util.h"
+//#include "serialize_util.h"
 
 #include "common_util.h"
 
@@ -160,6 +160,11 @@ struct Node
 		ar & GEZI_SERIALIZATION_NVP(_id);
 	}
 
+	virtual void Name()
+	{
+		LOG(INFO) << "Node";
+	}
+
 	void Save(string path)
 	{
 		//serialize_util::save_xml(*this, path); //基类这样 子类调用Save没办法保存子类的任何信息
@@ -190,6 +195,37 @@ struct ChildNode : public Node
 	{
 		ar(CEREAL_BASE_OBJECT_NVP(Node));
 		ar(CEREAL_NVP(height));
+	}
+
+	virtual void Name() override
+	{
+		LOG(INFO) << "ChildNode";
+	}
+
+	virtual void Save_(string path) override
+	{
+		serialize_util::save_xml(*this, path);
+	}
+
+	virtual void SaveJson_(string path) override
+	{
+		serialize_util::save_json(*this, path);
+	}
+};
+
+struct ChildNode2 : public Node
+{
+	int height = 166;
+	template<class Archive>
+	void serialize(Archive &ar, const unsigned int version)
+	{
+		ar(CEREAL_BASE_OBJECT_NVP(Node));
+		ar(CEREAL_NVP(height));
+	}
+
+	virtual void Name() override
+	{
+		LOG(INFO) << "ChildNode2";
 	}
 
 	virtual void Save_(string path) override
@@ -278,6 +314,7 @@ TEST(seralize_derived, func)
 	cnode.SaveJson("./cnode.json");
 }
 
+
 TEST(seralize_as_conf, func)
 {
 	ChildNode cnode;
@@ -287,16 +324,41 @@ TEST(seralize_as_conf, func)
 	Pval3(cnode.name, cnode.age, cnode.height);
 }
 
+CEREAL_REGISTER_TYPE(ChildNode)
+CEREAL_REGISTER_TYPE(ChildNode2)
+TEST(shared_ptr, func)
+{
+	{
+		shared_ptr<Node> child = make_shared<ChildNode>();
+		child->height = 12345;
+		shared_ptr<Node> child2 = make_shared<ChildNode2>();
+		shared_ptr<Node> base = make_shared<Node>();
+
+		std::ofstream os("shared_ptr.json");
+		{
+			cereal::JSONOutputArchive oar(os);
+			oar(child, child2, base);
+		}
+	}
+	{
+		shared_ptr<Node> child, child2, base;
+		std::ifstream is("shared_ptr.json");
+		{
+			cereal::InputArchive iar(is);
+			iar(child, child2, base);
+		}
+		Pval2(child->Name(), child->height);
+		Pval2(child2->Name(), child2->height);
+		Pval2(base->Name(), base->height);
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	testing::InitGoogleTest(&argc, argv);
 	google::InitGoogleLogging(argv[0]);
 	google::InstallFailureSignalHandler();
 	int s = google::ParseCommandLineFlags(&argc, &argv, false);
-	if (FLAGS_log_dir.empty())
-		FLAGS_logtostderr = true;
-	if (FLAGS_v == 0)
-		FLAGS_v = FLAGS_vl;
-	
+
 	return RUN_ALL_TESTS();
 }

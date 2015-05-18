@@ -14,7 +14,9 @@
 #ifndef MAP_UTIL_H_
 #define MAP_UTIL_H_
 
-#include "common_def.h"
+//#include "common_def.h"
+#include <iostream>     // std::cout, std::hex, std::endl
+#include <iomanip>      // std::setiosflags
 namespace gezi {
 	//-----------------map util
 
@@ -133,16 +135,17 @@ namespace gezi {
 	{
 		for (auto item : m)
 		{
-			std::cout << setiosflags(ios::left) << setfill(' ') << setw(40)
+			std::cerr << std::setiosflags(ios::left) << std::setfill(' ') << std::setw(40)
 				<< item.first << " " << (int)item.second << std::endl;
 		}
 	}
+
 	template<typename _Map>
 	void print_map(const _Map& m)
 	{
 		for (auto item : m)
 		{
-			std::cout << setiosflags(ios::left) << setfill(' ') << setw(40)
+			std::cerr << std::setiosflags(ios::left) << std::setfill(' ') << std::setw(40)
 				<< item.first << " " << item.second << std::endl;
 		}
 	}

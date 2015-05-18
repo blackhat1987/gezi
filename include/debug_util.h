@@ -17,9 +17,13 @@
 #include <iomanip>   //for setw format output
 #include <iterator>
 #ifdef SIMPLE_DEBUG
-#define LOG(INFO) cout
-#define VLOG(0) cout
-#define VLOG(5) cout
+#define LOG(INFO) std::cerr
+#define VLOG(0) std::cerr
+#define VLOG(1) std::cerr
+#define VLOG(2) std::cerr
+#define VLOG(3) std::cerr
+#define VLOG(4) std::cerr
+#define VLOG(5) std::cerr
 #else
 #include <glog/logging.h>
 #endif

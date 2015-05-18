@@ -274,7 +274,6 @@ namespace gezi {
 		}
 	}
 
-#include "debug_util.h"
 
 	inline unsigned int fast_atou(const char* str)
 	{
@@ -772,6 +771,16 @@ namespace gezi {
 			//merge(result, temp);
 		}
 		return result;
+	}
+
+	template<typename T>
+	void print(const vector<string>& names, const vector<T>& results)
+	{
+		for (size_t i = 0; i < names.size(); i++)
+		{
+			std::cerr << std::setiosflags(ios::left) << std::setfill(' ') << std::setw(40)
+				<< names[i] << "\t" << results[i] << std::endl;
+		}
 	}
 }  //----end of namespace gezi
 

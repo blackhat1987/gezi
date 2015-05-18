@@ -13,10 +13,16 @@
  */
 
 #define private public
-#define protected public
+#define protected public 
+#include <stdlib.h>
+#include <string.h>
+#include <complex>      // std::complex, std::abs
+#include <cmath>
+
+#include "serialize_util.h"
+//#include "Identifer.h"
 #include "common_util.h"
 #include "Numeric/Vector/Vector.h"
-#include "Identifer.h"
 using namespace std;
 using namespace gezi;
 DEFINE_int32(level, 0, "min log level");

@@ -13,8 +13,11 @@
 
 #ifndef IDENTIFER_H_
 #define IDENTIFER_H_
+
+#include <glog/logging.h>
+#include "common_def.h"    //很奇怪 单独使用Identifer.h 必须放在common_util.h后面才可以
 #include "serialize_util.h"
-#include "common_def.h"
+//#include "common_util.h"
 namespace gezi {
 
 	class Identifer

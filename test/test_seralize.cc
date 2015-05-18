@@ -23,6 +23,7 @@ DEFINE_string(i, "", "input");
 DEFINE_string(o, "", "output");
 DEFINE_string(type, "simple", "");
 
+
 TEST(test_seralize, func)
 {
 
