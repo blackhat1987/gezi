@@ -647,19 +647,19 @@ namespace gezi {
 	template<typename T>
 	inline void save_shared_ptr(T obj, string path, string name)
 	{
+		string outName = "";
+		string outFile = format("{}/{}.bin", path, name);
 		if (obj != nullptr)
 		{
-			string outName = "";
-			string outFile = format("{}/{}.bin", path, name);
-			//#ifdef NO_CEREAL
-			obj->Save(outFile);
-			//#else
-			//			serialize_util::save(obj, outFile);
-			//#endif
 			outName = obj->Name();
 			Pval_2(outName);
 			write_file(outName, format("{}/{}.name.txt", path, name));
 		}
+#ifdef NO_CEREAL
+		obj->Save(outFile);
+#else
+		serialize_util::save(obj, outFile);  //使用直接序列化shared ptr好处是可以save nullptr这样 避免两次save程序 第一次有normalizer 第二次没有 载入的时候仍然载入
+#endif
 	}
 
 	template<typename T>
@@ -674,19 +674,27 @@ namespace gezi {
 	template<typename T>
 	inline void save_shared_ptr_asxml(T obj, string name)
 	{
+//#ifdef NO_CEREAL
 		if (obj != nullptr)
 		{
 			obj->SaveXml(name);
 		}
+//#else 
+//		serialize_util::save_xml(obj, name);
+//#endif
 	}
 
 	template<typename T>
 	inline void save_shared_ptr_asjson(T obj, string name)
 	{
+#ifdef NO_CEREAL
 		if (obj != nullptr)
 		{
 			obj->SaveJson(name);
 		}
+#else
+		serialize_util::save_json(obj, name);
+#endif
 	}
 } //----end of namespace gezi
 
