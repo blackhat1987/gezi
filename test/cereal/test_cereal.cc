@@ -23,8 +23,9 @@
 //#define NO_BAIDU_DEP
 //#define USE_CEREAL
 //#define NO_CEREAL
-#include "Identifer.h"
-//#include "serialize_util.h"
+#include "Matrix.h"
+//#include "Identifer.h"
+#include "serialize_util.h"
 
 #include "common_util.h"
 
@@ -160,9 +161,9 @@ struct Node
 		ar & GEZI_SERIALIZATION_NVP(_id);
 	}
 
-	virtual void Name()
+	virtual string Name()
 	{
-		LOG(INFO) << "Node";
+		return "Node";
 	}
 
 	void Save(string path)
@@ -197,9 +198,9 @@ struct ChildNode : public Node
 		ar(CEREAL_NVP(height));
 	}
 
-	virtual void Name() override
+	virtual string Name() override
 	{
-		LOG(INFO) << "ChildNode";
+		return "ChildNode";
 	}
 
 	virtual void Save_(string path) override
@@ -223,9 +224,9 @@ struct ChildNode2 : public Node
 		ar(CEREAL_NVP(height));
 	}
 
-	virtual void Name() override
+	virtual string Name() override
 	{
-		LOG(INFO) << "ChildNode2";
+		return "ChildNode2";
 	}
 
 	virtual void Save_(string path) override
@@ -330,26 +331,31 @@ TEST(shared_ptr, func)
 {
 	{
 		shared_ptr<Node> child = make_shared<ChildNode>();
-		child->height = 12345;
+		shared_ptr<Node> child_ = child;
+		shared_ptr<Node> child__ = nullptr;
+		(dynamic_pointer_cast<ChildNode>(child))->height = 12345;
 		shared_ptr<Node> child2 = make_shared<ChildNode2>();
 		shared_ptr<Node> base = make_shared<Node>();
 
 		std::ofstream os("shared_ptr.json");
 		{
 			cereal::JSONOutputArchive oar(os);
-			oar(child, child2, base);
+			oar(child, child_, child__, child2, base);
 		}
 	}
 	{
-		shared_ptr<Node> child, child2, base;
+		shared_ptr<Node> child, child_, child__, child2, base;
 		std::ifstream is("shared_ptr.json");
 		{
-			cereal::InputArchive iar(is);
-			iar(child, child2, base);
+			cereal::JSONInputArchive iar(is);
+			iar(child, child_, child__, child2, base);
 		}
-		Pval2(child->Name(), child->height);
-		Pval2(child2->Name(), child2->height);
-		Pval2(base->Name(), base->height);
+		Pval((child__ == nullptr));
+		Pval2(child->Name(), (dynamic_pointer_cast<ChildNode>(child))->height);
+		Pval2(child_->Name(), (dynamic_pointer_cast<ChildNode>(child_))->height);
+		Pval3(child.use_count(), child_.use_count(), child2.use_count());
+		Pval2(child2->Name(), (dynamic_pointer_cast<ChildNode2>(child2))->height);
+		Pval(base->Name());
 	}
 }
 
@@ -359,6 +365,8 @@ int main(int argc, char *argv[])
 	google::InitGoogleLogging(argv[0]);
 	google::InstallFailureSignalHandler();
 	int s = google::ParseCommandLineFlags(&argc, &argv, false);
+	if (FLAGS_log_dir.empty())
+		FLAGS_logtostderr = true;
 
 	return RUN_ALL_TESTS();
 }

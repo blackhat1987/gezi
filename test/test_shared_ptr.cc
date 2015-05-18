@@ -126,14 +126,14 @@ TEST(test_shared_ptr, return_func)
 }
 int main(int argc, char *argv[])
 {
-  testing::InitGoogleTest(&argc, argv);
-  google::InitGoogleLogging(argv[0]);
-  google::InstallFailureSignalHandler();
-  int s = google::ParseCommandLineFlags(&argc, &argv, false);
-  if (FLAGS_log_dir.empty())
-    FLAGS_logtostderr = true;
-  FLAGS_minloglevel = FLAGS_level;
-  boost::progress_timer timer;
-  
-  return RUN_ALL_TESTS();
+	testing::InitGoogleTest(&argc, argv);
+	google::InitGoogleLogging(argv[0]);
+	google::InstallFailureSignalHandler();
+	int s = google::ParseCommandLineFlags(&argc, &argv, false);
+	if (FLAGS_log_dir.empty())
+		FLAGS_logtostderr = true;
+	FLAGS_minloglevel = FLAGS_level;
+	boost::progress_timer timer;
+	
+	return RUN_ALL_TESTS();
 }
