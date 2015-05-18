@@ -674,14 +674,14 @@ namespace gezi {
 	template<typename T>
 	inline void save_shared_ptr_asxml(T obj, string name)
 	{
-//#ifdef NO_CEREAL
+#ifdef NO_CEREAL
 		if (obj != nullptr)
 		{
 			obj->SaveXml(name);
 		}
-//#else 
-//		serialize_util::save_xml(obj, name);
-//#endif
+#else 
+		serialize_util::save_xml(obj, name);
+#endif
 	}
 
 	template<typename T>
