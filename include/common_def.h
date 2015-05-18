@@ -177,33 +177,42 @@ using boost::algorithm::split_regex;
 	Pval(cmd);\
 	system((cmd).c_str())
 
-//use this or just use pair ? first as key second as value//suggested to use pair for generic
-template<typename Key, typename Value>
-struct KeyValuePair
-{
-	Key key;
-	Value value;
 
-	KeyValuePair(const Key& key_, const Value& value_)
-		:key(key_), value(value_)
-	{
-
-	}
-
-	bool operator == (const KeyValuePair<Key, Value>& other)
-	{
-		return key == other.key;
-	}
-
-	bool operator < (const KeyValuePair<Key, Value>& other)
-	{
-		key < other.key;
-	}
-};
-
-
-#ifndef __VERSION_ID__
-#define  __VERSION_ID__ "unknown"
+#ifndef VERSION
+#define  VERSION "unknown"
 #endif
+
+namespace gezi
+{
+	//use this or just use pair ? first as key second as value//suggested to use pair for generic
+	template<typename Key, typename Value>
+	struct KeyValuePair
+	{
+		Key key;
+		Value value;
+
+		KeyValuePair(const Key& key_, const Value& value_)
+			:key(key_), value(value_)
+		{
+
+		}
+
+		bool operator == (const KeyValuePair<Key, Value>& other)
+		{
+			return key == other.key;
+		}
+
+		bool operator < (const KeyValuePair<Key, Value>& other)
+		{
+			key < other.key;
+		}
+	};
+
+
+	inline string get_version()
+	{
+		return string(VERSION) + " -- " + string(__DATE__) + " -- " + string(__TIME__);
+	}
+} //-----------end of gezi
 
 #endif  //----end of COMMON_DEF_H_

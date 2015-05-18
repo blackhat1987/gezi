@@ -111,6 +111,10 @@ TEST(vector_add_sparseDense, func)
 	Pval(B.DenseStr());
 }
 
+TEST(ad, func)
+{
+
+}
 
 int main(int argc, char *argv[])
 {
