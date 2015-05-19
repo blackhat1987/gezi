@@ -245,6 +245,51 @@ namespace gezi {
 		return true;
 	}
 
+	inline bool split(string input, string sep, string& first, string& second, string& third)
+	{
+		size_t index = input.find(sep);
+		if (index == string::npos)
+		{
+			return false;
+		}
+
+		first = input.substr(0, index);
+
+		index += sep.size();
+		size_t index2 = input.find(sep, index);
+		if (index2 == string::npos)
+		{
+			return false;
+		}
+
+		second = input.substr(index, index2 - index);
+
+		third = input.substr(index2 + sep.size());
+		return true;
+	}
+
+	inline bool split(string input, const char sep, string& first, string& second, string& third)
+	{
+		size_t index = input.find_first_of(sep);
+		if (index == string::npos)
+		{
+			return false;
+		}
+
+		first = input.substr(0, index);
+
+		index += 1;
+		size_t index2 = input.find_first_of(sep, index);
+		if (index2 == string::npos)
+		{
+			return false;
+		}
+
+		second = input.substr(index, index2 - index);
+		third = input.substr(index2 + 1);
+		return true;
+	}
+
 	template<typename T>
 	bool split(string input, const char sep, int& first, T& second)
 	{
@@ -427,6 +472,20 @@ namespace gezi {
 			boost::trim(str);
 			ovec.push_back(boost::lexical_cast<T>(str));
 		}
+	}
+
+	inline vector<double> to_dvec(string input, const char sep)
+	{
+		vector<double> vec;
+		int preIndex = 0, index = 0;
+		while (index < input.size())
+		{
+			index = input.find_first_of(sep, preIndex);
+			vec.push_back(atof(input.substr(preIndex, index - preIndex).c_str()));
+			preIndex = index + 1;
+		}
+		vec.push_back(atof(input.substr(preIndex).c_str()));
+		return vec;
 	}
 
 	template<typename T>

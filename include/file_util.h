@@ -483,19 +483,50 @@ namespace gezi {
 		ofs.write(reinterpret_cast<const char*> (&vec[0]), sizeof(_Node)* vec.size());
 	}
 
+
 	template<typename _Node>
 	bool read_vec(const std::string& file, std::vector<_Node>& vec)
 	{
 		std::ifstream ifs(file.c_str(), std::ios::binary);
 		if (!ifs.is_open())
 			return false;
-		vec.clear();
+		vec.clear(); //@TODO
 		ifs.seekg(0, std::ios::end);
 		int length = ifs.tellg(); //FIXME big file?
 		ifs.seekg(0, std::ios::beg);
 		vec.resize(length / sizeof(_Node));
 		ifs.read(reinterpret_cast<char*> (&vec[0]), length);
 		return true;
+	}
+
+	template<typename _Node>
+	void write_vec(const std::vector<_Node>& vec, std::ofstream& ofs)
+	{
+		int len = (int)vec.size();
+		ofs.write(reinterpret_cast<const char*> (&len), sizeof(len));
+		ofs.write(reinterpret_cast<const char*> (&vec[0]), sizeof(_Node)* vec.size());
+	}
+
+	template<typename _Node>
+	std::vector<_Node> read_vec(std::ifstream& ifs)
+	{
+		std::vector<_Node> vec;
+		int len;
+		ifs.read(reinterpret_cast<char*> (&len), sizeof(len));
+		vec.resize(len);
+		ifs.read(reinterpret_cast<char*> (&vec[0]), sizeof(_Node) * len);
+		return vec;
+	}
+
+	template<typename _Node>
+	void read_vec(std::ifstream& ifs, std::vector<_Node>& vec)
+	{
+		vec.clear();
+		int len;
+		ifs.read(reinterpret_cast<char*> (&len), sizeof(len));
+		vec.resize(len);
+		ifs.read(reinterpret_cast<char*> (&vec[0]), sizeof(_Node) * len);
+		return vec;
 	}
 
 	template<typename T>
@@ -513,6 +544,18 @@ namespace gezi {
 			return false;
 		ifs >> elem;
 		return true;
+	}
+
+	template<typename T>
+	void write_elem(const T& elem, std::ofstream& ofs)
+	{
+		ofs.write(reinterpret_cast<const char*> (&elem), sizeof(elem));
+	}
+
+	template<typename T>
+	void read_elem(std::ifstream& ifs, T& elem)
+	{
+		ifs.read(reinterpret_cast<char*> (&elem), sizeof(elem));
 	}
 
 	template<typename _Node>
@@ -610,26 +653,31 @@ namespace gezi {
 	{
 	public:
 
-		VecWriter(const std::string& file)
-			: _ofs(file.c_str(), std::ios::binary)
+		VecWriter(std::ofstream& ofs)
+			: _ofs(ofs)
 		{
 		}
 
 		template<typename _Node>
-		void write(const std::vector<_Node>& vec)
+		VecWriter& write(const std::vector<_Node>& vec)
 		{
 			int len = (int)vec.size();
+			_ofs.write(reinterpret_cast<const char*> (&len), sizeof(len));
 			_ofs.write(reinterpret_cast<const char*> (&vec[0]), sizeof(_Node)* len);
+			return *this;
 		}
 
 		template<typename _Iter>
-		void write(_Iter begin, _Iter end)
+		VecWriter& write(_Iter begin, _Iter end)
 		{
 			typedef typename _Iter::value_type value_type;
+			int len = end - begin;
+			_ofs.write(reinterpret_cast<const char*> (&len), sizeof(len));
 			while (begin != end)
 			{
 				_ofs.write(reinterpret_cast<const char*> (&(*begin)), sizeof(value_type));
 			}
+			return *this;
 		}
 
 		void close()
@@ -637,7 +685,7 @@ namespace gezi {
 			_ofs.close();
 		}
 	private:
-		std::ofstream _ofs;
+		std::ofstream& _ofs;
 	};
 
 
@@ -658,7 +706,8 @@ namespace gezi {
 #ifdef NO_CEREAL
 		obj->Save(outFile);
 #else
-		serialize_util::save(obj, outFile);  //使用直接序列化shared ptr好处是可以save nullptr这样 避免两次save程序 第一次有normalizer 第二次没有 载入的时候仍然载入
+		//使用直接序列化shared ptr好处是可以save nullptr这样 避免两次save程序 第一次有normalizer 第二次没有normalizer 载入的时候仍然载入第一次save的normalizer
+		serialize_util::save(obj, outFile);  
 #endif
 	}
 

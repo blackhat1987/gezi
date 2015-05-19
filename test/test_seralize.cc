@@ -26,9 +26,37 @@ DEFINE_string(type, "simple", "");
 
 TEST(test_seralize, func)
 {
-
+        {
+            ofstream ofs("a.bin", ios::binary);
+            int a = 3;
+            ofs << 3 << 4.5;
+        }
+        {
+            ifstream ifs("a.bin", ios::binary);
+            int a;
+            double b;
+            ifs >> a >> b;
+            Pval2(a, b);
+        }
 }
 
+TEST(test_seralize2, func)
+{
+        {
+            ofstream ofs("b.bin", ios::binary);
+            int a = 3;
+            write_elem(a, ofs);
+            write_elem(4.5, ofs);
+        }
+        {
+            ifstream ifs("b.bin", ios::binary);
+            int a;
+            double b;
+            read_elem(ifs, a);
+            read_elem(ifs, b);
+            Pval2(a, b);
+        }
+}
 int main(int argc, char *argv[])
 {
   testing::InitGoogleTest(&argc, argv);

@@ -23,6 +23,7 @@
 
 #include <algorithm>
 #include <numeric>
+#include <cmath>
 //#include <boost/bind.hpp>
 
 #include "hashmap_util.h"
@@ -54,7 +55,7 @@ namespace gezi {
 
 	inline double sigmoid(double score, double A, double B)
 	{
-		return 1.0 / (1 + exp(A * score + B));
+		return 1.0 / (1 + std::exp(A * score + B));
 	}
 
 	template<typename Iter>
