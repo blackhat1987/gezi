@@ -179,6 +179,15 @@ using boost::algorithm::split_regex;
 	Pval(cmd);\
 	system((cmd).c_str())
 
+#if __GNUC__ > 3 || defined(WIN32)
+//for polynomial class
+//#define  IS_TYPE_OF(a,A) \
+//	(dynamic_cast<A>(a) != nullptr)
+
+#define  IS_POINTER_TYPE_OF(a,A)\
+	(dynamic_pointer_cast<A>(a) != nullptr)
+#endif
+
 
 #ifndef VERSION
 #define  VERSION "unknown"
