@@ -92,6 +92,7 @@ namespace gezi {
 		}
 	};
 
+	//print 2 lines start and end
 	class Noticer
 	{
 	public:
@@ -126,6 +127,7 @@ namespace gezi {
 		int _level;
 	};
 
+	//only print at end
 	class Notifer
 	{
 	public:

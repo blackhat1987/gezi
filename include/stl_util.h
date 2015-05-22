@@ -832,13 +832,13 @@ namespace gezi {
 		return result;
 	}
 
-	template<typename T>
-	void print(const vector<string>& names, const vector<T>& results)
+	template<typename T, typename U>
+	void print(const vector<T>& names, const vector<U>& results, string inSep = "\t", string outSep = "\n", int space = 40)
 	{
 		for (size_t i = 0; i < names.size(); i++)
 		{
-			std::cerr << std::setiosflags(ios::left) << std::setfill(' ') << std::setw(40)
-				<< names[i] << "\t" << results[i] << std::endl;
+			std::cerr << std::setiosflags(ios::left) << std::setfill(' ') << std::setw(space)
+				<< names[i] << inSep << results[i] << outSep;
 		}
 	}
 }  //----end of namespace gezi

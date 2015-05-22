@@ -1928,6 +1928,21 @@
     <ClCompile Include="test\expression-template\exp_template.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="test\test_dynamic_cast.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_numeric_limit.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_template_function.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_derive.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\initializer\test_simple.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl">

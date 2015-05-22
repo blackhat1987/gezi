@@ -611,6 +611,7 @@
     <ClCompile Include="test\expression-template\test_vector.cc" />
     <ClCompile Include="test\expression-template\vector_simple.cc" />
     <ClCompile Include="test\identifer-text2bin.cc" />
+    <ClCompile Include="test\initializer\test_simple.cc" />
     <ClCompile Include="test\linq\test.cc" />
     <ClCompile Include="test\mpi\boost_broadcast.cc" />
     <ClCompile Include="test\mpi\boost_gather.cc" />
@@ -636,6 +637,8 @@
     <ClCompile Include="test\test_cppformat.cc" />
     <ClCompile Include="test\test_cpplinq.cc" />
     <ClCompile Include="test\test_datetime.cc" />
+    <ClCompile Include="test\test_derive.cc" />
+    <ClCompile Include="test\test_dynamic_cast.cc" />
     <ClCompile Include="test\test_encode.cc" />
     <ClCompile Include="test\test_erase.cc" />
     <ClCompile Include="test\test_escape.cc" />
@@ -655,6 +658,7 @@
     <ClCompile Include="test\test_max_count_by.cc" />
     <ClCompile Include="test\test_mean_var.cc" />
     <ClCompile Include="test\test_namepattern.cc" />
+    <ClCompile Include="test\test_numeric_limit.cc" />
     <ClCompile Include="test\test_other.cc" />
     <ClCompile Include="test\test_partial_sort.cc" />
     <ClCompile Include="test\test_pinyin.cc" />
@@ -671,6 +675,7 @@
     <ClCompile Include="test\test_static_thread_safe.cc" />
     <ClCompile Include="test\test_string.cc" />
     <ClCompile Include="test\test_string_util.cc" />
+    <ClCompile Include="test\test_template_function.cc" />
     <ClCompile Include="test\test_thread_local.cc" />
     <ClCompile Include="test\test_tieba_get_info.cc" />
     <ClCompile Include="test\tieba\get_full_posts_info.cc" />

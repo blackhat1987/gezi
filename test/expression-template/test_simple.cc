@@ -1,12 +1,12 @@
-/** 
+/**
  *  ==============================================================================
- * 
+ *
  *          \file   test_simple.cc
  *
- *        \author   chenghuige   
+ *        \author   chenghuige
  *
  *          \date   2015-05-12 10:54:23.369821
- *  
+ *
  *  \Description:
  *
  *  ==============================================================================
@@ -95,6 +95,6 @@ int main(int argc, char *argv[])
 		FLAGS_logtostderr = true;
 	if (FLAGS_v == 0)
 		FLAGS_v = FLAGS_vl;
-	
+
 	return RUN_ALL_TESTS();
 }
