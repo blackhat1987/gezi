@@ -1569,6 +1569,21 @@
     <ClInclude Include="include\tieba\TextPredictor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="test\factory\FastRankTrainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="test\factory\LinearSVMTrainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="test\factory\TrainerFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="test\factory\Trianer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -1941,6 +1956,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="test\initializer\test_simple.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\factory\test_factory.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\factory\TrainerFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_derive_override.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_derive_same_variable.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_derive_vector.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

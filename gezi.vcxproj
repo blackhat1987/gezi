@@ -394,6 +394,7 @@
     <ClInclude Include="include\Eigen\src\UmfPackSupport\UmfPackSupport.h" />
     <ClInclude Include="include\encoding_convert.h" />
     <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\Factory.h" />
     <ClInclude Include="include\feature\Feature.h" />
     <ClInclude Include="include\feature\FeatureExtractor.h" />
     <ClInclude Include="include\feature\FeatureExtractorMgr.h" />
@@ -584,6 +585,10 @@
     <ClInclude Include="include\wstring_util.h" />
     <ClInclude Include="src\json\json_batchallocator.h" />
     <ClInclude Include="src\json\json_tool.h" />
+    <ClInclude Include="test\factory\FastRankTrainer.h" />
+    <ClInclude Include="test\factory\LinearSVMTrainer.h" />
+    <ClInclude Include="test\factory\TrainerFactory.h" />
+    <ClInclude Include="test\factory\Trianer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc" />
@@ -610,6 +615,8 @@
     <ClCompile Include="test\expression-template\test_simple.cc" />
     <ClCompile Include="test\expression-template\test_vector.cc" />
     <ClCompile Include="test\expression-template\vector_simple.cc" />
+    <ClCompile Include="test\factory\test_factory.cc" />
+    <ClCompile Include="test\factory\TrainerFactory.cpp" />
     <ClCompile Include="test\identifer-text2bin.cc" />
     <ClCompile Include="test\initializer\test_simple.cc" />
     <ClCompile Include="test\linq\test.cc" />
@@ -638,6 +645,8 @@
     <ClCompile Include="test\test_cpplinq.cc" />
     <ClCompile Include="test\test_datetime.cc" />
     <ClCompile Include="test\test_derive.cc" />
+    <ClCompile Include="test\test_derive_override.cc" />
+    <ClCompile Include="test\test_derive_same_variable.cc" />
     <ClCompile Include="test\test_dynamic_cast.cc" />
     <ClCompile Include="test\test_encode.cc" />
     <ClCompile Include="test\test_erase.cc" />

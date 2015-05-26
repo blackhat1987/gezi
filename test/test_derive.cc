@@ -50,6 +50,7 @@ public:
 			func2();*/
 		//(Derived)(*this).func2();
 		func2();
+                static_cast<Derived*>(this)->func2();
 	}
 
 	virtual void deal()

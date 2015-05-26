@@ -181,8 +181,16 @@ namespace gezi {
 	template<typename ValueVec = vector<double>, typename IndexVec = vector<int> >
 	struct IndexCmper
 	{
-		ValueVec* valueVec;
+		const ValueVec* valueVec;
 		typedef typename IndexVec::value_type T;
+
+		IndexCmper() {}
+
+		IndexCmper(const ValueVec& valueVec_)
+			:valueVec(&valueVec_)
+		{
+
+		}
 
 		bool operator() (T left, T right)
 		{
@@ -193,8 +201,16 @@ namespace gezi {
 	template<typename ValueVec = vector<double>, typename IndexVec = vector<int> >
 	struct IndexReverseCmper
 	{
-		ValueVec* valueVec;
+		const ValueVec* valueVec;
 		typedef typename IndexVec::value_type T;
+
+		IndexReverseCmper(){}
+
+		IndexReverseCmper(const ValueVec& valueVec_)
+			:valueVec(&valueVec_)
+		{
+
+		}
 
 		bool operator() (T left, T right)
 		{
@@ -203,35 +219,41 @@ namespace gezi {
 	};
 
 	template<typename ValueVec, typename IndexVec, typename Func>
-	void sort(ValueVec& valueVec, IndexVec& indexVec, Func func)
+	void sort(const ValueVec& valueVec, IndexVec& indexVec, Func func)
 	{
 		func.valueVec = &valueVec;
 		int len = valueVec.size();
-		indexVec.resize(len);
-		for (size_t i = 0; i < len; i++)
+		if (indexVec.empty())
 		{
-			indexVec[i] = i;
+			indexVec.resize(len);
+			for (size_t i = 0; i < len; i++)
+			{
+				indexVec[i] = i;
+			}
 		}
 		std::sort(indexVec.begin(), indexVec.end(), func);
 	}
 
 	//默认是从大到小排序
 	template<typename ValueVec, typename IndexVec>
-	void sort(ValueVec& valueVec, IndexVec& indexVec)
+	void sort(const ValueVec& valueVec, IndexVec& indexVec)
 	{
 		IndexCmper<ValueVec, IndexVec> func;
 		sort(valueVec, indexVec, func);
 	}
 
 	template<typename ValueVec, typename IndexVec, typename Func>
-	void sort(ValueVec& valueVec, IndexVec& indexVec, int maxLen, Func func)
+	void sort(const ValueVec& valueVec, IndexVec& indexVec, int maxLen, Func func)
 	{
 		func.valueVec = &valueVec;
 		int len = valueVec.size();
-		indexVec.resize(len);
-		for (size_t i = 0; i < len; i++)
+		if (indexVec.empty())
 		{
-			indexVec[i] = i;
+			indexVec.resize(len);
+			for (size_t i = 0; i < len; i++)
+			{
+				indexVec[i] = i;
+			}
 		}
 		if (len <= maxLen)
 		{

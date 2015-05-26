@@ -124,6 +124,28 @@ TEST(test_shared_ptr, return_func)
 	pvec = play3();
 	Pval((*pvec)[4]);
 }
+
+struct A
+{
+	int x = 5;
+	~A()
+	{
+		VLOG(0) << "A desctruct";
+	}
+};
+
+A* Get()
+{
+	auto a = make_shared<A>();
+	a->x = 10;
+	return a.get();
+}
+
+TEST(test_shared_ptr2, return_func)
+{
+	A* p = Get();
+	Pval(p->x);
+}
 int main(int argc, char *argv[])
 {
 	testing::InitGoogleTest(&argc, argv);
