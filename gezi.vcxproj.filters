@@ -1973,6 +1973,12 @@
     <ClCompile Include="test\test_derive_vector.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="test\test_sort.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_rvalue.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl">

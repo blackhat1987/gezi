@@ -804,7 +804,7 @@ namespace gezi {
 		}
 
 		//小写开头的是为了兼容stl
-		int size() const
+		size_t size() const
 		{
 			return Length();
 		}

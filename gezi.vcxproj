@@ -647,6 +647,7 @@
     <ClCompile Include="test\test_derive.cc" />
     <ClCompile Include="test\test_derive_override.cc" />
     <ClCompile Include="test\test_derive_same_variable.cc" />
+    <ClCompile Include="test\test_derive_vector.cc" />
     <ClCompile Include="test\test_dynamic_cast.cc" />
     <ClCompile Include="test\test_encode.cc" />
     <ClCompile Include="test\test_erase.cc" />
@@ -674,11 +675,13 @@
     <ClCompile Include="test\test_random.cc" />
     <ClCompile Include="test\test_regex.cc" />
     <ClCompile Include="test\test_regex2.cc" />
+    <ClCompile Include="test\test_rvalue.cc" />
     <ClCompile Include="test\test_seg.cc" />
     <ClCompile Include="test\test_seralize.cc" />
     <ClCompile Include="test\test_seralize_xml.cc" />
     <ClCompile Include="test\test_sharedobjects.cc" />
     <ClCompile Include="test\test_shared_ptr.cc" />
+    <ClCompile Include="test\test_sort.cc" />
     <ClCompile Include="test\test_split.cc" />
     <ClCompile Include="test\test_static.cc" />
     <ClCompile Include="test\test_static_thread_safe.cc" />

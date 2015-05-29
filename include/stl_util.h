@@ -833,13 +833,70 @@ namespace gezi {
 	}
 
 	template<typename T, typename U>
-	void print(const vector<T>& names, const vector<U>& results, string inSep = "\t", string outSep = "\n", int space = 40)
+	void print(const vector<T>& names, const vector<U>& results, string inSep = "", string outSep = "\n", int space = 40)
 	{
 		for (size_t i = 0; i < names.size(); i++)
 		{
 			std::cerr << std::setiosflags(ios::left) << std::setfill(' ') << std::setw(space)
-				<< names[i] << inSep << results[i] << outSep;
+				<< names[i] + inSep
+				<< results[i] << outSep;
 		}
+	}
+
+	template<typename T, typename U>
+	void print_key_value(const T& name, const U& result, string inSep = "", string outSep = "\n", int space = 40)
+	{
+		std::cerr << std::setiosflags(ios::left) << std::setfill(' ') << std::setw(space)
+			<< name + inSep
+			<< result << outSep;
+	}
+
+	template<typename T, typename U>
+	string print2str(const vector<T>& names, const vector<U>& results, string inSep = "", string outSep = "\n", int space = 40)
+	{
+		std::stringstream ss;
+		for (size_t i = 0; i < names.size(); i++)
+		{
+			ss << std::setiosflags(ios::left) << std::setfill(' ') << std::setw(space)
+				<< STR(names[i]) + inSep
+				<< results[i] << outSep;
+		}
+		return ss.str();
+	}
+
+	template<typename T, typename U>
+	string print2str_row(const vector<T>& names, const vector<U>& results, int space = 40, string inSep = ":", char outSep = ' ')
+	{
+		std::stringstream ss;
+		for (size_t i = 0; i < names.size(); i++)
+		{
+			ss << names[i] << inSep 
+				<< std::setiosflags(ios::left) << std::setfill(outSep) << std::setw(space)
+				<< results[i]
+				<< outSep;
+		}
+		return ss.str();
+	}
+	//将数组中最大的转为1 其余norm到0-1, 需要输入数组都是正数
+	template<typename Vec>
+	void normalize_vec(Vec& vec)
+	{
+		Float maxValue = *(std::max_element(vec.begin(), vec.end()));
+		Float normalizingFactor = (maxValue != 0) ? std::sqrt(maxValue) : 1.0;
+		for (auto& item : vec)
+		{
+			item = std::sqrt(item) / normalizingFactor;
+		}
+	}
+
+	template<typename Vec, typename T>
+	void reset_vec(Vec& vec, int len, T value)
+	{
+		for (auto& item : vec)
+		{
+			item = value;
+		}
+		vec.resize(len, value);
 	}
 }  //----end of namespace gezi
 

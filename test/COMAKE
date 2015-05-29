@@ -32,7 +32,7 @@ CopyUsingHardLink(True)
 GCC_BIN='g++'
 GCC_FLAGS = '' 
 TOOLCHAIN=TOOLCHAIN_ROOT
-if GCC_HIGH  == 1:
+if GCC_HIGH  == 1 and not GCC_VERSION.startswith('3'):
 	if GCC_DYNAMIC == 1:	
 		TOOLCHAIN += '/x86_64-unknown-linux-gnu-%s-%s-%s-%s'%(GCC_VERSION,GLIBC_VERSION,BINUTILS_VERSION,KERNAL_VERSION)
 		GCC_BIN=TOOLCHAIN + '/bin/x86_64-unknown-linux-gnu-g++'
@@ -41,10 +41,6 @@ if GCC_HIGH  == 1:
 		GCC_BIN=TOOLCHAIN + '/bin/g++'
 #对于static方式 LIBS_DIR不起任何作用
 LIBS_DIR=TOOLCHAIN + '/x86_64-unknown-linux-gnu/lib/'
-
-if GCC_HIGH == 1:
-	content = '#!/bin/sh\nexport LD_LIBRARY_PATH=%s\n./$1\n'%LIBS_DIR
-	open('run.sh','w').write(content)
 
 print 'LIBS_DIR: %s'%LIBS_DIR
 
@@ -60,10 +56,12 @@ CPPFLAGS('-D_GNU_SOURCE -D__STDC_LIMIT_MACROS -DVERSION=\\\"1.9.8.7\\\"')
 #编译参数设置
 COMMON_FLAGS = '-g -O0 -pipe -W -Wall -fPIC -DHAVE_NETINET_IN_H -Wno-unused-parameter'
 
-if GCC_HIGH  == 1:
+if GCC_HIGH  == 1 and not GCC_VERSION.startswith('3'):
 	GCC_FLAGS += '-std=c++0x -fpermissive -Wno-write-strings -Wno-literal-suffix -Wno-unused-local-typedefs'
 	if GCC_DYNAMIC  == 1:
 		GCC_FLAGS += ' -fopenmp'
+print GCC_FLAGS
+print GCC_VERSION
 		
 #C编译参数.
 CFLAGS(COMMON_FLAGS, GCC_FLAGS)
@@ -185,3 +183,7 @@ Application('test_derive_override',Sources('test_derive_override.cc', srcs))
 Application('test_derive_same_variable',Sources('test_derive_same_variable.cc',srcs))
 #Application('test_derive_vector',Sources('test_derive_vector.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')))
 Application('test_derive_vector',Sources('test_derive_vector.cc',srcs))
+#Application('test',Sources('test.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')))
+Application('test',Sources('test.cc',srcs))
+Application('test_sort',Sources('test_sort.cc', srcs))
+Application('test_rvalue',Sources('test_rvalue.cc', srcs))

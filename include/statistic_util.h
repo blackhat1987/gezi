@@ -53,9 +53,10 @@ namespace gezi {
 		return fabs(a) < std::numeric_limits<double>::epsilon();
 	}
 
-	inline double sigmoid(double score, double A, double B)
+	//A一般取 -2 或者 1 按照logistic regression的习惯 看F(x）=log(p)/log(-1p)  -> A = -1 还是 F(x) = 1/2 * (log(p)/log(1-p)) -> A = -2
+	inline double sigmoid(double score, double A = -2.0, double B = 0.0)
 	{
-		return 1.0 / (1 + std::exp(A * score + B));
+		return 1.0 / (1.0 + std::exp(A * score + B));
 	}
 
 	template<typename Iter>
@@ -778,24 +779,116 @@ namespace gezi {
 	}
 #endif
 
-	inline double entropy(double prob, bool useLnNotLog2 = false)
+	//@TODO prob == 1的边界条件?
+	inline double entropy(double prob, bool useLnNotLog2 = true)
 	{
 		return
 			useLnNotLog2
 			? -prob * log(prob) - (1 - prob) * log(1 - prob)
 			: -prob * log(prob) / log(2) - (1 - prob) * log(1 - prob) / log(2);
+		//const double eps = 1e-16f;
+		//const double pneg = 1 - prob;
+		///*if (prob < eps || pneg < eps)*/
+		//if (prob == 0 || pneg == 0)
+		//{
+		//	return 0;
+		//}
+		//else
+		//{
+		//	return
+		//		useLnNotLog2
+		//		? -prob * log(prob) - (1 - prob) * log(1 - prob)
+		//		: -prob * log(prob) / log(2) - (1 - prob) * log(1 - prob) / log(2);
+		//}
 	}
 
 	/// <summary>
-	/// Cross-entropy of two distributions
+	/// Cross-entropy of two distributions, probTrue must be 0 or 1
 	/// </summary>        
-	inline double cross_entropy(double probTrue, double probPredicted, bool useLnNotLog2 = false)
+	inline double cross_entropy(double probTrue, double probPredicted, bool useLnNotLog2 = true)
+	{
+		////W0528 15:00:28.226536 21067 statistic_util.h:813] 1 1 0 -nan     0 * log(0) = 0 * inf = nan
+		//if (std::isnan(-probTrue * log(probPredicted) - (1 - probTrue) * log(1 - probPredicted)))
+		//{
+		//	LOG(WARNING) << probTrue << " " << probPredicted << " " << probTrue * log(probPredicted) << " " << (1 - probTrue) * log(1 - probPredicted);
+		//}
+		//return
+		//	useLnNotLog2
+		//	? -probTrue * log(probPredicted) - (1 - probTrue) * log(1 - probPredicted)
+		//	: -probTrue * log(probPredicted) / log(2) - (1 - probTrue) * log(1 - probPredicted) / log(2);
+
+		double eps = 1e-30f;
+		const double pneg = 1 - probPredicted;
+		if (probPredicted < eps)
+		//if (probPredicted == 0)
+		{
+			return probTrue > 0 ? 30 : 0;
+		}
+		else if (pneg < eps)
+		//else if (pneg == 0)
+		{
+			return probTrue > 0 ? 0 : 30;
+		}
+		else
+		{
+			return
+				useLnNotLog2
+				? -probTrue * log(probPredicted) - (1 - probTrue) * log(1 - probPredicted)
+				: -probTrue * log(probPredicted) / log(2) - (1 - probTrue) * log(1 - probPredicted) / log(2);
+		}
+	}
+
+	inline double label2ProbTrueZeroIsMin(double label)
+	{
+		return label > 0 ? 1 : 0;
+	}
+	inline double label2ProbTrueZeroNotMin(double label)
+	{
+		return label > 0 ? 1 : -1;
+	}
+
+
+	inline double cross_entropy_fast(double probTrue, double probPredicted, bool useLnNotLog2 = true)
 	{
 		return
 			useLnNotLog2
 			? -probTrue * log(probPredicted) - (1 - probTrue) * log(1 - probPredicted)
 			: -probTrue * log(probPredicted) / log(2) - (1 - probTrue) * log(1 - probPredicted) / log(2);
 	}
+
+	inline double cross_entropy_toleranced(double probTrue, double probPredicted, int logTolerance = 30.0, bool useLnNotLog2 = true)
+	{
+		double score = cross_entropy_fast(probTrue, probPredicted, useLnNotLog2);
+		if (score > logTolerance || std::isinf(score))
+		{
+			return logTolerance;
+		}
+		if (std::isnan(score))
+		{
+			return 0;
+		}
+		return score;
+	}
+
+	namespace loss {
+		//针对output输入的logsitic等价于针对prob输入的cross_entropy
+		inline double logistic(double trueProb, double prediction, double beta = 2.0)
+		{
+			//CHECK(!std::isinf(log(1.0 + std::exp(-beta * trueProb * prediction)))) << trueProb << " " << prediction;
+			// exp(760) will be info
+			double score = log(1.0 + std::exp(-beta * trueProb * prediction));
+			//if (score > 30 || std::isinf(score)) inf will > 30
+			if (score > 30.0)
+			{
+				return 30.0;
+			}
+			else
+			{
+				return score;
+			}
+		}
+	} //-----end of namespace loss
+
 } //----end of namespace sta
 namespace sta = gezi; //@TODO temply now since I use many sta:: right now
 #endif  //----end of STATISTIC_UTIL_H_

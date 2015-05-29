@@ -177,7 +177,7 @@ namespace gezi {
 		}
 	};
 
-
+	//---------------这些不再支持   改用index_sort
 	template<typename ValueVec = vector<double>, typename IndexVec = vector<int> >
 	struct IndexCmper
 	{
@@ -217,6 +217,7 @@ namespace gezi {
 			return ((*valueVec)[left] < (*valueVec)[right]);
 		}
 	};
+
 
 	template<typename ValueVec, typename IndexVec, typename Func>
 	void sort(const ValueVec& valueVec, IndexVec& indexVec, Func func)
@@ -310,6 +311,105 @@ namespace gezi {
 			std::partial_sort(vec.begin(), vec.begin() + maxLen, vec.end());
 		}
 	}
+
+
+	template<typename ValueVec>
+	void index_sort(const ValueVec& valueVec, vector<int>& indexVec)
+	{
+		indexVec.resize(valueVec.size());
+		for (size_t i = 0; i < indexVec.size(); i++)
+		{
+			indexVec[i] = i;
+		}
+		std::sort(indexVec.begin(), indexVec.end(),
+			[valueVec](const int l, const int r) { return valueVec[l] < valueVec[r]; });
+	}
+
+	template<typename ValueVec, typename Compare>
+	void index_sort(const ValueVec& valueVec, vector<int>& indexVec, Compare compare)
+	{
+		indexVec.resize(valueVec.size());
+		for (size_t i = 0; i < indexVec.size(); i++)
+		{
+			indexVec[i] = i;
+		}
+		std::sort(indexVec.begin(), indexVec.end(),
+			[valueVec,compare](const int l, const int r) { return compare(valueVec[l], valueVec[r]); });
+	}
+
+	template<typename ValueVec>
+	void index_sort(const ValueVec& valueVec, vector<int>& indexVec, int maxLen)
+	{
+		indexVec.resize(valueVec.size());
+		for (size_t i = 0; i < indexVec.size(); i++)
+		{
+			indexVec[i] = i;
+		}
+		if (maxLen >= indexVec.size())
+		{
+			std::sort(indexVec.begin(), indexVec.begin() + maxLen, indexVec.end(),
+				[valueVec](const int l, const int r) { return valueVec[l] < valueVec[r]; });
+		}
+		else
+		{
+			std::partial_sort(indexVec.begin(), indexVec.end(),
+				[valueVec](const int l, const int r) { return valueVec[l] < valueVec[r]; });
+		}
+	}
+
+
+	template<typename ValueVec, typename Compare>
+	void index_sort(const ValueVec& valueVec, vector<int>& indexVec, Compare compare, int maxLen)
+	{
+		indexVec.resize(valueVec.size());
+		for (size_t i = 0; i < indexVec.size(); i++)
+		{
+			indexVec[i] = i;
+		}
+		if (maxLen >= indexVec.size())
+		{
+			std::sort(indexVec.begin(), indexVec.end(),
+				[valueVec, compare](const int l, const int r) { return compare(valueVec[l], valueVec[r]); });
+		}
+		else
+		{
+			std::partial_sort(indexVec.begin(), indexVec.begin() + maxLen, indexVec.end(),
+				[valueVec, compare](const int l, const int r) { return compare(valueVec[l], valueVec[r]); });
+		}
+	}
+
+	template<typename ValueVec>
+	vector<int> index_sort(const ValueVec& valueVec)
+	{
+		vector<int> indexVec(valueVec.size());
+		index_sort(valueVec, indexVec);
+		return indexVec;
+	}
+
+	template<typename ValueVec, typename Compare>
+	vector<int> index_sort(const ValueVec& valueVec, Compare compare)
+	{
+		vector<int> indexVec(valueVec.size());
+		index_sort(valueVec, indexVec, compare);
+		return indexVec;
+	}
+
+	template<typename ValueVec>
+	vector<int> index_sort(const ValueVec& valueVec, int maxLen)
+	{
+		vector<int> indexVec(valueVec.size());
+		index_sort(valueVec, indexVec, maxLen);
+		return indexVec;
+	}
+
+	template<typename ValueVec, typename Compare>
+	vector<int> index_sort(const ValueVec& valueVec, Compare compare, int maxLen)
+	{
+		vector<int> indexVec(valueVec.size());
+		index_sort(valueVec, indexVec, compare, maxLen);
+		return indexVec;
+	}
+
 
 } //----end of namespace gezi
 

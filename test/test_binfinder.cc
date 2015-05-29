@@ -160,6 +160,18 @@ TEST(test_binfinder, perf2)
 	}
 }
 
+TEST(special, wrong)
+{
+	{
+		Fvec vec = { 1, 2, 2, 2, 2, 3 };
+		Pvec(vec);
+		Fvec result, medians;
+		find_bins(vec, 2, result, medians);
+		Pvec(result);
+		Pvec(medians);
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	testing::InitGoogleTest(&argc, argv);

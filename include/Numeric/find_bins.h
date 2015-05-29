@@ -20,7 +20,7 @@ namespace gezi {
 	//输入的countValues是resize之后的
 	inline int find_distinct_counts(Fvec& values, vector<pair<int, Float> >& countValues)
 	{
-		int numValues = 1;
+		int numDistinctValues = 1;
 
 		if (!values.empty())
 		{ //兼容边界条件 value是空的时候 返回1个bin max最大值，median设置为0
@@ -33,27 +33,27 @@ namespace gezi {
 			{
 				if (values[i] != values[i - 1])
 				{
-					countValues[numValues].first = 1;
-					countValues[numValues].second = values[i];
-					numValues++;
+					countValues[numDistinctValues].first = 1;
+					countValues[numDistinctValues].second = values[i];
+					numDistinctValues++;
 				}
 				else
 				{
-					countValues[numValues - 1].first++;
+					countValues[numDistinctValues - 1].first++;
 				}
 			}
 		}
 
-		return numValues;
+		return numDistinctValues;
 	}
 
 	//输入是一个近似稀疏表示,所有非0元素排列(values), 整个完整序列长度, 注意输入需要确保values里面没有0
 	inline int find_distinct_counts(Fvec& values, int len, vector<pair<int, Float> >& countValues)
 	{
-		int numValues = find_distinct_counts(values, countValues);
+		int numDistinctValues = find_distinct_counts(values, countValues);
 		int numZeros = len - values.size();
 		if (numZeros <= 0) //注意伪稀疏特殊直接返回
-			return numValues;
+			return numDistinctValues;
 
 		if (values.empty())
 		{
@@ -65,31 +65,33 @@ namespace gezi {
 		{
 			auto item = make_pair(numZeros, (Float)0.0); //auto item = make_pair(numZeros, 0.0); item.second会默认double类型
 			//注意不是countValues.end()因为空间复用
-			auto iter = std::lower_bound(countValues.begin(), countValues.begin() + numValues, item, CmpPairBySecond());
+			auto iter = std::lower_bound(countValues.begin(), countValues.begin() + numDistinctValues, item, CmpPairBySecond());
 			countValues.insert(iter, item); //@TODO insert ?
-			return numValues + 1;
+			return numDistinctValues + 1;
 		}
 	}
 
+	//存在问题 1,2,2,2,2,3分成2个桶 会出错,2独占一桶是不对的
+	//找binUpperBound的核心代码 返回binUpperBound
 	inline Fvec find_bins(vector<pair<int, Float> >& countValues,
 		vector<pair<Float, Float> >& binLowerUpperBounds,
-		int maxBins, int sampleSize, int numValues)
+		int maxBins, int sampleSize, int numDistinctValues)
 	{
 		Fvec result;
 		// case 1: each distinct value is a bin
-		if (numValues <= maxBins)
+		if (numDistinctValues <= maxBins)
 		{
-			result.resize(numValues);
-			for (int i = 0; i < numValues - 1; ++i)
+			result.resize(numDistinctValues);
+			for (int i = 0; i < numDistinctValues - 1; ++i)
 				result[i] = (countValues[i].second + countValues[i + 1].second) / 2;
-			result[numValues - 1] = std::numeric_limits<Float>::max();
+			result[numDistinctValues - 1] = std::numeric_limits<Float>::max();
 			return result;
 		}
 
 		// case 2: more distinct values than bins
 		// find single value bins
 		int meanBinSize = sampleSize / maxBins;
-		sort(countValues.begin(), countValues.begin() + numValues, CmpPairByFirstReverse());
+		sort(countValues.begin(), countValues.begin() + numDistinctValues, CmpPairByFirstReverse());
 		int numBins = 0;
 		int countSoFar = 0;
 		while (countValues[numBins].first > meanBinSize)
@@ -103,11 +105,11 @@ namespace gezi {
 		// find remaining bins
 		if (numBins < maxBins)
 		{
-			sort(countValues.begin() + numBins, countValues.begin() + numValues, CmpPairBySecond());
+			sort(countValues.begin() + numBins, countValues.begin() + numDistinctValues, CmpPairBySecond());
 			binLowerUpperBounds[numBins].first = countValues[numBins].second;
 			meanBinSize = (sampleSize - countSoFar) / (maxBins - numBins);
 			int currBinSize = 0;
-			for (int i = numBins; i < numValues - 1; ++i)
+			for (int i = numBins; i < numDistinctValues - 1; ++i)
 			{
 				binLowerUpperBounds[numBins].second = countValues[i].second;
 				currBinSize += countValues[i].first;
@@ -124,12 +126,27 @@ namespace gezi {
 			}
 			if (numBins < maxBins)
 			{
-				binLowerUpperBounds[numBins].second = countValues[numValues - 1].second;
+				binLowerUpperBounds[numBins].second = countValues[numDistinctValues - 1].second;
 				++numBins;
 			}
 		}
 		// prepare result 
 		sort(binLowerUpperBounds.begin(), binLowerUpperBounds.begin() + numBins, CmpPairByFirst());
+		//fix tlc的这个问题 bug
+		//$10 = (__gnu_cxx::__alloc_traits<std::allocator<std::pair<double, double> > >::value_type &) @0xcafef70: {first = 19761, second = 19761}
+		//(gdb)p binLowerUpperBounds[248]
+		//	$11 = (__gnu_cxx::__alloc_traits<std::allocator<std::pair<double, double> > >::value_type &) @0xcafef80: {first = 20125, second = 32685}
+		//(gdb)p binLowerUpperBounds[249]
+		//	$12 = (__gnu_cxx::__alloc_traits<std::allocator<std::pair<double, double> > >::value_type &) @0xcafef90: {first = 20733, second = 20733}
+		//(gdb)p binLowerUpperBounds[250]
+		//	$14 = (__gnu_cxx::__alloc_traits<std::allocator<std::pair<double, double> > >::value_type &) @0xcafefa0: {first = 21533, second = 21533}
+		for (int i = 0; i < numBins - 1; i++)
+		{
+			if (binLowerUpperBounds[i].second > binLowerUpperBounds[i + 1].second)
+			{
+				std::swap(binLowerUpperBounds[i].second, binLowerUpperBounds[i + 1].second);
+			}
+		}
 		result.resize(numBins, 0);
 		for (int i = 0; i < numBins - 1; ++i)
 			result[i] = (binLowerUpperBounds[i].second + binLowerUpperBounds[i + 1].first) / 2;
@@ -289,14 +306,14 @@ namespace gezi {
 	//输出bin分割点向量 
 	inline Fvec find_bins(Fvec& values, int maxBins)
 	{
-		vector<pair<Float, Float> > binLowerUpperBounds; //first as loewr, second as upper
+		vector<pair<Float, Float> > binLowerUpperBounds; //first as lower, second as upper
 		vector<pair<int, Float> > countValues; //first as counts, second as distinct values
 		return find_bins_(values, maxBins, binLowerUpperBounds, countValues);
 	}
 
 	inline Fvec find_bins(Fvec& values, int len, int maxBins)
 	{
-		vector<pair<Float, Float> > binLowerUpperBounds; //first as loewr, second as upper
+		vector<pair<Float, Float> > binLowerUpperBounds; //first as lower, second as upper
 		vector<pair<int, Float> > countValues; //first as counts, second as distinct values
 		return find_bins_(values, len, maxBins, binLowerUpperBounds, countValues);
 	}
@@ -304,7 +321,7 @@ namespace gezi {
 	//find binUpperBounds and binMedians
 	inline void find_bins(Fvec& values, int maxBins, Fvec& binUpperBounds, Fvec& binMedians)
 	{
-		vector<pair<Float, Float> > binLowerUpperBounds; //first as loewr, second as upper
+		vector<pair<Float, Float> > binLowerUpperBounds; //first as lower, second as upper
 		vector<pair<int, Float> > countValues; //first as counts, second as distinct values
 		find_bins_(values, maxBins, binLowerUpperBounds, countValues, binUpperBounds, binMedians);
 	}
@@ -312,7 +329,7 @@ namespace gezi {
 
 	inline void find_bins(Fvec& values, int len, int maxBins, Fvec& binUpperBounds, Fvec& binMedians)
 	{
-		vector<pair<Float, Float> > binLowerUpperBounds; //first as loewr, second as upper
+		vector<pair<Float, Float> > binLowerUpperBounds; //first as lower, second as upper
 		vector<pair<int, Float> > countValues; //first as counts, second as distinct values
 		find_bins_(values, len, maxBins, binLowerUpperBounds, countValues, binUpperBounds, binMedians);
 	}

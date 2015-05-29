@@ -248,8 +248,8 @@ namespace gezi {
 		//注意如果len= total 那么最后一个交换其实不需要
 		for (size_t i = 0; i < len; i++)
 		{
-			std::uniform_int_distribution<size_t> d(0, total - i - 1);
 			swap(first[i], first[i + d(rng)]);
+			std::uniform_int_distribution<size_t> d(0, total - i - 1);
 		}
 	}
 
@@ -263,7 +263,7 @@ namespace gezi {
 		diff_t total = last - first;
 		diff_t len = std::min(total, (diff_t)sample_num);
 		//注意如果len= total 那么最后一个交换其实不需要
-		for (diff_t i = total - 1; i >= total - len; i++)
+		for (diff_t i = total - 1; i >= total - len; i--)
 		{
 			std::uniform_int_distribution<size_t> d(0, i);
 			swap(first[i], first[d(rng)]);
