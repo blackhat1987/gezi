@@ -489,11 +489,21 @@ namespace gezi {
 	}
 
 	template<typename T>
-	void convert(const vector<string>&ivec, vector<T>& ovec)
+	void covert_append(const vector<string>&ivec, vector<T>& ovec)
 	{
-		foreach(const string item, ivec)
+		for(string item : ivec)
 		{
 			ovec.push_back(boost::lexical_cast<T>(item));
+		}
+	}
+
+	template<typename T>
+	void convert(const vector<string>&ivec, vector<T>& ovec)
+	{
+		ovec.resize(ivec.size());
+		for (size_t i = 0; i < ivec.size(); i++)
+		{
+			ovec[i] = boost::lexical_cast<T>(ivec[i]);
 		}
 	}
 

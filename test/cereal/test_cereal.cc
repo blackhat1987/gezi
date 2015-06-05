@@ -144,6 +144,20 @@ TEST(seralize_xml_map, func)
 	}
 }
 
+TEST(seralize_json_map, func)
+{
+	map<string, uint64> m = { { "abc", 3 }, { "def", 4 } };
+	serialize_util::save_json(m, "./map.json");
+	{
+		map<string, uint64> m;
+		serialize_util::load_json("./map.json", m);
+		for (auto& item : m)
+		{
+			Pval2(item.first, item.second);
+		}
+	}
+}
+
 struct Node
 {
 	string name = "abc";
@@ -356,6 +370,28 @@ TEST(shared_ptr, func)
 		Pval3(child.use_count(), child_.use_count(), child2.use_count());
 		Pval2(child2->Name(), (dynamic_pointer_cast<ChildNode2>(child2))->height);
 		Pval(base->Name());
+	}
+}
+
+TEST(string, func)
+{
+	map<string, uint64> m = { { "abc", 3 }, { "def", 4 } };
+	string s = serialize_util::save(m);
+	Pval(s);
+	{
+		map<string, uint64> m;
+		serialize_util::load_from_str(s, m);
+		for (auto& item : m)
+		{
+			Pval2(item.first, item.second);
+		}
+	}
+	{
+		map<string, uint64> m = serialize_util::load<map<string, uint64> >(s);
+		for (auto& item : m)
+		{
+			Pval2(item.first, item.second);
+		}
 	}
 }
 

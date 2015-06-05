@@ -16,6 +16,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 #include <cereal/types/unordered_map.hpp>
 #include <cereal/types/unordered_set.hpp>
@@ -36,12 +37,55 @@
 
 namespace serialize_util {
 	using std::string;
+
+	template<typename T>
+	string save(const T& data)
+	{
+		std::stringstream ss;
+		//cereal::JSONOutputArchive oa(ss); //注意序列化成json到string cereal是有bug的 少一个} 造成load的时候异常
+		//oa(CEREAL_NVP(data));
+		cereal::BinaryOutputArchive oa(ss);
+		oa(data);
+		return ss.str();
+	}
+	
+	//template<typename T>
+	//T load(string input)
+	//{
+	//	T data;
+	//	std::stringstream ss;
+	//	ss << input;
+	//	cereal::JSONInputArchive ia(ss); 
+	//	ia(data);
+	//	return data;
+	//}
+	template<typename T>
+	T load(string input)
+	{
+		T data;
+		std::stringstream ss(input);
+		cereal::BinaryInputArchive ia(ss);
+		ia(data);
+		//cereal::JSONInputArchive ia(ss); 
+		//ia(CEREAL_NVP(data));
+		return data;
+	}
+
+	template<typename T>
+	void load_from_str(string input, T& data)
+	{
+		std::stringstream ss(input);
+		cereal::BinaryInputArchive ia(ss);
+		ia(data);
+		//cereal::JSONInputArchive ia(ss); 
+		//ia(CEREAL_NVP(data));
+	}
 	/**将data序列化输出到file*/
 	template<typename T>
 	void save(const T& data, string file)
 	{
 		std::ofstream ofs(file.c_str(), std::ios::binary);
-		cereal::BinaryOutputArchive oa(ofs); //文本的输出归档类，使用一个ostream来构造
+		cereal::BinaryOutputArchive oa(ofs); 
 		oa(data);
 	}
 
@@ -49,7 +93,7 @@ namespace serialize_util {
 	void save_xml(const T& data, string file)
 	{
 		std::ofstream ofs(file.c_str());
-		 cereal::XMLOutputArchive oa(ofs); //文本的输出归档类，使用一个ostream来构造
+		 cereal::XMLOutputArchive oa(ofs); 
 		 oa(CEREAL_NVP(data));
 	}
 	
@@ -58,7 +102,7 @@ namespace serialize_util {
 	void save_text(const T& data, string file)
 	{
 		std::ofstream ofs(file.c_str());
-		cereal::JSONOutputArchive oa(ofs); //文本的输出归档类，使用一个ostream来构造
+		cereal::JSONOutputArchive oa(ofs); 
 		oa(CEREAL_NVP(data));
 	}
 
@@ -81,7 +125,7 @@ namespace serialize_util {
 		}
 		try
 		{
-			cereal::BinaryInputArchive ia(ifs); //文本的输出归档类，使用一个ostream来构造
+			cereal::BinaryInputArchive ia(ifs); 
 			ia(data);
 		}
 		catch (...)
@@ -101,7 +145,7 @@ namespace serialize_util {
 		}
 		try
 		{
-			cereal::XMLInputArchive ia(ifs); //文本的输出归档类，使用一个ostream来构造
+			cereal::XMLInputArchive ia(ifs); 
 			ia(CEREAL_NVP(data));
 		}
 		catch (...)
@@ -121,7 +165,7 @@ namespace serialize_util {
 		}
 		try
 		{
-			cereal::JSONInputArchive ia(ifs); //文本的输出归档类，使用一个ostream来构造
+			cereal::JSONInputArchive ia(ifs); 
 			ia(data);
 		}
 		catch (...)
@@ -141,8 +185,8 @@ namespace serialize_util {
 		}
 		try
 		{
-			cereal::JSONInputArchive ia(ifs); //文本的输出归档类，使用一个ostream来构造
-			ia(data);
+			cereal::JSONInputArchive ia(ifs); 
+			ia(CEREAL_NVP(data));
 		}
 		catch (...)
 		{

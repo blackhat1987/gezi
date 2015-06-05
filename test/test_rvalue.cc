@@ -35,19 +35,20 @@ void work(const ivec& a)
 void work(ivec& a)
 {
 	VLOG(0) << "&";
-	ivec x = move(a);
+	//ivec x = move(a);
+	ivec x =(a);
 	Pval(a.size());
 	Pval(x.size());
 }
 
-void work(ivec&& a)
-{
-	VLOG(0) << "&&";
-	//ivec x = move(a);
-	ivec x = a;
-	Pval(a.size());
-	Pval(x.size());
-}
+//void work(ivec&& a)
+//{
+//	VLOG(0) << "&&";
+//	//ivec x = move(a);
+//	ivec x = a;
+//	Pval(a.size());
+//	Pval(x.size());
+//}
 
 
 TEST(rvalue, func)

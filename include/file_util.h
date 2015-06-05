@@ -64,12 +64,19 @@ namespace gezi {
 			std::istreambuf_iterator<char>()));
 	}
 
-	inline void write_file(string content, string outfile)
+	template<typename T>
+	inline void write_file(const T& content, string outfile)
 	{
 		std::ofstream ofs(outfile.c_str());
 		ofs << content;
 	}
 
+	template<typename T>
+	inline void read_file(string infile, T& content)
+	{
+		std::ifstream ifs(infile.c_str());
+		ifs >> content;
+	}
 	template<typename Container>
 	bool file_to_set(const std::string& infile, Container& container)
 	{

@@ -136,6 +136,11 @@
     <ClInclude Include="include\db\otl\DBReader.h" />
     <ClInclude Include="include\db\otl\otlv4.h" />
     <ClInclude Include="include\debug_util.h" />
+    <ClInclude Include="include\ds\DeterminSkipList.h" />
+    <ClInclude Include="include\ds\Rstree.h" />
+    <ClInclude Include="include\ds\RstreeWorker.h" />
+    <ClInclude Include="include\ds\SuffixTree.h" />
+    <ClInclude Include="include\ds\Trie.h" />
     <ClInclude Include="include\editdistance.h" />
     <ClInclude Include="include\edit_distance.h" />
     <ClInclude Include="include\Eigen\src\Cholesky\LDLT.h" />
@@ -462,6 +467,7 @@
     <ClInclude Include="include\PythonWrapper\Predictor.h" />
     <ClInclude Include="include\PythonWrapper\PredictorFactory.h" />
     <ClInclude Include="include\python_util.h" />
+    <ClInclude Include="include\rabit_util.h" />
     <ClInclude Include="include\random_util.h" />
     <ClInclude Include="include\RegexMatcher.h" />
     <ClInclude Include="include\RegexReplaceProcessor.h" />

@@ -32,7 +32,7 @@ template<typename T>
 void run()
 {
 	Pval(numeric_limits<T>::lowest());
-	Pval(numeric_limits<T>::min());
+	Pval(numeric_limits<T>::min());  //所以 double 一般要用lowest才能表示真正最小值  而不是最小的正值
 	Pval(numeric_limits<T>::max());
 	Pval(numeric_limits<T>::infinity());
 	Pval(numeric_limits<T>::epsilon());
@@ -92,9 +92,9 @@ int main(int argc, char *argv[])
 	Pval((gezi::loss::logistic(1, -3)));
 	Pval((gezi::loss::logistic(1, -10)));
 	Pval((gezi::loss::logistic(1, -20)));
-        Pval(std::exp(380));
-        Pval(std::exp(760));
-        Pval((std::exp(760) > 30));
+				Pval(std::exp(380));
+				Pval(std::exp(760));
+				Pval((std::exp(760) > 30));
 	Pval((gezi::loss::logistic(1, -380)));
 
 	vector<int> vec{ 1, 2, 3 };
