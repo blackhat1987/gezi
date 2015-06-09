@@ -26,11 +26,11 @@ SELECT L{0}.post_id, uid, uname, thread_id, title, content, create_time, op_user
 FROM 
 (SELECT post_id, uid, uname, thread_id, get_json_object(title, "$.title") AS title, get_json_object(content, "$.content") AS content, create_time
 FROM default.pbdata
-WHERE day = {0} and post_id % 31 == 0)L{0}
+WHERE day = {0} and post_id % {1} == 0)L{0}
 LEFT OUTER JOIN 
 (SELECT post_id, op_username, monitor_type
 FROM default.forum_ueg_anti_monitor
-WHERE day = {0} and post_id % 31 == 0)R{0}
+WHERE day = {0} and post_id % {1} == 0)R{0}
 ON L{0}.post_id == R{0}.post_id 
 '''
 code_middle = '''UNION ALL
@@ -38,11 +38,11 @@ SELECT L{0}.post_id, uid, uname, thread_id, title, content, create_time, op_user
 FROM 
 (SELECT post_id, uid, uname, thread_id, get_json_object(title, "$.title") AS title, get_json_object(content, "$.content") AS content, create_time
 FROM default.pbdata
-WHERE day = {0} and post_id % 31 == 0)L{0}
+WHERE day = {0} and post_id % {1} == 0)L{0}
 LEFT OUTER JOIN 
 (SELECT post_id, op_username, monitor_type
 FROM default.forum_ueg_anti_monitor
-WHERE day = {0} and post_id % 31 == 0)R{0}
+WHERE day = {0} and post_id % {1} == 0)R{0}
 ON L{0}.post_id == R{0}.post_id 
 '''
 
@@ -54,9 +54,10 @@ l = time.localtime()
 last_day = (datetime.date(l[0],l[1],l[2]) -  datetime.timedelta (days = 1)).strftime('%Y%m%d')
 
 code = code_begin.format(last_day)
-for i in range(2,3):
+days = int(sys.argv[1])
+for i in range(2,days + 1):
     the_day = (datetime.date(l[0],l[1],l[2]) -  datetime.timedelta (days = i)).strftime('%Y%m%d')
-    code += code_middle.format(the_day)
+    code += code_middle.format(the_day, days)
 
 code += code_end
 
