@@ -10,8 +10,7 @@
 import sys,os
 import time,datetime
 
-code_begin = '''
-set mapred.job.name=chenghuige.add; 
+code_begin = '''set mapred.job.name=chenghuige.add; 
 set hive.map.aggr=true; 
 set hive.auto.convert.join=false; 
 set mapred.job.map.capacity=6000; 
