@@ -80,6 +80,17 @@ namespace serialize_util {
 		//cereal::JSONInputArchive ia(ss); 
 		//ia(CEREAL_NVP(data));
 	}
+
+	template<typename T>
+	void load_from_str(T& data, string input)
+	{
+		std::stringstream ss(input);
+		cereal::BinaryInputArchive ia(ss);
+		ia(data);
+		//cereal::JSONInputArchive ia(ss); 
+		//ia(CEREAL_NVP(data));
+	}
+
 	/**将data序列化输出到file*/
 	template<typename T>
 	void save(const T& data, string file)

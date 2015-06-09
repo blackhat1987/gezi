@@ -1602,6 +1602,30 @@
     <ClInclude Include="include\rabit_util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="other\rabit\include\dmlc\io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other\rabit\include\rabit\engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other\rabit\include\rabit\io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other\rabit\include\rabit\rabit-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other\rabit\include\rabit\timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other\rabit\include\rabit\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other\rabit\include\rabit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other\rabit\include\rabit_serializable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">

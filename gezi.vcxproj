@@ -589,6 +589,14 @@
     <ClInclude Include="include\WithHelp.h" />
     <ClInclude Include="include\word_seg.h" />
     <ClInclude Include="include\wstring_util.h" />
+    <ClInclude Include="other\rabit\include\dmlc\io.h" />
+    <ClInclude Include="other\rabit\include\rabit.h" />
+    <ClInclude Include="other\rabit\include\rabit\engine.h" />
+    <ClInclude Include="other\rabit\include\rabit\io.h" />
+    <ClInclude Include="other\rabit\include\rabit\rabit-inl.h" />
+    <ClInclude Include="other\rabit\include\rabit\timer.h" />
+    <ClInclude Include="other\rabit\include\rabit\utils.h" />
+    <ClInclude Include="other\rabit\include\rabit_serializable.h" />
     <ClInclude Include="src\json\json_batchallocator.h" />
     <ClInclude Include="src\json\json_tool.h" />
     <ClInclude Include="test\factory\FastRankTrainer.h" />
