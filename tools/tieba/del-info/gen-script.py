@@ -53,8 +53,9 @@ now = time.strftime('%Y%m%d',time.localtime(time.time()))
 l = time.localtime()
 last_day = (datetime.date(l[0],l[1],l[2]) -  datetime.timedelta (days = 1)).strftime('%Y%m%d')
 
-code = code_begin.format(last_day)
 days = int(sys.argv[1])
+
+code = code_begin.format(last_day, days)
 for i in range(2,days + 1):
     the_day = (datetime.date(l[0],l[1],l[2]) -  datetime.timedelta (days = i)).strftime('%Y%m%d')
     code += code_middle.format(the_day, days)
