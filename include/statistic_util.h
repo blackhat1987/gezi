@@ -179,6 +179,15 @@ namespace gezi {
 		}
 	}
 
+	template<typename Iter, typename Iter2>
+	void copy_range(Iter dest, Iter2 src, int len)
+	{
+		for (int i = 0; i < len; i++)
+		{
+			*dest++ = *src++;
+		}
+	}
+
 	struct sd_op
 	{
 		template<typename T1, typename T2 >

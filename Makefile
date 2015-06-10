@@ -1,8 +1,8 @@
 #COMAKE2 edit-mode: -*- Makefile -*-
 ####################64Bit Mode####################
 ifeq ($(shell uname -m),x86_64)
-CC=/opt/compiler/gcc-4.8.2/bin/g++
-CXX=/opt/compiler/gcc-4.8.2/bin/g++
+CC=g++
+CXX=g++
 CXXFLAGS=-g \
   -O3 \
   -pipe \
@@ -139,7 +139,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=a0581d4902d0e096a2fd387c84aae3b1  COMAKE
+COMAKE_MD5=4747c936f14931c7b39a7ab3558c1fef  COMAKE
 
 
 .PHONY:all
