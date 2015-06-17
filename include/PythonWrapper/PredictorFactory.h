@@ -16,10 +16,11 @@
 #include "PythonWrapper/Predictor.h"
 namespace gezi {
 	namespace py {
-		class PyPredictorFactory
+		class PredictorFactory
 		{
 		public:
-			static PyPredictor LoadPredictor(string path);
+			static Predictor LoadPredictor(string path);
+                        static Predictor LoadTextPredictor(string path);
 		};
 	}
 }  //----end of namespace gezi

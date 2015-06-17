@@ -17,7 +17,7 @@
 #include <iostream>
 #include <iomanip>
 #include <boost/progress.hpp>
-
+#include <glog/logging.h>
 //#include "common_util.h"
 #include "time_util.h" //@TODO  当前使用common_util.h python的封装有问题
 using std::string;
@@ -52,6 +52,11 @@ namespace gezi {
 		{
 		}
 		
+		void set_level(int level)
+		{
+			_level = level;
+		}
+
 		size_t counter() const
 		{
 			return _current;
@@ -85,7 +90,7 @@ namespace gezi {
 		{
 			size_t progress = static_cast<int> (100.0 * (current + 1) / total);
 			size_t bar_length = static_cast<int> (1.0 * (current + 1) * Size / total);
-			if (_prev_progress != progress)
+			if (VLOG_IS_ON(_level) && _prev_progress != progress)
 			{
 				std::cerr << _log_word << " [ " << current + 1 << " ] (" << _timer.elapsed() << " s)" << std::setw(3) << progress << '%'
 					<< " |";
@@ -99,6 +104,7 @@ namespace gezi {
 		}
 
 	private:
+		int _level = 0;
 		size_t _prev_progress = 1;
 		size_t _current = 0;
 		std::string _log_word = "Finished";

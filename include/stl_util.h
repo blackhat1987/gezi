@@ -557,7 +557,7 @@ namespace gezi {
 		return ((&l == &r) || (l.empty() && r.empty()));
 	}
 
-	//两个vector合并结果存储到第一个vector,注意第二个数组不再有效 @TODO验证对map正确
+	//两个vector合并结果存储到第一个vector,注意第二个数组不再有效 @TODO验证对map正确 注意两个容器需要类型一样 bool int这种不行
 	template<typename Container>
 	void merge(Container& dest, Container& src)
 	{
@@ -784,6 +784,15 @@ namespace gezi {
 		}
 	}
 
+	template<typename Container, typename Container2>
+	void vec_add(Container& vec1, const Container2& vec2)
+	{
+		for (size_t i = 0; i < vec1.size(); i++)
+		{
+			vec1[i] += vec2[i];
+		}
+	}
+
 	namespace ufo
 	{
 		template<typename Container>
@@ -907,6 +916,18 @@ namespace gezi {
 			item = value;
 		}
 		vec.resize(len, value);
+	}
+
+	template<typename T>
+	inline T* begin_ptr(vector<T>& vec)
+	{
+		return vec.empty() ? NULL : &vec[0];
+	}
+
+	template<typename T>
+	inline const T* begin_ptr(const vector<T>& vec)
+	{
+		return vec.empty() ? NULL : &vec[0];
 	}
 }  //----end of namespace gezi
 

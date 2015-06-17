@@ -110,6 +110,16 @@ namespace gezi {
 				}
 			}
 
+			void ExtractAudios()
+			{
+				if (audiosVec.empty())
+				{
+					audiosVec = from(postsInfo.contents)
+						>> select([](string content) { return gezi::contains_audio(content); })
+						>> to_vector();
+				}
+			}
+
 			void ExtractNumbers()
 			{
 				if (numbersVec.empty())
@@ -476,6 +486,7 @@ namespace gezi {
 			vector<svec> atsVec;
 			vector<svec> videosVec;
 			vector<svec> emailsVec;
+			vector<bool> audiosVec;
 
 			vector<svec> numbersVec; //这些需要多个extractor share
 			vector<svec> normedNumbersVec; //从normalized 内容中抽取的number

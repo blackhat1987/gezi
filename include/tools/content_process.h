@@ -78,6 +78,13 @@ namespace gezi {
 		return !get_emails(src).empty();
 	}
 
+	//<audio style = "width:250px;" src = "/getvoice/?tid=3813275746&amp;pid=69543315198" controls loop>< / audio>
+	inline bool contains_audio(string src)
+	{
+		string audioPattern = "<audio.*?audio>";
+		return gezi::reg_find(src, audioPattern);
+	}
+
 	/*<a href = \"http://tieba.baidu.com/i/sys/jump?un=%D7%ED%BE%C6%CF%B7%C1%F7%C4%EA%D8%BC\" onclick=\"Stats.sendRequest('fr=tb0_forum&st_mod=pb&st_value=atlink');\" onmouseover=\"showattip(this)\" onmouseout=\"hideattip(this)\" username=\"%D7%ED%BE%C6%CF%B7%C1%F7%C4%EA%D8%BC\" target=\"_blank\" class=\"at\">@×í¾ÆÏ·Á÷ÄêØ¼</a>*/
 	inline vector<string> get_urls(string src)
 	{
@@ -162,6 +169,11 @@ namespace gezi {
 		if (type == "num")
 		{
 			return contains_num(src);
+		}
+
+		if (type == "audio")
+		{
+			return contains_audio(src);
 		}
 
 		return false;

@@ -33,6 +33,7 @@ namespace gezi {
 				info().ExtractPics();
 				info().ExtractUrls();
 				info().ExtractVideos();
+				info().ExtractAudios();
 			}
 
 			void ExtractCurrentPost()
@@ -49,6 +50,8 @@ namespace gezi {
 				ADD_FEATURE(nowHasVideo);
 				double nowUrlHostRank = nowHasUrl ? _hostRanks[0] : _defaultHostRank;
 				ADD_FEATURE(nowUrlHostRank);
+				bool nowHasAudio = info().audiosVec[0];
+				ADD_FEATURE(nowHasAudio);
 			}
 
 			void ExtractCount()
@@ -73,10 +76,15 @@ namespace gezi {
 				double numVideosRatio = numVideos / (double)size();
 				ADD_FEATURE(numVideosRatio);
 
+				int numAudios = gezi::sum(info().audiosVec);
+				ADD_FEATURE(numAudios);
+				double numAudiosRatio = numAudios / (double)size();
+
 				int numMedias = 0;
 				for (size_t i = 0; i < size(); i++)
 				{
-					if (!info().urlsVec[i].empty() || !info().atsVec[i].empty() || !info().picsVec[i].empty())
+					if (!info().urlsVec[i].empty() || !info().atsVec[i].empty()
+						|| !info().picsVec[i].empty() || info().audiosVec[i])
 					{
 						numMedias++;
 					}

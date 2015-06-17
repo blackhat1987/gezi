@@ -410,6 +410,14 @@ namespace gezi {
 		return indexVec;
 	}
 
+	namespace ufo
+	{
+		template<typename Vec>
+		void sort(Vec& vec)
+		{
+			std::sort(vec.begin(), vec.end());
+		}
+	} //----end of namespace ufo
 
 } //----end of namespace gezi
 

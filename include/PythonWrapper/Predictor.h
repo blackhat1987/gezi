@@ -24,11 +24,14 @@ namespace gezi {
 			Float Output(Vector& features);
 			Float Predict(Vector& features);
 			Float Predict(Vector& features, Float& output);
-			void Normalize(Vector& features);
+			//void Normalize(Vector& features);
 
 			//--------can save json for debug
 			void SaveJson(string file);
 			void SaveJson();
+                        
+                        void Save(string path);
+                        void Save();
 		public:
 			void* _predictor;
 		};
