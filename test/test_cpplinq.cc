@@ -45,11 +45,25 @@ TEST(cpplinq2, func)
 
 TEST(count, func)
 {
-	{//bool貌似是有问题的 奇怪的是之前编译有过正常的时候。。。 vector<bool>是特殊的！
+	{//bool貌似是有问题的 奇怪的是之前编译有过正常的时候。。。 vector<bool>是特殊的！ 只是不要用 const bool&..
 		vector<bool> vec = { 0, 1, 0, 0, 0, 1, 1 };
 		//bool *pb = &vec[0];
 		//Pval(*pb);
 		int numThreads = from(vec) >> where([](const bool& a) { return a == true;  }) >> count();
+		Pval(numThreads);
+	}
+	{
+		vector<bool> vec = { 0, 1, 0, 0, 0, 1, 1 };
+		//bool *pb = &vec[0];
+		//Pval(*pb);
+		int numThreads = from(vec) >> where([](bool a) { return a == true;  }) >> count();
+		Pval(numThreads);
+	}
+	{
+		vector<bool> vec = { 0, 1, 0, 0, 0, 1, 1 };
+		//bool *pb = &vec[0];
+		//Pval(*pb);
+		int numThreads = from(vec) >> where([](bool a) { return a == 1;  }) >> count();
 		Pval(numThreads);
 	}
 	{

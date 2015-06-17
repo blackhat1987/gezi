@@ -52,6 +52,12 @@ int main(int argc, char *argv[])
 	if (FLAGS_v == 0)
 		FLAGS_v = FLAGS_vl;
 
+	vector<vector<int> > v;
+	v.resize(2);
+	v[0].resize(3, 1);
+	v[1].resize(4, 2);
+	Pval2(*(&v[0][0] + 2), *(&v[0][0] + 3));
+
 	LOG(INFO) << "int";
 	run<int>();
 	LOG(INFO) << "uint";
