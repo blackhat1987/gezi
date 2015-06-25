@@ -49,7 +49,7 @@ namespace gezi {
 		{
 		}
 
-		void Swap(Vector& other)
+		void Swap(TVector<ValueType>& other)
 		{
 			length = other.length;
 			indices.swap(other.indices);
@@ -206,9 +206,10 @@ namespace gezi {
 			}
 		}
 
-		Vector& operator()(int index, ValueType value)
+		TVector<ValueType>& operator()(int index, ValueType value)
 		{
 			Add(index, value);
+                        return *this;
 		}
 
 		/// Applies the given ValueVisitor to every element of the vector, in order of index.  (Zeros of sparse vectors will not be included.)

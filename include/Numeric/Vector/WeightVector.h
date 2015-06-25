@@ -96,26 +96,33 @@ namespace gezi {
 			return values[index];
 		}
 
-		value_type Value(int index) const
+		//using Vector::Value;
+		value_type Value(index_type index) const
 		{
-			//Pval3(_scale, values[index], values[index] * _scale);
+			VLOG(0) << "weight vector value int const";
+			Pval3(_scale, values[index], values[index] * _scale);
 			return values[index] * _scale;
 		}
 
-		////using Vector::Value; //这个会影响到后面的dot 里面Value 也会使用Vector::value
+		////using Vector::Value; //这个会影响到后面的dot 里面Value 也会使用Vector::Value
 		////因此为了后面能使用 暂时duplicate,覆盖基类同名函数比较危险 比如这里等于非const的被覆盖了 deleted 
 		////如果使用using 又貌似没办法指定只using非const版本 @TODO
 		////另外假如加上下面 也要注意 没有的时候 dot函数 可以不设置成const 因为都会调用const版本的Value,但是如果有下面的 dot必须const否则优先调用下面的
 		////当然为了安全也可以不提供下面的 强迫非const版本 直接使用values[index]
-		//value_type& Value(int index)
-		//{
-		//	return values[index];
-		//}
+		//!@NOTICE不要提供这个非const的版本 否则很多时候 你需要const版本 *_scale的结果 但是其实
+		//你优先调用了这个nont const版本，不符合你的预期 error prone!
+//		value_type& Value(int index)
+//		{
+//			VLOG(0) << "weight vector value int non const";
+//			return values[index];
+//		}
 
 		//@WARNING 下面两个函数从Vector输入改为Vector 看一下是否影响最后结果
 		/// Adds the supplied vector to myself.  (this += a) //@TODO check if can use const Vector&
+		using Vector::Add; //这个可以 不会有 const non const重载的困惑
 		void Add(const Vector& other)
 		{
+			//VLOG(0) << "In weight vector add vector";
 			Float innerProduct = 0;
 			if (other.IsSparse())
 			{

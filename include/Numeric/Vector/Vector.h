@@ -148,7 +148,7 @@ namespace gezi {
 
 		//需要外部注意的 初始设置length 那么如果是Add(value) dense方式 要保证values最后长度
 		//和初始设置的一样 不要Add不够 因为实际Length()函数表示向量长度 这个其实主要针对sparse
-		Vector(int length_)
+		explicit Vector(int length_)
 			: length(length_)
 		{
 		}
@@ -231,21 +231,26 @@ namespace gezi {
 			if (inputs.size() > 0)
 			{ //注意可能稀疏没有带有length
 				if (contains(inputs[0], ':'))
-				{
-					int maxIndex = -1;
+				{ //改用缓存方式 为了更加方便 不假设输入是排好序的,另外debug可以方便输入修改,后续添加的(index,value)覆盖前面相同index的value
+					map<index_type, value_type> m;
+					index_type maxIndex = -1;
 					for (string part : inputs)
 					{
 						string index_, val_;
 						split(part, ':', index_, val_);
-						int index = INT(index_) + startIndex;
-						maxIndex = index;
-						double val = DOUBLE(val_);
-						Add(index, val);
+						index_type index = INT(index_) + startIndex;
+						if (index > maxIndex)
+						{
+							maxIndex = index;
+						}
+						value_type val = DOUBLE(val_);
+						m[index] = val;
 					}
 					if (length < maxIndex + 1)
 					{
 						length = maxIndex * 2;
 					}
+					AddRange(m);
 				}
 				else
 				{
@@ -519,7 +524,7 @@ namespace gezi {
 				auto iter = std::lower_bound(indices.begin(), indices.end(), index);
 				//hack
 				if (iter == indices.end() || *iter != index)
-				{
+				{//@FIXME 不应该提供 非const版本的 zeroValue不应该被改变 风险
 					return _zeroValue;
 					//THROW((format("In sparse vector could not find the index %d") % i).str());
 				}
@@ -867,21 +872,24 @@ namespace gezi {
 			return values;
 		}
 
-		int Index(int index) const
+		index_type Index(index_type index) const
 		{
 			return indices[index];
 		}
 
-#ifndef GCCXML  
-		//the same as Value() python wrapper problem hack
-		int& Index(int index)
+		//the same as Value() python wrapper problem hack,now will deal at h2interface.py which wil comment as //index_type& Index(index_type index)
+		index_type& Index(index_type index)
 		{
 			return indices[index];
 		}
-#endif
-
-		value_type Value(int index) const
+		void SetIndex(index_type index, index_type indexValue)
 		{
+			indices[index] = indexValue;
+		}
+
+		value_type Value(index_type index) const
+		{
+			VLOG(0) << "vector value int const";
 			return values[index];
 		}
 
@@ -889,13 +897,16 @@ namespace gezi {
 		//../../../../../../third-64/boost.1.53/include/boost/mpl/assert.hpp:223:13: error: no matching function for call to 'assertion_failed(mpl_::failed************ boost::mpl::or_<boost::is_class<double>, boost::is_union<double>, mpl_::bool_<false>, mpl_::bool_<false>, mpl_::bool_<false> >::************)'
 		//GCCXML WARNING: value_type & gezi::Vector::Value(int index) [member function]
 		//> warning W1008 : The function returns non - const reference to "Python immutable" type.The value cannot be modified from Python.
-		//很奇怪的是
-#ifndef GCCXML
-		value_type& Value(int index)
+		value_type& Value(index_type index)
 		{
+			VLOG(0) << "vector value int non const";
 			return values[index];
 		}
-#endif
+
+		void SetValue(index_type index, value_type value)
+		{
+			values[index] = value;
+		}
 
 		void Clear()
 		{
@@ -922,7 +933,7 @@ namespace gezi {
 			}
 		}
 
-#ifndef GCCXML
+//#ifndef GCCXML
 		//@TODO 延迟计算的方式的 operator + - * /
 		Vector& operator *= (value_type d)
 		{
@@ -948,7 +959,7 @@ namespace gezi {
 			Subtract(other);
 			return *this;
 		}
-#endif // GCCXML
+//#endif // GCCXML
 
 		Float dot(const Vector& other) const
 		{
