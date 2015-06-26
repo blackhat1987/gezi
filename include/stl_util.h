@@ -491,7 +491,7 @@ namespace gezi {
 	template<typename T>
 	void covert_append(const vector<string>&ivec, vector<T>& ovec)
 	{
-		for(string item : ivec)
+		for (string item : ivec)
 		{
 			ovec.push_back(boost::lexical_cast<T>(item));
 		}
@@ -568,7 +568,6 @@ namespace gezi {
 			);
 	}
 
-#ifndef PYTHON_WRAPPER
 	template<typename Container>
 	void merge(Container& dest, Container&& src)
 	{
@@ -578,7 +577,6 @@ namespace gezi {
 			std::make_move_iterator(src.end())
 			);
 	}
-#endif
 
 	template<typename Container, typename Container2>
 	void merge_map(Container& dest, Container2& src)
@@ -889,7 +887,7 @@ namespace gezi {
 		std::stringstream ss;
 		for (size_t i = 0; i < names.size(); i++)
 		{
-			ss << names[i] << inSep 
+			ss << names[i] << inSep
 				<< std::setiosflags(ios::left) << std::setfill(outSep) << std::setw(space)
 				<< results[i]
 				<< outSep;

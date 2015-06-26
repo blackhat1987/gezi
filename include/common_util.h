@@ -21,13 +21,12 @@
 #include <cmath>
 
 #include <gtest/gtest.h> 
-#include <glog/logging.h>
 #include <gflags/gflags.h>
 
 #include "common_def.h"
 
 #include "string_util.h" //will remove baidu dependence 
-#include "log_util.h"
+#include "log_util.h" //glog and baidu log
 #include "conf_util.h"
 
 #include "debug_util.h"

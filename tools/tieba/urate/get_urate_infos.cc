@@ -48,7 +48,6 @@ void run()
 	for (size_t i = 0; i < pids.size(); i++)
 	{
 		run_get_urate_info(pids[i]);
-
 	}
 }
 

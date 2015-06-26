@@ -31,6 +31,13 @@ namespace gezi {
 
 	public:
 
+		//@TODO PYTHON
+#ifndef PYTHON_WRAPPER
+		enum IdTypes{ NullId = -1, };  //这样写 使用NullId更加简洁 但是python封装不会对外暴露
+#else
+		static const int NullId = -1;
+#endif
+
 		static const IdType null_id()
 		{
 			static const IdType _null_id = -1;
@@ -42,6 +49,7 @@ namespace gezi {
 			return _index;
 		}
 
+		//@TODO PYTHON
 #ifndef GCCXML	
 		iterator begin()
 		{
@@ -203,13 +211,13 @@ namespace gezi {
 		}
 
 		//写成cereal形式ok 转换成boost也可以通过define NO_CEREAL完成 测试ok 但是GCCXML似乎不能处理 反馈找不到cereal 因此workaround。。
-	/*	friend class cereal::access;
-		template<class Archive>
-		void serialize(Archive &ar, const unsigned int version)
-		{
+		/*	friend class cereal::access;
+			template<class Archive>
+			void serialize(Archive &ar, const unsigned int version)
+			{
 			ar & CEREAL_NVP(_hashdict);
 			ar & CEREAL_NVP(_index);
-		}*/
+			}*/
 		friend class boost::serialization::access;
 		template<class Archive>
 		void serialize(Archive &ar, const unsigned int version)
@@ -301,7 +309,7 @@ namespace gezi {
 		void serialize(Archive &ar, const unsigned int version)
 		{
 			ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Identifer);
-			ar & BOOST_SERIALIZATION_NVP(_values); 
+			ar & BOOST_SERIALIZATION_NVP(_values);
 		}
 	private:
 		vector<T> _values;
@@ -309,17 +317,15 @@ namespace gezi {
 
 	typedef ValueIdentifer<int> IntIdentifer;
 	typedef ValueIdentifer<double> DoubleIdentifer;
-
-	#ifdef PYTHON_WRAPPER
-	class PyIntIndentifer : public IntIdentifer
+	//@TODO PYTHON
+#ifdef PYTHON_WRAPPER
+	struct PyHack_IntIndentifer : public IntIdentifer
 	{
-
 	};
-	class PyDoubleIdentifer : public DoubleIdentifer
+	struct PyHack_DoubleIdentifer : public DoubleIdentifer
 	{
-
 	};
-	#endif //PYTHON_WRAPPER
+#endif //PYTHON_WRAPPER
 
 } //----end of namespace gezi
 

@@ -603,6 +603,12 @@
     <ClInclude Include="test\factory\LinearSVMTrainer.h" />
     <ClInclude Include="test\factory\TrainerFactory.h" />
     <ClInclude Include="test\factory\Trianer.h" />
+    <ClInclude Include="third-64\glog\include\glog\logging.h" />
+    <ClInclude Include="third-64\glog\include\glog\log_severity.h" />
+    <ClInclude Include="third-64\glog\include\glog\raw_logging.h" />
+    <ClInclude Include="third-64\glog\include\glog\stl_logging.h" />
+    <ClInclude Include="third-64\glog\include\glog\vlog_is_on.h" />
+    <ClInclude Include="tools\tieba\urate\include\urate_train.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc" />
@@ -704,6 +710,7 @@
     <ClCompile Include="test\test_template_function.cc" />
     <ClCompile Include="test\test_thread_local.cc" />
     <ClCompile Include="test\test_tieba_get_info.cc" />
+    <ClCompile Include="test\test_weight_vector.cc" />
     <ClCompile Include="test\tieba\get_full_posts_info.cc" />
     <ClCompile Include="test\tieba\test_get_delete_info.cc" />
     <ClCompile Include="test\tieba\test_get_forum_info.cc" />

@@ -22,11 +22,13 @@
 
 #ifndef SEGMENTOR_H_
 #define SEGMENTOR_H_
+#ifndef NO_BAIDU_DEP
 #include "scwdef.h"
 #include "property.h"
 #include "isegment.h"
 #include "ipostag.h"
 #include "ul_dict.h"
+#endif
 #include "log_util.h"
 #include "debug_util.h"
 #include <string>
@@ -35,6 +37,7 @@
 
 namespace gezi {
 	using namespace std;
+#ifndef NO_BAIDU_DEP
 
 	struct SegHandle
 	{
@@ -550,7 +553,7 @@ namespace gezi {
 				handle.tokens[i].buffer << " " << handle.tokens[i].length;
 		}
 	}
-
+#endif // !NO_BAIDU_DEP
 } //----end of namespace gezi
 
 #endif  //----end of SEGMENTOR_H_

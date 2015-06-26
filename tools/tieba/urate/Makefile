@@ -41,12 +41,9 @@ INCPATH=-I. \
   -I../../../output/include \
   -I../../../include/feature \
   -I../../../include/model \
-  -I../../../include/numeric
-DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/gezi \
-  -I../../../../../../../../app/search/sep/anti-spam/gezi/include \
-  -I../../../../../../../../app/search/sep/anti-spam/gezi/output \
-  -I../../../../../../../../app/search/sep/anti-spam/gezi/output/include \
-  -I../../../../../../../../app/search/sep/anti-spam/melt \
+  -I../../../include/numeric \
+  -I./include/
+DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/melt \
   -I../../../../../../../../app/search/sep/anti-spam/melt/include \
   -I../../../../../../../../app/search/sep/anti-spam/melt/output \
   -I../../../../../../../../app/search/sep/anti-spam/melt/output/include \
@@ -102,10 +99,6 @@ DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/gezi \
   -I../../../../../../../../ps/se/include/include \
   -I../../../../../../../../ps/se/include/output \
   -I../../../../../../../../ps/se/include/output/include \
-  -I../../../../../../../../ps/se/toolchain \
-  -I../../../../../../../../ps/se/toolchain/include \
-  -I../../../../../../../../ps/se/toolchain/output \
-  -I../../../../../../../../ps/se/toolchain/output/include \
   -I../../../../../../../../public/comlog-plugin \
   -I../../../../../../../../public/comlog-plugin/include \
   -I../../../../../../../../public/comlog-plugin/output \
@@ -154,10 +147,6 @@ DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/gezi \
   -I../../../../../../../../third-64/glog/include \
   -I../../../../../../../../third-64/glog/output \
   -I../../../../../../../../third-64/glog/output/include \
-  -I../../../../../../../../third-64/libcurl \
-  -I../../../../../../../../third-64/libcurl/include \
-  -I../../../../../../../../third-64/libcurl/output \
-  -I../../../../../../../../third-64/libcurl/output/include \
   -I../../../../../../../../third-64/pcre \
   -I../../../../../../../../third-64/pcre/include \
   -I../../../../../../../../third-64/pcre/output \
@@ -181,11 +170,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=ca04888788d7b31a4c63ee52d4204c02  COMAKE
+COMAKE_MD5=aff8186d0dfb0d0db6eb4935d9403478  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check get_urate_infos urate_train urate_predicts_from_file urate_reducer img_reducer lou_reducer test_langmodel 
+all:comake2_makefile_check get_urate_infos urate_train urate_predicts_from_file urate_reducer img_reducer lou_reducer test_langmodel liburate_train.a 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -219,6 +208,8 @@ clean:ccpclean
 	rm -rf ./output/bin/lou_reducer
 	rm -rf test_langmodel
 	rm -rf ./output/bin/test_langmodel
+	rm -rf liburate_train.a
+	rm -rf ./output/lib/liburate_train.a
 	rm -rf get_urate_infos_get_urate_infos.o
 	rm -rf urate_train_urate_train.o
 	rm -rf urate_predicts_from_file_urate_predicts_from_file.o
@@ -226,6 +217,7 @@ clean:ccpclean
 	rm -rf img_reducer_img_reducer.o
 	rm -rf lou_reducer_lou_reducer.o
 	rm -rf test_langmodel_test_langmodel.o
+	rm -rf src/urate_train_urate_train.o
 
 .PHONY:dist
 dist:
@@ -246,14 +238,12 @@ love:
 
 get_urate_infos:get_urate_infos_get_urate_infos.o \
   ../../../libgezi_common.a \
-  ../../../libgezi_json.a
+  ../../../libgezi_json.a \
+  ../../../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mget_urate_infos[0m']"
 	$(CXX) get_urate_infos_get_urate_infos.o -Xlinker "-(" ../../../libgezi_common.a \
-  ../../../libgezi_json.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
-  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../libgezi_json.a \
+  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
@@ -324,7 +314,6 @@ get_urate_infos:get_urate_infos_get_urate_infos.o \
   ../../../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -348,14 +337,12 @@ get_urate_infos:get_urate_infos_get_urate_infos.o \
 
 urate_train:urate_train_urate_train.o \
   ../../../libgezi_common.a \
-  ../../../libgezi_json.a
+  ../../../libgezi_json.a \
+  ../../../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40murate_train[0m']"
 	$(CXX) urate_train_urate_train.o -Xlinker "-(" ../../../libgezi_common.a \
-  ../../../libgezi_json.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
-  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../libgezi_json.a \
+  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
@@ -426,7 +413,6 @@ urate_train:urate_train_urate_train.o \
   ../../../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -450,14 +436,12 @@ urate_train:urate_train_urate_train.o \
 
 urate_predicts_from_file:urate_predicts_from_file_urate_predicts_from_file.o \
   ../../../libgezi_common.a \
-  ../../../libgezi_json.a
+  ../../../libgezi_json.a \
+  ../../../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40murate_predicts_from_file[0m']"
 	$(CXX) urate_predicts_from_file_urate_predicts_from_file.o -Xlinker "-(" ../../../libgezi_common.a \
-  ../../../libgezi_json.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
-  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../libgezi_json.a \
+  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
@@ -528,7 +512,6 @@ urate_predicts_from_file:urate_predicts_from_file_urate_predicts_from_file.o \
   ../../../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -552,14 +535,12 @@ urate_predicts_from_file:urate_predicts_from_file_urate_predicts_from_file.o \
 
 urate_reducer:urate_reducer_urate_reducer.o \
   ../../../libgezi_common.a \
-  ../../../libgezi_json.a
+  ../../../libgezi_json.a \
+  ../../../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40murate_reducer[0m']"
 	$(CXX) urate_reducer_urate_reducer.o -Xlinker "-(" ../../../libgezi_common.a \
-  ../../../libgezi_json.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
-  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../libgezi_json.a \
+  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
@@ -630,7 +611,6 @@ urate_reducer:urate_reducer_urate_reducer.o \
   ../../../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -654,14 +634,12 @@ urate_reducer:urate_reducer_urate_reducer.o \
 
 img_reducer:img_reducer_img_reducer.o \
   ../../../libgezi_common.a \
-  ../../../libgezi_json.a
+  ../../../libgezi_json.a \
+  ../../../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mimg_reducer[0m']"
 	$(CXX) img_reducer_img_reducer.o -Xlinker "-(" ../../../libgezi_common.a \
-  ../../../libgezi_json.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
-  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../libgezi_json.a \
+  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
@@ -732,7 +710,6 @@ img_reducer:img_reducer_img_reducer.o \
   ../../../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -756,14 +733,12 @@ img_reducer:img_reducer_img_reducer.o \
 
 lou_reducer:lou_reducer_lou_reducer.o \
   ../../../libgezi_common.a \
-  ../../../libgezi_json.a
+  ../../../libgezi_json.a \
+  ../../../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlou_reducer[0m']"
 	$(CXX) lou_reducer_lou_reducer.o -Xlinker "-(" ../../../libgezi_common.a \
-  ../../../libgezi_json.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
-  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../libgezi_json.a \
+  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
@@ -834,7 +809,6 @@ lou_reducer:lou_reducer_lou_reducer.o \
   ../../../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -858,14 +832,12 @@ lou_reducer:lou_reducer_lou_reducer.o \
 
 test_langmodel:test_langmodel_test_langmodel.o \
   ../../../libgezi_common.a \
-  ../../../libgezi_json.a
+  ../../../libgezi_json.a \
+  ../../../libgezi_cppformat.a
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_langmodel[0m']"
 	$(CXX) test_langmodel_test_langmodel.o -Xlinker "-(" ../../../libgezi_common.a \
-  ../../../libgezi_json.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
-  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../libgezi_json.a \
+  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
@@ -936,7 +908,6 @@ test_langmodel:test_langmodel_test_langmodel.o \
   ../../../../../../../../third-64/gflags/lib/libgflags.a \
   ../../../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
   ../../../../../../../../third-64/glog/lib/libglog.a \
-  ../../../../../../../../third-64/libcurl/lib/libcurl.a \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
@@ -957,6 +928,12 @@ test_langmodel:test_langmodel_test_langmodel.o \
   -lgomp -Xlinker "-)" -o test_langmodel
 	mkdir -p ./output/bin
 	cp -f --link test_langmodel ./output/bin
+
+liburate_train.a:src/urate_train_urate_train.o
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mliburate_train.a[0m']"
+	ar crs liburate_train.a src/urate_train_urate_train.o
+	mkdir -p ./output/lib
+	cp -f --link liburate_train.a ./output/lib
 
 get_urate_infos_get_urate_infos.o:get_urate_infos.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mget_urate_infos_get_urate_infos.o[0m']"
@@ -985,6 +962,14 @@ lou_reducer_lou_reducer.o:lou_reducer.cc
 test_langmodel_test_langmodel.o:test_langmodel.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_langmodel_test_langmodel.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_langmodel_test_langmodel.o test_langmodel.cc
+
+src/urate_train_urate_train.o:src/urate_train.cpp
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/urate_train_urate_train.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
+  -D__STDC_LIMIT_MACROS \
+  -DVERSION=\"1.9.8.7\" \
+  -O3 \
+  -DNDEBUG $(CXXFLAGS)  -o src/urate_train_urate_train.o src/urate_train.cpp
 
 endif #ifeq ($(shell uname -m),x86_64)
 

@@ -73,13 +73,13 @@ namespace gezi {
 
 		}
 
-		int Next()
+		int Next() const
 		{
 			return _d(_rng);
 		}
 	private:
-		RandomEngine _rng;
 		std::uniform_int_distribution<size_t> _d;
+		RandomEngine _rng;
 	};
 
 	//genearate 0-1 double number
@@ -98,13 +98,13 @@ namespace gezi {
 
 		}
 
-		double Next()
+		double Next() const
 		{
 			return _d(_rng);
 		}
 	private:
-		RandomEngine _rng;
 		std::uniform_real_distribution<> _d;
+		RandomEngine _rng;
 	};
 
 	//Ä£·Âc#
@@ -134,34 +134,34 @@ namespace gezi {
 		}
 
 		//return int in [0, max int)
-		int Next()
+		int Next() const 
 		{
 			std::uniform_int_distribution<int> d(0, std::numeric_limits<int>::max());
 			return d(_rng);
 		}
 
 		//return int in[0, max)
-		int Next(int max)
+		int Next(int max) const 
 		{
 			std::uniform_int_distribution<int> d(0, max - 1);
 			return d(_rng);
 		}
 		
 		//return int in [min,max)
-		int Next(int min, int max)
+		int Next(int min, int max) const 
 		{
 			std::uniform_int_distribution<int> d(min, max - 1);
 			return d(_rng);
 		}
 
 		//return double in [0.0,1.0]
-		double NextDouble()
+		double NextDouble() const 
 		{
 			std::uniform_real_distribution<> d;
 			return d(_rng);
 		}
 
-		Float NextFloat()
+		Float NextFloat() const
 		{
 			std::uniform_real_distribution<> d;
 			return d(_rng);
@@ -190,7 +190,7 @@ namespace gezi {
 			Init();
 		}
 
-		int Next()
+		int Next() 
 		{
 			std::uniform_int_distribution<size_t> d(0, _end - _index - 1);
 			swap(_vec[_index], _vec[_index + d(_rng)]);
@@ -207,10 +207,10 @@ namespace gezi {
 				_vec[i] = i;
 		}
 	private:
-		RandomEngine _rng;
 		ivec _vec;
 		int _end;
 		int _index = 0;
+		RandomEngine _rng;
 	};
 
 	typedef shared_ptr<RandomRange> RandomRangePtr;

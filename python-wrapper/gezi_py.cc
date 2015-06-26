@@ -753,7 +753,7 @@ Vector_exposer.def(
 }
 { //::gezi::Vector::Add
 
-typedef void ( ::gezi::Vector::*Add_function_type )( ::gezi::Vector & ) ;
+typedef void ( ::gezi::Vector::*Add_function_type )( ::gezi::Vector const & ) ;
 
 Vector_exposer.def(
 "Add"
@@ -808,13 +808,13 @@ Vector_exposer.def(
 , Count_function_type( &::gezi::Vector::Count ) );
 
 }
-{ //::gezi::Vector::DenseSr
+{ //::gezi::Vector::DenseStr
 
-typedef ::std::string ( ::gezi::Vector::*DenseSr_function_type )( ::std::string ) const;
+typedef ::std::string ( ::gezi::Vector::*DenseStr_function_type )( ::std::string ) const;
 
 Vector_exposer.def(
-"DenseSr"
-, DenseSr_function_type( &::gezi::Vector::DenseSr )
+"DenseStr"
+, DenseStr_function_type( &::gezi::Vector::DenseStr )
 , ( bp::arg("sep")="," ) );
 
 }
@@ -901,7 +901,7 @@ typedef void ( ::gezi::Vector::*Init_function_type )( ::std::string,int,int,::st
 Vector_exposer.def(
 "Init"
 , Init_function_type( &::gezi::Vector::Init )
-, ( bp::arg("input"), bp::arg("startIndex")=(int)(0), bp::arg("length_")=(int)(1024000), bp::arg("sep")=",\011 " ) );
+, ( bp::arg("input"), bp::arg("startIndex")=(int)(0), bp::arg("length_")=(int)(0), bp::arg("sep")=",\011 " ) );
 
 }
 { //::gezi::Vector::Init
@@ -1066,7 +1066,7 @@ Vector_exposer.def(
 }
 { //::gezi::Vector::Subtract
 
-typedef void ( ::gezi::Vector::*Subtract_function_type )( ::gezi::Vector & ) ;
+typedef void ( ::gezi::Vector::*Subtract_function_type )( ::gezi::Vector const & ) ;
 
 Vector_exposer.def(
 "Subtract"
@@ -1301,7 +1301,7 @@ Vector_exposer.def(
 }
 { //::gezi::Vector::size
 
-typedef int ( ::gezi::Vector::*size_function_type )(  ) const;
+typedef ::size_t ( ::gezi::Vector::*size_function_type )(  ) const;
 
 Vector_exposer.def(
 "size"
@@ -2109,6 +2109,16 @@ ProgressBar_exposer.def(
 , ( bp::arg("current"), bp::arg("total") ) );
 
 }
+{ //::gezi::ProgressBar::set_level
+
+typedef void ( ::gezi::ProgressBar::*set_level_function_type )( int ) ;
+
+ProgressBar_exposer.def(
+"set_level"
+, set_level_function_type( &::gezi::ProgressBar::set_level )
+, ( bp::arg("level") ) );
+
+}
 }
 
 bp::class_< gezi::ValueIdentifer< double >, bp::bases< gezi::Identifer > >( "DoubleIdentifer" )
@@ -2340,6 +2350,16 @@ Segmentor_exposer.def(
 , ( bp::arg("input"), bp::arg("result"), bp::arg("type")=(int)(gezi::SEG_WPCOMP) ) );
 
 }
+{ //::gezi::Segmentor::Segment_
+
+typedef bool ( *Segment__function_type )( ::std::string,int );
+
+Segmentor_exposer.def(
+"Segment_"
+, Segment__function_type( &::gezi::Segmentor::Segment_ )
+, ( bp::arg("input"), bp::arg("type")=(int)(gezi::SEG_WPCOMP) ) );
+
+}
 { //::gezi::Segmentor::Uninit
 
 typedef void ( *Uninit_function_type )(  );
@@ -2396,6 +2416,16 @@ Segmentor_exposer.def(
 "get_tokens"
 , get_tokens_function_type( &::gezi::Segmentor::get_tokens )
 , ( bp::arg("type")=(int)(gezi::SEG_WPCOMP) ) );
+
+}
+{ //::gezi::Segmentor::handle
+
+typedef ::gezi::SegHandle & ( *handle_function_type )(  );
+
+Segmentor_exposer.def(
+"handle"
+, handle_function_type( &::gezi::Segmentor::handle )
+, bp::return_internal_reference<>());
 
 }
 { //::gezi::Segmentor::init
@@ -2511,9 +2541,11 @@ Segmentor_exposer.def(
 Segmentor_exposer.staticmethod( "Init" );
 Segmentor_exposer.staticmethod( "SegFlag" );
 Segmentor_exposer.staticmethod( "Segment" );
+Segmentor_exposer.staticmethod( "Segment_" );
 Segmentor_exposer.staticmethod( "Uninit" );
 Segmentor_exposer.staticmethod( "get_segnodes" );
 Segmentor_exposer.staticmethod( "get_tokens" );
+Segmentor_exposer.staticmethod( "handle" );
 Segmentor_exposer.staticmethod( "init" );
 Segmentor_exposer.staticmethod( "seg_words" );
 Segmentor_exposer.staticmethod( "segment" );
@@ -2586,9 +2618,9 @@ Vec2dWriter_exposer.def(
 
 { //::gezi::VecWriter
 typedef bp::class_< gezi::VecWriter, boost::noncopyable > VecWriter_exposer_t;
-VecWriter_exposer_t VecWriter_exposer = VecWriter_exposer_t( "VecWriter", bp::init< std::string const & >(( bp::arg("file") )) );
+VecWriter_exposer_t VecWriter_exposer = VecWriter_exposer_t( "VecWriter", bp::init< std::ofstream & >(( bp::arg("ofs") )) );
 bp::scope VecWriter_scope( VecWriter_exposer );
-bp::implicitly_convertible< std::string const &, gezi::VecWriter >();
+bp::implicitly_convertible< std::ofstream &, gezi::VecWriter >();
 { //::gezi::VecWriter::close
 
 typedef void ( ::gezi::VecWriter::*close_function_type )(  ) ;
@@ -2984,6 +3016,17 @@ typedef bool ( *contains_at_function_type )( ::std::string );
 bp::def(
 "contains_at"
 , contains_at_function_type( &::gezi::contains_at )
+, ( bp::arg("src") ) );
+
+}
+
+{ //::gezi::contains_audio
+
+typedef bool ( *contains_audio_function_type )( ::std::string );
+
+bp::def(
+"contains_audio"
+, contains_audio_function_type( &::gezi::contains_audio )
 , ( bp::arg("src") ) );
 
 }
@@ -5559,17 +5602,6 @@ bp::def(
 "write_def"
 , write_def_function_type( &::gezi::write_def )
 , ( bp::arg("features"), bp::arg("outfile") ) );
-
-}
-
-{ //::gezi::write_file
-
-typedef void ( *write_file_function_type )( ::std::string,::std::string );
-
-bp::def(
-"write_file"
-, write_file_function_type( &::gezi::write_file )
-, ( bp::arg("content"), bp::arg("outfile") ) );
 
 }
 

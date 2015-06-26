@@ -14,6 +14,8 @@
 #ifndef PYTHON_UTIL_H_
 #define PYTHON_UTIL_H_
 
+#ifndef GCCXML
+
 #define BOOST_BIND_PLACEHOLDERS_HPP_INCLUDED
 #include <boost/bind.hpp>
 #include <boost/lambda/lambda.hpp>
@@ -192,5 +194,7 @@ VEC_METHOD(Vec)
 #ifndef COMMA
 #define  COMMA ,
 #endif
+
+#endif // !GCCXML
 
 #endif  //----end of PYTHON_UTIL_H_

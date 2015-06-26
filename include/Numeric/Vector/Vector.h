@@ -889,7 +889,7 @@ namespace gezi {
 
 		value_type Value(index_type index) const
 		{
-			VLOG(0) << "vector value int const";
+			//VLOG(0) << "vector value int const";
 			return values[index];
 		}
 
@@ -899,7 +899,7 @@ namespace gezi {
 		//> warning W1008 : The function returns non - const reference to "Python immutable" type.The value cannot be modified from Python.
 		value_type& Value(index_type index)
 		{
-			VLOG(0) << "vector value int non const";
+			//VLOG(0) << "vector value int non const";
 			return values[index];
 		}
 

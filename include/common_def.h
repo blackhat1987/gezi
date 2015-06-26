@@ -27,7 +27,7 @@
 
 #include <limits>
 #include <cmath>
-#if __GNUC__ > 3 || defined(WIN32)
+#if __GNUC__ > 3 || defined(WIN32) 
 #include <mutex>
 #include <array>
 #include <memory>
@@ -116,8 +116,14 @@ typedef vector<Float> Fvec;
 typedef shared_ptr<Fvec> fvec_ptr;
 typedef shared_ptr<Fvec> FvecPtr;
 typedef vector<string> svec;
-typedef vector<bool> bvec;
+
+#include <boost/dynamic_bitset.hpp>
+typedef vector<unsigned> bvec;
+//vector<bool>不是线程安全的 包括随机index访问等等 内存不是连续存储的 @NOTICE
+//但是貌似下面的其它替代都有序列化问题 所以 还是特别注意吧。。 线程安全等使用bvec
 typedef vector<bool> BitArray;
+//typedef boost::dynamic_bitset<> BitArray;
+//typedef deque<bool> BitArray;
 
 //------------下面主要是python封装的时候使用
 typedef std::pair<std::string, int> si_pair;
@@ -160,6 +166,7 @@ typedef std::map<std::string, boost::any> AnyMap;
 using boost::regex;
 using boost::algorithm::split_regex;
 
+#define interface class //most for pyplusplus wrapper
 
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
 	TypeName(const TypeName&); \

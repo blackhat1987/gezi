@@ -9,7 +9,8 @@ mb = module_builder.module_builder_t(
         files=[
 					'include.python/common_util.h',  #for safe let it be first for without it file_util.h or string_util.h... will fail
 					'./include.python/Numeric/Vector/Vector.h',
-					'./include.python/feature/FeatureVector.h',
+					'./include.python/feature/FeatureVector.h', 
+
 					#------------below has been tested ok
 					#feature related
 					'./include.python/feature/features_util.h',

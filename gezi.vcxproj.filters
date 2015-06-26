@@ -1626,6 +1626,24 @@
     <ClInclude Include="other\rabit\include\rabit_serializable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="third-64\glog\include\glog\log_severity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third-64\glog\include\glog\logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third-64\glog\include\glog\raw_logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third-64\glog\include\glog\stl_logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third-64\glog\include\glog\vlog_is_on.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tieba\urate\include\urate_train.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -2019,6 +2037,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="test\test_rvalue.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_weight_vector.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

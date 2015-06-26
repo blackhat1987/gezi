@@ -76,6 +76,7 @@ if GCC_HIGH  == 1:
 #链接参数.
 #LDFLAGS('-ldl -lpthread -lrt -rdynamic', GCC_LDFLAGS)
 LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -lcurl -ldl -rdynamic -L./ -lpython2.7 -lboost_python -Wl,-rpath=./', GCC_LDFLAGS)
+#LDFLAGS('-lpthread -L./ -lpython2.7 -lboost_python -Wl,-rpath=./', GCC_LDFLAGS)
 #LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -lcurl -ldl -rdynamic -L./ -lpython2.7 -lboost_python -Wl,-rpath=/home/users/chenghuige/rsc/app/search/sep/anti-spam/gezi/python-wrapper', GCC_LDFLAGS)
 #LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -lcurl -ldl -rdynamic -L./ -lpython2.7 -lboost_python -Wl,-rpath=/home/users/chenghuige/.jumbo/lib', GCC_LDFLAGS)
 
@@ -88,6 +89,7 @@ CONFIGS('third-64/libcurl@base')
 CONFIGS('app/search/ksarch/store/proxy-lib/redis@base')
 CONFIGS('public/ub')
 CONFIGS('app/search/sep/anti-spam/melt@base')
+CONFIGS('st/nlp/lm-score')
 
 #头文件路径.
 #INCPATHS('/home/users/chenghuige/.jumbo/include/python2.7 /home/users/chenghuige/.jumbo/include/ . ./include ./utils ./output ./output/include ./include/feature ./include/model ./include/numeric'.replace('./',RELATIVE_PATH))

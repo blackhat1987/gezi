@@ -9,6 +9,8 @@
 
 import sys,os
 
+vectors = ['Vector', 'FeatureVector', 'Instances']
+
 s = set()
 def add_vector(line, name):
 	if line.strip().startswith('%s_exposer.def'%name):
@@ -18,8 +20,8 @@ def add_vector(line, name):
 			print item
 
 for line in open(sys.argv[1]):
-	add_vector(line, 'Vector')
-	add_vector(line, 'FeatureVector')
+        for vector in vectors:
+            add_vector(line, vector)
 	print line,
 
  

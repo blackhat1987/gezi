@@ -294,6 +294,7 @@ namespace gezi {
 			string suffix = "", bool retry = true)
 		{
 			InfoType info;
+			try_create_dir(historyDir);
 			string end = suffix.empty() ? ".json" : "." + suffix + ".json";
 			string historyFile = historyDir + "/" + STR(id) + end;
 			if (!forceFetch)

@@ -109,7 +109,7 @@ namespace gezi
 		//	Your case can be described by Allgather operation, which could be implemented(not yet exposed) in rabit.If you only need to save the model, another alternative would simply be save it into different files in parallel from each of the node.
 		//@TODO 如果T是string 直接 rabit::Brodacast即可
 		template<typename T>
-		static void BroadcastAsString(T& data, int root)
+		static void SerializeBroadcast(T& data, int root)
 		{
 			string sdata = rabit::GetRank() == root ? serialize_util::save(data) : "";
 			rabit::Broadcast(&sdata, root);
@@ -123,11 +123,11 @@ namespace gezi
 		//但string似乎不能allreduce出去 rabit只能allreduce传输基本类型或者类型组合的struct
 		//似乎可以类似rabit::SeralizeReducer可以实现
 		template<typename T>
-		static void BroadcastAsString(std::vector<T>& datas)
+		static void SerializeBroadcast(std::vector<T>& datas)
 		{
 			for (size_t i = 0; i < datas.size(); i++)
 			{
-				BroadcastAsString(datas[i], (int)i % rabit::GetWorldSize());
+				SerializeBroadcast(datas[i], (int)i % rabit::GetWorldSize());
 			}
 		}
 
