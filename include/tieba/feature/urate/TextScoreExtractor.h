@@ -57,6 +57,11 @@ namespace gezi {
 						GetPredictor(i);
 					}
 				}
+
+				PSCONF(_ngram, name());
+				PSCONF(_skip, name());
+				PSCONF(_sep, name());
+				PSCONF(_normalize, name());
 			}
 
 			double Predict(string title, string content, int offset)
@@ -164,9 +169,10 @@ namespace gezi {
 		private:
 			int _ngram = 3;
 			int _skip = 2;
-			string _sep = "$#$";
+			string _sep = "\x01";
 			int _segType = SEG_BASIC;
 			bool _normalize = false; //是否对title，内容进行normalize
+
 			bool _useMedia = false;
 
 			bool _isRsc = false; //是否是rsc模式 rsc模式title和content不区分

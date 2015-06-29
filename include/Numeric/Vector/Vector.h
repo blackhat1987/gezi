@@ -377,7 +377,7 @@ namespace gezi {
 
 		void MakeDense()
 		{
-			if (IsSparse())
+			if (IsSparse() && !keepSparse)
 			{
 				ToDense();
 			}
@@ -391,7 +391,7 @@ namespace gezi {
 
 		void MakeSparse()
 		{
-			if (IsDense())
+			if (IsDense() && !keepDense)
 			{
 				ToSparse();
 			}
