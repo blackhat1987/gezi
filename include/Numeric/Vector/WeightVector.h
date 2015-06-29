@@ -35,12 +35,22 @@ namespace gezi {
 		{
 			Init(length_, val);
 		}
+		
+		//----------覆盖掉基类 Sparsify 不起作用
+		void Sparsify(value_type maxSparsity)
+		{
+			LOG(WARNING) << "Weight vector not support sparsify, do nothing";
+		}
+		void Sparsify()
+		{
+			LOG(WARNING) << "Weight vector not support sparsify, do nothing";
+		}
 
 		void SetLength(int length_)
 		{
 			length = length_;
 			values.resize(length_, _zeroValue);
-			keepDense = true;
+			//keepDense = true;  //自己保证不使用Sparsify即可,否则转换回Vector,keepDense仍然是true会带来Sparsify失效
 		}
 
 		using Vector::Init;
@@ -48,7 +58,7 @@ namespace gezi {
 		{
 			length = length_;
 			values.resize(length_, val);
-			keepDense = true;
+			//keepDense = true;
 		}
 
 		void Resize(int length_, value_type value_ = 0)
@@ -56,7 +66,7 @@ namespace gezi {
 			values.resize(length_, value_);
 			length = length_;
 			indices.clear();
-			keepDense = true;
+			//keepDense = true;
 		}
 
 		/// Multiples the Vector by a real value
