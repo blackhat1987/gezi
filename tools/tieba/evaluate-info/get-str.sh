@@ -1,0 +1,1 @@
+/home/forum/database/mysql/bin/mysql -hdbbk-forumbadou.xdb.all.serv -P5200 -u rd -pMhxzKhl forum_featurestr -N -e "select str,  store, str_type, create_time, post_num from featurestr_str where (str_type = 1 or str_type = 2) and (store = 1 or store = 2) order by create_time desc limit 200000" > strs.txt
