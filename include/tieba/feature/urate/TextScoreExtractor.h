@@ -62,6 +62,7 @@ namespace gezi {
 				PSCONF(_skip, name());
 				PSCONF(_sep, name());
 				PSCONF(_normalize, name());
+				PSCONF(_maxLen, name());
 			}
 
 			double Predict(string title, string content, int offset)
@@ -93,7 +94,14 @@ namespace gezi {
 				PSCONF(maxTextScoreNum, name());
 				int len = std::min((int)size(), maxTextScoreNum);
 				auto& titles = info().postsInfo.titles;
-				auto& contents = info().htmlFilteredContents;
+				auto contents = info().htmlFilteredContents;
+				for (auto& content : contents)
+				{
+					if (content.size() > _maxLen)
+					{
+						content = gezi::gbk_substr(content, 0, _maxLen);
+					}
+				}
 				auto& isThreads = info().postsInfo.isThreads;
 				/*dvec textScores = range(0, len) >> select([&titles, &contents](int i) { return Predict(titles[i], contents[i]); }) >> to_vector();*/
 				dvec textScores;
@@ -171,6 +179,8 @@ namespace gezi {
 			int _skip = 2;
 			string _sep = "\x01";
 			int _segType = SEG_BASIC;
+			int _maxLen = 1024;
+
 			bool _normalize = false; //是否对title，内容进行normalize
 
 			bool _useMedia = false;

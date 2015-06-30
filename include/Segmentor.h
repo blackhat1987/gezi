@@ -42,8 +42,8 @@ namespace gezi {
 	struct SegHandle
 	{
 		//分词buffer大小,不能开辟太大因为分词scw_create_out的时候会占过多内存
-		//static const int SEG_BUFF_SIZE = 20480; //50*1024
-		static const int SEG_BUFF_SIZE = 15000; //50*1024
+		static const int SEG_BUFF_SIZE = 20480; //50*1024
+		//static const int SEG_BUFF_SIZE = 15000; //50*1024
 
 		SegHandle() = default;
 
