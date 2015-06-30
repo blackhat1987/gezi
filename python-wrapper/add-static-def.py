@@ -10,14 +10,14 @@
 import sys,os
 
 l = []
-print '#define private public'
-print '#define protected public'
-for line in open(sys.argv[1]):
+input = sys.stdin
+if len(sys.argv) > 1:
+    input = open(sys.argv[1])
+for line in input:
 	print line,
-	if (line.startswith('#include')):
+	if line.startswith('#include') and line.find('include.python') >= 0:
 		file_ = line.split()[1].strip('"')
-		os.system('fix-static.py %s > %s'%(file_,'temp.static'))
-		for def_ in open('temp.static').readlines():
+		for def_ in os.popen('./fix-static.py %s'%file_).readlines():
 			if def_.find('global') >= 0:
 				pass
 				def_=def_[:def_.find(';')]
@@ -31,7 +31,3 @@ for line in open(sys.argv[1]):
 		for def_ in l:
 			print def_
 
-os.remove('temp.static')
-	
-
- 

@@ -19,7 +19,10 @@ def add_vector(line, name):
 			s.add(item)
 			print item
 
-for line in open(sys.argv[1]):
+input = sys.stdin 
+if len(sys.argv) > 1:
+    input = open(sys.argv[1])
+for line in input:
         for vector in vectors:
             add_vector(line, vector)
 	print line,

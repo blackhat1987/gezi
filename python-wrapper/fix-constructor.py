@@ -11,7 +11,11 @@ import sys,os
 
 pre_is_constructor = False
 constructor = ''
-for line in open(sys.argv[1]):
+
+input = sys.stdin
+if len(sys.argv) >  1:
+    input = open(sys.argv[1])
+for line in input:
 	line = line.strip()
 	if line.endswith(') :'):
 		pre_is_constructor = True
