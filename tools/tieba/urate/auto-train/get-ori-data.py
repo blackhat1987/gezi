@@ -9,7 +9,8 @@
 
 import sys,os
 
-path = "ftp://cp01-forum0015.cp01.baidu.com//home/forum/sifa/data/"
+#path = "ftp://cp01-forum0015.cp01.baidu.com//home/forum/sifa/data/"
+path = 'ftp://cq01-forum-xdi03.cq01.baidu.com//home/forum/chenghuige/evaluate-info-recent/'
 
 thread_spam = "%s/thread_spampid.txt"%path
 thread_normal = "%s/thread_normalpid.txt"%path
@@ -30,7 +31,7 @@ os.system('rm frs_normalpid.txt')
 os.system('rm pb_spampid.txt')
 os.system('rm pb_normalpid.txt')
 
-command = 'wget %s .'%thread_spam
+command = 'wget %s .'%thread_spam 
 os.system(command)
 
 command = 'wget %s .'%thread_normal
