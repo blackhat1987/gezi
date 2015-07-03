@@ -19,6 +19,7 @@
 #include "feature/Features.h"
 #include "tieba/urate/get_urate_info.h"
 #include "tieba/urate/urate_features.h"
+#include "Predictors/GbdtPredictor.h"
 using namespace std;
 using namespace gezi;
 using namespace gezi::tieba;
@@ -86,7 +87,7 @@ void run_predicts()
 		cin >> pid;
 		Pval(pid);
 		Features fe = gen_features(pid);
-		Pval(fe.str());
+		Pval2(fe.size(), fe.str());
 		Pval(predictor->Predict(fe));
 	}
 }

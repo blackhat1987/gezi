@@ -23,7 +23,7 @@ using namespace gezi;
 using namespace gezi::tieba;
 
 inline void gen_features(const std::vector<unsigned long long>& pids, const std::vector<bool>& lables,
-std::string output = "feature.txt", std::string history = "./history");
+std::string output = "feature.txt", std::string history = "./history")
 {
 	write_features(pids, labels,
 		[&](uint64 pid) { return gen_urate_features(pid, history); }, output);

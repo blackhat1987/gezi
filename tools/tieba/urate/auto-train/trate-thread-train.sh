@@ -4,7 +4,10 @@ python gen-feature.py ./title-content.segged.txt identifer.txt feature.trate.txt
 python identifer-text2bin.py ./identifer.txt ./identifer.bin 
 rm -rf ./ltrate.thread.model.bak/ 
 mv ./ltrate.thread.model/ ./ltrate.thread.model.bak/ 
-./bin/melt feature.trate.txt -iter 500000 -c train -m ltrate.thread.model -rs 12345 --mt=1 
+
+lines=`cat ./feature.trate.txt | wc -l`
+lines=$(($lines+$lines/2))
+./bin/melt feature.trate.txt -iter $lines -c train -m ltrate.thread.model -rs 12345 --mt=1 
 cp ./identifer.bin ./ltrate.thread.model/ 
 rm -rf ./roc.thread.model.bak
 mv ./roc.thread.model/ ./roc.thread.model.bak

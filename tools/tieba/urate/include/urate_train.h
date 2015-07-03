@@ -17,7 +17,7 @@
 #include <string>
 #include <vector>
 
-inline void gen_features(const std::vector<unsigned long long>& pids, const std::vector<bool>& lables, 
+void gen_features(const std::vector<unsigned long long>& pids, const std::vector<bool>& labels,
 	std::string output = "feature.txt", std::string history = "./history");
 
 #endif  //----end of URATE_TRAIN_H_
