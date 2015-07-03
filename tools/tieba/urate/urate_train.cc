@@ -79,6 +79,7 @@ void run_predicts()
 {
 	string modelPath = FLAGS_m;
 	auto& predictor = SharedPredictors::Instance(modelPath);
+	//auto predictor = PredictorFactory::LoadPredictor(modelPath);
 	uint64 pid;
 	while (true)
 	{
@@ -86,7 +87,6 @@ void run_predicts()
 		Pval(pid);
 		Features fe = gen_features(pid);
 		Pval(fe.str());
-		//Pval(fe.Str());
 		Pval(predictor->Predict(fe));
 	}
 }
