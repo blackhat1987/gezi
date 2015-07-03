@@ -20,6 +20,7 @@
 #include "Numeric/Vector/Vector.h"
 namespace gezi {
 
+	//不要单独使用配合FeatureExtractorMgr,避免忘记调用finalize
 	class FeatureVector : public Vector
 	{
 	public:
@@ -29,9 +30,7 @@ namespace gezi {
 		FeatureVector(const FeatureVector&) = default;
 		FeatureVector& operator = (const FeatureVector&) = default;
 
-#ifndef GCCXML
 		using Vector::Vector;
-#endif
 
 		//在线始终是dense
 		FeatureVector(bool useSparse = true)
@@ -44,7 +43,7 @@ namespace gezi {
 		}
 
 		//尽量不用 如果需要 可以考虑直接用Vector 稀疏情况
-		FeatureVector(int length_)
+		explicit FeatureVector(int length_)
 			:Vector(length_)
 		{
 
@@ -96,35 +95,31 @@ namespace gezi {
 			return values[i];
 		}
 
-		value_type value_at(int index) const
+		value_type value_at(index_type index) const
 		{
 			int idx = (index + values.size()) % values.size();
 			return values[idx];
 		}
 
-#ifndef PYTHON_WRAPPER
-		value_type& value_at(int index)
-		{
-			int idx = (index + values.size()) % values.size();
-			return values[idx];
-		}
-#endif
-
-		value_type at(int index) const
+		value_type& value_at(index_type index)
 		{
 			int idx = (index + values.size()) % values.size();
 			return values[idx];
 		}
 
-#ifndef PYTHON_WRAPPER
-		value_type& at(int index)
+		value_type at(index_type index) const
 		{
 			int idx = (index + values.size()) % values.size();
 			return values[idx];
 		}
-#endif
 
-		//覆盖掉基类  注意尽量在FeatureVector数据填充完之后 set_length一下(FeatureExtractor)
+		value_type& at(index_type index)
+		{
+			int idx = (index + values.size()) % values.size();
+			return values[idx];
+		}
+
+		//覆盖掉基类  注意尽量在FeatureVector数据填充完之后 SetLength一下(FeatureExtractor), finalize会处理，注意别忘记调用
 		int dimension() const
 		{
 			return Length();
@@ -137,6 +132,7 @@ namespace gezi {
 				_nameCounts.push_back(_idx);
 			}
 			_idx = 0;
+			SetLength(values.size()); //为了安全 理论上可以不需要
 		}
 
 		vector<Feature>& features()
@@ -466,13 +462,12 @@ namespace gezi {
 		}
 	public:
 
-#ifndef GCCXML
 		static bool& useNames()
 		{
 			static bool _useNames = true;
 			return _useNames;
 		}
-#endif
+
 	protected:
 	private:
 		bool _useSectionName = true;

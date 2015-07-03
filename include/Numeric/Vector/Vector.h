@@ -491,10 +491,10 @@ namespace gezi {
 
 		value_type operator[](index_type index) const
 		{
-			if (index < 0 || index >= length)
-				return _zeroValue;
+			//外部确保不越界,允许dense的时候length忘记设置 比如是0 但是values非空的情况
+			//if (index < 0 || index >= length) //有风险,这种需要确保dense也要设置length=values.size(), 同时 const 非const不一致会带来风险困扰
+			//	return _zeroValue;
 			//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
-
 			if (IsDense())
 			{
 				return values[index];
