@@ -62,6 +62,7 @@ namespace gezi {
 				PSCONF(_skip, name());
 				PSCONF(_sep, name());
 				PSCONF(_normalize, name());
+				PSCONF(_addNorm, name());
 				PSCONF(_maxLen, name());
 			}
 
@@ -93,13 +94,24 @@ namespace gezi {
 				int maxTextScoreNum = 10;
 				PSCONF(maxTextScoreNum, name());
 				int len = std::min((int)size(), maxTextScoreNum);
-				auto& titles = info().postsInfo.titles;
+				auto titles = info().postsInfo.titles;
+				if (_addNorm)
+				{
+					for (auto& title : titles)
+					{
+						title = title + " " + gezi::normalize_str(title);
+					}
+				}
 				auto contents = info().htmlFilteredContents;
 				for (auto& content : contents)
 				{
 					if (content.size() > _maxLen)
 					{
 						content = gezi::gbk_substr(content, 0, _maxLen);
+					}
+					if (_addNorm)
+					{
+						content = content + " " + gezi::normalize_str(content);
 					}
 				}
 				auto& isThreads = info().postsInfo.isThreads;
@@ -179,9 +191,10 @@ namespace gezi {
 			int _skip = 2;
 			string _sep = "\x01";
 			int _segType = SEG_BASIC;
-			int _maxLen = 1024;
+			int _maxLen = 100; //from 1024 -> 100
 
 			bool _normalize = false; //是否对title，内容进行normalize
+			bool _addNorm = true; // title + normalized_title, content + normalized_content
 
 			bool _useMedia = false;
 
