@@ -107,8 +107,15 @@ namespace gezi {
 		inline void adjust(double& score, const gezi::tieba::UrateInfo& uinfo)
 		{
 			static int min_posts_num = 3;
-			PSCONF(min_posts_num, "Urate");
-
+			if (uinfo.nowPostInfo.IsThread())
+			{
+				PSCONF(min_posts_num, "UrateThread");
+			}
+			else
+			{
+				PSCONF(min_posts_num, "UrateReply");
+			}
+	
 			string name = uinfo.userInfo.userName.c_str();
 			if (gezi::contains(name, "Õ‚Ωª")
 				|| uinfo.isWhiteTitle
