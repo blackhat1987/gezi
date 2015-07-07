@@ -669,6 +669,31 @@ namespace gezi {
 		return res;
 	}
 
+	inline double scale_value(double value, double default_thre, double now_thre)
+	{
+		if (now_thre == 0 || now_thre == 1 || (default_thre == now_thre))
+		{
+			return value;
+		}
+		if (value < now_thre)
+		{
+			value = value / now_thre * default_thre;
+		}
+		else
+		{
+			value = default_thre + (value - now_thre) / (1 - now_thre) * (1 - default_thre);
+		}
+		if (value > 1)
+		{
+			value = 1;
+		}
+		if (value < 0)
+		{
+			value = 0;
+		}
+		return value;
+	}
+
 	//пео╒а©
 	template<typename Iter>
 	inline double information(Iter begin, Iter end)

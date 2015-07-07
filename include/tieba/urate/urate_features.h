@@ -103,7 +103,7 @@ namespace gezi {
 			return fe;
 		}
 
-		//添加规则豁免
+		//添加规则豁免,根据阈值scale score
 		inline void adjust(double& score, const gezi::tieba::UrateInfo& uinfo)
 		{
 			static int min_posts_num = 3;
@@ -115,6 +115,23 @@ namespace gezi {
 				|| uinfo.size() < min_posts_num)
 			{
 				score = 0;
+			}
+
+			if (uinfo.nowPostInfo.IsThread())
+			{
+				double default_spam_thre = 0.92;
+				PSCONF(default_spam_thre, "UrateThread");
+				double spam_thre = 0.995;
+				PSCONF(spam_thre, "UrateThread");
+				score = gezi::scale_value(score, default_spam_thre, spam_thre);
+			}
+			else
+			{
+				double default_spam_thre = 0.99;
+				PSCONF(default_spam_thre, "UrateReply");
+				double spam_thre = 0.995;
+				PSCONF(spam_thre, "UrateReply");
+				score = gezi::scale_value(score, default_spam_thre, spam_thre);
 			}
 		}
 
