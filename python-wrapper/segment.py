@@ -42,7 +42,7 @@ include_paths=[
 	      ]
 
 include_paths_python = [
-				'app/search/sep/anti-spam/gezi/python-wrapper-new',
+				'app/search/sep/anti-spam/gezi/python-wrapper',
 		       ]
 
 include_paths_obsolute = [

@@ -6,4 +6,5 @@ python $i
 
 sh fix-cc.sh $o
 
+~/.jumbo/comake/comake2 -P
 sh ~/tools/bin/make.sh

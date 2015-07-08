@@ -15,8 +15,6 @@
 
 #include "conf_util.h"
 
-#include "serialize_util.h"
-
 #include "log_util.h"
 
 #include "tools/content_process.h"

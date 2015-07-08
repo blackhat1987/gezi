@@ -41,7 +41,7 @@ files = [
           #'./include.python/SharedIdentifers.h',
           #'./include.python/SharedObjects.h',
 					'./include.python/conf_util.h',
-					'./include.python/serialize_util.h',
+					#'./include.python/serialize_util.h',
 					'./include.python/log_util.h',
 					'./include.python/tools/content_process.h',
 					'./include.python/string_util.h',
@@ -95,7 +95,7 @@ include_paths=[
 	      ]
 
 include_paths_python = [
-				'app/search/sep/anti-spam/gezi/python-wrapper-new',
+				'app/search/sep/anti-spam/gezi/python-wrapper',
 		       ]
 
 include_paths_obsolute = [

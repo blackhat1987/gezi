@@ -114,5 +114,7 @@ LIBS('./lib/libpython2.7.so ./lib/libboost_python.so')
 srcs = ''
 #SharedLibrary('melt',Sources('melt_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 #SharedLibrary('identifer',Sources('identifer_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
-SharedLibrary('gezi',Sources('gezi_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
+#SharedLibrary('gezi',Sources('gezi_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 #SharedLibrary('segment',Sources('segment_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
+#SharedLibrary('idf',Sources('idf_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
+SharedLibrary('tieba',Sources('tieba_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
