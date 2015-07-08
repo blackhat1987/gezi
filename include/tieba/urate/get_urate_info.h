@@ -16,6 +16,8 @@
 #include "tieba/urate/urate_info.h"
 #include "tieba/get_parsed_info.h"
 #include "tools/content_process.h"
+#include "serialize_util.h"
+#include <sstream>
 namespace gezi {
 	namespace tieba {
 
@@ -33,6 +35,7 @@ namespace gezi {
 			return urateInfo;
 		}
 
+	
 		inline UrateInfo get_urate_info(uint64 pid, bool needHistory = true, int historyNum = 25, bool needUrlInfo = true) 
 		{
 			UrateInfo urateInfo;
@@ -89,6 +92,15 @@ namespace gezi {
 
 			urateInfo.postId = pid;
 			return urateInfo;
+		}
+
+		inline string get_serialized_urate_info_str(uint64 pid, bool needHistory = true, int historyNum = 25, bool needUrlInfo = true)
+		{
+			UrateInfo info = get_full_urate_info(pid);
+			stringstream ss;
+			cereal::JSONOutputArchive oa(ss); 
+			oa(CEREAL_NVP(info));
+			return ss.str();
 		}
 
 		inline UrateInfo get_full_urate_info(uint64 pid, int historyNum = 25, bool needUrl = true)
