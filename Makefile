@@ -16,7 +16,8 @@ CXXFLAGS=-g \
   -fpermissive \
   -Wno-write-strings \
   -Wno-literal-suffix \
-  -Wno-unused-local-typedefs
+  -Wno-unused-local-typedefs \
+  -fopenmp
 CFLAGS=-g \
   -O3 \
   -pipe \
@@ -30,7 +31,8 @@ CFLAGS=-g \
   -fpermissive \
   -Wno-write-strings \
   -Wno-literal-suffix \
-  -Wno-unused-local-typedefs
+  -Wno-unused-local-typedefs \
+  -fopenmp
 CPPFLAGS=-D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\"
@@ -139,7 +141,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=150585047844b3294a9a91c7722f34dc  COMAKE
+COMAKE_MD5=f8aa7bb6e8867356d742bd529d689ba5  COMAKE
 
 
 .PHONY:all
