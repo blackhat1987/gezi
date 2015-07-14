@@ -42,9 +42,14 @@ DEFINE_bool(gf, false, "gen feature");
 DEFINE_int32(predict, 0, "1 predict, 2 predicts, 3 predicts from file");
 DEFINE_string(m, "model", "model path");
 
+DEFINE_bool(useFetch, true, "");
+
+DEFINE_string(conf, "urate_strategy.conf", "")
+
+
 Features gen_features(uint64 pid)
 {
-	return gen_urate_features(pid, FLAGS_history);
+	return gen_urate_features(pid, FLAGS_history, FLAGS_useFetch);
 }
 
 void run()
@@ -57,8 +62,7 @@ void run()
 	vector<int> labels;
 	read_to_vec(FLAGS_i, pids, labels, FLAGS_index, FLAGS_index2);
 	Pval2(pids.size(), pids[0]);
-	write_features(pids, labels, 
-		[&](uint64 pid) { return gen_urate_features(pid, FLAGS_history); }, FLAGS_o);
+	write_features(pids, labels, gen_features, FLAGS_o);
 }
 
 void run_gen_feature()
@@ -122,7 +126,7 @@ int main(int argc, char *argv[])
 	FLAGS_minloglevel = FLAGS_level;
 	if (FLAGS_v == 0)
 		FLAGS_v = FLAGS_vl;
-	SharedConf::init("urate_strategy.conf");
+	SharedConf::init(FLAGS_conf);
 
 	if (FLAGS_gf)
 	{
