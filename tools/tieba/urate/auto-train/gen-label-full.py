@@ -9,16 +9,22 @@
 
 import sys,os
 
+num_max_pos = 20000
+
+count = 0
+date = ''
 for line in open(sys.argv[1]):
 	l = line.split()
-	if int(l[0][0]) < 5:
-		continue
 	print '%s\t%d'%(l[0], 1)
+	count += 1
+	if count > num_max_pos:
+		date = l[3]
+		break
 
 for line in open(sys.argv[2]):
 	l = line.split()
-	if int(l[0][0]) < 5:
-		continue
+	if date != '' and date > l[3]:
+		break 
 	print '%s\t%d'%(l[0], 0)
 
  

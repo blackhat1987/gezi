@@ -44,7 +44,7 @@ DEFINE_string(m, "model", "model path");
 
 DEFINE_bool(useFetch, true, "");
 
-DEFINE_string(conf, "urate_strategy.conf", "")
+DEFINE_string(conf, "urate_strategy.conf", "");
 
 
 Features gen_features(uint64 pid)

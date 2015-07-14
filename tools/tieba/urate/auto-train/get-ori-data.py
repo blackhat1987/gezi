@@ -10,7 +10,7 @@
 import sys,os
 
 #path = "ftp://cp01-forum0015.cp01.baidu.com//home/forum/sifa/data/"
-path = 'ftp://cq01-forum-xdi03.cq01.baidu.com//home/forum/chenghuige/evaluate-info-recent/'
+path = 'ftp://cq01-forum-xdi03.cq01.baidu.com//home/forum/chenghuige/' + sys.argv[1]
 
 thread_spam = "%s/thread_spampid.txt"%path
 thread_normal = "%s/thread_normalpid.txt"%path
@@ -22,14 +22,6 @@ reply_normal = "%s/reply_normalpid.txt"%path
 reply_pv_spam = "%s/pb_spampid.txt"%path
 reply_pv_normal = "%s/pb_normalpid.txt"%path
 
-os.system('rm reply_spampid.txt')
-os.system('rm reply_normalpid.txt')
-os.system('rm thread_spampid.txt')
-os.system('rm thread_normalpid.txt')
-os.system('rm frs_spampid.txt')
-os.system('rm frs_normalpid.txt')
-os.system('rm pb_spampid.txt')
-os.system('rm pb_normalpid.txt')
 
 command = 'wget %s .'%thread_spam 
 os.system(command)
