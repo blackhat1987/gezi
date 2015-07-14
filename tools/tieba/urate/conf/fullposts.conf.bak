@@ -1,0 +1,36 @@
+[FeaturesExtractor]
+Number_isFiltered : 0
+[ExtendedUrateInfo]
+maxPostNum : 10
+historyDay : 14
+
+[TextScore]
+maxTextScoreNum : 10
+[RscTextScore]
+identiferPath0 : ./data/rsc.model/identifer.bin 
+predictorPath0 : ./data/rsc.model/
+[RocTextScore]
+predictorPath0 : ./data/roc.reply.model/ 
+predictorPath1 : ./data/roc.thread.model/ 
+
+[RocTextScore2]
+identiferPath0 : ./data/ltrate.thread.model2/identifer.bin 
+predictorPath0 : ./data/roc.reply.model/ 
+predictorPath1 : ./data/roc.thread.model2/ 
+
+[TextScore2]
+identiferPath0 : ./data/ltrate.thread.model2/identifer.bin 
+predictorPath0 : ./data/ltrate.reply.model/ 
+predictorPath1 : ./data/ltrate.thread.model2/ 
+
+[FPTextScore]
+maxTextScoreNum : 10
+[FPRscTextScore]
+identiferPath0 : ./data/rsc.model/identifer.bin 
+predictorPath0 : ./data/rsc.model/
+[FPRocTextScore]
+predictorPath0 : ./data/roc.reply.model/ 
+predictorPath1 : ./data/roc.thread.model/ 
+
+[Urate]
+historyNum  : 10

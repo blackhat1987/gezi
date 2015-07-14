@@ -170,11 +170,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=aff8186d0dfb0d0db6eb4935d9403478  COMAKE
+COMAKE_MD5=5c721149f5c7f33ecb244e3262ff5b87  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check get_urate_infos urate_train urate_predicts_from_file urate_reducer img_reducer lou_reducer test_langmodel liburate_train.a 
+all:comake2_makefile_check get_urate_infos urate_train urate_predicts_from_file urate_reducer img_reducer lou_reducer test_langmodel 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -208,8 +208,6 @@ clean:ccpclean
 	rm -rf ./output/bin/lou_reducer
 	rm -rf test_langmodel
 	rm -rf ./output/bin/test_langmodel
-	rm -rf liburate_train.a
-	rm -rf ./output/lib/liburate_train.a
 	rm -rf get_urate_infos_get_urate_infos.o
 	rm -rf urate_train_urate_train.o
 	rm -rf urate_predicts_from_file_urate_predicts_from_file.o
@@ -217,7 +215,6 @@ clean:ccpclean
 	rm -rf img_reducer_img_reducer.o
 	rm -rf lou_reducer_lou_reducer.o
 	rm -rf test_langmodel_test_langmodel.o
-	rm -rf src/urate_train_urate_train.o
 
 .PHONY:dist
 dist:
@@ -950,12 +947,6 @@ test_langmodel:test_langmodel_test_langmodel.o \
 	mkdir -p ./output/bin
 	cp -f --link test_langmodel ./output/bin
 
-liburate_train.a:src/urate_train_urate_train.o
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mliburate_train.a[0m']"
-	ar crs liburate_train.a src/urate_train_urate_train.o
-	mkdir -p ./output/lib
-	cp -f --link liburate_train.a ./output/lib
-
 get_urate_infos_get_urate_infos.o:get_urate_infos.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mget_urate_infos_get_urate_infos.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o get_urate_infos_get_urate_infos.o get_urate_infos.cc
@@ -983,14 +974,6 @@ lou_reducer_lou_reducer.o:lou_reducer.cc
 test_langmodel_test_langmodel.o:test_langmodel.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_langmodel_test_langmodel.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_langmodel_test_langmodel.o test_langmodel.cc
-
-src/urate_train_urate_train.o:src/urate_train.cpp
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/urate_train_urate_train.o[0m']"
-	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
-  -D__STDC_LIMIT_MACROS \
-  -DVERSION=\"1.9.8.7\" \
-  -O3 \
-  -DNDEBUG $(CXXFLAGS)  -o src/urate_train_urate_train.o src/urate_train.cpp
 
 endif #ifeq ($(shell uname -m),x86_64)
 

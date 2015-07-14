@@ -86,7 +86,7 @@ def main(argv):
 	dir capacity
 	'''
 	dir = argv[1]
-	capacity = int(argv[2])
+	capacity = int(argv[2]) * 10 #fixme hack
 	print "dir:[%s],capacity:[%d]"%(dir, capacity)
 	files = sortdir(argv[1])
 	print "%d files need to remove"%(len(files) - capacity)

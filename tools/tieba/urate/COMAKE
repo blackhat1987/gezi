@@ -102,5 +102,5 @@ Application('lou_reducer',Sources('lou_reducer.cc',srcs))
 #Application('test_langmodel',Sources('test_langmodel.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')))
 Application('test_langmodel',Sources('test_langmodel.cc',srcs))
 
-srcs = './src/urate_train.cpp'
-StaticLibrary('urate_train',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),HeaderFiles(headers))
+#srcs = './src/urate_train.cpp'
+#StaticLibrary('urate_train',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),HeaderFiles(headers))

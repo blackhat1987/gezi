@@ -96,6 +96,8 @@ void run_predicts_from_file()
 {
 	ifstream ifs(FLAGS_i);
 	string line;
+
+
 	while (getline(ifs, line))
 	{
 		uint64 pid = UINT64(line);
@@ -105,6 +107,7 @@ void run_predicts_from_file()
 		auto& predictor = SharedPredictors::Instance(modelPath);
 		double score = predictor->Predict(fe);
 		gezi::tieba::adjust(score, info);
+		Pval(score);
 	}
 }
 

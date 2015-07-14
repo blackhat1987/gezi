@@ -33,6 +33,7 @@ DEFINE_string(o, "", "output file");
 DEFINE_int32(nt, 12, "thread num");
 
 DEFINE_string(history, "./history", "");
+DEFINE_string(m, "", "set model path by -m");
 
 void run_predicts_from_file()
 {
@@ -50,11 +51,19 @@ void run_predicts_from_file()
 		UrateInfo info;
 		Features fe = gen_urate_features(pid, info, FLAGS_history);
 		string modelPath = info.nowPostInfo.IsThread() ? "model" : "reply.model";
+		if (!FLAGS_m.empty())
+		{
+			modelPath = FLAGS_m;
+		}
 		auto& predictor = SharedPredictors::Instance(modelPath);
 		double score = predictor->Predict(fe);
+		double oriScore = score;
 		gezi::tieba::adjust(score, info);
 #pragma  omp critical
-		ofs << pid << "\t" << info.nowPostInfo.title << "\t" << gezi::replace(info.nowPostInfo.content, '\n', ' ') << "\t" << score << endl;
+		ofs << pid << "\t" << info.nowPostInfo.userName << "\t" 
+			<< info.nowPostInfo.title << "\t" << gezi::replace(info.nowPostInfo.content, '\n', ' ') << "\t" 
+			<< info.nowPostInfo.forumName << "\t" << oriScore << "\t"
+			<< score << endl;
 	}
 }
 
