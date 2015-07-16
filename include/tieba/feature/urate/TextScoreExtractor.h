@@ -32,19 +32,25 @@ namespace gezi {
 
 			void Init()
 			{
+				PVAL(name());
 				string identiferPath0 = "./data/ltrate.reply.model/identifer.bin";
 				PSCONF(identiferPath0, name());
 				string identiferPath1 = "./data/ltrate.thread.model/identifer.bin";
 				PSCONF(identiferPath1, name());
 				_identiferPath[0] = identiferPath0;
 				_identiferPath[1] = identiferPath1;
+				PVAL(_identiferPath[0]);
+				PVAL(_identiferPath[1]);
 
 				string predictorPath0 = "./data/ltrate.reply.model";
 				PSCONF(predictorPath0, name());
+
 				string predictorPath1 = "./data/ltrate.thread.model";
 				PSCONF(predictorPath1, name());
 				_predictorPath[0] = predictorPath0;
 				_predictorPath[1] = predictorPath1;
+				PVAL(_predictorPath[0]);
+				PVAL(_predictorPath[1]);
 				{
 					//mutex m; //local no effect
 					lock_guard<mutex> lk(theMutex());

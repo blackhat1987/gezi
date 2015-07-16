@@ -290,7 +290,7 @@ namespace gezi {
 		}
 
 		template<typename InfoType, typename Func>
-		inline InfoType try_get_info(uint64 id, Func func, string historyDir, bool forceFetch = false, bool useFetch = true,
+		inline InfoType try_get_info(uint64 id, Func func, string historyDir, bool useFetch = true, bool forceFetch = false,
 			string suffix = "", bool retry = true)
 		{
 			InfoType info;
@@ -333,7 +333,7 @@ namespace gezi {
 
 		template<typename IdType, typename InfosType, typename Func>
 		void try_get_infos_(const vector<IdType>& ids, InfosType& infos, Func func, string historyDir, string historyName,
-			bool forceFetch = false, bool useFetch = true, string suffix = "")
+			bool useFetch = true, bool forceFetch = false, string suffix = "")
 		{
 			string end = suffix.empty() ? ".json" : "." + suffix + ".json";
 			string historyFile = historyDir + "/" + historyName + end;
@@ -356,7 +356,7 @@ namespace gezi {
 
 		template<typename InfoType, typename Func>
 		inline vector<InfoType> try_get_infos(const vector<uint64>& ids, Func func, string historyDir, string historyName,
-			bool forceFetch = false, bool useFetch = true, string suffix = "")
+			bool useFetch = true, bool forceFetch = false, string suffix = "")
 		{
 			vector<InfoType> infos;
 			try_get_infos_<uint64, vector<InfoType> >(ids, infos, func, historyDir, historyName, forceFetch, useFetch, suffix);
@@ -365,7 +365,7 @@ namespace gezi {
 
 		template<typename IdType, typename InfoType, typename Func>
 		inline map<IdType, InfoType> try_get_infos_map(const vector<IdType>& ids, Func func, string historyDir, string historyName,
-			bool forceFetch = false, bool useFetch = true, string suffix = "")
+			bool useFetch = true, bool forceFetch = false, string suffix = "")
 		{
 			map<IdType, InfoType> infos;
 			try_get_infos_<IdType, map<IdType, InfoType> >(ids, infos, func, historyDir, historyName, forceFetch, useFetch, suffix);

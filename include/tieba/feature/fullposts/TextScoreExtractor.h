@@ -31,21 +31,27 @@ namespace gezi {
 
 			void Init()
 			{
+				PVAL(name());
+
 				info().ExtractHtmlFilteredContents();
 
 				string identiferPath0 = "./data/ltrate.reply.model/identifer.bin";
 				PSCONF(identiferPath0, name());
-				string identiferPath1 = "./data/ltrate.thread.model/identifer.bin";
+				string identiferPath1 = "./data/trate.thread.model/identifer.bin";
 				PSCONF(identiferPath1, name());
 				_identiferPath[0] = identiferPath0;
 				_identiferPath[1] = identiferPath1;
+				PVAL(_identiferPath[0]);
+				PVAL(_identiferPath[1]);
 
 				string predictorPath0 = "./data/ltrate.reply.model";
 				PSCONF(predictorPath0, name());
-				string predictorPath1 = "./data/ltrate.thread.model";
+				string predictorPath1 = "./data/trate.thread.model";
 				PSCONF(predictorPath1, name());
 				_predictorPath[0] = predictorPath0;
 				_predictorPath[1] = predictorPath1;
+				PVAL(_predictorPath[0]);
+				PVAL(_predictorPath[1]);
 				{
 					//mutex m; //local no effect
 					lock_guard<mutex> lk(theMutex());
@@ -58,6 +64,13 @@ namespace gezi {
 						GetPredictor(i);
 					}
 				}
+
+				PSCONF(_ngram, name());
+				PSCONF(_skip, name());
+				PSCONF(_sep, name());
+				PSCONF(_normalize, name());
+				PSCONF(_addNorm, name());
+				PSCONF(_maxLen, name());
 			}
 
 			double Predict(string title, string content, int offset)
@@ -87,13 +100,30 @@ namespace gezi {
 				int maxTextScoreNum = 10;
 				PSCONF(maxTextScoreNum, name());
 				int len = std::min((int)size(), maxTextScoreNum);
-				auto& contents = info().htmlFilteredContents;
+				auto title = info().title;
+				if (_addNorm)
+				{
+					title = title + " " + gezi::normalize_str(title);
+				}
+				auto contents = info().htmlFilteredContents;
+				for (auto& content : contents)
+				{
+					if (content.size() > _maxLen)
+					{
+						content = gezi::gbk_substr(content, 0, _maxLen);
+					}
+					if (_addNorm)
+					{
+						content = content + " " + gezi::normalize_str(content);
+					}
+				}
+
 				dvec textScores;
 				for (int i = 1; i < len; i++)
 				{
 					if (info().uids[i] == info().uids[0])
 					{
-						textScores.push_back(Predict(info().title, contents[i]));
+						textScores.push_back(Predict(title, contents[i]));
 					}
 				}
 				double textScoreMean = 0.0, textScoreVar = std::numeric_limits<double>::max();
@@ -111,7 +141,7 @@ namespace gezi {
 				ADD_FEATURE(textScoreVar);
 				ADD_FEATURE(numLouzhuReplyTextScores);
 
-				double threadTextScore = Predict(info().title, contents[0], 1);
+				double threadTextScore = Predict(title, contents[0], 1);
 				ADD_FEATURE(threadTextScore);
 			}
 		protected:
@@ -135,9 +165,13 @@ namespace gezi {
 		private:
 			int _ngram = 3;
 			int _skip = 2;
-			string _sep = "$#$";
+			string _sep = "\x01";
 			int _segType = SEG_BASIC;
+			int _maxLen = 100; //from 1024 -> 100
+
 			bool _normalize = false; //是否对title，内容进行normalize
+			bool _addNorm = true; // title + normalized_title, content + normalized_content
+
 			bool _useMedia = false;
 
 			bool _isRsc = false; //是否是rsc模式 rsc模式title和content不区分

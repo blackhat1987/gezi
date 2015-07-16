@@ -77,12 +77,12 @@ namespace gezi {
 				return postId < other.postId;
 			}
 
-			bool IsThread()
+			bool IsThread() const 
 			{
 				return !startswith(title, "»Ø¸´£º");
 			}
 
-			bool IsQuote()
+			bool IsQuote() const
 			{
 				return quoteInfo.postId != 0;
 			}

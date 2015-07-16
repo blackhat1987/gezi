@@ -33,11 +33,11 @@ namespace gezi {
 			mgr.add(new FPTextScoreExtractor("FPRocTextScore"));
 		}
 
-		inline Features gen_fullposts_features(uint64 tid, int num, string historyPath, string urateHistoryPath)
+		inline Features gen_fullposts_features(uint64 tid, int num, string historyPath, string urateHistoryPath, bool useFetch = true, bool forceFetch = false)
 		{
 			Features fe;
 			FullPostsInfo info = try_get_info<FullPostsInfo>(tid,
-				[&](uint64 tid) { return get_full_posts_info(tid, num, 0, 1); }, historyPath);
+				[&](uint64 tid) { return get_full_posts_info(tid, num, 0, 1); }, historyPath, useFetch, forceFetch);
 			if (info.IsValid())
 			{
 				FullPostsExtractor::info() = move(info);
@@ -45,7 +45,7 @@ namespace gezi {
 				add_fullposts_features(mgr);
 				mgr.extract(fe);
 				{
-					UrateInfo uinfo = try_get_info<UrateInfo>(info.pids.front(), [](uint64 pid) { return get_urate_info(pid); }, urateHistoryPath);
+					UrateInfo uinfo = try_get_info<UrateInfo>(info.pids.front(), [](uint64 pid) { return get_urate_info(pid); }, urateHistoryPath, useFetch, forceFetch);
 					if (uinfo.IsValid())
 					{
 						UrateExtractor::info() = move(uinfo);

@@ -67,6 +67,9 @@ namespace gezi {
 				threadNode.isShortContent = contents[0].length() < shortContentLength;
 				threadNode.hasSecondFloor = gezi::contains(contents[0], "二楼") || gezi::contains(contents[0], "2楼");
 				uint louzhuUid = uids[0];
+				int ucount = 0;
+				int numLouzhuUrls = 0, numLouzhuPics = 0, numLouzhuAts = 0;
+				bool secondFloorIsUrl = false;
 				for (size_t i = 1; i < size(); i++)
 				{
 					if (uids[i] == louzhuUid)
@@ -93,13 +96,37 @@ namespace gezi {
 						{
 							secondFloor2PicOrUrlOrAt++;
 						}
-						break;
+						if (hasUrl)
+						{
+							numLouzhuUrls++;
+							if (ucount < 3)
+							{
+								secondFloorIsUrl = true;
+							}
+						}
+						if (hasPic)
+						{
+							numLouzhuPics++;
+						}
+						if (hasAt)
+						{
+							numLouzhuAts++;
+						}
+						ucount++;
+						if (ucount > 10)
+						{
+							break;
+						}
 					}
 				}
 				ADD_FEATURE(noPic2PicCount);
 				ADD_FEATURE(pic2UrlCount);
 				ADD_FEATURE(pic2AtCount);
 				ADD_FEATURE(secondFloor2PicOrUrlOrAt);
+				ADD_FEATURE(numLouzhuAts);
+				ADD_FEATURE(numLouzhuPics);
+				ADD_FEATURE(numLouzhuUrls);
+				ADD_FEATURE(secondFloorIsUrl);
 				//1楼有url  文本内容< 5个汉字 10个字符
 
 				int numUrlShortContents = 0;
