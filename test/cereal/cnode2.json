@@ -1,0 +1,12 @@
+{
+    "data": {
+        "cereal_class_version": 0,
+        "Node": {
+            "cereal_class_version": 0,
+            "name": "abc",
+            "age": 2,
+            "id": 1025
+        },
+        "height": 8
+    }
+}
