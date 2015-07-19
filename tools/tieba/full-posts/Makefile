@@ -46,10 +46,6 @@ DEP_INCPATH=-I../../../../../../../../app/search/ksarch/store/proxy-lib/redis \
   -I../../../../../../../../app/search/ksarch/store/proxy-lib/redis/include \
   -I../../../../../../../../app/search/ksarch/store/proxy-lib/redis/output \
   -I../../../../../../../../app/search/ksarch/store/proxy-lib/redis/output/include \
-  -I../../../../../../../../app/search/sep/anti-spam/gezi \
-  -I../../../../../../../../app/search/sep/anti-spam/gezi/include \
-  -I../../../../../../../../app/search/sep/anti-spam/gezi/output \
-  -I../../../../../../../../app/search/sep/anti-spam/gezi/output/include \
   -I../../../../../../../../app/search/sep/anti-spam/melt \
   -I../../../../../../../../app/search/sep/anti-spam/melt/include \
   -I../../../../../../../../app/search/sep/anti-spam/melt/output \
@@ -130,10 +126,6 @@ DEP_INCPATH=-I../../../../../../../../app/search/ksarch/store/proxy-lib/redis \
   -I../../../../../../../../ps/se/include/include \
   -I../../../../../../../../ps/se/include/output \
   -I../../../../../../../../ps/se/include/output/include \
-  -I../../../../../../../../ps/se/toolchain \
-  -I../../../../../../../../ps/se/toolchain/include \
-  -I../../../../../../../../ps/se/toolchain/output \
-  -I../../../../../../../../ps/se/toolchain/output/include \
   -I../../../../../../../../public/bslext \
   -I../../../../../../../../public/bslext/include \
   -I../../../../../../../../public/bslext/output \
@@ -237,7 +229,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=2c8e8707bbab5b59a62b769ac65e3e88  COMAKE
+COMAKE_MD5=e2963eb805e1318ba287d26de9fae227  COMAKE
 
 
 .PHONY:all
@@ -302,14 +294,9 @@ fullposts_train:fullposts_train_fullposts_train.o \
 	$(CXX) fullposts_train_fullposts_train.o -Xlinker "-(" ../../../libgezi_common.a \
   ../../../libgezi_json.a \
   ../../../libgezi_cppformat.a ../../../../../../../../app/search/ksarch/store/proxy-lib/redis/libredisclient.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
-  ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
@@ -381,7 +368,9 @@ fullposts_train:fullposts_train_fullposts_train.o \
   ../../../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -393,6 +382,8 @@ fullposts_train:fullposts_train_fullposts_train.o \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../../../third-64/boost/lib/libboost_python.a \
@@ -443,14 +434,9 @@ get_fullposts:get_fullposts_get_fullposts.o \
 	$(CXX) get_fullposts_get_fullposts.o -Xlinker "-(" ../../../libgezi_common.a \
   ../../../libgezi_json.a \
   ../../../libgezi_cppformat.a ../../../../../../../../app/search/ksarch/store/proxy-lib/redis/libredisclient.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
-  ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
@@ -522,7 +508,9 @@ get_fullposts:get_fullposts_get_fullposts.o \
   ../../../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -534,6 +522,8 @@ get_fullposts:get_fullposts_get_fullposts.o \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../../../third-64/boost/lib/libboost_python.a \
@@ -584,14 +574,9 @@ fullposts:fullposts_fullposts.o \
 	$(CXX) fullposts_fullposts.o -Xlinker "-(" ../../../libgezi_common.a \
   ../../../libgezi_json.a \
   ../../../libgezi_cppformat.a ../../../../../../../../app/search/ksarch/store/proxy-lib/redis/libredisclient.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
-  ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
@@ -663,7 +648,9 @@ fullposts:fullposts_fullposts.o \
   ../../../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -675,6 +662,8 @@ fullposts:fullposts_fullposts.o \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../../../third-64/boost/lib/libboost_python.a \
@@ -725,14 +714,9 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
 	$(CXX) test_cached_fetcher_test_cached_fetcher.o -Xlinker "-(" ../../../libgezi_common.a \
   ../../../libgezi_json.a \
   ../../../libgezi_cppformat.a ../../../../../../../../app/search/ksarch/store/proxy-lib/redis/libredisclient.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
-  ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
@@ -804,7 +788,9 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   ../../../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -816,6 +802,8 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../../../third-64/boost/lib/libboost_python.a \
@@ -866,14 +854,9 @@ get_full_posts_info:get_full_posts_info_get_full_posts_info.o \
 	$(CXX) get_full_posts_info_get_full_posts_info.o -Xlinker "-(" ../../../libgezi_common.a \
   ../../../libgezi_json.a \
   ../../../libgezi_cppformat.a ../../../../../../../../app/search/ksarch/store/proxy-lib/redis/libredisclient.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
-  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
-  ../../../../../../../../app/search/sep/anti-spam/melt/libmelt_predict.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
@@ -945,7 +928,9 @@ get_full_posts_info:get_full_posts_info_get_full_posts_info.o \
   ../../../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -957,6 +942,8 @@ get_full_posts_info:get_full_posts_info_get_full_posts_info.o \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../../../third-64/boost/lib/libboost_python.a \

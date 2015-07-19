@@ -11,8 +11,12 @@ rm -rf *
 python ../get-ori-data.py evaluate-info-recent
 cd ..
 
+#./rand.py ./evaluate-info/frs_normalpid.txt > ./evaluate-info/frs_normalpid.rand.txt
+#./gen-frs-label.py ./evaluate-info/frs_spampid.txt ./evaluate-info/frs_normalpid.rand.txt > pid.frs.txt
+#./gen-frs-label.py ./evaluate-info/frs_spampid.txt ./evaluate-info/frs_normalpid.txt > pid.frs.txt
 ./rand.py ./evaluate-info-recent/frs_normalpid.txt > ./evaluate-info-recent/frs_normalpid.rand.txt
-./gen-label2.py ./evaluate-info-recent/frs_spampid.txt ./evaluate-info-recent/frs_normalpid.rand.txt > pid.frs.txt
+#./gen-frs-label.py ./evaluate-info-recent/frs_spampid.txt ./evaluate-info-recent/frs_normalpid.txt > pid.frs.txt
+./gen-frs-label.py ./evaluate-info-recent/frs_spampid.txt ./evaluate-info-recent/frs_normalpid.rand.txt > pid.frs.txt
 ./gen-label-full.py ./evaluate-info/thread_spampid.txt ./evaluate-info/thread_normalpid.txt > pid.txt #urate thread
 
 sh ./get-trate-corpus.sh  #trate thread corpus

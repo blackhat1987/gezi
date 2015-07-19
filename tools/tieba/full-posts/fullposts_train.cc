@@ -37,12 +37,16 @@ DEFINE_string(i, "./test.data/tid.txt", "input file");
 DEFINE_string(o, "feature.txt", "output file");
 DEFINE_int32(nt, 12, "thread num");
 
+DEFINE_bool(useFetch, true, "");
+
 DEFINE_string(m, "model", "");
+
+DEFINE_string(conf, "fullposts.conf", "");
 
 
 Features gen_features(uint64 tid)
 {
-	return gen_fullposts_features(tid, FLAGS_num, FLAGS_history, FLAGS_urate_history);
+	return gen_fullposts_features(tid, FLAGS_num, FLAGS_history, FLAGS_urate_history, FLAGS_useFetch);
 }
 
 void run()
@@ -99,7 +103,7 @@ int main(int argc, char *argv[])
 	LogHelper::set_level(FLAGS_level);
 	if (FLAGS_v == 0)
 		FLAGS_v = FLAGS_vl;
-	SharedConf::init("fullposts.conf");
+	SharedConf::init(FLAGS_conf);
 
 	if (FLAGS_gf)
 	{

@@ -97,8 +97,9 @@ ImportConfigsFrom('../../../')
 CONFIGS('app/search/sep/anti-spam/melt@trunk')
 #CONFIGS('st/nlp/lm-score@lm-score_1-0-3-1_PD_BL')
 CONFIGS('st/nlp/lm-score')
+CONFIGS('third-64/zlib')
 
-CONFIGS('public/ub@1.2.49.0')
+#CONFIGS('public/ub@1.2.49.0')
 CONFIGS('app/search/ksarch/store/proxy-lib/redis@base')
 
 #头文件路径.

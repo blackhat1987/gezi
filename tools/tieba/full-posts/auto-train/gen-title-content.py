@@ -10,6 +10,9 @@
 import sys,os
 import urllib,json
 
+import nowarning 
+from libtieba import *
+
 import gezi 
 
 pid_label = {}
@@ -19,10 +22,10 @@ for line in open(sys.argv[1]):
 	pid_label[pid] = label
 	pids.append(int(pid))
 
-vec = gezi.ulvec()
+vec = ulvec()
 gezi.list2vec(pids, vec)
 
-m = gezi.get_posts_info_map(vec)
+m = get_posts_info_map(vec)
 for item in m:
 	pid = str(item.key())
 	label = pid_label[pid]

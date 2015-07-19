@@ -12,6 +12,8 @@ import sys,os
 count1 = 0
 for line in open(sys.argv[1]):
 	l = line.split()
+	if l[2] != '指定大型吧' and l[2] != '热点吧':
+		continue
 	print '%s\t%d'%(l[0], 1)
 	count1 += 1
 
@@ -19,6 +21,8 @@ count1 *= 10
 count2 = 0
 for line in open(sys.argv[2]):
 	l = line.split()
+	if l[2] != '指定大型吧' and l[2] != '热点吧':
+		continue
 	print '%s\t%d'%(l[0], 0)
 	count2 += 1
 	if count2 > count1:
