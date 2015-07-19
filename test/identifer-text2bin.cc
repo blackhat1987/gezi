@@ -38,17 +38,17 @@ void run()
 
 int main(int argc, char *argv[])
 {
-  google::InitGoogleLogging(argv[0]);
-  google::InstallFailureSignalHandler();
-  int s = google::ParseCommandLineFlags(&argc, &argv, false);
-  if (FLAGS_log_dir.empty())
-    FLAGS_logtostderr = true;
-  FLAGS_minloglevel = FLAGS_level;
+	google::InitGoogleLogging(argv[0]);
+	google::InstallFailureSignalHandler();
+	int s = google::ParseCommandLineFlags(&argc, &argv, false);
+	if (FLAGS_log_dir.empty())
+		FLAGS_logtostderr = true;
+	FLAGS_minloglevel = FLAGS_level;
 	LogHelper::set_level(FLAGS_level);
-  if (FLAGS_v == 0)
-    FLAGS_v = FLAGS_vl;
+	if (FLAGS_v == 0)
+		FLAGS_v = FLAGS_vl;
 
-  run();
+	run();
 
-  return 0;
+	return 0;
 }
