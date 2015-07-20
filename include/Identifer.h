@@ -24,8 +24,8 @@ namespace gezi {
 	{
 	public:
 		typedef int IdType; //may be changed to int64
-		typedef std::vector<string>::iterator iterator;
-		typedef std::vector<string>::const_iterator const_iterator;
+		typedef vector<string>::iterator iterator;
+		typedef vector<string>::const_iterator const_iterator;
 		typedef unordered_map<string, IdType> HashMap;
 		typedef HashMap::const_iterator const_mapiter;
 

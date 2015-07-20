@@ -138,7 +138,7 @@ namespace gezi {
 		~Notifer()
 		{
 			string prefix = _info + " using:";
-			VLOG(_level) << setiosflags(ios::left) << setfill(' ') << setw(40)
+			VLOG(_level) << setiosflags(std::ios::left) << std::setfill(' ') << setw(40)
 				<< prefix << " " << "[" << _timer.elapsed_ms() << " ms] "
 				<< "(" << _timer.elapsed() << " s)";
 		}

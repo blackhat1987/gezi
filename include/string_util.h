@@ -40,8 +40,8 @@
 #include "stl_util.h"
 
 namespace gezi {
-	using namespace std;
 
+	static const int kSmallStringLength = 1024;
 	//already gbk chinese,judge if gb2312 chinese
 	inline bool is_gb2312(unsigned char ch1, unsigned char ch2)
 	{
@@ -111,7 +111,12 @@ namespace gezi {
 	//ÌáÈ¡ high>0x81 µÄ×Ö
 	inline string extract_gbk_dual(string temp)
 	{
+#ifdef GEZI_USE_FOLLY
+		folly::small_vector<char, kSmallStringLength> out(temp.size() + 1, 0);
+#else
 		vector<char> out(temp.size() + 1, 0);
+#endif // GEZI_USE_FOLLY
+
 		int index = 0;
 		for (size_t i = 0; i < temp.size(); i++)
 		{

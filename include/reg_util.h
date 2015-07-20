@@ -18,9 +18,9 @@
 #include <boost/algorithm/string/regex.hpp>
 using boost::regex;
 using boost::algorithm::split_regex;
-using std::string;
-using std::wstring;
-using std::vector;
+
+#include "vector_def.h"
+#include "string_def.h"
 namespace gezi
 {
 	//-------------------regex realted

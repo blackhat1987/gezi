@@ -13,7 +13,6 @@
 
 #ifndef MATRIX_H_
 #define MATRIX_H_
-#include <vector>
 #include "common_def.h"
 #include "serialize_util.h"
 namespace gezi {
@@ -89,12 +88,12 @@ namespace gezi {
 				return _mat[rowIdx][colIdx];
 			}
 
-			std::vector<std::vector<T> >& mat()
+			vector<vector<T> >& mat()
 			{
 				return _mat;
 			}
 
-			std::vector<T>& operator[](int index)
+			vector<T>& operator[](int index)
 			{
 				return _mat[index];
 			}
@@ -119,7 +118,7 @@ namespace gezi {
 			}
 
 		private:
-			std::vector<std::vector<T> > _mat;
+			vector<vector<T> > _mat;
 			int _nrow = 0;
 			int _ncol = 0;
 		};
@@ -127,7 +126,7 @@ namespace gezi {
 	}
 
 	template<typename T>
-	inline void init(std::vector<std::vector<T> >& mat, int rows, int cols, T value)
+	inline void init(vector<vector<T> >& mat, int rows, int cols, T value)
 	{
 		mat.resize(rows);
 		for (int i = 0; i < rows; i++)
@@ -137,7 +136,7 @@ namespace gezi {
 	}
 
 	template<typename T>
-	inline void init(std::vector<std::vector<T> >& mat, int rows, int cols)
+	inline void init(vector<vector<T> >& mat, int rows, int cols)
 	{
 		mat.resize(rows);
 		for (int i = 0; i < rows; i++)
@@ -146,10 +145,10 @@ namespace gezi {
 		}
 	}
 
-	typedef std::vector<std::vector<int> > imat;
-	typedef std::vector<std::vector<float> > fmat;
-	typedef std::vector<std::vector<Float> > Fmat;
-	typedef std::vector<std::vector<double> > dmat;
+	typedef vector<vector<int> > imat;
+	typedef vector<vector<float> > fmat;
+	typedef vector<vector<Float> > Fmat;
+	typedef vector<vector<double> > dmat;
 } //----end of namespace gezi
 
 #endif  //----end of MATRIX_H_

@@ -28,7 +28,12 @@
 #include <glog/logging.h>
 #endif
 
-using namespace std;
+//using namespace std;
+using std::ios;
+using std::setprecision;
+using std::setw;
+#include "string_def.h"
+using std::stringstream;
 
 #define VPVAL(s, u)\
 	VLOG(u) << #s <<" --- [" << s << "]"

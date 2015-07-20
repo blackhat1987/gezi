@@ -23,6 +23,9 @@
 #include <cereal/types/base_class.hpp>
 #include <cereal/types/deque.hpp>
 #include <cereal/types/vector.hpp>
+#ifdef USE_FOLLY_VECTOR
+#include <cereal/types/fbvector.hpp>
+#endif // USE_FOLLY_VECTOR
 #include <cereal/types/map.hpp>
 #include <cereal/types/set.hpp>
 #include <cereal/types/list.hpp>

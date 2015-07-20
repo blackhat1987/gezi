@@ -100,5 +100,13 @@ srcs = srcs.replace('../../third/folly/folly/experimental/io/HugePageUtil.cpp', 
 
 #print srcs
 
-CppFlags = ENV.CppFlags() + CppFlags('-DFOLLY_NO_CONFIG -DFOLLY_HAVE_CLOCK_GETTIME -DFOLLY_VERSION=\\\"1\\\"')
+CppFlags = ENV.CppFlags() + CppFlags('-DFOLLY_NO_CONFIG -DFOLLY_HAVE_CLOCK_GETTIME -DFOLLY_VERSION=\\\"1\\\" -DFOLLY_HAVE_MALLOC_H')
 Application('ForeachTest',Sources('./ForeachTest.cpp', srcs, CppFlags))
+Application('ConvTest',Sources('./ConvTest.cpp', srcs, CppFlags))
+Application('FBVectorTest',Sources('./FBVectorTest.cpp', srcs, CppFlags))
+Application('FBVectorBenchmark',Sources('./FBVectorBenchmark.cpp', srcs, CppFlags))
+Application('small_vector_test',Sources('./small_vector_test.cpp', srcs, CppFlags))
+Application('test_vector',Sources('test_vector.cc', srcs))
+Application('test_fbvector',Sources('test_fbvector.cc', srcs, CppFlags))
+Application('test_no_small_vector',Sources('test_no_small_vector.cc', srcs, CppFlags))
+Application('test_with_small_vector',Sources('test_with_small_vector.cc', srcs, CppFlags))

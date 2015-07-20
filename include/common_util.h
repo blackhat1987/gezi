@@ -20,7 +20,9 @@
 #include <complex>      // std::complex, std::abs
 #include <cmath>
 
-#include <gtest/gtest.h> 
+#ifndef USE_FOLLY_VECTOR
+#include <gtest/gtest.h>  //@FIXME will introduce std::vector
+#endif // USE_FOLLY_VECTOR
 #include <gflags/gflags.h>
 
 #include "common_def.h"

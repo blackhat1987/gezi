@@ -96,14 +96,26 @@ typedef float Float;
 typedef double Float;
 #endif // FLOAT
 
-//using std::string;
-//using std::vector;
-//using std::set;
-//using std::map;
-//using std::ifstream;
-//using std::ofstream;
+using std::set;
+using std::map;
+using std::stringstream;
+using std::ifstream;
+using std::ofstream;
 using std::array;
-using namespace std;
+using std::swap;
+using std::pair;
+using std::make_pair;
+using std::setfill;
+using std::endl;
+using std::sort;
+
+using std::move;
+using std::make_shared;
+
+//using namespace std;
+#include "vector_def.h"
+#include "string_def.h"
+
 typedef vector<int> ivec;
 typedef shared_ptr<ivec> ivec_ptr;
 typedef shared_ptr<ivec> IvecPtr;
@@ -198,6 +210,31 @@ using boost::algorithm::split_regex;
 
 #ifndef VERSION
 #define  VERSION "unknown"
+#endif
+
+//-------------folly related
+#ifdef GEZI_USE_FOLLY
+
+#ifndef	FOLLY_NO_CONFIG 
+#define FOLLY_NO_CONFIG 
+#endif
+
+#ifndef  FOLLY_HAVE_CLOCK_GETTIME
+#define FOLLY_HAVE_CLOCK_GETTIME 
+#endif
+
+#ifndef FOLLY_VERSION 
+#define FOLLY_VERSION "1"
+#endif
+
+#ifndef FOLLY_HAVE_MALLOC_H
+#define  FOLLY_HAVE_MALLOC_H
+#endif
+
+#include "folly/Foreach.h"
+#include "folly/small_vector.h"
+#include "folly/MapUtil.h"
+
 #endif
 
 namespace gezi

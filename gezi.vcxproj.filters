@@ -1644,6 +1644,96 @@
     <ClInclude Include="tools\tieba\urate\include\urate_train.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\folly\detail\AtomicHashUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\AtomicUnorderedMapUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\BitIteratorDetail.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\BitsDetail.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\CacheLocality.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\ChecksumDetail.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\Clock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\DiscriminatedPtrDetail.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\ExceptionWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\FileUtilDetail.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\FingerprintPolynomial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\FunctionalExcept.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\Futex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\GroupVarintDetail.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\IPAddress.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\Malloc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\MemoryIdler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\MPMCPipelineDetail.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\Sleeper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\SlowFingerprint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\SpinLockImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\Stats.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\ThreadLocalDetail.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\TurnSequencer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\detail\UncaughtExceptionCounter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\folly\Foreach.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vector_def.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\folly\folly\FBVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\folly\folly\FBString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cereal\types\fbvector.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -2040,6 +2130,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="test\test_weight_vector.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\folly\detail\CacheLocality.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\folly\detail\Clock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\folly\detail\FunctionalExcept.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\folly\detail\Futex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\folly\detail\MallocImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\folly\detail\MemoryIdler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

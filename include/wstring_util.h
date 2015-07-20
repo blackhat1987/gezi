@@ -13,10 +13,10 @@
 
 #ifndef WSTRING_UTIL_H_
 #define WSTRING_UTIL_H_
-#include <string>
+#include "string_def.h"
+#include "vector_def.h"
 namespace gezi
 {
-	using namespace std;
 	//-----------------------------------wstring convert
 	/**
 	 * @brief ×Ö·û´®×ª»¯³É¿ístring

@@ -14,7 +14,7 @@
 #ifndef NUMERIC_FIND_BINS_H_
 #define NUMERIC_FIND_BINS_H_
 #include "common_def.h"
-#include "common_util.h"
+#include "sort_util.h"
 namespace gezi {
 
 	//输入的countValues是resize之后的
@@ -24,7 +24,8 @@ namespace gezi {
 
 		if (!values.empty())
 		{ //兼容边界条件 value是空的时候 返回1个bin max最大值，median设置为0
-			sort(values.begin(), values.end());
+			//sort_util.h:222:7: note: template<class ValueVec, class IndexVec, class Func> void gezi::sort(const ValueVec&, IndexVec&, Func)
+			std::sort(values.begin(), values.end()); //@FIXME 没有std::sort为什么会去尝试匹配gezi::sort,如果不是fbvector没事？
 
 			countValues[0].first = 1;
 			countValues[0].second = values[0];

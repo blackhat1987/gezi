@@ -20,7 +20,7 @@
 #include <boost/lexical_cast.hpp>
 namespace gezi {
 	template<typename T>
-	std::string join(const std::vector<T>& vec, const std::string& sep = " ")
+	string join(const vector<T>& vec, const string& sep = " ")
 	{
 		if (vec.empty())
 		{
@@ -37,7 +37,7 @@ namespace gezi {
 	}
 
 	template<typename Iter>
-	std::string join(Iter begin, Iter end, const std::string& sep = " ")
+	string join(Iter begin, Iter end, const string& sep = " ")
 	{
 		if (begin == end)
 		{
@@ -68,9 +68,9 @@ namespace gezi {
 	}
 
 	template<typename T>
-	std::string get_json(const std::vector<T>& vec)
+	string get_json(const vector<T>& vec)
 	{
-		std::vector<string> rvec;
+		vector<string> rvec;
 		for (int i = 0; i < (int)vec.size(); i++)
 		{
 			//string kv = (format("\"%1%\":\"%2%\"") % STR(i) % STR(vec[i])).str();
@@ -82,9 +82,9 @@ namespace gezi {
 	}
 
 	template<typename T>
-	std::string get_json(const std::vector<T>& vec, int len)
+	string get_json(const vector<T>& vec, int len)
 	{
-		std::vector<string> rvec;
+		vector<string> rvec;
 		for (int i = 0; i < len; i++)
 		{
 			//string kv = (format("\"%1%\":\"%2%\"") % STR(i) % STR(vec[i])).str();
@@ -125,18 +125,18 @@ namespace gezi {
 	}*/
 
 	//this one is speed similar to boost::split(container, str, std::bind1st(std::equal_to<char>(), ','));
-	inline std::vector<std::string> split2(std::string s, const char delimiter)
+	inline vector<string> split2(string s, const char delimiter)
 	{
 		size_t start = 0;
 		size_t end = s.find_first_of(delimiter);
 
-		std::vector<std::string> output;
+		vector<string> output;
 
-		while (end <= std::string::npos)
+		while (end <= string::npos)
 		{
 			output.emplace_back(s.substr(start, end - start));
 
-			if (end == std::string::npos)
+			if (end == string::npos)
 				break;
 
 			start = end + 1;
@@ -754,7 +754,7 @@ namespace gezi {
 			m[ips[i]].insert(uids[i]);
 		}
 
-		return (*max_element(m.begin(), m.end(), [](const ItemType& l, const ItemType& r) { return l.second.size() < r.second.size(); })).second.size();
+		return (*std::max_element(m.begin(), m.end(), [](const ItemType& l, const ItemType& r) { return l.second.size() < r.second.size(); })).second.size();
 	}
 
 	template<typename DestVec, typename RefVec>
@@ -770,7 +770,7 @@ namespace gezi {
 			m[ips[i]].insert(uids[i]);
 		}
 
-		return (*min_element(m.begin(), m.end(), [](const ItemType& l, const ItemType& r) { return l.second.size() < r.second.size(); })).second.size();
+		return (*std::min_element(m.begin(), m.end(), [](const ItemType& l, const ItemType& r) { return l.second.size() < r.second.size(); })).second.size();
 	}
 
 	template<typename Container, typename Container2>
@@ -854,7 +854,7 @@ namespace gezi {
 	{
 		for (size_t i = 0; i < names.size(); i++)
 		{
-			std::cerr << std::setiosflags(ios::left) << std::setfill(' ') << std::setw(space)
+			std::cerr << std::setiosflags(std::ios::left) << std::setfill(' ') << std::setw(space)
 				<< names[i] + inSep
 				<< results[i] << outSep;
 		}
@@ -863,7 +863,7 @@ namespace gezi {
 	template<typename T, typename U>
 	void print_key_value(const T& name, const U& result, string inSep = "", string outSep = "\n", int space = 40)
 	{
-		std::cerr << std::setiosflags(ios::left) << std::setfill(' ') << std::setw(space)
+		std::cerr << std::setiosflags(std::ios::left) << std::setfill(' ') << std::setw(space)
 			<< name + inSep
 			<< result << outSep;
 	}
@@ -874,7 +874,7 @@ namespace gezi {
 		std::stringstream ss;
 		for (size_t i = 0; i < names.size(); i++)
 		{
-			ss << std::setiosflags(ios::left) << std::setfill(' ') << std::setw(space)
+			ss << std::setiosflags(std::ios::left) << std::setfill(' ') << std::setw(space)
 				<< STR(names[i]) + inSep
 				<< results[i] << outSep;
 		}
@@ -888,7 +888,7 @@ namespace gezi {
 		for (size_t i = 0; i < names.size(); i++)
 		{
 			ss << names[i] << inSep
-				<< std::setiosflags(ios::left) << std::setfill(outSep) << std::setw(space)
+				<< std::setiosflags(std::ios::left) << std::setfill(outSep) << std::setw(space)
 				<< results[i]
 				<< outSep;
 		}

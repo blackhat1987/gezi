@@ -140,6 +140,20 @@ TEST(Foreach, ForEachEnumerateBreak) {
 	EXPECT_EQ(numIterations, 2);
 }
 
+TEST(Foreach, ForEachRange) {
+	int sum = 0;
+	FOR_EACH_RANGE(i, 1, 3) {
+		sum += i;
+	}
+	EXPECT_EQ(3, sum);
+
+	sum = 0;
+	FOR_EACH_RANGE_R(i, 1, 3) {
+		sum += i;
+	}
+	EXPECT_EQ(3, sum);
+}
+
 TEST(Foreach, ForEachRangeR) {
 	int sum = 0;
 

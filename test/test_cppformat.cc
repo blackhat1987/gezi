@@ -55,6 +55,7 @@ TEST(cppformat, func)
 	fmt::printf("%d",INT(a) + INT(b));
 	Pval(fmt::format("{{{}}}", "abc"));
 	Pval(fmt::format("\"{}\"", "abc"));
+	Pval(fmt::format("{:>7}", "hello"));
 }
 
 int main(int argc, char *argv[])

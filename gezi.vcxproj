@@ -104,6 +104,7 @@
     <ClInclude Include="include\cereal\types\common.hpp" />
     <ClInclude Include="include\cereal\types\complex.hpp" />
     <ClInclude Include="include\cereal\types\deque.hpp" />
+    <ClInclude Include="include\cereal\types\fbvector.hpp" />
     <ClInclude Include="include\cereal\types\forward_list.hpp" />
     <ClInclude Include="include\cereal\types\list.hpp" />
     <ClInclude Include="include\cereal\types\map.hpp" />
@@ -415,6 +416,32 @@
     <ClInclude Include="include\feature\feature_util.h" />
     <ClInclude Include="include\feature\gain_summary.h" />
     <ClInclude Include="include\file_util.h" />
+    <ClInclude Include="include\folly\detail\AtomicHashUtils.h" />
+    <ClInclude Include="include\folly\detail\AtomicUnorderedMapUtils.h" />
+    <ClInclude Include="include\folly\detail\BitIteratorDetail.h" />
+    <ClInclude Include="include\folly\detail\BitsDetail.h" />
+    <ClInclude Include="include\folly\detail\CacheLocality.h" />
+    <ClInclude Include="include\folly\detail\ChecksumDetail.h" />
+    <ClInclude Include="include\folly\detail\Clock.h" />
+    <ClInclude Include="include\folly\detail\DiscriminatedPtrDetail.h" />
+    <ClInclude Include="include\folly\detail\ExceptionWrapper.h" />
+    <ClInclude Include="include\folly\detail\FileUtilDetail.h" />
+    <ClInclude Include="include\folly\detail\FingerprintPolynomial.h" />
+    <ClInclude Include="include\folly\detail\FunctionalExcept.h" />
+    <ClInclude Include="include\folly\detail\Futex.h" />
+    <ClInclude Include="include\folly\detail\GroupVarintDetail.h" />
+    <ClInclude Include="include\folly\detail\IPAddress.h" />
+    <ClInclude Include="include\folly\detail\Malloc.h" />
+    <ClInclude Include="include\folly\detail\MemoryIdler.h" />
+    <ClInclude Include="include\folly\detail\MPMCPipelineDetail.h" />
+    <ClInclude Include="include\folly\detail\Sleeper.h" />
+    <ClInclude Include="include\folly\detail\SlowFingerprint.h" />
+    <ClInclude Include="include\folly\detail\SpinLockImpl.h" />
+    <ClInclude Include="include\folly\detail\Stats.h" />
+    <ClInclude Include="include\folly\detail\ThreadLocalDetail.h" />
+    <ClInclude Include="include\folly\detail\TurnSequencer.h" />
+    <ClInclude Include="include\folly\detail\UncaughtExceptionCounter.h" />
+    <ClInclude Include="include\folly\Foreach.h" />
     <ClInclude Include="include\format.h" />
     <ClInclude Include="include\hashmap_util.h" />
     <ClInclude Include="include\Identifer.h" />
@@ -585,6 +612,7 @@
     <ClInclude Include="include\unordered_map_serialize.h" />
     <ClInclude Include="include\unordered_set_serialize.h" />
     <ClInclude Include="include\url_util.h" />
+    <ClInclude Include="include\vector_def.h" />
     <ClInclude Include="include\WithArgs.h" />
     <ClInclude Include="include\WithHelp.h" />
     <ClInclude Include="include\word_seg.h" />
@@ -608,10 +636,18 @@
     <ClInclude Include="third-64\glog\include\glog\raw_logging.h" />
     <ClInclude Include="third-64\glog\include\glog\stl_logging.h" />
     <ClInclude Include="third-64\glog\include\glog\vlog_is_on.h" />
+    <ClInclude Include="third\folly\folly\FBString.h" />
+    <ClInclude Include="third\folly\folly\FBVector.h" />
     <ClInclude Include="tools\tieba\urate\include\urate_train.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc" />
+    <ClCompile Include="include\folly\detail\CacheLocality.cpp" />
+    <ClCompile Include="include\folly\detail\Clock.cpp" />
+    <ClCompile Include="include\folly\detail\FunctionalExcept.cpp" />
+    <ClCompile Include="include\folly\detail\Futex.cpp" />
+    <ClCompile Include="include\folly\detail\MallocImpl.cpp" />
+    <ClCompile Include="include\folly\detail\MemoryIdler.cpp" />
     <ClCompile Include="include\serialization\shared_ptr_helper.cpp" />
     <ClCompile Include="src\conf_util.cpp" />
     <ClCompile Include="src\json\json_reader.cpp" />

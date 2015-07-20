@@ -31,11 +31,6 @@
 namespace bfs = boost::filesystem;
 //---------------------------for file save load
 namespace gezi {
-
-	using std::map;
-	using std::set;
-	using std::string;
-
 	//forced copy
 	inline void copy_file(string src, string dest)
 	{
@@ -57,10 +52,10 @@ namespace gezi {
 		}
 	}
 
-	inline std::string read_file(const std::string& infile)
+	inline string read_file(const string& infile)
 	{
 		std::ifstream ifs(infile.c_str());
-		return boost::trim_copy(std::string((std::istreambuf_iterator<char>(ifs)),
+		return boost::trim_copy(string((std::istreambuf_iterator<char>(ifs)),
 			std::istreambuf_iterator<char>()));
 	}
 
@@ -78,7 +73,7 @@ namespace gezi {
 		ifs >> content;
 	}
 	template<typename Container>
-	bool file_to_set(const std::string& infile, Container& container)
+	bool file_to_set(const string& infile, Container& container)
 	{
 		typedef typename Container::value_type T;
 		std::ifstream ifs(infile.c_str());
@@ -95,7 +90,7 @@ namespace gezi {
 	//适用于单列文本
 
 	template<typename Container>
-	bool file_to_vec(const std::string& infile, Container& container)
+	bool file_to_vec(const string& infile, Container& container)
 	{
 		typedef typename Container::value_type T;
 		std::ifstream ifs(infile.c_str());
@@ -274,7 +269,7 @@ namespace gezi {
 
 	//多列 read_to
 
-	inline void read_to_set(const std::string& infile, std::set<std::string>& container,
+	inline void read_to_set(const string& infile, std::set<string>& container,
 		int index = 0, string sep = "\t ")
 	{
 		std::ifstream ifs(infile.c_str());
@@ -288,7 +283,7 @@ namespace gezi {
 		}
 	}
 
-	inline void read_to_set(const std::string& infile, unordered_set<std::string>& container,
+	inline void read_to_set(const string& infile, unordered_set<string>& container,
 		int index = 0, string sep = "\t ")
 	{
 		std::ifstream ifs(infile.c_str());
@@ -303,7 +298,7 @@ namespace gezi {
 	}
 
 	template<typename Container>
-	void read_to_set(const std::string& infile, Container& container, int index = 0, string sep = "\t ")
+	void read_to_set(const string& infile, Container& container, int index = 0, string sep = "\t ")
 	{
 		typedef typename Container::value_type T;
 		std::ifstream ifs(infile.c_str());
@@ -317,7 +312,7 @@ namespace gezi {
 		}
 	}
 
-	inline void read_to_vec(const std::string& infile, std::vector<std::string>& container,
+	inline void read_to_vec(const string& infile, vector<string>& container,
 		int index = 0, string sep = "\t ")
 	{
 		std::ifstream ifs(infile.c_str());
@@ -331,7 +326,7 @@ namespace gezi {
 		}
 	}
 
-	inline std::vector<std::string> read_to_vec(const std::string& infile, int index = 0, string sep = "\t ")
+	inline vector<string> read_to_vec(const string& infile, int index = 0, string sep = "\t ")
 	{
 		vector<string> container;
 		std::ifstream ifs(infile.c_str());
@@ -347,7 +342,7 @@ namespace gezi {
 	}
 
 	template<typename Container>
-	void read_to_vec(const std::string& infile, Container& container, int index = 0, string sep = "\t ")
+	void read_to_vec(const string& infile, Container& container, int index = 0, string sep = "\t ")
 	{
 		typedef typename Container::value_type T;
 		std::ifstream ifs(infile.c_str());
@@ -362,7 +357,7 @@ namespace gezi {
 	}
 
 	template<typename T>
-	vector<T> read_to_vec(const std::string& infile, int index = 0, string sep = "\t ")
+	vector<T> read_to_vec(const string& infile, int index = 0, string sep = "\t ")
 	{
 		vector<T> container;
 		std::ifstream ifs(infile.c_str());
@@ -378,7 +373,7 @@ namespace gezi {
 	}
 
 	template<typename Container, typename Container2>
-	void read_to_vec(const std::string& infile, Container& container, Container2& container2, int index = 0, int index2 = 1, string sep = "\t ")
+	void read_to_vec(const string& infile, Container& container, Container2& container2, int index = 0, int index2 = 1, string sep = "\t ")
 	{
 		typedef typename Container::value_type T;
 		typedef typename Container2::value_type U;
@@ -395,7 +390,7 @@ namespace gezi {
 	}
 	//TODO better method...
 
-	inline void read_map(const std::string& infile, std::map<std::string, std::string>& container,
+	inline void read_map(const string& infile, std::map<string, string>& container,
 		string sep = "\t", int key_idx = 0, int value_idx = 1)
 	{
 		std::ifstream ifs(infile.c_str());
@@ -409,7 +404,7 @@ namespace gezi {
 		}
 	}
 
-	inline void read_map(const std::string& infile, unordered_map<std::string, std::string>& container,
+	inline void read_map(const string& infile, unordered_map<string, string>& container,
 		string sep = "\t", int key_idx = 0, int value_idx = 1)
 	{
 		std::ifstream ifs(infile.c_str());
@@ -424,7 +419,7 @@ namespace gezi {
 	}
 
 	template<typename Container>
-	void read_map(const std::string& infile, Container& container, string sep = "\t",
+	void read_map(const string& infile, Container& container, string sep = "\t",
 		int key_idx = 0, int value_idx = 1)
 	{
 		//  typedef typename Container::key_type T;
@@ -468,7 +463,7 @@ namespace gezi {
 	}
 
 	template<typename Map>
-	void write_map(const Map& m, const std::string& ofile, const std::string& sep = "\t")
+	void write_map(const Map& m, const string& ofile, const string& sep = "\t")
 	{
 		ofstream ofs(ofile.c_str());
 		typedef typename Map::value_type Pair;
@@ -483,7 +478,7 @@ namespace gezi {
 	* 注意 write_ve 与 read_vec配合使用, 只适用于_Node 是简单类型的情况比如int,float struct{int,float}
 	*/
 	template<typename _Node>
-	void write_vec(const std::vector<_Node>& vec, const std::string& file)
+	void write_vec(const vector<_Node>& vec, const string& file)
 	{
 		//不输出长度
 		std::ofstream ofs(file.c_str(), std::ios::binary);
@@ -492,7 +487,7 @@ namespace gezi {
 
 
 	template<typename _Node>
-	bool read_vec(const std::string& file, std::vector<_Node>& vec)
+	bool read_vec(const string& file, vector<_Node>& vec)
 	{
 		std::ifstream ifs(file.c_str(), std::ios::binary);
 		if (!ifs.is_open())
@@ -507,7 +502,7 @@ namespace gezi {
 	}
 
 	template<typename _Node>
-	void write_vec(const std::vector<_Node>& vec, std::ofstream& ofs)
+	void write_vec(const vector<_Node>& vec, std::ofstream& ofs)
 	{
 		int len = (int)vec.size();
 		ofs.write(reinterpret_cast<const char*> (&len), sizeof(len));
@@ -515,9 +510,9 @@ namespace gezi {
 	}
 
 	template<typename _Node>
-	std::vector<_Node> read_vec(std::ifstream& ifs)
+	vector<_Node> read_vec(std::ifstream& ifs)
 	{
-		std::vector<_Node> vec;
+		vector<_Node> vec;
 		int len;
 		ifs.read(reinterpret_cast<char*> (&len), sizeof(len));
 		vec.resize(len);
@@ -526,7 +521,7 @@ namespace gezi {
 	}
 
 	template<typename _Node>
-	void read_vec(std::ifstream& ifs, std::vector<_Node>& vec)
+	void read_vec(std::ifstream& ifs, vector<_Node>& vec)
 	{
 		vec.clear();
 		int len;
@@ -537,14 +532,14 @@ namespace gezi {
 	}
 
 	template<typename T>
-	void write_elem(const T& elem, const std::string& file)
+	void write_elem(const T& elem, const string& file)
 	{
 		std::ofstream ofs(file.c_str());
 		ofs << elem;
 	}
 
 	template<typename T>
-	bool read_elem(const std::string& file, T& elem)
+	bool read_elem(const string& file, T& elem)
 	{
 		std::ifstream ifs(file.c_str());
 		if (!ifs.is_open())
@@ -566,7 +561,7 @@ namespace gezi {
 	}
 
 	template<typename _Node>
-	void write_vec2d(const std::vector<std::vector<_Node> >& vec, std::ofstream& ofs)
+	void write_vec2d(const vector<vector<_Node> >& vec, std::ofstream& ofs)
 	{
 		size_t row_len = vec.size();
 		if (!row_len)
@@ -582,7 +577,7 @@ namespace gezi {
 	}
 
 	template<typename _Node>
-	void write_vec2d(const std::vector<std::vector<_Node> >& vec, const std::string& file)
+	void write_vec2d(const vector<vector<_Node> >& vec, const string& file)
 	{
 		std::ofstream ofs(file.c_str(), std::ios::binary);
 		size_t row_len = vec.size();
@@ -591,7 +586,7 @@ namespace gezi {
 	}
 
 	template<typename _Node>
-	bool read_vec2d(const std::string& file, std::vector<std::vector<_Node> >& vec)
+	bool read_vec2d(const string& file, vector<vector<_Node> >& vec)
 	{
 		std::ifstream ifs(file.c_str(), std::ios::binary);
 		if (!ifs.is_open())
@@ -619,13 +614,13 @@ namespace gezi {
 	{
 	public:
 
-		Vec2dWriter(const std::string& file)
+		Vec2dWriter(const string& file)
 			: _ofs(file.c_str(), std::ios::binary)
 		{
 		}
 
 		template<typename _Node>
-		void write(const std::vector<_Node>& vec)
+		void write(const vector<_Node>& vec)
 		{
 			int len = (int)vec.size();
 			_ofs.write(reinterpret_cast<const char*> (&len), sizeof(len));
@@ -666,7 +661,7 @@ namespace gezi {
 		}
 
 		template<typename _Node>
-		VecWriter& write(const std::vector<_Node>& vec)
+		VecWriter& write(const vector<_Node>& vec)
 		{
 			int len = (int)vec.size();
 			_ofs.write(reinterpret_cast<const char*> (&len), sizeof(len));

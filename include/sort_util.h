@@ -13,9 +13,8 @@
 
 #ifndef SORT_UTIL_H_
 #define SORT_UTIL_H_
-
+#include "vector_def.h"
 namespace gezi {
-
 	/**
 	 * value second从大到小排序  作为默认顺序
 	 * index id first 从小到大排序 作为默认顺序

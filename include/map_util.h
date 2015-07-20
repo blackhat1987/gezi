@@ -133,9 +133,9 @@ namespace gezi {
 	template<typename _Map>
 	void print_enum_map(const _Map& m)
 	{
-		for (auto item : m)
+		for (const auto& item : m)
 		{
-			std::cerr << std::setiosflags(ios::left) << std::setfill(' ') << std::setw(40)
+			std::cerr << std::setiosflags(std::ios::left) << std::setfill(' ') << std::setw(40)
 				<< item.first << " " << (int)item.second << std::endl;
 		}
 	}
@@ -143,9 +143,9 @@ namespace gezi {
 	template<typename _Map>
 	void print_map(const _Map& m)
 	{
-		for (auto item : m)
+		for (const auto& item : m)
 		{
-			std::cerr << std::setiosflags(ios::left) << std::setfill(' ') << std::setw(40)
+			std::cerr << std::setiosflags(std::ios::left) << std::setfill(' ') << std::setw(40)
 				<< item.first << " " << item.second << std::endl;
 		}
 	}
