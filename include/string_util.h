@@ -111,11 +111,13 @@ namespace gezi {
 	//提取 high>0x81 的字
 	inline string extract_gbk_dual(string temp)
 	{
-#ifdef GEZI_USE_FOLLY
-		folly::small_vector<char, kSmallStringLength> out(temp.size() + 1, 0);
-#else
+		////@TODO 测试发现small_vector并没有变快呢。。至少 没有明显收益。。
+		//#ifdef GEZI_USE_FOLLY
+		//		folly::small_vector<char, kSmallStringLength> out(temp.size() + 1, 0);
+		//		//folly::fbvector<char> out(temp.size() + 1, 0);
+		//#else
 		vector<char> out(temp.size() + 1, 0);
-#endif // GEZI_USE_FOLLY
+		//#endif // GEZI_USE_FOLLY
 
 		int index = 0;
 		for (size_t i = 0; i < temp.size(); i++)

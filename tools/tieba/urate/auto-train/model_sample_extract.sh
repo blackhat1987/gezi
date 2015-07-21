@@ -1,11 +1,15 @@
+mkdir -p corpus 
 cd ./corpus/ 
 rm -rf *
+cd ..
 
+mkdir -p evaluate-info 
 cd ./evaluate-info/
 rm -rf *
 python ../get-ori-data.py  evaluate-info 
-
 cd .. 
+
+mkdir -p evaluate-info-recent
 cd ./evaluate-info-recent/ 
 rm -rf *
 python ../get-ori-data.py evaluate-info-recent

@@ -17,7 +17,7 @@
 #define protected public
 #define GEZI_USE_FOLLY
 #include "common_util.h"
-#include <folly/Benchmark.h>
+//#include <folly/Benchmark.h>
 using namespace std;
 using namespace gezi;
 DEFINE_int32(vl, 5, "vlog level");
@@ -30,10 +30,10 @@ TEST(with_small_vector, func)
 	{
 		string s = "1234你是谁呢456哎呦我去tomorrow i will go to 优衣库";
 		string s2 = gezi::extract_gbk_dual(s);
-		Pval(s2);
+		Pval2(s2, s.size());
 	}
 	string s2;
-	for (size_t i = 0; i < 1024; i++)
+	for (size_t i = 0; i < 10240000; i++)
 	{
 		string s = "1234你是谁呢456哎呦我去tomorrow i will go to 优衣库";
 		s2 = gezi::extract_gbk_dual(s);

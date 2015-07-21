@@ -39,6 +39,7 @@ CPPFLAGS=-D_GNU_SOURCE \
 INCPATH=-I./include/cppformat/ \
   -I. \
   -I./include \
+  -I./third/ \
   -I./utils \
   -I./output \
   -I./output/include \
@@ -141,7 +142,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=f8aa7bb6e8867356d742bd529d689ba5  COMAKE
+COMAKE_MD5=f724700d762416655164037058a3065d  COMAKE
 
 
 .PHONY:all

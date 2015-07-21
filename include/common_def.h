@@ -234,8 +234,8 @@ using boost::algorithm::split_regex;
 #include "folly/Foreach.h"
 #include "folly/small_vector.h"
 #include "folly/MapUtil.h"
-
-#endif
+#include "folly/FBVector.h"
+#endif //GEZI_USE_FOLLY 
 
 namespace gezi
 {

@@ -108,5 +108,7 @@ Application('FBVectorBenchmark',Sources('./FBVectorBenchmark.cpp', srcs, CppFlag
 Application('small_vector_test',Sources('./small_vector_test.cpp', srcs, CppFlags))
 Application('test_vector',Sources('test_vector.cc', srcs))
 Application('test_fbvector',Sources('test_fbvector.cc', srcs, CppFlags))
-Application('test_no_small_vector',Sources('test_no_small_vector.cc', srcs, CppFlags))
+Application('test_no_small_vector',Sources('test_no_small_vector.cc', srcs))
 Application('test_with_small_vector',Sources('test_with_small_vector.cc', srcs, CppFlags))
+Application('test_trie',Sources('test_trie.cc', srcs))
+Application('benchmark_trie',Sources('benchmark_trie.cc', srcs))

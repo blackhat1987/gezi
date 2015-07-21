@@ -93,11 +93,11 @@ CONFIGS('public/uconv@1.1.3.0')
 #必须放在前面 不然会受到gezi下面的include影响 目前主要是convert_type中使用UINT等define的影响 后续考虑将应用代码统一改为TO_UINT等
 headers=''
 INCPATHS('./include/cppformat/'.replace('./',RELATIVE_PATH))
-srcs = GLOB('./src/cppformat/*.cc'.replace('./', RELATIVE_PATH))
+srcs = GLOB('./third/cppformat/*.cc'.replace('./', RELATIVE_PATH))
 StaticLibrary('gezi_cppformat',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),HeaderFiles(headers))
 
 #头文件路径.
-INCPATHS('. ./include ./utils ./output ./output/include ./include/feature ./include/numeric ./melt/include/ ./include/serialization/'.replace('./',RELATIVE_PATH))
+INCPATHS('. ./include ./third/ ./utils ./output ./output/include ./include/feature ./include/numeric ./melt/include/ ./include/serialization/'.replace('./',RELATIVE_PATH))
 #srcs=GLOB('./src/*.cpp ./src/feature/*.cpp ./src/model/*.cpp ./src/seralization/shared_ptr_helper.cpp'.replace('./',RELATIVE_PATH))
 #srcs=GLOB('./src/*.cpp ./src/feature/*.cpp ./src/model/*.cpp'.replace('./',RELATIVE_PATH))
 srcs=GLOB('./src/*.cpp'.replace('./',RELATIVE_PATH))
@@ -115,7 +115,6 @@ StaticLibrary('gezi_common',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG'
 #StaticLibrary('gezi_common',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),HeaderFiles(headers))
 srcs = GLOB('./src/json/*.cpp'.replace('./',RELATIVE_PATH))
 StaticLibrary('gezi_json',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),HeaderFiles(headers))
-
 
 #共享库
 #子目录
