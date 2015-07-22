@@ -71,7 +71,7 @@ namespace gezi {
 #undef uint8_t
 #undef uint32_t
 
-
+#if __GNUC__ > 3 || defined(WIN32)
 //----------------------------boost based 
 //参见 ds/benchmark_encoding_convert.cc 测试 boost 性能较差
 //== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
@@ -96,6 +96,6 @@ namespace gezi {
 	}
 } // namespace gezi
 
-
+#endif // __GNUC__ > 3
 #endif	/* ENCODING_CONVERT_H_ */
 

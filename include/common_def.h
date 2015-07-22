@@ -101,6 +101,7 @@ using std::map;
 using std::stringstream;
 using std::ifstream;
 using std::ofstream;
+using std::ostream;
 using std::array;
 using std::swap;
 using std::pair;
@@ -109,8 +110,10 @@ using std::setfill;
 using std::endl;
 using std::sort;
 
+#if __GNUC__ > 3 || defined(WIN32)
 using std::move;
 using std::make_shared;
+#endif
 
 //using namespace std;
 #include "vector_def.h"

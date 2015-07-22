@@ -70,7 +70,7 @@ while i < len(m):
 	if line.endswith('='):
 		if i + 1 < len(m) and m[i + 1].startswith('{'):
 			print line[:line.rfind('=')].rstrip() + ';'
-			while not (m[i].startswith('};')):
+			while not (m[i].startswith('};')) and not (m[i].strip() == ';' and i - 1 >= 0 and m[i - 1].strip() == '}'):
 				i += 1
 			i += 1
 			continue

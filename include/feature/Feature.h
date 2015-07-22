@@ -2,9 +2,6 @@
 #define _FEATURE_H_
 
 #include "common_util.h"
-using std::vector;
-using std::pair;
-using std::make_pair;
 
 //@WARNING depreciated -> use FeatureVector.h
 namespace gezi {
