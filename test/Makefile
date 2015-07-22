@@ -42,7 +42,11 @@ INCPATH=-I. \
   -I../include/feature \
   -I../include/model \
   -I../include/numeric
-DEP_INCPATH=-I../../../../../../com/btest/gtest \
+DEP_INCPATH=-I../../../../../../app/search/sep/anti-spam/gezi/third \
+  -I../../../../../../app/search/sep/anti-spam/gezi/third/include \
+  -I../../../../../../app/search/sep/anti-spam/gezi/third/output \
+  -I../../../../../../app/search/sep/anti-spam/gezi/third/output/include \
+  -I../../../../../../com/btest/gtest \
   -I../../../../../../com/btest/gtest/include \
   -I../../../../../../com/btest/gtest/output \
   -I../../../../../../com/btest/gtest/output/include \

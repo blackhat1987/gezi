@@ -14,8 +14,10 @@
 #ifndef RSTREE_H_
 #define RSTREE_H_
 #include "SuffixTree.h"
-#include "rstree_def.h"
 #include "debug_util.h"
+#ifdef GEZI_USE_CONF
+#include "conf_util.h"
+#endif
 namespace gezi
 {
 
@@ -38,6 +40,15 @@ namespace gezi
 			_max_jump = 5; //平均多于5个分支的时候取上面的 也就是说频次n 下降到 < n/_max_jump 那么取上面的 
 		}
 
+		enum SEG_POS
+		{
+			SINGLE,
+			LEFT,
+			MIDDLE,
+			RIGHT
+		};
+
+#ifdef GEZI_USE_CONF
 		bool init()
 		{
 			return init(SharedConf::get_conf());
@@ -53,6 +64,7 @@ namespace gezi
 			CONF(_max_jump);
 			return true;
 		}
+#endif // GEZI_USE_CONF 
 
 		void init(int min_substr_len, int max_substr_len, int min_freq, int tree_size)
 		{

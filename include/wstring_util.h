@@ -15,13 +15,17 @@
 #define WSTRING_UTIL_H_
 #include "string_def.h"
 #include "vector_def.h"
+#include "encoding_def.h"
+#include <boost/locale.hpp>
 namespace gezi
 {
+
 	//-----------------------------------wstring convert
-	/**
-	 * @brief 字符串转化成宽string
-	 *注意转化前需要配置locale 如   setlocale(LC_ALL, "zh_CN.UTF-8"); 当前gcc高版本动态链接 转换不成功,及时默认的高版本gcc也不行。。
-	 */
+	/*!
+	* \brief 字符串转化成宽string
+	*				注意转化前需要配置locale 如   setlocale(LC_ALL, "zh_CN.UTF-8"); 当前gcc高版本动态链接 转换不成功,及时默认的高版本gcc也不行。。V2环境ok
+	*				或者使用 	std::locale::global(std::locale("zh_CN.GB18030")); //这个也是需要v2环境 否则core
+	*/
 	inline wstring str_to_wstr(const char* pc, int len)
 	{
 		if (!pc || len <= 0)
@@ -44,10 +48,9 @@ namespace gezi
 		return str_to_wstr(src);
 	}
 
-	/**
-	 * @brief 将宽字符串转化为string
-	 *
-	 */
+	/*!
+	* \brief 将宽字符串转化为string
+	*/
 	inline string wstr_to_str(const wchar_t *pw, int len)
 	{
 		if (!pw || len <= 0)
@@ -73,20 +76,34 @@ namespace gezi
 	{
 		return wstr_to_str(src);
 	}
-
-	inline string wstr2str(const wstring& src)
-	{
-		return wstr_to_str(src);
-	}
-
+	
 	inline wstring str2wstr(string src)
 	{
 		return str_to_wstr(src);
 	}
 
+	///suggested
+	inline string wstr2str(const wstring& src)
+	{
+		return wstr_to_str(src);
+	}
+
+	///suggested
 	inline wstring wstr(string src)
 	{
 		return str_to_wstr(src);
+	}
+
+	//------however benchmark show boost conv is much slow
+	//Considering that the enumerators use the specified type unsigned short as an underlying type, as Alok Save pointed out, it is probably a good idea to pass such objects by value (unless you want to change their value in the function as a side effect, in which case you should use a reference.)
+	inline string wstr2str(const wstring& src, EncodingType encodingType)
+	{
+		return boost::locale::conv::from_utf(src, kEncodings[static_cast<int>(encodingType)]);
+	}
+
+	inline wstring wstr(string src, EncodingType encodingType)
+	{
+		return  boost::locale::conv::to_utf<wchar_t>(src, kEncodings[static_cast<int>(encodingType)]);
 	}
 
 	//can use boost instead

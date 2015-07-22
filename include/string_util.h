@@ -135,6 +135,7 @@ namespace gezi {
 		string ret(&out[0]);
 		return ret;
 	}
+
 	//ÌáÈ¡·ûºÅ
 	inline string extract_suspect_symb(string temp)
 	{

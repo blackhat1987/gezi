@@ -96,7 +96,7 @@ namespace gezi {
 	class Noticer
 	{
 	public:
-		Noticer(string info, int level = 0, bool caclTime = true)
+		Noticer(string info = "Noticer", int level = 0, bool caclTime = true)
 			:_info(info), _timer(NULL), _level(level)
 		{
 			VLOG(_level) << _info << " started";
@@ -131,7 +131,7 @@ namespace gezi {
 	class Notifer
 	{
 	public:
-		Notifer(string info, int level = 0)
+		Notifer(string info = "Notifer", int level = 0)
 			:_info(info), _level(level)
 		{
 		}

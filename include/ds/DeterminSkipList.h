@@ -405,7 +405,7 @@ namespace gezi {
 	}
 
 
-} //end fo namespace skip_list
+} //end fo namespace gezi
 
 #endif //end of _DETERMIN_SKIP_LIST_H
 

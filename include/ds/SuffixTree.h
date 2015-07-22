@@ -28,10 +28,6 @@
 
 namespace gezi
 {
-using namespace std;
-using std::wstring;
-using std::vector;
-
 class SuffixTree
 {
 public:

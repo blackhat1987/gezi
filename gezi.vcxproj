@@ -96,6 +96,7 @@
     <ClInclude Include="include\cereal\external\rapidxml\rapidxml_iterators.hpp" />
     <ClInclude Include="include\cereal\external\rapidxml\rapidxml_print.hpp" />
     <ClInclude Include="include\cereal\external\rapidxml\rapidxml_utils.hpp" />
+    <ClInclude Include="include\cereal\macros.hpp" />
     <ClInclude Include="include\cereal\types\array.hpp" />
     <ClInclude Include="include\cereal\types\base_class.hpp" />
     <ClInclude Include="include\cereal\types\bitset.hpp" />
@@ -415,6 +416,13 @@
     <ClInclude Include="include\feature\feature_selection.h" />
     <ClInclude Include="include\feature\feature_util.h" />
     <ClInclude Include="include\feature\gain_summary.h" />
+    <ClInclude Include="include\fgl\darts.clone.h" />
+    <ClInclude Include="include\fgl\darts2.clone.h" />
+    <ClInclude Include="include\fgl\LHash.h" />
+    <ClInclude Include="include\fgl\TCPub.h" />
+    <ClInclude Include="include\fgl\TCSegFunc.h" />
+    <ClInclude Include="include\fgl\tc_seg.h" />
+    <ClInclude Include="include\fgl\Trie.h" />
     <ClInclude Include="include\file_util.h" />
     <ClInclude Include="include\folly\detail\AtomicHashUtils.h" />
     <ClInclude Include="include\folly\detail\AtomicUnorderedMapUtils.h" />
@@ -636,8 +644,13 @@
     <ClInclude Include="third-64\glog\include\glog\raw_logging.h" />
     <ClInclude Include="third-64\glog\include\glog\stl_logging.h" />
     <ClInclude Include="third-64\glog\include\glog\vlog_is_on.h" />
+    <ClInclude Include="third\folly\folly\Benchmark.h" />
     <ClInclude Include="third\folly\folly\FBString.h" />
     <ClInclude Include="third\folly\folly\FBVector.h" />
+    <ClInclude Include="third\folly\folly\Foreach.h" />
+    <ClInclude Include="third\folly\folly\MapUtil.h" />
+    <ClInclude Include="third\folly\folly\Preprocessor.h" />
+    <ClInclude Include="third\folly\folly\small_vector.h" />
     <ClInclude Include="tools\tieba\urate\include\urate_train.h" />
   </ItemGroup>
   <ItemGroup>
@@ -667,12 +680,23 @@
     <ClCompile Include="src\SharedSegmentor.cpp" />
     <ClCompile Include="src\word_seg.cpp" />
     <ClCompile Include="test\cereal\test_cereal.cc" />
+    <ClCompile Include="test\ds\benchmark_trie.cc" />
+    <ClCompile Include="test\ds\test_determin_skip_list.cc" />
+    <ClCompile Include="test\ds\test_rstree.cc" />
+    <ClCompile Include="test\ds\test_suffixtree.cc" />
+    <ClCompile Include="test\ds\test_trie.cc" />
     <ClCompile Include="test\expression-template\exp_template.cc" />
     <ClCompile Include="test\expression-template\test_simple.cc" />
     <ClCompile Include="test\expression-template\test_vector.cc" />
     <ClCompile Include="test\expression-template\vector_simple.cc" />
     <ClCompile Include="test\factory\test_factory.cc" />
     <ClCompile Include="test\factory\TrainerFactory.cpp" />
+    <ClCompile Include="test\folly\benchmark_trie.cc" />
+    <ClCompile Include="test\folly\test_fbvector.cc" />
+    <ClCompile Include="test\folly\test_no_small_vector.cc" />
+    <ClCompile Include="test\folly\test_trie.cc" />
+    <ClCompile Include="test\folly\test_vector.cc" />
+    <ClCompile Include="test\folly\test_with_small_vector.cc" />
     <ClCompile Include="test\identifer-text2bin.cc" />
     <ClCompile Include="test\initializer\test_simple.cc" />
     <ClCompile Include="test\linq\test.cc" />

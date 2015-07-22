@@ -15,10 +15,12 @@ while(True):
 	now = time.strftime('%Y%m%d',time.localtime(time.time())) 
 	l = time.localtime()
 	now_hour =  l[3]
-	if now != pre and now_hour == 23:
+	if now != pre and now_hour == 0:
 		pre = now 
 		print 'run %s'%now 
-		os.system('sh predict.sh %s'%(last_day))
-
+		os.system('sh ./get-recent.sh 24')
 	time.sleep(60)
+
+
+
  

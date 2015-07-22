@@ -1734,6 +1734,45 @@
     <ClInclude Include="include\cereal\types\fbvector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="third\folly\folly\MapUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\folly\folly\Foreach.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\folly\folly\small_vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\folly\folly\Benchmark.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\folly\folly\Preprocessor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cereal\macros.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\fgl\LHash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\fgl\darts.clone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\fgl\darts2.clone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\fgl\tc_seg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\fgl\TCPub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\fgl\TCSegFunc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\fgl\trie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -2148,6 +2187,39 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="include\folly\detail\MemoryIdler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\folly\test_vector.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\folly\test_fbvector.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\folly\test_with_small_vector.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\folly\test_no_small_vector.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\folly\test_trie.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\folly\benchmark_trie.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\ds\test_trie.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\ds\benchmark_trie.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\ds\test_rstree.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\ds\test_suffixtree.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\ds\test_determin_skip_list.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
