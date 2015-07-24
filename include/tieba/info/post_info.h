@@ -223,7 +223,7 @@ namespace gezi {
 			{
 				info.color_rate.push_back(INT(m[i]["rate_color"].asString()));
 				info.gameporn_rate.push_back(INT(m[i]["rate_gameporn"].asString()));
-				info.ocr_img.push_back(m[i]["ocr_img"].asString());
+				info.ocr_img.push_back(gezi::utf82gbk(m[i]["ocr_img"].asString()));
 				info.porn_rate.push_back(INT(m[i]["rate_porn_idl"].asString()));
 				info.simi_rate.push_back(INT(m[i]["rate_simi_idl"].asString()));
 				info.text_ratio.push_back(INT(m[i]["ratio_text"].asString()));

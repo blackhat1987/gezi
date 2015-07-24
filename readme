@@ -1,22 +1,6 @@
-gezi is a common util lib like folly, it is a base lib 
-gezi use many third party code 
-like boost in third-64/boost 
-it will hold many third party code inside gezi path 
-
-./third will contains some code like folly,rabit,cppformat, 
-those code is unmodifed 
-
-./include will contains some code like json(jsoncpp), cereal(for seralization like boost.seralization but quick and with json support), 
-those code is modifed by myself
-
-you can use 'folly/..h'
-or 'cereal/..h'
-For application code not advise to use third party header file in include path like 'cereal/..' directly :) 
-For third party header file in ./third, use it in application code like 'folly/..' is fine 
-
-some small third-party header file will be in  ./include/third/ 
-if use them will use 'third/...'
-these files mainly for experiment, like benchmark comparsion
-if they work best, will move to other place in ./include :)
-
-
+inlude  --- common .h code  now used
+src     --- cpp implementaion for include .h 
+third   --- third party code copy without modification 
+old     --- common .h at nlp period 
+segment --- common .h especiall segmentaion nlp related at dangdang period 
+test    --- uinitest and per test

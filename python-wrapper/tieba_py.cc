@@ -440,10 +440,10 @@ bp::class_< gezi::tieba::DeleteInfo >( "DeleteInfo" )
 bp::class_< gezi::tieba::PostInfo >( "PostInfo" )
 .def(
 "IsQuote"
-, (bool ( ::gezi::tieba::PostInfo::* )(  ) )( &::gezi::tieba::PostInfo::IsQuote ) )
+, (bool ( ::gezi::tieba::PostInfo::* )(  ) const)( &::gezi::tieba::PostInfo::IsQuote ) )
 .def(
 "IsThread"
-, (bool ( ::gezi::tieba::PostInfo::* )(  ) )( &::gezi::tieba::PostInfo::IsThread ) )
+, (bool ( ::gezi::tieba::PostInfo::* )(  ) const)( &::gezi::tieba::PostInfo::IsThread ) )
 .def( bp::self < bp::self )
 .def( bp::self == bp::self )
 .def_readwrite( "content", &gezi::tieba::PostInfo::content )

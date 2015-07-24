@@ -44,6 +44,7 @@ public:
 		free();
 	}
 
+#ifndef GCCXML
 	struct Node;
 	//typedef std::map<wchar_t, Node*, less<wchar_t> > Edges; //内存占用近似 测试用map 线上可以用hash map提高速度
 	typedef std::unordered_map<wchar_t, Node*> Edges;
@@ -102,7 +103,7 @@ public:
 
 		int text_id; //node id 指向text所在texts序列中的位置
 	};
-
+#endif //GCCXML
 	void init()
 	{
 		_root = new Node;
@@ -141,22 +142,6 @@ public:
 		_root->next = NULL;
 	}
 
-	void clear(Node* node)
-	{
-		if (node)
-		{
-			if (node->next)
-			{
-				for (NIter iter = node->next->begin(); iter != node->next->end(); ++iter)
-				{
-					clear(iter->second);
-				}
-				delete node->next;
-			}
-			delete node;
-		}
-	}
-
 	inline wstring& end_mark()
 	{
 		return _end_mark;
@@ -174,12 +159,14 @@ public:
 
 protected:
 	typedef unsigned long long uint64;
+#ifndef GCCXML
 	Node* _root;
 	uint64 _current_text_id;
 	uint64 _oldest_text_id;
 	std::deque<wstring> _texts;
 	std::deque<Node*> _first_leafs;
 	wstring _end_mark;
+#endif //GCCXML
 public:
 
 	void build(const wstring& text)
@@ -223,6 +210,23 @@ public:
 	void remove(int id)
 	{
 
+	}
+
+#ifndef GCCXML
+	void clear(Node* node)
+	{
+		if (node)
+		{
+			if (node->next)
+			{
+				for (NIter iter = node->next->begin(); iter != node->next->end(); ++iter)
+				{
+					clear(iter->second);
+				}
+				delete node->next;
+			}
+			delete node;
+		}
 	}
 
 	//查找从一个字符串指定位置(start)开始 在后缀树中最长匹配的串
@@ -271,6 +275,8 @@ public:
 		return active_node;
 	}
 
+#endif //GCCXML
+
 	//返回匹配到的长度
 
 	int find_longest(const wstring& text, int start)
@@ -290,6 +296,24 @@ public:
 		return node->length;
 	}
 
+	//判断一个字符串是否在后缀树中
+
+	bool find(const wstring& text, int start = 0)
+	{
+		return find_node(text, start) != NULL;
+	}
+
+	int find_freq(const wstring& text, int start = 0)
+	{
+		Node* node = find_node(text, start);
+		if (node)
+		{
+			return node->freq;
+		}
+		return 0;
+	}
+
+#ifndef GCCXML
 	//在后缀树中查找一个字符串 并且返回记录频次信息等的Node节点 如果路径中某次查找失败或者走到叶子节点text仍然没有走完 返回root_
 
 	Node* find_node(const wstring& text, int start = 0)
@@ -336,39 +360,6 @@ public:
 		return active_node;
 	}
 
-	//判断一个字符串是否在后缀树中
-
-	bool find(const wstring& text, int start = 0)
-	{
-		return find_node(text, start) != NULL;
-	}
-
-	int find_freq(const wstring& text, int start = 0)
-	{
-		Node* node = find_node(text, start);
-		if (node)
-		{
-			return node->freq;
-		}
-		return 0;
-	}
-
-	//去掉最旧的文本，删除过程相对简单因为我们假定删除的文本是以前添加的 所以任何后缀都是在后缀树中存在已经
-	//首先找到对应整个文本的叶子结点，对应 active_node - next_node next_node对应叶子结点
-	//向上直到root频次-1，然后如果叶子结点频率将为0 删除叶子结点 同时判断active_node是否next map只有1个边
-	//如果是则将next_node合并到active_node, active_node成为叶子结点
-	//继续active_node = active_node->suffix_link
-	//设字符串长度为m 整个过程就是删除m
-
-	void remove_()
-	{
-		for (Node* leaf_node = _first_leafs[0]; leaf_node != NULL; leaf_node = leaf_node->suffix_link)
-		{
-			dec_freq(leaf_node);
-		}
-	}
-
-
 	//输入是一个叶子结点
 
 	void dec_freq(Node* node)
@@ -407,8 +398,25 @@ public:
 		}
 	}
 
-protected:
+	//去掉最旧的文本，删除过程相对简单因为我们假定删除的文本是以前添加的 所以任何后缀都是在后缀树中存在已经
+	//首先找到对应整个文本的叶子结点，对应 active_node - next_node next_node对应叶子结点
+	//向上直到root频次-1，然后如果叶子结点频率将为0 删除叶子结点 同时判断active_node是否next map只有1个边
+	//如果是则将next_node合并到active_node, active_node成为叶子结点
+	//继续active_node = active_node->suffix_link
+	//设字符串长度为m 整个过程就是删除m
 
+	void remove_()
+	{
+		for (Node* leaf_node = _first_leafs[0]; leaf_node != NULL; leaf_node = leaf_node->suffix_link)
+		{
+			dec_freq(leaf_node);
+		}
+	}
+
+#endif //GCCXML
+
+protected:
+#ifndef GCCXML
 	//完全按照
 	//http://stackoverflow.com/questions/9452701/ukkonens-suffix-tree-algorithm-in-plain-english/9513423#9513423
 	//事实上remainder可以去掉得到 形式上更简洁的结果 效率应该一样 但可理解性变差 
@@ -816,7 +824,7 @@ protected:
 			pre_node = node;
 		}
 	}
-
+#endif //GCCXML
 public:
 	//假设使用map作为边 顺序输出遍历的各个节点 (text_id, start point, end point, edge length node freq, node depth)
 	//输出到文本 方便对比测试是否结果正确
@@ -826,29 +834,6 @@ public:
 		wofstream ofs(file.c_str());
 		write_result(_root, 0, ofs);
 		wcout << "Writed result" << endl;
-	}
-
-	void write_result(Node* node, int depth, wofstream & ofs)
-	{
-		using namespace std;
-		if (!node || !node->next)
-		{
-			return;
-		}
-
-		for (NIter iter = node->next->begin(); iter != node->next->end(); ++iter)
-		{
-			//iter->second->freq = 0;
-			wstring edge = this->_texts[iter->second->text_id - _oldest_text_id].
-							substr(iter->second->start, iter->second->end - iter->second->start);
-			ofs << iter->second->text_id << " " << iter->second->start << " " << iter->second->end << " " << edge << " "
-							<< (!iter->second->next) << " " << iter->second->freq << "  " << depth << endl;
-
-			//             wcout << iter->second->text_id << " " << iter->second->start << " " << iter->second->end << " " << edge << " "
-			//                    << (!iter->second->next) << " " << iter->second->freq << "  " << depth << endl;
-
-			write_result(iter->second, depth + 1, ofs);
-		}
 	}
 
 	void print()
@@ -863,6 +848,29 @@ public:
 		wcout << "The total leaf freq is " << leaf_freq << endl;
 	}
 
+#ifndef GCCXML
+	void write_result(Node* node, int depth, wofstream & ofs)
+	{
+		using namespace std;
+		if (!node || !node->next)
+		{
+			return;
+		}
+
+		for (NIter iter = node->next->begin(); iter != node->next->end(); ++iter)
+		{
+			//iter->second->freq = 0;
+			wstring edge = this->_texts[iter->second->text_id - _oldest_text_id].
+				substr(iter->second->start, iter->second->end - iter->second->start);
+			ofs << iter->second->text_id << " " << iter->second->start << " " << iter->second->end << " " << edge << " "
+				<< (!iter->second->next) << " " << iter->second->freq << "  " << depth << endl;
+
+			//             wcout << iter->second->text_id << " " << iter->second->start << " " << iter->second->end << " " << edge << " "
+			//                    << (!iter->second->next) << " " << iter->second->freq << "  " << depth << endl;
+
+			write_result(iter->second, depth + 1, ofs);
+		}
+	}
 	//input from root , input is not NULL
 
 	void print(Node* node, int depth, int & leaf_freq)
@@ -907,7 +915,7 @@ public:
 			print(iter->second, depth + 1, leaf_freq);
 		}
 	}
-
+#endif //GCCXML
 
 };
 }

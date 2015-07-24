@@ -64,15 +64,6 @@ namespace gezi
 			CONF(_max_jump);
 			return true;
 		}
-#endif // GEZI_USE_CONF 
-
-		void init(int min_substr_len, int max_substr_len, int min_freq, int tree_size)
-		{
-			_min_substr_len = min_substr_len;
-			_max_substr_len = max_substr_len;
-			_min_frequency = min_freq;
-			_max_tree_size = tree_size;
-		}
 
 		bool read_config(const comcfg::Configure& conf,
 			string section = "Rstree")
@@ -106,6 +97,15 @@ namespace gezi
 				return false;
 			}
 			return read_config(conf);
+		}
+#endif // GEZI_USE_CONF 
+
+		void init(int min_substr_len, int max_substr_len, int min_freq, int tree_size)
+		{
+			_min_substr_len = min_substr_len;
+			_max_substr_len = max_substr_len;
+			_min_frequency = min_freq;
+			_max_tree_size = tree_size;
 		}
 
 		inline void set_min_frequency(int freq)
@@ -149,6 +149,15 @@ namespace gezi
 		}
 
 		typedef std::pair<wstring, int> Pair; //first is substring, second is freq
+
+		vector<Pair> find_all_substrs()
+		{
+			vector<Pair> result_vec;
+			find_all_substrs(_root, result_vec);
+			return result_vec;
+		}
+
+#ifndef GCCXML
 
 		void add_find(const wstring& text, vector<Pair>& result_vec, const vector<int>* pos_types = NULL)
 		{
@@ -387,12 +396,15 @@ namespace gezi
 			}
 		}
 
-		vector<Pair> find_all_substrs()
-		{
-			vector<Pair> result_vec;
-			find_all_substrs(_root, result_vec);
-			return result_vec;
-		}
+		//void find_all_substrs(vector<wstring>& strs, vector<int>& freqs)
+		//{
+		//	vector<Pair> result_vec;
+		//	find_all_substrs(_root, result_vec);
+		//	for (auto& item : result_vec)
+		//	{
+		//		strs.push_back(item.first);
+		//	}
+		//}
 		//满足长度 频次要求 情况下 长度优先   长度要求包括最长限制
 		//极端情况下 限制长度不超过某个阈值 选取 可能会取不到 比如abcdefghigk...重复n次 但是大语料中概率极小
 		//如果不限制最长 最后再截取  可能无法截取到黑词部分的串 综合权衡 采用下面策略
@@ -513,7 +525,7 @@ namespace gezi
 				}
 			}
 		}
-
+#endif //GCCXML
 	};
 
 } //----end of namespace gezi

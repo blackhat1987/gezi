@@ -142,7 +142,9 @@ typedef vector<bool> BitArray;
 
 //------------下面主要是python封装的时候使用
 typedef std::pair<std::string, int> si_pair;
+typedef std::pair<std::wstring, int> wsi_pair;
 typedef std::vector<std::pair<std::string, int> > si_pair_vec;
+typedef std::vector<std::pair<std::wstring, int> > wsi_pair_vec;
 typedef std::map<std::string, std::string> ss_map;
 typedef std::map<std::string, int> si_map;
 typedef std::unordered_map<std::string, int> si_hashmap;

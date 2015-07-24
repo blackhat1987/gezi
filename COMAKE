@@ -123,3 +123,4 @@ StaticLibrary('gezi_json',Sources(srcs, CPP_FLAGS),HeaderFiles(headers))
 #Directory('demo')
 
 TARGET('copy-cppformat', ShellCommands('mkdir -p output/cppformat', 'cp -rf third/cppformat/*.h output/cppformat'), CleanCommands('rm -rf output/cppformat')) 
+TARGET('copy-eigen', ShellCommands('mkdir -p output/Eigen', 'cp -rf third/Eigen/* output/Eigen'), CleanCommands('rm -rf output/Eigen')) 

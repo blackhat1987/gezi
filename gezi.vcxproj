@@ -400,6 +400,7 @@
     <ClInclude Include="include\Eigen\src\SVD\UpperBidiagonalization.h" />
     <ClInclude Include="include\Eigen\src\UmfPackSupport\UmfPackSupport.h" />
     <ClInclude Include="include\encoding_convert.h" />
+    <ClInclude Include="include\encoding_def.h" />
     <ClInclude Include="include\Exception.h" />
     <ClInclude Include="include\Factory.h" />
     <ClInclude Include="include\feature\Feature.h" />

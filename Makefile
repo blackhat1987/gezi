@@ -146,11 +146,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=22f543bf5d12a38e79a940c6e19f1def  COMAKE
+COMAKE_MD5=a793c448816be3ca6a393db539783845  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check libgezi_cppformat.a copy-pinyin-lib libgezi_common.a libgezi_json.a copy-cppformat 
+all:comake2_makefile_check libgezi_cppformat.a copy-pinyin-lib libgezi_common.a libgezi_json.a copy-cppformat copy-eigen 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -180,6 +180,8 @@ clean:ccpclean
 	rm -rf ./output/lib/libgezi_json.a
 	rm -rf copy-cppformat
 	rm -rf output/cppformat
+	rm -rf copy-eigen
+	rm -rf output/Eigen
 	rm -rf third/cppformat/gezi_cppformat_format.o
 	rm -rf third/cppformat/gezi_cppformat_posix.o
 	rm -rf src/json/gezi_json_json_reader.o
@@ -236,6 +238,11 @@ copy-cppformat:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mcopy-cppformat[0m']"
 	mkdir -p output/cppformat
 	cp -rf third/cppformat/*.h output/cppformat
+
+copy-eigen:
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mcopy-eigen[0m']"
+	mkdir -p output/Eigen
+	cp -rf third/Eigen/* output/Eigen
 
 third/cppformat/gezi_cppformat_format.o:third/cppformat/format.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mthird/cppformat/gezi_cppformat_format.o[0m']"

@@ -242,7 +242,8 @@ namespace gezi {
 		{
 			return phrase;
 		}
-		char *buf = new char[phrase.size() + 1];
+		//char *buf = new char[phrase.size() + 1]
+		vector<char> buf(phrase.size() + 1, 0);
 		int j = 0;
 		bool pre_ch = false;
 		for (size_t i = 0; i < phrase.size();)
@@ -266,9 +267,8 @@ namespace gezi {
 				i++;
 			}
 		}
-		buf[j] = '\0';
-		string rs = buf;
-		delete[] buf;
+		string rs(&buf[0]);
+		//delete[] buf;
 		return rs;
 	}
 

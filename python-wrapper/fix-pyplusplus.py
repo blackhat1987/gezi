@@ -71,6 +71,11 @@ for line in input:
 			DEF_MAP(id_map);
 			DEF_MAP(sd_map);
 			DEF_MAP(si_map);
+			DEF_MAP(ss_map);
+			DEF_PAIR(si_pair);
+			DEF_PAIR(wsi_pair);
+			DEF_VEC(si_pair_vec);
+			DEF_VEC(wsi_pair_vec);
 			'''
 	else:
 		result = '            , bp::return_internal_reference<>())'
