@@ -120,6 +120,7 @@
     <ClInclude Include="include\cereal\types\unordered_set.hpp" />
     <ClInclude Include="include\cereal\types\utility.hpp" />
     <ClInclude Include="include\cereal\types\vector.hpp" />
+    <ClInclude Include="include\ChNormalizer.h" />
     <ClInclude Include="include\common\Exception.h" />
     <ClInclude Include="include\common_algorithm.h" />
     <ClInclude Include="include\common_def.h" />
@@ -532,6 +533,7 @@
     <ClInclude Include="include\statistic_util.h" />
     <ClInclude Include="include\stl_util.h" />
     <ClInclude Include="include\string2argcargv.h" />
+    <ClInclude Include="include\string_def.h" />
     <ClInclude Include="include\string_util.h" />
     <ClInclude Include="include\ThreadLocalAnyMap.h" />
     <ClInclude Include="include\tieba\common_def.h" />
@@ -652,6 +654,7 @@
     <ClInclude Include="third\folly\folly\MapUtil.h" />
     <ClInclude Include="third\folly\folly\Preprocessor.h" />
     <ClInclude Include="third\folly\folly\small_vector.h" />
+    <ClInclude Include="third\folly\folly\Traits.h" />
     <ClInclude Include="tools\tieba\urate\include\urate_train.h" />
   </ItemGroup>
   <ItemGroup>

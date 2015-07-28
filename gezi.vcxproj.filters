@@ -1773,6 +1773,18 @@
     <ClInclude Include="include\fgl\trie.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\encoding_def.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\folly\folly\Traits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ChNormalizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\string_def.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">

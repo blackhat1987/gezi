@@ -110,9 +110,18 @@ using std::setfill;
 using std::endl;
 using std::sort;
 
+
+//@TODO c++14 里面有了make_unique
+#include "folly/Memory.h"
+namespace std
+{
+	using folly::make_unique;
+}
+
 #if __GNUC__ > 3 || defined(WIN32)
 using std::move;
 using std::make_shared;
+using std::make_unique;
 #endif
 
 //using namespace std;

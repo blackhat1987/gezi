@@ -172,55 +172,218 @@ inline string extract_gbk_dual3(string temp)
 	return out;
 }
 
-
-
-TEST(vec2_, perf)
+inline string extract_gbk_stack(string temp)
 {
-	FOR_EACH_RANGE(i, 0, 10240000) {
-		string s = extract_gbk_dual2("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+	char out[temp.size() + 1];
+	int index = 0;
+	for (size_t i = 0; i < temp.size(); i++)
+	{
+		unsigned high = (unsigned)(0xff & temp[i]);
+		if (high >= 0x81)
+		{
+			out[index] = temp[i];
+			out[index + 1] = temp[i + 1];
+			index += 2;
+			i++;
+		}
+	}
+	out[index] = '\0';
+	return out;
+}
+
+#define CREATE_BUFFER(out, T, Length)\
+	char* out; \
+	bool bufferIsOnHeap = false;\
+	if (Length > kSmallStringLength)\
+	{\
+		out = new T[Length]; \
+		bufferIsOnHeap = true; \
+	}\
+	else\
+	{\
+			T temp[Length]; \
+			out = temp; \
+	}
+
+#define FREE_BUFFER(out)\
+	if (bufferIsOnHeap) \
+		delete[] out 
+
+inline void extract_gbk_stack_or_heap_(char * out, string temp)
+{
+	int index = 0;
+	for (size_t i = 0; i < temp.size(); i++)
+	{
+		unsigned high = (unsigned)(0xff & temp[i]);
+		if (high >= 0x81)
+		{
+			out[index] = temp[i];
+			out[index + 1] = temp[i + 1];
+			index += 2;
+			i++;
+		}
+	}
+	out[index] = '\0';
+}
+inline string extract_gbk_stack_or_heap(string temp)
+{
+	int length = temp.size() + 1;
+	if (length > kSmallStringLength)
+	{
+		char* out = new char[length];
+		extract_gbk_stack_or_heap_(out, temp);
+		string ret(out);
+		delete[] out;
+		return ret;
+	}
+	else
+	{
+		char out[length];
+		extract_gbk_stack_or_heap_(out, temp);
+		return out;
 	}
 }
 
-TEST(vec3_, perf)
+//TEST(vec2_, perf)
+//{
+//	FOR_EACH_RANGE(i, 0, 10240000) {
+//		string s = extract_gbk_dual2("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+//	}
+//}
+//
+//TEST(vec3_, perf)
+//{
+//	FOR_EACH_RANGE(i, 0, 10240000) {
+//		string s = extract_gbk_dual3("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+//	}
+//}
+//
+//TEST(fbvec_, perf)
+//{
+//	FOR_EACH_RANGE(i, 0, 10240000) {
+//		string s = extract_gbk_dual_fbvec("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+//	}
+//}
+//
+//TEST(smallvec_, perf)
+//{
+//	FOR_EACH_RANGE(i, 0, 10240000) {
+//		string s = extract_gbk_dual_smallvec("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+//	}
+//}
+//
+//TEST(vec_, perf)
+//{
+//	FOR_EACH_RANGE(i, 0, 10240000) {
+//		string s = extract_gbk_dual1("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+//	}
+//}
+//
+//TEST(vec11_, perf)
+//{
+//	FOR_EACH_RANGE(i, 0, 10240000) {
+//		string s = extract_gbk_dual11("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+//	}
+//}
+//
+//
+//TEST(uniqueptr_, perf)
+//{
+//	FOR_EACH_RANGE(i, 0, 10240000) {
+//		string s = extract_gbk_dual_uniqueptr("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+//	}
+//}
+//
+//TEST(vec22_, perf)
+//{
+//	FOR_EACH_RANGE(i, 0, 10240000) {
+//		string s = extract_gbk_dual2("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+//	}
+//}
+//
+//
+//TEST(stack_, perf)
+//{
+//	FOR_EACH_RANGE(i, 0, 10240000) {
+//		string s = extract_gbk_stack("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+//	}
+//}
+//
+//TEST(stack_or_heap_, perf)
+//{
+//	FOR_EACH_RANGE(i, 0, 10240000) {
+//		string s = extract_gbk_stack_or_heap("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+//	}
+//}
+
+
+vector<string> titles;
+vector<string> contents;
+vector<string> titles2;
+vector<string> contents2;
+
+TEST(file_new, perf)
 {
-	FOR_EACH_RANGE(i, 0, 10240000) {
-		string s = extract_gbk_dual3("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+	FOR_EACH_RANGE(i, 0, titles.size())
+	{
+		titles2[i] = extract_gbk_dual2(titles[i]);
+	}
+
+	FOR_EACH_RANGE(i, 0, contents.size())
+	{
+		contents2[i] = extract_gbk_dual2(contents[i]);
 	}
 }
 
-TEST(fbvec_, perf)
+TEST(file_vector, perf)
 {
-	FOR_EACH_RANGE(i, 0, 10240000) {
-		string s = extract_gbk_dual_fbvec("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+	FOR_EACH_RANGE(i, 0, titles.size())
+	{
+		titles2[i] = extract_gbk_dual1(titles[i]);
+	}
+
+	FOR_EACH_RANGE(i, 0, contents.size())
+	{
+		contents2[i] = extract_gbk_dual1(contents[i]);
 	}
 }
 
-TEST(smallvec_, perf)
+TEST(file_vector_noinit, perf)
 {
-	FOR_EACH_RANGE(i, 0, 10240000) {
-		string s = extract_gbk_dual_smallvec("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+	FOR_EACH_RANGE(i, 0, titles.size())
+	{
+		titles2[i] = extract_gbk_dual11(titles[i]);
+	}
+
+	FOR_EACH_RANGE(i, 0, contents.size())
+	{
+		contents2[i] = extract_gbk_dual11(contents[i]);
 	}
 }
 
-TEST(vec_, perf)
+TEST(file_inplace_string, perf)
 {
-	FOR_EACH_RANGE(i, 0, 10240000) {
-		string s = extract_gbk_dual1("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+	FOR_EACH_RANGE(i, 0, titles.size())
+	{
+		titles2[i] = extract_gbk_dual3(titles[i]);
+	}
+
+	FOR_EACH_RANGE(i, 0, contents.size())
+	{
+		contents2[i] = extract_gbk_dual3(contents[i]);
 	}
 }
 
-TEST(vec11_, perf)
+TEST(file_uniqueptr, perf)
 {
-	FOR_EACH_RANGE(i, 0, 10240000) {
-		string s = extract_gbk_dual11("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+	FOR_EACH_RANGE(i, 0, titles.size())
+	{
+		titles2[i] = extract_gbk_dual_uniqueptr(titles[i]);
 	}
-}
 
-
-TEST(uniqueptr_, perf)
-{
-	FOR_EACH_RANGE(i, 0, 10240000) {
-		string s = extract_gbk_dual_uniqueptr("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²");
+	FOR_EACH_RANGE(i, 0, contents.size())
+	{
+		contents2[i] = extract_gbk_dual_uniqueptr(contents[i]);
 	}
 }
 
@@ -236,5 +399,20 @@ int main(int argc, char *argv[])
 		FLAGS_v = FLAGS_vl;
 
 	Pval(extract_gbk_dual_uniqueptr("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²"));
+	Pval(extract_gbk_stack("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²"));
+	Pval(extract_gbk_stack_or_heap("gbk×Ö·û´®ÄãÊÇË­Ë­ÊÇÄãÀ²À²À²"));
+
+
+	ifstream ifs(FLAGS_i);
+	string line;
+	while (getline(ifs, line))
+	{
+		svec l = gezi::split(line, '\t');
+		titles.push_back(l[2]);
+		contents.push_back(l[3]);
+		titles2.push_back(l[2]);
+		contents2.push_back(l[3]);
+	}
+
 	return RUN_ALL_TESTS();
 }

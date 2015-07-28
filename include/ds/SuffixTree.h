@@ -277,8 +277,7 @@ public:
 
 #endif //GCCXML
 
-	//返回匹配到的长度
-
+	///返回匹配到的长度
 	int find_longest(const wstring& text, int start)
 	{
 		Node* node = find_longest_node(text, start);
@@ -296,8 +295,7 @@ public:
 		return node->length;
 	}
 
-	//判断一个字符串是否在后缀树中
-
+	///判断一个字符串是否在后缀树中
 	bool find(const wstring& text, int start = 0)
 	{
 		return find_node(text, start) != NULL;
@@ -314,8 +312,7 @@ public:
 	}
 
 #ifndef GCCXML
-	//在后缀树中查找一个字符串 并且返回记录频次信息等的Node节点 如果路径中某次查找失败或者走到叶子节点text仍然没有走完 返回root_
-
+	///在后缀树中查找一个字符串 并且返回记录频次信息等的Node节点 如果路径中某次查找失败或者走到叶子节点text仍然没有走完 返回root_
 	Node* find_node(const wstring& text, int start = 0)
 	{
 		int text_length = text.length() - start;

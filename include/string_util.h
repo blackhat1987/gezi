@@ -183,7 +183,7 @@ namespace gezi {
 	/**
 	 *brief 过滤掉标点符号 不可见字符
 	 */
-	inline string filter_str(string temp)
+	inline string filter_str(string temp, bool withSpace = false)
 	{
 		vector<char> out(temp.size() + 1, 0);
 		int index = 0;
@@ -203,6 +203,10 @@ namespace gezi {
 				|| (temp[i] >= 'a' && temp[i] <= 'z'))
 			{
 				out[index++] = temp[i];
+			}
+			else if (withSpace)
+			{
+				out[index++] = ' ';
 			}
 		}
 		string ret(&out[0]);

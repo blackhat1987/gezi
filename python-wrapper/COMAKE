@@ -118,4 +118,6 @@ srcs = ''
 #SharedLibrary('segment',Sources('segment_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 #SharedLibrary('idf',Sources('idf_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 #SharedLibrary('tieba',Sources('tieba_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
-SharedLibrary('rstree',Sources('rstree_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
+#SharedLibrary('rstree',Sources('rstree_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
+#SharedLibrary('chnormalizer',Sources('chnormalizer_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
+SharedLibrary('stringutil',Sources('stringutil_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DPYTHON_WRAPPER -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))

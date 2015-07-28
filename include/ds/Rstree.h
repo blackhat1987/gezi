@@ -143,6 +143,11 @@ namespace gezi
 			_max_tree_size = size;
 		}
 
+		void set_max_jump(int len)
+		{
+			_max_jump = len;
+		}
+
 		inline int max_tree_size()
 		{
 			return _max_tree_size;
@@ -249,6 +254,7 @@ namespace gezi
 			}
 		}
 
+		//@TODO 当前频次符合要求 但是长度过长的 需要substr吗
 		bool is_node_down_ok(const Node* node, bool& need_down)
 		{
 			if (node->next == NULL)

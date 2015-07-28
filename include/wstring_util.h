@@ -21,6 +21,25 @@ namespace gezi
 {
 
 	//-----------------------------------wstring convert
+#ifndef GEZI_UTF8_AS_DEFAULT_ENCODING
+	inline void setlocale()
+	{
+		std::locale::global(std::locale("zh_CN.UTF-8"));
+	}
+#else
+	inline void setlocale()
+	{
+		std::locale::global(std::locale("zh_CN.GB18030"));
+	}
+#endif //GEZI_UTF8_AS_DEFAULT_ENCODING
+	inline void setlocale_gbk()
+	{
+		std::locale::global(std::locale("zh_CN.GB18030"));
+	}
+	inline void setlocale_utf8()
+	{
+		std::locale::global(std::locale("zh_CN.UTF-8"));
+	}
 	/*!
 	* \brief 字符串转化成宽string
 	*				注意转化前需要配置locale 如   setlocale(LC_ALL, "zh_CN.UTF-8"); 当前gcc高版本动态链接 转换不成功,及时默认的高版本gcc也不行。。V2环境ok
@@ -88,8 +107,20 @@ namespace gezi
 		return wstr_to_str(src);
 	}
 
+	//like python
+	inline string encode(const wstring& src)
+	{
+		return wstr_to_str(src);
+	}
+
 	///suggested
 	inline wstring wstr(string src)
+	{
+		return str_to_wstr(src);
+	}
+
+	//like python
+	inline wstring decode(string src)
 	{
 		return str_to_wstr(src);
 	}

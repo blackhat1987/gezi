@@ -21,6 +21,7 @@ def fix_vec(line):
 		if line2.find('true') > 0:
 			pos3 = line2.rfind(',')
 			line2 = line2[0 : pos3]
+		line2 = line2.replace(',', ' COMMA ')
 		name = line2.strip() 
 		return line.strip()[:-1] + '\n' + 'VEC_METHOD(%s)'%name + ";\n"
 	else:
