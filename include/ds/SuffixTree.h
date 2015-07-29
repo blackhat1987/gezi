@@ -62,7 +62,7 @@ public:
 	{
 		Node()
 		{
-			Init();
+			init();
 			parent = NULL;
 			start = 0;
 			end = 0;
@@ -70,29 +70,29 @@ public:
 			text_id = 0;
 		}
 
-		void Init()
+		void init()
 		{
 			next = NULL;
 			freq = 0;
 			suffix_link = NULL;
 		}
 
-		Node(Node* _parent, int _id = 0)
+		Node(Node* parent_, index_type id_ = 0)
 		{
-			Init();
-			parent = _parent;
-			text_id = _id;
+			init();
+			parent = parent_;
+			text_id = id_;
 		}
 
-		Node(Node* _parent, int _start, int _end, int _length, int _id = 0, int _freq = 0)
+		Node(Node* parent_, int start_, int end_, int length_, index_type id_ = 0, int freq_ = 0)
 		{
-			Init();
-			parent = _parent;
-			start = _start;
-			end = _end;
-			length = _length;
-			text_id = _id;
-			freq = _freq;
+			init();
+			parent = parent_;
+			start = start_;
+			end = end_;
+			length = length_;
+			text_id = id_;
+			freq = freq_;
 		}
 
 		inline bool is_leaf()
@@ -194,6 +194,11 @@ public:
 		_texts.push_back(s);
 		add_(s);
 		_current_text_id++;
+	}
+
+	void insert(const wstring& text)
+	{
+		add(text);
 	}
 
 	//remove the oldest one
@@ -514,13 +519,21 @@ protected:
 						next_node->length = remaining_len;
 
 						mid_node->next = new Edges;
-						mid_node->next->insert(Edges::value_type(text[pos], next_node));
+#if __GNUC__ > 3 || defined(WIN32)
+						mid_node->next->emplace(text[pos], next_node);
+#else
+						mid_node->next->insert(Edges::value_type(text[pos], next_node)); 
+#endif
 					}
 				}
 				//生成新叶(内部节点插入,内部边分裂两种情形的生成新叶统一放到这里处理)
 				//叶子结点始终是叶子节点结束位置问输入文本结束位置  
 				Node* leaf_node = new Node(mid_node, end_idx, text_length, mid_node->length + (text_length - end_idx), _current_text_id, 1);
+#if __GNUC__ > 3 || defined(WIN32)
+				mid_node->next->emplace(text[end_idx], leaf_node);
+#else
 				mid_node->next->insert(Edges::value_type(text[end_idx], leaf_node));
+#endif
 				//对于连续生成新点的情况，创建suffix link
 				if (old_node != _root)
 				{
@@ -630,7 +643,11 @@ protected:
 		next_node->start = split_pos;
 
 		mid_node->next = new Edges;
+#if __GNUC__ > 3 || defined(WIN32)
+		mid_node->next->emplace(test_char, next_node);
+#else
 		mid_node->next->insert(Edges::value_type(test_char, next_node));
+#endif
 
 		return mid_node;
 	}
@@ -717,7 +734,11 @@ protected:
 					//生成新叶(内部节点插入,内部边分裂两种情形的生成新叶统一放到这里处理)
 					//叶子节点始终会是叶子节点,所以结束位置问输入文本结束位置
 					leaf_node = new Node(mid_node, end_idx, text_length, mid_node->length + (text_length - end_idx), _current_text_id, 0);
+#if __GNUC__ > 3 || defined(WIN32)
+					mid_node->next->emplace(text[end_idx], leaf_node);
+#else
 					mid_node->next->insert(Edges::value_type(text[end_idx], leaf_node));
+#endif
 				}
 				else
 				{

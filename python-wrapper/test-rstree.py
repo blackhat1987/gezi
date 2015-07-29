@@ -63,6 +63,6 @@ id = 0
 for item in l:
 	print '-----------------', id, (item.substr).encode('gbk'), item.freq 
 	for tid in item.tids:
-		print 'tid',tid
-		#print tree.text(tid).encode('gbk')
+		print 'tid:',tid,'totalId:',tree.text_id(tid)
+		print tree.text(tid).encode('gbk')
 	id += 1

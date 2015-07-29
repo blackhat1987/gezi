@@ -180,6 +180,27 @@ void run()
 			vector<int> vec;
 			Pval(sizeof(vec));
 		}
+		{
+			int x;
+			Pval(sizeof(x));
+			uint64 y;
+			Pval(sizeof(y));
+		}
+		{
+			unique_ptr<int> p = make_unique<int>(3);
+			Pval(sizeof(p));
+		}
+		{
+			unique_ptr<int> p = nullptr;
+			if (p)
+			{
+				cout << "not  null ptr\n";
+			}
+			if (!p)
+			{
+				cout << "null ptr\n";
+			}
+		}
 }
 
 int main(int argc, char *argv[])

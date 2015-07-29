@@ -50,8 +50,14 @@ namespace gezi {
 
 		///这里指针没有NULL的情况，利用map.empty()来表示空,使用指针NULL可以节约一点内存，不过利用map empty代码更加方便
 		struct Node;
+		typedef unique_ptr<Node> NodePtr;
 		///这里如果不使用指针map是可以的但是使用unorderd_map gcc4会报错  error: 'std::pair<_T1, _T2>::second' has incomplete type
-		typedef _Map<char_type, unique_ptr<Node> > Map;
+		//这里为了支持unordered_map至少要有一个指针next 或者 这里的Node,为了使用uniqe ptr方便 这里Node不再使用指针
+		//这个写法类似sunpinyin 而在SuffixTree中都使用了指针,使用指针占用的空间会少一点点但是不多 只是少一个index_type的空间，这里不用裸指针，使用unique ptr希望能方便序列化
+		//SuffixTree一般没有序列化需求,因此使用裸指针
+		//而为了使用unique ptr方便 这里使用Node 而不是指针 否则不太方便，访问也复杂一些
+		typedef _Map<char_type, Node > Map;
+		typedef unique_ptr<Map> MapPtr;
 		//@TODO 先对比下空map和指针大小区别
 		//check一下 Map* next的写法 
 
@@ -66,9 +72,12 @@ namespace gezi {
 
 		struct Node
 		{
-			index_type index = null_index;  ///null_index用来表示内部节点
-			unique_ptr<Map> next;
-
+			index_type index = null_index;  ///null_index用来表示内部节点,如果没有用Node* 那么多一个index_type的占用空间 对于叶子节点 @TODO 暂时不考虑这个了
+			//MapPtr next = nullptr; //@FIXME this will complie error 
+			//.. / .. / .. / .. / .. / .. / .. / app / search / sep / anti - spam / gezi / include / ds / detail / TrieImpl.h: In constructor 'constexpr gezi::Trie<std::basic_string<char>, int>::Node::Node()' :
+			//	.. / .. / .. / .. / .. / .. / .. / app / search / sep / anti - spam / gezi / include / ds / detail / TrieImpl.h : 73 : 10 : error : conversion from 'std::nullptr_t' to non - scalar type 'std::unique_ptr<std::unordered_map<char, gezi::Trie<std::basic_string<char>, int>::Node>, std::default_delete<std::unordered_map<char, gezi::Trie<std::basic_string<char>, int>::Node> > >' requested
+			//struct Node
+			MapPtr next;
 			friend class boost::serialization::access;
 			template<class Archive>
 			void serialize(Archive &ar, const unsigned int version)
@@ -77,6 +86,7 @@ namespace gezi {
 				ar & next;
 			}
 		};
+
 
 
 		pair<iterator, bool> insert(const value_type& value)
@@ -112,6 +122,18 @@ namespace gezi {
 			return make_pair(&_mappedVec[pnode->index], false);
 		}
 
+		pair<iterator, bool> insert(const key_type& key, mapped_type&& mapped)
+		{
+			Node* pnode = insert_key(key);
+			if (pnode->index == null_index)
+			{
+				pnode->index = (index_type)_mappedVec.size();
+				_mappedVec.emplace_back(mapped);
+				return make_pair(&_mappedVec[pnode->index], true);
+			}
+			return make_pair(&_mappedVec[pnode->index], false);
+		}
+
 		mapped_type& operator[](const key_type& key)
 		{
 			Node* pnode = insert_key(key);
@@ -130,16 +152,23 @@ namespace gezi {
 
 		size_type count(const key_type& key) const
 		{
-			Node* pnode = &_root;
+			const Node* pnode = &_root;
 			for (auto& ch : key)
 			{
-				Map& m = pnode->next;
-				auto iter = m.find(ch);
-				if (iter == m.end())
+				if (!pnode->next)
 				{
 					return 0;
 				}
-				pnode = (iter->second).get();
+				else
+				{
+					const Map& m = *pnode->next;
+					auto iter = m.find(ch);
+					if (iter == m.end())
+					{
+						return 0;
+					}
+					pnode = &(iter->second);
+				}
 			}
 			return (size_type)(pnode->index != null_index);
 		}
@@ -149,20 +178,27 @@ namespace gezi {
 			const Node* pnode = &_root;
 			for (auto& ch : key)
 			{
-				const Map& m = pnode->next;
-				auto iter = m.find(ch);
-				if (iter == m.end())
+				if (!pnode->next)
 				{
 					return 0;
 				}
-				pnode = (iter->second).get();
+				else
+				{
+					const Map& m = *pnode->next;
+					auto iter = m.find(ch);
+					if (iter == m.end())
+					{
+						return 0;
+					}
+					pnode = &(iter->second);
+				}
 			}
 			return count(pnode);
 		}
 
 		bool empty() const
 		{
-			return (_root.next).empty();
+			return !_root.next;
 		}
 
 		bool search(const key_type& key) const
@@ -170,13 +206,20 @@ namespace gezi {
 			const Node* pnode = &_root;
 			for (auto& ch : key)
 			{
-				const Map& m = pnode->next;
-				auto iter = m.find(ch);
-				if (iter == m.end())
+				if (!pnode->next)
 				{
 					return false;
 				}
-				pnode = (iter->second).get();
+				else
+				{
+					const Map& m = *pnode->next;
+					auto iter = m.find(ch);
+					if (iter == m.end())
+					{
+						return false;
+					}
+					pnode = &(iter->second);
+				}
 			}
 			return pnode->index != null_index;
 		}
@@ -186,26 +229,51 @@ namespace gezi {
 			const Node* pnode = &_root;
 			for (auto& ch : key)
 			{
-				const Map& m = pnode->next;
-				auto iter = m.find(ch);
-				if (iter == m.end())
+				if (!pnode->next)
 				{
 					return false;
 				}
-				pnode = (iter->second).get();
+				else
+				{
+					const Map& m = *pnode->next;
+					auto iter = m.find(ch);
+					if (iter == m.end())
+					{
+						return false;
+					}
+					pnode = &(iter->second);
+				}
 			}
 			return true;
 		}
 
 
-		const Node* root() const 
+		const Node* root() const
 		{
 			return &_root;
 		}
 
-		static const Node* find(const Node* pnode, const key_type& key) const
+		/////@TODO
+		static const Node* find(const Node* pnode, const key_type& key) 
 		{
-			return NULL;
+			for (auto& ch : key)
+			{
+				if (!pnode->next)
+				{
+					return NULL;
+				}
+				else
+				{
+					Map& m = *pnode->next;
+					auto iter = m.find(ch);
+					if (iter == m.end())
+					{
+						return NULL;
+					}
+					pnode = &(iter->second);
+				}
+			}
+			return pnode;
 		}
 
 		iterator end() const
@@ -218,13 +286,20 @@ namespace gezi {
 			Node* pnode = &_root;
 			for (auto& ch : key)
 			{
-				Map& m = pnode->next;
-				auto iter = m.find(ch);
-				if (iter == m.end())
+				if (!pnode->next)
 				{
 					return NULL;
 				}
-				pnode = (iter->second).get();
+				else
+				{
+					Map& m = *pnode->next;
+					auto iter = m.find(ch);
+					if (iter == m.end())
+					{
+						return NULL;
+					}
+					pnode = &(iter->second);
+				}
 			}
 
 			if (pnode->index != null_index)
@@ -246,13 +321,20 @@ namespace gezi {
 			const Node* pnode = &_root;
 			for (auto& ch : key)
 			{
-				const Map& m = pnode->next;
-				auto iter = m.find(ch);
-				if (iter == m.end())
+				if (!pnode->next)
 				{
 					return NULL;
 				}
-				pnode = (iter->second).get();
+				else
+				{
+					const Map& m = *pnode->next;
+					auto iter = m.find(ch);
+					if (iter == m.end())
+					{
+						return NULL;
+					}
+					pnode = &(iter->second);
+				}
 			}
 
 			if (pnode->index != null_index)
@@ -275,11 +357,14 @@ namespace gezi {
 		*/
 		size_type count(const Node* pnode) const
 		{
-			const auto& m = pnode->next;
 			size_type numStrs = pnode->index != null_index;
-			for (auto& item : m)
+			if (pnode->next)
 			{
-				numStrs += count((item.second).get());
+				const auto& m = *pnode->next;
+				for (auto& item : m)
+				{
+					numStrs += count(&item.second);
+				}
 			}
 			return numStrs;
 		}
@@ -289,11 +374,14 @@ namespace gezi {
 		*/
 		size_type size() const
 		{
-			const auto& m = _root.next;
 			size_type numStrs = 0;
-			for (auto& item : m)
+			if (_root.next)
 			{
-				numStrs += count((item.second).get());
+				const auto& m = *_root.next;
+				for (auto& item : m)
+				{
+					numStrs += count(&item.second);
+				}
 			}
 			return numStrs;
 		}
@@ -310,11 +398,14 @@ namespace gezi {
 			{
 				cout << key << endl;
 			}
-			for (const auto& item : pnode->next)
+			if (pnode->next)
 			{
-				key_type key2 = key;
-				key2.push_back(item.first);
-				print(item.second.get(), key2);
+				for (const auto& item : *(pnode->next))
+				{
+					key_type key2 = key;
+					key2.push_back(item.first);
+					print(&item.second, key2);
+				}
 			}
 		}
 
@@ -324,13 +415,26 @@ namespace gezi {
 			Node* pnode = &_root;
 			for (auto& ch : key)
 			{
-				Map& m = pnode->next;
+				//if (!pnode->next)
+				//{
+				//	//pnode->next = make_unique<Map>({ch, Node()}); //@TDO
+				//	pnode->next = make_unique<Map>();
+				//	pnode->next->emplace(ch, Node());
+				//}
+				//else
+				//{
+				if (!pnode->next)
+				{
+					pnode->next = make_unique<Map>();
+				}
+				Map& m = *pnode->next;
 				auto iter = m.find(ch);
 				if (iter == m.end())
 				{
-					iter = m.insert(iter, make_pair(ch, make_unique<Node>()));
+					iter = m.emplace_hint(iter, ch, Node());
 				}
-				pnode = (iter->second).get();
+				pnode = &(iter->second);
+				//}
 			}
 			return pnode;
 		}

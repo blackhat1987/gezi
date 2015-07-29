@@ -11,6 +11,7 @@
  *                 另外与map的区别是find返回的iterator 只是mapped的指针，因为内部key,mapped分开存储 没有类似vector<pair<key,mapped> >这样的存储
  *                 trie树的主要功能是前缀查询,特别是查询中间状态的支持
  *                 @TODO 针对中文短串的特定优化 比如第一层hash是否可以直接o(1)索引
+ *                 这是一种正确的实现 但是由于map next没有采用指针 内存占用会大 因此后面改了这个设计 @NOTICE
  *  ==============================================================================
  */
 
@@ -129,10 +130,10 @@ namespace gezi {
 
 		size_type count(const key_type& key) const
 		{
-			Node* pnode = &_root;
+			const Node* pnode = &_root;
 			for (auto& ch : key)
 			{
-				Map& m = pnode->next;
+				const Map& m = pnode->next;
 				auto iter = m.find(ch);
 				if (iter == m.end())
 				{
