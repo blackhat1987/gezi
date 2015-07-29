@@ -44,7 +44,15 @@ public:
 		free();
 	}
 
+#ifndef GEZI_SUFFIXTREE_INT_INDEX_TYPE
+	///这样线上不断删除 每天按照5kw 也没关系需要太多年，但是int比较危险，不过一般其它应用int足够了,比如离线处理一天的数据,int减小内存占用 @TODO
+	typedef unsigned long long index_type;
+#else
+	typedef int index_type;
+#endif
+
 #ifndef GCCXML
+
 	struct Node;
 	//typedef std::map<wchar_t, Node*, less<wchar_t> > Edges; //内存占用近似 测试用map 线上可以用hash map提高速度
 	typedef std::unordered_map<wchar_t, Node*> Edges;
@@ -101,7 +109,7 @@ public:
 		Node* suffix_link; // v1 -> v2  v1 a(D)  v2 (D), v1 v2 均为内部节点  事实上叶子结点不需要suffix_link
 		Edges* next; //叶子结点next == NULL
 
-		int text_id; //node id 指向text所在texts序列中的位置
+		index_type text_id; //node id 指向text所在texts序列中的位置  注意需要是index_type 不是int
 	};
 #endif //GCCXML
 	void init()
@@ -158,11 +166,11 @@ public:
 	}
 
 protected:
-	typedef unsigned long long uint64;
+
 #ifndef GCCXML
 	Node* _root;
-	uint64 _current_text_id;
-	uint64 _oldest_text_id;
+	index_type _current_text_id;
+	index_type _oldest_text_id;
 	std::deque<wstring> _texts;
 	std::deque<Node*> _first_leafs;
 	wstring _end_mark;
@@ -845,6 +853,34 @@ public:
 		wcout << "The total leaf freq is " << leaf_freq << endl;
 	}
 
+	/**
+	* @brief 
+	* @param id:  相对id 0 开始
+	*/
+	wstring text(int id) const
+	{
+		return _texts[id];
+	}
+
+	index_type min_text_id() const
+	{
+		return _oldest_text_id;
+	}
+
+	index_type max_text_id() const
+	{
+		return _current_text_id;
+	}
+
+	/**
+	* @brief 获取绝对id 包含被remove的累加起来
+	* @param id: 
+	* @return (gezi::SuffixTree::index_type):
+	*/
+	index_type text_id(int id) const
+	{
+		return id + _oldest_text_id;
+	}
 #ifndef GCCXML
 	void write_result(Node* node, int depth, wofstream & ofs)
 	{

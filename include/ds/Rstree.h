@@ -161,6 +161,36 @@ namespace gezi
 			find_all_substrs(_root, result_vec);
 			return result_vec;
 		}
+	
+		struct SubstrNode
+		{
+			wstring substr;
+			int freq;
+			set<int> tids;
+
+#ifdef PYTHON_WRAPPER
+			SubstrNode() 
+			{
+			}
+			//不然的话vector 不能iterate
+			bool operator == (const SubstrNode& other)
+			{
+				return substr == other.substr;
+			}
+#endif // PYTHON_WRAPPER
+
+			SubstrNode(wstring substr_, int freq_, set<int>&& tids_)
+				:substr(substr_), freq(freq_), tids(move(tids_))
+			{
+			}
+		};
+
+		vector<SubstrNode> find_all()
+		{
+			vector<SubstrNode> result_vec;
+			find_all_substrs(_root, result_vec);
+			return result_vec;
+		}
 
 #ifndef GCCXML
 
@@ -172,7 +202,7 @@ namespace gezi
 			add_(s);
 			find_substrs(result_vec, pos_types);
 			_current_text_id++;
-			if (tree_size() >= _max_tree_size)
+			if (tree_size() > _max_tree_size)
 			{
 				remove();
 			}
@@ -189,7 +219,7 @@ namespace gezi
 			add_(s);
 			find_substrs(result_vec, pos_types);
 			_current_text_id++;
-			if (tree_size() >= _max_tree_size)
+			if (tree_size() > _max_tree_size)
 			{
 				remove();
 			}
@@ -387,7 +417,7 @@ namespace gezi
 			bool need_down = true; //must be true
 			if (is_node_down_ok(node, need_down))
 			{
-				result_vec.push_back(Pair(get_str(node), node->freq));
+				result_vec.emplace_back(get_str(node), node->freq);
 			}
 			else if (!need_down || !node->next)
 			{
@@ -402,6 +432,54 @@ namespace gezi
 			}
 		}
 
+		set<int> get_text_ids(Node* node)
+		{
+			set<int> tids;
+			get_text_ids(node, tids);
+			return tids;
+		}
+
+
+		void get_text_ids(Node* node, set<int>& tids)
+		{
+			using namespace std;
+			if (node->next == NULL)
+			{
+				tids.insert(node->text_id - _oldest_text_id);
+				return;
+			}
+			for (NIter iter = node->next->begin(); iter != node->next->end(); ++iter)
+			{
+				get_text_ids(iter->second, tids);
+			}
+		}
+
+
+		void find_all_substrs(Node* node, vector<SubstrNode>& result_vec)
+		{
+			if (!node)
+			{
+				return;
+			}
+
+			bool need_down = true; //must be true
+			if (is_node_down_ok(node, need_down))
+			{
+				set<int> tids = get_text_ids(node);
+				result_vec.emplace_back(get_str(node), node->freq, move(tids));
+			}
+			else if (!need_down || !node->next)
+			{
+				return;
+			}
+			else
+			{
+				for (NIter iter = node->next->begin(); iter != node->next->end(); ++iter)
+				{
+					find_all_substrs(iter->second, result_vec);
+				}
+			}
+		}
 		//void find_all_substrs(vector<wstring>& strs, vector<int>& freqs)
 		//{
 		//	vector<Pair> result_vec;
@@ -468,7 +546,7 @@ namespace gezi
 				if (iter->second == true)
 				{
 					Node* node = iter->first;
-					result_vec.push_back(Pair(get_str(node), node->freq));
+					result_vec.emplace_back(get_str(node), node->freq);
 				}
 			}
 		}
@@ -526,7 +604,7 @@ namespace gezi
 					//Pval(wstr_to_str(substr));
 					if (substr.length() >= _min_substr_len)
 					{
-						result_vec.push_back(Pair(substr, node->freq));
+						result_vec.emplace_back(substr, node->freq);
 					}
 				}
 			}

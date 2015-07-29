@@ -19,19 +19,24 @@ librstree.setlocale_gbk()
 
 tree = librstree.Rstree()
 tree.set_max_substr_len(5)
-tree.set_min_substr_len(3)
+tree.set_min_substr_len(2)
 tree.set_min_frequency(3)
 
-tree.add(wstr('你是谁'))
-tree.add(wstr('你是谁'))
-tree.add(wstr('你是谁'))
-tree.add('abc')
-tree.add('abc')
-tree.add('abc')
+tree.add(('你是谁').decode('gbk'))
+tree.add(('你是谁').decode('gbk'))
+tree.add(('你是谁').decode('gbk'))
+tree.add(('abc').decode('gbk'))
+tree.add(('abc').decode('gbk'))
+tree.add(('abc').decode('gbk'))
+
 
 tree.add('我是谁'.decode('gbk'))
 tree.add('我是谁'.decode('gbk'))
 tree.add('我是谁'.decode('gbk'))
+tree.add('梅西是一个球员'.decode('gbk'))
+tree.add('c罗是一个球员'.decode('gbk'))
+tree.add('你是谁是梅西'.decode('gbk'))
+tree.add('巴萨球员梅西打进决胜球'.decode('gbk'))
 
 l = tree.find_all_substrs()
 
@@ -50,4 +55,14 @@ print len(l)
 
 for item in l:
 	print (item.first).encode('gbk'), item.second
- 
+
+print tree.text(0).encode('gbk')
+
+l = tree.find_all()
+id = 0
+for item in l:
+	print '-----------------', id, (item.substr).encode('gbk'), item.freq 
+	for tid in item.tids:
+		print 'tid',tid
+		#print tree.text(tid).encode('gbk')
+	id += 1

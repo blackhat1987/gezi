@@ -52,7 +52,8 @@ namespace gezi {
 		struct Node;
 		///这里如果不使用指针map是可以的但是使用unorderd_map gcc4会报错  error: 'std::pair<_T1, _T2>::second' has incomplete type
 		typedef _Map<char_type, unique_ptr<Node> > Map;
-
+		//@TODO 先对比下空map和指针大小区别
+		//check一下 Map* next的写法 
 
 		enum
 		{
@@ -66,7 +67,7 @@ namespace gezi {
 		struct Node
 		{
 			index_type index = null_index;  ///null_index用来表示内部节点
-			Map next;
+			unique_ptr<Map> next;
 
 			friend class boost::serialization::access;
 			template<class Archive>
@@ -194,6 +195,17 @@ namespace gezi {
 				pnode = (iter->second).get();
 			}
 			return true;
+		}
+
+
+		const Node* root() const 
+		{
+			return &_root;
+		}
+
+		static const Node* find(const Node* pnode, const key_type& key) const
+		{
+			return NULL;
 		}
 
 		iterator end() const

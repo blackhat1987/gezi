@@ -111,12 +111,44 @@ using std::endl;
 using std::sort;
 
 
+//-------------folly related
+//#ifdef GEZI_USE_FOLLY
+
+#ifndef	FOLLY_NO_CONFIG 
+#define FOLLY_NO_CONFIG 1
+#endif
+
+#ifndef  FOLLY_HAVE_CLOCK_GETTIME
+#define FOLLY_HAVE_CLOCK_GETTIME 1
+#endif
+
+#ifndef FOLLY_VERSION 
+#define FOLLY_VERSION "1"
+#endif
+
+#ifndef FOLLY_HAVE_MALLOC_H
+#define  FOLLY_HAVE_MALLOC_H 1
+#endif
+
+#ifndef GCCXML
+
+#include "folly/Foreach.h"
+#include "folly/small_vector.h"
+#include "folly/MapUtil.h"
+#include "folly/FBVector.h"
+
 //@TODO c++14 里面有了make_unique
 #include "folly/Memory.h"
+//#endif //GEZI_USE_FOLLY 
+
+
 namespace std
 {
 	using folly::make_unique;
 }
+
+#endif //GCCXML
+
 
 #if __GNUC__ > 3 || defined(WIN32)
 using std::move;
@@ -173,6 +205,9 @@ typedef std::map<uint64, float> ulf_map;
 typedef std::map<uint64, Float> ulF_map;
 typedef std::map<std::string, std::pair<int, int> > str_iipair_map;
 typedef std::set<std::string> sset;
+typedef std::set<int> iset;
+typedef std::set<int64> lset;
+typedef std::set<uint64> ulset;
 
 #include <boost/foreach.hpp>
 #define foreach BOOST_FOREACH
@@ -225,31 +260,6 @@ using boost::algorithm::split_regex;
 #ifndef VERSION
 #define  VERSION "unknown"
 #endif
-
-//-------------folly related
-#ifdef GEZI_USE_FOLLY
-
-#ifndef	FOLLY_NO_CONFIG 
-#define FOLLY_NO_CONFIG 
-#endif
-
-#ifndef  FOLLY_HAVE_CLOCK_GETTIME
-#define FOLLY_HAVE_CLOCK_GETTIME 
-#endif
-
-#ifndef FOLLY_VERSION 
-#define FOLLY_VERSION "1"
-#endif
-
-#ifndef FOLLY_HAVE_MALLOC_H
-#define  FOLLY_HAVE_MALLOC_H
-#endif
-
-#include "folly/Foreach.h"
-#include "folly/small_vector.h"
-#include "folly/MapUtil.h"
-#include "folly/FBVector.h"
-#endif //GEZI_USE_FOLLY 
 
 namespace gezi
 {
