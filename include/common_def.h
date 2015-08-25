@@ -182,6 +182,7 @@ typedef vector<bool> BitArray;
 //typedef deque<bool> BitArray;
 
 //------------下面主要是python封装的时候使用
+typedef std::pair<int, int> ii_pair;
 typedef std::pair<std::string, int> si_pair;
 typedef std::pair<std::wstring, int> wsi_pair;
 typedef std::vector<std::pair<std::string, int> > si_pair_vec;

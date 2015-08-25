@@ -31,7 +31,8 @@
 #include "tieba/feature/urate/LanguageModelExtractor.h"
 #include "tieba/feature/urate/SequenceExtractor.h"
 #include "tieba/feature/urate/DictMatchExtractor.h"
-#include "tieba/feature/urate/ImgExtrator.h" //新增
+#include "tieba/feature/urate/ImgExtrator.h" 
+#include "tieba/feature/urate/DeformExtractor.h"
 
 
 namespace gezi {
@@ -63,6 +64,7 @@ namespace gezi {
 			mgr.add(new SequenceExtractor);
 			mgr.add(new DictMatchExtractor);
 			mgr.add(new ImgExtractor); //新增
+			mgr.add(new DeformExtractor);
 		}
 
 		inline Features gen_urate_features(uint64 pid, string historyPath, bool useFetch = true, bool forceFetch = false)
@@ -106,7 +108,7 @@ namespace gezi {
 		//添加规则豁免,根据阈值scale score
 		inline void adjust(double& score, const gezi::tieba::UrateInfo& uinfo)
 		{
-			static int min_posts_num = 3;
+			int min_posts_num = 3;
 			PSCONF(min_posts_num, "Urate");
 			if (uinfo.nowPostInfo.IsThread())
 			{

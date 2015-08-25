@@ -22,6 +22,12 @@
 
 #ifndef SEGMENTOR_H_
 #define SEGMENTOR_H_
+
+#ifndef NO_BAIDU_DEP
+#include "tagdict.h"
+extern const char* get_pos_str(unsigned int nPOS); // from libpostag.a
+#endif
+
 #ifndef NO_BAIDU_DEP
 #include "scwdef.h"
 #include "property.h"
@@ -35,9 +41,34 @@
 #include <vector>
 //#include "common_util.h"
 
+
 namespace gezi {
-	using namespace std;
+	using std::vector;
+	using std::string;
 #ifndef NO_BAIDU_DEP
+
+	//typedef struct
+	//{
+	//	/* term info */
+	//	uint32_t length : 8;  /* length of term, not include the '\0' */
+	//	uint32_t offset : 24; /* offset of term in input text */
+	//	uint32_t type : 8;    /* type info, e.g. POS tag. 0 is invalid, used in postag, NOT used in wordseg */
+	//	uint32_t weight : 24; /* weight of term */
+
+	//	/* property */
+	//	struct
+	//	{
+	//		uint32_t m_lprop;  /* high 32 bit */
+	//		uint32_t m_hprop;  /* low 32 bit */
+	//	} prop;
+
+	//	/* dict index */
+	//	long index; /* point to the address of dict item */
+
+	//	/* term buffer */
+	//	char buffer[TERM_MAX_LEN];
+
+	//} token_t;
 
 	struct SegHandle
 	{
@@ -89,6 +120,7 @@ namespace gezi {
 		int buf_size = 0;
 	};
 
+
 	struct SegNode
 	{
 		string word;
@@ -102,6 +134,7 @@ namespace gezi {
 
 		}
 	};
+
 	//进程级别 一般 一个程序一个Segmentor资源实例
 	static const int  SEG_USE_DEFAULT = 0;
 	static const int SEG_USE_POSTAG = 1;
@@ -172,10 +205,15 @@ namespace gezi {
 			return *this;
 		}
 
-		static void SegFlag(int flag_)
+		static void SetFlag(int flag_)
 		{
 			flag() = flag_;
 			PVAL(flag());
+		}
+
+		static void SetStrategy(int strategy_)
+		{
+			strategy() = strategy_;
 		}
 
 		static bool init(string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
@@ -215,7 +253,7 @@ namespace gezi {
 			//---------分词
 			if (scw_segment_words(pwdict(), handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)flag()) < 0)
 			{
-				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
+				LOG(ERROR) << "Segment fail " << input << " " << input.length();
 				return false;
 			}
 			return true;
@@ -256,7 +294,7 @@ namespace gezi {
 			int* pflag = flag() == 0 ? NULL : &flag();
 			if (scw_segment_words(pwdict(), handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)pflag) < 0)
 			{
-				LOG_ERROR("Segment fail %s %d", input.c_str(), input.length());
+				LOG(ERROR) << "Segment fail " << input << " " << input.length();
 				return false;
 			}
 			if (type != SEG_MERGE_NEWWORD || !handle.pout->pnewword->newwordbtermcount)
@@ -274,7 +312,7 @@ namespace gezi {
 				//----------标注
 				if (tag_postag(handle.tokens, handle.nresult) < 0)
 				{
-					LOG_ERROR("Tagging failed!");
+					LOG(ERROR) << "Tagging failed";
 					return false;
 				}
 			}
@@ -401,7 +439,7 @@ namespace gezi {
 	private:
 		static bool init(const char* data_dir, int type = 0, const char* conf_path = "./conf/scw.conf")
 		{
-			strategy() = type;
+			strategy() |= type;
 			int ret = -1;
 			//--------------打开分词字典
 			if (!pwdict())
@@ -531,7 +569,7 @@ namespace gezi {
 			return _strategy;
 		}
 
-	
+
 		static int& flag(int flag_ = 0)
 		{//dynfloag 是否开启crf等 当前主要考虑设置是否开启crf
 			static int _flag = flag_;
@@ -543,17 +581,45 @@ namespace gezi {
 		SegHandle _handle;
 	};
 
+
+#ifndef NO_BAIDU_DEP
 	//util
 	inline void print_seg_result(const SegHandle& handle)
 	{
-		Pval(handle.nresult);
 		for (int i = 0; i < handle.nresult; i++)
 		{
-			VLOG(3) << setiosflags(ios::left) << setfill(' ') << setw(4) << i <<
-				handle.tokens[i].buffer << " " << handle.tokens[i].length;
+			std::cerr << handle.tokens[i].buffer << " " << handle.tokens[i].offset << " " << handle.tokens[i].length << endl;
 		}
 	}
+
+	inline void print_seg_posttag_result(const gezi::SegHandle& handle)
+	{
+		for (int i = 0; i < handle.nresult; i++)
+		{
+			const char* stag = ::get_pos_str(handle.tokens[i].type);
+			if (stag)
+				printf("%s/%s  ", handle.tokens[i].buffer, stag);
+			else
+				printf("%s  ", handle.tokens[i].buffer);
+		}
+		printf("\n");
+	}
+
+	inline void print_seg_result()
+	{
+		print_seg_result(Segmentor::handle());
+	}
+
+	inline void print_seg_posttag_result()
+	{
+		print_seg_posttag_result(Segmentor::handle());
+	}
+
+#endif
+
 #endif // !NO_BAIDU_DEP
 } //----end of namespace gezi
+
+
 
 #endif  //----end of SEGMENTOR_H_

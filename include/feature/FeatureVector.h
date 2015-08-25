@@ -20,7 +20,7 @@
 #include "Numeric/Vector/Vector.h"
 namespace gezi {
 
-	//不要单独使用配合FeatureExtractorMgr,避免忘记调用finalize
+	//尽量避免单独使用配合FeatureExtractorMgr,避免忘记调用finalize
 	class FeatureVector : public Vector
 	{
 	public:

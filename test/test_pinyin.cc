@@ -36,7 +36,7 @@ TEST(test_pinyin, func)
 	}
 
 	Pval(Pinyin::Convert("ab音乐乐趣12很多123"));
-	
+	Pval(Pinyin::Convert("圆顺达驾校是呼巿一所"));
 }
 
 int main(int argc, char *argv[])

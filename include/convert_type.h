@@ -43,11 +43,18 @@
 #undef  DOUBLE	
 //#define DOUBLE boost::lexical_cast<double>
 #undef  STRING
+#if __GNUC__ > 3 || defined(WIN32) 
+#define STRING std::to_string
+#else
 #define STRING boost::lexical_cast<std::string>
+#endif
 
 #undef  STR
+#if __GNUC__ > 3 || defined(WIN32) 
+#define STR std::to_string
+#else
 #define STR boost::lexical_cast<std::string>
-//#define STR std::to_string
+#endif
 
 //Defined in header <string>
 //int       stoi(const std::string& str, std::size_t* pos = 0, int base = 10);

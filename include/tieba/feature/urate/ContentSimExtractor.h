@@ -29,7 +29,7 @@ namespace gezi {
 
 			}
 
-			virtual void init()
+			virtual void init() override
 			{
 				info().ExtractHtmlFilteredContents();
 				info().ExtractCnContents();

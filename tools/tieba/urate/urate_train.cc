@@ -55,7 +55,6 @@ Features gen_features(uint64 pid)
 void run()
 {
 	try_create_dir(FLAGS_history);
-	omp_set_num_threads(FLAGS_nt);
 	
 	AutoTimer timer("run", 0);
 	vector<uint64> pids;
@@ -127,6 +126,8 @@ int main(int argc, char *argv[])
 	if (FLAGS_v == 0)
 		FLAGS_v = FLAGS_vl;
 	SharedConf::init(FLAGS_conf);
+
+	omp_set_num_threads(FLAGS_nt);
 
 	if (FLAGS_gf)
 	{

@@ -167,11 +167,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=07de5501f601e2e8795716027521b494  COMAKE
+COMAKE_MD5=d5a4d1533780d7f03ce6d417a8fc3a46  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check .copy-so test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf test_random test_shared_ptr test_binfinder test_seralize test_string test_bitop test_featurevector test_split test_tieba_get_info test_content_process test_cached_fetcher test_bind test_lrumap test_seralize_xml test_thread_local test_configure test_static test_cpplinq test_partial_sort test_string_util test_mean_var test_const test_matchdict test_sharedobjects test_matchdict test_erase test_max_count_by test_informaiton test_information simple test_cppformat test_string_find test_static_thread_safe test_map_default test_template_function identifer-text2bin test_numeric_limit test_langmodel test_dynamic_cast test_derive test_derive_override test_derive_same_variable test_derive_vector test test_sort test_rvalue test_weight_vector test_static_const test_enum test_chnormalizer test_sizeof test_vector_copy 
+all:comake2_makefile_check .copy-so test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf test_random test_shared_ptr test_binfinder test_seralize test_string test_bitop test_featurevector test_split test_tieba_get_info test_content_process test_cached_fetcher test_bind test_lrumap test_seralize_xml test_thread_local test_configure test_static test_cpplinq test_partial_sort test_string_util test_mean_var test_const test_matchdict test_sharedobjects test_matchdict test_erase test_max_count_by test_informaiton test_information simple test_cppformat test_string_find test_static_thread_safe test_map_default test_template_function identifer-text2bin test_numeric_limit test_langmodel test_dynamic_cast test_derive test_derive_override test_derive_same_variable test_derive_vector test test_sort test_rvalue test_weight_vector test_static_const test_enum test_chnormalizer test_sizeof test_vector_copy test_deformation test_reverse test_convert test_map 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -339,6 +339,14 @@ clean:ccpclean
 	rm -rf ./output/bin/test_sizeof
 	rm -rf test_vector_copy
 	rm -rf ./output/bin/test_vector_copy
+	rm -rf test_deformation
+	rm -rf ./output/bin/test_deformation
+	rm -rf test_reverse
+	rm -rf ./output/bin/test_reverse
+	rm -rf test_convert
+	rm -rf ./output/bin/test_convert
+	rm -rf test_map
+	rm -rf ./bin/test_map
 	rm -rf test_lambda_test_lambda.o
 	rm -rf test_bins_test_bins.o
 	rm -rf test_datetime_test_datetime.o
@@ -414,6 +422,10 @@ clean:ccpclean
 	rm -rf test_chnormalizer_test_chnormalizer.o
 	rm -rf test_sizeof_test_sizeof.o
 	rm -rf test_vector_copy_test_vector_copy.o
+	rm -rf test_deformation_test_deformation.o
+	rm -rf test_reverse_test_reverse.o
+	rm -rf test_convert_test_convert.o
+	rm -rf test_map_test_map.o
 
 .PHONY:dist
 dist:
@@ -526,6 +538,7 @@ test_lambda:test_lambda_test_lambda.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_lambda
@@ -622,6 +635,7 @@ test_bins:test_bins_test_bins.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_bins
@@ -718,6 +732,7 @@ test_datetime:test_datetime_test_datetime.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_datetime
@@ -814,6 +829,7 @@ test_content_filter:test_content_filter_test_content_filter.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_content_filter
@@ -910,6 +926,7 @@ test_regex:test_regex_test_regex.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_regex
@@ -1006,6 +1023,7 @@ test_regex2:test_regex2_test_regex2.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_regex2
@@ -1102,6 +1120,7 @@ test_encode:test_encode_test_encode.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_encode
@@ -1204,6 +1223,7 @@ test_json:test_json_test_json.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_json
@@ -1300,6 +1320,7 @@ test_escape:test_escape_test_escape.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_escape
@@ -1396,6 +1417,7 @@ test_other:test_other_test_other.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_other
@@ -1492,6 +1514,7 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_feature_selector
@@ -1588,6 +1611,7 @@ openmp_hello:openmp/openmp_hello_hello.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o openmp_hello
@@ -1684,6 +1708,7 @@ openmp_test:openmp/openmp_test_test.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o openmp_test
@@ -1780,6 +1805,7 @@ test_exception:test_exception_test_exception.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_exception
@@ -1876,6 +1902,7 @@ test_map_util:test_map_util_test_map_util.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_map_util
@@ -1972,6 +1999,7 @@ test_seg:test_seg_test_seg.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_seg
@@ -2068,6 +2096,7 @@ test_identifer:test_identifer_test_identifer.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_identifer
@@ -2164,6 +2193,7 @@ test_linear:test_linear_test_linear.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_linear
@@ -2260,6 +2290,7 @@ test_pinyin:test_pinyin_test_pinyin.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_pinyin
@@ -2356,6 +2387,7 @@ test_namepattern:test_namepattern_test_namepattern.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_namepattern
@@ -2452,6 +2484,7 @@ test_conf:test_conf_test_conf.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_conf
@@ -2548,6 +2581,7 @@ test_random:test_random_test_random.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_random
@@ -2644,6 +2678,7 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_shared_ptr
@@ -2740,6 +2775,7 @@ test_binfinder:test_binfinder_test_binfinder.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_binfinder
@@ -2836,6 +2872,7 @@ test_seralize:test_seralize_test_seralize.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_seralize
@@ -2932,6 +2969,7 @@ test_string:test_string_test_string.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_string
@@ -3028,6 +3066,7 @@ test_bitop:test_bitop_test_bitop.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_bitop
@@ -3124,6 +3163,7 @@ test_featurevector:test_featurevector_test_featurevector.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_featurevector
@@ -3220,6 +3260,7 @@ test_split:test_split_test_split.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_split
@@ -3316,6 +3357,7 @@ test_tieba_get_info:test_tieba_get_info_test_tieba_get_info.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_tieba_get_info
@@ -3412,6 +3454,7 @@ test_content_process:test_content_process_test_content_process.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_content_process
@@ -3508,6 +3551,7 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_cached_fetcher
@@ -3604,6 +3648,7 @@ test_bind:test_bind_test_bind.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_bind
@@ -3700,6 +3745,7 @@ test_lrumap:test_lrumap_test_lrumap.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_lrumap
@@ -3796,6 +3842,7 @@ test_seralize_xml:test_seralize_xml_test_seralize_xml.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_seralize_xml
@@ -3892,6 +3939,7 @@ test_thread_local:test_thread_local_test_thread_local.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_thread_local
@@ -3988,6 +4036,7 @@ test_configure:test_configure_test_configure.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_configure
@@ -4084,6 +4133,7 @@ test_static:test_static_test_static.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_static
@@ -4180,6 +4230,7 @@ test_cpplinq:test_cpplinq_test_cpplinq.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_cpplinq
@@ -4276,6 +4327,7 @@ test_partial_sort:test_partial_sort_test_partial_sort.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_partial_sort
@@ -4372,6 +4424,7 @@ test_string_util:test_string_util_test_string_util.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_string_util
@@ -4468,6 +4521,7 @@ test_mean_var:test_mean_var_test_mean_var.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_mean_var
@@ -4564,6 +4618,7 @@ test_const:test_const_test_const.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_const
@@ -4660,6 +4715,7 @@ test_matchdict:test_matchdict.h \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_matchdict
@@ -4756,6 +4812,7 @@ test_sharedobjects:test_sharedobjects_test_sharedobjects.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_sharedobjects
@@ -4852,6 +4909,7 @@ test_matchdict:test_matchdict_test_matchdict.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_matchdict
@@ -4948,6 +5006,7 @@ test_erase:test_erase_test_erase.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_erase
@@ -5044,6 +5103,7 @@ test_max_count_by:test_max_count_by_test_max_count_by.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_max_count_by
@@ -5140,6 +5200,7 @@ test_informaiton:test_informaiton_test_informaiton.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_informaiton
@@ -5236,6 +5297,7 @@ test_information:test_information_test_information.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_information
@@ -5332,6 +5394,7 @@ simple:simple_simple.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o simple
@@ -5428,6 +5491,7 @@ test_cppformat:test_cppformat_test_cppformat.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_cppformat
@@ -5524,6 +5588,7 @@ test_string_find:test_string_find_test_string_find.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_string_find
@@ -5620,6 +5685,7 @@ test_static_thread_safe:test_static_thread_safe_test_static_thread_safe.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_static_thread_safe
@@ -5716,6 +5782,7 @@ test_map_default:test_map_default_test_map_default.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_map_default
@@ -5812,6 +5879,7 @@ test_template_function:test_template_function_test_template_function.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_template_function
@@ -5908,6 +5976,7 @@ identifer-text2bin:identifer-text2bin_identifer-text2bin.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o identifer-text2bin
@@ -6004,6 +6073,7 @@ test_numeric_limit:test_numeric_limit_test_numeric_limit.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_numeric_limit
@@ -6100,6 +6170,7 @@ test_langmodel:test_langmodel_test_langmodel.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_langmodel
@@ -6196,6 +6267,7 @@ test_dynamic_cast:test_dynamic_cast_test_dynamic_cast.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_dynamic_cast
@@ -6292,6 +6364,7 @@ test_derive:test_derive_test_derive.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_derive
@@ -6388,6 +6461,7 @@ test_derive_override:test_derive_override_test_derive_override.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_derive_override
@@ -6484,6 +6558,7 @@ test_derive_same_variable:test_derive_same_variable_test_derive_same_variable.o 
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_derive_same_variable
@@ -6580,6 +6655,7 @@ test_derive_vector:test_derive_vector_test_derive_vector.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_derive_vector
@@ -6676,6 +6752,7 @@ test:test_test.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test
@@ -6772,6 +6849,7 @@ test_sort:test_sort_test_sort.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_sort
@@ -6868,6 +6946,7 @@ test_rvalue:test_rvalue_test_rvalue.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_rvalue
@@ -6964,6 +7043,7 @@ test_weight_vector:test_weight_vector_test_weight_vector.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_weight_vector
@@ -7060,6 +7140,7 @@ test_static_const:test_static_const_test_static_const.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_static_const
@@ -7156,6 +7237,7 @@ test_enum:test_enum_test_enum.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_enum
@@ -7252,6 +7334,7 @@ test_chnormalizer:test_chnormalizer_test_chnormalizer.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_chnormalizer
@@ -7348,6 +7431,7 @@ test_sizeof:test_sizeof_test_sizeof.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_sizeof
@@ -7444,11 +7528,400 @@ test_vector_copy:test_vector_copy_test_vector_copy.o \
   -lrt \
   -lldap \
   -lcurl \
+  -lcrypto \
   -lgomp \
   -rdynamic \
   -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_vector_copy
 	mkdir -p ./output/bin
 	cp -f --link test_vector_copy ./output/bin
+
+test_deformation:test_deformation_test_deformation.o \
+  ../include/tools/pinyin/libPYNotation.a \
+  ../libgezi_common.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_deformation[0m']"
+	$(CXX) test_deformation_test_deformation.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
+  ../libgezi_common.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
+  -lrt \
+  -lldap \
+  -lcurl \
+  -lcrypto \
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_deformation
+	mkdir -p ./output/bin
+	cp -f --link test_deformation ./output/bin
+
+test_reverse:test_reverse_test_reverse.o \
+  ../include/tools/pinyin/libPYNotation.a \
+  ../libgezi_common.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_reverse[0m']"
+	$(CXX) test_reverse_test_reverse.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
+  ../libgezi_common.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
+  -lrt \
+  -lldap \
+  -lcurl \
+  -lcrypto \
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_reverse
+	mkdir -p ./output/bin
+	cp -f --link test_reverse ./output/bin
+
+test_convert:test_convert_test_convert.o \
+  ../include/tools/pinyin/libPYNotation.a \
+  ../libgezi_common.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_convert[0m']"
+	$(CXX) test_convert_test_convert.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
+  ../libgezi_common.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
+  -lrt \
+  -lldap \
+  -lcurl \
+  -lcrypto \
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_convert
+	mkdir -p ./output/bin
+	cp -f --link test_convert ./output/bin
+
+test_map:test_map_test_map.o \
+  ../include/tools/pinyin/libPYNotation.a \
+  ../libgezi_common.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_map[0m']"
+	$(CXX) test_map_test_map.o -Xlinker "-(" ../include/tools/pinyin/libPYNotation.a \
+  ../libgezi_common.a \
+  ../libgezi_json.a \
+  ../libgezi_cppformat.a ../../../../../../com/btest/gtest/output/lib/libgtest.a \
+  ../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_buffer.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_check_cast.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_exception.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_pool.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_utils.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_implement.a \
+  ../../../../../../lib2-64/bsl/lib/libbsl_var_utils.a \
+  ../../../../../../lib2-64/ccode/lib/libulccode.a \
+  ../../../../../../lib2-64/dict/lib/libuldict.a \
+  ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
+  ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag/lib/libpostag.a \
+  ../../../../../../lib2-64/text-util/lib/libtextutil.a \
+  ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../ps/se/dict-set/libdictset.a \
+  ../../../../../../public/comlog-plugin/libcomlog.a \
+  ../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
+  ../../../../../../public/configure/libconfig.a \
+  ../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../public/odict/libodict.a \
+  ../../../../../../public/spreg/libspreg.a \
+  ../../../../../../public/uconv/libuconv.a \
+  ../../../../../../public/urlparser/libnewurl.a \
+  ../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
+  ../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
+  ../../../../../../third-64/boost/lib/libboost_atomic.a \
+  ../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../third-64/boost/lib/libboost_container.a \
+  ../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../third-64/boost/lib/libboost_coroutine.a \
+  ../../../../../../third-64/boost/lib/libboost_date_time.a \
+  ../../../../../../third-64/boost/lib/libboost_exception.a \
+  ../../../../../../third-64/boost/lib/libboost_filesystem.a \
+  ../../../../../../third-64/boost/lib/libboost_graph.a \
+  ../../../../../../third-64/boost/lib/libboost_locale.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_c99l.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
+  ../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../third-64/boost/lib/libboost_mpi_python.a \
+  ../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_program_options.a \
+  ../../../../../../third-64/boost/lib/libboost_python.a \
+  ../../../../../../third-64/boost/lib/libboost_random.a \
+  ../../../../../../third-64/boost/lib/libboost_regex.a \
+  ../../../../../../third-64/boost/lib/libboost_serialization.a \
+  ../../../../../../third-64/boost/lib/libboost_signals.a \
+  ../../../../../../third-64/boost/lib/libboost_system.a \
+  ../../../../../../third-64/boost/lib/libboost_test_exec_monitor.a \
+  ../../../../../../third-64/boost/lib/libboost_thread.a \
+  ../../../../../../third-64/boost/lib/libboost_timer.a \
+  ../../../../../../third-64/boost/lib/libboost_unit_test_framework.a \
+  ../../../../../../third-64/boost/lib/libboost_wave.a \
+  ../../../../../../third-64/boost/lib/libboost_wserialization.a \
+  ../../../../../../third-64/gflags/lib/libgflags.a \
+  ../../../../../../third-64/gflags/lib/libgflags_nothreads.a \
+  ../../../../../../third-64/glog/lib/libglog.a \
+  ../../../../../../third-64/pcre/lib/libpcre.a \
+  ../../../../../../third-64/pcre/lib/libpcrecpp.a \
+  ../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../third-64/tcmalloc/lib/libprofiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_debug.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal.a \
+  ../../../../../../third-64/tcmalloc/lib/libtcmalloc_minimal_debug.a -lpthread \
+  -rdynamic \
+  -lrt \
+  -lldap \
+  -lcurl \
+  -lcrypto \
+  -lgomp \
+  -rdynamic \
+  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_map
+	mkdir -p ./bin
+	cp -f --link test_map ./bin
 
 test_lambda_test_lambda.o:test_lambda.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_lambda_test_lambda.o[0m']"
@@ -7749,6 +8222,22 @@ test_sizeof_test_sizeof.o:test_sizeof.cc
 test_vector_copy_test_vector_copy.o:test_vector_copy.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_vector_copy_test_vector_copy.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_vector_copy_test_vector_copy.o test_vector_copy.cc
+
+test_deformation_test_deformation.o:test_deformation.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_deformation_test_deformation.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_deformation_test_deformation.o test_deformation.cc
+
+test_reverse_test_reverse.o:test_reverse.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_reverse_test_reverse.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_reverse_test_reverse.o test_reverse.cc
+
+test_convert_test_convert.o:test_convert.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_convert_test_convert.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_convert_test_convert.o test_convert.cc
+
+test_map_test_map.o:test_map.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_map_test_map.o[0m']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o test_map_test_map.o test_map.cc
 
 endif #ifeq ($(shell uname -m),x86_64)
 

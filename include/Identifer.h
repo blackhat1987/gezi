@@ -7,7 +7,7 @@
  *
  *          \date   2014-01-19 09:53:10.353333
  *
- *  \Description:    @TODO   加入序列化
+ *  \Description:    Key Id 双向索引
  *  ==============================================================================
  */
 
@@ -23,7 +23,7 @@ namespace gezi {
 	class Identifer
 	{
 	public:
-		typedef int IdType; //may be changed to int64
+		typedef int IdType; //@TODO may be changed to int64 or use uint32 ?
 		typedef vector<string>::iterator iterator;
 		typedef vector<string>::const_iterator const_iterator;
 		typedef unordered_map<string, IdType> HashMap;
@@ -317,6 +317,7 @@ namespace gezi {
 
 	typedef ValueIdentifer<int> IntIdentifer;
 	typedef ValueIdentifer<double> DoubleIdentifer;
+
 	//@TODO PYTHON
 #ifdef PYTHON_WRAPPER
 	struct PyHack_IntIndentifer : public IntIdentifer

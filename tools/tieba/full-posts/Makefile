@@ -41,11 +41,17 @@ INCPATH=-I. \
   -I../../../output/include \
   -I../../../include/feature \
   -I../../../include/model \
-  -I../../../include/numeric
+  -I../../../include/numeric \
+  -I../../../third/folly \
+  -I../../../third/double-conversion
 DEP_INCPATH=-I../../../../../../../../app/search/ksarch/store/proxy-lib/redis \
   -I../../../../../../../../app/search/ksarch/store/proxy-lib/redis/include \
   -I../../../../../../../../app/search/ksarch/store/proxy-lib/redis/output \
   -I../../../../../../../../app/search/ksarch/store/proxy-lib/redis/output/include \
+  -I../../../../../../../../app/search/sep/anti-spam/gezi/third \
+  -I../../../../../../../../app/search/sep/anti-spam/gezi/third/include \
+  -I../../../../../../../../app/search/sep/anti-spam/gezi/third/output \
+  -I../../../../../../../../app/search/sep/anti-spam/gezi/third/output/include \
   -I../../../../../../../../app/search/sep/anti-spam/melt \
   -I../../../../../../../../app/search/sep/anti-spam/melt/include \
   -I../../../../../../../../app/search/sep/anti-spam/melt/output \
@@ -229,7 +235,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=e2963eb805e1318ba287d26de9fae227  COMAKE
+COMAKE_MD5=b59ed3292b5a9d6ea4797f587e8c7e65  COMAKE
 
 
 .PHONY:all

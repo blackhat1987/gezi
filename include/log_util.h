@@ -95,7 +95,7 @@ namespace gezi
 	public:
 		LogHelper(int log_level = 16)
 		{ //设置16是打印debug的 8一般OK 没有debug,有trace warning
-			VLOG(0) << "Log to tty with log_level " << 16;
+			VLOG(0) << "Log to tty with log_level " << log_level;
 			com_device_t dev[1];
 			com_logstat_t logstat;
 			logstat.sysevents = log_level;

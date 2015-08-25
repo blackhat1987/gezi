@@ -72,6 +72,7 @@ for line in input:
 			DEF_MAP(sd_map);
 			DEF_MAP(si_map);
 			DEF_MAP(ss_map);
+			DEF_PAIR(ii_pair);
 			DEF_PAIR(si_pair);
 			DEF_PAIR(wsi_pair);
 			DEF_VEC(si_pair_vec);

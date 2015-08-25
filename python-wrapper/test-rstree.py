@@ -59,6 +59,8 @@ for item in l:
 print tree.text(0).encode('gbk')
 
 l = tree.find_all()
+l = sorted(l, cmp=lambda x,y : cmp(y.freq, x.freq))
+
 id = 0
 for item in l:
 	print '-----------------', id, (item.substr).encode('gbk'), item.freq 

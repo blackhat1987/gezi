@@ -42,15 +42,29 @@ INCPATH=-I. \
   -I../../../include/feature \
   -I../../../include/model \
   -I../../../include/numeric \
+  -I../../../third/folly \
+  -I../../../third/double-conversion \
   -I./include/
-DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/melt \
+DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/gezi/third \
+  -I../../../../../../../../app/search/sep/anti-spam/gezi/third/include \
+  -I../../../../../../../../app/search/sep/anti-spam/gezi/third/output \
+  -I../../../../../../../../app/search/sep/anti-spam/gezi/third/output/include \
+  -I../../../../../../../../app/search/sep/anti-spam/melt \
   -I../../../../../../../../app/search/sep/anti-spam/melt/include \
   -I../../../../../../../../app/search/sep/anti-spam/melt/output \
   -I../../../../../../../../app/search/sep/anti-spam/melt/output/include \
+  -I../../../../../../../../app/search/sep/mining/deformation-text \
+  -I../../../../../../../../app/search/sep/mining/deformation-text/include \
+  -I../../../../../../../../app/search/sep/mining/deformation-text/output \
+  -I../../../../../../../../app/search/sep/mining/deformation-text/output/include \
   -I../../../../../../../../com/btest/gtest \
   -I../../../../../../../../com/btest/gtest/include \
   -I../../../../../../../../com/btest/gtest/output \
   -I../../../../../../../../com/btest/gtest/output/include \
+  -I../../../../../../../../com/idlcompiler \
+  -I../../../../../../../../com/idlcompiler/include \
+  -I../../../../../../../../com/idlcompiler/output \
+  -I../../../../../../../../com/idlcompiler/output/include \
   -I../../../../../../../../lib2-64/bsl \
   -I../../../../../../../../lib2-64/bsl/include \
   -I../../../../../../../../lib2-64/bsl/output \
@@ -91,6 +105,10 @@ DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/melt \
   -I../../../../../../../../lib2-64/wordseg/include \
   -I../../../../../../../../lib2-64/wordseg/output \
   -I../../../../../../../../lib2-64/wordseg/output/include \
+  -I../../../../../../../../op/oped/noah/webfoot/naming-lib \
+  -I../../../../../../../../op/oped/noah/webfoot/naming-lib/include \
+  -I../../../../../../../../op/oped/noah/webfoot/naming-lib/output \
+  -I../../../../../../../../op/oped/noah/webfoot/naming-lib/output/include \
   -I../../../../../../../../ps/se/dict-set \
   -I../../../../../../../../ps/se/dict-set/include \
   -I../../../../../../../../ps/se/dict-set/output \
@@ -99,6 +117,10 @@ DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/melt \
   -I../../../../../../../../ps/se/include/include \
   -I../../../../../../../../ps/se/include/output \
   -I../../../../../../../../ps/se/include/output/include \
+  -I../../../../../../../../public/bslext \
+  -I../../../../../../../../public/bslext/include \
+  -I../../../../../../../../public/bslext/output \
+  -I../../../../../../../../public/bslext/output/include \
   -I../../../../../../../../public/comlog-plugin \
   -I../../../../../../../../public/comlog-plugin/include \
   -I../../../../../../../../public/comlog-plugin/output \
@@ -111,6 +133,18 @@ DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/melt \
   -I../../../../../../../../public/connectpool/include \
   -I../../../../../../../../public/connectpool/output \
   -I../../../../../../../../public/connectpool/output/include \
+  -I../../../../../../../../public/idlcompiler \
+  -I../../../../../../../../public/idlcompiler/include \
+  -I../../../../../../../../public/idlcompiler/output \
+  -I../../../../../../../../public/idlcompiler/output/include \
+  -I../../../../../../../../public/mcpack \
+  -I../../../../../../../../public/mcpack/include \
+  -I../../../../../../../../public/mcpack/output \
+  -I../../../../../../../../public/mcpack/output/include \
+  -I../../../../../../../../public/nshead \
+  -I../../../../../../../../public/nshead/include \
+  -I../../../../../../../../public/nshead/output \
+  -I../../../../../../../../public/nshead/output/include \
   -I../../../../../../../../public/odict \
   -I../../../../../../../../public/odict/include \
   -I../../../../../../../../public/odict/output \
@@ -119,6 +153,10 @@ DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/melt \
   -I../../../../../../../../public/spreg/include \
   -I../../../../../../../../public/spreg/output \
   -I../../../../../../../../public/spreg/output/include \
+  -I../../../../../../../../public/ub \
+  -I../../../../../../../../public/ub/include \
+  -I../../../../../../../../public/ub/output \
+  -I../../../../../../../../public/ub/output/include \
   -I../../../../../../../../public/uconv \
   -I../../../../../../../../public/uconv/include \
   -I../../../../../../../../public/uconv/output \
@@ -151,6 +189,10 @@ DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/melt \
   -I../../../../../../../../third-64/pcre/include \
   -I../../../../../../../../third-64/pcre/output \
   -I../../../../../../../../third-64/pcre/output/include \
+  -I../../../../../../../../third-64/protobuf \
+  -I../../../../../../../../third-64/protobuf/include \
+  -I../../../../../../../../third-64/protobuf/output \
+  -I../../../../../../../../third-64/protobuf/output/include \
   -I../../../../../../../../third-64/tcmalloc \
   -I../../../../../../../../third-64/tcmalloc/include \
   -I../../../../../../../../third-64/tcmalloc/output \
@@ -170,7 +212,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=5c721149f5c7f33ecb244e3262ff5b87  COMAKE
+COMAKE_MD5=7bd90e7c5e7a3145bbfedadfb4c8df0b  COMAKE
 
 
 .PHONY:all
@@ -246,8 +288,21 @@ get_urate_infos:get_urate_infos_get_urate_infos.o \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libXTrie.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libcommon.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libmatch_index.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libpreprocess.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libstrprocess.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libtrie.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libword_ext.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/output/lib/libdeformation-procs.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
+  ../../../../../../../../com/idlcompiler/cxx/libskeleton.a \
+  ../../../../../../../../com/idlcompiler/java/libjava_skeleton.a \
+  ../../../../../../../../com/idlcompiler/parser/libparser.a \
+  ../../../../../../../../com/idlcompiler/php/libphp_skeleton.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
@@ -268,13 +323,36 @@ get_urate_infos:get_urate_infos_get_urate_infos.o \
   ../../../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../../../op/oped/noah/webfoot/naming-lib/output/lib/libwebfoot_naming.a \
   ../../../../../../../../ps/se/dict-set/libdictset.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_bml.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_containers_utils.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_scripting.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_serializer.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_vscript.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_vs.a \
+  ../../../../../../../../public/bslext/output/lib/libbslext.a \
   ../../../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../../../public/configure/libconfig.a \
   ../../../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../../../public/idlcompiler/output/lib/libmcpack_idl.a \
+  ../../../../../../../../public/mcpack/libmcpack.a \
+  ../../../../../../../../public/nshead/libnshead.a \
   ../../../../../../../../public/odict/libodict.a \
   ../../../../../../../../public/spreg/libspreg.a \
+  ../../../../../../../../public/ub/output/lib/libub.a \
+  ../../../../../../../../public/ub/output/lib/libub_aserver.a \
+  ../../../../../../../../public/ub/output/lib/libub_client.a \
+  ../../../../../../../../public/ub/output/lib/libub_conf.a \
+  ../../../../../../../../public/ub/output/lib/libub_galileo.a \
+  ../../../../../../../../public/ub/output/lib/libub_log.a \
+  ../../../../../../../../public/ub/output/lib/libub_misc.a \
+  ../../../../../../../../public/ub/output/lib/libub_monitor.a \
+  ../../../../../../../../public/ub/output/lib/libub_naming.a \
+  ../../../../../../../../public/ub/output/lib/libub_server.a \
+  ../../../../../../../../public/ub/output/lib/libubex.a \
+  ../../../../../../../../public/ub/output/lib/libubfw.a \
   ../../../../../../../../public/uconv/libuconv.a \
   ../../../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
@@ -317,6 +395,9 @@ get_urate_infos:get_urate_infos_get_urate_infos.o \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotobuf-lite.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotobuf.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotoc.a \
   ../../../../../../../../third-64/tcmalloc/lib/libprofiler.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
@@ -348,8 +429,21 @@ urate_train:urate_train_urate_train.o \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libXTrie.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libcommon.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libmatch_index.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libpreprocess.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libstrprocess.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libtrie.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libword_ext.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/output/lib/libdeformation-procs.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
+  ../../../../../../../../com/idlcompiler/cxx/libskeleton.a \
+  ../../../../../../../../com/idlcompiler/java/libjava_skeleton.a \
+  ../../../../../../../../com/idlcompiler/parser/libparser.a \
+  ../../../../../../../../com/idlcompiler/php/libphp_skeleton.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
@@ -370,13 +464,36 @@ urate_train:urate_train_urate_train.o \
   ../../../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../../../op/oped/noah/webfoot/naming-lib/output/lib/libwebfoot_naming.a \
   ../../../../../../../../ps/se/dict-set/libdictset.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_bml.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_containers_utils.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_scripting.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_serializer.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_vscript.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_vs.a \
+  ../../../../../../../../public/bslext/output/lib/libbslext.a \
   ../../../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../../../public/configure/libconfig.a \
   ../../../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../../../public/idlcompiler/output/lib/libmcpack_idl.a \
+  ../../../../../../../../public/mcpack/libmcpack.a \
+  ../../../../../../../../public/nshead/libnshead.a \
   ../../../../../../../../public/odict/libodict.a \
   ../../../../../../../../public/spreg/libspreg.a \
+  ../../../../../../../../public/ub/output/lib/libub.a \
+  ../../../../../../../../public/ub/output/lib/libub_aserver.a \
+  ../../../../../../../../public/ub/output/lib/libub_client.a \
+  ../../../../../../../../public/ub/output/lib/libub_conf.a \
+  ../../../../../../../../public/ub/output/lib/libub_galileo.a \
+  ../../../../../../../../public/ub/output/lib/libub_log.a \
+  ../../../../../../../../public/ub/output/lib/libub_misc.a \
+  ../../../../../../../../public/ub/output/lib/libub_monitor.a \
+  ../../../../../../../../public/ub/output/lib/libub_naming.a \
+  ../../../../../../../../public/ub/output/lib/libub_server.a \
+  ../../../../../../../../public/ub/output/lib/libubex.a \
+  ../../../../../../../../public/ub/output/lib/libubfw.a \
   ../../../../../../../../public/uconv/libuconv.a \
   ../../../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
@@ -419,6 +536,9 @@ urate_train:urate_train_urate_train.o \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotobuf-lite.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotobuf.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotoc.a \
   ../../../../../../../../third-64/tcmalloc/lib/libprofiler.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
@@ -450,8 +570,21 @@ urate_predicts_from_file:urate_predicts_from_file_urate_predicts_from_file.o \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libXTrie.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libcommon.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libmatch_index.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libpreprocess.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libstrprocess.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libtrie.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libword_ext.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/output/lib/libdeformation-procs.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
+  ../../../../../../../../com/idlcompiler/cxx/libskeleton.a \
+  ../../../../../../../../com/idlcompiler/java/libjava_skeleton.a \
+  ../../../../../../../../com/idlcompiler/parser/libparser.a \
+  ../../../../../../../../com/idlcompiler/php/libphp_skeleton.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
@@ -472,13 +605,36 @@ urate_predicts_from_file:urate_predicts_from_file_urate_predicts_from_file.o \
   ../../../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../../../op/oped/noah/webfoot/naming-lib/output/lib/libwebfoot_naming.a \
   ../../../../../../../../ps/se/dict-set/libdictset.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_bml.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_containers_utils.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_scripting.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_serializer.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_vscript.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_vs.a \
+  ../../../../../../../../public/bslext/output/lib/libbslext.a \
   ../../../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../../../public/configure/libconfig.a \
   ../../../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../../../public/idlcompiler/output/lib/libmcpack_idl.a \
+  ../../../../../../../../public/mcpack/libmcpack.a \
+  ../../../../../../../../public/nshead/libnshead.a \
   ../../../../../../../../public/odict/libodict.a \
   ../../../../../../../../public/spreg/libspreg.a \
+  ../../../../../../../../public/ub/output/lib/libub.a \
+  ../../../../../../../../public/ub/output/lib/libub_aserver.a \
+  ../../../../../../../../public/ub/output/lib/libub_client.a \
+  ../../../../../../../../public/ub/output/lib/libub_conf.a \
+  ../../../../../../../../public/ub/output/lib/libub_galileo.a \
+  ../../../../../../../../public/ub/output/lib/libub_log.a \
+  ../../../../../../../../public/ub/output/lib/libub_misc.a \
+  ../../../../../../../../public/ub/output/lib/libub_monitor.a \
+  ../../../../../../../../public/ub/output/lib/libub_naming.a \
+  ../../../../../../../../public/ub/output/lib/libub_server.a \
+  ../../../../../../../../public/ub/output/lib/libubex.a \
+  ../../../../../../../../public/ub/output/lib/libubfw.a \
   ../../../../../../../../public/uconv/libuconv.a \
   ../../../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
@@ -521,6 +677,9 @@ urate_predicts_from_file:urate_predicts_from_file_urate_predicts_from_file.o \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotobuf-lite.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotobuf.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotoc.a \
   ../../../../../../../../third-64/tcmalloc/lib/libprofiler.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
@@ -552,8 +711,21 @@ urate_reducer:urate_reducer_urate_reducer.o \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libXTrie.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libcommon.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libmatch_index.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libpreprocess.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libstrprocess.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libtrie.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libword_ext.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/output/lib/libdeformation-procs.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
+  ../../../../../../../../com/idlcompiler/cxx/libskeleton.a \
+  ../../../../../../../../com/idlcompiler/java/libjava_skeleton.a \
+  ../../../../../../../../com/idlcompiler/parser/libparser.a \
+  ../../../../../../../../com/idlcompiler/php/libphp_skeleton.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
@@ -574,13 +746,36 @@ urate_reducer:urate_reducer_urate_reducer.o \
   ../../../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../../../op/oped/noah/webfoot/naming-lib/output/lib/libwebfoot_naming.a \
   ../../../../../../../../ps/se/dict-set/libdictset.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_bml.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_containers_utils.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_scripting.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_serializer.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_vscript.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_vs.a \
+  ../../../../../../../../public/bslext/output/lib/libbslext.a \
   ../../../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../../../public/configure/libconfig.a \
   ../../../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../../../public/idlcompiler/output/lib/libmcpack_idl.a \
+  ../../../../../../../../public/mcpack/libmcpack.a \
+  ../../../../../../../../public/nshead/libnshead.a \
   ../../../../../../../../public/odict/libodict.a \
   ../../../../../../../../public/spreg/libspreg.a \
+  ../../../../../../../../public/ub/output/lib/libub.a \
+  ../../../../../../../../public/ub/output/lib/libub_aserver.a \
+  ../../../../../../../../public/ub/output/lib/libub_client.a \
+  ../../../../../../../../public/ub/output/lib/libub_conf.a \
+  ../../../../../../../../public/ub/output/lib/libub_galileo.a \
+  ../../../../../../../../public/ub/output/lib/libub_log.a \
+  ../../../../../../../../public/ub/output/lib/libub_misc.a \
+  ../../../../../../../../public/ub/output/lib/libub_monitor.a \
+  ../../../../../../../../public/ub/output/lib/libub_naming.a \
+  ../../../../../../../../public/ub/output/lib/libub_server.a \
+  ../../../../../../../../public/ub/output/lib/libubex.a \
+  ../../../../../../../../public/ub/output/lib/libubfw.a \
   ../../../../../../../../public/uconv/libuconv.a \
   ../../../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
@@ -623,6 +818,9 @@ urate_reducer:urate_reducer_urate_reducer.o \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotobuf-lite.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotobuf.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotoc.a \
   ../../../../../../../../third-64/tcmalloc/lib/libprofiler.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
@@ -654,8 +852,21 @@ img_reducer:img_reducer_img_reducer.o \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libXTrie.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libcommon.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libmatch_index.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libpreprocess.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libstrprocess.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libtrie.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libword_ext.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/output/lib/libdeformation-procs.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
+  ../../../../../../../../com/idlcompiler/cxx/libskeleton.a \
+  ../../../../../../../../com/idlcompiler/java/libjava_skeleton.a \
+  ../../../../../../../../com/idlcompiler/parser/libparser.a \
+  ../../../../../../../../com/idlcompiler/php/libphp_skeleton.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
@@ -676,13 +887,36 @@ img_reducer:img_reducer_img_reducer.o \
   ../../../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../../../op/oped/noah/webfoot/naming-lib/output/lib/libwebfoot_naming.a \
   ../../../../../../../../ps/se/dict-set/libdictset.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_bml.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_containers_utils.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_scripting.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_serializer.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_vscript.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_vs.a \
+  ../../../../../../../../public/bslext/output/lib/libbslext.a \
   ../../../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../../../public/configure/libconfig.a \
   ../../../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../../../public/idlcompiler/output/lib/libmcpack_idl.a \
+  ../../../../../../../../public/mcpack/libmcpack.a \
+  ../../../../../../../../public/nshead/libnshead.a \
   ../../../../../../../../public/odict/libodict.a \
   ../../../../../../../../public/spreg/libspreg.a \
+  ../../../../../../../../public/ub/output/lib/libub.a \
+  ../../../../../../../../public/ub/output/lib/libub_aserver.a \
+  ../../../../../../../../public/ub/output/lib/libub_client.a \
+  ../../../../../../../../public/ub/output/lib/libub_conf.a \
+  ../../../../../../../../public/ub/output/lib/libub_galileo.a \
+  ../../../../../../../../public/ub/output/lib/libub_log.a \
+  ../../../../../../../../public/ub/output/lib/libub_misc.a \
+  ../../../../../../../../public/ub/output/lib/libub_monitor.a \
+  ../../../../../../../../public/ub/output/lib/libub_naming.a \
+  ../../../../../../../../public/ub/output/lib/libub_server.a \
+  ../../../../../../../../public/ub/output/lib/libubex.a \
+  ../../../../../../../../public/ub/output/lib/libubfw.a \
   ../../../../../../../../public/uconv/libuconv.a \
   ../../../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
@@ -725,6 +959,9 @@ img_reducer:img_reducer_img_reducer.o \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotobuf-lite.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotobuf.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotoc.a \
   ../../../../../../../../third-64/tcmalloc/lib/libprofiler.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
@@ -756,8 +993,21 @@ lou_reducer:lou_reducer_lou_reducer.o \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libXTrie.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libcommon.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libmatch_index.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libpreprocess.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libstrprocess.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libtrie.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libword_ext.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/output/lib/libdeformation-procs.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
+  ../../../../../../../../com/idlcompiler/cxx/libskeleton.a \
+  ../../../../../../../../com/idlcompiler/java/libjava_skeleton.a \
+  ../../../../../../../../com/idlcompiler/parser/libparser.a \
+  ../../../../../../../../com/idlcompiler/php/libphp_skeleton.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
@@ -778,13 +1028,36 @@ lou_reducer:lou_reducer_lou_reducer.o \
   ../../../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../../../op/oped/noah/webfoot/naming-lib/output/lib/libwebfoot_naming.a \
   ../../../../../../../../ps/se/dict-set/libdictset.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_bml.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_containers_utils.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_scripting.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_serializer.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_vscript.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_vs.a \
+  ../../../../../../../../public/bslext/output/lib/libbslext.a \
   ../../../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../../../public/configure/libconfig.a \
   ../../../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../../../public/idlcompiler/output/lib/libmcpack_idl.a \
+  ../../../../../../../../public/mcpack/libmcpack.a \
+  ../../../../../../../../public/nshead/libnshead.a \
   ../../../../../../../../public/odict/libodict.a \
   ../../../../../../../../public/spreg/libspreg.a \
+  ../../../../../../../../public/ub/output/lib/libub.a \
+  ../../../../../../../../public/ub/output/lib/libub_aserver.a \
+  ../../../../../../../../public/ub/output/lib/libub_client.a \
+  ../../../../../../../../public/ub/output/lib/libub_conf.a \
+  ../../../../../../../../public/ub/output/lib/libub_galileo.a \
+  ../../../../../../../../public/ub/output/lib/libub_log.a \
+  ../../../../../../../../public/ub/output/lib/libub_misc.a \
+  ../../../../../../../../public/ub/output/lib/libub_monitor.a \
+  ../../../../../../../../public/ub/output/lib/libub_naming.a \
+  ../../../../../../../../public/ub/output/lib/libub_server.a \
+  ../../../../../../../../public/ub/output/lib/libubex.a \
+  ../../../../../../../../public/ub/output/lib/libubfw.a \
   ../../../../../../../../public/uconv/libuconv.a \
   ../../../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
@@ -827,6 +1100,9 @@ lou_reducer:lou_reducer_lou_reducer.o \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotobuf-lite.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotobuf.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotoc.a \
   ../../../../../../../../third-64/tcmalloc/lib/libprofiler.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \
@@ -858,8 +1134,21 @@ test_langmodel:test_langmodel_test_langmodel.o \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libXTrie.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libcommon.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libmatch_index.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libpreprocess.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libstrprocess.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libtrie.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libword_ext.a \
+  ../../../../../../../../app/search/sep/mining/deformation-text/output/lib/libdeformation-procs.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
+  ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
+  ../../../../../../../../com/idlcompiler/cxx/libskeleton.a \
+  ../../../../../../../../com/idlcompiler/java/libjava_skeleton.a \
+  ../../../../../../../../com/idlcompiler/parser/libparser.a \
+  ../../../../../../../../com/idlcompiler/php/libphp_skeleton.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
   ../../../../../../../../lib2-64/bsl/lib/libbsl_archive.a \
@@ -880,13 +1169,36 @@ test_langmodel:test_langmodel_test_langmodel.o \
   ../../../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../../../lib2-64/ullib/lib/libullib.a \
   ../../../../../../../../lib2-64/wordseg/libsegment.a \
+  ../../../../../../../../op/oped/noah/webfoot/naming-lib/output/lib/libwebfoot_naming.a \
   ../../../../../../../../ps/se/dict-set/libdictset.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_bml.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_containers_utils.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_scripting.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_serializer.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_var_vscript.a \
+  ../../../../../../../../public/bslext/output/lib/libbsl_vs.a \
+  ../../../../../../../../public/bslext/output/lib/libbslext.a \
   ../../../../../../../../public/comlog-plugin/libcomlog.a \
   ../../../../../../../../public/comlog-plugin/output/lib/libdfsappender.a \
   ../../../../../../../../public/configure/libconfig.a \
   ../../../../../../../../public/connectpool/libconnectpool.a \
+  ../../../../../../../../public/idlcompiler/output/lib/libmcpack_idl.a \
+  ../../../../../../../../public/mcpack/libmcpack.a \
+  ../../../../../../../../public/nshead/libnshead.a \
   ../../../../../../../../public/odict/libodict.a \
   ../../../../../../../../public/spreg/libspreg.a \
+  ../../../../../../../../public/ub/output/lib/libub.a \
+  ../../../../../../../../public/ub/output/lib/libub_aserver.a \
+  ../../../../../../../../public/ub/output/lib/libub_client.a \
+  ../../../../../../../../public/ub/output/lib/libub_conf.a \
+  ../../../../../../../../public/ub/output/lib/libub_galileo.a \
+  ../../../../../../../../public/ub/output/lib/libub_log.a \
+  ../../../../../../../../public/ub/output/lib/libub_misc.a \
+  ../../../../../../../../public/ub/output/lib/libub_monitor.a \
+  ../../../../../../../../public/ub/output/lib/libub_naming.a \
+  ../../../../../../../../public/ub/output/lib/libub_server.a \
+  ../../../../../../../../public/ub/output/lib/libubex.a \
+  ../../../../../../../../public/ub/output/lib/libubfw.a \
   ../../../../../../../../public/uconv/libuconv.a \
   ../../../../../../../../public/urlparser/libnewurl.a \
   ../../../../../../../../quality/autotest/reportlib/cpp/libautotest.a \
@@ -929,6 +1241,9 @@ test_langmodel:test_langmodel_test_langmodel.o \
   ../../../../../../../../third-64/pcre/lib/libpcre.a \
   ../../../../../../../../third-64/pcre/lib/libpcrecpp.a \
   ../../../../../../../../third-64/pcre/lib/libpcreposix.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotobuf-lite.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotobuf.a \
+  ../../../../../../../../third-64/protobuf/lib/libprotoc.a \
   ../../../../../../../../third-64/tcmalloc/lib/libprofiler.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc.a \
   ../../../../../../../../third-64/tcmalloc/lib/libtcmalloc_and_profiler.a \

@@ -562,6 +562,7 @@
     <ClInclude Include="include\tieba\feature\UnusalCnExtractor.h" />
     <ClInclude Include="include\tieba\feature\UrateExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\ContentSimExtractor.h" />
+    <ClInclude Include="include\tieba\feature\urate\DeformExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\DictMatchExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\ForumExtractor.h" />
     <ClInclude Include="include\tieba\feature\urate\ImgExtrator.h" />
@@ -684,6 +685,7 @@
     <ClCompile Include="src\SharedSegmentor.cpp" />
     <ClCompile Include="src\word_seg.cpp" />
     <ClCompile Include="test\cereal\test_cereal.cc" />
+    <ClCompile Include="test\deformation\test_deformation.cc" />
     <ClCompile Include="test\ds\benchmark_trie.cc" />
     <ClCompile Include="test\ds\test_determin_skip_list.cc" />
     <ClCompile Include="test\ds\test_rstree.cc" />

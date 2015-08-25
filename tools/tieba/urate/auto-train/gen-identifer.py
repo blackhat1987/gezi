@@ -21,7 +21,7 @@ from trate_conf import *
 
 def calc(l):
 	vec = svec()
-	li = get_words(l, ngram)
+	li = get_words(l, ngram, sep)
 	get_skip_bigram(l, li, skip, sep)
 	for item in li:
 		vec.append(item)

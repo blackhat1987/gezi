@@ -364,6 +364,29 @@ namespace gezi {
 		return num;
 	}
 
+	inline vector<int> unicode_index(string input)
+	{
+		vector<int> results;
+		results.push_back(0);
+		for (size_t i = 0; i < input.size(); i++)
+		{
+			if (input[i] < 0)
+			{
+				results.push_back(2);
+				i++;
+			}
+			else
+			{
+				results.push_back(1);
+			}
+		}
+		for (size_t i = 1; i < results.size(); i++)
+		{
+			results[i] += results[i - 1];
+		}
+		return results;
+	}
+
 	inline string remove_dupspace(string input)
 	{
 		if (input.size() == 0)

@@ -49,6 +49,7 @@ include_paths_obsolute = [
           #'app/search/sep/anti-spam/melt/python-wrapper/gezi.include.python',
         	'lib2-64/wordseg', 
         	'public/comlog-plugin',
+					'app/search/sep/anti-spam/gezi/third',
         ]
 
 mb = module_builder.module_builder_t(

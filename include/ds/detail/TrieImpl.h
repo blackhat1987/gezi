@@ -10,7 +10,9 @@
  *  \Description:  模仿std::map std::set接口 但是当前并不提供iterator支持
  *                 另外与map的区别是find返回的iterator 只是mapped的指针，因为内部key,mapped分开存储 没有类似vector<pair<key,mapped> >这样的存储
  *                 trie树的主要功能是前缀查询,特别是查询中间状态的支持
- *                 @TODO 针对中文短串的特定优化 比如第一层hash是否可以直接o(1)索引
+ *                 具体使用的时候参考test_trie.cc  Trie<string, int> 一般意义的支持任意mapped_type的的Trie, TrieSet<string> 一般意义的TrieSet
+ *                 TrieDict<string> mapped_type是int 同时index就是表示存储的value,类似 Identifer 适用于Key Id的存储
+ *                 相比Trie占用更少内存，但是如果mapped_type是占用更大内存uint64等等，由于内部节点较多可能占用更多内存
  *  ==============================================================================
  */
 
@@ -24,7 +26,11 @@
 
 namespace gezi {
 #ifdef GEZI_DATA_TRUE_INDICATOR
+#ifndef GEZI_TRIE_INDEX_IS_VALUE
 #define GEZI_TRIE_NAME Trie
+#else 
+#define  GEZI_TRIE_NAME TrieDict_
+#endif 
 #endif
 
 #ifdef GEZI_DATA_FALSE_INDICATOR
@@ -44,7 +50,11 @@ namespace gezi {
 		typedef typename key_mapped_traits<Key, Mapped>::const_iterator const_iterator;
 
 		typedef typename key_type::value_type char_type;
+#ifndef GEZI_TRIE_INDEX_IS_VALUE
 		typedef typename key_mapped_traits<Key, Mapped>::index_type index_type;
+#else 
+		typedef mapped_type index_type;
+#endif
 		typedef size_t size_type;
 
 
@@ -58,13 +68,11 @@ namespace gezi {
 		//而为了使用unique ptr方便 这里使用Node 而不是指针 否则不太方便，访问也复杂一些
 		typedef _Map<char_type, Node > Map;
 		typedef unique_ptr<Map> MapPtr;
-		//@TODO 先对比下空map和指针大小区别
-		//check一下 Map* next的写法 
 
 		enum
 		{
 #ifdef GEZI_DATA_TRUE_INDICATOR
-			null_index = -1,
+			null_index = -1,  //@TODO uint32怎么定义null?
 #else
 			null_index = 0,
 #endif
@@ -87,16 +95,19 @@ namespace gezi {
 			}
 		};
 
-
-
 		pair<iterator, bool> insert(const value_type& value)
 		{
 			Node* pnode = insert_key(GEZI_V2F(value));
 			bool isNewKey = (pnode->index == null_index);
 #ifdef  GEZI_DATA_TRUE_INDICATOR
+#ifndef GEZI_TRIE_INDEX_IS_VALUE
 			pnode->index = (index_type)_mappedVec.size();
 			_mappedVec.push_back(GEZI_V2S(value));
 			return make_pair(&_mappedVec[pnode->index], isNewKey);
+#else 
+			pnode->index = GEZI_V2F(value); //@TODO pnode->id = value ?
+			return make_pair(&pnode->index, isNewKey);
+#endif
 #else
 			pnode->index = true;
 			return make_pair<void*, bool>((void*)NULL, (bool)isNewKey); //@TODO why need... bool again
@@ -115,11 +126,20 @@ namespace gezi {
 			Node* pnode = insert_key(key);
 			if (pnode->index == null_index)
 			{
+#ifndef GEZI_TRIE_INDEX_IS_VALUE
 				pnode->index = (index_type)_mappedVec.size();
 				_mappedVec.push_back(mapped);
 				return make_pair(&_mappedVec[pnode->index], true);
+#else 
+				pnode->index = mapped;
+				return make_pair(&pnode->index, true);
+#endif
 			}
+#ifndef GEZI_TRIE_INDEX_IS_VALUE
 			return make_pair(&_mappedVec[pnode->index], false);
+#else 
+			return make_pair(&pnode->index, false);
+#endif
 		}
 
 		pair<iterator, bool> insert(const key_type& key, mapped_type&& mapped)
@@ -127,11 +147,20 @@ namespace gezi {
 			Node* pnode = insert_key(key);
 			if (pnode->index == null_index)
 			{
+#ifndef GEZI_TRIE_INDEX_IS_VALUE
 				pnode->index = (index_type)_mappedVec.size();
 				_mappedVec.emplace_back(mapped);
 				return make_pair(&_mappedVec[pnode->index], true);
+#else 
+				pnode->index = mapped;
+				return make_pair(&pnode->index, true);
+#endif
 			}
+#ifndef GEZI_TRIE_INDEX_IS_VALUE
 			return make_pair(&_mappedVec[pnode->index], false);
+#else 
+			return make_pair(&pnode->index, false);
+#endif
 		}
 
 		mapped_type& operator[](const key_type& key)
@@ -139,13 +168,21 @@ namespace gezi {
 			Node* pnode = insert_key(key);
 			if (pnode->index == null_index)
 			{
+#ifndef GEZI_TRIE_INDEX_IS_VALUE
 				pnode->index = (index_type)_mappedVec.size();
 				_mappedVec.push_back(mapped_type());
 				return _mappedVec.back();
+#else 
+				return pnode->index;
+#endif
 			}
 			else
 			{
+#ifndef GEZI_TRIE_INDEX_IS_VALUE
 				return _mappedVec[pnode->index];
+#else 
+				return pnode->index;
+#endif
 			}
 		}
 #endif
@@ -254,7 +291,7 @@ namespace gezi {
 		}
 
 		/////@TODO
-		static const Node* find(const Node* pnode, const key_type& key) 
+		static const Node* find(const Node* pnode, const key_type& key)
 		{
 			for (auto& ch : key)
 			{
@@ -264,8 +301,8 @@ namespace gezi {
 				}
 				else
 				{
-					Map& m = *pnode->next;
-					auto iter = m.find(ch);
+					const Map& m = *pnode->next;
+					const auto iter = m.find(ch);
 					if (iter == m.end())
 					{
 						return NULL;
@@ -305,7 +342,10 @@ namespace gezi {
 			if (pnode->index != null_index)
 			{
 #ifdef GEZI_DATA_TRUE_INDICATOR
+#ifndef GEZI_TRIE_INDEX_IS_VALUE
 				return &_mappedVec[pnode->index];
+#endif
+				return &pnode->index;
 #else 
 				return (void*)1;
 #endif
@@ -328,7 +368,7 @@ namespace gezi {
 				else
 				{
 					const Map& m = *pnode->next;
-					auto iter = m.find(ch);
+					const auto iter = m.find(ch);
 					if (iter == m.end())
 					{
 						return NULL;
@@ -340,7 +380,11 @@ namespace gezi {
 			if (pnode->index != null_index)
 			{
 #ifdef GEZI_DATA_TRUE_INDICATOR
+#ifndef GEZI_TRIE_INDEX_IS_VALUE
 				return &_mappedVec[pnode->index];
+#else
+				return &pnode->index;
+#endif
 #else 
 				return (void*)1;
 #endif
@@ -442,7 +486,9 @@ namespace gezi {
 	private:
 		Node _root;
 #ifdef GEZI_DATA_TRUE_INDICATOR
+#ifndef GEZI_TRIE_INDEX_IS_VALUE
 		vector<mapped_type> _mappedVec;
+#endif
 #endif
 
 		friend class boost::serialization::access;
@@ -451,16 +497,26 @@ namespace gezi {
 		{
 			ar & _root;
 #ifdef GEZI_DATA_TRUE_INDICATOR
+#ifndef GEZI_TRIE_INDEX_IS_VALUE
 			ar & _mappedVec;
+#endif
 #endif
 		}
 	};
 
 #ifdef GEZI_DATA_FALSE_INDICATOR
 	template <typename Key,
-		typename Mapped = null_type,
 		template<class _Kty, class _Ty, typename...> class _Map = std::unordered_map>
-	using TrieSet = TrieSet_ < Key, Mapped, _Map > ;
+	using TrieSet = TrieSet_ < Key, null_type, _Map > ;
+#endif
+
+#ifdef GEZI_DATA_TRUE_INDICATOR
+#ifdef GEZI_TRIE_INDEX_IS_VALUE 
+	template <typename Key,
+		typename Mapped = int,
+		template<class _Kty, class _Ty, typename...> class _Map = std::unordered_map>
+	using TrieDict = TrieDict_ < Key, Mapped, _Map > ;
+#endif
 #endif
 
 }  //----end of namespace gezi

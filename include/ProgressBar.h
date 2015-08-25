@@ -97,7 +97,7 @@ namespace gezi {
 			size_t bar_length = static_cast<int> (1.0 * (current) * Size / total);
 			if (VLOG_IS_ON(_level) && _prev_progress != progress)
 			{
-				std::cerr << _log_word << " [ " << current + 1 << " ] (" << _timer.elapsed() << " s)" << std::setw(3) << progress << '%'
+				std::cerr << _log_word << " [ " << current << " ] (" << _timer.elapsed() << " s)" << std::setw(3) << progress << '%'
 					<< " |";
 				std::cerr.write(&Bar[0], bar_length);
 				std::cerr.write(&Space[0], Size - bar_length);

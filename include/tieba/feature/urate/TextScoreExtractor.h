@@ -189,7 +189,7 @@ namespace gezi {
 
 			DoubleIdentifer& GetIdentifer(int offset)
 			{
-				return SharedDoubleIdentifers::Instance(_identiferPath[offset]);
+				return *SharedDoubleIdentifers::Instance(_identiferPath[offset]);
 			}
 
 		private:

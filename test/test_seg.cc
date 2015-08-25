@@ -158,14 +158,25 @@ TEST(segmentor_instance, func)
 	//Tester tester;
 }
 
-TEST(segmentor_thread_local, func)
+//TEST(segmentor_thread_local, func)
+//{
+//	Segmentor::Init();
+//	Pval(Segmentor::Segment("我爱你中国扣扣是速去美女激晴吧", "|", SCW_OUT_WPCOMP));
+//	Pval(Segmentor::Segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
+//	Segmentor::Uninit();
+//}
+
+
+TEST(segmentor_postag, func)
 {
+	Segmentor::SetStrategy(SEG_USE_POSTAG);
 	Segmentor::Init();
 	Pval(Segmentor::Segment("我爱你中国扣扣是速去美女激晴吧", "|", SCW_OUT_WPCOMP));
+	print_seg_posttag_result(Segmentor::handle());
 	Pval(Segmentor::Segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
+	print_seg_posttag_result(Segmentor::handle());
 	Segmentor::Uninit();
 }
-
 int main(int argc, char *argv[])
 {
 	testing::InitGoogleTest(&argc, argv);

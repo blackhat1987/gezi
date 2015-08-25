@@ -31,7 +31,7 @@ namespace gezi
 		int _max_tree_size; //树的大小限制
 		double _max_jump; //贴吧重复串 特殊处理
 
-		Rstree(const wstring& end_mark = L"\n", int min_substr_len = 8, 
+		Rstree(const wstring& end_mark = L"\n", int min_substr_len = 8,
 			int max_substr_len = 40, int min_frequency = 15, int max_tree_size = 300000)
 			: SuffixTree(end_mark)
 		{
@@ -161,7 +161,7 @@ namespace gezi
 			find_all_substrs(_root, result_vec);
 			return result_vec;
 		}
-	
+
 		struct SubstrNode
 		{
 			wstring substr;
@@ -169,7 +169,7 @@ namespace gezi
 			set<int> tids;
 
 #ifdef PYTHON_WRAPPER
-			SubstrNode() 
+			SubstrNode()
 			{
 			}
 			//不然的话vector 不能iterate
@@ -188,7 +188,7 @@ namespace gezi
 		vector<SubstrNode> find_all()
 		{
 			vector<SubstrNode> result_vec;
-			find_all_substrs(_root, result_vec);
+			find_all(_root, result_vec);
 			return result_vec;
 		}
 
@@ -253,7 +253,7 @@ namespace gezi
 			}
 		}
 
-		bool is_node_ok(const Node* node, bool& need_up)
+		bool is_node_up_ok(const Node* node, bool& need_up)
 		{
 			if (node->next == NULL)
 			{
@@ -285,12 +285,14 @@ namespace gezi
 		}
 
 		//@TODO 当前频次符合要求 但是长度过长的 需要substr吗
-		bool is_node_down_ok(const Node* node, bool& need_down)
+		bool is_node_ok(const Node* node, bool& need_down)
 		{
+
 			if (node->next == NULL)
 			{
 				if (node->freq <= _min_frequency)
 				{
+
 					need_down = false;
 				}
 
@@ -309,6 +311,7 @@ namespace gezi
 				{
 					need_down = false;
 				}
+
 				return node->freq >= _min_frequency
 					&& node->length >= _min_substr_len
 					&& node->length <= _max_substr_len;
@@ -375,21 +378,6 @@ namespace gezi
 			}
 		}
 
-		inline wstring get_str(const Node* node)
-		{
-			wstring& text = _texts[node->text_id - _oldest_text_id];
-			if (node->next == NULL)
-			{
-				return text.substr(node->end - node->length,
-					node->length - 1);
-			}
-			else
-			{
-				return text.substr(node->end - node->length,
-					node->length);
-			}
-		}
-
 		//rstree 针对贴吧重复串特殊处理的。。
 		inline Node* get_node(Node* node)
 		{
@@ -415,11 +403,12 @@ namespace gezi
 			}
 
 			bool need_down = true; //must be true
-			if (is_node_down_ok(node, need_down))
+			if (is_node_ok(node, need_down))
 			{
 				result_vec.emplace_back(get_str(node), node->freq);
 			}
-			else if (!need_down || !node->next)
+			
+			if (!need_down || !node->next)
 			{
 				return;
 			}
@@ -432,30 +421,7 @@ namespace gezi
 			}
 		}
 
-		set<int> get_text_ids(Node* node)
-		{
-			set<int> tids;
-			get_text_ids(node, tids);
-			return tids;
-		}
-
-
-		void get_text_ids(Node* node, set<int>& tids)
-		{
-			using namespace std;
-			if (node->next == NULL)
-			{
-				tids.insert(node->text_id - _oldest_text_id);
-				return;
-			}
-			for (NIter iter = node->next->begin(); iter != node->next->end(); ++iter)
-			{
-				get_text_ids(iter->second, tids);
-			}
-		}
-
-
-		void find_all_substrs(Node* node, vector<SubstrNode>& result_vec)
+		void find_all(Node* node, vector<SubstrNode>& result_vec)
 		{
 			if (!node)
 			{
@@ -463,12 +429,13 @@ namespace gezi
 			}
 
 			bool need_down = true; //must be true
-			if (is_node_down_ok(node, need_down))
+			if (is_node_ok(node, need_down))
 			{
 				set<int> tids = get_text_ids(node);
 				result_vec.emplace_back(get_str(node), node->freq, move(tids));
 			}
-			else if (!need_down || !node->next)
+			
+			if (!need_down || !node->next)
 			{
 				return;
 			}
@@ -476,7 +443,7 @@ namespace gezi
 			{
 				for (NIter iter = node->next->begin(); iter != node->next->end(); ++iter)
 				{
-					find_all_substrs(iter->second, result_vec);
+					find_all(iter->second, result_vec);
 				}
 			}
 		}
@@ -557,7 +524,7 @@ namespace gezi
 			int idx = _current_text_id - _oldest_text_id;
 			find_substrs(idx, result_vec, pos_types);
 		}
-		
+
 		void find_substrs(int idx, vector<Pair>& result_vec, const vector<int>* pos_types)
 		{
 			Node* leaf_node;
@@ -572,7 +539,7 @@ namespace gezi
 				{
 					if (internal_nodes.find(node) == internal_nodes.end())
 					{
-						if (is_node_ok(node, need_up))
+						if (is_node_up_ok(node, need_up))
 						{
 							internal_nodes[node] = true;
 							internal_nodes[node->suffix_link] = false;

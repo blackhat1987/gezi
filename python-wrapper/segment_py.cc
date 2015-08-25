@@ -64,6 +64,14 @@ DEF_VEC(ulvec);
 DEF_MAP(id_map);
 DEF_MAP(sd_map);
 DEF_MAP(si_map);
+DEF_MAP(ss_map);
+DEF_PAIR(si_pair);
+DEF_PAIR(wsi_pair);
+DEF_VEC(si_pair_vec);
+DEF_VEC(wsi_pair_vec);
+DEF_SET(iset);
+DEF_SET(lset);
+DEF_SET(ulset);
 
 { //::std::vector< token_t >
 typedef bp::class_< std::vector< token_t > > vector_less__token_t__greater__exposer_t;
@@ -144,16 +152,6 @@ Segmentor_exposer.def(
 , ( bp::arg("seg_buff_size")=(int)(gezi::SegHandle::SEG_BUFF_SIZE), bp::arg("data_dir")="./data/wordseg", bp::arg("type")=(int)(gezi::SEG_USE_DEFAULT), bp::arg("conf_path")="./conf/scw.conf" ) );
 
 }
-{ //::gezi::Segmentor::SegFlag
-
-typedef void ( *SegFlag_function_type )( int );
-
-Segmentor_exposer.def(
-"SegFlag"
-, SegFlag_function_type( &::gezi::Segmentor::SegFlag )
-, ( bp::arg("flag_") ) );
-
-}
 { //::gezi::Segmentor::Segment
 
 typedef ::std::vector< std::string > ( *Segment_function_type )( ::std::string,int );
@@ -202,6 +200,26 @@ Segmentor_exposer.def(
 "Segment_"
 , Segment__function_type( &::gezi::Segmentor::Segment_ )
 , ( bp::arg("input"), bp::arg("type")=(int)(gezi::SEG_WPCOMP) ) );
+
+}
+{ //::gezi::Segmentor::SetFlag
+
+typedef void ( *SetFlag_function_type )( int );
+
+Segmentor_exposer.def(
+"SetFlag"
+, SetFlag_function_type( &::gezi::Segmentor::SetFlag )
+, ( bp::arg("flag_") ) );
+
+}
+{ //::gezi::Segmentor::SetStrategy
+
+typedef void ( *SetStrategy_function_type )( int );
+
+Segmentor_exposer.def(
+"SetStrategy"
+, SetStrategy_function_type( &::gezi::Segmentor::SetStrategy )
+, ( bp::arg("strategy_") ) );
 
 }
 { //::gezi::Segmentor::Uninit
@@ -373,9 +391,10 @@ Segmentor_exposer.def(
 
 }
 Segmentor_exposer.staticmethod( "Init" );
-Segmentor_exposer.staticmethod( "SegFlag" );
 Segmentor_exposer.staticmethod( "Segment" );
 Segmentor_exposer.staticmethod( "Segment_" );
+Segmentor_exposer.staticmethod( "SetFlag" );
+Segmentor_exposer.staticmethod( "SetStrategy" );
 Segmentor_exposer.staticmethod( "Uninit" );
 Segmentor_exposer.staticmethod( "get_segnodes" );
 Segmentor_exposer.staticmethod( "get_tokens" );
@@ -383,6 +402,37 @@ Segmentor_exposer.staticmethod( "init" );
 Segmentor_exposer.staticmethod( "seg_words" );
 Segmentor_exposer.staticmethod( "segment" );
 Segmentor_exposer.staticmethod( "uninit" );
+}
+
+{ //::gezi::print_seg_posttag_result
+
+typedef void ( *print_seg_posttag_result_function_type )(  );
+
+bp::def(
+"print_seg_posttag_result"
+, print_seg_posttag_result_function_type( &::gezi::print_seg_posttag_result ) );
+
+}
+
+{ //::gezi::print_seg_posttag_result
+
+typedef void ( *print_seg_posttag_result_function_type )( ::gezi::SegHandle const & );
+
+bp::def(
+"print_seg_posttag_result"
+, print_seg_posttag_result_function_type( &::gezi::print_seg_posttag_result )
+, ( bp::arg("handle") ) );
+
+}
+
+{ //::gezi::print_seg_result
+
+typedef void ( *print_seg_result_function_type )(  );
+
+bp::def(
+"print_seg_result"
+, print_seg_result_function_type( &::gezi::print_seg_result ) );
+
 }
 
 { //::gezi::print_seg_result

@@ -21,7 +21,7 @@ namespace gezi
 {
 
 	//-----------------------------------wstring convert
-#ifndef GEZI_UTF8_AS_DEFAULT_ENCODING
+#ifdef GEZI_UTF8_AS_DEFAULT_ENCODING
 	inline void setlocale()
 	{
 		std::locale::global(std::locale("zh_CN.UTF-8"));

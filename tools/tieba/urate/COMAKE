@@ -68,11 +68,13 @@ LDFLAGS('-lpthread -lrt -ldl -lldap -lcurl -rdynamic -lssl -lcrypto', GCC_LDFLAG
 #依赖模块
 ImportConfigsFrom('../../../')
 CONFIGS('app/search/sep/anti-spam/melt@trunk')
+CONFIGS('app/search/sep/mining/deformation-text@trunk')
 #CONFIGS('st/nlp/lm-score@lm-score_1-0-3-1_PD_BL')
 CONFIGS('st/nlp/lm-score')
 CONFIGS('third-64/zlib')
+CONFIGS('public/ub')
 #头文件路径.
-INCPATHS('. ./include ./utils ./output ./output/include ./include/feature ./include/model ./include/numeric'.replace('./',RELATIVE_PATH) + ' ./include/')
+INCPATHS('. ./include ./utils ./output ./output/include ./include/feature ./include/model ./include/numeric ./third/folly ./third/double-conversion '.replace('./',RELATIVE_PATH) + './include/')
 #srcs=GLOB('./src/*.cpp ./src/feature/*.cpp ./src/model/*.cpp ./src/json/*.cpp'.replace('./',RELATIVE_PATH))
 headers=''
 #使用库

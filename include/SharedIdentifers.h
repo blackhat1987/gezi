@@ -65,9 +65,9 @@ namespace gezi {
 	class SharedValueIdentifers
 	{
 	public:
-		static ValueIdentifer<T>& Instance(string path)
+		static shared_ptr<ValueIdentifer<T> >& Instance(string path)
 		{
-			static map<string, ValueIdentifer<T> > _identifers;
+			static map<string, shared_ptr<ValueIdentifer<T> > > _identifers;
 			auto iter = _identifers.find(path);
 			if (iter != _identifers.end())
 			{
@@ -75,24 +75,10 @@ namespace gezi {
 			}
 			else
 			{
+				_identifers[path] = make_shared<ValueIdentifer<T> >();
 				auto& identifer = _identifers[path];
-				identifer.Load(path);
+				identifer->Load(path);
 				return identifer;
-			}
-		}
-
-		static ValueIdentifer<T>& instance(string path)
-		{
-			static map<string, ValueIdentifer<T> > _identifers;
-			auto iter = _identifers.find(path);
-			if (iter != _identifers.end())
-			{
-				return iter->second;
-			}
-			else
-			{
-				auto& identifer = _identifers[path];
-				identifer.load(path);
 			}
 		}
 	};

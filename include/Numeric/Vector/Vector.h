@@ -7,7 +7,7 @@
  *
  *          \date   2014-03-26 10:46:03.965585
  *
- *  \Description:  特征的核心表示
+ *  \Description:  melt中特征的核心表示,同时支持稀疏和稠密表示
  *								 支持读写，dense and sparse
  可以增加支持binary 比如value为空表示binary @TODO
  *   @TODO 是否需要 int length , index 改为int64
