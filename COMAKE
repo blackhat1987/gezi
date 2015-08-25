@@ -102,7 +102,7 @@ srcs = GLOB('./third/cppformat/*.cc'.replace('./', RELATIVE_PATH))
 StaticLibrary('gezi_cppformat',Sources(srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')),HeaderFiles(headers))
 
 #头文件路径.
-INCPATHS('. ./include ./third/folly ./utils ./output ./output/include ./include/feature ./include/numeric ./melt/include/ ./include/serialization/'.replace('./',RELATIVE_PATH))
+INCPATHS('. ./include ./third/folly ./third/double-conversion/ ./utils ./output ./output/include ./include/feature ./include/numeric ./melt/include/ ./include/serialization/'.replace('./',RELATIVE_PATH))
 #srcs=GLOB('./src/*.cpp ./src/feature/*.cpp ./src/model/*.cpp ./src/seralization/shared_ptr_helper.cpp'.replace('./',RELATIVE_PATH))
 #srcs=GLOB('./src/*.cpp ./src/feature/*.cpp ./src/model/*.cpp'.replace('./',RELATIVE_PATH))
 srcs=GLOB('./src/*.cpp'.replace('./',RELATIVE_PATH))

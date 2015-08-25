@@ -40,6 +40,7 @@ INCPATH=-I./include/cppformat/ \
   -I. \
   -I./include \
   -I./third/folly \
+  -I./third/double-conversion/ \
   -I./utils \
   -I./output \
   -I./output/include \
@@ -146,7 +147,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=ee9cba9d89dd48dd2f727c51c04e1c6f  COMAKE
+COMAKE_MD5=1129b7762279cd7e72fb8f20400b5727  COMAKE
 
 
 .PHONY:all
