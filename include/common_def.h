@@ -113,6 +113,14 @@ using std::sort;
 
 //-------------folly related
 //#ifdef GEZI_USE_FOLLY
+#ifndef GEZI_NO_FOLLY   //@FXIME urate中发现ub.h -> ul_log.h 由于定义宏Max。。 会冲突且暂时没有解决
+#ifdef MAX           //sb ullog  #define Max(a,b) ((a)>(b)?(a):(b))
+#undef  MAX
+#endif
+
+#ifdef MIN           //sb ullog  #define Max(a,b) ((a)>(b)?(a):(b))
+#undef  MIN
+#endif
 
 #ifndef	FOLLY_NO_CONFIG 
 #define FOLLY_NO_CONFIG 1
@@ -139,13 +147,14 @@ using std::sort;
 
 //@TODO c++14 里面有了make_unique
 #include "folly/Memory.h"
-//#endif //GEZI_USE_FOLLY 
-
 
 namespace std
 {
 	using folly::make_unique;
 }
+using std::make_unique;
+//#endif //GEZI_USE_FOLLY 
+#endif //GEZI_NO_FOLLY
 
 #endif //GCCXML
 
@@ -153,7 +162,6 @@ namespace std
 #if __GNUC__ > 3 || defined(WIN32)
 using std::move;
 using std::make_shared;
-using std::make_unique;
 #endif
 
 //using namespace std;

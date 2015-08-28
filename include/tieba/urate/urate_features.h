@@ -32,7 +32,7 @@
 #include "tieba/feature/urate/SequenceExtractor.h"
 #include "tieba/feature/urate/DictMatchExtractor.h"
 #include "tieba/feature/urate/ImgExtrator.h" 
-#include "tieba/feature/urate/DeformExtractor.h"
+//#include "tieba/feature/urate/DeformExtractor.h"
 
 
 namespace gezi {
@@ -64,7 +64,7 @@ namespace gezi {
 			mgr.add(new SequenceExtractor);
 			mgr.add(new DictMatchExtractor);
 			mgr.add(new ImgExtractor); //ÐÂÔö
-			mgr.add(new DeformExtractor);
+			//mgr.add(new DeformExtractor);
 		}
 
 		inline Features gen_urate_features(uint64 pid, string historyPath, bool useFetch = true, bool forceFetch = false)
