@@ -198,11 +198,12 @@ namespace gezi {
 			return it->second;
 		}
 
-		void Load(string path)
+		bool Load(string path)
 		{
 			VLOG(0) << "Identifer Loading " << path;
-			serialize_util::load(*this, path);
+			bool loadOk = serialize_util::load(*this, path);
 			VLOG(0) << "Identifer Loading Done size: " << size();
+			return loadOk;
 		}
 
 		void Save(string path)
@@ -279,11 +280,12 @@ namespace gezi {
 			serialize_util::save(*this, file);
 		}
 
-		void Load(string file)
+		bool Load(string file)
 		{
 			VLOG(0) << "Identifer Loading " << file;
-			serialize_util::load(*this, file);
+			bool loadOk = serialize_util::load(*this, file);
 			VLOG(0) << "Identifer Loading Done size: " << size();
+			return loadOk;
 		}
 
 		T value(int index) const
@@ -317,6 +319,8 @@ namespace gezi {
 
 	typedef ValueIdentifer<int> IntIdentifer;
 	typedef ValueIdentifer<double> DoubleIdentifer;
+
+	typedef shared_ptr<DoubleIdentifer> DoubleIdentiferPtr;
 
 	//@TODO PYTHON
 #ifdef PYTHON_WRAPPER
