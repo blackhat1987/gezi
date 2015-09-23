@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <fstream>
 #include "mpi.h"
 
+using namespace std;
 int main(int argc, char *argv[])
 {
   int nproc;
@@ -14,6 +16,9 @@ int main(int argc, char *argv[])
   MPI_Get_processor_name(proc_name,&nameLength);
   printf("Hello World, Iam host %s with rank %d of %d\n", proc_name,iproc,nproc);
   
+  ofstream ofs("a.txt");
+  ofs << iproc << endl;
+
   MPI_Finalize();
   
   return 0;

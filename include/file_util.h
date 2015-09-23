@@ -67,10 +67,13 @@ namespace gezi {
 	}
 
 	template<typename T>
-	inline void read_file(string infile, T& content)
+	inline bool read_file(string infile, T& content)
 	{
 		std::ifstream ifs(infile.c_str());
+		if (!ifs.is_open())
+			return false;
 		ifs >> content;
+		return true;
 	}
 	template<typename Container>
 	bool file_to_set(const string& infile, Container& container)

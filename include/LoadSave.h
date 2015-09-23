@@ -24,9 +24,10 @@ namespace gezi {
 			VLOG(0) << Name() << " try save to " << path;
 		}
 
-		virtual void Load(string path)
+		virtual bool Load(string path)
 		{
 			VLOG(0) << Name() << " try load from " << path;
+			return true;
 		}
 
 		//另外兼容之前 小写开头的load save看做类似 LoadText, SaveText
@@ -35,9 +36,10 @@ namespace gezi {
 			VLOG(0) << Name() << " try save as text to " << file;
 		}
 
-		virtual void LoadText(string file)
+		virtual bool LoadText(string file)
 		{
 			VLOG(0) << Name() << " try load as text from " << file;
+			return true;
 		}
 
 		virtual void SaveXml(string file)
@@ -45,9 +47,10 @@ namespace gezi {
 			VLOG(0) << Name() << " try save as xml to " << file;
 		}
 
-		virtual void LoadXml(string file)
+		virtual bool LoadXml(string file)
 		{
 			VLOG(0) << Name() << " try load as xml from " << file;
+			return true;
 		}
 
 		virtual void SaveJson(string file)
@@ -55,9 +58,10 @@ namespace gezi {
 			VLOG(0) << Name() << " try save as json to " << file;
 		}
 
-		virtual void LoadJson(string file)
+		virtual bool LoadJson(string file)
 		{
 			VLOG(0) << Name() << " load as json from " << file;
+			return true;
 		}
 
 		virtual string Name()

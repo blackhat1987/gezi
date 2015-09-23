@@ -43,11 +43,15 @@
 #undef  DOUBLE	
 //#define DOUBLE boost::lexical_cast<double>
 #undef  STRING
-#if __GNUC__ > 3 || defined(WIN32) 
-#define STRING std::to_string
-#else
+//#if __GNUC__ > 3 || defined(WIN32) 
+//这个是有区别的 为了安全 暂时使用boost cast
+//char sep = ' ';
+//I0923 15:20 : 43.542109   778 test.cc : 26] std::to_string(sep)-- - [32]
+//I0923 15:20 : 43.542124   778 test.cc : 27] boost::lexical_cast<std::string>(sep)-- - []
+//#define STRING std::to_string
+//#else
 #define STRING boost::lexical_cast<std::string>
-#endif
+//#endif
 
 #undef  STR
 #if __GNUC__ > 3 || defined(WIN32) 
