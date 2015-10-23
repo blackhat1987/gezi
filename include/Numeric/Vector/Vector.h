@@ -148,7 +148,7 @@ namespace gezi {
 
 		//需要外部注意的 初始设置length 那么如果是Add(value) dense方式 要保证values最后长度
 		//和初始设置的一样 不要Add不够 因为实际Length()函数表示向量长度 这个其实主要针对sparse
-		explicit Vector(int length_)
+		explicit Vector(index_type length_)
 			: length(length_)
 		{
 		}
@@ -158,38 +158,38 @@ namespace gezi {
 		{
 		}
 
-		Vector(int length_, value_type value_)
+		Vector(index_type length_, value_type value_)
 		{
 			values.resize(length_, value_);
 			length = length_;
 			indices.clear();
 		}
 
-		Vector(const map<int, double>& m)
+		Vector(const map<index_type, double>& m)
 		{
 			AddRange(m);
 		}
 
-		void Resize(int length_, value_type value_ = 0)
+		void Resize(index_type length_, value_type value_ = 0)
 		{
 			values.resize(length_, value_);
 			length = length_;
 			indices.clear();
 		}
 
-		void resize(int length_, value_type value_ = 0)
+		void resize(index_type length_, value_type value_ = 0)
 		{
 			Resize(length_, value_);
 		}
 
-		Vector(int length_, ivec& indices_, vector<value_type>& values_)
+		Vector(index_type length_, ivec& indices_, vector<value_type>& values_)
 			:length(length_)
 		{
 			indices.swap(indices_);
 			values.swap(values_);
 		}
 
-		Vector(ivec& indices_, vector<value_type>& values_, int length_ = 1024000)
+		Vector(ivec& indices_, vector<value_type>& values_, index_type length_ = 1024000)
 			:length(length_)
 		{
 			indices.swap(indices_);
@@ -204,7 +204,7 @@ namespace gezi {
 		}
 
 		//方便debug Vector vec("1\t3\t4\t5"); Vector vec("1:2.3\t3:4.5"); or vec("1 3") space is also ok
-		Vector(string input, int startIndex = 0, int length_ = 1024000, string sep = ",\t ")
+		Vector(string input, index_type startIndex = 0, index_type length_ = 1024000, string sep = ",\t ")
 		{
 			Init(input, startIndex, length_, sep);
 		}
@@ -222,7 +222,7 @@ namespace gezi {
 		}
 #endif
 
-		void Init(string input, int startIndex = 0, int length_ = 0, string sep = ",\t ")
+		void Init(string input, index_type startIndex = 0, index_type length_ = 0, string sep = ",\t ")
 		{
 			boost::trim(input); //需要注意 因为DOUBLE采用atof快速但是不安全 可能输入是一个空格 导致有问题
 			//注意split("",sep)得到不是空结果 而是有1个空元素的vector c# python	也是		
@@ -263,7 +263,7 @@ namespace gezi {
 			}
 		}
 
-		void Init(int length_, ivec& indices_, vector<value_type>& values_)
+		void Init(index_type length_, vector<index_type>& indices_, vector<value_type>& values_)
 		{
 			length = length_;
 			indices.swap(indices_);
@@ -412,7 +412,7 @@ namespace gezi {
 		}
 		//#endif //PYTHON_WRAPPER
 		//这个接口在python情况下 不管 Add(3, 3.0) 还是Add(3,3)都是ok的 上面哪个神奇的bug
-		void Add(int index, value_type value)
+		void Add(index_type index, value_type value)
 		{
 			if (value != _zeroValue)
 			{
@@ -1381,7 +1381,7 @@ namespace gezi {
 		bool normalized = false;
 		int numNonZeros = -1; //-1 means unknow
 	protected:
-		int length = 0;
+		index_type length = 0;
 		value_type _zeroValue = 0.0;
 	};
 

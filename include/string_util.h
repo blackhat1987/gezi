@@ -214,9 +214,9 @@ namespace gezi {
 	}
 
 	//不包括繁简体转换 全角半角
-	inline string normalize_str(string input)
+	inline string normalize_str(string input, bool withSpace = false)
 	{
-		return boost::to_lower_copy(filter_str(input));
+		return boost::to_lower_copy(filter_str(input, withSpace));
 	}
 
 	inline string extract_chinese(string temp)

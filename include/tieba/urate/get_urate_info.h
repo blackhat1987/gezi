@@ -110,6 +110,12 @@ namespace gezi {
 			return get_urate_info(pid, true, historyNum, needUrl);
 		}
 
+		inline UrateInfo get_urate_info_from_file(string pid, string historyPath = "./history")
+		{
+			UrateInfo info;
+			serialize_util::load_json(format("{}/{}.json", historyPath, pid), info);
+			return info;
+		}
 
 	}  //----end of namespace tieba
 }  //----end of namespace gezi

@@ -43,7 +43,7 @@ namespace gezi {
 		}
 
 		//尽量不用 如果需要 可以考虑直接用Vector 稀疏情况
-		explicit FeatureVector(int length_)
+		explicit FeatureVector(index_type length_)
 			:Vector(length_)
 		{
 
@@ -56,7 +56,7 @@ namespace gezi {
 			{
 			}
 
-			Feature(int index_, value_type value_)
+			Feature(index_type index_, value_type value_)
 				: index(index_), value(value_)
 			{
 
@@ -303,20 +303,20 @@ namespace gezi {
 		//	add(value_type(value), name);
 		//}
 
-		void add(value_type* values_, int len, string name = "")
+		void add(value_type* values_, index_type len, string name = "")
 		{
 			if (useNames())
 			{
 				if (name.empty())
 				{
-					for (int i = 0; i < len; i++)
+					for (index_type i = 0; i < len; i++)
 					{
 						add(values_[i]);
 					}
 				}
 				else
 				{
-					for (int i = 0; i < len; i++)
+					for (index_type i = 0; i < len; i++)
 					{
 						string name_ = format("{}{}", name, i);
 						add(values_[i], name_);
@@ -325,7 +325,7 @@ namespace gezi {
 			}
 			else
 			{
-				for (int i = 0; i < len; i++)
+				for (index_type i = 0; i < len; i++)
 				{
 					add(values_[i]);
 				}

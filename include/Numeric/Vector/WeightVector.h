@@ -27,12 +27,12 @@ namespace gezi {
 		virtual ~WeightVector() {}
 
 
-		WeightVector(int length_)
+		WeightVector(index_type length_)
 		{
 			SetLength(length_);
 		}
 
-		WeightVector(int length_, value_type val)
+		WeightVector(index_type length_, value_type val)
 		{
 			Init(length_, val);
 		}
@@ -42,12 +42,13 @@ namespace gezi {
 		{
 			LOG(WARNING) << "Weight vector not support sparsify, do nothing";
 		}
+
 		void Sparsify()
 		{
 			LOG(WARNING) << "Weight vector not support sparsify, do nothing";
 		}
 
-		void SetLength(int length_)
+		void SetLength(index_type length_)
 		{
 			length = length_;
 			values.resize(length_, _zeroValue);
@@ -55,14 +56,14 @@ namespace gezi {
 		}
 
 		using Vector::Init;
-		void Init(int length_, value_type val)
+		void Init(index_type length_, value_type val)
 		{
 			length = length_;
 			values.resize(length_, val);
 			//keepDense = true;
 		}
 
-		void Resize(int length_, value_type value_ = 0)
+		void Resize(index_type length_, value_type value_ = 0)
 		{
 			values.resize(length_, value_);
 			length = length_;

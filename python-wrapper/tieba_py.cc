@@ -61,6 +61,15 @@ DEF_VEC(ulvec);
 DEF_MAP(id_map);
 DEF_MAP(sd_map);
 DEF_MAP(si_map);
+DEF_MAP(ss_map);
+DEF_PAIR(ii_pair);
+DEF_PAIR(si_pair);
+DEF_PAIR(wsi_pair);
+DEF_VEC(si_pair_vec);
+DEF_VEC(wsi_pair_vec);
+DEF_SET(iset);
+DEF_SET(lset);
+DEF_SET(ulset);
 
 { //::std::vector< unsigned long long >
 typedef bp::class_< std::vector< unsigned long long > > ulvec_exposer_t;
@@ -1345,6 +1354,17 @@ bp::def(
 "get_urate_info"
 , get_urate_info_function_type( &::gezi::tieba::get_urate_info )
 , ( bp::arg("pid"), bp::arg("needHistory")=(bool)(true), bp::arg("historyNum")=(int)(25), bp::arg("needUrlInfo")=(bool)(true) ) );
+
+}
+
+{ //::gezi::tieba::get_urate_info_from_file
+
+typedef ::gezi::tieba::UrateInfo ( *get_urate_info_from_file_function_type )( ::std::string,::std::string );
+
+bp::def(
+"get_urate_info_from_file"
+, get_urate_info_from_file_function_type( &::gezi::tieba::get_urate_info_from_file )
+, ( bp::arg("pid"), bp::arg("historyPath")="./history" ) );
 
 }
 
