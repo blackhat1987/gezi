@@ -38,6 +38,8 @@
 #include <cereal/archives/json.hpp>
 #include <cereal/archives/xml.hpp>
 
+#include <cereal/types/eigen.hpp>
+
 namespace serialize_util {
 	using std::string;
 

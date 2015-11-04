@@ -1,111 +1,48 @@
-[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mcomake2_makefile_check[0m']
-#in case of error, update 'Makefile' by 'comake2'
-[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_cereal_test_cereal.o[0m']
-g++ -c -I. -I../../include -I../../utils -I../../output -I../../output/include -I../../include/feature -I../../include/model -I../../include/numeric -I../../../../../../../com/btest/gtest -I../../../../../../../com/btest/gtest/include -I../../../../../../../com/btest/gtest/output -I../../../../../../../com/btest/gtest/output/include -I../../../../../../../lib2-64/bsl -I../../../../../../../lib2-64/bsl/include -I../../../../../../../lib2-64/bsl/output -I../../../../../../../lib2-64/bsl/output/include -I../../../../../../../lib2-64/ccode -I../../../../../../../lib2-64/ccode/include -I../../../../../../../lib2-64/ccode/output -I../../../../../../../lib2-64/ccode/output/include -I../../../../../../../lib2-64/dict -I../../../../../../../lib2-64/dict/include -I../../../../../../../lib2-64/dict/output -I../../../../../../../lib2-64/dict/output/include -I../../../../../../../lib2-64/libcrf -I../../../../../../../lib2-64/libcrf/include -I../../../../../../../lib2-64/libcrf/output -I../../../../../../../lib2-64/libcrf/output/include -I../../../../../../../lib2-64/nlp/compact-trie -I../../../../../../../lib2-64/nlp/compact-trie/include -I../../../../../../../lib2-64/nlp/compact-trie/output -I../../../../../../../lib2-64/nlp/compact-trie/output/include -I../../../../../../../lib2-64/others-ex -I../../../../../../../lib2-64/others-ex/include -I../../../../../../../lib2-64/others-ex/output -I../../../../../../../lib2-64/others-ex/output/include -I../../../../../../../lib2-64/postag -I../../../../../../../lib2-64/postag/include -I../../../../../../../lib2-64/postag/output -I../../../../../../../lib2-64/postag/output/include -I../../../../../../../lib2-64/text-util -I../../../../../../../lib2-64/text-util/include -I../../../../../../../lib2-64/text-util/output -I../../../../../../../lib2-64/text-util/output/include -I../../../../../../../lib2-64/ullib -I../../../../../../../lib2-64/ullib/include -I../../../../../../../lib2-64/ullib/output -I../../../../../../../lib2-64/ullib/output/include -I../../../../../../../lib2-64/wordseg -I../../../../../../../lib2-64/wordseg/include -I../../../../../../../lib2-64/wordseg/output -I../../../../../../../lib2-64/wordseg/output/include -I../../../../../../../ps/se/dict-set -I../../../../../../../ps/se/dict-set/include -I../../../../../../../ps/se/dict-set/output -I../../../../../../../ps/se/dict-set/output/include -I../../../../../../../ps/se/include -I../../../../../../../ps/se/include/include -I../../../../../../../ps/se/include/output -I../../../../../../../ps/se/include/output/include -I../../../../../../../public/comlog-plugin -I../../../../../../../public/comlog-plugin/include -I../../../../../../../public/comlog-plugin/output -I../../../../../../../public/comlog-plugin/output/include -I../../../../../../../public/configure -I../../../../../../../public/configure/include -I../../../../../../../public/configure/output -I../../../../../../../public/configure/output/include -I../../../../../../../public/connectpool -I../../../../../../../public/connectpool/include -I../../../../../../../public/connectpool/output -I../../../../../../../public/connectpool/output/include -I../../../../../../../public/odict -I../../../../../../../public/odict/include -I../../../../../../../public/odict/output -I../../../../../../../public/odict/output/include -I../../../../../../../public/spreg -I../../../../../../../public/spreg/include -I../../../../../../../public/spreg/output -I../../../../../../../public/spreg/output/include -I../../../../../../../public/uconv -I../../../../../../../public/uconv/include -I../../../../../../../public/uconv/output -I../../../../../../../public/uconv/output/include -I../../../../../../../public/urlparser -I../../../../../../../public/urlparser/include -I../../../../../../../public/urlparser/output -I../../../../../../../public/urlparser/output/include -I../../../../../../../quality/autotest/reportlib/cpp -I../../../../../../../quality/autotest/reportlib/cpp/include -I../../../../../../../quality/autotest/reportlib/cpp/output -I../../../../../../../quality/autotest/reportlib/cpp/output/include -I../../../../../../../st/nlp/lm-score -I../../../../../../../st/nlp/lm-score/include -I../../../../../../../st/nlp/lm-score/output -I../../../../../../../st/nlp/lm-score/output/include -I../../../../../../../third-64/boost -I../../../../../../../third-64/boost/include -I../../../../../../../third-64/boost/output -I../../../../../../../third-64/boost/output/include -I../../../../../../../third-64/gflags -I../../../../../../../third-64/gflags/include -I../../../../../../../third-64/gflags/output -I../../../../../../../third-64/gflags/output/include -I../../../../../../../third-64/glog -I../../../../../../../third-64/glog/include -I../../../../../../../third-64/glog/output -I../../../../../../../third-64/glog/output/include -I../../../../../../../third-64/pcre -I../../../../../../../third-64/pcre/include -I../../../../../../../third-64/pcre/output -I../../../../../../../third-64/pcre/output/include -I../../../../../../../third-64/tcmalloc -I../../../../../../../third-64/tcmalloc/include -I../../../../../../../third-64/tcmalloc/output -I../../../../../../../third-64/tcmalloc/output/include -D_GNU_SOURCE -D__STDC_LIMIT_MACROS -DVERSION=\"1.9.8.7\" -g -O0 -pipe -W -Wall -fPIC -DHAVE_NETINET_IN_H -Wno-unused-parameter -std=c++0x -fpermissive -Wno-write-strings -Wno-literal-suffix -Wno-unused-local-typedefs -fopenmp  -o test_cereal_test_cereal.o test_cereal.cc
-In file included from ../../include/Matrix.h:17:0,
-                 from test_cereal.cc:26:
-../../include/common_def.h:184:1: warning: multi-line comment [-Wcomment]
- //#define  IS_TYPE_OF(a,A) \
- ^
-In file included from ../../include/Matrix.h:18:0,
-                 from test_cereal.cc:26:
+[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_eigen_test_eigen.o[0m']
+g++ -c -I. -I../../include -I../../utils -I../../output -I../../output/include -I../../include/feature -I../../include/model -I../../include/numeric -I../../../../../../../app/search/sep/anti-spam/gezi/third -I../../../../../../../app/search/sep/anti-spam/gezi/third/include -I../../../../../../../app/search/sep/anti-spam/gezi/third/output -I../../../../../../../app/search/sep/anti-spam/gezi/third/output/include -I../../../../../../../com/btest/gtest -I../../../../../../../com/btest/gtest/include -I../../../../../../../com/btest/gtest/output -I../../../../../../../com/btest/gtest/output/include -I../../../../../../../lib2-64/bsl -I../../../../../../../lib2-64/bsl/include -I../../../../../../../lib2-64/bsl/output -I../../../../../../../lib2-64/bsl/output/include -I../../../../../../../lib2-64/ccode -I../../../../../../../lib2-64/ccode/include -I../../../../../../../lib2-64/ccode/output -I../../../../../../../lib2-64/ccode/output/include -I../../../../../../../lib2-64/dict -I../../../../../../../lib2-64/dict/include -I../../../../../../../lib2-64/dict/output -I../../../../../../../lib2-64/dict/output/include -I../../../../../../../lib2-64/libcrf -I../../../../../../../lib2-64/libcrf/include -I../../../../../../../lib2-64/libcrf/output -I../../../../../../../lib2-64/libcrf/output/include -I../../../../../../../lib2-64/nlp/compact-trie -I../../../../../../../lib2-64/nlp/compact-trie/include -I../../../../../../../lib2-64/nlp/compact-trie/output -I../../../../../../../lib2-64/nlp/compact-trie/output/include -I../../../../../../../lib2-64/others-ex -I../../../../../../../lib2-64/others-ex/include -I../../../../../../../lib2-64/others-ex/output -I../../../../../../../lib2-64/others-ex/output/include -I../../../../../../../lib2-64/postag -I../../../../../../../lib2-64/postag/include -I../../../../../../../lib2-64/postag/output -I../../../../../../../lib2-64/postag/output/include -I../../../../../../../lib2-64/text-util -I../../../../../../../lib2-64/text-util/include -I../../../../../../../lib2-64/text-util/output -I../../../../../../../lib2-64/text-util/output/include -I../../../../../../../lib2-64/ullib -I../../../../../../../lib2-64/ullib/include -I../../../../../../../lib2-64/ullib/output -I../../../../../../../lib2-64/ullib/output/include -I../../../../../../../lib2-64/wordseg -I../../../../../../../lib2-64/wordseg/include -I../../../../../../../lib2-64/wordseg/output -I../../../../../../../lib2-64/wordseg/output/include -I../../../../../../../ps/se/dict-set -I../../../../../../../ps/se/dict-set/include -I../../../../../../../ps/se/dict-set/output -I../../../../../../../ps/se/dict-set/output/include -I../../../../../../../ps/se/include -I../../../../../../../ps/se/include/include -I../../../../../../../ps/se/include/output -I../../../../../../../ps/se/include/output/include -I../../../../../../../public/comlog-plugin -I../../../../../../../public/comlog-plugin/include -I../../../../../../../public/comlog-plugin/output -I../../../../../../../public/comlog-plugin/output/include -I../../../../../../../public/configure -I../../../../../../../public/configure/include -I../../../../../../../public/configure/output -I../../../../../../../public/configure/output/include -I../../../../../../../public/connectpool -I../../../../../../../public/connectpool/include -I../../../../../../../public/connectpool/output -I../../../../../../../public/connectpool/output/include -I../../../../../../../public/odict -I../../../../../../../public/odict/include -I../../../../../../../public/odict/output -I../../../../../../../public/odict/output/include -I../../../../../../../public/spreg -I../../../../../../../public/spreg/include -I../../../../../../../public/spreg/output -I../../../../../../../public/spreg/output/include -I../../../../../../../public/uconv -I../../../../../../../public/uconv/include -I../../../../../../../public/uconv/output -I../../../../../../../public/uconv/output/include -I../../../../../../../public/urlparser -I../../../../../../../public/urlparser/include -I../../../../../../../public/urlparser/output -I../../../../../../../public/urlparser/output/include -I../../../../../../../quality/autotest/reportlib/cpp -I../../../../../../../quality/autotest/reportlib/cpp/include -I../../../../../../../quality/autotest/reportlib/cpp/output -I../../../../../../../quality/autotest/reportlib/cpp/output/include -I../../../../../../../st/nlp/lm-score -I../../../../../../../st/nlp/lm-score/include -I../../../../../../../st/nlp/lm-score/output -I../../../../../../../st/nlp/lm-score/output/include -I../../../../../../../third-64/boost -I../../../../../../../third-64/boost/include -I../../../../../../../third-64/boost/output -I../../../../../../../third-64/boost/output/include -I../../../../../../../third-64/gflags -I../../../../../../../third-64/gflags/include -I../../../../../../../third-64/gflags/output -I../../../../../../../third-64/gflags/output/include -I../../../../../../../third-64/glog -I../../../../../../../third-64/glog/include -I../../../../../../../third-64/glog/output -I../../../../../../../third-64/glog/output/include -I../../../../../../../third-64/pcre -I../../../../../../../third-64/pcre/include -I../../../../../../../third-64/pcre/output -I../../../../../../../third-64/pcre/output/include -I../../../../../../../third-64/tcmalloc -I../../../../../../../third-64/tcmalloc/include -I../../../../../../../third-64/tcmalloc/output -I../../../../../../../third-64/tcmalloc/output/include -D_GNU_SOURCE -D__STDC_LIMIT_MACROS -DVERSION=\"1.9.8.7\" -g -O0 -pipe -W -Wall -fPIC -DHAVE_NETINET_IN_H -Wno-unused-parameter -std=c++0x -fpermissive -Wno-write-strings -Wno-literal-suffix -Wno-unused-local-typedefs -fopenmp  -o test_eigen_test_eigen.o test_eigen.cc
+In file included from test_eigen.cc:16:0:
 ../../include/serialize_util.h:42:38: warning: backslash and newline separated by space [enabled by default]
  #define BOOST_SERIALIZATION_NVP(name)\ 
  ^
 In file included from ../../include/cereal/types/polymorphic.hpp:39:0,
-                 from ../../include/serialize_cereal.h:32,
+                 from ../../include/serialize_cereal.h:35,
                  from ../../include/serialize_util.h:64,
-                 from ../../include/Matrix.h:18,
-                 from test_cereal.cc:26:
+                 from test_eigen.cc:16:
 ../../include/cereal/details/polymorphic_impl.hpp:67:119: warning: backslash and newline separated by space [enabled by default]
      const static bind_to_archives<T> _b = ::cereal::detail::StaticObject<bind_to_archives<T> >::getInstance().bind(); \  
  ^
 ../../include/cereal/details/polymorphic_impl.hpp:71:50: warning: backslash and newline separated by space [enabled by default]
      };                                           \    
  ^
-In file included from test_cereal.cc:28:0:
-../../include/serialize_util.h:42:38: warning: backslash and newline separated by space [enabled by default]
- #define BOOST_SERIALIZATION_NVP(name)\ 
- ^
-In file included from ../../include/common_util.h:30:0,
-                 from test_cereal.cc:30:
-../../include/log_util.h:61:1: warning: multi-line comment [-Wcomment]
- //#define LOG_NOTICE(log_id, fmt, arg...) do { \
- ^
-In file included from ../../include/Numeric/find_bins.h:16:0,
-                 from ../../include/statistic_util.h:32,
-                 from ../../include/common_util.h:38,
-                 from test_cereal.cc:30:
-../../include/common_def.h:184:1: warning: multi-line comment [-Wcomment]
+In file included from ../../include/string_util.h:38:0,
+                 from ../../include/serialize_util.h:66,
+                 from test_eigen.cc:16:
+../../include/common_def.h:263:1: warning: multi-line comment [-Wcomment]
  //#define  IS_TYPE_OF(a,A) \
  ^
-In file included from ../../include/Matrix.h:17:0,
-                 from test_cereal.cc:26:
 ../../include/common_def.h: In member function 'bool gezi::KeyValuePair<Key, Value>::operator<(const gezi::KeyValuePair<Key, Value>&)':
-../../include/common_def.h:219:3: warning: no return statement in function returning non-void [-Wreturn-type]
+../../include/common_def.h:298:3: warning: no return statement in function returning non-void [-Wreturn-type]
    }
    ^
 In file included from ../../include/string_util.h:40:0,
                  from ../../include/serialize_util.h:66,
-                 from ../../include/Matrix.h:18,
-                 from test_cereal.cc:26:
+                 from test_eigen.cc:16:
 ../../include/stl_util.h: In function 'std::vector<double> gezi::to_dvec(std::string, char)':
 ../../include/stl_util.h:481:29: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
    while (index < input.size())
                              ^
 In file included from ../../include/serialize_util.h:66:0,
-                 from ../../include/Matrix.h:18,
-                 from test_cereal.cc:26:
+                 from test_eigen.cc:16:
 ../../include/string_util.h: In function 'std::string gezi::extract_suspect_symb(std::string)':
-../../include/string_util.h:161:11: warning: variable 'logtmp' set but not used [-Wunused-but-set-variable]
+../../include/string_util.h:169:11: warning: variable 'logtmp' set but not used [-Wunused-but-set-variable]
       char logtmp[3];
            ^
-In file included from test_cereal.cc:27:0:
-../../include/Identifer.h: At global scope:
-../../include/Identifer.h:34:31: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
-   static const IdType null_id()
-                               ^
-../../include/Identifer.h:185:41: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
-   const IdType operator () (string key) const
-                                         ^
-In file included from ../../include/common_util.h:43:0,
-                 from test_cereal.cc:30:
-../../include/ProgressBar.h: In constructor 'gezi::ProgressBar::ProgressBar(size_t)':
-../../include/ProgressBar.h:108:10: warning: 'gezi::ProgressBar::_total' will be initialized after [-Wreorder]
-   size_t _total;
-          ^
-../../include/ProgressBar.h:107:10: warning:   'size_t gezi::ProgressBar::Size' [-Wreorder]
-   size_t Size;
-          ^
-../../include/ProgressBar.h:40:3: warning:   when initialized here [-Wreorder]
-   ProgressBar(size_t total) :
-   ^
-../../include/ProgressBar.h: In constructor 'gezi::ProgressBar::ProgressBar(std::string, size_t)':
-../../include/ProgressBar.h:108:10: warning: 'gezi::ProgressBar::_total' will be initialized after [-Wreorder]
-   size_t _total;
-          ^
-../../include/ProgressBar.h:107:10: warning:   'size_t gezi::ProgressBar::Size' [-Wreorder]
-   size_t Size;
-          ^
-../../include/ProgressBar.h:45:3: warning:   when initialized here [-Wreorder]
-   ProgressBar(string log_word, size_t total) :
-   ^
-../../include/ProgressBar.h: In constructor 'gezi::ProgressBar::ProgressBar(size_t, std::string)':
-../../include/ProgressBar.h:108:10: warning: 'gezi::ProgressBar::_total' will be initialized after [-Wreorder]
-   size_t _total;
-          ^
-../../include/ProgressBar.h:104:27: warning:   'std::string gezi::ProgressBar::_log_word' [-Wreorder]
-   std::string _log_word = "Finished";
-                           ^
-../../include/ProgressBar.h:50:3: warning:   when initialized here [-Wreorder]
-   ProgressBar(size_t total, string log_word) :
-   ^
-test_cereal.cc: In function 'int main(int, char**)':
-test_cereal.cc:403:6: warning: unused variable 's' [-Wunused-variable]
-  int s = google::ParseCommandLineFlags(&argc, &argv, false);
-      ^
-[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_cereal[0m']
-g++ test_cereal_test_cereal.o -Xlinker "-("  ../../../../../../../com/btest/gtest/output/lib/libgtest.a \
+../../include/string_util.h: In function 'std::vector<_RealType> gezi::cut_wstring(const String&, int, int)':
+../../include/string_util.h:467:52: warning: there are no arguments to 'max' that depend on a template parameter, so a declaration of 'max' must be available [-fpermissive]
+    ret.push_back(s.substr(max(0, i * unit - max_len), unit + max_len));
+                                                    ^
+[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_eigen[0m']
+g++ test_eigen_test_eigen.o -Xlinker "-("  ../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../../lib2-64/bsl/lib/libbsl.a \
   ../../../../../../../lib2-64/bsl/lib/libbsl_ResourcePool.a \
@@ -140,7 +77,9 @@ g++ test_cereal_test_cereal.o -Xlinker "-("  ../../../../../../../com/btest/gtes
   ../../../../../../../st/nlp/lm-score/output/lib/libScoreCal.a \
   ../../../../../../../third-64/boost/lib/libboost_atomic.a \
   ../../../../../../../third-64/boost/lib/libboost_chrono.a \
+  ../../../../../../../third-64/boost/lib/libboost_container.a \
   ../../../../../../../third-64/boost/lib/libboost_context.a \
+  ../../../../../../../third-64/boost/lib/libboost_coroutine.a \
   ../../../../../../../third-64/boost/lib/libboost_date_time.a \
   ../../../../../../../third-64/boost/lib/libboost_exception.a \
   ../../../../../../../third-64/boost/lib/libboost_filesystem.a \
@@ -152,6 +91,8 @@ g++ test_cereal_test_cereal.o -Xlinker "-("  ../../../../../../../com/btest/gtes
   ../../../../../../../third-64/boost/lib/libboost_math_tr1.a \
   ../../../../../../../third-64/boost/lib/libboost_math_tr1f.a \
   ../../../../../../../third-64/boost/lib/libboost_math_tr1l.a \
+  ../../../../../../../third-64/boost/lib/libboost_mpi.a \
+  ../../../../../../../third-64/boost/lib/libboost_mpi_python.a \
   ../../../../../../../third-64/boost/lib/libboost_prg_exec_monitor.a \
   ../../../../../../../third-64/boost/lib/libboost_program_options.a \
   ../../../../../../../third-64/boost/lib/libboost_python.a \
@@ -182,8 +123,6 @@ g++ test_cereal_test_cereal.o -Xlinker "-("  ../../../../../../../com/btest/gtes
   -ldl \
   -lldap \
   -lcurl \
-  -rdynamic -Xlinker "-)" -o test_cereal
+  -rdynamic -Xlinker "-)" -o test_eigen
 mkdir -p ./output/bin
-cp -f --link test_cereal ./output/bin
-[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']
-make all done
+cp -f --link test_eigen ./output/bin

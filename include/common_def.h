@@ -88,6 +88,8 @@ typedef unsigned int uint;
 typedef unsigned long long uint64;
 typedef unsigned char uchar;
 
+typedef unsigned int WordIndex;
+
 //typedef float Float;
 
 #ifdef FLOAT32

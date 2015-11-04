@@ -1,4 +1,4 @@
-/*! \file vector.hpp
+/*! \file fbvector.hpp
     \brief Support for types found in \<vector\>
     \ingroup STLSupport */
 /*

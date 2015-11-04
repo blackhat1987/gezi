@@ -208,6 +208,8 @@ void LOGPVec(const T&vec, string sep = " ", int level = 5, string last = "\n")
 	VLOG(level) << ss.str();
 }
 
+
+
 template<typename Iter>
 void PRange(Iter begin, Iter end, std::ostream& out = std::cout, string sep = "\n", string last = "\n")
 {
@@ -216,6 +218,15 @@ void PRange(Iter begin, Iter end, std::ostream& out = std::cout, string sep = "\
 		out << *begin << sep;
 	}
 	out << last;
+}
+
+template<typename Iter>
+void LOGRange(Iter begin, Iter end, int level = 5)
+{
+	for (; begin != end; ++begin)
+	{
+		VLOG(level) << *begin;
+	}
 }
 
 #define PVECTOR(v)\

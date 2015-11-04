@@ -173,8 +173,21 @@ TEST(segmentor_postag, func)
 	Segmentor::Init();
 	Pval(Segmentor::Segment("我爱你中国扣扣是速去美女激晴吧", "|", SCW_OUT_WPCOMP));
 	print_seg_posttag_result(Segmentor::handle());
+
 	Pval(Segmentor::Segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
 	print_seg_posttag_result(Segmentor::handle());
+
+	Pval(Segmentor::Segment("我的扣扣是马布里杨美美基晴视频你好", "|", SEG_MERGE_NEWWORD));
+	print_seg_posttag_result(Segmentor::handle());
+
+	LOG(INFO) << "Begin multi thread";
+#pragma omp parallel for
+	for (size_t j = 0; j < 10; j++)
+	{
+		Segmentor::Init(); //注意需要每个线程都init handle
+		Pval2(j, Segmentor::Segment("我的扣扣是马布里杨美美基晴视频", "|"));
+	}
+
 	Segmentor::Uninit();
 }
 int main(int argc, char *argv[])

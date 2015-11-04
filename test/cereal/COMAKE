@@ -81,3 +81,5 @@ headers=''
 #Application('test_redis_client',Sources('test_redis_client.cc'))
 srcs = ''
 Application('test_cereal',Sources('test_cereal.cc', srcs))
+#Application('test_eigen',Sources('test_eigen.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')))
+Application('test_eigen',Sources('test_eigen.cc',srcs))
