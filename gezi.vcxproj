@@ -105,6 +105,7 @@
     <ClInclude Include="include\cereal\types\common.hpp" />
     <ClInclude Include="include\cereal\types\complex.hpp" />
     <ClInclude Include="include\cereal\types\deque.hpp" />
+    <ClInclude Include="include\cereal\types\eigen.hpp" />
     <ClInclude Include="include\cereal\types\fbvector.hpp" />
     <ClInclude Include="include\cereal\types\forward_list.hpp" />
     <ClInclude Include="include\cereal\types\list.hpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="include\db\otl\otlv4.h" />
     <ClInclude Include="include\debug_util.h" />
     <ClInclude Include="include\ds\DeterminSkipList.h" />
+    <ClInclude Include="include\ds\HuffmanTree.h" />
     <ClInclude Include="include\ds\Rstree.h" />
     <ClInclude Include="include\ds\RstreeWorker.h" />
     <ClInclude Include="include\ds\SuffixTree.h" />
@@ -489,6 +491,7 @@
     <ClInclude Include="include\MultiHash.h" />
     <ClInclude Include="include\myclient_help.h" />
     <ClInclude Include="include\myclient_stream.h" />
+    <ClInclude Include="include\nlp\Vocabulary.h" />
     <ClInclude Include="include\Numeric\BinFinder.h" />
     <ClInclude Include="include\numeric\collocation.h" />
     <ClInclude Include="include\Numeric\find_bins.h" />
@@ -656,6 +659,22 @@
     <ClInclude Include="third\folly\folly\Preprocessor.h" />
     <ClInclude Include="third\folly\folly\small_vector.h" />
     <ClInclude Include="third\folly\folly\Traits.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\cuda_softmax.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\hierarchical_softmax.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\layers\activation_functions.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\layers\gru_layer.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\layers\interface.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\layers\layer_stack.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\layers\scrn_layer.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\layers\simple_layer.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\layers\util.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\maxent.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\nce.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\nnet.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\program_options.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\settings.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\util.h" />
+    <ClInclude Include="third\rnnlm\faster-rnnlm\words.h" />
     <ClInclude Include="tools\tieba\urate\include\urate_train.h" />
   </ItemGroup>
   <ItemGroup>
@@ -685,9 +704,11 @@
     <ClCompile Include="src\SharedSegmentor.cpp" />
     <ClCompile Include="src\word_seg.cpp" />
     <ClCompile Include="test\cereal\test_cereal.cc" />
+    <ClCompile Include="test\cereal\test_eigen.cc" />
     <ClCompile Include="test\deformation\test_deformation.cc" />
     <ClCompile Include="test\ds\benchmark_trie.cc" />
     <ClCompile Include="test\ds\test_determin_skip_list.cc" />
+    <ClCompile Include="test\ds\test_huffmantree.cc" />
     <ClCompile Include="test\ds\test_rstree.cc" />
     <ClCompile Include="test\ds\test_suffixtree.cc" />
     <ClCompile Include="test\ds\test_trie.cc" />
@@ -790,6 +811,17 @@
     <ClCompile Include="test\tieba\test_threads_info.cc" />
     <ClCompile Include="test\tieba\test_uname.cc" />
     <ClCompile Include="test\tieba\test_user_info_extractor.cc" />
+    <ClCompile Include="third\rnnlm\rnnlm.cc" />
+    <ClCompile Include="third\rnnlm\src\hierarchical_softmax.cc" />
+    <ClCompile Include="third\rnnlm\src\layers\gru_layer.cc" />
+    <ClCompile Include="third\rnnlm\src\layers\interface.cc" />
+    <ClCompile Include="third\rnnlm\src\layers\layer_stack.cc" />
+    <ClCompile Include="third\rnnlm\src\layers\scrn_layer.cc" />
+    <ClCompile Include="third\rnnlm\src\layers\simple_layer.cc" />
+    <ClCompile Include="third\rnnlm\src\maxent.cc" />
+    <ClCompile Include="third\rnnlm\src\nce.cc" />
+    <ClCompile Include="third\rnnlm\src\nnet.cc" />
+    <ClCompile Include="third\rnnlm\src\words.cc" />
     <ClCompile Include="tools\identifer\check-identifer.cc" />
     <ClCompile Include="tools\identifer\identifer-text2bin.cc" />
     <ClCompile Include="tools\tieba\full-posts\fullposts.cc" />

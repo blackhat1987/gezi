@@ -24,7 +24,7 @@ namespace gezi {
 	public:
 		//默认假定输入的freqs是从大到小排好序的 needSort = false
 		//@TODO 对应 NumBranch不是2 比如3叉huffman 要检查叶子数目是否ok
-		HuffmanTree(const vector<int64>& freqs, const int numBranchces = 2)
+		HuffmanTree(const vector<int64>& freqs, int numBranchces = 2)
 			:_numBranches(numBranchces),
 			_numLeaves(freqs.size()),
 			_numInterNodes(freqs.size() - 1),
@@ -72,6 +72,11 @@ namespace gezi {
 		const vector<int>& BranchPaths(int node) const
 		{
 			return _branchPaths[node];
+		}
+
+		int Height() const
+		{
+			return _height;
 		}
 
 	protected:
@@ -127,6 +132,10 @@ namespace gezi {
 					_nodePaths[leafNode].push_back(parents[node]);
 					_branchPaths[leafNode].push_back(branches[node]);
 				} 
+				if (_branchPaths[leafNode].size() > _height)
+				{
+					_height = _branchPaths[leafNode].size();
+				}
 				std::reverse(_nodePaths[leafNode].begin(), _nodePaths[leafNode].end());
 				std::reverse(_branchPaths[leafNode].begin(), _branchPaths[leafNode].end());
 			}
@@ -140,6 +149,7 @@ namespace gezi {
 		int _numInterNodes;
 		int _numNodes;
 		int _root;
+		int _height = 0;
 
 		//存储所有node的weight最开始存储所有叶子节点从大到小排列，然后存储内部节点从小到大排列，root节点就是最后一个节点
 		//保持和faster-rnnlm中策略一致

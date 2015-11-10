@@ -42,6 +42,7 @@ TEST(huffmantree, func)
 		Pvec(tree.NodePaths(i));
 		Pvec(tree.BranchPaths(i));
 	}
+	Pval(tree.Height());
 }
 
 int main(int argc, char *argv[])
