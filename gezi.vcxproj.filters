@@ -1788,6 +1788,1071 @@
     <ClInclude Include="include\tieba\feature\urate\DeformExtractor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\cereal\types\eigen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ds\HuffmanTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nlp\Vocabulary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\cuda_softmax.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\hierarchical_softmax.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\layers\activation_functions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\layers\gru_layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\layers\interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\layers\layer_stack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\layers\scrn_layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\layers\simple_layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\layers\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\maxent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\nce.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\nnet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\program_options.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\rnnlm\faster-rnnlm\words.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\amalgamation\jni\org_dmlc_mxnet_Predictor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\concurrency.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\json.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\memory_io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\omp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\parameter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\recordio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\registry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\serializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\threadediter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\type_traits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\data\basic_row_iter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\data\disk_row_iter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\data\libsvm_parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\data\parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\data\row_block.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\data\strtonum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\io\azure_filesys.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\io\cached_input_split.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\io\filesys.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\io\hdfs_filesys.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\io\input_split_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\io\line_split.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\io\local_filesys.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\io\recordio_split.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\io\s3_filesys.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\io\single_file_split.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\io\threaded_input_split.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\dmlc-core\src\io\uri_spec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\include\mxnet\base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\include\mxnet\c_api.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\include\mxnet\c_predict_api.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\include\mxnet\engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\include\mxnet\io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\include\mxnet\kvstore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\include\mxnet\ndarray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\include\mxnet\operator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\include\mxnet\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\include\mxnet\storage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\include\mxnet\symbolic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\guide\mshadow-ps\dbstr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\guide\mshadow-ps\dist_async_sum-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\guide\mshadow-ps\local_sum-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\guide\neuralnet\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\broadcast.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\channel_pool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\channel_unpool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\choose.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\concat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\crop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\implicit_gemm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\mirror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\one_hot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\pack_col2patch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\pad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\reduceto1d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\reshape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\slice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\spatial_pool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\spatial_unpool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\swapaxis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension\unpack_patch2col.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\packet\plain-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\packet\sse-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\dot_engine-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\expr_engine-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\expr_scalar-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\expression.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\extension.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\packet-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\random.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\stream_gpu-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\tensor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\tensor_blob.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\tensor_container.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\tensor_cpu-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow\tensor_gpu-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow-ps\mshadow_ps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow-ps\ps_dist-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow-ps\ps_local-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow-ps\ps_rabit-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow-ps\thread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\mshadow-ps\thread_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\mshadow\test\test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\glog\log_severity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\glog\logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\glog\raw_logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\glog\stl_logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\glog\vlog_is_on.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\cpp\cpp_generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\csharp\csharp_generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\java\java_generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\java\java_names.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\javanano\javanano_generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\objectivec\objectivec_generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\objectivec\objectivec_helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\python\python_generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\ruby\ruby_generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\code_generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\command_line_interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\importer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\plugin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\compiler\plugin.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\io\coded_stream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\io\gzip_stream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\io\printer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\io\strtod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\io\tokenizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\io\zero_copy_stream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\io\zero_copy_stream_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\io\zero_copy_stream_impl_lite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomic_sequence_num.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomicops.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomicops_internals_aix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomicops_internals_arm_gcc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomicops_internals_arm_qnx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomicops_internals_arm64_gcc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomicops_internals_atomicword_compat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomicops_internals_generic_gcc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomicops_internals_macosx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomicops_internals_mips_gcc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomicops_internals_pnacl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomicops_internals_solaris.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomicops_internals_tsan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomicops_internals_x86_gcc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\atomicops_internals_x86_msvc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\fastmem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\hash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\once.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\pbconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\platform_macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\shared_ptr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\singleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\stl_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\template_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\stubs\type_traits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\util\field_comparator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\util\json_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\util\message_differencer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\util\type_resolver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\util\type_resolver_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\any.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\any.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\api.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\arena.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\arenastring.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\descriptor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\descriptor.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\descriptor_database.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\duration.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\dynamic_message.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\empty.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\extension_set.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\field_mask.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\generated_enum_reflection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\generated_enum_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\generated_message_reflection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\generated_message_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\map_entry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\map_entry_lite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\map_field.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\map_field_inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\map_field_lite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\map_type_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\message.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\message_lite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\metadata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\reflection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\reflection_ops.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\repeated_field.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\repeated_field_reflection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\service.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\source_context.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\struct.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\text_format.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\timestamp.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\type.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\unknown_field_set.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\wire_format.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\wire_format_lite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\wire_format_lite_inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\protobuf\wrappers.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\gflags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\google\gflags_completions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\city.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\lz4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\lz4frame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\lz4hc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\zmq.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\deps\include\zmq_utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\assign_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\barrier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\bitmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\block_bloom_filter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\bloom_filter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\countmin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\dir.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\local_machine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\parallel_ordered_match.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\parallel_sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\producer_consumer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\range.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\resource_usage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\sketch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\split.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\thread_pool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\threadsafe_limited_queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\base\threadsafe_queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\dmlc\io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\filter\add_noise.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\filter\compressing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\filter\delta_key.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\filter\filter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\filter\fixing_float.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\filter\frequency_filter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\filter\key_caching.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\filter\sparse_filter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\filter\truncate_float.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\kv\kv_cache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\kv\kv_store.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\kv\kv_store_sparse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\kv\kv_store_sparse_st.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\proto\assign_op.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\proto\data.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\proto\filter.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\proto\heartbeat.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\proto\node.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\proto\param.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\proto\range.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\proto\task.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\ps\app.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\ps\base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\ps\blob.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\ps\node_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\ps\scheduler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\ps\server.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\ps\shared_array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\ps\worker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\system\env.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\system\executor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\system\manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\system\message.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\system\monitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\system\network_usage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\system\node_assigner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\system\postoffice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\system\ps-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\system\remote_node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\system\van.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\windows\getopt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\windows\unistd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\ps-lite\src\ps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\R-package\src\base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\R-package\src\executor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\R-package\src\export.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\R-package\src\io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\R-package\src\kvstore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\R-package\src\name.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\R-package\src\ndarray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\R-package\src\symbol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\c_api\c_api_error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\common\cuda_utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\common\lazy_alloc_array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\common\object_pool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\common\tblob_op_registry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\common\thread_local.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\common\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\engine\engine_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\engine\stream_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\engine\thread_pool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\engine\threaded_engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\io\image_augmenter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\io\image_recordio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\io\inst_vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\io\iter_batchloader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\io\iter_normalize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\io\iter_prefetcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\kvstore\kvstore_device.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\kvstore\kvstore_dist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\kvstore\kvstore_dist_server.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\kvstore\kvstore_local.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\ndarray\ndarray_function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\ndarray\ndarray_function-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\ndarray\unary_function-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\activation-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\batch_norm-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\block_grad-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\channel_op_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\concat-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\convolution-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\cudnn_activation-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\cudnn_convolution-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\cudnn_deconvolution-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\cudnn_lrn-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\cudnn_pooling-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\deconvolution-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\dropout-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\elementwise_binary_op-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\elementwise_binary_scalar_op-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\elementwise_sum-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\fully_connected-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\leaky_relu-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\lrn-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\mshadow_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\native_op-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\operator_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\pooling-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\regression_output-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\reshape-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\slice_channel-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\softmax_output-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\operator\swapaxis-inl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\storage\cpu_device_storage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\storage\gpu_device_storage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\storage\naive_storage_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\storage\pinned_memory_storage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\storage\pooled_storage_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\storage\storage_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\symbol\graph_algorithm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\symbol\graph_executor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\symbol\graph_memory_allocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\mxnet\src\symbol\static_graph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -2240,6 +3305,426 @@
     <ClCompile Include="test\deformation\test_deformation.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="test\cereal\test_eigen.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\ds\test_huffmantree.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\rnnlm\rnnlm.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\rnnlm\src\hierarchical_softmax.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\rnnlm\src\layers\gru_layer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\rnnlm\src\layers\interface.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\rnnlm\src\layers\layer_stack.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\rnnlm\src\layers\scrn_layer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\rnnlm\src\layers\simple_layer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\rnnlm\src\maxent.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\rnnlm\src\nce.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\rnnlm\src\nnet.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\rnnlm\src\words.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\amalgamation\jni\predictor.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\amalgamation\mxnet_predict0.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\cmake\CMakeFiles\3.2.2\CompilerIdC\CMakeCCompilerId.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\cmake\CMakeFiles\3.2.2\CompilerIdCXX\CMakeCXXCompilerId.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\cmake\CMakeFiles\feature_tests.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\cmake\CMakeFiles\feature_tests.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\CMakeFiles\3.2.2\CompilerIdC\CMakeCCompilerId.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\CMakeFiles\3.2.2\CompilerIdCXX\CMakeCXXCompilerId.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\CMakeFiles\feature_tests.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\CMakeFiles\feature_tests.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\src\io\azure_filesys.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\src\io\hdfs_filesys.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\src\io\input_split_base.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\src\io\line_split.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\src\io\local_filesys.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\src\io\recordio_split.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\src\io\s3_filesys.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\src\config.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\src\data.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\src\io.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\src\recordio.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\unittest\unittest_config.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\unittest\unittest_json.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\unittest\unittest_logging.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\unittest\unittest_main.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\unittest\unittest_serializer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\unittest\unittest_threaditer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\dataiter_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\filesys_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\iostream_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\libsvm_parser_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\logging_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\parameter_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\recordio_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\registry_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\split_read_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\split_repeat_read_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\split_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\stream_read_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\dmlc-core\test\strtonum_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\mshadow\guide\exp-template\exp_lazy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\mshadow\guide\exp-template\exp_template.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\mshadow\guide\exp-template\exp_template_op.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\mshadow\guide\mshadow-ps\dist_async_sum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\mshadow\guide\mshadow-ps\local_sum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\mshadow\guide\basic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\mshadow\guide\defop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\mshadow\test\test_tblob.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\guide\example_a.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\guide\example_b.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\guide\example_c.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\guide\example_d.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\guide\example_e.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\guide\network_perf.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\base\thread_pool.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\filter\filter.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\proto\assign_op.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\proto\data.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\proto\filter.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\proto\heartbeat.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\proto\node.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\proto\param.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\proto\range.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\proto\task.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\system\env.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\system\executor.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\system\manager.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\system\message.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\system\postoffice.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\system\remote_node.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\system\van.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\windows\getopt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\ps-lite\src\ps_main.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\R-package\src\executor.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\R-package\src\export.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\R-package\src\io.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\R-package\src\kvstore.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\R-package\src\mxnet.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\R-package\src\ndarray.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\R-package\src\symbol.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\c_api\c_api.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\c_api\c_api_error.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\c_api\c_predict_api.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\common\tblob_op_registry.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\engine\engine.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\engine\naive_engine.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\engine\threaded_engine.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\engine\threaded_engine_perdevice.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\engine\threaded_engine_pooled.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\io\io.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\io\iter_image_recordio.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\io\iter_mnist.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\kvstore\kvstore.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\ndarray\ndarray.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\ndarray\ndarray_function.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\ndarray\unary_function.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\activation.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\batch_norm.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\block_grad.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\concat.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\convolution.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\deconvolution.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\dropout.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\elementwise_binary_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\elementwise_binary_scalar_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\elementwise_sum.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\fully_connected.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\leaky_relu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\lrn.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\native_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\operator.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\pooling.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\regression_output.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\reshape.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\slice_channel.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\softmax_output.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\operator\swapaxis.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\storage\storage.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\symbol\graph_executor.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\symbol\static_graph.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\symbol\symbol.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\src\resource.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\tests\cpp\storage_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\tests\cpp\threaded_engine_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\tests\test_storage.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\tests\test_threaded_engine.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\mxnet\tools\im2rec.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl">
@@ -2254,5 +3739,23 @@
     <None Include="test\COMAKE" />
     <None Include="test\Makefile" />
     <None Include="include\cereal\external\rapidxml\manual.html" />
+    <None Include="third\mxnet\cmake\CMakeFiles\3.2.2\CMakeDetermineCompilerABI_C.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="third\mxnet\cmake\CMakeFiles\3.2.2\CMakeDetermineCompilerABI_CXX.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="third\mxnet\cmake\CMakeFiles\feature_tests.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="third\mxnet\CMakeFiles\3.2.2\CMakeDetermineCompilerABI_C.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="third\mxnet\CMakeFiles\3.2.2\CMakeDetermineCompilerABI_CXX.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="third\mxnet\CMakeFiles\feature_tests.bin">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

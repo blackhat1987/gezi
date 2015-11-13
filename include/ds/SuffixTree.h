@@ -260,7 +260,7 @@ public:
 		Node* active_node = _root;
 		int cur = start;
 
-		while (cur < text_length)
+		while (cur < text.length())
 		{
 			NIter iter = active_node->next->find(text[cur]);
 			if (iter == active_node->next->end())
@@ -270,14 +270,14 @@ public:
 			active_node = iter->second;
 			int end = cur + (active_node->end - active_node->start);
 			int j;
-			for (j = cur + 1; j < end && j < text_length; j++)
+			for (j = cur + 1; j < end && j < text.length(); j++)
 			{
-				if (_texts[active_node->text_id][active_node->start + j] != text[j])
+				if (_texts[active_node->text_id - _oldest_text_id][active_node->start + j] != text[j])
 				{//找到不匹配
 					return active_node;
 				}
 			}
-			if (j == text_length)
+			if (j == text.length())
 			{ //文本串匹配完
 				return active_node;
 			}
@@ -391,9 +391,9 @@ public:
 		}
 
 		Node* active_node = _root;
-		int cur = start;
+		int cur = start;  //@FIXME start != 0 应该有问题吧
 
-		while (cur < text_length)
+		while (cur < text.length())
 		{
 			NIter iter = active_node->next->find(text[cur]);
 			if (iter == active_node->next->end())
@@ -403,14 +403,14 @@ public:
 			active_node = iter->second;
 			int end = cur + (active_node->end - active_node->start);
 			int j, idx = 1;
-			for (j = cur + 1; j < end && j < text_length; j++, idx++)
+			for (j = cur + 1; j < end && j < text.length(); j++, idx++)
 			{
-				if (_texts[active_node->text_id][active_node->start + idx] != text[j])
+				if (_texts[active_node->text_id - _oldest_text_id][active_node->start + idx] != text[j])
 				{//找到不匹配
 					return NULL;
 				}
 			}
-			if (j == text_length)
+			if (j == text.length())
 			{ //文本串匹配完
 				return active_node;
 			}
@@ -512,7 +512,7 @@ public:
 			int j, idx = 1;
 			for (j = cur + 1; j < end && j < text_length; j++, idx++)
 			{
-				if (_texts[active_node->text_id][active_node->start + idx] != text[j])
+				if (_texts[active_node->text_id - _oldest_text_id][active_node->start + idx] != text[j])
 				{//找到不匹配
 					return NULL;
 				}
@@ -1047,21 +1047,21 @@ public:
 
 	void write_result(const string & file)
 	{
-		wofstream ofs(file.c_str());
+		std::wofstream ofs(file.c_str());
 		write_result(_root, 0, ofs);
-		wcout << "Writed result" << endl;
+		std::wcout << "Writed result" << endl;
 	}
 
 	void print()
 	{
-		wcout << "The string is: " << _texts[_texts.size() - 1] << endl;
-		wcout << "Current text id: " << _current_text_id << "  Oldest text id: " << _oldest_text_id << " texts_.size: " << _texts.size() << endl;
-		wcout << L"root_ " << _root << endl;
+		std::wcout << "The string is: " << _texts[_texts.size() - 1] << endl;
+		std::wcout << "Current text id: " << _current_text_id << "  Oldest text id: " << _oldest_text_id << " texts_.size: " << _texts.size() << endl;
+		std::wcout << L"root_ " << _root << endl;
 		int leaf_freq = 0;
 		print(_root, 0, leaf_freq);
 
-		//        wcout << "The string length is " << texts_[0].length() << endl;
-		wcout << "The total leaf freq is " << leaf_freq << endl;
+		//        std::wcout << "The string length is " << texts_[0].length() << endl;
+		std::wcout << "The total leaf freq is " << leaf_freq << endl;
 	}
 
 	/**
@@ -1093,7 +1093,7 @@ public:
 		return id + _oldest_text_id;
 	}
 #ifndef GCCXML
-	void write_result(Node* node, int depth, wofstream & ofs)
+	void write_result(Node* node, int depth, std::wofstream & ofs)
 	{
 		using namespace std;
 		if (!node || !node->next)
@@ -1109,7 +1109,7 @@ public:
 			ofs << iter->second->text_id << " " << iter->second->start << " " << iter->second->end << " " << edge << " "
 				<< (!iter->second->next) << " " << iter->second->freq << "  " << depth << endl;
 
-			//             wcout << iter->second->text_id << " " << iter->second->start << " " << iter->second->end << " " << edge << " "
+			//             std::wcout << iter->second->text_id << " " << iter->second->start << " " << iter->second->end << " " << edge << " "
 			//                    << (!iter->second->next) << " " << iter->second->freq << "  " << depth << endl;
 
 			write_result(iter->second, depth + 1, ofs);
@@ -1129,7 +1129,7 @@ public:
 		{
 			for (int i = 0; i < depth; i++)
 			{
-				wcout << "   ";
+				std::wcout << "   ";
 			}
 
 			//TODO why wrong
@@ -1140,20 +1140,20 @@ public:
 				leaf_freq += iter->second->freq;
 			}
 
-			//            wcout << iter->second->text_id << " " << oldest_text_id_ << endl;
-			//                wcout << texts_[iter->second->text_id - oldest_text_id_] << endl;
-			//                wcout << iter->second->start << endl;
-			//                wcout << (iter->second->end - iter->second->start) << endl;
-			//                wcout << iter ->first << endl;
+			//            std::wcout << iter->second->text_id << " " << oldest_text_id_ << endl;
+			//                std::wcout << texts_[iter->second->text_id - oldest_text_id_] << endl;
+			//                std::wcout << iter->second->start << endl;
+			//                std::wcout << (iter->second->end - iter->second->start) << endl;
+			//                std::wcout << iter ->first << endl;
 			wstring edge = this->_texts[iter->second->text_id - _oldest_text_id].
 							substr(iter->second->start, iter->second->end - iter->second->start);
-			wcout << "|-" << edge << "[" << iter->second->text_id << " " << iter->second->start << ":"
+			std::wcout << "|-" << edge << "[" << iter->second->text_id << " " << iter->second->start << ":"
 							<< iter->second->end << "] " << " (" << iter->second->freq << " " << iter->second->length << ") "
 							<< iter->second << "->" << iter->second->suffix_link
 							//                    << " " << (iter->second->next == NULL) 
 							<< endl;
 
-			//              wcout << "|-"  << " "<< "[" << iter->second->id << " " << iter->second->start << ":"
+			//              std::wcout << "|-"  << " "<< "[" << iter->second->id << " " << iter->second->start << ":"
 			//                    << iter->second->end << "] " << iter->second << "->" << iter->second->suffix_link
 			//                    << " " << (iter->second->next==NULL) << endl;
 			print(iter->second, depth + 1, leaf_freq);
