@@ -20,7 +20,7 @@
 #include "container/lru_containers.h"
 #include "tieba/info/post_info.h"
 #include "Identifer.h"
-#include "tieba/TextPredictor.h"
+#include "MLCore/TextPredictor.h"
 
 using namespace std;
 using namespace gezi;
@@ -61,8 +61,8 @@ void init()
 {
 	SharedConf::init("fullposts.conf");
 
-	_predictor = PredictorFactory::LoadPredictor(FLAGS_m);
-	_identifer.Load(FLAGS_m + "/identifer.bin");
+	//_predictor = PredictorFactory::LoadPredictor(FLAGS_m);
+	//_identifer.Load(FLAGS_m + "/identifer.bin");
 
 	int redisRet = _redisClient.Init();
 	CHECK_EQ(redisRet, 0);

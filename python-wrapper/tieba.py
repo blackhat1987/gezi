@@ -10,6 +10,7 @@ define_symbols = ['GCCXML','PYTHON_WRAPPER']
 
 files = [
 					'include.python/common_util.h',  #for safe let it be first for without it file_util.h or string_util.h... will fail
+					'./include.python/log_util.h',
 					#-------------ip util
 					'./include.python/tools/IpFinder.h',
 					'./include.python/tools/ip.h',
@@ -57,7 +58,7 @@ include_paths=[
                 'public/odict/output',
                 'public/uconv/output',
                 'public/configure/output',
-                'other/rabit',
+								'app/search/sep/anti-spam/gezi/third/rabit',
 	      ]
 
 include_paths_python = [

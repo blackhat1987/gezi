@@ -4,14 +4,15 @@ import glob
 from pyplusplus import module_builder
 
 root = '/home/users/chenghuige/rsc/'
-name = 'segment'
+name = 'redis'
 #define_symbols = ['GCCXML','PYTHON_WRAPPER','NO_BAIDU_DEP']
 define_symbols = ['GCCXML','PYTHON_WRAPPER']
 
 files = [
 					'include.python/common_util.h',  #for safe let it be first for without it file_util.h or string_util.h... will fail
-					'./include.python/log_util.h',
-					'./include.python/Segmentor.h',
+					'./include.python/log_util.h', #without this Logger.set_level not actually in effect
+					##-------------redis util
+          './include.python/tools/redis/RedisClient.h',
 				]
 
 paths = [
@@ -39,6 +40,11 @@ include_paths=[
                 'public/odict/output',
                 'public/uconv/output',
                 'public/configure/output',
+								'app/search/ksarch/store/proxy-lib/redis/output',
+								'public/ub',
+								'public/mcpack',
+								'public/nshead/output',
+								'public/odict/output',
 								'app/search/sep/anti-spam/gezi/third/rabit',
 	      ]
 
@@ -50,6 +56,7 @@ include_paths_obsolute = [
           #'app/search/sep/anti-spam/melt/python-wrapper/gezi.include.python',
         	'lib2-64/wordseg', 
         	'public/comlog-plugin',
+					'public/connectpool',
 					'app/search/sep/anti-spam/gezi/third',
         ]
 

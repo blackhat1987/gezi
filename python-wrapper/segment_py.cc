@@ -9,6 +9,8 @@
 
 #include "common_util.h"
 
+#include "log_util.h"
+
 #include "Segmentor.h"
 const int gezi::SegHandle::SEG_BUFF_SIZE;
 
@@ -65,6 +67,7 @@ DEF_MAP(id_map);
 DEF_MAP(sd_map);
 DEF_MAP(si_map);
 DEF_MAP(ss_map);
+DEF_PAIR(ii_pair);
 DEF_PAIR(si_pair);
 DEF_PAIR(wsi_pair);
 DEF_VEC(si_pair_vec);
@@ -92,6 +95,25 @@ bp::scope vector_less__gezi_scope_SegNode__greater__scope( vector_less__gezi_sco
 //WARNING: the next line of code will not compile, because "::gezi::SegNode" does not have operator== !
 //         vector_less__gezi_scope_SegNode__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< gezi::SegNode > >() );
 } //scope end
+
+{ //::gezi::LogHelper
+typedef bp::class_< gezi::LogHelper > LogHelper_exposer_t;
+LogHelper_exposer_t LogHelper_exposer = LogHelper_exposer_t( "LogHelper", bp::init< bp::optional< int > >(( bp::arg("log_level")=(int)(16) )) );
+bp::scope LogHelper_scope( LogHelper_exposer );
+bp::implicitly_convertible< int, gezi::LogHelper >();
+LogHelper_exposer.def( bp::init< std::string const &, bp::optional< std::string const & > >(( bp::arg("conf_file"), bp::arg("conf_path")="./conf" )) );
+{ //::gezi::LogHelper::set_level
+
+typedef void ( *set_level_function_type )( int );
+
+LogHelper_exposer.def(
+"set_level"
+, set_level_function_type( &::gezi::LogHelper::set_level )
+, ( bp::arg("log_level") ) );
+
+}
+LogHelper_exposer.staticmethod( "set_level" );
+}
 
 { //::gezi::SegHandle
 typedef bp::class_< SegHandle_wrapper > SegHandle_exposer_t;
@@ -403,6 +425,8 @@ Segmentor_exposer.staticmethod( "seg_words" );
 Segmentor_exposer.staticmethod( "segment" );
 Segmentor_exposer.staticmethod( "uninit" );
 }
+
+bp::class_< gezi::ThreadLogHelper >( "ThreadLogHelper", bp::init< >() );
 
 { //::gezi::print_seg_posttag_result
 

@@ -9,7 +9,12 @@
 
 import sys,os
 import gflags
-import libredis
+
+import nowarning
+import libredis 
+#from libgezi import LogHelper
+libredis.LogHelper.set_level(4)
+
 
 FLAGS = gflags.FLAGS
 
@@ -27,9 +32,9 @@ if ret != 0:
 	print 'redis init fail ret:', ret
 	exit(-1)
 
-vec = libredis.svec()
 round = 0
 while True:
+	vec = libredis.svec()
 	ret = redis_client.ZrangeFirstNElement(FLAGS.thread_key, FLAGS.queue_size, vec)
 	if ret != 0:
 		print 'read redis fail ret:', ret
@@ -38,14 +43,11 @@ while True:
 	num_old = 0
 	num_new = 0 
 	for pid in vec:
-		print pid
 		if pid in pids:
 			num_old += 1
 		else:
 			num_new += 1
 			pids.add(pid)
-	print 'new:', num_new, ' old:', num_old
+	print 'new:', num_new, ' old:', num_old, ' total:', len(pids)
 	round += 1
-	if round > 2:
-		break
  
