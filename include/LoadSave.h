@@ -30,6 +30,17 @@ namespace gezi {
 			return true;
 		}
 
+		virtual void CustomSave(string path)
+		{
+			VLOG(0) << Name() << " try custom save to " << path;
+		}
+
+		virtual bool CustomLoad(string path)
+		{
+			VLOG(0) << Name() << " try custom load from " << path;
+			return true;
+		}
+
 		//另外兼容之前 小写开头的load save看做类似 LoadText, SaveText
 		virtual void SaveText(string file)
 		{

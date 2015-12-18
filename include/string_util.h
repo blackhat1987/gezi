@@ -705,7 +705,7 @@ namespace gezi {
 	}
 
 	//@TODO move to somewhere else
-	inline vector<string> get_words(vector<string>& l, int ngram = 3, string sep = "$#$")
+	inline vector<string> get_words(const vector<string>& l, int ngram = 3, string sep = "\x01")
 	{
 		int len = l.size();
 		vector<string> result;
@@ -721,7 +721,7 @@ namespace gezi {
 		return result;
 	}
 
-	inline void get_skipn_bigram(const svec& l, svec& li, int n, string sep = "$#$")
+	inline void get_skipn_bigram(const svec& l, svec& li, int n, string sep = "\x01")
 	{
 		svec l2(2);
 		int len = l.size();
@@ -733,7 +733,7 @@ namespace gezi {
 		}
 	}
 
-	inline void get_skip_bigram(const svec& l, svec& li, int n, string sep = "$#$")
+	inline void get_skip_bigram(const svec& l, svec& li, int n, string sep = "\x01")
 	{
 		for (int skip = 1; skip < n; skip++)
 		{

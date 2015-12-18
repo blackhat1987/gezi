@@ -48,6 +48,7 @@ files = [
 					'./include.python/reg_util.h',
 					'./include.python/file_util.h',
 					'./include.python/encoding_convert.h',
+				
 					##-------------tieba utils 
 					#'./include.python/tieba/tieba_util.h',
 					#'./include.python/tieba/get_info.h',
@@ -91,7 +92,6 @@ include_paths=[
                 'public/odict/output',
                 'public/uconv/output',
                 'public/configure/output',
-                'other/rabit',
 	      ]
 
 include_paths_python = [
@@ -102,6 +102,7 @@ include_paths_obsolute = [
           #'app/search/sep/anti-spam/melt/python-wrapper/gezi.include.python',
         	'lib2-64/wordseg', 
         	'public/comlog-plugin',
+          'app/search/sep/anti-spam/gezi/third/',
         ]
 
 mb = module_builder.module_builder_t(

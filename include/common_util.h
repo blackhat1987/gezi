@@ -25,11 +25,6 @@
 #endif // USE_FOLLY_VECTOR
 #include <gflags/gflags.h>
 
-#ifdef _DEBUG 
-#define private public 
-#define protected public 
-#endif //_DEBUG
-
 #include "common_def.h"
 
 #include "string_util.h" //will remove baidu dependence 

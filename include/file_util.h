@@ -114,7 +114,7 @@ namespace gezi {
 
 	inline vector<string> read_lines(string infile)
 	{
-		AutoTimer timer("read_lines", 3);
+		//AutoTimer timer("read_lines", 3);
 		vector<string> vec;
 		std::ifstream ifs(infile.c_str());
 		string line;
@@ -128,7 +128,7 @@ namespace gezi {
 
 	inline vector<string> read_lines_fast(string infile)
 	{
-		AutoTimer timer("read_lines", 3);
+		//AutoTimer timer("read_lines", 3);
 		vector<string> vec;
 		std::ifstream ifs(infile.c_str());
 		string line;

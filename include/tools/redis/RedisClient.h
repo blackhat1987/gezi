@@ -70,7 +70,7 @@ namespace gezi {
 		{
 			store::ss* valueVec;
 			double* scoreVec;
-			int ret = 0, outNum = 0, finalRet;
+			int ret = 0, outNum = 0, finalRet = 0;
 			for (int start = 0; start < num; start += step)
 			{
 				int nowCount = std::min(step, num - start);
@@ -103,7 +103,7 @@ namespace gezi {
 		{
 			store::ss* valueVec;
 			double* scoreVec;
-			int ret = 0, outNum = 0, finalRet;
+			int ret = 0, outNum = 0, finalRet = 0;
 			for (int start = 0; start < num; start += step)
 			{
 				int nowCount = std::min(step, num - start);
@@ -136,7 +136,7 @@ namespace gezi {
 		{
 			store::ss* valueVec;
 			double* scoreVec;
-			int ret = 0, outNum = 0, finalRet;
+			int ret = 0, outNum = 0, finalRet = 0;
 			for (int start = 0; start < num; start += step)
 			{
 				int nowCount = std::min(step, num - start);
@@ -288,7 +288,7 @@ namespace gezi {
 		{
 			store::ss* valueVec;
 			double* scoreVec;
-			int ret = 0, outNum = 0, finalRet;
+			int ret = 0, outNum = 0, finalRet = 0;
 			for (int start = 0; start < num; start += step)
 			{
 				int nowCount = std::min(step, num - start);
@@ -352,7 +352,7 @@ namespace gezi {
 		{
 			store::ss* valueVec;
 			double* scoreVec;
-			int ret = 0, outNum = 0, finalRet;
+			int ret = 0, outNum = 0, finalRet = 0;
 			for (int start = 0; start < num; start += step)
 			{
 				int nowCount = std::min(step, num - start);

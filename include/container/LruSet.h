@@ -17,7 +17,7 @@
 #include "common_util.h"
 
 namespace gezi {
-
+	//@TODO 目前这样的template是无法封装python的 由于gccxml不能处理
 	template<typename Key, template<class _Kty, typename...> class _Set = std::set>
 	class LruSet
 	{
@@ -83,6 +83,7 @@ namespace gezi {
 		deque<Key> _queue;
 		int _capacity;
 	};
+
 	template <typename Key, typename...>
 	using LruHashSet = LruSet<Key, std::unordered_set>;
 }  //----end of namespace gezi

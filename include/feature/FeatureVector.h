@@ -85,22 +85,14 @@ namespace gezi {
 		};
 
 		//注意非多态情况 默认按照dense 处理 但是如果是按照Vector Sparse的话 还是按照二分查找
-		value_type operator[](index_type index) const
+		value_type operator[](index_type i) const
 		{
-#ifdef __DEBUG 
-			CHECK_GE(index, 0);
-			CHECK_LT(index, values.size());
-#endif
-			return values[index];
+			return values[i];
 		}
 
-		value_type& operator[](index_type index)
+		value_type& operator[](index_type i)
 		{
-#ifdef __DEBUG 
-			CHECK_GE(index, 0);
-			CHECK_LT(index, values.size());
-#endif
-			return values[index];
+			return values[i];
 		}
 
 		value_type value_at(index_type index) const

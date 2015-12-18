@@ -70,10 +70,11 @@ if GCC_HIGH  == 1:
 		GCC_LDFLAGS  += ' -static-libgcc -static-libstdc++'
 
 #链接参数.
-LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -ldl -rdynamic -L./ -lpython2.7 -lboost_python -Wl,-rpath=./', GCC_LDFLAGS)
+LDFLAGS('-lpthread -lcrypto -lrt -lssl -lldap -ldl -rdynamic -L./ -L/home/users/chenghuige/.jumbo/lib -lpython2.7 -lboost_python -Wl,-rpath=./', GCC_LDFLAGS)
 
 #依赖模块
 ImportConfigsFrom('..')
+CONFIGS('app/search/sep/anti-spam/gezi@trunk')
 #CONFIGS('third-64/boost.1.53')
 
 #头文件路径.
@@ -81,9 +82,11 @@ INCPATHS('/home/users/chenghuige/.jumbo/include/python2.7 ./include'.replace('./
 headers=''
 
 #静态库
-#LIBS('/home/users/chenghuige/.jumbo/lib/libpython2.7.so /home/users/chenghuige/.jumbo/lib/libboost_python.so')
-LIBS('./libpython2.7.so ./libboost_python.so')
+LIBS('/home/users/chenghuige/.jumbo/lib/libpython2.7.so /home/users/chenghuige/.jumbo/lib/libboost_python.so')
+#LIBS('./libpython2.7.so ./libboost_python.so')
 srcs=GLOB('')
 #SharedLibrary('gezi',Sources('gezi_py.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED')),LinkDeps(True))
 Application('simple_py_embedding',Sources('simple_py_embedding.cc', srcs))
 Application('boost_py_embedding',Sources('boost_py_embedding.cc', srcs))
+#Application('tensorflow_embedding',Sources('tensorflow_embedding.py',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')))
+Application('tensorflow_embedding',Sources('tensorflow_embedding.cc',srcs))

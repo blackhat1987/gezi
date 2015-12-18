@@ -2853,6 +2853,723 @@
     <ClInclude Include="third\mxnet\src\symbol\static_graph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\device.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\device_factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\device_mgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\device_set.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\direct_session.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\eigen_thread_pool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\executor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\gpu\dma_helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_allocator_retry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_bfc_allocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_debug_allocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_event_mgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_init.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_region_allocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_stream_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\gpu\pool_allocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\gpu\process_state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\gpu\visitable_allocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\gpu_device_context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\kernel_benchmark_testlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\local_device.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\rendezvous_mgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\session_factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\simple_placer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\common_runtime\threadpool_device.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\allocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\attr_value_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\bfloat16.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\cancellation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\control_flow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\device_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\fake_input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\function_testlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\graph_def_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\kernel_def_builder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\lookup_interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\node_def_builder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\node_def_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\numeric_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\numeric_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\op_def_builder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\op_def_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\op_gen_lib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\op_kernel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\op_segment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\queue_interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\reader_interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\reader_op_kernel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\register_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\rendezvous.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\resource_mgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\tensor_slice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\tensor_testutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\tensor_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\tensor_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\tracking_allocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\framework\type_traits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\algorithm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\colors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\costmodel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\costutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\default_device.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\dot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\edgeset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\equal_graph_def.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\graph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\graph_constructor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\graph_def_builder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\graph_partition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\node_builder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\optimizer_cse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\subgraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\tensor_id.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\testlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\graph\types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\adjust_contrast_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\aggregate_ops.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\argmax_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\assign_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\avgpooling_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\batch_norm_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\bias_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\cast_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\concat_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\constant_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\control_flow_ops.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\conv_2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\cwise_ops.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\cwise_ops_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\cwise_ops_gpu_common.cu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\dense_update_ops.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\fifo_queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\fill_functor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\identity_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\initializable_lookup_table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\l2loss_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\linalg_ops_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\lookup_table_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\lookup_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\matmul_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\maxpooling_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\maxpooling_op_gpu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\no_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\ops_testutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\ops_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\pad_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\pooling_ops_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\pooling_ops_common_gpu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\queue_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\random_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\range_sampler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\reader_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\reduction_ops.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\reduction_ops_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\reference_gemm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\relu_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\reshape_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\reverse_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\reverse_sequence_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\sendrecv_ops.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\slice_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\softmax_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\softplus_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\split_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\tile_ops.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\training_ops.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\transpose_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\transpose_op_functor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\typed_queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\variable_ops.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\where_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\kernels\xent_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\core\arena.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\core\bits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\core\blocking_counter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\core\casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\core\coding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\core\command_line_flags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\core\errors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\core\notification.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\core\raw_coding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\core\refcount.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\core\status_test_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\core\stringpiece.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\core\threadpool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\gtl\array_slice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\gtl\array_slice_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\gtl\edit_distance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\gtl\inlined_vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\gtl\int_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\gtl\iterator_range.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\gtl\manual_constructor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\gtl\map_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\gtl\stl_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\gtl\top_n.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\hash\crc32c.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\hash\hash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\histogram\histogram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\io\block.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\io\block_builder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\io\format.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\io\inputbuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\io\iterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\io\match.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\io\path.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\io\record_reader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\io\record_writer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\io\table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\io\table_builder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\io\table_options.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\io\two_level_iterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\jpeg\jpeg_handle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\jpeg\jpeg_mem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\png\png_io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\random\distribution_sampler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\random\exact_uniform_int.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\random\philox_random.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\random\philox_random_test_utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\random\random.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\random\random_distributions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\random\simple_philox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\random\weighted_picker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\strings\numbers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\strings\ordered_code.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\strings\strcat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\strings\stringprintf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\lib\strings\str_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\default\dynamic_annotations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\default\integral_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\default\logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\default\mutex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\default\protobuf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\default\stream_executor_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\default\thread_annotations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\default\tracing_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\init_main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\port.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\protobuf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\regexp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\stream_executor_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\tensor_coding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\test_benchmark.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\thread_annotations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\platform\tracing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\public\env.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\public\session.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\public\session_options.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\public\status.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\public\tensor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\public\tensorflow_server.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\public\tensor_c_api.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\public\tensor_shape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\bcast.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\device_name_utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\events_writer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\guarded_philox_random.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\padding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\port.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\saved_tensor_slice_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\sparse\dim_comparator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\sparse\group_iterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\sparse\sparse_tensor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\tensor_slice_reader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\tensor_slice_reader_cache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\tensor_slice_set.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\tensor_slice_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\tensor_slice_writer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\use_cudnn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\tensorflow\tensorflow\core\util\work_sharder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -3725,6 +4442,1566 @@
     <ClCompile Include="third\mxnet\tools\im2rec.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\client\tensor_c_api.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\client\tensor_c_api_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\device.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\device_factory.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\device_mgr.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\device_set.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\device_set_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\direct_session.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\direct_session_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\executor.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\function.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_allocator_retry.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_allocator_retry_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_bfc_allocator.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_bfc_allocator_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_debug_allocator.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_debug_allocator_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device_factory.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_event_mgr.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_event_mgr_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_init.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_region_allocator.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_region_allocator_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_stream_util.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_stream_util_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_util.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\gpu_util_platform_specific.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\pool_allocator.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\pool_allocator_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\gpu\process_state.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\kernel_benchmark_testlib.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\local_device.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\rendezvous_mgr.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\session.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\session_factory.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\session_options.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\session_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\simple_placer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\simple_placer_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\threadpool_device.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\common_runtime\threadpool_device_factory.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\allocator.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\allocator_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\attr_value_util.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\attr_value_util_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\bfloat16.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\bfloat16_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\cancellation.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\cancellation_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\device_base.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\fake_input.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\function.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\function_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\function_testlib.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\graph_def_util.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\kernel_def_builder.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\kernel_def_builder_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\lookup_interface.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\node_def_builder.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\node_def_builder_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\node_def_util.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\node_def_util_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\op_compatibility_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\op_def_builder.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\op_def_builder_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\op_def_util.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\op_def_util_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\op_gen_lib.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\op_kernel.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\op_kernel_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\op_segment.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\op_segment_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\reader_op_kernel.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\rendezvous.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\rendezvous_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\resource_mgr.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\resource_mgr_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\tensor.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\tensor_shape.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\tensor_shape_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\tensor_slice.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\tensor_slice_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\tensor_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\tensor_testutil.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\tensor_util.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\tensor_util_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\tracking_allocator.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\tracking_allocator_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\types.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\framework\types_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\algorithm.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\algorithm_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\colors.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\costmodel.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\costutil.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\dot.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\edgeset.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\edgeset_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\equal_graph_def.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\equal_graph_def_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\graph.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\graph_constructor.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\graph_constructor_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\graph_def_builder.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\graph_partition.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\graph_partition_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\graph_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\node_builder.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\node_builder_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\optimizer_cse.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\optimizer_cse_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\subgraph.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\subgraph_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\tensor_id.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\tensor_id_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\graph\testlib.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\adjust_contrast_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\adjust_contrast_op_benchmark_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\adjust_contrast_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\adjust_contrast_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\aggregate_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\aggregate_ops_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\argmax_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\argmax_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\attention_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\avgpooling_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\avgpooling_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\batch_matmul_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\batch_norm_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\batch_norm_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\bcast_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\bias_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\bias_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\candidate_sampler_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cast_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cast_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cast_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\check_numerics_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\check_numerics_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cholesky_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\concat_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\concat_op_cpu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\concat_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\concat_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\constant_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\constant_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\constant_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\control_flow_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\control_flow_ops_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\conv_grad_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\conv_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\conv_ops_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\conv_ops_gpu_2.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\conv_ops_gpu_3.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\conv_ops_gpu_matmul.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\core_ops_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\count_up_to_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_ops_common.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_ops_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_abs.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_add.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_ceil.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_complex.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_conj.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_cos.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_div.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_equal_to.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_exp.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_floor.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_abs.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_add.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_ceil.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_complex.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_conj.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_cos.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_div.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_equal_to.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_exp.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_floor.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_greater.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_greater_equal.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_imag.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_inverse.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_isfinite.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_isinf.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_isnan.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_less.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_less_equal.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_log.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_logical_and.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_logical_not.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_logical_or.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_maximum.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_minimum.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_mod.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_mul.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_neg.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_not_equal_to.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_pow.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_real.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_rsqrt.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_select.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_sigmoid.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_sign.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_sin.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_sqrt.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_square.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_sub.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_gpu_tanh.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_greater.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_greater_equal.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_imag.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_inverse.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_isfinite.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_isinf.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_isnan.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_less.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_less_equal.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_log.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_logical_and.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_logical_not.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_logical_or.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_maximum.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_minimum.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_mod.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_mul.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_neg.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_not_equal_to.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_pow.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_real.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_rsqrt.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_select.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_sigmoid.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_sign.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_sin.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_sqrt.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_square.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_sub.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\cwise_op_tanh.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\decode_csv_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\decode_jpeg_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\decode_png_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\decode_raw_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\dense_update_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\dense_update_ops_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\determinant_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\diag_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\dynamic_partition_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\dynamic_partition_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\dynamic_stitch_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\dynamic_stitch_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\edit_distance_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\encode_jpeg_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\encode_png_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\example_parsing_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\fact_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\fifo_queue.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\fifo_queue_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\fixed_length_record_reader_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\gather_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\gather_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\identity_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\identity_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\identity_reader_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\initializable_lookup_table.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\in_topk_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\io.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\l2loss_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\l2loss_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\linalg_ops_common.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\listdiff_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\logging_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\logging_ops_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\lookup_table_init_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\lookup_table_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\lookup_util.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\lrn_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\lrn_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\matching_files_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\matmul_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\matmul_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\matmul_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\matrix_inverse_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\maxpooling_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\maxpooling_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\no_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\ops_testutil.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\ops_util.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\ops_util_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\pack_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\pad_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\pad_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\pooling_ops_common.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\queue_base.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\queue_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\random_crop_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\random_crop_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\random_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\random_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\random_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\random_shuffle_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\random_shuffle_queue_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\range_sampler.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\range_sampler_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reader_base.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reader_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reduction_ops_all.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reduction_ops_any.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reduction_ops_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reduction_ops_max.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reduction_ops_mean.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reduction_ops_min.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reduction_ops_prod.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reduction_ops_sum.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reduction_ops_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\relu_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\relu_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reshape_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\resize_area_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\resize_bicubic_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\resize_bilinear_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\resize_bilinear_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\resize_nearest_neighbor_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\resize_nearest_neighbor_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\restore_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\restore_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reverse_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reverse_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reverse_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reverse_sequence_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\reverse_sequence_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\save_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\save_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\scatter_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\scatter_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\segment_reduction_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\segment_reduction_ops_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\sendrecv_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\sequence_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\shape_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\slice_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\slice_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\slice_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\softmax_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\softmax_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\softplus_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\softplus_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\sparse_concat_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\sparse_matmul_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\sparse_matmul_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\sparse_reorder_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\sparse_to_dense_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\sparse_to_dense_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\split_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\split_op_cpu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\split_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\string_to_hash_bucket_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\string_to_number_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\summary_image_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\summary_image_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\summary_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\summary_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\text_line_reader_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\tf_record_reader_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\tile_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\tile_ops_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\topk_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\training_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\training_ops_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\training_ops_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\transpose_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\transpose_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\unique_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\unique_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\unpack_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\variable_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\where_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\whole_file_read_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\xent_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\xent_op_gpu.cu.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\kernels\xent_op_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\arena.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\arena_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\bit_cast_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\blocking_counter_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\coding.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\coding_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\command_line_flags.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\notification_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\refcount.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\refcount_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\status.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\status_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\stringpiece.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\threadpool.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\core\threadpool_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\gtl\array_slice_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\gtl\edit_distance_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\gtl\inlined_vector_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\gtl\int_type_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\gtl\iterator_range_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\gtl\manual_constructor_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\gtl\map_util_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\gtl\top_n_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\hash\crc32c.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\hash\crc32c_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\hash\hash.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\hash\hash_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\histogram\histogram.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\histogram\histogram_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\block.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\block_builder.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\format.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\inputbuffer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\inputbuffer_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\iterator.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\match.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\match_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\path.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\path_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\recordio_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\record_reader.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\record_writer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\table.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\table_builder.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\table_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\io\two_level_iterator.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\jpeg\jpeg_handle.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\jpeg\jpeg_mem.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\jpeg\jpeg_mem_unittest.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\png\png_io.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\random\distribution_sampler.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\random\distribution_sampler_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\random\philox_random_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\random\random.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\random\random_distributions_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\random\random_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\random\simple_philox.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\random\simple_philox_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\random\weighted_picker.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\random\weighted_picker_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\strings\numbers.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\strings\numbers_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\strings\ordered_code.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\strings\ordered_code_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\strings\strcat.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\strings\strcat_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\strings\stringprintf.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\strings\stringprintf_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\strings\str_util.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\lib\strings\str_util_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\array_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\attention_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\candidate_sampling_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\control_flow_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\data_flow_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\image_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\io_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\linalg_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\logging_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\math_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\nn_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\no_op.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\parsing_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\random_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\sendrecv_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\sparse_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\state_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\string_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\summary_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\ops\training_ops.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\default\logging.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\default\test_benchmark.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\default\tracing.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\env.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\env_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\integral_types_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\logging_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\port_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\posix\env.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\posix\port.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\protobuf_util.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\tensor_coding.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\test_main.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\platform\tracing.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\user_ops\fact.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\bcast.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\bcast_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\device_name_utils.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\device_name_utils_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\events_writer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\events_writer_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\guarded_philox_random.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\padding.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\port.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\saved_tensor_slice_util.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\saved_tensor_slice_util_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\sparse\group_iterator.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\sparse\sparse_tensor_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\tensor_slice_reader.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\tensor_slice_reader_cache.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\tensor_slice_reader_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\tensor_slice_set.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\tensor_slice_set_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\tensor_slice_util_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\tensor_slice_writer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\tensor_slice_writer_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\use_cudnn.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\util.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\work_sharder.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\util\work_sharder_test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\g3doc\how_tos\adding_an_op\attr_examples.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\g3doc\how_tos\adding_an_op\zero_out_op_kernel_1.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\g3doc\how_tos\adding_an_op\zero_out_op_kernel_2.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\g3doc\how_tos\adding_an_op\zero_out_op_kernel_3.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\user_ops\zero_out.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\tensorflow\tensorflow\core\user_ops\auc.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\json\json_internalarray.inl">
@@ -3757,5 +6034,6 @@
     <None Include="third\mxnet\CMakeFiles\feature_tests.bin">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="third\tensorflow\tensorflow\g3doc\tutorials\deep_cnn\cifar_tensorboard.html" />
   </ItemGroup>
 </Project>

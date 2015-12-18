@@ -2012,7 +2012,9 @@
     <ClCompile Include="third\tensorflow\tensorflow\core\platform\test.cc" />
     <ClCompile Include="third\tensorflow\tensorflow\core\platform\test_main.cc" />
     <ClCompile Include="third\tensorflow\tensorflow\core\platform\tracing.cc" />
+    <ClCompile Include="third\tensorflow\tensorflow\core\user_ops\auc.cc" />
     <ClCompile Include="third\tensorflow\tensorflow\core\user_ops\fact.cc" />
+    <ClCompile Include="third\tensorflow\tensorflow\core\user_ops\zero_out.cc" />
     <ClCompile Include="third\tensorflow\tensorflow\core\util\bcast.cc" />
     <ClCompile Include="third\tensorflow\tensorflow\core\util\bcast_test.cc" />
     <ClCompile Include="third\tensorflow\tensorflow\core\util\device_name_utils.cc" />
@@ -2076,6 +2078,8 @@
     <None Include="third\mxnet\cmake\CMakeFiles\3.2.2\CMakeDetermineCompilerABI_CXX.bin" />
     <None Include="third\mxnet\cmake\CMakeFiles\feature_tests.bin" />
     <None Include="third\tensorflow\tensorflow\g3doc\tutorials\deep_cnn\cifar_tensorboard.html" />
+    <None Include="third\tensorflow\tensorflow\models\embedding\word2vec.py" />
+    <None Include="third\tensorflow\tensorflow\models\embedding\word2vec_test.py" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

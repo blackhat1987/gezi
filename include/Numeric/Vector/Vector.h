@@ -497,10 +497,6 @@ namespace gezi {
 			//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
 			if (IsDense())
 			{
-#ifdef __DEBUG 
-				CHECK_GE(index, 0);
-				//CHECK_LT(index, values.size());
-#endif
 				return values[index];
 			}
 			else
@@ -510,10 +506,6 @@ namespace gezi {
 				{
 					return _zeroValue;
 				}
-#ifdef __DEBUG 
-				CHECK_GE(iter - indices.begin(), 0);
-				CHECK_LT(iter - indices.begin(), values.size());
-#endif
 				return values[iter - indices.begin()];
 			}
 		}
@@ -525,10 +517,6 @@ namespace gezi {
 			//THROW((format("Index %d out of range in Vector of length %d") % i % length).str());
 			if (IsDense())
 			{//外部确保不越界！
-#ifdef __DEBUG 
-				CHECK_GE(index, 0);
-				//CHECK_LT(index, values.size());
-#endif
 				return values[index];
 			}
 			else
@@ -540,10 +528,6 @@ namespace gezi {
 					return _zeroValue;
 					//THROW((format("In sparse vector could not find the index %d") % i).str());
 				}
-#ifdef __DEBUG 
-				CHECK_GE(iter - indices.begin(), 0);
-				CHECK_LT(iter - indices.begin(), values.size());
-#endif
 				return values[iter - indices.begin()];
 			}
 		}
