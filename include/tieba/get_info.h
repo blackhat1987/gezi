@@ -58,6 +58,7 @@ namespace gezi {
 
 			CurlUtil curl;
 			curl.setTimeout(timeout);
+			PVAL2(url, curl.get(url));
 			return curl.get(url);
 		}
 

@@ -45,7 +45,11 @@ INCPATH=-I. \
   -I../../../third/folly \
   -I../../../third/double-conversion \
   -I./include/
-DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/gezi/third \
+DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/gezi \
+  -I../../../../../../../../app/search/sep/anti-spam/gezi/include \
+  -I../../../../../../../../app/search/sep/anti-spam/gezi/output \
+  -I../../../../../../../../app/search/sep/anti-spam/gezi/output/include \
+  -I../../../../../../../../app/search/sep/anti-spam/gezi/third \
   -I../../../../../../../../app/search/sep/anti-spam/gezi/third/include \
   -I../../../../../../../../app/search/sep/anti-spam/gezi/third/output \
   -I../../../../../../../../app/search/sep/anti-spam/gezi/third/output/include \
@@ -53,10 +57,6 @@ DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/gezi/third \
   -I../../../../../../../../app/search/sep/anti-spam/melt/include \
   -I../../../../../../../../app/search/sep/anti-spam/melt/output \
   -I../../../../../../../../app/search/sep/anti-spam/melt/output/include \
-  -I../../../../../../../../app/search/sep/mining/deformation-text \
-  -I../../../../../../../../app/search/sep/mining/deformation-text/include \
-  -I../../../../../../../../app/search/sep/mining/deformation-text/output \
-  -I../../../../../../../../app/search/sep/mining/deformation-text/output/include \
   -I../../../../../../../../com/btest/gtest \
   -I../../../../../../../../com/btest/gtest/include \
   -I../../../../../../../../com/btest/gtest/output \
@@ -117,6 +117,10 @@ DEP_INCPATH=-I../../../../../../../../app/search/sep/anti-spam/gezi/third \
   -I../../../../../../../../ps/se/include/include \
   -I../../../../../../../../ps/se/include/output \
   -I../../../../../../../../ps/se/include/output/include \
+  -I../../../../../../../../ps/se/toolchain \
+  -I../../../../../../../../ps/se/toolchain/include \
+  -I../../../../../../../../ps/se/toolchain/output \
+  -I../../../../../../../../ps/se/toolchain/output/include \
   -I../../../../../../../../public/bslext \
   -I../../../../../../../../public/bslext/include \
   -I../../../../../../../../public/bslext/output \
@@ -212,7 +216,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=7bd90e7c5e7a3145bbfedadfb4c8df0b  COMAKE
+COMAKE_MD5=1fabd97270281a13a1be616904f209b3  COMAKE
 
 
 .PHONY:all
@@ -282,20 +286,16 @@ get_urate_infos:get_urate_infos_get_urate_infos.o \
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mget_urate_infos[0m']"
 	$(CXX) get_urate_infos_get_urate_infos.o -Xlinker "-(" ../../../libgezi_common.a \
   ../../../libgezi_json.a \
-  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libXTrie.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libcommon.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libmatch_index.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libpreprocess.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libstrprocess.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libtrie.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libword_ext.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/output/lib/libdeformation-procs.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
@@ -423,20 +423,16 @@ urate_train:urate_train_urate_train.o \
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40murate_train[0m']"
 	$(CXX) urate_train_urate_train.o -Xlinker "-(" ../../../libgezi_common.a \
   ../../../libgezi_json.a \
-  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libXTrie.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libcommon.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libmatch_index.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libpreprocess.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libstrprocess.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libtrie.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libword_ext.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/output/lib/libdeformation-procs.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
@@ -564,20 +560,16 @@ urate_predicts_from_file:urate_predicts_from_file_urate_predicts_from_file.o \
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40murate_predicts_from_file[0m']"
 	$(CXX) urate_predicts_from_file_urate_predicts_from_file.o -Xlinker "-(" ../../../libgezi_common.a \
   ../../../libgezi_json.a \
-  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libXTrie.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libcommon.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libmatch_index.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libpreprocess.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libstrprocess.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libtrie.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libword_ext.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/output/lib/libdeformation-procs.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
@@ -705,20 +697,16 @@ urate_reducer:urate_reducer_urate_reducer.o \
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40murate_reducer[0m']"
 	$(CXX) urate_reducer_urate_reducer.o -Xlinker "-(" ../../../libgezi_common.a \
   ../../../libgezi_json.a \
-  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libXTrie.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libcommon.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libmatch_index.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libpreprocess.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libstrprocess.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libtrie.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libword_ext.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/output/lib/libdeformation-procs.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
@@ -846,20 +834,16 @@ img_reducer:img_reducer_img_reducer.o \
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mimg_reducer[0m']"
 	$(CXX) img_reducer_img_reducer.o -Xlinker "-(" ../../../libgezi_common.a \
   ../../../libgezi_json.a \
-  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libXTrie.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libcommon.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libmatch_index.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libpreprocess.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libstrprocess.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libtrie.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libword_ext.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/output/lib/libdeformation-procs.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
@@ -987,20 +971,16 @@ lou_reducer:lou_reducer_lou_reducer.o \
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlou_reducer[0m']"
 	$(CXX) lou_reducer_lou_reducer.o -Xlinker "-(" ../../../libgezi_common.a \
   ../../../libgezi_json.a \
-  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libXTrie.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libcommon.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libmatch_index.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libpreprocess.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libstrprocess.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libtrie.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libword_ext.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/output/lib/libdeformation-procs.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../../../com/idlcompiler/astyle/libastyle.a \
@@ -1128,20 +1108,16 @@ test_langmodel:test_langmodel_test_langmodel.o \
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mtest_langmodel[0m']"
 	$(CXX) test_langmodel_test_langmodel.o -Xlinker "-(" ../../../libgezi_common.a \
   ../../../libgezi_json.a \
-  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
+  ../../../libgezi_cppformat.a ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/libgezi_json.a \
+  ../../../../../../../../app/search/sep/anti-spam/gezi/output/lib/libPYNotation.a \
+  ../../../../../../../../app/search/sep/anti-spam/melt/libblas.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/liblinear.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libmelt.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsofia.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libsvm.a \
   ../../../../../../../../app/search/sep/anti-spam/melt/libvw.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libXTrie.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libcommon.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libmatch_index.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libpreprocess.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libstrprocess.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libtrie.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/lib/libword_ext.a \
-  ../../../../../../../../app/search/sep/mining/deformation-text/output/lib/libdeformation-procs.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest.a \
   ../../../../../../../../com/btest/gtest/output/lib/libgtest_main.a \
   ../../../../../../../../com/idlcompiler/astyle/libastyle.a \

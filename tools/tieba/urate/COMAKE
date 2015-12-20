@@ -68,7 +68,7 @@ LDFLAGS('-lpthread -lrt -ldl -lldap -lcurl -rdynamic -lssl -lcrypto', GCC_LDFLAG
 #ÒÀÀµÄ£¿é
 ImportConfigsFrom('../../../')
 CONFIGS('app/search/sep/anti-spam/melt@trunk')
-CONFIGS('app/search/sep/mining/deformation-text@trunk')
+#CONFIGS('app/search/sep/mining/deformation-text@trunk')
 #CONFIGS('st/nlp/lm-score@lm-score_1-0-3-1_PD_BL')
 CONFIGS('st/nlp/lm-score')
 CONFIGS('third-64/zlib')
