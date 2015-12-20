@@ -119,3 +119,5 @@ LIBS('../../../libgezi_cppformat.a')
 #Directory('demo')
 srcs = ''
 Application('trate',Sources('trate.cc', srcs))
+Application('test_load',Sources('test_load.cc',srcs, ENV.CppFlags()+CppFlags('-O0')))
+#Application('test_load',Sources('test_load.cc',srcs))

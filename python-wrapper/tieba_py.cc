@@ -11,6 +11,8 @@
 
 #include "common_util.h"
 
+#include "log_util.h"
+
 #include "tools/IpFinder.h"
 const int gezi::IpFinder::INDEX_LENGTH;
 const int gezi::IpFinder::IP_LENGTH;
@@ -425,6 +427,27 @@ IpFinder_exposer.def_readonly( "INDEX_LENGTH", gezi::IpFinder::INDEX_LENGTH );
 IpFinder_exposer.def_readonly( "IP_LENGTH", gezi::IpFinder::IP_LENGTH );
 IpFinder_exposer.def_readonly( "OFFSET_LENGTH", gezi::IpFinder::OFFSET_LENGTH );
 }
+
+{ //::gezi::LogHelper
+typedef bp::class_< gezi::LogHelper > LogHelper_exposer_t;
+LogHelper_exposer_t LogHelper_exposer = LogHelper_exposer_t( "LogHelper", bp::init< bp::optional< int > >(( bp::arg("log_level")=(int)(16) )) );
+bp::scope LogHelper_scope( LogHelper_exposer );
+bp::implicitly_convertible< int, gezi::LogHelper >();
+LogHelper_exposer.def( bp::init< std::string const &, bp::optional< std::string const & > >(( bp::arg("conf_file"), bp::arg("conf_path")="./conf" )) );
+{ //::gezi::LogHelper::set_level
+
+typedef void ( *set_level_function_type )( int );
+
+LogHelper_exposer.def(
+"set_level"
+, set_level_function_type( &::gezi::LogHelper::set_level )
+, ( bp::arg("log_level") ) );
+
+}
+LogHelper_exposer.staticmethod( "set_level" );
+}
+
+bp::class_< gezi::ThreadLogHelper >( "ThreadLogHelper", bp::init< >() );
 
 bp::class_< gezi::tieba::CommentInfo >( "CommentInfo" )
 .def( bp::self == bp::self )
