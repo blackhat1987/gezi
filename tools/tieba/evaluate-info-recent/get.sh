@@ -4,13 +4,13 @@ PBTYPE=1
 THREADTYPE=2
 REPLYTYPE=8
 
-MYSQLBIN="/home/forum/.jumbo/bin/mysql -h10.95.32.17 -P3306 -uroot -pueg_evaluation_12345 evaluation-pf -N -e"
+MYSQLBIN="/home/forum/.jumbo/bin/mysql -h10.95.32.17 -P3306 -uroot -proot evaluation-pf -N -e"
 
-DATE=$(date +%Y%m%d --date=$1' month ago')
+DATE=$(date +%Y%m%d --date='12 month ago')
 SELECT_SP="select post_id,pd.dict_id,t.name,end_time,d.name from epf_post_dict as pd inner join epf_task as t on pd.task_id=t.task_id inner join epf_dict as d on pd.dict_id=d.dict_id"
-WHERE_SP="where pd.dict_id not in (0,1,37) and end_time > $DATE and t.task_status = 2 and t.task_type"
+WHERE_SP="where pd.dict_id not in (0,1,37) and t.task_status = 2 and t.task_type"
 SELECT_NO="select distinct post_id, max(pd.dict_id) as dict_id,t.name,end_time,d.name from epf_post_dict as pd inner join epf_task as t on pd.task_id=t.task_id inner join epf_dict as d on pd.dict_id=d.dict_id"
-WHERE_NO="where end_time > $DATE and t.task_status=2 and t.task_type"
+WHERE_NO="where t.task_status = 2 and t.task_type"
 GROUP="group by post_id having dict_id=1"
 ORDER="order by end_time desc"
 
