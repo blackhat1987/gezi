@@ -27,6 +27,7 @@ namespace gezi {
 			}
 
 			bool _isOnline = true;
+#ifndef GCCXML
 			static map<string, int>& level1Identifer()
 			{
 				static map<string, int> _level1Identifer = ([&](){
@@ -65,6 +66,7 @@ namespace gezi {
 			}
 
 			map<string, double>& _rankIdentifer = rankIdentifer();
+#endif //endof ndef GCCXML
 			////@TODO 合并到一起 和 levelIdentifer? 另外也可以比如是多个static 放在统一的Init函数 然后
 			////利用一个Init函数内部static bool _isInited的确保构造一次 放到构造函数即可
 			//static bool& isLevel1IdentiferInited()

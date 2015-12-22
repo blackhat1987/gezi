@@ -14,6 +14,9 @@
 #ifndef TIEBA_URATE_URATE_INFO_H_
 #define TIEBA_URATE_URATE_INFO_H_
 #include "tieba/info_def.h"
+#include "serialize_util.h"
+#include <sstream>
+
 namespace gezi {
 	namespace tieba {
 
@@ -65,6 +68,15 @@ namespace gezi {
 			}
 		};
 
+		inline string get_urate_info_str(const UrateInfo& info)
+		{
+			stringstream ss;
+			{
+				cereal::JSONOutputArchive oa(ss);
+				oa(CEREAL_NVP(info));
+			}
+			return ss.str();
+		}
 	}  //----end of namespace tieba
 }  //----end of namespace gezi
 

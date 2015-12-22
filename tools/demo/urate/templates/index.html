@@ -11,6 +11,12 @@
 {% set unameUrl = "http://cp01-forum0015.cp01.baidu.com:8393/evaluationpf/newpvfrs/historythread?userName=%s"%nowPostInfo.userName.decode('gbk') %}
 {% set uidUrl = "http://imis.tieba.baidu.com/mp-mis-search/search?pn=1&ie=utf-8&searchwhat=username&username=%s"%nowPostInfo.userName.decode('gbk') %}
 
+{% if form.score > 0.5 %}
+    作弊嫌疑度: <font color="red">{{"%.3f" % form.score}}</font>
+{% else %}
+    作弊嫌疑度: <font color="green">{{"%.3f" % form.score}}</font>
+{% endif %}
+ 
  用户名: <a name="uname" key="uanme" href="{{unameUrl | safe}}" target="_blank">{{nowPostInfo.userName.decode('gbk')}}</a>
  用户id: <a name="uid" key="uid" href="{{uidUrl | safe}}" target="_blank">{{nowPostInfo.userId}}</a>
 
@@ -31,7 +37,8 @@
   <tr>
     <td>{{postsInfo.fnames[i].decode('gbk') | safe}}</td>
  
-    {% set url = "http://tieba.baidu.com/p/{0}?ie=gbk&pid={1}&cid=#{1}".format(postsInfo.tids[i], form.post_id.data) %}
+    <!-- {% set url = "http://tieba.baidu.com/p/{0}?ie=gbk&pid={1}&cid=#{1}".format(postsInfo.tids[i], form.post_id.data) %} -->
+    {% set url = "http://imis.tieba.baidu.com/mp-mis-full/search?pn=1&ie=utf-8&thread_id={0}&searchwhat=searchbythreadid&floorNum=1".format(postsInfo.tids[i]) %}
     <td><a name="title" key="title" href="{{url | safe}}" target="_blank">{{postsInfo.titles[i].decode('gbk') | safe}}</a><br>
     {{postsInfo.contents[i].decode('gbk') | safe}}
     </td>

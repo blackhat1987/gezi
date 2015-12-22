@@ -530,7 +530,7 @@ namespace gezi {
 			bool _type; //0»Ø¸´£¬1Ö÷Ìâ
 
 		public:
-			static InitIpFinder()
+			static void InitIpFinder()
 			{
 				ipFinder();
 			}

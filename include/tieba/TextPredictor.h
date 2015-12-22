@@ -34,16 +34,16 @@ namespace gezi {
 			}
 
 			static double Predict(string title, string content, const DoubleIdentifer& identifer, const PredictorPtr& predictor,
-				int segType = SEG_BASIC, bool useMedia = false, int ngram = 3, int skip = 2, string sep = "$#$")
+				int segType = SEG_BASIC, int ngram = 3, int skip = 2, string sep = "\x01")
 			{
 				title = get_real_title(title);
 				title = title + " " + normalize_str(title);
 				content = filter_content(content);
-				return gezi::TextPredictor::Predict(title, content, identifer, predictor, segType, useMedia, ngram, skip, sep);
+				return gezi::TextPredictor::Predict(title, content, identifer, predictor, segType, ngram, skip, sep);
 			}
 
 			static double Predict(string content, const DoubleIdentifer& identifer, const PredictorPtr& predictor,
-				int segType = SEG_BASIC, int ngram = 3, int skip = 2, string sep = "$#$")
+				int segType = SEG_BASIC, int ngram = 3, int skip = 2, string sep = "\x01")
 			{
 				content = filter_content(content);
 				return gezi::TextPredictor::Predict(content, identifer, predictor, segType, ngram, skip, sep);

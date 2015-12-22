@@ -37,6 +37,7 @@ namespace tieba {
 
 		}
 
+#ifndef GCCXML
 		static map<string, double>& nameCnFreqMap()
 		{
 			static map<string, double> _nameCnFreqMap = ([&](){
@@ -66,6 +67,7 @@ namespace tieba {
 		}
 
 		map<string, double>& _nameCnFreqMap = nameCnFreqMap();
+#endif
 
 		virtual void extract() override
 		{

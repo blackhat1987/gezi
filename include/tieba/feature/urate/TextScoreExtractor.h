@@ -81,7 +81,8 @@ namespace gezi {
 				PVAL5(name(), offset, _identiferPath[offset], identifer.size(), identifer.id("ЪЈзг"));
 				if (!_isRsc)
 				{
-					return 	tieba::TextPredictor::Predict(title, content, identifer, predictor, _segType, _useMedia, _ngram, _skip, _sep);
+					//return 	tieba::TextPredictor::Predict(title, content, identifer, predictor, _segType, _useMedia, _ngram, _skip, _sep);
+					return 	tieba::TextPredictor::Predict(title, content, identifer, predictor, _segType, _ngram, _skip, _sep);
 				}
 				else
 				{

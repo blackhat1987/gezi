@@ -1,6 +1,14 @@
 
 {% extends "base.html" %}
 {% block content %}
-<h1>{{form.post_id.data}} is wrong input, input should be integer bigger than 0</h1>
+<pre> <body>
+post_id:{{form.post_id.data}}, post_id should be integer bigger than 0, then click Posts button to show posts 
+clik FeatureGainPerPredict button will show features gain for your input post_id(if valid)
+clik Json will show json info for your input post_id(if valid)
+click FeatureGainThread button will show thread model features gain
+click FeatureGainReply button will show repy model features gain
+click PrintTreeThread will show gbdt tree of thread model, you can input tree number, default will be tree 0
+click PrintTreeReply will show gbdt tree of reply model, you can input tree number, default will be tree 0
+</body> </pre>
 {% endblock %}
 

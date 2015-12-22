@@ -67,11 +67,10 @@ namespace gezi {
 			//mgr.add(new DeformExtractor);
 		}
 
-		inline Features gen_urate_features(uint64 pid, string historyPath, bool useFetch = true, bool forceFetch = false)
+		inline Features gen_urate_features(uint64 pid, string historyPath = "./history", bool useFetch = true, bool forceFetch = false, int historyNum = 25)
 		{
 			Features fe;
 			/*UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);*/
-			int historyNum = 25;
 			PSCONF(historyNum, "Urate");
 			UrateInfo info = try_get_info<UrateInfo>(pid, [&](uint64 pid) { return get_urate_info(pid, true, historyNum); }, historyPath, useFetch, forceFetch);
 			if (info.IsValid())
@@ -86,11 +85,10 @@ namespace gezi {
 			return fe;
 		}
 
-		inline Features gen_urate_features(uint64 pid, UrateInfo& info, string historyPath, bool useFetch = true, bool forceFetch = false)
+		inline Features gen_urate_features(uint64 pid, UrateInfo& info, string historyPath = "./history", bool useFetch = true, bool forceFetch = false, int historyNum = 25)
 		{
 			Features fe;
 			/*UrateInfo info = try_get_info<UrateInfo>(pid, [](uint64 pid) { return get_urate_info(pid); }, FLAGS_history);*/
-			int historyNum = 25;
 			PSCONF(historyNum, "Urate");
 			info = try_get_info<UrateInfo>(pid, [&](uint64 pid) { return get_urate_info(pid, true, historyNum); }, historyPath, useFetch, forceFetch);
 			if (info.IsValid())
