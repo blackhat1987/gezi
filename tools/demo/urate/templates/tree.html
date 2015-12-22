@@ -1,0 +1,8 @@
+
+{% extends "base.html" %}
+{% block content %}
+<!-- <img src="{{ url_for('static', filename='%s'%('./trees.thread/0.png')) }}"></img> -->
+<!-- <img src="{{ url_for('static', filename='%s'%(tree_file)) }}"></img> -->
+<img src="{{ url_for('static', filename='tree.%d.%d.png'%(pid, index)) }}"></img>
+{% endblock %}
+
