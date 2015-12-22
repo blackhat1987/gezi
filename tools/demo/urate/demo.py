@@ -29,6 +29,7 @@ from wtforms.validators import Required,Length
 
 class UrateForm(Form):
     post_id = IntegerField('post_id',validators = [Required()])
+    tree_index = IntegerField('tree_index',validators = [Required()])
     info = None
     score = 0
 
@@ -42,23 +43,15 @@ from flask import request
 @app.route('/urate',methods = ['GET' , 'POST'])
 def urate():
     form = UrateForm()
-
+    
+    models = ('./data/reply.model/', './data/thread.model/')
     if 'submit' in request.form:
-    	models = ('./data/reply.model/', './data/thread.model/')
     	if request.form['submit'] == 'FeatureGainThread' or request.form['submit'] == 'FeatureGainReply':
     		index = (request.form['submit'] == 'FeatureGainThread')
     		file_ = models[index] + 'model.featureGain.txt'
     		pre_str = 'Feature importance of model: %s\n\n'%models[index]
     		gain_str = pre_str + open(file_).read() 
     		return render_template('content.html', form = form, content = gain_str)
-    	
-    	if request.form['submit'] == 'PrintTreeTread' or request.form['submit'] == 'PrintTreeReply':
-    		index = 0
-    		if form.post_id.data != None:
-    			index = form.post_id.data
-
-    		tree = 'Will come soon'
-    		return render_template('content.html', form = form, content = tree)
 
     if validate_on_submit(form):
         print('post_id:%d'%form.post_id.data)
@@ -80,22 +73,37 @@ def urate():
         is_thread = form.info.nowPostInfo.IsThread()
         preidctor = predictors[is_thread]
         form.score = preidctor.Predict(fe)
+        pid = form.post_id.data
 
         print request.form
         if 'submit' in request.form:
         	if request.form['submit'] == 'Json':
         		s = urate.get_urate_info_str(form.info)
-        		json_str = s.decode('gbk')
+        		json_str = s.decode('gbk', 'ignore')
         		return render_template('content.html', form = form, content = json_str) 
 
         	if request.form['submit'] == 'FeatureGainPerPredict':
         		summary = preidctor.ToGainSummary(fe)
-        		summary = 'score:%.3f\n\n%s'%(form.score, summary)
+        		summary = 'PerfeatureGain for post_id: %d\nscore:%.3f\n\n%s'%(pid, form.score, summary)
         		return render_template('content.html', form = form, content = summary) 
+
+        	if request.form['submit'] == 'PrintTree':
+    			index = 0
+    			if form.tree_index.data != None:
+    				index = form.tree_index.data
+    			model = models[is_thread]
+
+    			import os
+    			command = 'rm -rf ./static/tree*.png'
+    			os.system(command)
+    			command = './print-gbdt-tree.py --m %s --tree %d --outfile ./static/tree.%d.%d.png --feature %s'%(model, index, pid, index, fe.str())
+    			os.system(command)
+    			return render_template('tree.html', form = form, pid = pid, index = index)
 
 
         from gezi import get_timestr
         return render_template('index.html',form = form, get_timestr = get_timestr)
+
     return render_template('error.html', form = form)
 
 if __name__ == '__main__':
