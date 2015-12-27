@@ -21,7 +21,7 @@ app.secret_key = 's3cr3t'
 
 @app.route('/')
 def index():
-	return 'This is demos of chenghuige you may try /urate'
+	return 'This is demo of urate you may try /urate'
 
 from flask.ext.wtf import Form
 from wtforms import IntegerField
@@ -39,7 +39,9 @@ def validate_on_submit(form):
 		return False
 	return True
 
+
 from flask import request  
+predictors = None
 @app.route('/urate',methods = ['GET' , 'POST'])
 def urate():
     form = UrateForm()
@@ -59,9 +61,11 @@ def urate():
         import nowarning
         import libmelt_predict as mp
 
-        reply_predictor = mp.PredictorFactory.LoadPredictor('./data/reply.model')
-        thread_predictor = mp.PredictorFactory.LoadPredictor('./data/thread.model')
-        predictors = (reply_predictor, thread_predictor)
+        global predictors
+        if predictors == None:
+            reply_predictor = mp.PredictorFactory.LoadPredictor('./data/reply.model')
+            thread_predictor = mp.PredictorFactory.LoadPredictor('./data/thread.model')
+            predictors = (reply_predictor, thread_predictor)
 
         import liburate as urate
         import libmelt_predict as mp

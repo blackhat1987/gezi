@@ -1,0 +1,38 @@
+
+{% extends "base.html" %}
+{% block content %}
+
+{% set unameUrl = "http://cp01-forum0015.cp01.baidu.com:8393/evaluationpf/newpvfrs/historythread?userName=%s"%info.userName.decode('gbk') %}
+{% set uidUrl = "http://imis.tieba.baidu.com/mp-mis-search/search?pn=1&ie=utf-8&searchwhat=username&username=%s"%info.userName.decode('gbk') %}
+
+{% if form.score > 0.5 %}
+    作弊嫌疑度: <font color="red">{{"%.3f" % form.score}}</font>
+{% else %}
+    作弊嫌疑度: <font color="green">{{"%.3f" % form.score}}</font>
+{% endif %}
+
+{{debug_info.total}}
+{{debug_info.output}}
+{{debug_info.score}}
+ 
+ 用户名: <a name="uname" key="uanme" href="{{unameUrl | safe}}" target="_blank">{{info.userName.decode('gbk')}}</a>
+ 用户id: <a name="uid" key="uid" href="{{uidUrl | safe}}" target="_blank">{{info.userId}}</a>
+
+<br><br><br>
+<标题><br>
+{{info.title.decode('gbk') | safe}} <br>
+<处理后标题><br>
+{{debug_info.title.decode('gbk')}} <br>
+<处理后标题分词结果><br>
+{{debug_info.title_seg_result.decode('gbk')}} <br><br>
+<内容><br>
+{{info.content.decode('gbk') | safe}} <br>
+<处理后内容><br>
+{{debug_info.content.decode('gbk')}} <br>
+<处理后内容分词结果><br>
+{{debug_info.content_seg_result.decode('gbk')}} <br><br>
+
+<pre> <body>{{debug_info.map_info.decode('gbk')}}</body> </pre>
+
+{% endblock %}
+

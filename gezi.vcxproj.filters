@@ -3570,6 +3570,15 @@
     <ClInclude Include="third\tensorflow\tensorflow\core\util\work_sharder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\container\LruSetPy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tieba\urate\include\urate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\tieba\urate\include\urate_py.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -6035,5 +6044,8 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="third\tensorflow\tensorflow\g3doc\tutorials\deep_cnn\cifar_tensorboard.html" />
+    <None Include="third\tensorflow\tensorflow\models\embedding\word2vec.py" />
+    <None Include="third\tensorflow\tensorflow\models\embedding\word2vec_test.py" />
+    <None Include="third\tensorflow\tensorflow\models\embedding\word2vec_optimized.py" />
   </ItemGroup>
 </Project>

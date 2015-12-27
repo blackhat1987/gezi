@@ -129,6 +129,7 @@
     <ClInclude Include="include\conf_util.h" />
     <ClInclude Include="include\container\LruMap.h" />
     <ClInclude Include="include\container\LruSet.h" />
+    <ClInclude Include="include\container\LruSetPy.h" />
     <ClInclude Include="include\container\lru_containers.h" />
     <ClInclude Include="include\container\RegressionTree.h" />
     <ClInclude Include="include\convert_type.h" />
@@ -1250,6 +1251,8 @@
     <ClInclude Include="third\tensorflow\tensorflow\core\util\use_cudnn.h" />
     <ClInclude Include="third\tensorflow\tensorflow\core\util\util.h" />
     <ClInclude Include="third\tensorflow\tensorflow\core\util\work_sharder.h" />
+    <ClInclude Include="tools\tieba\urate\include\urate.h" />
+    <ClInclude Include="tools\tieba\urate\include\urate_py.h" />
     <ClInclude Include="tools\tieba\urate\include\urate_train.h" />
   </ItemGroup>
   <ItemGroup>
@@ -2079,6 +2082,7 @@
     <None Include="third\mxnet\cmake\CMakeFiles\feature_tests.bin" />
     <None Include="third\tensorflow\tensorflow\g3doc\tutorials\deep_cnn\cifar_tensorboard.html" />
     <None Include="third\tensorflow\tensorflow\models\embedding\word2vec.py" />
+    <None Include="third\tensorflow\tensorflow\models\embedding\word2vec_optimized.py" />
     <None Include="third\tensorflow\tensorflow\models\embedding\word2vec_test.py" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

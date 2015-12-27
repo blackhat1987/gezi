@@ -29,9 +29,9 @@ namespace gezi {
 			//--------can save json for debug
 			void SaveJson(string file);
 			void SaveJson();
-                        
-                        void Save(string path);
-                        void Save();
+												
+												void Save(string path);
+												void Save();
 		public:
 			void* _predictor;
 		};
