@@ -35,7 +35,7 @@ if ret != 0:
 	print 'redis init fail ret:', ret
 	exit(-1)
 
-from trate_predictor import TextPredictor
+from text_predictor import TextPredictor
 predictor = TextPredictor('./ltrate.thread.model/identifer.bin', './ltrate.thread.model/')
 
 num_normals = 0
