@@ -67,12 +67,16 @@ def urate():
             thread_predictor = mp.PredictorFactory.LoadPredictor('./data/thread.model')
             predictors = (reply_predictor, thread_predictor)
 
-        import liburate as urate
+        import liburate 
         import libmelt_predict as mp
-        import libtieba as tieba
+        import libtieba 
 
-        form.info = urate.UrateInfo()
-        fe = urate.gen_urate_features(form.post_id.data, form.info, historyNum = 40)
+        form.info = liburate.UrateInfo()
+        form.ips = []
+        fe = liburate.gen_urate_features(form.post_id.data, form.info, historyNum = 40)
+
+        for ip in form.info.postsInfo.ips:
+            form.ips.append(libtieba.to_ipstr(ip))
 
         is_thread = form.info.nowPostInfo.IsThread()
         preidctor = predictors[is_thread]
@@ -82,7 +86,7 @@ def urate():
         print request.form
         if 'submit' in request.form:
         	if request.form['submit'] == 'Json':
-        		s = urate.get_urate_info_str(form.info)
+        		s = liburate.get_urate_info_str(form.info)
         		json_str = s.decode('gbk', 'ignore')
         		return render_template('content.html', form = form, content = json_str) 
 

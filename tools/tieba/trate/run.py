@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #coding=gbk
 # ==============================================================================
-#          \file   trate_from_redis.py
+#          \file   run.py
 #        \author   chenghuige  
 #          \date   2015-12-17 16:54:03.137910
 #   \Description  
@@ -12,25 +12,22 @@ import sys,os
 import gflags
 FLAGS = gflags.FLAGS
 
-from text_predictor import TextPredictor
+gflags.DEFINE_string('conf_file', 'redis_client.conf', '')
+gflags.DEFINE_string('conf_dir', './conf', '')
+gflags.DEFINE_string('thread_key', '#!thread!#', '')
+gflags.DEFINE_integer('queue_size', 100, 'fetch num each time from redis')
+gflags.DEFINE_integer('set_capacity', 10000000, 'fetch num each time from redis')
+gflags.DEFINE_float('thre', 0.5, 'fetch num each time from redis')
+gflags.DEFINE_string('model', './model', 'model path')
+
+FLAGS(sys.argv)
+
+from mlp_predictor import TextPredictor
 
 import nowarning
 import libredis 
 libredis.LogHelper.set_level(4)
 import libtieba
-
-
-gflags.DEFINE_string('conf_file', 'redis_client.conf', '')
-gflags.DEFINE_string('conf_dir', './conf', '')
-gflags.DEFINE_string('thread_key', "#!thread!#", "")
-gflags.DEFINE_integer('queue_size', 100, 'fetch num each time from redis')
-gflags.DEFINE_integer('set_capacity', 10000000, 'fetch num each time from redis')
-gflags.DEFINE_float('thre', 0.5, 'fetch num each time from redis')
-gflags.DEFINE_integer('score_index', 2, '0 linear score, 1 dnn score, 2 adjusted dnn score')
-
-FLAGS(sys.argv)
-
-print 'score_index: ', FLAGS.score_index
 
 pid_set = set()
 redis_client = libredis.RedisClient()
@@ -40,34 +37,24 @@ if ret != 0:
     print 'redis init fail ret:', ret
     exit(-1)
 
-#predictor = TextPredictor('./data/ltrate.thread.model/identifer.bin', './data/ltrate.thread.model/')
-#predictor = TextPredictor('./ltrate.thread.model/identifer.bin', './ltrate.thread.model/')
-predictor = TextPredictor('./model/', './ltrate.thread.model/')
+predictor = TextPredictor(FLAGS.model)
 
 num_normals = 0
 num_spams = 0
-
-out = open('result.txt', 'w')
-out_dnn = open('result.dnn.txt', 'w')
 
 def run(pids):
     global predictor, num_normals, num_spams
     infos = libtieba.get_posts_info(pids)
     for info in infos:
-        scores = predictor.predict(info.title, info.content)
-        #print scores
-        if scores[FLAGS.score_index] > FLAGS.thre:
+        score = predictor.predict(info.title, info.content)
+        if score > FLAGS.thre:
             num_spams += 1
             print info.postId, info.threadId, info.forumName, info.userName, info.title, info.content
-            print 'score: ', scores[0], ' dnn_score: ', scores[1], ' adjusted_dnn_score: ', scores[2], ' spam ratio: ', float(num_spams) / (num_spams + num_normals), FLAGS.thre
+            print 'score: ', score, ' spam ratio: ', float(num_spams) / (num_spams + num_normals), FLAGS.thre
         else:
             num_normals += 1
-        l = [str(scores[0]), str(scores[2]), str(info.postId), info.forumName, info.userName, info.title, info.content]
+        l = [str(score), str(info.postId), info.forumName, info.userName, info.title, info.content]
         line = '\t'.join(l)
-        if scores[0] > 0.9:
-            out.write('%s\n'%line)
-        if scores[2] > 0.9:
-            out_dnn.write('%s\n'%line)
          
 round = 0
 while True:

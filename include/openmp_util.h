@@ -27,6 +27,8 @@
 #define omp_set_num_threads {}
 #endif
 
+#include <algorithm>
+
 namespace gezi {
 
 	inline int get_num_threads()
@@ -36,8 +38,24 @@ namespace gezi {
 #pragma omp master
 		{
 			numThreads = omp_get_num_threads();
-		} 
+		}
 		return numThreads;
+	}
+
+	inline int set_num_threads(int numThreads = 0, int reduce = 2)
+	{
+		if (numThreads)
+		{
+			omp_set_num_threads(numThreads);
+			return numThreads;
+		}
+		else
+		{ //@TODO openmp设置线程数目很微妙。。 如果有其它程序在跑12核 设置12 很慢 11，13 等都比12快很多。。
+			int numProcs = omp_get_num_procs();
+			numProcs = std::max(1, numProcs - reduce);
+			omp_set_num_threads(numProcs);
+			return numProcs;
+		}
 	}
 }  //----end of namespace gezi
 

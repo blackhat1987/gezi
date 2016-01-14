@@ -139,6 +139,11 @@ namespace gezi {
 		Vector(const Vector&) = default;
 		Vector& operator = (const Vector&) = default;
 
+		bool operator == (const Vector& other)
+		{ //for python wrapper 应该是boost.python的问题 vector<vector<CommentInfo> >需要
+			return indices == other.indices && values == other.values;
+		}
+
 		typedef int index_type;  //@TODO 修改所有可能的int 到index_type
 		typedef Float value_type;
 		typedef size_t size_type;
@@ -204,9 +209,10 @@ namespace gezi {
 		}
 
 		//方便debug Vector vec("1\t3\t4\t5"); Vector vec("1:2.3\t3:4.5"); or vec("1 3") space is also ok
-		Vector(string input, index_type startIndex = 0, index_type length_ = 1024000, string sep = ",\t ")
+		Vector(string input, index_type startIndex = 0, index_type length_ = 1024000, string sep = ",\t ", 
+			bool indexOnly = false)
 		{
-			Init(input, startIndex, length_, sep);
+			Init(input, startIndex, length_, sep, indexOnly);
 		}
 
 		Vector(iterator first, iterator end)
@@ -222,7 +228,7 @@ namespace gezi {
 		}
 #endif
 
-		void Init(string input, index_type startIndex = 0, index_type length_ = 0, string sep = ",\t ")
+		void Init(string input, index_type startIndex = 0, index_type length_ = 0, string sep = ",\t ", bool indexOnly = false)
 		{
 			boost::trim(input); //需要注意 因为DOUBLE采用atof快速但是不安全 可能输入是一个空格 导致有问题
 			//注意split("",sep)得到不是空结果 而是有1个空元素的vector c# python	也是		
@@ -230,20 +236,27 @@ namespace gezi {
 			length = length_;
 			if (inputs.size() > 0)
 			{ //注意可能稀疏没有带有length
-				if (contains(inputs[0], ':'))
+				if (contains(inputs[0], ':') || indexOnly)
 				{ //改用缓存方式 为了更加方便 不假设输入是排好序的,另外debug可以方便输入修改,后续添加的(index,value)覆盖前面相同index的value
 					map<index_type, value_type> m;
 					index_type maxIndex = -1;
 					for (string part : inputs)
 					{
 						string index_, val_;
-						split(part, ':', index_, val_);
+						if (!indexOnly)
+						{
+							split(part, ':', index_, val_);
+						}
+						else
+						{
+							index_ = part;
+						}
 						index_type index = INT(index_) + startIndex;
 						if (index > maxIndex)
 						{
 							maxIndex = index;
 						}
-						value_type val = DOUBLE(val_);
+						value_type val = indexOnly ? 1.0 : DOUBLE(val_);
 						m[index] = val;
 					}
 					if (length < maxIndex + 1)
@@ -1370,6 +1383,14 @@ namespace gezi {
 	};
 
 	typedef shared_ptr<Vector> VectorPtr;
+
+
+	typedef vector<Vector> Vectors;
+#ifdef PYTHON_WRAPPER
+	struct PyHack_Vectors : public Vectors
+	{
+	};
+#endif //PYTHON_WRAPPER
 
 	//主要是稀疏矩阵构建通过输入map内容(保证key排序好)
 	template<typename Map>

@@ -660,6 +660,16 @@
     <ClInclude Include="third\folly\folly\Preprocessor.h" />
     <ClInclude Include="third\folly\folly\small_vector.h" />
     <ClInclude Include="third\folly\folly\Traits.h" />
+    <ClInclude Include="third\liblego\include\liblego\blob.h" />
+    <ClInclude Include="third\liblego\include\liblego\common.h" />
+    <ClInclude Include="third\liblego\include\liblego\compute_layers.h" />
+    <ClInclude Include="third\liblego\include\liblego\layer.h" />
+    <ClInclude Include="third\liblego\include\liblego\layer_factory.h" />
+    <ClInclude Include="third\liblego\include\liblego\lego.h" />
+    <ClInclude Include="third\liblego\include\liblego\liblego.pb.h" />
+    <ClInclude Include="third\liblego\include\liblego\math_functions.h" />
+    <ClInclude Include="third\liblego\include\liblego\net.h" />
+    <ClInclude Include="third\liblego\include\liblego\param_layers.h" />
     <ClInclude Include="third\mxnet\amalgamation\jni\org_dmlc_mxnet_Predictor.h" />
     <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\base.h" />
     <ClInclude Include="third\mxnet\dmlc-core\include\dmlc\concurrency.h" />
@@ -1304,6 +1314,7 @@
     <ClCompile Include="test\folly\test_with_small_vector.cc" />
     <ClCompile Include="test\identifer-text2bin.cc" />
     <ClCompile Include="test\initializer\test_simple.cc" />
+    <ClCompile Include="test\lego\test.cc" />
     <ClCompile Include="test\linq\test.cc" />
     <ClCompile Include="test\mpi\boost_broadcast.cc" />
     <ClCompile Include="test\mpi\boost_gather.cc" />
@@ -1389,6 +1400,7 @@
     <ClCompile Include="test\tieba\test_threads_info.cc" />
     <ClCompile Include="test\tieba\test_uname.cc" />
     <ClCompile Include="test\tieba\test_user_info_extractor.cc" />
+    <ClCompile Include="third\liblego\classify_demo\src\main.cpp" />
     <ClCompile Include="third\mxnet\amalgamation\jni\predictor.cc" />
     <ClCompile Include="third\mxnet\amalgamation\mxnet_predict0.cc" />
     <ClCompile Include="third\mxnet\CMakeFiles\3.2.2\CompilerIdCXX\CMakeCXXCompilerId.cpp" />

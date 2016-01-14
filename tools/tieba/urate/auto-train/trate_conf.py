@@ -13,7 +13,7 @@ import libsegment
 sep = '\x01'
 seg_type = libsegment.SEG_BASIC
 #seg_type = libsegment.SEG_WPCOMP
-ngram = 3
-skip = 2
+ngram = 1
+skip = 0
 #max_len = 1024 
 max_len = 100

@@ -3579,6 +3579,36 @@
     <ClInclude Include="tools\tieba\urate\include\urate_py.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="third\liblego\include\liblego\blob.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\liblego\include\liblego\common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\liblego\include\liblego\compute_layers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\liblego\include\liblego\layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\liblego\include\liblego\layer_factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\liblego\include\liblego\lego.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\liblego\include\liblego\liblego.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\liblego\include\liblego\math_functions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\liblego\include\liblego\net.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="third\liblego\include\liblego\param_layers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
@@ -6009,6 +6039,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="third\tensorflow\tensorflow\core\user_ops\auc.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="third\liblego\classify_demo\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\lego\test.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
