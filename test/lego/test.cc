@@ -31,64 +31,63 @@ DEFINE_string(i, "", "input file");
 DEFINE_string(o, "", "output file");
 
 DEFINE_string(net, "net.prototxt", "lego net config file");
-DEFINE_string(model, "model.bin", "lego model path");
-DEFINE_string(fname, "word_seq", "feature part name of blob");
+DEFINE_string(m, "model", "lego model path");
 
 DEFINE_string(test, "test_text", "test file name");
 
 DEFINE_bool(parallel, false, "use parallel mode");
 
-void run()
-{
-	Net net;
-	EXPECT_EQ(net.set_net_parameter_from_file(FLAGS_net.c_str()), 0);
-	EXPECT_EQ(net.init(FLAGS_model.c_str()), 0);
-	void* tlr_ptr = net.register_thread();
-	EXPECT_TRUE(tlr_ptr);
-
-	Blob* blob = NULL;
-	blob = net.input_blob_by_name(FLAGS_fname, tlr_ptr);
-	EXPECT_TRUE(blob);
-
-	{
-		vector<int> indexes = { 37, 250, 3152, 24927, 44234, 69028, 69241, 72143, 93918, 113225 };
-		blob->dim0 = indexes.size();
-		for (size_t i = 0; i < indexes.size(); i++)
-		{
-			blob->data[i] = indexes[i];
-		}
-
-		EXPECT_EQ(net.predict(tlr_ptr), 0);
-
-		double score = net.result_blob(tlr_ptr)->data[1];
-
-		Pval(score);
-	}
-
-	{
-		vector<int> indexes = { 45, 55, 66, 67, 191, 328, 331, 793, 887, 948, 1685, 4622 };
-		blob->dim0 = indexes.size();
-		for (size_t i = 0; i < indexes.size(); i++)
-		{
-			blob->data[i] = indexes[i];
-		}
-
-		EXPECT_EQ(net.predict(tlr_ptr), 0);
-
-		double score = net.result_blob(tlr_ptr)->data[1];
-
-		Pval(score);
-	}
-
-	net.destroy_thread(tlr_ptr);
-}
+//void run()
+//{
+//	Net net;
+//	EXPECT_EQ(net.set_net_parameter_from_file(FLAGS_net.c_str()), 0);
+//	EXPECT_EQ(net.init(FLAGS_model.c_str()), 0);
+//	void* tlr_ptr = net.register_thread();
+//	EXPECT_TRUE(tlr_ptr);
+//
+//	Blob* blob = NULL;
+//	blob = net.input_blob_by_name(FLAGS_fname, tlr_ptr);
+//	EXPECT_TRUE(blob);
+//
+//	{
+//		vector<int> indexes = { 37, 250, 3152, 24927, 44234, 69028, 69241, 72143, 93918, 113225 };
+//		blob->dim0 = indexes.size();
+//		for (size_t i = 0; i < indexes.size(); i++)
+//		{
+//			blob->data[i] = indexes[i];
+//		}
+//
+//		EXPECT_EQ(net.predict(tlr_ptr), 0);
+//
+//		double score = net.result_blob(tlr_ptr)->data[1];
+//
+//		Pval(score);
+//	}
+//
+//	{
+//		vector<int> indexes = { 45, 55, 66, 67, 191, 328, 331, 793, 887, 948, 1685, 4622 };
+//		blob->dim0 = indexes.size();
+//		for (size_t i = 0; i < indexes.size(); i++)
+//		{
+//			blob->data[i] = indexes[i];
+//		}
+//
+//		EXPECT_EQ(net.predict(tlr_ptr), 0);
+//
+//		double score = net.result_blob(tlr_ptr)->data[1];
+//
+//		Pval(score);
+//	}
+//
+//	net.destroy_thread(tlr_ptr);
+//}
 
 #include "Predictors/LegoPredictor.h"
 //假设model路径下面没有normalizer
-void run2()
+void run()
 {
 	LegoPredictor predictor;
-	predictor.Load("./model");
+	predictor.Load(FLAGS_m);
 	{
 		Vector fe("37:0.0769231,250:0.333333,3152:0.5,24927:1,44234:1,69028:0.0769231,69241:0.25,72143:0.5,93918:1,113225:0.4");
 		double  score = predictor.Predict(fe);
@@ -104,7 +103,7 @@ void run2()
 void run_file()
 {
 	LegoPredictor predictor;
-	predictor.Load("./model");
+	predictor.Load(FLAGS_m);
 
 	ifstream ifs(FLAGS_test);
 	string line;
@@ -127,7 +126,7 @@ void run_file_parallel()
 	gezi::set_num_threads(0);
 	Pval(gezi::get_num_threads());
 	LegoPredictor predictor;
-	predictor.Load("./model");
+	predictor.Load(FLAGS_m);
 
 	ifstream ifs(FLAGS_test);
 	string line;
@@ -161,16 +160,16 @@ int main(int argc, char *argv[])
 
 	run();
 
-	run2();
+	//run2();
 
-	if (FLAGS_parallel)
-	{
-		run_file_parallel();
-	}
-	else
-	{
-		run_file();
-	}
+	//if (FLAGS_parallel)
+	//{
+	//	run_file_parallel();
+	//}
+	//else
+	//{
+	//	run_file();
+	//}
 
 	return 0;
 }
