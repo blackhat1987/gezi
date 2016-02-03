@@ -7,7 +7,7 @@ TOOLCHAIN_ROOT='../../../../../ps/se/toolchain'
 RELATIVE_PATH='./'
 
 GCC_LEVEL=3
-GCC_LOCAL=2  #<1 use g++ <2 use /opt/compiler/gcc-4.8.2/bin/g++  <0 will use toolchain
+GCC_LOCAL=2 #<1 use g++ <2 use /opt/compiler/gcc-4.8.2/bin/g++  <0 will use toolchain
 print 'GCC_LOCAL: %d'%GCC_LOCAL 
 GCC_DYNAMIC=1
 print 'GCC_DYNAMIC: %d'%GCC_DYNAMIC
