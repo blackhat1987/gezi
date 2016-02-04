@@ -174,6 +174,38 @@ void run_file_parallel()
 	//}
 }
 
+#include <thread>
+
+
+
+void thread_task(LegoPredictor& predictor) 
+{
+		predictor.InitThread();
+		std::cout << "hello thread" << std::endl;
+		{
+			Vector fe("24:0.153846	69:0.115385	354:0.5	409:0.8	420:0.333333	1127:0.333333	1241:1	1645:0.333333	2058:0.333333	2217:0.333333	6613:1	6887:1	7350:0.5	9523:0.25	9681:0.25	16785:1	21710:0.5	22304:0.5	24282:1	28173:0.25	51361:1	52573:0.5	52876:1	54153:1	64670:1	96030:1	228161:0.5	520301:1	797757:1	1191766:1	1263784:1	1263785:1	1263791:1	1263793:1	1263794:1	1263797:1	1263801:1	1263805:1	1263806:1	1263809:1");
+			double  score = predictor.Predict(fe);
+			Pval(score);
+		}
+}
+
+void run_pthread()
+{
+	LegoPredictor predictor;
+	predictor.Load(FLAGS_m);
+	int numThreads = 10;
+	std::thread t[numThreads];
+	for (int i = 0; i < numThreads; i++)
+	{
+		t[i] = std::thread(thread_task, ref(predictor));
+	}
+
+	for(int i = 0; i < numThreads; i++) 
+	{
+		t[i].join();
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	google::InitGoogleLogging(argv[0]);
@@ -188,6 +220,8 @@ int main(int argc, char *argv[])
 		FLAGS_v = FLAGS_vl;
 
 	run();
+
+	run_pthread();
 
 	//run2();
 
