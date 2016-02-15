@@ -12,7 +12,7 @@ import sys,os
 import gflags
 FLAGS = gflags.FLAGS
 
-from text_predictor import TextPredictor
+from text_predictor import TextPredictor 
 
 import nowarning
 import libredis 

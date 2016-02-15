@@ -55,6 +55,7 @@ public:
                 if (min_dist < array[i][j].dist) // < is OK but <= make modify hight priority
                     SetArrayData(array[i][j], min_dist, i - 1, j - 1);
             }
+            
 
         //store the best path result to  two result string  rs1 and rs2
         StoreResult(array, len1, len2, s1, s2, rs1, rs2);
@@ -182,7 +183,7 @@ public:
 #endif
     }
     /**
-     * ¼ÆËã²»¿¼ÂÇË³ÐòµÄ×îÐ¡±à¼­¾àÀë£¬ÈçABC,CBA ¾àÀëÎª0  // AB   CAD ¾àÀëÎª2
+     * ï¿½ï¿½ï¿½ã²»ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½à¼­ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½ABC,CBA ï¿½ï¿½ï¿½ï¿½Îª0  // AB   CAD ï¿½ï¿½ï¿½ï¿½Îª2
      */
     template<typename T>
     static inline int MaxDiffNum(T s1, T s2)

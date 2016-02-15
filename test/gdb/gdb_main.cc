@@ -20,7 +20,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-  vector<float> v = {1, 2, 3, 4, 4.5};
+	vector<float> v = { 1, 2, 3, 4, 4.5 };
 	v[1] += 0.3;
-  return 0;
+	return 0;
 }
