@@ -13,9 +13,9 @@
 
 #ifndef GEZI_ENCODING_DEF_H_
 #define GEZI_ENCODING_DEF_H_
-
+#include "common_define.h"
 namespace gezi {
-#if __GNUC__ > 3 || defined(WIN32)
+#if IS_HIGH_COMPILER
 
 	const char* const kEncodings[] = { "GBK", "UTF8" };
 

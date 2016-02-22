@@ -11,8 +11,12 @@
  *  ==============================================================================
  */
 
-#ifndef FORMAT_H_
+#ifndef FORMAT_H_ 
 #define FORMAT_H_
+
+#include "common_define.h"
+#if IS_HIGH_COMPILER
+
 #define INT INT_CPPFORMAT
 #define UINT UINT_CPPFORMAT
 #define STRING STRING_CPPFORMAT
@@ -43,5 +47,7 @@ namespace fmt {
 namespace gezi {
 
 }  //----end of namespace gezi
+
+#endif //IS_HIGH_COMPILER
 
 #endif  //----end of FORMAT_H_

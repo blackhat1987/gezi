@@ -15,6 +15,7 @@
 #define STRING_UTIL_H_
 #include <string>
 #include <vector>
+
 #include "format.h" //放在最前面 有和convert_type.h的宏的冲突处理 
 
 #ifdef WIN32

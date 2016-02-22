@@ -125,6 +125,7 @@
     <ClInclude Include="include\common\Exception.h" />
     <ClInclude Include="include\common_algorithm.h" />
     <ClInclude Include="include\common_def.h" />
+    <ClInclude Include="include\common_define.h" />
     <ClInclude Include="include\common_util.h" />
     <ClInclude Include="include\conf_util.h" />
     <ClInclude Include="include\container\LruMap.h" />

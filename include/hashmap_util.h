@@ -16,7 +16,9 @@
 #ifndef HASHMAP_UTIL_H_
 #define HASHMAP_UTIL_H_
 
-#if __GNUC__ > 3 || defined(WIN32)
+#include "common_define.h"
+
+#if IS_HIGH_COMPILER
 #include <unordered_map> 
 #include <unordered_set> 
 #else

@@ -1,0 +1,7 @@
+//add this before all other incl headers in chg_py.cc 
+//now ok for both gccxml or castxml for this simple example
+#define BOOST_BIND_PLACEHOLDERS_HPP_INCLUDED
+#include <boost/bind.hpp>
+#include <boost/lambda/lambda.hpp>
+using namespace boost::lambda;
+

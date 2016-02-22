@@ -7,7 +7,7 @@ TOOLCHAIN_ROOT='../../../../../../../ps/se/toolchain'
 RELATIVE_PATH='../../'
 
 #是否使用本地的gcc 比如本地安装了gcc 4.8.2使用本地的可以直接使用生成的bin文件 如./main
-GCC_LOCAL=1
+GCC_LOCAL=2
 print 'GCC_LOCAL: %d'%GCC_LOCAL 
 #是否使用高版本gcc 可以直接使用生成的bin文件 如./main 
 GCC_HIGH=1
@@ -32,13 +32,6 @@ CopyUsingHardLink(True)
 GCC_BIN='g++'
 GCC_FLAGS = '' 
 TOOLCHAIN=TOOLCHAIN_ROOT
-if GCC_HIGH  == 1:
-	if GCC_DYNAMIC == 1:	
-		TOOLCHAIN += '/x86_64-unknown-linux-gnu-%s-%s-%s-%s'%(GCC_VERSION,GLIBC_VERSION,BINUTILS_VERSION,KERNAL_VERSION)
-		GCC_BIN=TOOLCHAIN + '/bin/x86_64-unknown-linux-gnu-g++'
-	else:
-		TOOLCHAIN += '/gcc_only_%s'%(GCC_VERSION)
-		GCC_BIN=TOOLCHAIN + '/bin/g++'
 #对于static方式 LIBS_DIR不起任何作用
 LIBS_DIR=TOOLCHAIN + '/x86_64-unknown-linux-gnu/lib/'
 
@@ -50,6 +43,9 @@ print 'LIBS_DIR: %s'%LIBS_DIR
 
 if GCC_LOCAL == 1:
 	GCC_BIN = 'g++'
+elif GCC_LOCAL == 2:
+	GCC_BIN = '/opt/compiler/gcc-4.8.2/bin/g++'
+
 print 'GCC_BIN: %s'%GCC_BIN; os.system('%s -v'%GCC_BIN)
 CC(GCC_BIN)
 CXX(GCC_BIN)
@@ -82,10 +78,6 @@ GCC_LDFLAGS=''
 if GCC_HIGH  == 1: 
 	if GCC_DYNAMIC  == 1:
 		GCC_LDFLAGS += ' -lgomp'
-		if GCC_LOCAL != 1:
-			GCC_LDFLAGS += ' -Wl,--dynamic-linker=./ld-linux-x86-64.so.2 -L%s'%(LIBS_DIR)
-			TARGET('.copy-so', ShellCommands('ln -s %s/ld-linux-x86-64.so.2 ld-linux-x86-64.so.2'%(LIBS_DIR)), 
-					CleanCommands('rm -rf ld-linux-x86-64.so.2')) 
 	else: 
 		GCC_LDFLAGS  += ' -static-libgcc -static-libstdc++'
 

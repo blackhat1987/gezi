@@ -53,8 +53,10 @@
 #define STRING boost::lexical_cast<std::string>
 //#endif
 
+#include "common_define.h"
+
 #undef  STR
-#if __GNUC__ > 3 || defined(WIN32) 
+#if IS_HIGH_COMPILER 
 #define STR std::to_string
 #else
 #define STR boost::lexical_cast<std::string>

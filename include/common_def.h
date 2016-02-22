@@ -17,7 +17,12 @@
 #define BOOST_DETAIL_NO_CONTAINER_FWD
 #endif
 
+
+#define IS_HIGH_COMPILER  ! 
+
+#ifndef GCCXML
 #include "format.h" //放在最前面 有和convert_type.h的宏的冲突处理 
+#endif
 
 #include <stdlib.h>
 #include <string>
@@ -32,7 +37,9 @@
 #include <array>
 #include <memory>
 #include <thread>
+#ifndef GCCXML
 #include <omp.h> //openmp for gcc4
+#endif
 //using namespace std::placeholders; //去掉这个一个测试lambda bind的测试会有问题 但是一般ok 使用lambda不用bind 将_1等留给boost也避免冲突
 #else
 #include <boost/shared_ptr.hpp>

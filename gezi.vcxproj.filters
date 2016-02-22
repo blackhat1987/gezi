@@ -3609,6 +3609,9 @@
     <ClInclude Include="third\liblego\include\liblego\param_layers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\common_define.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\editdistance.cc">
