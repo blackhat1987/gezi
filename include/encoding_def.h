@@ -15,7 +15,7 @@
 #define GEZI_ENCODING_DEF_H_
 #include "common_define.h"
 namespace gezi {
-#if IS_HIGH_COMPILER
+#if defined(IS_HIGH_COMPILER)
 
 	const char* const kEncodings[] = { "GBK", "UTF8" };
 

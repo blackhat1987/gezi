@@ -15,7 +15,7 @@ print 'GCC_DYNAMIC: %d'%GCC_DYNAMIC
 GCC_HIGH=1
 print 'GCC_HIGH: %d'%GCC_HIGH
 # π”√”≤¡¥Ω”copy.
-CopyUsingHardLink(True)
+#CopyUsingHardLink(True)
 
 GCC_BIN='g++'
 GCC_FLAGS = '' 

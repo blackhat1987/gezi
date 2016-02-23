@@ -147,7 +147,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=773d50ab2004069a37480844c7b7fe91  COMAKE
+COMAKE_MD5=aa9f682be322cec7404760540898dfd5  COMAKE
 
 
 .PHONY:all
@@ -216,7 +216,7 @@ libgezi_cppformat.a:third/cppformat/gezi_cppformat_format.o \
 	ar crs libgezi_cppformat.a third/cppformat/gezi_cppformat_format.o \
   third/cppformat/gezi_cppformat_posix.o
 	mkdir -p ./output/lib
-	cp -f --link libgezi_cppformat.a ./output/lib
+	cp -f libgezi_cppformat.a ./output/lib
 
 copy-pinyin-lib:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mcopy-pinyin-lib[0m']"
@@ -227,7 +227,7 @@ libgezi_common.a:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibgezi_common.a[0m']"
 	ar crs libgezi_common.a 
 	mkdir -p ./output/lib
-	cp -f --link libgezi_common.a ./output/lib
+	cp -f libgezi_common.a ./output/lib
 
 libgezi_json.a:src/json/gezi_json_json_reader.o \
   src/json/gezi_json_json_value.o \
@@ -237,7 +237,7 @@ libgezi_json.a:src/json/gezi_json_json_reader.o \
   src/json/gezi_json_json_value.o \
   src/json/gezi_json_json_writer.o
 	mkdir -p ./output/lib
-	cp -f --link libgezi_json.a ./output/lib
+	cp -f libgezi_json.a ./output/lib
 
 copy-cppformat:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mcopy-cppformat[0m']"

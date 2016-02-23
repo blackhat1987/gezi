@@ -126,7 +126,7 @@ namespace gezi
 	}
 
 #include "common_define.h"
-#if IS_HIGH_COMPILER
+#if defined(IS_HIGH_COMPILER)
 	//------however benchmark show boost conv is much slow
 	//Considering that the enumerators use the specified type unsigned short as an underlying type, as Alok Save pointed out, it is probably a good idea to pass such objects by value (unless you want to change their value in the function as a side effect, in which case you should use a reference.)
 	inline string wstr2str(const wstring& src, EncodingType encodingType)

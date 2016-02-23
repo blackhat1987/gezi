@@ -72,7 +72,7 @@ namespace gezi {
 #undef uint32_t
 
 #include "common_define.h"
-#if IS_HIGH_COMPILER
+#if defined(IS_HIGH_COMPILER)
 //----------------------------boost based 
 //参见 ds/benchmark_encoding_convert.cc 测试 boost 性能较差
 //== == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==

@@ -18,7 +18,7 @@
 
 #include "common_define.h"
 
-#if IS_HIGH_COMPILER
+#if defined(IS_HIGH_COMPILER)
 #include <unordered_map> 
 #include <unordered_set> 
 #else
