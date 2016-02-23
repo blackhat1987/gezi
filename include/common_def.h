@@ -17,9 +17,6 @@
 #define BOOST_DETAIL_NO_CONTAINER_FWD
 #endif
 
-
-#define IS_HIGH_COMPILER  ! 
-
 #ifndef GCCXML
 #include "format.h" //放在最前面 有和convert_type.h的宏的冲突处理 
 #endif
@@ -32,7 +29,7 @@
 
 #include <limits>
 #include <cmath>
-#if IS_HIGH_COMPILER 
+#if __GNUC__ > 3 || defined(WIN32) 
 #include <mutex>
 #include <array>
 #include <memory>
@@ -76,7 +73,7 @@ using std::shared_ptr;
 using std::thread;
 using std::ref; 
 using std::cref;
-#if IS_HIGH_COMPILER
+#if __GNUC__ > 3 || defined(WIN32)
 using std::mutex;
 using std::lock_guard;
 #endif
@@ -168,7 +165,7 @@ using std::make_unique;
 #endif //GCCXML
 
 
-#if IS_HIGH_COMPILER
+#if __GNUC__ > 3 || defined(WIN32)
 using std::move;
 using std::make_shared;
 #endif
@@ -230,6 +227,9 @@ typedef std::set<uint64> ulset;
 #include <boost/foreach.hpp>
 #define foreach BOOST_FOREACH
 
+//using boost::format; //可能会倾向使用cppformat即 fmt::format 不过暂时很多代码使用boost 并且两者格式不一样
+using fmt::format; //@TODO 也许所有using typedef 都应该放到gezi namespace内部
+
 using boost::is_any_of;
 #include <boost/any.hpp>   
 using boost::any_cast;
@@ -262,7 +262,7 @@ using boost::algorithm::split_regex;
 	Pval(cmd);\
 	system((cmd).c_str())
 
-#if IS_HIGH_COMPILER
+#if __GNUC__ > 3 || defined(WIN32)
 //for polynomial class
 //#define  IS_TYPE_OF(a,A) \
 //	(dynamic_cast<A>(a) != nullptr)
