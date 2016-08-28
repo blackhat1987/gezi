@@ -31,6 +31,7 @@
 
 #include "Numeric/find_bins.h"
 
+#include "floating_point.h"
 //#include <boost/accumulators/accumulators.hpp>
 //#include <boost/accumulators/statistics/stats.hpp>
 //#include <boost/accumulators/statistics/mean.hpp>
@@ -43,9 +44,12 @@ namespace gezi {
 
 	//@TODO FIXME 
 	//http://stackoverflow.com/questions/17333/most-effective-way-for-float-and-double-comparison 
+
 	inline bool are_same(double a, double b)
 	{
 		return fabs(a - b) < std::numeric_limits<double>::epsilon();
+		//return std::nextafter(a, std::numeric_limits<double>::lowest()) <= b
+		//	&& std::nextafter(a, std::numeric_limits<double>::max()) >= b;
 	}
 
 	inline bool is_zero(double a)
@@ -87,11 +91,12 @@ namespace gezi {
 		return sum<value_type>(vec.begin(), vec.end());
 	}
 
+	//@FIXME
 	template<typename Iter>
 	size_t num_zeros(Iter start, Iter end)
 	{
 		typedef typename Iter::value_type ValueType;
-		return std::accumulate(start, end, (size_t)0, [](ValueType a) { return a == 0; });
+		return std::accumulate(start, end, (size_t)0, [](size_t accumulator,const ValueType& a) { return accumulator + a == 0; });
 	}
 
 	template<typename Container>
@@ -104,7 +109,7 @@ namespace gezi {
 	size_t num_nonzeros(Iter start, Iter end)
 	{
 		typedef typename Iter::value_type ValueType;
-		return std::accumulate(start, end, (size_t)0, [](ValueType a) { return a != 0; });
+		return std::accumulate(start, end, (size_t)0, [](size_t accumulator, const ValueType& a) { return accumulator + a != 0; });
 	}
 
 	template<typename Container>
@@ -137,7 +142,7 @@ namespace gezi {
 		return std::lower_bound(vec.begin(), vec.end(), value) - vec.begin();
 	}
 
-	
+
 
 	template<typename Container>
 	size_t min_index(const Container& vec)
@@ -708,7 +713,7 @@ namespace gezi {
 		double res = 0;
 		int total = end - begin;
 
-		for(Pair& item : m)
+		for (Pair& item : m)
 		{
 			double prob = item.second / (double)total;
 			res += -prob * log(prob);
@@ -854,12 +859,12 @@ namespace gezi {
 		double eps = 1e-30f;
 		const double pneg = 1 - probPredicted;
 		if (probPredicted < eps)
-		//if (probPredicted == 0)
+			//if (probPredicted == 0)
 		{
 			return probTrue > 0 ? 30 : 0;
 		}
 		else if (pneg < eps)
-		//else if (pneg == 0)
+			//else if (pneg == 0)
 		{
 			return probTrue > 0 ? 0 : 30;
 		}

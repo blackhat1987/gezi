@@ -19,6 +19,7 @@
 #include "map_util.h"
 #include <boost/lexical_cast.hpp>
 namespace gezi {
+
 	template<typename T>
 	string join(const vector<T>& vec, const string& sep = " ")
 	{
@@ -557,9 +558,31 @@ namespace gezi {
 		return ((&l == &r) || (l.empty() && r.empty()));
 	}
 
+
+	//@TODO maybe shold be append?
 	//两个vector合并结果存储到第一个vector,注意第二个数组不再有效 @TODO验证对map正确 注意两个容器需要类型一样 bool int这种不行
 	template<typename Container>
 	void merge(Container& dest, Container& src)
+	{
+		dest.insert(
+			dest.end(),
+			std::make_move_iterator(src.begin()),
+			std::make_move_iterator(src.end())
+			);
+	}
+
+	template<typename Container>
+	void append(Container& dest, Container&& src)
+	{
+		dest.insert(
+			dest.end(),
+			std::make_move_iterator(src.begin()),
+			std::make_move_iterator(src.end())
+			);
+	}
+
+	template<typename Container>
+	void append(Container& dest, Container& src)
 	{
 		dest.insert(
 			dest.end(),
@@ -850,12 +873,12 @@ namespace gezi {
 	}
 
 	template<typename T, typename U>
-	void print(const vector<T>& names, const vector<U>& results, string inSep = "", string outSep = "\n", int space = 40)
+	void print(const vector<T>& names, const vector<U>& results, string inSep = "\t", string outSep = "\n", int space = 40)
 	{
 		for (size_t i = 0; i < names.size(); i++)
 		{
 			std::cerr << std::setiosflags(std::ios::left) << std::setfill(' ') << std::setw(space)
-				<< names[i] + inSep
+				<< names[i] << inSep
 				<< results[i] << outSep;
 		}
 	}
@@ -926,6 +949,16 @@ namespace gezi {
 	inline const T* begin_ptr(const vector<T>& vec)
 	{
 		return vec.empty() ? NULL : &vec[0];
+	}
+
+	inline vector<int> range_vec(size_t length)
+	{
+		vector<int> indexVec(length);
+		for (size_t i = 0; i < length; i++)
+		{
+			indexVec[i] = i;
+		}
+		return indexVec;
 	}
 }  //----end of namespace gezi
 

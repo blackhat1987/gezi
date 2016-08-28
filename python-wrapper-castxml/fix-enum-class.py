@@ -40,9 +40,7 @@ for line in input:
                 break
         if find:
             continue
+    #if not line.strip().startswith('unordered_') and not line.strip().startswith('std::unordered_') and not line.strip().startswith('boost::unordered_'):
     print line
                 
-
-
-
 

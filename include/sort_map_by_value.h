@@ -35,6 +35,15 @@ namespace gezi {
 		return results;
 	}
 
+	template <typename Map>
+	vector<std::pair<typename Map::key_type, typename Map::mapped_type> > sort_map_desc(Map& tmap)
+	{
+		vector<std::pair<typename Map::key_type, typename Map::mapped_type> > results(tmap.begin(), tmap.end());
+		sort(results.begin(), results.end(), CmpPairBySecondDesc());
+		return results;
+	}
+
+
 	template < typename Map, typename Func>
 	vector<std::pair<typename Map::key_type, typename Map::mapped_type> > sort_map(Map& tmap, int n, Func func)
 	{
@@ -60,6 +69,13 @@ namespace gezi {
 		return results;
 	}
 
+	template <typename Map>
+	vector<std::pair<typename Map::key_type, typename Map::mapped_type> > partial_sort_map_desc(Map& tmap, int n)
+	{
+		vector<std::pair<typename Map::key_type, typename Map::mapped_type> > results(tmap.begin(), tmap.end());
+		partial_sort(results.begin(), results.begin() + n, results.end(), CmpPairBySecondDesc());
+		return results;
+	}
 
 	//--------------------已下老接口 可废弃
 

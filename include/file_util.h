@@ -654,6 +654,7 @@ namespace gezi {
 		std::ofstream _ofs;
 	};
 
+#ifndef GCCXML
 	class VecWriter
 	{
 	public:
@@ -692,7 +693,7 @@ namespace gezi {
 	private:
 		std::ofstream& _ofs;
 	};
-
+#endif //GCCXML
 
 #define OBJ_PATH(obj, path)\
 	format("{}/{}.bin", path, gezi::conf_trim(#obj))
@@ -712,6 +713,7 @@ namespace gezi {
 		obj->Save(outFile);
 #else
 		//使用直接序列化shared ptr好处是可以save nullptr这样 避免两次save程序 第一次有normalizer 第二次没有normalizer 载入的时候仍然载入第一次save的normalizer
+		//@TODO normalizer 可能nullptr覆盖掉之前非nullptr的
 		serialize_util::save(obj, outFile);  
 #endif
 	}

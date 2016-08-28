@@ -167,11 +167,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=db241d046f95969a67f609c366ac451c  COMAKE
+COMAKE_MD5=b1a585945658a4240341c3338b35e5be  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check .copy-so test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf test_random test_shared_ptr test_binfinder test_seralize test_string test_bitop test_featurevector test_split test_tieba_get_info test_content_process test_cached_fetcher test_bind test_lrumap test_seralize_xml test_thread_local test_configure test_static test_cpplinq test_partial_sort test_string_util test_mean_var test_const test_matchdict test_sharedobjects test_matchdict test_erase test_max_count_by test_informaiton test_information simple test_cppformat test_string_find test_static_thread_safe test_map_default test_template_function identifer-text2bin test_numeric_limit test_langmodel test_dynamic_cast test_derive test_derive_override test_derive_same_variable test_derive_vector test test_sort test_rvalue test_weight_vector test_static_const test_enum test_chnormalizer test_sizeof test_vector_copy test_deformation test_reverse test_convert test_map test_virtual_derive_default_param 
+all:comake2_makefile_check test_lambda test_bins test_datetime test_content_filter test_regex test_regex2 test_encode test_json test_escape test_other test_feature_selector openmp_hello openmp_test test_exception test_map_util test_seg test_identifer test_linear test_pinyin test_namepattern test_conf test_random test_shared_ptr test_binfinder test_seralize test_string test_bitop test_featurevector test_split test_tieba_get_info test_content_process test_cached_fetcher test_bind test_lrumap test_seralize_xml test_thread_local test_configure test_static test_cpplinq test_partial_sort test_string_util test_mean_var test_const test_matchdict test_sharedobjects test_matchdict test_erase test_max_count_by test_informaiton test_information simple test_cppformat test_string_find test_static_thread_safe test_map_default test_template_function identifer-text2bin test_numeric_limit test_langmodel test_dynamic_cast test_derive test_derive_override test_derive_same_variable test_derive_vector test test_sort test_rvalue test_weight_vector test_static_const test_enum test_chnormalizer test_sizeof test_vector_copy test_deformation test_reverse test_convert test_map test_virtual_derive_default_param 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -191,8 +191,6 @@ ccpclean:
 .PHONY:clean
 clean:ccpclean
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mclean[0m']"
-	rm -rf .copy-so
-	rm -rf ld-linux-x86-64.so.2
 	rm -rf test_lambda
 	rm -rf ./output/bin/test_lambda
 	rm -rf test_bins
@@ -447,10 +445,6 @@ love:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlove[0m']"
 	@echo "make love done"
 
-.copy-so:
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40m.copy-so[0m']"
-	ln -s ../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib//ld-linux-x86-64.so.2 ld-linux-x86-64.so.2 .
-
 test_lambda:test_lambda_test_lambda.o \
   ../include/tools/pinyin/libPYNotation.a \
   ../libgezi_common.a \
@@ -542,9 +536,7 @@ test_lambda:test_lambda_test_lambda.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_lambda
+  -lgomp -Xlinker "-)" -o test_lambda
 	mkdir -p ./output/bin
 	cp -f --link test_lambda ./output/bin
 
@@ -639,9 +631,7 @@ test_bins:test_bins_test_bins.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_bins
+  -lgomp -Xlinker "-)" -o test_bins
 	mkdir -p ./output/bin
 	cp -f --link test_bins ./output/bin
 
@@ -736,9 +726,7 @@ test_datetime:test_datetime_test_datetime.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_datetime
+  -lgomp -Xlinker "-)" -o test_datetime
 	mkdir -p ./output/bin
 	cp -f --link test_datetime ./output/bin
 
@@ -833,9 +821,7 @@ test_content_filter:test_content_filter_test_content_filter.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_content_filter
+  -lgomp -Xlinker "-)" -o test_content_filter
 	mkdir -p ./output/bin
 	cp -f --link test_content_filter ./output/bin
 
@@ -930,9 +916,7 @@ test_regex:test_regex_test_regex.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_regex
+  -lgomp -Xlinker "-)" -o test_regex
 	mkdir -p ./output/bin
 	cp -f --link test_regex ./output/bin
 
@@ -1027,9 +1011,7 @@ test_regex2:test_regex2_test_regex2.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_regex2
+  -lgomp -Xlinker "-)" -o test_regex2
 	mkdir -p ./output/bin
 	cp -f --link test_regex2 ./output/bin
 
@@ -1124,9 +1106,7 @@ test_encode:test_encode_test_encode.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_encode
+  -lgomp -Xlinker "-)" -o test_encode
 	mkdir -p ./output/bin
 	cp -f --link test_encode ./output/bin
 
@@ -1227,9 +1207,7 @@ test_json:test_json_test_json.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_json
+  -lgomp -Xlinker "-)" -o test_json
 	mkdir -p ./output/bin
 	cp -f --link test_json ./output/bin
 
@@ -1324,9 +1302,7 @@ test_escape:test_escape_test_escape.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_escape
+  -lgomp -Xlinker "-)" -o test_escape
 	mkdir -p ./output/bin
 	cp -f --link test_escape ./output/bin
 
@@ -1421,9 +1397,7 @@ test_other:test_other_test_other.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_other
+  -lgomp -Xlinker "-)" -o test_other
 	mkdir -p ./output/bin
 	cp -f --link test_other ./output/bin
 
@@ -1518,9 +1492,7 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_feature_selector
+  -lgomp -Xlinker "-)" -o test_feature_selector
 	mkdir -p ./output/bin
 	cp -f --link test_feature_selector ./output/bin
 
@@ -1615,9 +1587,7 @@ openmp_hello:openmp/openmp_hello_hello.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o openmp_hello
+  -lgomp -Xlinker "-)" -o openmp_hello
 	mkdir -p ./bin
 	cp -f --link openmp_hello ./bin
 
@@ -1712,9 +1682,7 @@ openmp_test:openmp/openmp_test_test.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o openmp_test
+  -lgomp -Xlinker "-)" -o openmp_test
 	mkdir -p ./bin
 	cp -f --link openmp_test ./bin
 
@@ -1809,9 +1777,7 @@ test_exception:test_exception_test_exception.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_exception
+  -lgomp -Xlinker "-)" -o test_exception
 	mkdir -p ./bin
 	cp -f --link test_exception ./bin
 
@@ -1906,9 +1872,7 @@ test_map_util:test_map_util_test_map_util.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_map_util
+  -lgomp -Xlinker "-)" -o test_map_util
 	mkdir -p ./bin
 	cp -f --link test_map_util ./bin
 
@@ -2003,9 +1967,7 @@ test_seg:test_seg_test_seg.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_seg
+  -lgomp -Xlinker "-)" -o test_seg
 	mkdir -p ./output/bin
 	cp -f --link test_seg ./output/bin
 
@@ -2100,9 +2062,7 @@ test_identifer:test_identifer_test_identifer.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_identifer
+  -lgomp -Xlinker "-)" -o test_identifer
 	mkdir -p ./output/bin
 	cp -f --link test_identifer ./output/bin
 
@@ -2197,9 +2157,7 @@ test_linear:test_linear_test_linear.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_linear
+  -lgomp -Xlinker "-)" -o test_linear
 	mkdir -p ./output/bin
 	cp -f --link test_linear ./output/bin
 
@@ -2294,9 +2252,7 @@ test_pinyin:test_pinyin_test_pinyin.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_pinyin
+  -lgomp -Xlinker "-)" -o test_pinyin
 	mkdir -p ./output/bin
 	cp -f --link test_pinyin ./output/bin
 
@@ -2391,9 +2347,7 @@ test_namepattern:test_namepattern_test_namepattern.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_namepattern
+  -lgomp -Xlinker "-)" -o test_namepattern
 	mkdir -p ./output/bin
 	cp -f --link test_namepattern ./output/bin
 
@@ -2488,9 +2442,7 @@ test_conf:test_conf_test_conf.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_conf
+  -lgomp -Xlinker "-)" -o test_conf
 	mkdir -p ./output/bin
 	cp -f --link test_conf ./output/bin
 
@@ -2585,9 +2537,7 @@ test_random:test_random_test_random.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_random
+  -lgomp -Xlinker "-)" -o test_random
 	mkdir -p ./output/bin
 	cp -f --link test_random ./output/bin
 
@@ -2682,9 +2632,7 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_shared_ptr
+  -lgomp -Xlinker "-)" -o test_shared_ptr
 	mkdir -p ./output/bin
 	cp -f --link test_shared_ptr ./output/bin
 
@@ -2779,9 +2727,7 @@ test_binfinder:test_binfinder_test_binfinder.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_binfinder
+  -lgomp -Xlinker "-)" -o test_binfinder
 	mkdir -p ./output/bin
 	cp -f --link test_binfinder ./output/bin
 
@@ -2876,9 +2822,7 @@ test_seralize:test_seralize_test_seralize.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_seralize
+  -lgomp -Xlinker "-)" -o test_seralize
 	mkdir -p ./output/bin
 	cp -f --link test_seralize ./output/bin
 
@@ -2973,9 +2917,7 @@ test_string:test_string_test_string.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_string
+  -lgomp -Xlinker "-)" -o test_string
 	mkdir -p ./output/bin
 	cp -f --link test_string ./output/bin
 
@@ -3070,9 +3012,7 @@ test_bitop:test_bitop_test_bitop.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_bitop
+  -lgomp -Xlinker "-)" -o test_bitop
 	mkdir -p ./output/bin
 	cp -f --link test_bitop ./output/bin
 
@@ -3167,9 +3107,7 @@ test_featurevector:test_featurevector_test_featurevector.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_featurevector
+  -lgomp -Xlinker "-)" -o test_featurevector
 	mkdir -p ./output/bin
 	cp -f --link test_featurevector ./output/bin
 
@@ -3264,9 +3202,7 @@ test_split:test_split_test_split.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_split
+  -lgomp -Xlinker "-)" -o test_split
 	mkdir -p ./output/bin
 	cp -f --link test_split ./output/bin
 
@@ -3361,9 +3297,7 @@ test_tieba_get_info:test_tieba_get_info_test_tieba_get_info.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_tieba_get_info
+  -lgomp -Xlinker "-)" -o test_tieba_get_info
 	mkdir -p ./output/bin
 	cp -f --link test_tieba_get_info ./output/bin
 
@@ -3458,9 +3392,7 @@ test_content_process:test_content_process_test_content_process.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_content_process
+  -lgomp -Xlinker "-)" -o test_content_process
 	mkdir -p ./output/bin
 	cp -f --link test_content_process ./output/bin
 
@@ -3555,9 +3487,7 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_cached_fetcher
+  -lgomp -Xlinker "-)" -o test_cached_fetcher
 	mkdir -p ./output/bin
 	cp -f --link test_cached_fetcher ./output/bin
 
@@ -3652,9 +3582,7 @@ test_bind:test_bind_test_bind.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_bind
+  -lgomp -Xlinker "-)" -o test_bind
 	mkdir -p ./output/bin
 	cp -f --link test_bind ./output/bin
 
@@ -3749,9 +3677,7 @@ test_lrumap:test_lrumap_test_lrumap.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_lrumap
+  -lgomp -Xlinker "-)" -o test_lrumap
 	mkdir -p ./output/bin
 	cp -f --link test_lrumap ./output/bin
 
@@ -3846,9 +3772,7 @@ test_seralize_xml:test_seralize_xml_test_seralize_xml.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_seralize_xml
+  -lgomp -Xlinker "-)" -o test_seralize_xml
 	mkdir -p ./output/bin
 	cp -f --link test_seralize_xml ./output/bin
 
@@ -3943,9 +3867,7 @@ test_thread_local:test_thread_local_test_thread_local.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_thread_local
+  -lgomp -Xlinker "-)" -o test_thread_local
 	mkdir -p ./output/bin
 	cp -f --link test_thread_local ./output/bin
 
@@ -4040,9 +3962,7 @@ test_configure:test_configure_test_configure.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_configure
+  -lgomp -Xlinker "-)" -o test_configure
 	mkdir -p ./output/bin
 	cp -f --link test_configure ./output/bin
 
@@ -4137,9 +4057,7 @@ test_static:test_static_test_static.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_static
+  -lgomp -Xlinker "-)" -o test_static
 	mkdir -p ./output/bin
 	cp -f --link test_static ./output/bin
 
@@ -4234,9 +4152,7 @@ test_cpplinq:test_cpplinq_test_cpplinq.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_cpplinq
+  -lgomp -Xlinker "-)" -o test_cpplinq
 	mkdir -p ./output/bin
 	cp -f --link test_cpplinq ./output/bin
 
@@ -4331,9 +4247,7 @@ test_partial_sort:test_partial_sort_test_partial_sort.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_partial_sort
+  -lgomp -Xlinker "-)" -o test_partial_sort
 	mkdir -p ./output/bin
 	cp -f --link test_partial_sort ./output/bin
 
@@ -4428,9 +4342,7 @@ test_string_util:test_string_util_test_string_util.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_string_util
+  -lgomp -Xlinker "-)" -o test_string_util
 	mkdir -p ./output/bin
 	cp -f --link test_string_util ./output/bin
 
@@ -4525,9 +4437,7 @@ test_mean_var:test_mean_var_test_mean_var.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_mean_var
+  -lgomp -Xlinker "-)" -o test_mean_var
 	mkdir -p ./output/bin
 	cp -f --link test_mean_var ./output/bin
 
@@ -4622,9 +4532,7 @@ test_const:test_const_test_const.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_const
+  -lgomp -Xlinker "-)" -o test_const
 	mkdir -p ./output/bin
 	cp -f --link test_const ./output/bin
 
@@ -4719,9 +4627,7 @@ test_matchdict:test_matchdict.h \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_matchdict
+  -lgomp -Xlinker "-)" -o test_matchdict
 	mkdir -p ./output/bin
 	cp -f --link test_matchdict ./output/bin
 
@@ -4816,9 +4722,7 @@ test_sharedobjects:test_sharedobjects_test_sharedobjects.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_sharedobjects
+  -lgomp -Xlinker "-)" -o test_sharedobjects
 	mkdir -p ./output/bin
 	cp -f --link test_sharedobjects ./output/bin
 
@@ -4913,9 +4817,7 @@ test_matchdict:test_matchdict_test_matchdict.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_matchdict
+  -lgomp -Xlinker "-)" -o test_matchdict
 	mkdir -p ./output/bin
 	cp -f --link test_matchdict ./output/bin
 
@@ -5010,9 +4912,7 @@ test_erase:test_erase_test_erase.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_erase
+  -lgomp -Xlinker "-)" -o test_erase
 	mkdir -p ./output/bin
 	cp -f --link test_erase ./output/bin
 
@@ -5107,9 +5007,7 @@ test_max_count_by:test_max_count_by_test_max_count_by.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_max_count_by
+  -lgomp -Xlinker "-)" -o test_max_count_by
 	mkdir -p ./output/bin
 	cp -f --link test_max_count_by ./output/bin
 
@@ -5204,9 +5102,7 @@ test_informaiton:test_informaiton_test_informaiton.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_informaiton
+  -lgomp -Xlinker "-)" -o test_informaiton
 	mkdir -p ./output/bin
 	cp -f --link test_informaiton ./output/bin
 
@@ -5301,9 +5197,7 @@ test_information:test_information_test_information.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_information
+  -lgomp -Xlinker "-)" -o test_information
 	mkdir -p ./output/bin
 	cp -f --link test_information ./output/bin
 
@@ -5398,9 +5292,7 @@ simple:simple_simple.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o simple
+  -lgomp -Xlinker "-)" -o simple
 	mkdir -p ./bin
 	cp -f --link simple ./bin
 
@@ -5495,9 +5387,7 @@ test_cppformat:test_cppformat_test_cppformat.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_cppformat
+  -lgomp -Xlinker "-)" -o test_cppformat
 	mkdir -p ./output/bin
 	cp -f --link test_cppformat ./output/bin
 
@@ -5592,9 +5482,7 @@ test_string_find:test_string_find_test_string_find.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_string_find
+  -lgomp -Xlinker "-)" -o test_string_find
 	mkdir -p ./output/bin
 	cp -f --link test_string_find ./output/bin
 
@@ -5689,9 +5577,7 @@ test_static_thread_safe:test_static_thread_safe_test_static_thread_safe.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_static_thread_safe
+  -lgomp -Xlinker "-)" -o test_static_thread_safe
 	mkdir -p ./output/bin
 	cp -f --link test_static_thread_safe ./output/bin
 
@@ -5786,9 +5672,7 @@ test_map_default:test_map_default_test_map_default.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_map_default
+  -lgomp -Xlinker "-)" -o test_map_default
 	mkdir -p ./output/bin
 	cp -f --link test_map_default ./output/bin
 
@@ -5883,9 +5767,7 @@ test_template_function:test_template_function_test_template_function.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_template_function
+  -lgomp -Xlinker "-)" -o test_template_function
 	mkdir -p ./output/bin
 	cp -f --link test_template_function ./output/bin
 
@@ -5980,9 +5862,7 @@ identifer-text2bin:identifer-text2bin_identifer-text2bin.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o identifer-text2bin
+  -lgomp -Xlinker "-)" -o identifer-text2bin
 	mkdir -p ./output/bin
 	cp -f --link identifer-text2bin ./output/bin
 
@@ -6077,9 +5957,7 @@ test_numeric_limit:test_numeric_limit_test_numeric_limit.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_numeric_limit
+  -lgomp -Xlinker "-)" -o test_numeric_limit
 	mkdir -p ./output/bin
 	cp -f --link test_numeric_limit ./output/bin
 
@@ -6174,9 +6052,7 @@ test_langmodel:test_langmodel_test_langmodel.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_langmodel
+  -lgomp -Xlinker "-)" -o test_langmodel
 	mkdir -p ./output/bin
 	cp -f --link test_langmodel ./output/bin
 
@@ -6271,9 +6147,7 @@ test_dynamic_cast:test_dynamic_cast_test_dynamic_cast.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_dynamic_cast
+  -lgomp -Xlinker "-)" -o test_dynamic_cast
 	mkdir -p ./output/bin
 	cp -f --link test_dynamic_cast ./output/bin
 
@@ -6368,9 +6242,7 @@ test_derive:test_derive_test_derive.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_derive
+  -lgomp -Xlinker "-)" -o test_derive
 	mkdir -p ./output/bin
 	cp -f --link test_derive ./output/bin
 
@@ -6465,9 +6337,7 @@ test_derive_override:test_derive_override_test_derive_override.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_derive_override
+  -lgomp -Xlinker "-)" -o test_derive_override
 	mkdir -p ./output/bin
 	cp -f --link test_derive_override ./output/bin
 
@@ -6562,9 +6432,7 @@ test_derive_same_variable:test_derive_same_variable_test_derive_same_variable.o 
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_derive_same_variable
+  -lgomp -Xlinker "-)" -o test_derive_same_variable
 	mkdir -p ./output/bin
 	cp -f --link test_derive_same_variable ./output/bin
 
@@ -6659,9 +6527,7 @@ test_derive_vector:test_derive_vector_test_derive_vector.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_derive_vector
+  -lgomp -Xlinker "-)" -o test_derive_vector
 	mkdir -p ./output/bin
 	cp -f --link test_derive_vector ./output/bin
 
@@ -6756,9 +6622,7 @@ test:test_test.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test
+  -lgomp -Xlinker "-)" -o test
 	mkdir -p ./output/bin
 	cp -f --link test ./output/bin
 
@@ -6853,9 +6717,7 @@ test_sort:test_sort_test_sort.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_sort
+  -lgomp -Xlinker "-)" -o test_sort
 	mkdir -p ./output/bin
 	cp -f --link test_sort ./output/bin
 
@@ -6950,9 +6812,7 @@ test_rvalue:test_rvalue_test_rvalue.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_rvalue
+  -lgomp -Xlinker "-)" -o test_rvalue
 	mkdir -p ./output/bin
 	cp -f --link test_rvalue ./output/bin
 
@@ -7047,9 +6907,7 @@ test_weight_vector:test_weight_vector_test_weight_vector.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_weight_vector
+  -lgomp -Xlinker "-)" -o test_weight_vector
 	mkdir -p ./output/bin
 	cp -f --link test_weight_vector ./output/bin
 
@@ -7144,9 +7002,7 @@ test_static_const:test_static_const_test_static_const.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_static_const
+  -lgomp -Xlinker "-)" -o test_static_const
 	mkdir -p ./output/bin
 	cp -f --link test_static_const ./output/bin
 
@@ -7241,9 +7097,7 @@ test_enum:test_enum_test_enum.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_enum
+  -lgomp -Xlinker "-)" -o test_enum
 	mkdir -p ./output/bin
 	cp -f --link test_enum ./output/bin
 
@@ -7338,9 +7192,7 @@ test_chnormalizer:test_chnormalizer_test_chnormalizer.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_chnormalizer
+  -lgomp -Xlinker "-)" -o test_chnormalizer
 	mkdir -p ./output/bin
 	cp -f --link test_chnormalizer ./output/bin
 
@@ -7435,9 +7287,7 @@ test_sizeof:test_sizeof_test_sizeof.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_sizeof
+  -lgomp -Xlinker "-)" -o test_sizeof
 	mkdir -p ./output/bin
 	cp -f --link test_sizeof ./output/bin
 
@@ -7532,9 +7382,7 @@ test_vector_copy:test_vector_copy_test_vector_copy.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_vector_copy
+  -lgomp -Xlinker "-)" -o test_vector_copy
 	mkdir -p ./output/bin
 	cp -f --link test_vector_copy ./output/bin
 
@@ -7629,9 +7477,7 @@ test_deformation:test_deformation_test_deformation.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_deformation
+  -lgomp -Xlinker "-)" -o test_deformation
 	mkdir -p ./output/bin
 	cp -f --link test_deformation ./output/bin
 
@@ -7726,9 +7572,7 @@ test_reverse:test_reverse_test_reverse.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_reverse
+  -lgomp -Xlinker "-)" -o test_reverse
 	mkdir -p ./output/bin
 	cp -f --link test_reverse ./output/bin
 
@@ -7823,9 +7667,7 @@ test_convert:test_convert_test_convert.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_convert
+  -lgomp -Xlinker "-)" -o test_convert
 	mkdir -p ./output/bin
 	cp -f --link test_convert ./output/bin
 
@@ -7920,9 +7762,7 @@ test_map:test_map_test_map.o \
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_map
+  -lgomp -Xlinker "-)" -o test_map
 	mkdir -p ./bin
 	cp -f --link test_map ./bin
 
@@ -8017,9 +7857,7 @@ test_virtual_derive_default_param:test_virtual_derive_default_param_test_virtual
   -lldap \
   -lcurl \
   -lcrypto \
-  -lgomp \
-  -rdynamic \
-  -Wl,-rpath=../../../../../../ps/se/toolchain/x86_64-unknown-linux-gnu-4.8.1-2.9-2.20-2.6.32/x86_64-unknown-linux-gnu/lib/ -Xlinker "-)" -o test_virtual_derive_default_param
+  -lgomp -Xlinker "-)" -o test_virtual_derive_default_param
 	mkdir -p ./output/bin
 	cp -f --link test_virtual_derive_default_param ./output/bin
 

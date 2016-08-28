@@ -56,7 +56,7 @@
 #include "common_define.h"
 
 #undef  STR
-#if defined(IS_HIGH_COMPILER)
+#if IS_HIGH_COMPILER
 #define STR std::to_string
 #else
 #define STR boost::lexical_cast<std::string>

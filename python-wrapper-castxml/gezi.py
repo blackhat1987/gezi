@@ -6,7 +6,8 @@ from pyplusplus import module_builder
 root = '/home/users/chenghuige/rsc/'
 name = 'gezi'
 #define_symbols = ['GCCXML','PYTHON_WRAPPER','NO_BAIDU_DEP']
-define_symbols = ['GCCXML','PYTHON_WRAPPER']
+#define_symbols = ['GCCXML','PYTHON_WRAPPER']
+define_symbols = ['GCCXML', 'PYTHON_WRAPPER', 'GEZI_NO_FOLLY', 'NO_BAIDU_DEP']
 
 files = [
 					'include.python/common_util.h',  #for safe let it be first for without it file_util.h or string_util.h... will fail
@@ -36,15 +37,16 @@ files = [
 					#-------------segmentor 
 					#'./include.python/Segmentor.h',
 					#-------------common utils
-					'./include.python/ProgressBar.h',
+					#'./include.python/ProgressBar.h',
 					#'./include.python/Identifer.h',
           #'./include.python/SharedIdentifers.h',
           #'./include.python/SharedObjects.h',
-					'./include.python/conf_util.h',
-					#'./include.python/serialize_util.h',
+					#'./include.python/conf_util.h',
+					##'./include.python/serialize_util.h',
 					'./include.python/log_util.h',
 					'./include.python/tools/content_process.h',
 					'./include.python/string_util.h',
+					'./include.python/wstring_util.h',
 					'./include.python/reg_util.h',
 					'./include.python/file_util.h',
 					'./include.python/encoding_convert.h',
@@ -95,7 +97,7 @@ include_paths=[
 	      ]
 
 include_paths_python = [
-				'app/search/sep/anti-spam/gezi/python-wrapper',
+				'app/search/sep/anti-spam/gezi/python-wrapper-castxml',
 		       ]
 
 include_paths_obsolute = [
@@ -104,10 +106,12 @@ include_paths_obsolute = [
         	'public/comlog-plugin',
           'app/search/sep/anti-spam/gezi/third/',
         ]
-
 mb = module_builder.module_builder_t(
-        gccxml_path = '~/.jumbo/bin/gccxml',
+        #gccxml_path = '/home/gezi/.jumbo/bin/gccxml',
+        #gccxml_path = '/home/gezi/.jumbo/bin/gccxml',
+				xml_generator_path = '/usr/local/bin/castxml',
         define_symbols = define_symbols,
+				cflags='-fopenmp -std=c++11 -Wexpansion-to-defined',
         files = files,
         include_paths = [root + f + '/include' for f in include_paths]
                         + [root + f + '/include.python' for f in include_paths_python]
@@ -118,4 +122,5 @@ mb.build_code_creator( module_name='lib%s'%name )
 
 mb.code_creator.user_defined_directories.append( os.path.abspath('.') )
 
-mb.write_module( os.path.join( os.path.abspath('./'), '%s_py.cc'%name) ) 
+#mb.write_module( os.path.join( os.path.abspath('./'), '%s_py.cc'%name) ) 
+mb.write_module('./gezi_py.cc')

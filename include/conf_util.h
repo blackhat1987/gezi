@@ -25,7 +25,9 @@
 #endif //--- __GNUC__
 
 #ifndef NO_BAIDU_DEP
+#ifndef NO_BAIDU_CONF
 #include "Configure.h"
+#endif
 #endif
 #include "log_util.h"
 #include "debug_util.h" 
@@ -74,6 +76,7 @@ namespace gezi
 		return BOOL(line.substr(name.size()));
 	}
 #ifndef NO_BAIDU_DEP
+#ifndef NO_BAIDU_CONF
 	using comcfg::Configure;
 
 	class SharedConf
@@ -498,11 +501,12 @@ namespace gezi
 		strncpy(dest, tmp.c_str(), tmp.length());
 		dest[tmp.length()] = '\0';
 	}
-#endif
+#endif //NO_BAIDU_CONF
+#endif //NO_BAIDU_DEP
 }
 
 #ifndef NO_BAIDU_DEP
-
+#ifndef NO_BAIDU_CONF
 //@TODO 以后外部都用宏调用 如果#define 。。 可以下面所有变为空去掉对conf的依赖 即代码没有配置完全是默认
 #define SCONF(s)\
 	gezi::set_val(gezi::SharedConf::conf(), section, gezi::conf_trim(#s), s)
@@ -584,5 +588,6 @@ namespace gezi
 	PROP_STRCPY_##s##result = gezi::get_val(conf, field, gezi::conf_trim(#s), default_value); \
 	strncpy(root, PROP_STRCPY_##s##result.c_str(), PROP_STRCPY_##s##result.length()); \
 	root[PROP_STRCPY_##s##result.length()] = '\0'
+#endif //NO_BAIDU_CONF
 #endif //NO_BAIDU_DEP
 #endif  //----end of CONF_UTIL_H_

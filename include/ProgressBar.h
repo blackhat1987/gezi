@@ -28,33 +28,33 @@ namespace gezi {
 	public:
 		
 		ProgressBar() :
-			Size(Bar.size() - 1)
+			Size(Bar.size())
 		{
 		}
 
 		ProgressBar(string log_word) :
-			_log_word(log_word), Size(Bar.size() - 1)
+			_log_word(log_word), Size(Bar.size())
 		{
 		}
 
 		ProgressBar(size_t total) :
-			_total(total), Size(Bar.size() - 1)
+			_total(total), Size(Bar.size())
 		{
 		}
 
 		ProgressBar(string log_word, size_t total) :
-			_log_word(log_word), _total(total), Size(Bar.size() - 1)
+			_log_word(log_word), _total(total), Size(Bar.size())
 		{
 		}
 
 		ProgressBar(size_t total, string log_word) :
-			_total(total), _log_word(log_word), Size(Bar.size() - 1)
+			_total(total), _log_word(log_word), Size(Bar.size())
 		{
 		}
 		
 		~ProgressBar()
 		{
-			(*this)(_current++, _total);
+			(*this)(_current, _total);
 		}
 
 		void set_level(int level)
@@ -65,6 +65,11 @@ namespace gezi {
 		size_t counter() const
 		{
 			return _current;
+		}
+
+		void progress()
+		{
+			(*this)(_current);
 		}
 
 		void progress(size_t current)
@@ -106,6 +111,7 @@ namespace gezi {
 				std::cerr.flush();
 				_prev_progress = progress;
 			}
+			_current = current + 1;
 		}
 
 	private:

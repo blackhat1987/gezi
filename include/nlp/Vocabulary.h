@@ -17,19 +17,43 @@
 
 namespace gezi {
 
-class Vocabulary : public ValueIdentifer<int64>
+class Vocabulary : public CountIdentifer
 {
 public:
-	int64 freq(int index) const
+#ifndef GCCXML
+	using CountIdentifer::CountIdentifer;
+#else 
+	Vocabulary() 
+	{
+	}
+	Vocabulary(string file)
+	{
+		Load(file);
+	}
+#endif
+	
+	size_t freq(int index) const
 	{
 		return _values[index];
 	}
 
 	//注意 可能 -1 越界
-	int64 freq(string key) const
+	size_t freq(string key) const
 	{
 		return _values[id(key)];
 	}
+
+	size_t count(int index) const
+	{
+		return _values[index];
+	}
+
+	//注意 可能 -1 越界
+	size_t count(string key) const
+	{
+		return _values[id(key)];
+	}
+
 protected:
 private:
 

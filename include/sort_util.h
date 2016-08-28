@@ -104,13 +104,22 @@ namespace gezi {
 
 	struct CmpPairBySecondReverse
 	{
-
 		template<typename _Node>
 		bool operator() (const _Node& left, const _Node& right)
 		{
 			return (left.second > right.second);
 		}
 	};
+
+	struct CmpPairBySecondDesc
+	{
+		template<typename _Node>
+		bool operator() (const _Node& left, const _Node& right)
+		{
+			return (left.second > right.second);
+		}
+	};
+
 
 	struct EqualPairByFirst
 	{

@@ -28,7 +28,8 @@
 #include "common_def.h"
 
 #include "string_util.h" //will remove baidu dependence 
-#include "log_util.h" //glog and baidu log
+
+//#include "log_util.h" //glog and baidu log
 #include "conf_util.h"
 
 #include "debug_util.h"
@@ -38,11 +39,13 @@
 
 #include "statistic_util.h"
 
-//#ifndef GCCXML
+#ifndef GCCXML
 #include "datetime_util.h"
+#endif
+
 #include "time_util.h"
 #include "ProgressBar.h" //use timer
-//#endif
+
 
 #include "file_util.h"
 

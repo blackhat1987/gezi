@@ -60,8 +60,8 @@ namespace std {
 	using boost::shared_ptr;
 	using boost::function;
 	using boost::thread;
-				using boost::bind;
-				using boost::cref;
+	using boost::bind;
+	using boost::cref;
 }
 #endif
 
@@ -73,7 +73,7 @@ using std::shared_ptr;
 using std::thread;
 using std::ref; 
 using std::cref;
-#if __GNUC__ > 3 || defined(WIN32)
+#if IS_HIGH_COMPILER
 using std::mutex;
 using std::lock_guard;
 #endif
@@ -113,6 +113,7 @@ using std::swap;
 using std::pair;
 using std::make_pair;
 using std::setfill;
+using std::cout;
 using std::endl;
 using std::sort;
 
@@ -165,7 +166,7 @@ using std::make_unique;
 #endif //GCCXML
 
 
-#if __GNUC__ > 3 || defined(WIN32)
+#if IS_HIGH_COMPILER
 using std::move;
 using std::make_shared;
 #endif
@@ -228,8 +229,9 @@ typedef std::set<uint64> ulset;
 #define foreach BOOST_FOREACH
 
 //using boost::format; //可能会倾向使用cppformat即 fmt::format 不过暂时很多代码使用boost 并且两者格式不一样
+#ifndef GCCXML
 using fmt::format; //@TODO 也许所有using typedef 都应该放到gezi namespace内部
-
+#endif
 using boost::is_any_of;
 #include <boost/any.hpp>   
 using boost::any_cast;
@@ -262,7 +264,7 @@ using boost::algorithm::split_regex;
 	Pval(cmd);\
 	system((cmd).c_str())
 
-#if __GNUC__ > 3 || defined(WIN32)
+#if IS_HIGH_COMPILER
 //for polynomial class
 //#define  IS_TYPE_OF(a,A) \
 //	(dynamic_cast<A>(a) != nullptr)
@@ -308,5 +310,10 @@ namespace gezi
 		return string(VERSION) + " -- " + string(__DATE__) + " -- " + string(__TIME__);
 	}
 } //-----------end of gezi
+
+
+//-----for python wrapper with py++, should use with DEF PYTHON_WRAPPER see example in Indentifer.h
+#define  PYHACK(CLASS_NAME) \
+	struct PyHack_##CLASS_NAME : public CLASS_NAME {};
 
 #endif  //----end of COMMON_DEF_H_

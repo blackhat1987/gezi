@@ -29,6 +29,15 @@ namespace gezi {
 		typedef unordered_map<string, IdType> HashMap;
 		typedef HashMap::const_iterator const_mapiter;
 
+		Identifer()
+		{
+		}
+
+		Identifer(string file)
+		{
+			Load(file);
+		}
+
 	public:
 
 		//@TODO PYTHON
@@ -88,9 +97,14 @@ namespace gezi {
 			_index.clear();
 		}
 
-		inline string key(int id) const
+		inline string key(IdType id) const
 		{
 			return _index[id];
+		}
+
+		inline string key(IdType id, string defualtKey) const
+		{
+			return id >= 0 && id < _index.size() ? _index[id] : defualtKey;
 		}
 
 		vector<string>& keys()
@@ -99,12 +113,19 @@ namespace gezi {
 		}
 
 		//get a item's id (index in dict),if the item does not exist return null_id()
-
 		inline IdType id(string f) const
 		{
 			HashMap::const_iterator it = _hashdict.find(f);
 			if (it == _hashdict.end())
 				return null_id();
+			return it->second;
+		}
+
+		inline IdType id(string f, IdType defaultVal) const
+		{
+			HashMap::const_iterator it = _hashdict.find(f);
+			if (it == _hashdict.end())
+				return defaultVal;
 			return it->second;
 		}
 
@@ -237,6 +258,16 @@ namespace gezi {
 	class ValueIdentifer : public Identifer
 	{
 	public:
+		ValueIdentifer()
+		{
+
+		}
+
+		ValueIdentifer(string file)
+		{
+			Load(file);
+		}
+
 		bool load(string file, int index = 1, string sep = "\t")
 		{
 			ifstream ifs(file.c_str());
@@ -274,6 +305,21 @@ namespace gezi {
 			return true;
 		}
 
+		void save(string file)
+		{
+			ofstream ofs(file);
+			for (size_t i = 0; i < size(); i++)
+			{
+				ofs << _index[i] << "\t" << _values[i] << endl;
+			}
+		}
+
+		void add(string key, T value)
+		{
+			Identifer::add(key);
+			_values.push_back(value);
+		}
+
 		void Save(string file)
 		{
 			serialize_util::save(*this, file);
@@ -297,6 +343,11 @@ namespace gezi {
 			return _values[id(key)];
 		}
 
+		T value(string key) const
+		{
+			return _values[id(key)];
+		}
+
 		//friend class cereal::access;
 		//template<class Archive>
 		//void serialize(Archive &ar, const unsigned int version)
@@ -316,16 +367,16 @@ namespace gezi {
 	};
 
 	typedef ValueIdentifer<int> IntIdentifer;
+	typedef ValueIdentifer<int64> Int64Identifer;
+	typedef ValueIdentifer<size_t> CountIdentifer;
 	typedef ValueIdentifer<double> DoubleIdentifer;
 
 	//@TODO PYTHON
 #ifdef PYTHON_WRAPPER
-	struct PyHack_IntIndentifer : public IntIdentifer
-	{
-	};
-	struct PyHack_DoubleIdentifer : public DoubleIdentifer
-	{
-	};
+	PYHACK(IntIdentifer);
+	PYHACK(Int64Identifer);
+	PYHACK(CountIdentifer);
+	PYHACK(DoubleIdentifer);
 #endif //PYTHON_WRAPPER
 
 } //----end of namespace gezi

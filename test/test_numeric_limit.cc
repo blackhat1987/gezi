@@ -107,6 +107,9 @@ int main(int argc, char *argv[])
 	vec.resize(3, 0);
 	Pvec(vec);
 
+  Pval((sizeof(size_t)));
+  Pval((sizeof(int64)));
+
 	//NaN是Not a Number的缩写。在matlab中以下情况会出现NaN：
 	//	任何关于NaN的数值运算， 如sqrt(NaN)
 	//	加减法， 如(+Inf) + (-Inf)

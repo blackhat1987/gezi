@@ -494,6 +494,7 @@
     <ClInclude Include="include\myclient_help.h" />
     <ClInclude Include="include\myclient_stream.h" />
     <ClInclude Include="include\nlp\Vocabulary.h" />
+    <ClInclude Include="include\nlp\WordCounter.h" />
     <ClInclude Include="include\Numeric\BinFinder.h" />
     <ClInclude Include="include\numeric\collocation.h" />
     <ClInclude Include="include\Numeric\find_bins.h" />
@@ -632,6 +633,7 @@
     <ClInclude Include="include\vector_def.h" />
     <ClInclude Include="include\WithArgs.h" />
     <ClInclude Include="include\WithHelp.h" />
+    <ClInclude Include="include\WordCounter.h" />
     <ClInclude Include="include\word_seg.h" />
     <ClInclude Include="include\wstring_util.h" />
     <ClInclude Include="other\rabit\include\dmlc\io.h" />
@@ -2073,6 +2075,7 @@
     <ClCompile Include="tools\tieba\trate\dump_post.cc" />
     <ClCompile Include="tools\tieba\trate\test_trate.cc" />
     <ClCompile Include="tools\tieba\trate\trate.cc" />
+    <ClCompile Include="tools\tieba\trate\trate_predicts.cc" />
     <ClCompile Include="tools\tieba\urate\get_urate_infos.cc" />
     <ClCompile Include="tools\tieba\urate\img_reducer.cc" />
     <ClCompile Include="tools\tieba\urate\lou_reducer.cc" />

@@ -104,9 +104,10 @@ include_paths_obsolute = [
         	'public/comlog-plugin',
           'app/search/sep/anti-spam/gezi/third/',
         ]
-
 mb = module_builder.module_builder_t(
-        gccxml_path = '~/.jumbo/bin/gccxml',
+        #gccxml_path = '/home/gezi/.jumbo/bin/gccxml',
+        #gccxml_path = '/home/gezi/.jumbo/bin/gccxml',
+				xml_generator_path = '/usr/local/bin/castxml',
         define_symbols = define_symbols,
         files = files,
         include_paths = [root + f + '/include' for f in include_paths]

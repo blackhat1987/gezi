@@ -15,7 +15,10 @@
 #define LOG_UTIL_H_
 #include <string>
 #include <glog/logging.h>
+
+
 #ifndef NO_BAIDU_DEP
+#ifdef USE_BAIDU_LOG  //不再使用com log 等 都使用glog  comlog dereciated use glog instead
 
 #include "com_log.h" 
 #include "ul_log.h"
@@ -145,5 +148,8 @@ namespace gezi
 		}
 	};
 } //gezi
+
+#endif //USE_BAIDU_LOG
 #endif //NO_BAID_DEP
+
 #endif  //----end of LOG_UTIL_H_

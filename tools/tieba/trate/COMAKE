@@ -118,6 +118,10 @@ LIBS('../../../libgezi_cppformat.a')
 #всд©б╪
 #Directory('demo')
 srcs = ''
-Application('trate',Sources('trate.cc', srcs))
-Application('test_load',Sources('test_load.cc',srcs, ENV.CppFlags()+CppFlags('-O0')))
+#Application('trate',Sources('trate.cc', srcs))
+#Application('test_load',Sources('test_load.cc',srcs, ENV.CppFlags()+CppFlags('-O0')))
 #Application('test_load',Sources('test_load.cc',srcs))
+#Application('trate_predicts',Sources('trate_predicts.py',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')))
+#Application('trate_predicts',Sources('trate_predicts.cc',srcs, ENV.CppFlags()+CppFlags('-O3 -DNDEBUG')))
+Application('trate_predicts_debug',Sources('trate_predicts.cc',srcs, ENV.CppFlags()+CppFlags('-D_DEBUG -O0')))
+Application('trate_predicts',Sources('trate_predicts.cc',srcs))

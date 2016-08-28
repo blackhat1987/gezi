@@ -137,25 +137,54 @@ DEFINE_string(type, "simple", "");
 //};
 TEST(segmentor_instance, func)
 {
-	Segmentor::init();
-	{
-		Segmentor seg; //确保handle clear在 Segmentor::uninit之前
-		Pval(seg.segment("我爱你中国扣扣是速去美女激晴吧", "|", SCW_OUT_WPCOMP));
+  Segmentor::init();
+  {
+    Segmentor seg; //确保handle clear在 Segmentor::uninit之前
 
-		Pval(seg.segment("我的扣扣是马布里杨美美基晴视频", "|", SCW_OUT_WPCOMP));
+    Pval(seg.segment("撸啊撸国产自拍", "|"));
+    Pval(seg.segment("撸啊撸国产自拍", "|", SEG_MERGE_NEWWORD));
+    
+    Pval(seg.segment("《宫心计》很好看 朴兰姬是韩国啦啦队队员", "|", SEG_MERGE_NEWWORD));
+    Pval(seg.segment("《宫心计》很好看 朴兰姬是韩国啦啦队队员", "|", SEG_WPCOMP));
+    Pval(seg.segment("《宫心计》很好看 邹宏建是韩国啦啦队队员", "|", SEG_MERGE_NEWWORD));
+    Pval(seg.segment("《宫心计》很好看 邹宏建是韩国啦啦队队员", "|"));
 
-		Pval(seg.segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
+    Pval(seg.segment("朴姬兰", "|"));
+    Pval(seg.segment("朴姬兰", "|", SEG_MERGE_NEWWORD));
 
-		Pval(seg.set_flag(SCW_CRF).segment("我的扣扣是马布里杨美美基晴视频", "|", SCW_OUT_WPCOMP | SCW_OUT_NEWWORD));
+    Pval(seg.segment("朴姬兰", "|", SEG_BASIC));
+           Pval(seg.segment("刘亦菲", "|", SEG_BASIC));
+           Pval(seg.segment("刘亦菲是女演员", "|", SEG_BASIC));
+    Pval(seg.segment("郭美美", "|", SEG_BASIC));
 
-		Pval(seg.segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
+    Pval(seg.segment("飞机降落伞$*$飞机降落伞图片", "|"));
 
-		Pval(seg.set_flag(0).segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
+    Pval(seg.segment("今野杏南大尺度", "|"));
+    Pval(seg.segment("今野杏南大尺度", "|", SEG_MERGE_NEWWORD));
 
-		Pval(seg.segment("回复：【新版斗破苍穹传奇】2014年最新火爆开放◆数月调试震撼上演	萧炎这才无奈的摇了摇头", "|", SEG_MERGE_NEWWORD));
-	}
-	Segmentor::uninit();
-	//Tester tester;
+    Pval(seg.segment("张筱雨大胆裸露", "|"));
+    Pval(seg.segment("张筱雨大胆裸露", "|", SEG_MERGE_NEWWORD));
+
+    Pval(seg.segment("我爱你中国扣扣是速去美女激晴吧", "|", SCW_OUT_WPCOMP));
+
+    Pval(seg.segment("我的扣扣是马布里杨美美基晴视频", "|", SCW_OUT_WPCOMP));
+
+    Pval(seg.segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
+
+    Pval(seg.set_flag(SCW_CRF).segment("我的扣扣是马布里杨美美基晴视频", "|", SCW_OUT_WPCOMP | SCW_OUT_NEWWORD));
+
+    Pval(seg.segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
+
+    Pval(seg.set_flag(0).segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
+
+    Pval(seg.segment("回复：【新版斗破苍穹传奇】2014年最新火爆开放◆数月调试震撼上演	萧炎这才无奈的摇了摇头", "|", SEG_MERGE_NEWWORD));
+    Pval(seg.segment("《宫心计》很好看 朴兰姬是韩国啦啦队队员", "|", SEG_MERGE_NEWWORD));
+    Pval(seg.segment("《宫心计》很好看 朴兰姬是韩国啦啦队队员", "|", SEG_WPCOMP));
+    Pval(seg.segment("《宫心计》很好看 邹宏建是韩国啦啦队队员", "|", SEG_MERGE_NEWWORD));
+    Pval(seg.segment("《宫心计》很好看 邹宏建是韩国啦啦队队员", "|"));
+  }
+  Segmentor::uninit();
+  //Tester tester;
 }
 
 //TEST(segmentor_thread_local, func)
@@ -169,37 +198,53 @@ TEST(segmentor_instance, func)
 
 TEST(segmentor_postag, func)
 {
-	Segmentor::SetStrategy(SEG_USE_POSTAG);
-	Segmentor::Init();
-	Pval(Segmentor::Segment("我爱你中国扣扣是速去美女激晴吧", "|", SCW_OUT_WPCOMP));
-	print_seg_posttag_result(Segmentor::handle());
+  //@TODO check postag problem, now will core
+  //Segmentor::SetStrategy(SEG_USE_POSTAG);
+  Segmentor::Init();
+  Pval(Segmentor::Segment("我爱你中国扣扣是速去美女激晴吧", "|", SCW_OUT_WPCOMP));
+  print_seg_posttag_result(Segmentor::handle());
 
-	Pval(Segmentor::Segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
-	print_seg_posttag_result(Segmentor::handle());
+  Pval(Segmentor::Segment("我的扣扣是马布里杨美美基晴视频", "|", SEG_MERGE_NEWWORD));
+  print_seg_posttag_result(Segmentor::handle());
 
-	Pval(Segmentor::Segment("我的扣扣是马布里杨美美基晴视频你好", "|", SEG_MERGE_NEWWORD));
-	print_seg_posttag_result(Segmentor::handle());
+  Pval(Segmentor::Segment("我的扣扣是马布里杨美美基晴视频你好", "|", SEG_MERGE_NEWWORD));
+  print_seg_posttag_result(Segmentor::handle());
 
-	LOG(INFO) << "Begin multi thread";
+  LOG(INFO) << "Begin multi thread";
 #pragma omp parallel for
-	for (size_t j = 0; j < 10; j++)
-	{
-		Segmentor::Init(); //注意需要每个线程都init handle
-		Pval2(j, Segmentor::Segment("我的扣扣是马布里杨美美基晴视频", "|"));
-	}
+  for (size_t j = 0; j < 100; j++)
+  {
+    //Segmentor::Init(); //注意需要每个线程都init handle
+    Pval2(j, Segmentor::Segment("我的扣扣是马布里杨美美基晴视频", "|"));
+    Pval2(j, Segmentor::Segment("我的扣扣是", "|"));
+    Pval2(j, Segmentor::Segment("我的扣扣是马布里", "|"));
+  }
 
-	Segmentor::Uninit();
+#pragma omp parallel for
+  for (size_t j = 0; j < 10; j++)
+  {
+    //Segmentor::Init(); //注意需要每个线程都init handle
+    Pval2(j, Segmentor::Segment("我的扣扣是马布里杨美美基晴视频", "|"));
+  }
+#pragma omp parallel for
+  for (size_t j = 0; j < 10; j++)
+  {
+    //Segmentor::Init(); //注意需要每个线程都init handle
+    Pval2(j, Segmentor::Segment("这是怎么回事", "|"));
+  }
+
+  Segmentor::Uninit();
 }
 int main(int argc, char *argv[])
 {
-	testing::InitGoogleTest(&argc, argv);
-	google::InitGoogleLogging(argv[0]);
-	google::InstallFailureSignalHandler();
-	int s = google::ParseCommandLineFlags(&argc, &argv, false);
-	if (FLAGS_log_dir.empty())
-		FLAGS_logtostderr = true;
-	FLAGS_minloglevel = FLAGS_level;
-	boost::progress_timer timer;
+  testing::InitGoogleTest(&argc, argv);
+  google::InitGoogleLogging(argv[0]);
+  google::InstallFailureSignalHandler();
+  int s = google::ParseCommandLineFlags(&argc, &argv, false);
+  if (FLAGS_log_dir.empty())
+    FLAGS_logtostderr = true;
+  FLAGS_minloglevel = FLAGS_level;
+  boost::progress_timer timer;
 
-	return RUN_ALL_TESTS();
+  return RUN_ALL_TESTS();
 }

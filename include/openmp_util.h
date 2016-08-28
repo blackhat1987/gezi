@@ -42,7 +42,7 @@ namespace gezi {
 		return numThreads;
 	}
 
-	inline int set_num_threads(int numThreads = 0, int reduce = 2)
+	inline int set_num_threads(int numThreads = 0, int reduce = 0)
 	{
 		if (numThreads)
 		{

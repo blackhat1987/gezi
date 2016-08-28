@@ -6,10 +6,11 @@ from pyplusplus import module_builder
 root = '/home/users/chenghuige/rsc/'
 name = 'segment'
 #define_symbols = ['GCCXML','PYTHON_WRAPPER','NO_BAIDU_DEP']
-define_symbols = ['GCCXML','PYTHON_WRAPPER', 'Wexpansion-to-defined']
+define_symbols = ['GCCXML','PYTHON_WRAPPER', 'NO_BAIDU_CONF']
 
 #cflags='-std=c++11' #well, will fail for comlog with c++11 why? it can compile under c++11 for real bin
-cflags=''
+cflags='-fopenmp -std=c++11 -Wexpansion-to-defined -Wreserved-user-defined-literal'
+
 #gccxml_path = '/home/users/chenghuige/.jumbo/bin/gccxml'
 gccxml_path=''
 xml_generator_path='/usr/local/bin/castxml'

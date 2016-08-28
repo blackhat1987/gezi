@@ -16,10 +16,14 @@
 #include "string_def.h"
 #include "vector_def.h"
 #include "encoding_def.h"
+
+#include "common_define.h"
+#if IS_HIGH_COMPILER
 #include <boost/locale.hpp>
+#endif
+
 namespace gezi
 {
-
 	//-----------------------------------wstring convert
 #ifdef GEZI_UTF8_AS_DEFAULT_ENCODING
 	inline void setlocale()
@@ -67,6 +71,7 @@ namespace gezi
 		return str_to_wstr(src);
 	}
 
+#ifndef GCCXML
 	/*!
 	* \brief 将宽字符串转化为string
 	*/
@@ -86,6 +91,8 @@ namespace gezi
 		return val;
 	}
 
+#endif
+	
 	inline string wstr_to_str(const wstring& src)
 	{
 		return wstr_to_str(src.c_str(), src.length());
@@ -125,8 +132,7 @@ namespace gezi
 		return str_to_wstr(src);
 	}
 
-#include "common_define.h"
-#if defined(IS_HIGH_COMPILER)
+#if IS_HIGH_COMPILER
 	//------however benchmark show boost conv is much slow
 	//Considering that the enumerators use the specified type unsigned short as an underlying type, as Alok Save pointed out, it is probably a good idea to pass such objects by value (unless you want to change their value in the function as a side effect, in which case you should use a reference.)
 	inline string wstr2str(const wstring& src, EncodingType encodingType)

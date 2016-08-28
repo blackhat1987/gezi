@@ -4,13 +4,13 @@ import glob
 from pyplusplus import module_builder
 
 root = '/home/users/chenghuige/rsc/'
-name = 'test'
+name = 'string_util'
 #define_symbols = ['GCCXML','PYTHON_WRAPPER','NO_BAIDU_DEP']
 #define_symbols = ['GCCXML','PYTHON_WRAPPER']
 define_symbols = ['GCCXML', 'PYTHON_WRAPPER', 'GEZI_NO_FOLLY', 'NO_BAIDU_DEP']
 
 files = [
-					#'include.python/common_util.h',  #for safe let it be first for without it file_util.h or string_util.h... will fail
+					'include.python/common_util.h',  #for safe let it be first for without it file_util.h or string_util.h... will fail
 					
 					#'./include.python/Numeric/Vector/Vector.h',
 					#'./include.python/feature/FeatureVector.h', 
@@ -37,7 +37,9 @@ files = [
 					#-------------segmentor 
 					#'./include.python/Segmentor.h',
 					#-------------common utils
-					'./test_py.h',
+					#'./include.python/Identifer.h',
+          #'./include.python/nlp/Vocabulary.h',
+          #'./include.python/nlp/WordCounter.h',
 					#'./include.python/Identifer.h',
           #'./include.python/SharedIdentifers.h',
           #'./include.python/SharedObjects.h',
@@ -45,11 +47,11 @@ files = [
 					##'./include.python/serialize_util.h',
 					#'./include.python/log_util.h',
 					#'./include.python/tools/content_process.h',
-					#'./include.python/string_util.h',
+					'./include.python/string_util.h',
 					#'./include.python/wstring_util.h',
 					#'./include.python/reg_util.h',
+					'./include.python/encoding_convert.h',
 					#'./include.python/file_util.h',
-					#'./include.python/encoding_convert.h',
 				
 					##-------------tieba utils 
 					#'./include.python/tieba/tieba_util.h',
@@ -111,7 +113,7 @@ mb = module_builder.module_builder_t(
         #gccxml_path = '/home/gezi/.jumbo/bin/gccxml',
 				xml_generator_path = '/usr/local/bin/castxml',
         define_symbols = define_symbols,
-				cflags='-openmp -std=c++11 -Wexpansion-to-defined',
+				cflags='-fopenmp -std=c++11 -Wexpansion-to-defined',
         files = files,
         include_paths = [root + f + '/include' for f in include_paths]
                         + [root + f + '/include.python' for f in include_paths_python]

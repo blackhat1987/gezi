@@ -14,8 +14,11 @@
 #ifndef TIME_UTIL_H_
 #define TIME_UTIL_H_
 
+#ifndef GCCXML
 #include <boost/date_time/posix_time/posix_time.hpp>
+#endif
 #include <boost/progress.hpp>
+
 #include <glog/logging.h>
 #include <string>
 #include "common_def.h"
@@ -68,7 +71,9 @@ namespace gezi {
 		}
 
 	private:
+#ifndef GCCXML
 		boost::posix_time::ptime _start_time;
+#endif
 	};
 
 	typedef MicrosecTimer Timer;

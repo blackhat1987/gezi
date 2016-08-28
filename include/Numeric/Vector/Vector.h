@@ -228,6 +228,7 @@ namespace gezi {
 		}
 #endif
 
+		//这里indexOnly表示 要构造成默认都是1.0 value的
 		void Init(string input, index_type startIndex = 0, index_type length_ = 0, string sep = ",\t ", bool indexOnly = false)
 		{
 			boost::trim(input); //需要注意 因为DOUBLE采用atof快速但是不安全 可能输入是一个空格 导致有问题

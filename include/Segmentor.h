@@ -35,7 +35,7 @@ extern const char* get_pos_str(unsigned int nPOS); // from libpostag.a
 #include "ipostag.h"
 #include "ul_dict.h"
 #endif
-#include "log_util.h"
+#include <glog/logging.h>
 #include "debug_util.h"
 #include <string>
 #include <vector>
@@ -43,577 +43,583 @@ extern const char* get_pos_str(unsigned int nPOS); // from libpostag.a
 
 
 namespace gezi {
-	using std::vector;
-	using std::string;
+  using std::vector;
+  using std::string;
 #ifndef NO_BAIDU_DEP
 
-	//typedef struct
-	//{
-	//	/* term info */
-	//	uint32_t length : 8;  /* length of term, not include the '\0' */
-	//	uint32_t offset : 24; /* offset of term in input text */
-	//	uint32_t type : 8;    /* type info, e.g. POS tag. 0 is invalid, used in postag, NOT used in wordseg */
-	//	uint32_t weight : 24; /* weight of term */
+  //typedef struct
+  //{
+  //	/* term info */
+  //	uint32_t length : 8;  /* length of term, not include the '\0' */
+  //	uint32_t offset : 24; /* offset of term in input text */
+  //	uint32_t type : 8;    /* type info, e.g. POS tag. 0 is invalid, used in postag, NOT used in wordseg */
+  //	uint32_t weight : 24; /* weight of term */
 
-	//	/* property */
-	//	struct
-	//	{
-	//		uint32_t m_lprop;  /* high 32 bit */
-	//		uint32_t m_hprop;  /* low 32 bit */
-	//	} prop;
+  //	/* property */
+  //	struct
+  //	{
+  //		uint32_t m_lprop;  /* high 32 bit */
+  //		uint32_t m_hprop;  /* low 32 bit */
+  //	} prop;
 
-	//	/* dict index */
-	//	long index; /* point to the address of dict item */
+  //	/* dict index */
+  //	long index; /* point to the address of dict item */
 
-	//	/* term buffer */
-	//	char buffer[TERM_MAX_LEN];
+  //	/* term buffer */
+  //	char buffer[TERM_MAX_LEN];
 
-	//} token_t;
+  //} token_t;
 
-	struct SegHandle
-	{
-		//分词buffer大小,不能开辟太大因为分词scw_create_out的时候会占过多内存
-		static const int SEG_BUFF_SIZE = 20480; //50*1024
-		//static const int SEG_BUFF_SIZE = 15000; //50*1024
+  struct SegHandle
+  {
+    //分词buffer大小,不能开辟太大因为分词scw_create_out的时候会占过多内存
+    static const int SEG_BUFF_SIZE = 20480; //50*1024
+    //static const int SEG_BUFF_SIZE = 15000; //50*1024
 
-		SegHandle() = default;
+    SegHandle() = default;
 
-		//SegHandle(int bufsize = SEG_BUFF_SIZE)
-		//这个要在Segmentor读取配置文件之后创建
-		SegHandle(int bufsize)
-		{
-			init(bufsize);
-		}
+    //SegHandle(int bufsize = SEG_BUFF_SIZE)
+    //这个要在Segmentor读取配置文件之后创建
+    SegHandle(int bufsize)
+    {
+      init(bufsize);
+    }
 
-		void init(int buf_size_ = SEG_BUFF_SIZE)
-		{
-			if (pout)
-				clear();
-			buf_size = buf_size_;
-			u_int scw_out__flag = SCW_OUT_ALL | SCW_OUT_PROP;
-			//nlp分词设计的 如果 没有Segmentor读配置文件 这里会创建失败的。。@TODO
-			pout = scw_create_out(buf_size, scw_out__flag);
-			CHECK_NOTNULL(pout);
-			token_vec.resize(buf_size);
-			tokens = &token_vec[0];
-		}
+    void init(int buf_size_ = SEG_BUFF_SIZE)
+    {
+      if (pout)
+        clear();
+      buf_size = buf_size_;
+      u_int scw_out__flag = SCW_OUT_ALL | SCW_OUT_PROP;
+      //nlp分词设计的 如果 没有Segmentor读配置文件 这里会创建失败的。。@TODO
+      pout = scw_create_out(buf_size, scw_out__flag);
+      CHECK_NOTNULL(pout);
+      token_vec.resize(buf_size);
+      tokens = &token_vec[0];
+    }
 
-		void clear()
-		{
-			if (pout)
-				scw_destroy_out(pout);
-			pout = NULL;
-			token_vec.clear();
-			token_vec.shrink_to_fit();
-			tokens = NULL;
-		}
+    void clear()
+    {
+      if (pout)
+        scw_destroy_out(pout);
+      pout = NULL;
+      token_vec.clear();
+      token_vec.shrink_to_fit();
+      tokens = NULL;
+    }
 
-		~SegHandle()
-		{
-			clear();
-		}
+    ~SegHandle()
+    {
+      clear();
+    }
 
-		scw_out_t* pout = NULL;
-		token_t* tokens = NULL;
-		vector<token_t> token_vec;
-		int nresult = 0;
-		int buf_size = 0;
-	};
-
-
-	struct SegNode
-	{
-		string word;
-		int length;
-		int offset;
-		int weight;
-		SegNode() = default;
-		SegNode(string word_, int length_, int offset_, int weight_)
-			:word(word_), length(length_), offset(offset_), weight(weight_)
-		{
-
-		}
-	};
-
-	//进程级别 一般 一个程序一个Segmentor资源实例
-	static const int  SEG_USE_DEFAULT = 0;
-	static const int SEG_USE_POSTAG = 1;
-	static const int SEG_USE_SPLIT = 2;
-	static const int SEG_USE_TRIE = 4;
-	static const int SEG_USE_ALL = 255;
-
-	//@TODO 可以使用enum class SegType,当前是c style利用名字前缀
-	//混排合并新词
-	static const int SEG_MERGE_NEWWORD = SCW_OUT_WPCOMP | SCW_OUT_NEWWORD;
-	//混排粒度
-	static const int SEG_WPCOMP = SCW_OUT_WPCOMP;
-	//新词结果
-	static const int SEG_NEWWORD = SCW_OUT_NEWWORD;
-	//基本小粒度
-	static const int SEG_BASIC = SCW_OUT_BASIC;
-	//人名结果
-	static const int SEG_HUMAN_NAME = SCW_OUT_HUMANNAME;
-
-	//改为线程安全设计 可以每个线程启动一个Segmentor,兼容之前的进程级别设计 仍然提供接受
-	//SegHandle的接口 可以进程启动一个Segmentor多个线程共享 自己再提供SegHandel存储结果
-	class Segmentor
-	{
-	public:
-		//保留 不初始化资源的初始接口 好处是比如需要读取配置文件后再初始Segmentor 如果没有
-		//需要使用shared_ptr方式用指针 达到延迟初始化 这样不方便SharedSegmentor设计
-		Segmentor(int seg_buff_size = SegHandle::SEG_BUFF_SIZE)
-		{
-			_handle.init(seg_buff_size); //在这之前需要先调用 Segmentor::init
-			VLOG(3) << "Segmentor handle init ok";
-		}
-
-		~Segmentor()
-		{
-			//需要先关闭它 
-			_handle.clear();
-		}
-
-		static void uninit()
-		{
-			LOG(INFO) << "segmentor uninit";
-			if (pwdict())
-			{
-				if (strategy() & SEG_USE_POSTAG)
-				{
-					tag_close();
-				}
-				//---关闭分词字典
-				if (pwdict())
-					scw_destroy_worddict(pwdict());
-				pwdict() = NULL;
-				//---关闭用户需要内部切分字典
-				if (split_dict())
-					ds_del(split_dict());
-				split_dict() = NULL;
-			}
-		}
-		static void Uninit()
-		{
-			handle().clear();
-			uninit();
-		}
-		//理论上通过这个 可以配置CRF开关 覆盖配置文件中的crf开关 但是测试无效　TRACE: 04-16 13:38:28:   * 0 Do not load CRF model, please check scw.conf-->Scw_crf = 1? 原因是要设置1 然后这里可以屏蔽crf
-		Segmentor& set_flag(int flag_)
-		{
-			flag() = flag_;
-			PVAL(flag());
-			return *this;
-		}
-
-		static void SetFlag(int flag_)
-		{
-			flag() = flag_;
-			PVAL(flag());
-		}
-
-		static void SetStrategy(int strategy_)
-		{
-			strategy() = strategy_;
-		}
-
-		static bool init(string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
-		{
-			//only once init
-			static bool ret = init(data_dir.c_str(), type, conf_path.c_str());
-			return ret;
-		}
-
-		static bool Init(int seg_buff_size = SegHandle::SEG_BUFF_SIZE, string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
-		{
-			//only once init
-			static bool ret = init(data_dir.c_str(), type, conf_path.c_str());
-
-			if (!ret)
-			{
-				LOG(WARNING) << "fail load data " << data_dir << " " << conf_path;
-				return false;
-			}
-
-			//only once init for each thread 或者也可以类似上面单独一个函数  static thread_local bool isHandleInted = initHandle();
-			static thread_local bool isHandleInited = false;
-			if (!isHandleInited)
-			{
-				handle().init(seg_buff_size);
-				isHandleInited = true;
-			}
-
-			return ret;
-		}
+    scw_out_t* pout = NULL;
+    token_t* tokens = NULL;
+    vector<token_t> token_vec;
+    int nresult = 0;
+    int buf_size = 0;
+  };
 
 
-		//输入是带有SegHandle的 可以作为static其实 static bool seg_words(string input, SegHandle& handle)
-		//Segmentor::segment(input, handle) @TODO
-		static bool seg_words(string input, SegHandle& handle)
-		{
-			//---------分词
-			if (scw_segment_words(pwdict(), handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)flag()) < 0)
-			{
-				LOG(ERROR) << "Segment fail " << input << " " << input.length();
-				return false;
-			}
-			return true;
-		}
+  struct SegNode
+  {
+    string word;
+    int length;
+    int offset;
+    int weight;
+    SegNode() = default;
+    SegNode(string word_, int length_, int offset_, int weight_)
+      :word(word_), length(length_), offset(offset_), weight(weight_)
+    {
 
-		static int get_tokens(SegHandle& handle, int type = SEG_WPCOMP)
-		{
-			handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
-			return handle.nresult;
-		}
+    }
+  };
 
-		int get_tokens(int type = SEG_WPCOMP)
-		{
-			_handle.nresult = scw_get_token_1(_handle.pout, type, _handle.tokens, _handle.buf_size);
-			return _handle.nresult;
-		}
+  //进程级别 一般 一个程序一个Segmentor资源实例
+  static const int  SEG_USE_DEFAULT = 0;
+  static const int SEG_USE_POSTAG = 1;
+  static const int SEG_USE_SPLIT = 2;
+  static const int SEG_USE_TRIE = 4;
+  static const int SEG_USE_ALL = 255;
 
-		static vector<SegNode> get_segnodes(SegHandle& handle)
-		{
-			vector<SegNode> result;
-			for (int i = 0; i < handle.nresult; i++)
-			{
-				result.push_back(SegNode(handle.tokens[i].buffer, handle.tokens[i].length,
-					handle.tokens[i].offset, handle.tokens[i].weight));
-			}
-			return result;
-		}
+  //@TODO 可以使用enum class SegType,当前是c style利用名字前缀
+  //混排合并新词
+  static const int SEG_MERGE_NEWWORD = SCW_OUT_WPCOMP | SCW_OUT_NEWWORD;
+  //混排粒度
+  static const int SEG_WPCOMP = SCW_OUT_WPCOMP;
+  //新词结果
+  static const int SEG_NEWWORD = SCW_OUT_NEWWORD;
+  //基本小粒度
+  static const int SEG_BASIC = SCW_OUT_BASIC;
+  //人名结果
+  static const int SEG_HUMAN_NAME = SCW_OUT_HUMANNAME;
 
-		vector<SegNode> get_segnodes()
-		{
-			return get_segnodes(_handle);
-		}
+  //改为线程安全设计 可以每个线程启动一个Segmentor,兼容之前的进程级别设计 仍然提供接受
+  //SegHandle的接口 可以进程启动一个Segmentor多个线程共享 自己再提供SegHandel存储结果
+  class Segmentor
+  {
+  public:
+    //保留 不初始化资源的初始接口 好处是比如需要读取配置文件后再初始Segmentor 如果没有
+    //需要使用shared_ptr方式用指针 达到延迟初始化 这样不方便SharedSegmentor设计
+    Segmentor(int seg_buff_size = SegHandle::SEG_BUFF_SIZE)
+    {
+      _handle.init(seg_buff_size); //在这之前需要先调用 Segmentor::init
+      VLOG(3) << "Segmentor handle init ok";
+    }
 
-		//@TODO can be static with handle outside Segmentor
-		static bool segment(string input, SegHandle& handle, int type = SEG_WPCOMP)
-		{
-			//---------分词
-			int* pflag = flag() == 0 ? NULL : &flag();
-			if (scw_segment_words(pwdict(), handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)pflag) < 0)
-			{
-				LOG(ERROR) << "Segment fail " << input << " " << input.length();
-				return false;
-			}
-			if (type != SEG_MERGE_NEWWORD || !handle.pout->pnewword->newwordbtermcount)
-			{
-				handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
-			}
-			else
-			{
-				handle.nresult = merge_newword(handle);
-			}
+    ~Segmentor()
+    {
+      //需要先关闭它 
+      _handle.clear();
 
-			//notice you can use if (strategy & ) also
-			if (strategy() & SEG_USE_POSTAG)
-			{
-				//----------标注
-				if (tag_postag(handle.tokens, handle.nresult) < 0)
-				{
-					LOG(ERROR) << "Tagging failed";
-					return false;
-				}
-			}
-			return true;
-		}
+      uninit();
+    }
 
-		static bool segment(string input, SegHandle& handle, vector<string>& result,
-			int type = SEG_WPCOMP)
-		{
-			bool ret = segment(input, handle, type);
-			if (!ret)
-			{
-				return;
-			}
+    static void uninit()
+    {
+      LOG(INFO) << "segmentor uninit";
+      if (pwdict())
+      {
+        if (strategy() & SEG_USE_POSTAG)
+        {
+          tag_close();
+        }
+        //---关闭分词字典
+        if (pwdict())
+          scw_destroy_worddict(pwdict());
+        pwdict() = NULL;
+        //---关闭用户需要内部切分字典
+        if (split_dict())
+          ds_del(split_dict());
+        split_dict() = NULL;
+      }
+    }
+    
+    static void Uninit()
+    {
+      handle().clear();
+    }
 
-			for (int i = 0; i < handle.nresult; i++)
-			{
-				result.push_back(handle.tokens[i].buffer);
-			}
-		}
+    //理论上通过这个 可以配置CRF开关 覆盖配置文件中的crf开关 但是测试无效　TRACE: 04-16 13:38:28:   * 0 Do not load CRF model, please check scw.conf-->Scw_crf = 1? 原因是要设置1 然后这里可以屏蔽crf
+    Segmentor& set_flag(int flag_)
+    {
+      flag() = flag_;
+      PVAL(flag());
+      return *this;
+    }
 
-		static string segment(string input, SegHandle& handle, string sep, int type = SEG_WPCOMP)
-		{
-			bool ret = segment(input, handle, type);
-			if (!ret || handle.nresult < 1)
-			{
-				return "";
-			}
-			std::stringstream ss;
-			ss << handle.tokens[0].buffer;
-			for (int i = 1; i < handle.nresult; i++)
-			{
-				ss << sep << handle.tokens[i].buffer;
-			}
-			return ss.str();
-		}
+    static void SetFlag(int flag_)
+    {
+      flag() = flag_;
+      PVAL(flag());
+    }
 
-		//快捷接口
-		vector<string> segment(string input, int type = SEG_WPCOMP)
-		{
-			vector<string> result;
-			segment(input, _handle, result, type);
-			return result;
-		}
+    static void SetStrategy(int strategy_)
+    {
+      strategy() = strategy_;
+    }
 
-		//快捷接口
-		static vector<string> Segment(string input, int type = SEG_WPCOMP)
-		{
-			vector<string> result;
-			segment(input, handle(), result, type);
-			return result;
-		}
+    static bool init(string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
+    {
+      //only once init
+      static bool ret = init(data_dir.c_str(), type, conf_path.c_str());
+      return ret;
+    }
 
-		static bool Segment_(string input, int type = SEG_WPCOMP)
-		{
-			return segment(input, handle(), type);
-		}
+    static bool Init(int seg_buff_size = SegHandle::SEG_BUFF_SIZE, string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
+    {
+      //only once init
+      static bool ret = init(data_dir.c_str(), type, conf_path.c_str());
 
-		bool segment(string input, vector<string>& result, int type = SEG_WPCOMP)
-		{
-			return segment(input, _handle, result, type);
-		}
+      if (!ret)
+      {
+        LOG(WARNING) << "fail load data " << data_dir << " " << conf_path;
+        return false;
+      }
 
-		static bool Segment(string input, vector<string>& result, int type = SEG_WPCOMP)
-		{
-			return segment(input, handle(), result, type);
-		}
+      InitThread(seg_buff_size);
 
-		string segment(string input, string sep, int type = SEG_WPCOMP)
-		{
-			return segment(input, _handle, sep, type);
-		}
+      return ret;
+    }
 
-		static string Segment(string input, string sep, int type = SEG_WPCOMP)
-		{
-			return segment(input, handle(), sep, type);
-		}
-
-		//主要为了python封装的分词获取offset,weight信息
-		bool segment(string input, vector<SegNode>& result, int type = SEG_WPCOMP)
-		{
-			bool ret = segment(input, _handle, type);
-			if (!ret)
-				return false;
-			for (int i = 0; i < _handle.nresult; i++)
-			{
-				result.push_back(SegNode(_handle.tokens[i].buffer, _handle.tokens[i].length,
-					_handle.tokens[i].offset, _handle.tokens[i].weight));
-			}
-			return true;
-		}
-
-		static bool Segment(string input, vector<SegNode>& result, int type = SEG_WPCOMP)
-		{
-			bool ret = segment(input, handle(), type);
-			if (!ret)
-				return false;
-			for (int i = 0; i < handle().nresult; i++)
-			{
-				result.push_back(SegNode(handle().tokens[i].buffer, handle().tokens[i].length,
-					handle().tokens[i].offset, handle().tokens[i].weight));
-			}
-			return true;
-		}
-		/*vector<string> segment(string input, )*/
-		//  //返回按照unicode的切分长度序列
-		//  vector<int> segment_w(string input, SegHandle& handle, int type = SEG_WPCOMP)
-		//  {
-		//    segment(input, handle, type);
-		//    
-		//  }
-
-		SegHandle& get_handle()
-		{
-			return _handle;
-		}
-
-		static SegHandle& handle()
-		{
-			static thread_local SegHandle _handle;
-			return _handle;
-		}
-
-	private:
-		static bool init(const char* data_dir, int type = 0, const char* conf_path = "./conf/scw.conf")
-		{
-			strategy() |= type;
-			int ret = -1;
-			//--------------打开分词字典
-			if (!pwdict())
-			{
-				{
-					if (pgconf != NULL)
-					{
-						scw_destroy_conf(pgconf);
-						pgconf = NULL;
-					}
-					pgconf = scw_load_conf(conf_path);
-					CHECK(pgconf != NULL) << conf_path;
-
-					pwdict() = scw_load_worddict(data_dir);
-					CHECK(pwdict() != NULL) << data_dir << " the path wrong ? or you use wrong segment version ?";
-					LOG(INFO) << "Load segmentor dict data ok";
-				}
-
-				if (strategy() & SEG_USE_POSTAG)
-				{ //--------------启动标注
-					char tag_dict_path[2048];
-					sprintf(tag_dict_path, "%s/%s", data_dir, "tagdict");
-					ret = tag_open(tag_dict_path);
-					CHECK_EQ(ret, 0) << tag_dict_path;
-					LOG(INFO) << "Tag open ok";
-				}
-				else
-				{
-					LOG(INFO) << "Do not use pos tag";
-				}
-				{	//---------------尝试打开need split字典，如果不存在或者打开出错就不使用
-					char user_dict_path[2048];
-					sprintf(user_dict_path, "%s/%s", data_dir, "need_split");
-					split_dict() = ds_load(user_dict_path, "need_split");
-					if (!split_dict())
-					{
-						LOG(INFO) << "Do not use user defined split dictionary, not find " << user_dict_path;
-					}
-					else
-					{
-						LOG(INFO) << "User defined split dictionary open ok";
-					}
-				}
-			}
-			LOG(INFO) << "Segmentor init ok";
-			return true;
-		}
-
-		//这个比较奇怪 c++没有问题 但是python不能很好处理static 运行没事  最后程序结束析构 
-		//SegHandle scw_destroy (pout)会出core
-		/*	static SegHandle& GetSegHandle(int buf_size = SegHandle::SEG_BUFF_SIZE)
-			{
-			static SegHandle _handle(buf_size);
-			return _handle;
-			}*/
-
-		static int merge_newword(SegHandle& handle)
-		{
-			scw_newword_t* pnewword = handle.pout->pnewword;
-			scw_out_t* pout = handle.pout;
-			token_t* tokens = handle.tokens;
-
-			int i = 0, j = 0, index = 0;
-			for (; j < pnewword->newwordbtermcount; i++, index++)
-			{
-				//int idx1 = pout->wpbtermoffsets[i]; //混排粒度offset是相对基本粒度的offset
-				int idx1 = i;
-				int idx2 = pnewword->newwordbtermoffsets[j * 2];//-这里是2*i,因为offset是不一样的
-				int pos1 = GET_TERM_POS(pout->wpbtermpos[i]);
-				int len1 = GET_TERM_LEN(pout->wpbtermpos[i]);
-				if (idx1 == idx2)
-				{
-					int pos2 = GET_TERM_POS(pnewword->newwordbtermpos[j]);
-					int len2 = GET_TERM_LEN(pnewword->newwordbtermpos[j]);
-					while (len1 != len2)
-					{
-						i++;
-						len1 += GET_TERM_LEN(pout->wpbtermpos[i]);
-					}
-					strncpy(tokens[index].buffer, pnewword->newwordbuf + pos2, len2);
-					tokens[index].buffer[len2] = '\0';
-					tokens[index].length = len2;
-					tokens[index].offset = idx2;
-					j++;
-				}
-				else
-				{ // can only be idx2 > idx1
-					strncpy(tokens[index].buffer, pout->wpcompbuf + pos1, len1);
-					tokens[index].buffer[len1] = '\0';
-					tokens[index].length = len1;
-					tokens[index].offset = idx1;
-				}
-			}
-			for (; i < pout->wpbtermcount; i++, index++)
-			{
-				int idx1 = pout->wpbtermoffsets[i]; //应该==i
-				int pos1 = GET_TERM_POS(pout->wpbtermpos[i]);
-				int len1 = GET_TERM_LEN(pout->wpbtermpos[i]);
-				strncpy(handle.tokens[index].buffer, pout->wpcompbuf + pos1, len1);
-				handle.tokens[index].buffer[len1] = '\0';
-				handle.tokens[index].length = len1;
-				handle.tokens[index].offset = idx1;
-			}
-			return index;
-		}
-
-		//另外一种设计是单独提出一个SegDict类 处理所有资源数据 然后作为Segmentor的一个static成员
-		//特别是当比如同时存在多个不同Segmentor使用不同的SegDict数据 不用static直接指针也可以(但是那样需要类外面将dict初始化，然后地址传到类内部，不能类内部dict初始化 否则每个线程都有一份dict数据copy)
-		//用SegDict + static 好处是不同segmentor可以不同SegDict 问题是每个线程只能一个Segmentor 不能多个不同Dict的相同类型的Segmentor因为是static 一个Segmentor类型只能对应一份资源 
-		//用SegDict + 指针 更灵活 封装性差一点 外部传入dict 一个Segmentor可以多个不同实例对应使用不同dict
-		//这里我们是只有一种Segmentor 一个共享dict 那么设计上采用了最大封装原则
-		static scw_worddict_t*& pwdict()
-		{
-			static scw_worddict_t* _pwdict = NULL;
-			return _pwdict;
-		}
-
-		static Sdict_search*& split_dict()
-		{
-			static Sdict_search* _split_dict = NULL;
-			return _split_dict;
-		}
-
-		static int& strategy()
-		{
-			static int _strategy = 0; //是否使用pos tag 等等
-			return _strategy;
-		}
+    static SegHandle& InitThread(int seg_buff_size = SegHandle::SEG_BUFF_SIZE)
+    {
+      return handle(seg_buff_size);
+    }
 
 
-		static int& flag(int flag_ = 0)
-		{//dynfloag 是否开启crf等 当前主要考虑设置是否开启crf
-			static int _flag = flag_;
-			return _flag;
-		}
+    //输入是带有SegHandle的 可以作为static其实 static bool seg_words(string input, SegHandle& handle)
+    //Segmentor::segment(input, handle) @TODO
+    static bool seg_words(string input, SegHandle& handle)
+    {
+      //---------分词
+      if (scw_segment_words(pwdict(), handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)flag()) < 0)
+      {
+        LOG(ERROR) << "Segment fail " << input << " " << input.length();
+        return false;
+      }
+      return true;
+    }
 
-	private:
-		//scw_conf_t* pgconf;
-		SegHandle _handle;
-	};
+    static int get_tokens(SegHandle& handle, int type = SEG_WPCOMP)
+    {
+      handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
+      return handle.nresult;
+    }
+
+    int get_tokens(int type = SEG_WPCOMP)
+    {
+      _handle.nresult = scw_get_token_1(_handle.pout, type, _handle.tokens, _handle.buf_size);
+      return _handle.nresult;
+    }
+
+    static vector<SegNode> get_segnodes(SegHandle& handle)
+    {
+      vector<SegNode> result;
+      for (int i = 0; i < handle.nresult; i++)
+      {
+        result.push_back(SegNode(handle.tokens[i].buffer, handle.tokens[i].length,
+          handle.tokens[i].offset, handle.tokens[i].weight));
+      }
+      return result;
+    }
+
+    vector<SegNode> get_segnodes()
+    {
+      return get_segnodes(_handle);
+    }
+
+    //@TODO can be static with handle outside Segmentor
+    static bool segment(string input, SegHandle& handle, int type = SEG_WPCOMP)
+    {
+      //---------分词
+      int* pflag = flag() == 0 ? NULL : &flag();
+      if (scw_segment_words(pwdict(), handle.pout, input.c_str(), input.length(), LANGTYPE_SIMP_CHINESE, (void *)pflag) < 0)
+      {
+        LOG(ERROR) << "Segment fail " << input << " " << input.length();
+        return false;
+      }
+      if (type != SEG_MERGE_NEWWORD || !handle.pout->pnewword->newwordbtermcount)
+      {
+        handle.nresult = scw_get_token_1(handle.pout, type, handle.tokens, handle.buf_size);
+      }
+      else
+      {
+        handle.nresult = merge_newword(handle);
+      }
+
+      //notice you can use if (strategy & ) also
+      if (strategy() & SEG_USE_POSTAG)
+      {
+        //----------标注
+        if (tag_postag(handle.tokens, handle.nresult) < 0)
+        {
+          LOG(ERROR) << "Tagging failed";
+          return false;
+        }
+      }
+      return true;
+    }
+
+    static bool segment(string input, SegHandle& handle, vector<string>& result,
+      int type = SEG_WPCOMP)
+    {
+      bool ret = segment(input, handle, type);
+      if (!ret)
+      {
+        return;
+      }
+
+      for (int i = 0; i < handle.nresult; i++)
+      {
+        result.push_back(handle.tokens[i].buffer);
+      }
+    }
+
+    static string segment(string input, SegHandle& handle, string sep, int type = SEG_WPCOMP)
+    {
+      bool ret = segment(input, handle, type);
+      if (!ret || handle.nresult < 1)
+      {
+        return "";
+      }
+      std::stringstream ss;
+      ss << handle.tokens[0].buffer;
+      for (int i = 1; i < handle.nresult; i++)
+      {
+        ss << sep << handle.tokens[i].buffer;
+      }
+      return ss.str();
+    }
+
+    //快捷接口
+    vector<string> segment(string input, int type = SEG_WPCOMP)
+    {
+      vector<string> result;
+      segment(input, _handle, result, type);
+      return result;
+    }
+
+    //快捷接口
+    static vector<string> Segment(string input, int type = SEG_WPCOMP)
+    {
+      vector<string> result;
+      segment(input, handle(), result, type);
+      return result;
+    }
+
+    static bool Segment_(string input, int type = SEG_WPCOMP)
+    {
+      return segment(input, handle(), type);
+    }
+
+    bool segment(string input, vector<string>& result, int type = SEG_WPCOMP)
+    {
+      return segment(input, _handle, result, type);
+    }
+
+    static bool Segment(string input, vector<string>& result, int type = SEG_WPCOMP)
+    {
+      return segment(input, handle(), result, type);
+    }
+
+    string segment(string input, string sep, int type = SEG_WPCOMP)
+    {
+      return segment(input, _handle, sep, type);
+    }
+
+    static string Segment(string input, string sep, int type = SEG_WPCOMP)
+    {
+      return segment(input, handle(), sep, type);
+    }
+
+    //主要为了python封装的分词获取offset,weight信息
+    bool segment(string input, vector<SegNode>& result, int type = SEG_WPCOMP)
+    {
+      bool ret = segment(input, _handle, type);
+      if (!ret)
+        return false;
+      for (int i = 0; i < _handle.nresult; i++)
+      {
+        result.push_back(SegNode(_handle.tokens[i].buffer, _handle.tokens[i].length,
+          _handle.tokens[i].offset, _handle.tokens[i].weight));
+      }
+      return true;
+    }
+
+    static bool Segment(string input, vector<SegNode>& result, int type = SEG_WPCOMP)
+    {
+      bool ret = segment(input, handle(), type);
+      if (!ret)
+        return false;
+      for (int i = 0; i < handle().nresult; i++)
+      {
+        result.push_back(SegNode(handle().tokens[i].buffer, handle().tokens[i].length,
+          handle().tokens[i].offset, handle().tokens[i].weight));
+      }
+      return true;
+    }
+    /*vector<string> segment(string input, )*/
+    //  //返回按照unicode的切分长度序列
+    //  vector<int> segment_w(string input, SegHandle& handle, int type = SEG_WPCOMP)
+    //  {
+    //    segment(input, handle, type);
+    //    
+    //  }
+
+    SegHandle& get_handle()
+    {
+      return _handle;
+    }
+
+    static SegHandle& handle(int buf_size = SegHandle::SEG_BUFF_SIZE)
+    {
+      static thread_local SegHandle _handle = ([&](){
+        SegHandle _handle;
+        _handle.init(buf_size);
+        return _handle;
+      })();
+      return _handle;
+    }
+
+  private:
+    static bool init(const char* data_dir, int type = 0, const char* conf_path = "./conf/scw.conf")
+    {
+      strategy() |= type;
+      int ret = -1;
+      //--------------打开分词字典
+      if (!pwdict())
+      {
+        {
+          if (pgconf != NULL)
+          {
+            scw_destroy_conf(pgconf);
+            pgconf = NULL;
+          }
+          pgconf = scw_load_conf(conf_path);
+          CHECK(pgconf != NULL) << conf_path;
+
+          pwdict() = scw_load_worddict(data_dir);
+          CHECK(pwdict() != NULL) << data_dir << " the path wrong ? or you use wrong segment version ?";
+          LOG(INFO) << "Load segmentor dict data ok";
+        }
+
+        if (strategy() & SEG_USE_POSTAG)
+        { //--------------启动标注
+          char tag_dict_path[2048];
+          sprintf(tag_dict_path, "%s/%s", data_dir, "tagdict");
+          ret = tag_open(tag_dict_path);
+          CHECK_EQ(ret, 0) << tag_dict_path;
+          LOG(INFO) << "Tag open ok";
+        }
+        else
+        {
+          LOG(INFO) << "Do not use pos tag";
+        }
+        {	//---------------尝试打开need split字典，如果不存在或者打开出错就不使用
+          char user_dict_path[2048];
+          sprintf(user_dict_path, "%s/%s", data_dir, "need_split");
+          split_dict() = ds_load(user_dict_path, "need_split");
+          if (!split_dict())
+          {
+            LOG(INFO) << "Do not use user defined split dictionary, not find " << user_dict_path;
+          }
+          else
+          {
+            LOG(INFO) << "User defined split dictionary open ok";
+          }
+        }
+      }
+      LOG(INFO) << "Segmentor init ok";
+      return true;
+    }
+
+    //这个比较奇怪 c++没有问题 但是python不能很好处理static 运行没事  最后程序结束析构 
+    //SegHandle scw_destroy (pout)会出core
+    /*	static SegHandle& GetSegHandle(int buf_size = SegHandle::SEG_BUFF_SIZE)
+      {
+      static SegHandle _handle(buf_size);
+      return _handle;
+      }*/
+
+    static int merge_newword(SegHandle& handle)
+    {
+      scw_newword_t* pnewword = handle.pout->pnewword;
+      scw_out_t* pout = handle.pout;
+      token_t* tokens = handle.tokens;
+
+      int i = 0, j = 0, index = 0;
+      for (; j < pnewword->newwordbtermcount; i++, index++)
+      {
+        //int idx1 = pout->wpbtermoffsets[i]; //混排粒度offset是相对基本粒度的offset
+        int idx1 = i;
+        int idx2 = pnewword->newwordbtermoffsets[j * 2];//-这里是2*i,因为offset是不一样的
+        int pos1 = GET_TERM_POS(pout->wpbtermpos[i]);
+        int len1 = GET_TERM_LEN(pout->wpbtermpos[i]);
+        if (idx1 == idx2)
+        {
+          int pos2 = GET_TERM_POS(pnewword->newwordbtermpos[j]);
+          int len2 = GET_TERM_LEN(pnewword->newwordbtermpos[j]);
+          while (len1 != len2)
+          {
+            i++;
+            len1 += GET_TERM_LEN(pout->wpbtermpos[i]);
+          }
+          strncpy(tokens[index].buffer, pnewword->newwordbuf + pos2, len2);
+          tokens[index].buffer[len2] = '\0';
+          tokens[index].length = len2;
+          tokens[index].offset = idx2;
+          j++;
+        }
+        else
+        { // can only be idx2 > idx1
+          strncpy(tokens[index].buffer, pout->wpcompbuf + pos1, len1);
+          tokens[index].buffer[len1] = '\0';
+          tokens[index].length = len1;
+          tokens[index].offset = idx1;
+        }
+      }
+      for (; i < pout->wpbtermcount; i++, index++)
+      {
+        int idx1 = pout->wpbtermoffsets[i]; //应该==i
+        int pos1 = GET_TERM_POS(pout->wpbtermpos[i]);
+        int len1 = GET_TERM_LEN(pout->wpbtermpos[i]);
+        strncpy(handle.tokens[index].buffer, pout->wpcompbuf + pos1, len1);
+        handle.tokens[index].buffer[len1] = '\0';
+        handle.tokens[index].length = len1;
+        handle.tokens[index].offset = idx1;
+      }
+      return index;
+    }
+
+    //另外一种设计是单独提出一个SegDict类 处理所有资源数据 然后作为Segmentor的一个static成员
+    //特别是当比如同时存在多个不同Segmentor使用不同的SegDict数据 不用static直接指针也可以(但是那样需要类外面将dict初始化，然后地址传到类内部，不能类内部dict初始化 否则每个线程都有一份dict数据copy)
+    //用SegDict + static 好处是不同segmentor可以不同SegDict 问题是每个线程只能一个Segmentor 不能多个不同Dict的相同类型的Segmentor因为是static 一个Segmentor类型只能对应一份资源 
+    //用SegDict + 指针 更灵活 封装性差一点 外部传入dict 一个Segmentor可以多个不同实例对应使用不同dict
+    //这里我们是只有一种Segmentor 一个共享dict 那么设计上采用了最大封装原则
+    static scw_worddict_t*& pwdict()
+    {
+      static scw_worddict_t* _pwdict = NULL;
+      return _pwdict;
+    }
+
+    static Sdict_search*& split_dict()
+    {
+      static Sdict_search* _split_dict = NULL;
+      return _split_dict;
+    }
+
+    static int& strategy()
+    {
+      static int _strategy = 0; //是否使用pos tag 等等
+      return _strategy;
+    }
+
+
+    static int& flag(int flag_ = 0)
+    {//dynfloag 是否开启crf等 当前主要考虑设置是否开启crf
+      static int _flag = flag_;
+      return _flag;
+    }
+
+  private:
+    //scw_conf_t* pgconf;
+    SegHandle _handle;
+  };
 
 
 #ifndef NO_BAIDU_DEP
-	//util
-	inline void print_seg_result(const SegHandle& handle)
-	{
-		for (int i = 0; i < handle.nresult; i++)
-		{
-			std::cerr << handle.tokens[i].buffer << " " << handle.tokens[i].offset << " " << handle.tokens[i].length << endl;
-		}
-	}
+  //util
+  inline void print_seg_result(const SegHandle& handle)
+  {
+    for (int i = 0; i < handle.nresult; i++)
+    {
+      std::cerr << handle.tokens[i].buffer << " " << handle.tokens[i].offset << " " << handle.tokens[i].length << endl;
+    }
+  }
 
-	inline void print_seg_posttag_result(const gezi::SegHandle& handle)
-	{
-		for (int i = 0; i < handle.nresult; i++)
-		{
-			const char* stag = ::get_pos_str(handle.tokens[i].type);
-			if (stag)
-				printf("%s/%s  ", handle.tokens[i].buffer, stag);
-			else
-				printf("%s  ", handle.tokens[i].buffer);
-		}
-		printf("\n");
-	}
+  inline void print_seg_posttag_result(const gezi::SegHandle& handle)
+  {
+    for (int i = 0; i < handle.nresult; i++)
+    {
+      const char* stag = ::get_pos_str(handle.tokens[i].type);
+      if (stag)
+        printf("%s/%s  ", handle.tokens[i].buffer, stag);
+      else
+        printf("%s  ", handle.tokens[i].buffer);
+    }
+    printf("\n");
+  }
 
-	inline void print_seg_result()
-	{
-		print_seg_result(Segmentor::handle());
-	}
+  inline void print_seg_result()
+  {
+    print_seg_result(Segmentor::handle());
+  }
 
-	inline void print_seg_posttag_result()
-	{
-		print_seg_posttag_result(Segmentor::handle());
-	}
+  inline void print_seg_posttag_result()
+  {
+    print_seg_posttag_result(Segmentor::handle());
+  }
 
 #endif
 

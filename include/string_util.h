@@ -786,7 +786,8 @@ namespace gezi {
 
 	}
 
-	inline string GetOutputFileName(string infile, string suffix, bool removeTxt = false)
+	//@TODO 改为 add_filename_suffix 和 replace_filename_suffix 两个函数更可读
+	inline string GetOutputFileNameWithSuffix(string infile, string suffix, bool removeTxt = false)
 	{
 		if (!removeTxt)
 			return endswith(infile, ".txt") ? boost::replace_last_copy(infile, ".txt", format(".{}.txt", suffix)) : format("{}.{}", infile, suffix);

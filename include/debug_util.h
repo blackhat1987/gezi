@@ -195,7 +195,7 @@ void PVec(const T&vec, std::ostream& out = std::cout, string sep = "\n", string 
 }
 
 template<typename T>
-void LOGPVec(const T&vec, string sep = " ", int level = 5, string last = "\n")
+void LOGVec(const T&vec, int level = 0, string sep = " ", string last = "\n")
 {
 	typedef typename T::value_type VType;
 	typedef typename T::const_iterator Iter;
@@ -229,38 +229,38 @@ void LOGRange(Iter begin, Iter end, int level = 5)
 	}
 }
 
-#define PVECTOR(v)\
+#define PVEC(v)\
 {\
 	stringstream ss;\
 	ss << #v << ":";\
 	for (size_t i_ = 0; i_ < v.size(); i_++)\
+	{\
+		if (v.size() > 6)\
 		{\
-	if (v.size() > 3)\
-		{\
-	ss << i_ << ":";\
+			ss << i_ << ":";\
 		}\
-	ss << v[i_] << " ";\
-		}\
+		ss << v[i_] << " ";\
+	}\
 	VLOG(5) << ss.str();\
 }
 
 
-#define Pvector(v)\
+#define Pvec(v)\
 {\
 	stringstream ss;\
 	ss << #v << ":";\
 	for (size_t i_ = 0; i_ < v.size(); i_++)\
+	{\
+		if (v.size() > 6)\
 		{\
-	if (v.size() > 3)\
-			{\
-		ss << i_ << ":";\
-			}\
-	ss << v[i_] << " ";\
+			ss << i_ << ":"; \
 		}\
+		ss << v[i_] << " ";\
+	}\
 	VLOG(0) << ss.str();\
 }
 
-#define PVEC(v)\
+#define PVECTOR(v)\
 	VLOG(5) << #v <<" --- " << v.size();\
 	for (size_t i_ = 0; i_ < v.size(); i_++)\
 		{\
@@ -274,7 +274,7 @@ void LOGRange(Iter begin, Iter end, int level = 5)
 	VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
 		}
 
-#define Pvec(v)\
+#define Pvector(v)\
 	VLOG(0) << #v <<" --- " << v.size();\
 	for (size_t i_ = 0; i_ < v.size(); i_++)\
 		{\

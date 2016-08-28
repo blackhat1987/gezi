@@ -18,8 +18,10 @@
 
 #include "common_util.h"
 
+#ifndef GCCXML
 using namespace boost::gregorian;
 using namespace boost::posix_time;
+#endif
 
 namespace gezi
 {

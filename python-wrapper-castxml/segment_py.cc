@@ -84,9 +84,13 @@ bp::scope vector_less__token_t__greater__scope( vector_less__token_t__greater__e
 //         vector_less__token_t__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< token_t > >() );
 }
 
-bp::class_< std::vector< std::string > >("vector_less__std_scope_string__greater_")
-.def( bp::vector_indexing_suite< ::std::vector< std::string >, true >() )
+{ //::std::vector< std::string >
+typedef bp::class_< std::vector< std::string > > vector_less__std_scope_string__greater__exposer_t;
+vector_less__std_scope_string__greater__exposer_t vector_less__std_scope_string__greater__exposer = vector_less__std_scope_string__greater__exposer_t( "vector_less__std_scope_string__greater_" );
+bp::scope vector_less__std_scope_string__greater__scope( vector_less__std_scope_string__greater__exposer );
+vector_less__std_scope_string__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< std::string >, true >() )
 VEC_METHOD(::std::vector< std::string >);
+}
 
 { //scope begin
 typedef bp::class_< std::vector< gezi::SegNode > > vector_less__gezi_scope_SegNode__greater__exposer_t;
@@ -96,34 +100,15 @@ bp::scope vector_less__gezi_scope_SegNode__greater__scope( vector_less__gezi_sco
 //         vector_less__gezi_scope_SegNode__greater__exposer.def( bp::vector_indexing_suite< ::std::vector< gezi::SegNode > >() );
 } //scope end
 
-{ //::gezi::LogHelper
-typedef bp::class_< gezi::LogHelper > LogHelper_exposer_t;
-LogHelper_exposer_t LogHelper_exposer = LogHelper_exposer_t( "LogHelper", bp::init< bp::optional< int > >(( bp::arg("log_level")=(int)(16) )) );
-bp::scope LogHelper_scope( LogHelper_exposer );
-bp::implicitly_convertible< int, gezi::LogHelper >();
-LogHelper_exposer.def( bp::init< std::string const &, bp::optional< std::string const & > >(( bp::arg("conf_file"), bp::arg("conf_path")="./conf" )) );
-{ //::gezi::LogHelper::set_level
-
-typedef void ( *set_level_function_type )( int );
-
-LogHelper_exposer.def(
-"set_level"
-, set_level_function_type( &::gezi::LogHelper::set_level )
-, ( bp::arg("log_level") ) );
-
-}
-LogHelper_exposer.staticmethod( "set_level" );
-}
-
 { //::gezi::SegHandle
-typedef bp::class_< SegHandle_wrapper > SegHandle_exposer_t;
+typedef bp::class_< SegHandle_wrapper, boost::noncopyable > SegHandle_exposer_t;
 SegHandle_exposer_t SegHandle_exposer = SegHandle_exposer_t( "SegHandle", bp::init< >() );
 bp::scope SegHandle_scope( SegHandle_exposer );
 SegHandle_exposer.def( bp::init< int >(( bp::arg("bufsize") )) );
 bp::implicitly_convertible< int, gezi::SegHandle >();
 { //::gezi::SegHandle::clear
 
-typedef void ( ::gezi::SegHandle::*clear_function_type )(  ) ;
+typedef void ( ::gezi::SegHandle::*clear_function_type)(  ) ;
 
 SegHandle_exposer.def(
 "clear"
@@ -132,7 +117,7 @@ SegHandle_exposer.def(
 }
 { //::gezi::SegHandle::init
 
-typedef void ( ::gezi::SegHandle::*init_function_type )( int ) ;
+typedef void ( ::gezi::SegHandle::*init_function_type)( int ) ;
 
 SegHandle_exposer.def(
 "init"
@@ -140,7 +125,7 @@ SegHandle_exposer.def(
 , ( bp::arg("buf_size_")=(int)(gezi::SegHandle::SEG_BUFF_SIZE) ) );
 
 }
-SegHandle_exposer.def_readonly( "SEG_BUFF_SIZE", gezi::SegHandle::SEG_BUFF_SIZE );
+SegHandle_exposer.def_readonly( "SEG_BUFF_SIZE", &gezi::SegHandle::SEG_BUFF_SIZE );
 SegHandle_exposer.def_readwrite( "buf_size", &gezi::SegHandle::buf_size );
 SegHandle_exposer.def_readwrite( "nresult", &gezi::SegHandle::nresult );
 SegHandle_exposer.add_property( "pout"
@@ -154,7 +139,6 @@ SegHandle_exposer.add_property( "tokens"
 
 bp::class_< gezi::SegNode >( "SegNode", bp::init< >() )
 .def( bp::init< std::string, int, int, int >(( bp::arg("word_"), bp::arg("length_"), bp::arg("offset_"), bp::arg("weight_") )) )
-.def_readwrite( "length", &gezi::SegNode::length )
 .def_readwrite( "offset", &gezi::SegNode::offset )
 .def_readwrite( "weight", &gezi::SegNode::weight )
 .def_readwrite( "word", &gezi::SegNode::word );
@@ -255,7 +239,7 @@ Segmentor_exposer.def(
 }
 { //::gezi::Segmentor::get_handle
 
-typedef ::gezi::SegHandle & ( ::gezi::Segmentor::*get_handle_function_type )(  ) ;
+typedef ::gezi::SegHandle & ( ::gezi::Segmentor::*get_handle_function_type)(  ) ;
 
 Segmentor_exposer.def(
 "get_handle"
@@ -275,7 +259,7 @@ Segmentor_exposer.def(
 }
 { //::gezi::Segmentor::get_segnodes
 
-typedef ::std::vector< gezi::SegNode > ( ::gezi::Segmentor::*get_segnodes_function_type )(  ) ;
+typedef ::std::vector< gezi::SegNode > ( ::gezi::Segmentor::*get_segnodes_function_type)(  ) ;
 
 Segmentor_exposer.def(
 "get_segnodes"
@@ -294,7 +278,7 @@ Segmentor_exposer.def(
 }
 { //::gezi::Segmentor::get_tokens
 
-typedef int ( ::gezi::Segmentor::*get_tokens_function_type )( int ) ;
+typedef int ( ::gezi::Segmentor::*get_tokens_function_type)( int ) ;
 
 Segmentor_exposer.def(
 "get_tokens"
@@ -354,7 +338,7 @@ Segmentor_exposer.def(
 }
 { //::gezi::Segmentor::segment
 
-typedef ::std::vector< std::string > ( ::gezi::Segmentor::*segment_function_type )( ::std::string,int ) ;
+typedef ::std::vector< std::string > ( ::gezi::Segmentor::*segment_function_type)( ::std::string,int ) ;
 
 Segmentor_exposer.def(
 "segment"
@@ -364,7 +348,7 @@ Segmentor_exposer.def(
 }
 { //::gezi::Segmentor::segment
 
-typedef bool ( ::gezi::Segmentor::*segment_function_type )( ::std::string,::std::vector< std::string > &,int ) ;
+typedef bool ( ::gezi::Segmentor::*segment_function_type)( ::std::string,::std::vector< std::string > &,int ) ;
 
 Segmentor_exposer.def(
 "segment"
@@ -374,7 +358,7 @@ Segmentor_exposer.def(
 }
 { //::gezi::Segmentor::segment
 
-typedef ::std::string ( ::gezi::Segmentor::*segment_function_type )( ::std::string,::std::string,int ) ;
+typedef ::std::string ( ::gezi::Segmentor::*segment_function_type)( ::std::string,::std::string,int ) ;
 
 Segmentor_exposer.def(
 "segment"
@@ -384,7 +368,7 @@ Segmentor_exposer.def(
 }
 { //::gezi::Segmentor::segment
 
-typedef bool ( ::gezi::Segmentor::*segment_function_type )( ::std::string,::std::vector< gezi::SegNode > &,int ) ;
+typedef bool ( ::gezi::Segmentor::*segment_function_type)( ::std::string,::std::vector< gezi::SegNode > &,int ) ;
 
 Segmentor_exposer.def(
 "segment"
@@ -394,7 +378,7 @@ Segmentor_exposer.def(
 }
 { //::gezi::Segmentor::set_flag
 
-typedef ::gezi::Segmentor & ( ::gezi::Segmentor::*set_flag_function_type )( int ) ;
+typedef ::gezi::Segmentor & ( ::gezi::Segmentor::*set_flag_function_type)( int ) ;
 
 Segmentor_exposer.def(
 "set_flag"
@@ -426,18 +410,6 @@ Segmentor_exposer.staticmethod( "segment" );
 Segmentor_exposer.staticmethod( "uninit" );
 }
 
-bp::class_< gezi::ThreadLogHelper >( "ThreadLogHelper", bp::init< >() );
-
-{ //::gezi::print_seg_posttag_result
-
-typedef void ( *print_seg_posttag_result_function_type )(  );
-
-bp::def(
-"print_seg_posttag_result"
-, print_seg_posttag_result_function_type( &::gezi::print_seg_posttag_result ) );
-
-}
-
 { //::gezi::print_seg_posttag_result
 
 typedef void ( *print_seg_posttag_result_function_type )( ::gezi::SegHandle const & );
@@ -449,13 +421,13 @@ bp::def(
 
 }
 
-{ //::gezi::print_seg_result
+{ //::gezi::print_seg_posttag_result
 
-typedef void ( *print_seg_result_function_type )(  );
+typedef void ( *print_seg_posttag_result_function_type )(  );
 
 bp::def(
-"print_seg_result"
-, print_seg_result_function_type( &::gezi::print_seg_result ) );
+"print_seg_posttag_result"
+, print_seg_posttag_result_function_type( &::gezi::print_seg_posttag_result ) );
 
 }
 
@@ -467,6 +439,16 @@ bp::def(
 "print_seg_result"
 , print_seg_result_function_type( &::gezi::print_seg_result )
 , ( bp::arg("handle") ) );
+
+}
+
+{ //::gezi::print_seg_result
+
+typedef void ( *print_seg_result_function_type )(  );
+
+bp::def(
+"print_seg_result"
+, print_seg_result_function_type( &::gezi::print_seg_result ) );
 
 }
 

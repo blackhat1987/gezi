@@ -1,8 +1,8 @@
 #COMAKE2 edit-mode: -*- Makefile -*-
 ####################64Bit Mode####################
 ifeq ($(shell uname -m),x86_64)
-CC=/opt/compiler/gcc-4.8.2/bin/g++
-CXX=/opt/compiler/gcc-4.8.2/bin/g++
+CC=g++
+CXX=g++
 CXXFLAGS=-g \
   -O3 \
   -pipe \
@@ -39,7 +39,6 @@ CPPFLAGS=-D_GNU_SOURCE \
 INCPATH=-I./include/cppformat/ \
   -I. \
   -I./include \
-  -I./third \
   -I./third/folly \
   -I./third/double-conversion/ \
   -I./utils \
@@ -49,7 +48,11 @@ INCPATH=-I./include/cppformat/ \
   -I./include/numeric \
   -I./melt/include/ \
   -I./include/serialization/
-DEP_INCPATH=-I../../../../../com/btest/gtest \
+DEP_INCPATH=-I../../../../../app/search/sep/anti-spam/gezi/third \
+  -I../../../../../app/search/sep/anti-spam/gezi/third/include \
+  -I../../../../../app/search/sep/anti-spam/gezi/third/output \
+  -I../../../../../app/search/sep/anti-spam/gezi/third/output/include \
+  -I../../../../../com/btest/gtest \
   -I../../../../../com/btest/gtest/include \
   -I../../../../../com/btest/gtest/output \
   -I../../../../../com/btest/gtest/output/include \
@@ -144,7 +147,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=c8434bb2f8655c038270d40c93ac8489  COMAKE
+COMAKE_MD5=59d88f080b6b42eadfb19ea53cd684c9  COMAKE
 
 
 .PHONY:all
@@ -213,7 +216,7 @@ libgezi_cppformat.a:third/cppformat/gezi_cppformat_format.o \
 	ar crs libgezi_cppformat.a third/cppformat/gezi_cppformat_format.o \
   third/cppformat/gezi_cppformat_posix.o
 	mkdir -p ./output/lib
-	cp -f libgezi_cppformat.a ./output/lib
+	cp -f --link libgezi_cppformat.a ./output/lib
 
 copy-pinyin-lib:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mcopy-pinyin-lib[0m']"
@@ -224,7 +227,7 @@ libgezi_common.a:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibgezi_common.a[0m']"
 	ar crs libgezi_common.a 
 	mkdir -p ./output/lib
-	cp -f libgezi_common.a ./output/lib
+	cp -f --link libgezi_common.a ./output/lib
 
 libgezi_json.a:src/json/gezi_json_json_reader.o \
   src/json/gezi_json_json_value.o \
@@ -234,7 +237,7 @@ libgezi_json.a:src/json/gezi_json_json_reader.o \
   src/json/gezi_json_json_value.o \
   src/json/gezi_json_json_writer.o
 	mkdir -p ./output/lib
-	cp -f libgezi_json.a ./output/lib
+	cp -f --link libgezi_json.a ./output/lib
 
 copy-cppformat:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mcopy-cppformat[0m']"
@@ -256,8 +259,7 @@ copy-double-conversion:
 	mkdir -p output/double-conversion
 	cp -rf third/double-conversion/double-conversion/* output/double-conversion
 
-third/cppformat/gezi_cppformat_format.o:third/cppformat/format.cc \
-  third/cppformat/format.h
+third/cppformat/gezi_cppformat_format.o:third/cppformat/format.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mthird/cppformat/gezi_cppformat_format.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -265,9 +267,7 @@ third/cppformat/gezi_cppformat_format.o:third/cppformat/format.cc \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o third/cppformat/gezi_cppformat_format.o third/cppformat/format.cc
 
-third/cppformat/gezi_cppformat_posix.o:third/cppformat/posix.cc \
-  third/cppformat/posix.h \
-  third/cppformat/format.h
+third/cppformat/gezi_cppformat_posix.o:third/cppformat/posix.cc
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mthird/cppformat/gezi_cppformat_posix.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
@@ -275,314 +275,21 @@ third/cppformat/gezi_cppformat_posix.o:third/cppformat/posix.cc \
   -O3 \
   -DNDEBUG $(CXXFLAGS)  -o third/cppformat/gezi_cppformat_posix.o third/cppformat/posix.cc
 
-src/json/gezi_json_json_reader.o:src/json/json_reader.cpp \
-  include/json/reader.h \
-  include/json/features.h \
-  include/json/forwards.h \
-  include/json/config.h \
-  include/json/value.h \
-  include/json/value.h \
-  src/json/json_tool.h \
-  include/encoding_convert.h \
-  include/string_def.h \
-  include/encoding_def.h \
-  include/common_define.h
+src/json/gezi_json_json_reader.o:src/json/json_reader.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_json_reader.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -DNDEBUG $(CXXFLAGS)  -o src/json/gezi_json_json_reader.o src/json/json_reader.cpp
 
-src/json/gezi_json_json_value.o:src/json/json_value.cpp \
-  include/common_util.h \
-  include/common_def.h \
-  include/format.h \
-  include/common_define.h \
-  third/cppformat/format.h \
-  include/convert_type.h \
-  include/hashmap_util.h \
-  third/folly/folly/Foreach.h \
-  third/folly/folly/small_vector.h \
-  third/folly/folly/FormatTraits.h \
-  third/folly/folly/Malloc.h \
-  third/folly/folly/detail/Malloc.h \
-  third/folly/folly/Portability.h \
-  third/folly/folly/CPortability.h \
-  third/folly/folly/detail/FunctionalExcept.h \
-  third/folly/folly/SmallLocks.h \
-  third/folly/folly/MicroSpinLock.h \
-  third/folly/folly/detail/Sleeper.h \
-  third/folly/folly/PicoSpinLock.h \
-  third/folly/folly/MapUtil.h \
-  third/folly/folly/Conv.h \
-  third/folly/folly/FBString.h \
-  third/folly/folly/Traits.h \
-  third/folly/folly/Hash.h \
-  third/folly/folly/SpookyHashV1.h \
-  third/folly/folly/SpookyHashV2.h \
-  third/folly/folly/ScopeGuard.h \
-  third/folly/folly/Preprocessor.h \
-  third/folly/folly/detail/UncaughtExceptionCounter.h \
-  third/folly/folly/Likely.h \
-  third/folly/folly/Range.h \
-  third/folly/folly/CpuId.h \
-  third/double-conversion/double-conversion/double-conversion.h \
-  third/double-conversion/double-conversion/utils.h \
-  third/folly/folly/Optional.h \
-  third/folly/folly/FBVector.h \
-  third/folly/folly/Memory.h \
-  include/vector_def.h \
-  include/string_def.h \
-  include/string_util.h \
-  include/encoding_convert.h \
-  include/encoding_def.h \
-  include/wstring_util.h \
-  include/reg_util.h \
-  include/stl_util.h \
-  include/map_util.h \
-  include/log_util.h \
-  include/conf_util.h \
-  include/debug_util.h \
-  include/Exception.h \
-  include/serialize_util.h \
-  include/serialize_cereal.h \
-  include/cereal/types/unordered_map.hpp \
-  include/cereal/cereal.hpp \
-  include/cereal/macros.hpp \
-  include/cereal/details/traits.hpp \
-  include/cereal/access.hpp \
-  include/cereal/details/helpers.hpp \
-  include/cereal/details/static_object.hpp \
-  include/cereal/types/base_class.hpp \
-  include/cereal/types/common.hpp \
-  include/cereal/types/unordered_set.hpp \
-  include/cereal/types/deque.hpp \
-  include/cereal/types/vector.hpp \
-  include/cereal/types/map.hpp \
-  include/cereal/types/set.hpp \
-  include/cereal/types/list.hpp \
-  include/cereal/types/string.hpp \
-  include/cereal/types/memory.hpp \
-  include/cereal/types/polymorphic.hpp \
-  include/cereal/details/util.hpp \
-  include/cereal/details/polymorphic_impl.hpp \
-  include/cereal/archives/binary.hpp \
-  include/cereal/archives/json.hpp \
-  include/cereal/external/rapidjson/prettywriter.h \
-  include/cereal/external/rapidjson/writer.h \
-  include/cereal/external/rapidjson/rapidjson.h \
-  include/cereal/external/rapidjson/internal/stack.h \
-  include/cereal/external/rapidjson/internal/strfunc.h \
-  include/cereal/external/rapidjson/genericstream.h \
-  include/cereal/external/rapidjson/reader.h \
-  include/cereal/external/rapidjson/internal/pow10.h \
-  include/cereal/external/rapidjson/document.h \
-  include/cereal/external/rapidjson/reader.h \
-  include/cereal/external/base64.hpp \
-  include/cereal/archives/xml.hpp \
-  include/cereal/external/rapidxml/rapidxml.hpp \
-  include/cereal/external/rapidxml/rapidxml_print.hpp \
-  include/cereal/external/rapidxml/rapidxml.hpp \
-  include/cereal/types/eigen.hpp \
-  third/Eigen/Dense \
-  third/Eigen/Core \
-  third/Eigen/src/Core/util/DisableStupidWarnings.h \
-  third/Eigen/src/Core/util/Macros.h \
-  third/Eigen/src/Core/util/MKL_support.h \
-  third/Eigen/src/Core/util/Constants.h \
-  third/Eigen/src/Core/util/ForwardDeclarations.h \
-  third/Eigen/src/Core/util/Meta.h \
-  third/Eigen/src/Core/util/StaticAssert.h \
-  third/Eigen/src/Core/util/XprHelper.h \
-  third/Eigen/src/Core/util/Memory.h \
-  third/Eigen/src/Core/NumTraits.h \
-  third/Eigen/src/Core/MathFunctions.h \
-  third/Eigen/src/Core/GenericPacketMath.h \
-  third/Eigen/src/Core/arch/SSE/PacketMath.h \
-  third/Eigen/src/Core/arch/SSE/MathFunctions.h \
-  third/Eigen/src/Core/arch/SSE/Complex.h \
-  third/Eigen/src/Core/arch/Default/Settings.h \
-  third/Eigen/src/Core/Functors.h \
-  third/Eigen/src/Core/DenseCoeffsBase.h \
-  third/Eigen/src/Core/DenseBase.h \
-  third/Eigen/src/plugins/BlockMethods.h \
-  third/Eigen/src/Core/MatrixBase.h \
-  third/Eigen/src/plugins/CommonCwiseUnaryOps.h \
-  third/Eigen/src/plugins/CommonCwiseBinaryOps.h \
-  third/Eigen/src/plugins/MatrixCwiseUnaryOps.h \
-  third/Eigen/src/plugins/MatrixCwiseBinaryOps.h \
-  third/Eigen/src/Core/EigenBase.h \
-  third/Eigen/src/Core/Assign.h \
-  third/Eigen/src/Core/util/BlasUtil.h \
-  third/Eigen/src/Core/DenseStorage.h \
-  third/Eigen/src/Core/NestByValue.h \
-  third/Eigen/src/Core/ForceAlignedAccess.h \
-  third/Eigen/src/Core/ReturnByValue.h \
-  third/Eigen/src/Core/NoAlias.h \
-  third/Eigen/src/Core/PlainObjectBase.h \
-  third/Eigen/src/Core/Matrix.h \
-  third/Eigen/src/Core/Array.h \
-  third/Eigen/src/Core/CwiseBinaryOp.h \
-  third/Eigen/src/Core/CwiseUnaryOp.h \
-  third/Eigen/src/Core/CwiseNullaryOp.h \
-  third/Eigen/src/Core/CwiseUnaryView.h \
-  third/Eigen/src/Core/SelfCwiseBinaryOp.h \
-  third/Eigen/src/Core/Dot.h \
-  third/Eigen/src/Core/StableNorm.h \
-  third/Eigen/src/Core/MapBase.h \
-  third/Eigen/src/Core/Stride.h \
-  third/Eigen/src/Core/Map.h \
-  third/Eigen/src/Core/Block.h \
-  third/Eigen/src/Core/VectorBlock.h \
-  third/Eigen/src/Core/Ref.h \
-  third/Eigen/src/Core/Transpose.h \
-  third/Eigen/src/Core/DiagonalMatrix.h \
-  third/Eigen/src/Core/Diagonal.h \
-  third/Eigen/src/Core/DiagonalProduct.h \
-  third/Eigen/src/Core/PermutationMatrix.h \
-  third/Eigen/src/Core/Transpositions.h \
-  third/Eigen/src/Core/Redux.h \
-  third/Eigen/src/Core/Visitor.h \
-  third/Eigen/src/Core/Fuzzy.h \
-  third/Eigen/src/Core/IO.h \
-  third/Eigen/src/Core/Swap.h \
-  third/Eigen/src/Core/CommaInitializer.h \
-  third/Eigen/src/Core/Flagged.h \
-  third/Eigen/src/Core/ProductBase.h \
-  third/Eigen/src/Core/GeneralProduct.h \
-  third/Eigen/src/Core/TriangularMatrix.h \
-  third/Eigen/src/Core/SelfAdjointView.h \
-  third/Eigen/src/Core/products/GeneralBlockPanelKernel.h \
-  third/Eigen/src/Core/products/Parallelizer.h \
-  third/Eigen/src/Core/products/CoeffBasedProduct.h \
-  third/Eigen/src/Core/products/GeneralMatrixVector.h \
-  third/Eigen/src/Core/products/GeneralMatrixMatrix.h \
-  third/Eigen/src/Core/SolveTriangular.h \
-  third/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h \
-  third/Eigen/src/Core/products/SelfadjointMatrixVector.h \
-  third/Eigen/src/Core/products/SelfadjointMatrixMatrix.h \
-  third/Eigen/src/Core/products/SelfadjointProduct.h \
-  third/Eigen/src/Core/products/SelfadjointRank2Update.h \
-  third/Eigen/src/Core/products/TriangularMatrixVector.h \
-  third/Eigen/src/Core/products/TriangularMatrixMatrix.h \
-  third/Eigen/src/Core/products/TriangularSolverMatrix.h \
-  third/Eigen/src/Core/products/TriangularSolverVector.h \
-  third/Eigen/src/Core/BandMatrix.h \
-  third/Eigen/src/Core/CoreIterators.h \
-  third/Eigen/src/Core/BooleanRedux.h \
-  third/Eigen/src/Core/Select.h \
-  third/Eigen/src/Core/VectorwiseOp.h \
-  third/Eigen/src/Core/Random.h \
-  third/Eigen/src/Core/Replicate.h \
-  third/Eigen/src/Core/Reverse.h \
-  third/Eigen/src/Core/ArrayBase.h \
-  third/Eigen/src/plugins/ArrayCwiseUnaryOps.h \
-  third/Eigen/src/plugins/ArrayCwiseBinaryOps.h \
-  third/Eigen/src/Core/ArrayWrapper.h \
-  third/Eigen/src/Core/GlobalFunctions.h \
-  third/Eigen/src/Core/util/ReenableStupidWarnings.h \
-  third/Eigen/LU \
-  third/Eigen/src/misc/Solve.h \
-  third/Eigen/src/misc/Kernel.h \
-  third/Eigen/src/misc/Image.h \
-  third/Eigen/src/LU/FullPivLU.h \
-  third/Eigen/src/LU/PartialPivLU.h \
-  third/Eigen/src/LU/Determinant.h \
-  third/Eigen/src/LU/Inverse.h \
-  third/Eigen/src/LU/arch/Inverse_SSE.h \
-  third/Eigen/Cholesky \
-  third/Eigen/src/Cholesky/LLT.h \
-  third/Eigen/src/Cholesky/LDLT.h \
-  third/Eigen/QR \
-  third/Eigen/Jacobi \
-  third/Eigen/src/Jacobi/Jacobi.h \
-  third/Eigen/Householder \
-  third/Eigen/src/Householder/Householder.h \
-  third/Eigen/src/Householder/HouseholderSequence.h \
-  third/Eigen/src/Householder/BlockHouseholder.h \
-  third/Eigen/src/QR/HouseholderQR.h \
-  third/Eigen/src/QR/FullPivHouseholderQR.h \
-  third/Eigen/src/QR/ColPivHouseholderQR.h \
-  third/Eigen/SVD \
-  third/Eigen/src/SVD/JacobiSVD.h \
-  third/Eigen/src/SVD/UpperBidiagonalization.h \
-  third/Eigen/Geometry \
-  third/Eigen/src/Geometry/OrthoMethods.h \
-  third/Eigen/src/Geometry/EulerAngles.h \
-  third/Eigen/src/Geometry/Homogeneous.h \
-  third/Eigen/src/Geometry/RotationBase.h \
-  third/Eigen/src/Geometry/Rotation2D.h \
-  third/Eigen/src/Geometry/Quaternion.h \
-  third/Eigen/src/Geometry/AngleAxis.h \
-  third/Eigen/src/Geometry/Transform.h \
-  third/Eigen/src/Geometry/Translation.h \
-  third/Eigen/src/Geometry/Scaling.h \
-  third/Eigen/src/Geometry/Hyperplane.h \
-  third/Eigen/src/Geometry/ParametrizedLine.h \
-  third/Eigen/src/Geometry/AlignedBox.h \
-  third/Eigen/src/Geometry/Umeyama.h \
-  third/Eigen/src/Geometry/arch/Geometry_SSE.h \
-  third/Eigen/Eigenvalues \
-  third/Eigen/src/Eigenvalues/Tridiagonalization.h \
-  third/Eigen/src/Eigenvalues/RealSchur.h \
-  third/Eigen/src/Eigenvalues/HessenbergDecomposition.h \
-  third/Eigen/src/Eigenvalues/EigenSolver.h \
-  third/Eigen/src/Eigenvalues/RealSchur.h \
-  third/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h \
-  third/Eigen/src/Eigenvalues/Tridiagonalization.h \
-  third/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h \
-  third/Eigen/src/Eigenvalues/HessenbergDecomposition.h \
-  third/Eigen/src/Eigenvalues/ComplexSchur.h \
-  third/Eigen/src/Eigenvalues/ComplexEigenSolver.h \
-  third/Eigen/src/Eigenvalues/ComplexSchur.h \
-  third/Eigen/src/Eigenvalues/RealQZ.h \
-  third/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
-  third/Eigen/src/Eigenvalues/RealQZ.h \
-  third/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
-  include/Matrix.h \
-  include/sort_util.h \
-  include/statistic_util.h \
-  include/common_util.h \
-  include/Numeric/find_bins.h \
-  include/common_def.h \
-  include/sort_util.h \
-  include/datetime_util.h \
-  include/time_util.h \
-  include/ProgressBar.h \
-  include/file_util.h \
-  include/linq.h \
-  include/linq/cpplinq.hpp \
-  include/LoadSave.h \
-  include/WithArgs.h \
-  include/WithHelp.h \
-  include/sort_map_by_value.h \
-  include/openmp_util.h \
-  include/ThreadLocalAnyMap.h \
-  include/SharedAnyMap.h \
-  include/Singleton.h \
-  include/Identifer.h \
-  include/SharedIdentifers.h \
-  include/SharedObjects.h \
-  include/encoding_convert.h \
-  include/json/value.h \
-  include/json/forwards.h \
-  include/json/config.h \
-  include/json/writer.h \
-  include/json/value.h \
-  src/json/json_batchallocator.h \
-  src/json/json_valueiterator.inl
+src/json/gezi_json_json_value.o:src/json/json_value.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_json_value.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -DNDEBUG $(CXXFLAGS)  -o src/json/gezi_json_json_value.o src/json/json_value.cpp
 
-src/json/gezi_json_json_writer.o:src/json/json_writer.cpp \
-  include/json/writer.h \
-  include/json/value.h \
-  include/json/forwards.h \
-  include/json/config.h \
-  src/json/json_tool.h
+src/json/gezi_json_json_writer.o:src/json/json_writer.cpp
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/json/gezi_json_json_writer.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
