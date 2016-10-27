@@ -16,7 +16,9 @@
 #include <string>
 #include <glog/logging.h>
 namespace gezi {
+//FIXME  not work with castxml now 
 
+#ifndef GCCXML
 	class LoadSave
 	{
 	public:
@@ -80,8 +82,9 @@ namespace gezi {
 		{
 			return "";
 		}
-
 	};
+
+#endif //GCCXML
 
 }  //----end of namespace gezi
 

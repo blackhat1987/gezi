@@ -22,7 +22,7 @@ class Vocabulary : public CountIdentifer
 public:
 
   Vocabulary(string file, 
-    int num_reserved_ids = 1,
+    int num_reserved_ids = 0,
     string start_word = "<S>",
     string end_word = "</S>",
     string unk_word = "<UNK>")

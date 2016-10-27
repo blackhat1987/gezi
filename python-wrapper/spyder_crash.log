@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/spyderlib/spyder.py", line 2152, in main
+    mainwindow = run_spyder(app, options, args)
+  File "/usr/lib/python2.7/dist-packages/spyderlib/spyder.py", line 2047, in run_spyder
+    main.setup()
+  File "/usr/lib/python2.7/dist-packages/spyderlib/spyder.py", line 753, in setup
+    self.editor = Editor(self)
+  File "/usr/lib/python2.7/dist-packages/spyderlib/plugins/editor.py", line 434, in __init__
+    self.load(filenames)
+  File "/usr/lib/python2.7/dist-packages/spyderlib/plugins/editor.py", line 1654, in load
+    current_editor = self.set_current_filename(filename, editorwindow)
+  File "/usr/lib/python2.7/dist-packages/spyderlib/plugins/editor.py", line 1297, in set_current_filename
+    return editorstack.set_current_filename(filename)
+  File "/usr/lib/python2.7/dist-packages/spyderlib/widgets/editor.py", line 1231, in set_current_filename
+    index = self.has_filename(filename)
+  File "/usr/lib/python2.7/dist-packages/spyderlib/widgets/editor.py", line 1226, in has_filename
+    if fixpath(filename) == fixpath(finfo.filename):
+  File "/usr/lib/python2.7/dist-packages/spyderlib/widgets/editor.py", line 1224, in <lambda>
+    fixpath = lambda path: osp.normcase(osp.realpath(path))
+  File "/usr/lib/python2.7/posixpath.py", line 382, in realpath
+    path, ok = _joinrealpath('', filename, {})
+  File "/usr/lib/python2.7/posixpath.py", line 421, in _joinrealpath
+    path, ok = _joinrealpath(path, os.readlink(newpath), seen)
+OSError: [Errno 22] Invalid argument: '/home/users/chenghuige/rsc/app/search/sep/anti-spam/melt-train'

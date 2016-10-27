@@ -15,7 +15,7 @@
 #define FORMAT_H_
 
 #include "common_define.h"
-#if defined (IS_HIGH_COMPILER)
+#if IS_HIGH_COMPILER
 
 #define INT INT_CPPFORMAT
 #define UINT UINT_CPPFORMAT

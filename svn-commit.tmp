@@ -1,0 +1,7 @@
+m
+--This line, and those below, will be ignored--
+
+A    tools/demo/urate/templates/json.html
+A    tools/demo/urate/templates/content.html
+A    tools/demo/urate/templates/tree.html
+A    tools/demo/urate/templates/tree.with.feature.html

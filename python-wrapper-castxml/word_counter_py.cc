@@ -654,13 +654,12 @@ IntIdentifer_exposer.def(
 
 { //::gezi::Vocabulary
 typedef bp::class_< gezi::Vocabulary, bp::bases< gezi::ValueIdentifer< unsigned long > > > Vocabulary_exposer_t;
-Vocabulary_exposer_t Vocabulary_exposer = Vocabulary_exposer_t( "Vocabulary", bp::init< >() );
+Vocabulary_exposer_t Vocabulary_exposer = Vocabulary_exposer_t( "Vocabulary", bp::init< std::string, bp::optional< int, std::string, std::string, std::string > >(( bp::arg("file"), bp::arg("num_reserved_ids")=(int)(0), bp::arg("start_word")="<S>", bp::arg("end_word")="</S>", bp::arg("unk_word")="<UNK>" )) );
 bp::scope Vocabulary_scope( Vocabulary_exposer );
-Vocabulary_exposer.def( bp::init< std::string >(( bp::arg("file") )) );
 bp::implicitly_convertible< std::string, gezi::Vocabulary >();
 { //::gezi::Vocabulary::count
 
-typedef ::size_t ( ::gezi::Vocabulary::*count_function_type)( int ) const;
+typedef ::size_t ( ::gezi::Vocabulary::*count_function_type)( ::gezi::Identifer::IdType ) const;
 
 Vocabulary_exposer.def(
 "count"
@@ -678,9 +677,27 @@ Vocabulary_exposer.def(
 , ( bp::arg("key") ) );
 
 }
+{ //::gezi::Vocabulary::end_id
+
+typedef ::gezi::Identifer::IdType ( ::gezi::Vocabulary::*end_id_function_type)(  ) const;
+
+Vocabulary_exposer.def(
+"end_id"
+, end_id_function_type( &::gezi::Vocabulary::end_id ) );
+
+}
+{ //::gezi::Vocabulary::end_word
+
+typedef ::std::string ( ::gezi::Vocabulary::*end_word_function_type)(  ) const;
+
+Vocabulary_exposer.def(
+"end_word"
+, end_word_function_type( &::gezi::Vocabulary::end_word ) );
+
+}
 { //::gezi::Vocabulary::freq
 
-typedef ::size_t ( ::gezi::Vocabulary::*freq_function_type)( int ) const;
+typedef ::size_t ( ::gezi::Vocabulary::*freq_function_type)( ::gezi::Identifer::IdType ) const;
 
 Vocabulary_exposer.def(
 "freq"
@@ -698,13 +715,127 @@ Vocabulary_exposer.def(
 , ( bp::arg("key") ) );
 
 }
+{ //::gezi::Vocabulary::get_value
+
+typedef ::size_t ( ::gezi::Vocabulary::*get_value_function_type)( ::std::string ) const;
+
+Vocabulary_exposer.def(
+"get_value"
+, get_value_function_type( &::gezi::Vocabulary::get_value )
+, ( bp::arg("key") ) );
+
+}
+{ //::gezi::Vocabulary::id
+
+typedef ::gezi::Identifer::IdType ( ::gezi::Vocabulary::*id_function_type)( ::std::string ) const;
+
+Vocabulary_exposer.def(
+"id"
+, id_function_type( &::gezi::Vocabulary::id )
+, ( bp::arg("key") ) );
+
+}
+{ //::gezi::Vocabulary::id
+
+typedef ::gezi::Identifer::IdType ( ::gezi::Vocabulary::*id_function_type)( ::std::string,::gezi::Identifer::IdType ) const;
+
+Vocabulary_exposer.def(
+"id"
+, id_function_type( &::gezi::Vocabulary::id )
+, ( bp::arg("key"), bp::arg("default_val") ) );
+
+}
+{ //::gezi::Vocabulary::key
+
+typedef ::std::string ( ::gezi::Vocabulary::*key_function_type)( ::gezi::Identifer::IdType ) const;
+
+Vocabulary_exposer.def(
+"key"
+, key_function_type( &::gezi::Vocabulary::key )
+, ( bp::arg("index") ) );
+
+}
+{ //::gezi::Vocabulary::num_reserved_ids
+
+typedef int ( ::gezi::Vocabulary::*num_reserved_ids_function_type)(  ) const;
+
+Vocabulary_exposer.def(
+"num_reserved_ids"
+, num_reserved_ids_function_type( &::gezi::Vocabulary::num_reserved_ids ) );
+
+}
+{ //::gezi::Vocabulary::size
+
+typedef ::size_t ( ::gezi::Vocabulary::*size_function_type)(  ) const;
+
+Vocabulary_exposer.def(
+"size"
+, size_function_type( &::gezi::Vocabulary::size ) );
+
+}
+{ //::gezi::Vocabulary::start_id
+
+typedef ::gezi::Identifer::IdType ( ::gezi::Vocabulary::*start_id_function_type)(  ) const;
+
+Vocabulary_exposer.def(
+"start_id"
+, start_id_function_type( &::gezi::Vocabulary::start_id ) );
+
+}
+{ //::gezi::Vocabulary::start_word
+
+typedef ::std::string ( ::gezi::Vocabulary::*start_word_function_type)(  ) const;
+
+Vocabulary_exposer.def(
+"start_word"
+, start_word_function_type( &::gezi::Vocabulary::start_word ) );
+
+}
+{ //::gezi::Vocabulary::unk_id
+
+typedef ::gezi::Identifer::IdType ( ::gezi::Vocabulary::*unk_id_function_type)(  ) const;
+
+Vocabulary_exposer.def(
+"unk_id"
+, unk_id_function_type( &::gezi::Vocabulary::unk_id ) );
+
+}
+{ //::gezi::Vocabulary::unk_word
+
+typedef ::std::string ( ::gezi::Vocabulary::*unk_word_function_type)(  ) const;
+
+Vocabulary_exposer.def(
+"unk_word"
+, unk_word_function_type( &::gezi::Vocabulary::unk_word ) );
+
+}
+{ //::gezi::Vocabulary::value
+
+typedef ::size_t ( ::gezi::Vocabulary::*value_function_type)( int ) const;
+
+Vocabulary_exposer.def(
+"value"
+, value_function_type( &::gezi::Vocabulary::value )
+, ( bp::arg("index") ) );
+
+}
+{ //::gezi::Vocabulary::value
+
+typedef ::size_t ( ::gezi::Vocabulary::*value_function_type)( ::std::string ) const;
+
+Vocabulary_exposer.def(
+"value"
+, value_function_type( &::gezi::Vocabulary::value )
+, ( bp::arg("key") ) );
+
+}
 }
 
 { //::gezi::WordCounter
 typedef bp::class_< gezi::WordCounter > WordCounter_exposer_t;
-WordCounter_exposer_t WordCounter_exposer = WordCounter_exposer_t( "WordCounter", bp::init< bp::optional< bool, std::string, size_t, size_t, bool > >(( bp::arg("addUnknown")=(bool)(true), bp::arg("unknownMark")="<UNK>", bp::arg("mostCommon")=(::size_t)(0), bp::arg("minCount")=(::size_t)(0), bp::arg("saveCountInfo")=(bool)(true) )) );
+WordCounter_exposer_t WordCounter_exposer = WordCounter_exposer_t( "WordCounter", bp::init< bp::optional< size_t, size_t, bool, std::string, bool, std::string > >(( bp::arg("mostCommon")=(::size_t)(0), bp::arg("minCount")=(::size_t)(0), bp::arg("addUnknown")=(bool)(true), bp::arg("unknownMark")="<UNK>", bp::arg("saveCountInfo")=(bool)(true), bp::arg("totalCountMark")="<TotalCount>" )) );
 bp::scope WordCounter_scope( WordCounter_exposer );
-bp::implicitly_convertible< bool, gezi::WordCounter >();
+bp::implicitly_convertible< size_t, gezi::WordCounter >();
 { //::gezi::WordCounter::add
 
 typedef void ( ::gezi::WordCounter::*add_function_type)( ::std::string ) ;
@@ -713,6 +844,25 @@ WordCounter_exposer.def(
 "add"
 , add_function_type( &::gezi::WordCounter::add )
 , ( bp::arg("word") ) );
+
+}
+{ //::gezi::WordCounter::add
+
+typedef void ( ::gezi::WordCounter::*add_function_type)( ::std::string,::size_t ) ;
+
+WordCounter_exposer.def(
+"add"
+, add_function_type( &::gezi::WordCounter::add )
+, ( bp::arg("word"), bp::arg("count") ) );
+
+}
+{ //::gezi::WordCounter::finalize
+
+typedef void ( ::gezi::WordCounter::*finalize_function_type)(  ) ;
+
+WordCounter_exposer.def(
+"finalize"
+, finalize_function_type( &::gezi::WordCounter::finalize ) );
 
 }
 { //::gezi::WordCounter::finish

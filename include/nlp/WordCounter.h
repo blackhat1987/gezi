@@ -24,12 +24,12 @@ class WordCounter
 public:
   typedef std::pair<string, size_t> WordFreq;
 
-  WordCounter(bool addUnknown = true, string unknownMark = "<UNK>", 
-    size_t mostCommon = 0, size_t minCount = 0, 
-    bool saveCountInfo = true)
-    :_addUnknown(addUnknown), _unknownMark(unknownMark),
-    _mostCommon(mostCommon), _minCount(minCount),
-    _saveCountInfo(saveCountInfo)
+  WordCounter(size_t mostCommon = 0, size_t minCount = 0, 
+    bool addUnknown = true, string unknownMark = "<UNK>", 
+    bool saveCountInfo = true, string totalCountMark = "<TotalCount>")
+    :_mostCommon(mostCommon), _minCount(minCount),
+    _addUnknown(addUnknown), _unknownMark(unknownMark), 
+    _saveCountInfo(saveCountInfo), _totalCountMark(totalCountMark)
   {
 
   }
@@ -41,6 +41,7 @@ public:
 
   void save_text(string file) const
   {
+    finalize();
     ofstream ofs(file);
     if (_unknownSize && _addUnknown)
     {
@@ -114,7 +115,7 @@ public:
 
   void save(string binFile, string countFile)
   {
-    finish();
+    finalize();
 
     ofstream ofs(countFile);
 
@@ -168,13 +169,26 @@ public:
     _corpusSize++;
   }
 
+  ///mainly for post deal hadoop generated word count file, notice <TotalCount> means for corpusSize
+  void add(string word, size_t count) 
+  {
+    if (word == _totalCountMark)
+    {
+      _corpusSize += count;
+    }
+    else
+    {
+      _dict[word] += count;
+    }
+  }
+
   //----------------must call most_common or min_count or finish after finish add()
 
   void most_common(size_t topN)
   {
     _ordered = topN >= _dict.size() ? gezi::sort_map_desc(_dict) : gezi::partial_sort_map_desc(_dict, topN);
     _vocabSize = std::min(_ordered.size(), topN);
-    if (_addUnknown)
+    if (_addUnknown && _unknownSize == 0)
     {
       _unknownSize = _corpusSize - std::accumulate(_ordered.begin(), _ordered.begin() + _vocabSize, (size_t)0, [](size_t accumulator, const WordFreq& x) { return accumulator + x.second; });
     }
@@ -198,7 +212,7 @@ public:
     _finished = true;
   }
   
-  void finish()
+  void finalize()
   {
     if (!_finished)
     {
@@ -219,6 +233,11 @@ public:
     _finished = true;
   }
 
+  void finish()
+  {
+    finalize();
+  }
+
 protected:
 private:
   unordered_map<string, size_t> _dict;
@@ -230,6 +249,7 @@ private:
 
   bool _addUnknown = true;
   string _unknownMark = "<UNK>";
+  string _totalCountMark = "<TotalCount>";
 
   size_t _mostCommon;
   size_t _minCount;

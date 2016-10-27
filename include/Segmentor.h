@@ -219,17 +219,17 @@ namespace gezi {
       strategy() = strategy_;
     }
 
-    static bool init(string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
+    static bool init(string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf", bool need_split_dict=false)
     {
       //only once init
-      static bool ret = init(data_dir.c_str(), type, conf_path.c_str());
+      static bool ret = init(data_dir.c_str(), type, conf_path.c_str(), need_split_dict);
       return ret;
     }
 
-    static bool Init(int seg_buff_size = SegHandle::SEG_BUFF_SIZE, string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf")
+    static bool Init(int seg_buff_size = SegHandle::SEG_BUFF_SIZE, string data_dir = "./data/wordseg", int type = SEG_USE_DEFAULT, string conf_path = "./conf/scw.conf", bool need_split_dict=false)
     {
       //only once init
-      static bool ret = init(data_dir.c_str(), type, conf_path.c_str());
+      static bool ret = init(data_dir.c_str(), type, conf_path.c_str(), need_split_dict);
 
       if (!ret)
       {
@@ -443,7 +443,7 @@ namespace gezi {
     }
 
   private:
-    static bool init(const char* data_dir, int type = 0, const char* conf_path = "./conf/scw.conf")
+    static bool init(const char* data_dir, int type = 0, const char* conf_path = "./conf/scw.conf", bool need_split_dict=false)
     {
       strategy() |= type;
       int ret = -1;
@@ -461,7 +461,7 @@ namespace gezi {
 
           pwdict() = scw_load_worddict(data_dir);
           CHECK(pwdict() != NULL) << data_dir << " the path wrong ? or you use wrong segment version ?";
-          LOG(INFO) << "Load segmentor dict data ok";
+          VLOG(1) << "Load segmentor dict data ok";
         }
 
         if (strategy() & SEG_USE_POSTAG)
@@ -470,27 +470,28 @@ namespace gezi {
           sprintf(tag_dict_path, "%s/%s", data_dir, "tagdict");
           ret = tag_open(tag_dict_path);
           CHECK_EQ(ret, 0) << tag_dict_path;
-          LOG(INFO) << "Tag open ok";
+          VLOG(1) << "Tag open ok";
         }
         else
         {
-          LOG(INFO) << "Do not use pos tag";
+          VLOG(1) << "Do not use pos tag";
         }
+        if (need_split_dict)
         {	//---------------尝试打开need split字典，如果不存在或者打开出错就不使用
           char user_dict_path[2048];
           sprintf(user_dict_path, "%s/%s", data_dir, "need_split");
           split_dict() = ds_load(user_dict_path, "need_split");
           if (!split_dict())
           {
-            LOG(INFO) << "Do not use user defined split dictionary, not find " << user_dict_path;
+            VLOG(1) << "Do not use user defined split dictionary, not find " << user_dict_path;
           }
           else
           {
-            LOG(INFO) << "User defined split dictionary open ok";
+            VLOG(1) << "User defined split dictionary open ok";
           }
         }
       }
-      LOG(INFO) << "Segmentor init ok";
+      VLOG(0) << "Segmentor init ok";
       return true;
     }
 
