@@ -3,6 +3,7 @@
 #include <string>
 #include <glog/logging.h>
 namespace gezi {
+#ifndef GCCXML
 class LoadSave
 {
 public:
@@ -18,5 +19,6 @@ virtual void SaveJson(std::string file);
 virtual bool LoadJson(std::string file);
 virtual std::string Name();
 };
+#endif
 }
 #endif

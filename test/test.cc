@@ -27,6 +27,16 @@ void run()
 		Pval(boost::lexical_cast<std::string>(sep));
     cout << "hahaha" << endl;
 		vector<int> a = {1,2,3};
+
+    string s = "";
+    if (s.empty())
+    {
+      cout << "a" << endl;
+    }
+    else
+    {
+      cout << "b" << endl;
+    }
 }
 
 int main(int argc, char *argv[])

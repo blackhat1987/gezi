@@ -8,7 +8,7 @@ namespace Pinyin
 class IPYFactory
 {
 public:
-//static IPYNotation* getPYInstance();
+static IPYNotation* getPYInstance();
 };
 }
 }

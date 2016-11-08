@@ -30,6 +30,7 @@ DEF_PAIR(si_pair);
 DEF_PAIR(wsi_pair);
 DEF_VEC(si_pair_vec);
 DEF_VEC(wsi_pair_vec);
+DEF_SET(sset);
 DEF_SET(iset);
 DEF_SET(lset);
 DEF_SET(ulset);
@@ -388,6 +389,50 @@ bp::def(
 "gbk2utf8"
 , gbk2utf8_function_type( &::gezi::gbk2utf8 )
 , ( bp::arg("src"), bp::arg("flags")=int(::uconv_flags_t::UCONV_INVCHAR_IGNORE) ) );
+
+}
+
+{ //::gezi::gbk_lengthes
+
+typedef ::std::vector< int > ( *gbk_lengthes_function_type )( ::std::string );
+
+bp::def(
+"gbk_lengthes"
+, gbk_lengthes_function_type( &::gezi::gbk_lengthes )
+, ( bp::arg("input") ) );
+
+}
+
+{ //::gezi::gbk_lengthes
+
+typedef ::std::vector< int > ( *gbk_lengthes_function_type )( ::std::string );
+
+bp::def(
+"gbk_lengthes"
+, gbk_lengthes_function_type( &::gezi::gbk_lengthes )
+, ( bp::arg("input") ) );
+
+}
+
+{ //::gezi::gbk_offsets
+
+typedef ::std::vector< int > ( *gbk_offsets_function_type )( ::std::string );
+
+bp::def(
+"gbk_offsets"
+, gbk_offsets_function_type( &::gezi::gbk_offsets )
+, ( bp::arg("input") ) );
+
+}
+
+{ //::gezi::gbk_offsets
+
+typedef ::std::vector< int > ( *gbk_offsets_function_type )( ::std::string );
+
+bp::def(
+"gbk_offsets"
+, gbk_offsets_function_type( &::gezi::gbk_offsets )
+, ( bp::arg("input") ) );
 
 }
 
@@ -971,28 +1016,6 @@ bp::def(
 "to_utf8"
 , to_utf8_function_type( &::gezi::to_utf8 )
 , ( bp::arg("src"), bp::arg("flags")=int(::uconv_flags_t::UCONV_INVCHAR_IGNORE) ) );
-
-}
-
-{ //::gezi::unicode_index
-
-typedef ::std::vector< int > ( *unicode_index_function_type )( ::std::string );
-
-bp::def(
-"unicode_index"
-, unicode_index_function_type( &::gezi::unicode_index )
-, ( bp::arg("input") ) );
-
-}
-
-{ //::gezi::unicode_index
-
-typedef ::std::vector< int > ( *unicode_index_function_type )( ::std::string );
-
-bp::def(
-"unicode_index"
-, unicode_index_function_type( &::gezi::unicode_index )
-, ( bp::arg("input") ) );
 
 }
 

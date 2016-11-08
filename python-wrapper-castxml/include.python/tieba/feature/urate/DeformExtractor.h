@@ -13,7 +13,7 @@ int NumDeforms(string str);
 virtual void extract();
 protected:
 private:
-//static deformation_text& deformation();
+static deformation_text& deformation();
 };
 }
 }

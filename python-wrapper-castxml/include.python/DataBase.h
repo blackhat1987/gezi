@@ -56,8 +56,8 @@ void process(_Func func);
 class SharedDataBase
 {
 public:
-//static DataBase* instance();
-//static DataBase& dataBase();
+static DataBase* instance();
+static DataBase& dataBase();
 };
 inline size_t get_nrows(const MyclientRes& res);
 inline bool to_bool_sql(const char* input);

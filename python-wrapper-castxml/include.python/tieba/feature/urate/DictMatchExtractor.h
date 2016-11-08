@@ -27,12 +27,12 @@ private:
 dm_pack_t* _result;
 int _maxMatchCount;
 private:
-//static MatchDict& blackDict();
-//static MatchDict& grayDict();
-//static MatchDict& whiteDict();
-//static RegexSearcher& blackRegSearcher();
-//static RegexSearcher& contentBlackRegSearcher();
-//static RegexSearcher& grayRegSearcher();
+static MatchDict& blackDict();
+static MatchDict& grayDict();
+static MatchDict& whiteDict();
+static RegexSearcher& blackRegSearcher();
+static RegexSearcher& contentBlackRegSearcher();
+static RegexSearcher& grayRegSearcher();
 };
 }
 }

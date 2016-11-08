@@ -12,7 +12,7 @@ static void Load(string dictPath);
 static string Convert(string input);
 protected:
 private:
-//static NLP::Pinyin::IPYNotation*& PyNotaion();
+static NLP::Pinyin::IPYNotation*& PyNotaion();
 };
 }
 #endif

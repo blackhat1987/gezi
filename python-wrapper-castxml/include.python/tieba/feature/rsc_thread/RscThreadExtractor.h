@@ -14,7 +14,7 @@ public:
 inline vector<pair<Features, ThreadInfo> > GetFeatures(string substr_, vector<ReplyInfo>& tids,
 bool isOnline = false, string historyDir = "./history");
 private:
-//static set<uint64>& tidSet();
+static set<uint64>& tidSet();
 set<uint64>& _tidSet;
 static map<uint64, int>& labelMap();
 map<uint64, int>& _labelMap = labelMap();
@@ -22,8 +22,8 @@ static LruMap<uint64, bool>& dealMap();
 LruMap<uint64, bool>& _dealMap = dealMap();
 static CachedFetcher<uint64, tieba::ThreadInfo, LruHashMap>& threadsFetcher();
 static CachedFetcher<uint, tieba::UserInfo, LruHashMap>& usersFetcher();
-//static RscThreadTextScoreExtractor& textScoreExtractor();
-//static RscThreadDictMatchExtractor& dictMatchExtractor();
+static RscThreadTextScoreExtractor& textScoreExtractor();
+static RscThreadDictMatchExtractor& dictMatchExtractor();
 };
 }
 }

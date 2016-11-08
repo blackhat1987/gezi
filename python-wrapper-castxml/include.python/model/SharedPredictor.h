@@ -4,7 +4,7 @@
 class SharedPredictor
 {
 public:
-//static Predictor* instance();
+static Predictor* instance();
 static int init();
 private:
 static Predictor _predictor;

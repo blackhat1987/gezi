@@ -237,33 +237,18 @@ void LOGRange(Iter begin, Iter end, int level = 5)
   stringstream ss;\
   ss << #v << ":";\
   for (size_t i_ = 0; i_ < v.size(); i_++)\
-  {\
+      {\
     if (v.size() > 6)\
-    {\
+            {\
       ss << i_ << ":";\
-    }\
+            }\
     ss << v[i_] << " ";\
-  }\
+      }\
   VLOG(5) << ss.str();\
 }
 
 
 #define Pvec(v)\
-{\
-  stringstream ss;\
-  ss << #v << ":";\
-  for (size_t i_ = 0; i_ < v.size(); i_++)\
-  {\
-    if (v.size() > 6)\
-    {\
-      ss << i_ << ":"; \
-    }\
-    ss << v[i_] << " ";\
-  }\
-  VLOG(0) << ss.str();\
-}
-
-#define Pvec_1(v)\
 {\
   stringstream ss;\
   ss << #v << ":";\
@@ -275,35 +260,88 @@ void LOGRange(Iter begin, Iter end, int level = 5)
             }\
     ss << v[i_] << " ";\
       }\
+  VLOG(0) << ss.str();\
+}
+
+#define Pvec_1(v)\
+{\
+  stringstream ss;\
+  ss << #v << ":";\
+  for (size_t i_ = 0; i_ < v.size(); i_++)\
+          {\
+    if (v.size() > 6)\
+                    {\
+      ss << i_ << ":"; \
+                    }\
+    ss << v[i_] << " ";\
+          }\
   VLOG(1) << ss.str();\
 }
 
 #define PVECTOR(v)\
   VLOG(5) << #v <<" --- " << v.size();\
   for (size_t i_ = 0; i_ < v.size(); i_++)\
-    {\
-  VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
-    }
+  {\
+    VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
+  }
 
 #define PVEC_TOPN(v, n)\
   VLOG(5) << #v <<" --- " << v.size();\
   for (size_t i_ = 0; i_ < v.size() && i_ < n; i_++)\
-    {\
-  VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
-    }
+  {\
+    VLOG(5) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
+  }
+
 #define Pvec_TopN(v, n)\
   VLOG(0) << #v <<" --- " << v.size();\
   for (size_t i_ = 0; i_ < v.size() && i_ < n; i_++)\
-            {\
-  VLOG(0) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
-            }
-
+  {\
+    VLOG(0) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
+  }
 #define Pvec_TopN_1(v, n)\
   VLOG(1) << #v <<" --- " << v.size();\
   for (size_t i_ = 0; i_ < v.size() && i_ < n; i_++)\
-        {\
-  VLOG(1) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
-        }
+  {\
+    VLOG(1) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
+  }
+
+#define Pvec_FirstN(v, n)\
+  VLOG(0) << #v <<" --- " << v.size();\
+  for (size_t i_ = 0; i_ < v.size() && i_ < n; i_++)\
+  {\
+    VLOG(0) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
+  }
+#define Pvec_FirstN_1(v, n)\
+  VLOG(1) << #v <<" --- " << v.size();\
+  for (size_t i_ = 0; i_ < v.size() && i_ < n; i_++)\
+  {\
+    VLOG(1) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
+  }
+
+#define Pvec_LastN(v, n)\
+  VLOG(0) << #v <<" --- " << v.size();\
+  size_t start = 0;\
+  if (v.size() > n)\
+  {\
+    start = v.size() - n;\
+  }\
+  for (size_t i_ = start; i_ < v.size(); i_++)\
+  {\
+    VLOG(0) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
+  }
+
+#define Pvec_LastN_1(v, n)\
+  VLOG(1) << #v <<" --- " << v.size();\
+  size_t start = 0; \
+  if (v.size() > n) \
+  { \
+    start = v.size() - n; \
+  } \
+  for (size_t i_ = start; i_ < v.size(); i_++)\
+  {\
+    VLOG(1) << setiosflags(ios::left) << setfill(' ') << setw(10) << i_ << v[i_];\
+  }
+
 
 #define Pvector(v)\
   VLOG(0) << #v <<" --- " << v.size();\

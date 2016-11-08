@@ -66,7 +66,7 @@ void add_sparse(vector<T>& values);
 template<class Archive>
 void serialize(Archive &ar, const unsigned int version);
 public:
-//static bool& useNames();
+static bool& useNames();
 protected:
 private:
 bool _useSectionName;

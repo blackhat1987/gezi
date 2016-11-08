@@ -7,4 +7,4 @@ python $i
 sh fix-cc.sh $o
 
 #~/.jumbo/comake/comake2 -P
-make -j22
+#make -j22

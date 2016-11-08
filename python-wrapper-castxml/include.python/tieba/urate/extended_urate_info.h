@@ -82,7 +82,7 @@ private:
 bool _type;
 public:
 static void InitIpFinder();
-//static IpFinder& ipFinder();
+static IpFinder& ipFinder();
 public:
 //friend class boost::serialization::access;
 template<class Archive>

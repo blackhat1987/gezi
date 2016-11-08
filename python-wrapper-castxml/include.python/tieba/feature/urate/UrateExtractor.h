@@ -14,7 +14,7 @@ static int type();
 bool IsThread();
 static size_t original_size();
 public:
-//static ExtendedUrateInfo& info();
+static ExtendedUrateInfo& info();
 ExtendedUrateInfo& _info;
 };
 }

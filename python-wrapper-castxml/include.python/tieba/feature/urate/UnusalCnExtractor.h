@@ -13,7 +13,7 @@ int GetCommonCnCount(string content);
 virtual void extract();
 protected:
 private:
-//static set<string>& commonCns();
+static set<string>& commonCns();
 };
 }
 }

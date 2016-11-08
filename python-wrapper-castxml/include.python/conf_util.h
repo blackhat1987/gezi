@@ -29,9 +29,9 @@ using comcfg::Configure;
 class SharedConf
 {
 public:
-//static comcfg::Configure& get_conf();
-//static comcfg::Configure& conf();
-//static comcfg::Configure* instance();
+static comcfg::Configure& get_conf();
+static comcfg::Configure& conf();
+static comcfg::Configure* instance();
 static bool init(string config_file = "strategy.conf", string dir = "./conf");
 };
 inline void set_val(const comcfg::Configure& conf, string key, string& val);

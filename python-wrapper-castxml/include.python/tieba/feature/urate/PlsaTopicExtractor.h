@@ -14,8 +14,8 @@ Fvec GetTopics(int i);
 virtual void extract();
 protected:
 private:
-//static Identifer& identifer();
-//static plsa::PLSAModel& model();
+static Identifer& identifer();
+static plsa::PLSAModel& model();
 };
 }
 }

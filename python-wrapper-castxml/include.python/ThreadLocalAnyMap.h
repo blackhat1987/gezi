@@ -5,7 +5,7 @@ namespace gezi {
 class ThreadLocalAnyMap
 {
 public:
-//static AnyMap& Instance();
+static AnyMap& Instance();
 };
 typedef ThreadLocalAnyMap ThreadLocalData;
 #endif

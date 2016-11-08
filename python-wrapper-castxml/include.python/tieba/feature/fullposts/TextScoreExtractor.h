@@ -17,7 +17,7 @@ double Predict(string title, string content);
 virtual void extract();
 protected:
 private:
-//static mutex& theMutex();
+static mutex& theMutex();
 PredictorPtr& GetPredictor(int offset);
 DoubleIdentifer& GetIdentifer(int offset);
 private:

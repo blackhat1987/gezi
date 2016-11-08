@@ -110,6 +110,14 @@ DEP_INCPATH=-I../../../../../../app/search/ksarch/store/proxy-lib/redis \
   -I../../../../../../lib2-64/libcrf/include \
   -I../../../../../../lib2-64/libcrf/output \
   -I../../../../../../lib2-64/libcrf/output/include \
+  -I../../../../../../lib2-64/max-entropy \
+  -I../../../../../../lib2-64/max-entropy/include \
+  -I../../../../../../lib2-64/max-entropy/output \
+  -I../../../../../../lib2-64/max-entropy/output/include \
+  -I../../../../../../lib2-64/ml/hmm \
+  -I../../../../../../lib2-64/ml/hmm/include \
+  -I../../../../../../lib2-64/ml/hmm/output \
+  -I../../../../../../lib2-64/ml/hmm/output/include \
   -I../../../../../../lib2-64/nlp/compact-trie \
   -I../../../../../../lib2-64/nlp/compact-trie/include \
   -I../../../../../../lib2-64/nlp/compact-trie/output \
@@ -119,6 +127,10 @@ DEP_INCPATH=-I../../../../../../app/search/ksarch/store/proxy-lib/redis \
   -I../../../../../../lib2-64/others-ex/output \
   -I../../../../../../lib2-64/others-ex/output/include \
   -I../../../../../../lib2-64/postag \
+  -I../../../../../../lib2-64/postag-ex \
+  -I../../../../../../lib2-64/postag-ex/include \
+  -I../../../../../../lib2-64/postag-ex/output \
+  -I../../../../../../lib2-64/postag-ex/output/include \
   -I../../../../../../lib2-64/postag/include \
   -I../../../../../../lib2-64/postag/output \
   -I../../../../../../lib2-64/postag/output/include \
@@ -134,6 +146,14 @@ DEP_INCPATH=-I../../../../../../app/search/ksarch/store/proxy-lib/redis \
   -I../../../../../../lib2-64/ullib/include \
   -I../../../../../../lib2-64/ullib/output \
   -I../../../../../../lib2-64/ullib/output/include \
+  -I../../../../../../lib2-64/wordner \
+  -I../../../../../../lib2-64/wordner/include \
+  -I../../../../../../lib2-64/wordner/output \
+  -I../../../../../../lib2-64/wordner/output/include \
+  -I../../../../../../lib2-64/wordrank \
+  -I../../../../../../lib2-64/wordrank/include \
+  -I../../../../../../lib2-64/wordrank/output \
+  -I../../../../../../lib2-64/wordrank/output/include \
   -I../../../../../../lib2-64/wordseg \
   -I../../../../../../lib2-64/wordseg/include \
   -I../../../../../../lib2-64/wordseg/output \
@@ -257,11 +277,11 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=5ca9237020e7975b24b0336eb9fd9328  COMAKE
+COMAKE_MD5=f9fcf4ed0c84b225525ab6b10f4c0a40  COMAKE
 
 
 .PHONY:all
-all:comake2_makefile_check libword_counter.so 
+all:comake2_makefile_check libsegment.so 
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
 	@echo "make all done"
 
@@ -281,9 +301,9 @@ ccpclean:
 .PHONY:clean
 clean:ccpclean
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mclean[0m']"
-	rm -rf libword_counter.so
-	rm -rf ./output/so/libword_counter.so
-	rm -rf word_counter_word_counter_py.o
+	rm -rf libsegment.so
+	rm -rf ./output/so/libsegment.so
+	rm -rf segment_segment_py.o
 
 .PHONY:dist
 dist:
@@ -302,11 +322,11 @@ love:
 	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlove[0m']"
 	@echo "make love done"
 
-libword_counter.so:word_counter_word_counter_py.o \
+libsegment.so:segment_segment_py.o \
   ./lib/libpython2.7.so \
   ./lib/libboost_python.so
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibword_counter.so[0m']"
-	$(CXX) -shared word_counter_word_counter_py.o -Xlinker "-(" ./lib/libpython2.7.so \
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlibsegment.so[0m']"
+	$(CXX) -shared segment_segment_py.o -Xlinker "-(" ./lib/libpython2.7.so \
   ./lib/libboost_python.so ../../../../../../app/search/ksarch/store/proxy-lib/redis/libredisclient.a \
   ../../../../../../app/search/sep/anti-spam/gezi/libgezi_common.a \
   ../../../../../../app/search/sep/anti-spam/gezi/libgezi_cppformat.a \
@@ -345,12 +365,17 @@ libword_counter.so:word_counter_word_counter_py.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/string/lib/libstring.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../op/oped/noah/webfoot/naming-lib/output/lib/libwebfoot_naming.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
@@ -480,19 +505,19 @@ libword_counter.so:word_counter_word_counter_py.o \
   -Wl,-rpath=./ \
   -lgomp \
   -rdynamic \
-  -Wl,-rpath=./lib/ -Xlinker "-)" -o libword_counter.so
+  -Wl,-rpath=./lib/ -Xlinker "-)" -o libsegment.so
 	mkdir -p ./output/so
-	cp -f --link libword_counter.so ./output/so
+	cp -f --link libsegment.so ./output/so
 
-word_counter_word_counter_py.o:word_counter_py.cc
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mword_counter_word_counter_py.o[0m']"
+segment_segment_py.o:segment_py.cc
+	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msegment_segment_py.o[0m']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) -D_GNU_SOURCE \
   -D__STDC_LIMIT_MACROS \
   -DVERSION=\"1.9.8.7\" \
   -O3 \
   -DPYTHON_WRAPPER \
   -DNDEBUG \
-  -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED $(CXXFLAGS)  -o word_counter_word_counter_py.o word_counter_py.cc
+  -DBOOST_BIND_PLACEHOLDERS_HPP_INCLUDED $(CXXFLAGS)  -o segment_segment_py.o segment_py.cc
 
 endif #ifeq ($(shell uname -m),x86_64)
 

@@ -72,11 +72,23 @@ DEP_INCPATH=-I../../../../../app/search/sep/anti-spam/gezi/third \
   -I../../../../../lib2-64/libcrf/include \
   -I../../../../../lib2-64/libcrf/output \
   -I../../../../../lib2-64/libcrf/output/include \
+  -I../../../../../lib2-64/max-entropy \
+  -I../../../../../lib2-64/max-entropy/include \
+  -I../../../../../lib2-64/max-entropy/output \
+  -I../../../../../lib2-64/max-entropy/output/include \
+  -I../../../../../lib2-64/ml/hmm \
+  -I../../../../../lib2-64/ml/hmm/include \
+  -I../../../../../lib2-64/ml/hmm/output \
+  -I../../../../../lib2-64/ml/hmm/output/include \
   -I../../../../../lib2-64/others-ex \
   -I../../../../../lib2-64/others-ex/include \
   -I../../../../../lib2-64/others-ex/output \
   -I../../../../../lib2-64/others-ex/output/include \
   -I../../../../../lib2-64/postag \
+  -I../../../../../lib2-64/postag-ex \
+  -I../../../../../lib2-64/postag-ex/include \
+  -I../../../../../lib2-64/postag-ex/output \
+  -I../../../../../lib2-64/postag-ex/output/include \
   -I../../../../../lib2-64/postag/include \
   -I../../../../../lib2-64/postag/output \
   -I../../../../../lib2-64/postag/output/include \
@@ -84,6 +96,14 @@ DEP_INCPATH=-I../../../../../app/search/sep/anti-spam/gezi/third \
   -I../../../../../lib2-64/ullib/include \
   -I../../../../../lib2-64/ullib/output \
   -I../../../../../lib2-64/ullib/output/include \
+  -I../../../../../lib2-64/wordner \
+  -I../../../../../lib2-64/wordner/include \
+  -I../../../../../lib2-64/wordner/output \
+  -I../../../../../lib2-64/wordner/output/include \
+  -I../../../../../lib2-64/wordrank \
+  -I../../../../../lib2-64/wordrank/include \
+  -I../../../../../lib2-64/wordrank/output \
+  -I../../../../../lib2-64/wordrank/output/include \
   -I../../../../../lib2-64/wordseg \
   -I../../../../../lib2-64/wordseg/include \
   -I../../../../../lib2-64/wordseg/output \
@@ -147,7 +167,7 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=59d88f080b6b42eadfb19ea53cd684c9  COMAKE
+COMAKE_MD5=a762ec8fd5935a44ef4957dfbc6af8cb  COMAKE
 
 
 .PHONY:all

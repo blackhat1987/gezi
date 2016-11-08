@@ -10,10 +10,10 @@ template<typename T>
 class SharedObjects
 {
 public:
-//static T& Instance(string path);
-//template<typename Func>
-//static T& Instance(string path, Func func);
-//static T& instance(string path);
+static T& Instance(string path);
+template<typename Func>
+static T& Instance(string path, Func func);
+static T& instance(string path);
 protected:
 private:
 };

@@ -41,7 +41,7 @@ set<uint64> uidSet;
 set<uint64> notSelfUpUidSet;
 set<uint64> ipSet;
 set<string> addressSet;
-//static IpFinder& ipFinder();
+static IpFinder& ipFinder();
 IpFinder& _ipFinder;
 };
 }

@@ -9,7 +9,7 @@ name = 'segment'
 define_symbols = ['GCCXML','PYTHON_WRAPPER', 'NO_BAIDU_CONF']
 
 #cflags='-std=c++11' #well, will fail for comlog with c++11 why? it can compile under c++11 for real bin
-cflags='-fopenmp -std=c++11 -Wexpansion-to-defined -Wreserved-user-defined-literal'
+cflags='-fopenmp -std=c++11 -Wexpansion-to-defined -Wreserved-user-defined-literal -fpermissive'
 
 #gccxml_path = '/home/users/chenghuige/.jumbo/bin/gccxml'
 gccxml_path=''
@@ -18,6 +18,10 @@ xml_generator_path='/usr/local/bin/castxml'
 
 files = [
 					'include.python/common_util.h',  #for safe let it be first for without it file_util.h or string_util.h... will fail
+          ##FIXME  Exception: Unable to find out actual class definition: 'token_t'. 
+          ##Class definition has been changed from one compilation to an other.
+          #root + '/lib2-64/wordseg/isegment.h',
+          #root + '/lib2-64/wordner/include/iwordner.h',
 					'./include.python/log_util.h',
 					'./include.python/Segmentor.h',
 				]
@@ -35,19 +39,24 @@ paths = [
 include_paths=[ 
 				'third-64/glog',
 				'third-64/gflags',
-                                'third-64/gtest',
+        'third-64/gtest',
 				'third-64/boost.1.53',
-                'lib2-64/bsl',
-        	'lib2-64/postag',
-        	'lib2-64/dict',
-        	'lib2-64/libcrf',
-        	'lib2-64/others-ex',
-        	'lib2-64/ullib',
-                'lib2-64/ccode',
-                'public/odict/output',
-                'public/uconv/output',
-                'public/configure/output',
-								'app/search/sep/anti-spam/gezi/third/rabit',
+        'lib2-64/bsl',
+        'lib2-64/postag',
+        'lib2-64/wordner',
+        'lib2-64/postag-ex',
+        'lib2-64/ml/hmm',
+        'lib2-64/wordrank',
+        'lib2-64/max-entropy',
+        'lib2-64/dict',
+        'lib2-64/libcrf',
+        'lib2-64/others-ex',
+        'lib2-64/ullib',
+        'lib2-64/ccode',
+        'public/odict/output',
+        'public/uconv/output',
+        'public/configure/output',
+				'app/search/sep/anti-spam/gezi/third/rabit',
 	      ]
 
 include_paths_python = [

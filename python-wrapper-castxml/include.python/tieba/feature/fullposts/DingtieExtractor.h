@@ -13,7 +13,7 @@ virtual void init();
 virtual void extract();
 protected:
 private:
-//static MatchDict& shanqianDict();
+static MatchDict& shanqianDict();
 };
 }
 }

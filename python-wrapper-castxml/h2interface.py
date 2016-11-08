@@ -61,9 +61,11 @@ def pyplusplus_hack(line, content):
         line = lines[i].strip().replace('inline', '').strip()
         l = line.split()
         #non const static ref
-        if len(l) > 1 and l[0] == 'static' and (l[1].endswith('&') or l[1].endswith('*')):
-            need_comment = True
-            break
+        
+        #if len(l) > 1 and l[0] == 'static' and (l[1].endswith('&') or l[1].endswith('*')):
+        #    need_comment = True
+        #    break
+        
         #rvalue
         if line.find('&&') >= 0:
             need_comment = True 

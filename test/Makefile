@@ -68,6 +68,14 @@ DEP_INCPATH=-I../../../../../../app/search/sep/anti-spam/gezi/third \
   -I../../../../../../lib2-64/libcrf/include \
   -I../../../../../../lib2-64/libcrf/output \
   -I../../../../../../lib2-64/libcrf/output/include \
+  -I../../../../../../lib2-64/max-entropy \
+  -I../../../../../../lib2-64/max-entropy/include \
+  -I../../../../../../lib2-64/max-entropy/output \
+  -I../../../../../../lib2-64/max-entropy/output/include \
+  -I../../../../../../lib2-64/ml/hmm \
+  -I../../../../../../lib2-64/ml/hmm/include \
+  -I../../../../../../lib2-64/ml/hmm/output \
+  -I../../../../../../lib2-64/ml/hmm/output/include \
   -I../../../../../../lib2-64/nlp/compact-trie \
   -I../../../../../../lib2-64/nlp/compact-trie/include \
   -I../../../../../../lib2-64/nlp/compact-trie/output \
@@ -77,6 +85,10 @@ DEP_INCPATH=-I../../../../../../app/search/sep/anti-spam/gezi/third \
   -I../../../../../../lib2-64/others-ex/output \
   -I../../../../../../lib2-64/others-ex/output/include \
   -I../../../../../../lib2-64/postag \
+  -I../../../../../../lib2-64/postag-ex \
+  -I../../../../../../lib2-64/postag-ex/include \
+  -I../../../../../../lib2-64/postag-ex/output \
+  -I../../../../../../lib2-64/postag-ex/output/include \
   -I../../../../../../lib2-64/postag/include \
   -I../../../../../../lib2-64/postag/output \
   -I../../../../../../lib2-64/postag/output/include \
@@ -88,6 +100,14 @@ DEP_INCPATH=-I../../../../../../app/search/sep/anti-spam/gezi/third \
   -I../../../../../../lib2-64/ullib/include \
   -I../../../../../../lib2-64/ullib/output \
   -I../../../../../../lib2-64/ullib/output/include \
+  -I../../../../../../lib2-64/wordner \
+  -I../../../../../../lib2-64/wordner/include \
+  -I../../../../../../lib2-64/wordner/output \
+  -I../../../../../../lib2-64/wordner/output/include \
+  -I../../../../../../lib2-64/wordrank \
+  -I../../../../../../lib2-64/wordrank/include \
+  -I../../../../../../lib2-64/wordrank/output \
+  -I../../../../../../lib2-64/wordrank/output/include \
   -I../../../../../../lib2-64/wordseg \
   -I../../../../../../lib2-64/wordseg/include \
   -I../../../../../../lib2-64/wordseg/output \
@@ -479,11 +499,16 @@ test_lambda:test_lambda_test_lambda.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -574,11 +599,16 @@ test_bins:test_bins_test_bins.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -669,11 +699,16 @@ test_datetime:test_datetime_test_datetime.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -764,11 +799,16 @@ test_content_filter:test_content_filter_test_content_filter.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -859,11 +899,16 @@ test_regex:test_regex_test_regex.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -954,11 +999,16 @@ test_regex2:test_regex2_test_regex2.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -1049,11 +1099,16 @@ test_encode:test_encode_test_encode.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -1150,11 +1205,16 @@ test_json:test_json_test_json.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -1245,11 +1305,16 @@ test_escape:test_escape_test_escape.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -1340,11 +1405,16 @@ test_other:test_other_test_other.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -1435,11 +1505,16 @@ test_feature_selector:test_feature_selector_test_feature_selector.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -1530,11 +1605,16 @@ openmp_hello:openmp/openmp_hello_hello.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -1625,11 +1705,16 @@ openmp_test:openmp/openmp_test_test.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -1720,11 +1805,16 @@ test_exception:test_exception_test_exception.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -1815,11 +1905,16 @@ test_map_util:test_map_util_test_map_util.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -1910,11 +2005,16 @@ test_seg:test_seg_test_seg.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -2005,11 +2105,16 @@ test_identifer:test_identifer_test_identifer.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -2100,11 +2205,16 @@ test_linear:test_linear_test_linear.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -2195,11 +2305,16 @@ test_pinyin:test_pinyin_test_pinyin.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -2290,11 +2405,16 @@ test_namepattern:test_namepattern_test_namepattern.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -2385,11 +2505,16 @@ test_conf:test_conf_test_conf.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -2480,11 +2605,16 @@ test_random:test_random_test_random.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -2575,11 +2705,16 @@ test_shared_ptr:test_shared_ptr_test_shared_ptr.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -2670,11 +2805,16 @@ test_binfinder:test_binfinder_test_binfinder.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -2765,11 +2905,16 @@ test_seralize:test_seralize_test_seralize.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -2860,11 +3005,16 @@ test_string:test_string_test_string.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -2955,11 +3105,16 @@ test_bitop:test_bitop_test_bitop.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -3050,11 +3205,16 @@ test_featurevector:test_featurevector_test_featurevector.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -3145,11 +3305,16 @@ test_split:test_split_test_split.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -3240,11 +3405,16 @@ test_tieba_get_info:test_tieba_get_info_test_tieba_get_info.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -3335,11 +3505,16 @@ test_content_process:test_content_process_test_content_process.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -3430,11 +3605,16 @@ test_cached_fetcher:test_cached_fetcher_test_cached_fetcher.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -3525,11 +3705,16 @@ test_bind:test_bind_test_bind.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -3620,11 +3805,16 @@ test_lrumap:test_lrumap_test_lrumap.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -3715,11 +3905,16 @@ test_seralize_xml:test_seralize_xml_test_seralize_xml.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -3810,11 +4005,16 @@ test_thread_local:test_thread_local_test_thread_local.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -3905,11 +4105,16 @@ test_configure:test_configure_test_configure.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -4000,11 +4205,16 @@ test_static:test_static_test_static.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -4095,11 +4305,16 @@ test_cpplinq:test_cpplinq_test_cpplinq.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -4190,11 +4405,16 @@ test_partial_sort:test_partial_sort_test_partial_sort.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -4285,11 +4505,16 @@ test_string_util:test_string_util_test_string_util.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -4380,11 +4605,16 @@ test_mean_var:test_mean_var_test_mean_var.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -4475,11 +4705,16 @@ test_const:test_const_test_const.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -4570,11 +4805,16 @@ test_matchdict:test_matchdict.h \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -4665,11 +4905,16 @@ test_sharedobjects:test_sharedobjects_test_sharedobjects.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -4760,11 +5005,16 @@ test_matchdict:test_matchdict_test_matchdict.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -4855,11 +5105,16 @@ test_erase:test_erase_test_erase.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -4950,11 +5205,16 @@ test_max_count_by:test_max_count_by_test_max_count_by.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -5045,11 +5305,16 @@ test_informaiton:test_informaiton_test_informaiton.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -5140,11 +5405,16 @@ test_information:test_information_test_information.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -5235,11 +5505,16 @@ simple:simple_simple.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -5330,11 +5605,16 @@ test_cppformat:test_cppformat_test_cppformat.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -5425,11 +5705,16 @@ test_string_find:test_string_find_test_string_find.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -5520,11 +5805,16 @@ test_static_thread_safe:test_static_thread_safe_test_static_thread_safe.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -5615,11 +5905,16 @@ test_map_default:test_map_default_test_map_default.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -5710,11 +6005,16 @@ test_template_function:test_template_function_test_template_function.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -5805,11 +6105,16 @@ identifer-text2bin:identifer-text2bin_identifer-text2bin.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -5900,11 +6205,16 @@ test_numeric_limit:test_numeric_limit_test_numeric_limit.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -5995,11 +6305,16 @@ test_langmodel:test_langmodel_test_langmodel.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -6090,11 +6405,16 @@ test_dynamic_cast:test_dynamic_cast_test_dynamic_cast.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -6185,11 +6505,16 @@ test_derive:test_derive_test_derive.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -6280,11 +6605,16 @@ test_derive_override:test_derive_override_test_derive_override.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -6375,11 +6705,16 @@ test_derive_same_variable:test_derive_same_variable_test_derive_same_variable.o 
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -6470,11 +6805,16 @@ test_derive_vector:test_derive_vector_test_derive_vector.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -6565,11 +6905,16 @@ test:test_test.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -6660,11 +7005,16 @@ test_sort:test_sort_test_sort.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -6755,11 +7105,16 @@ test_rvalue:test_rvalue_test_rvalue.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -6850,11 +7205,16 @@ test_weight_vector:test_weight_vector_test_weight_vector.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -6945,11 +7305,16 @@ test_static_const:test_static_const_test_static_const.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -7040,11 +7405,16 @@ test_enum:test_enum_test_enum.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -7135,11 +7505,16 @@ test_chnormalizer:test_chnormalizer_test_chnormalizer.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -7230,11 +7605,16 @@ test_sizeof:test_sizeof_test_sizeof.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -7325,11 +7705,16 @@ test_vector_copy:test_vector_copy_test_vector_copy.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -7420,11 +7805,16 @@ test_deformation:test_deformation_test_deformation.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -7515,11 +7905,16 @@ test_reverse:test_reverse_test_reverse.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -7610,11 +8005,16 @@ test_convert:test_convert_test_convert.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -7705,11 +8105,16 @@ test_map:test_map_test_map.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -7800,11 +8205,16 @@ test_virtual_derive_default_param:test_virtual_derive_default_param_test_virtual
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -7895,11 +8305,16 @@ test_double_equal:test_double_equal_test_double_equal.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -7990,11 +8405,16 @@ test_vocabulary:test_vocabulary_test_vocabulary.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \
@@ -8085,11 +8505,16 @@ test_wordcount:test_wordcount_test_wordcount.o \
   ../../../../../../lib2-64/ccode/lib/libulccode.a \
   ../../../../../../lib2-64/dict/lib/libuldict.a \
   ../../../../../../lib2-64/libcrf/lib/libcrf.a \
+  ../../../../../../lib2-64/max-entropy/lib/libmax_entropy.a \
+  ../../../../../../lib2-64/ml/hmm/lib/libhmm_model.a \
   ../../../../../../lib2-64/nlp/compact-trie/lib/libctrie.a \
   ../../../../../../lib2-64/others-ex/lib/libullib_ex.a \
+  ../../../../../../lib2-64/postag-ex/lib/libpostag-ex.a \
   ../../../../../../lib2-64/postag/lib/libpostag.a \
   ../../../../../../lib2-64/text-util/lib/libtextutil.a \
   ../../../../../../lib2-64/ullib/lib/libullib.a \
+  ../../../../../../lib2-64/wordner/lib/libwordner.a \
+  ../../../../../../lib2-64/wordrank/lib/libwordrank.a \
   ../../../../../../lib2-64/wordseg/libsegment.a \
   ../../../../../../ps/se/dict-set/libdictset.a \
   ../../../../../../public/comlog-plugin/libcomlog.a \

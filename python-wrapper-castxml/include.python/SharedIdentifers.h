@@ -6,9 +6,9 @@ class Identifer;
 class SharedIdentifers
 {
 public:
-//static Identifer& Instance();
-//static Identifer& Instance(string path);
-//static Identifer& instance(string path);
+static Identifer& Instance();
+static Identifer& Instance(string path);
+static Identifer& instance(string path);
 protected:
 private:
 };

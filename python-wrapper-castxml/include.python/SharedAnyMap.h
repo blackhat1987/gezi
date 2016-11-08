@@ -5,7 +5,7 @@ namespace gezi {
 class SharedAnyMap
 {
 public:
-//static AnyMap& Instance();
+static AnyMap& Instance();
 };
 typedef SharedAnyMap SharedData;
 }

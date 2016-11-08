@@ -31,7 +31,7 @@ public:
         db_del(wordDict);
         wordDict = NULL;
     }
-    inline int init_dict(char* file, int dictSize = 1024)
+    inline int init_dict(char* file, int dictSize = 4096)
     {
         char buffer[kMaxLine];
         unsigned sign1, sign2;

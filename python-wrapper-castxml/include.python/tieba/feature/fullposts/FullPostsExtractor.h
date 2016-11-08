@@ -9,7 +9,7 @@ class FullPostsExtractor : public FeaturesExtractor
 public:
 //using FeaturesExtractor::FeaturesExtractor;
 public:
-//static ExtendedFullPostsInfo& info();
+static ExtendedFullPostsInfo& info();
 ExtendedFullPostsInfo& _info;
 size_t size();
 };

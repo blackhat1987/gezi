@@ -15,7 +15,7 @@ struct Rabit
 {
 Rabit(int argc, char *argv[]);
 ~Rabit();
-//static bool& AllowDistribute();
+static bool& AllowDistribute();
 inline static bool Choose(size_t i);
 inline static bool SimpleChoose(size_t i);
 static int GetWorldSize();

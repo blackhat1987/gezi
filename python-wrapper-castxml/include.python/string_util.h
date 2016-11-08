@@ -36,7 +36,8 @@ inline string remove_space_cn(string phrase);
 inline string remove_space_cnonly(string phrase);
 inline int wchar_count(const char* buf, int len);
 inline int word_count(string phrase);
-inline vector<int> unicode_index(string input);
+inline vector<int> gbk_lengthes(string input);
+inline vector<int> gbk_offsets(string input);
 inline string remove_dupspace(string input);
 inline string replace_special_whitespace(string s, const char rep = ' ');
 template<typename String>

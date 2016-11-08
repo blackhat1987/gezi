@@ -80,13 +80,13 @@ template<typename CharType = char>
 struct UTF8
 {
 typedef CharType Ch;
-//static Ch* Encode(Ch *buffer, unsigned codepoint);
+static Ch* Encode(Ch *buffer, unsigned codepoint);
 };
 template<typename CharType = wchar_t>
 struct UTF16
 {
 typedef CharType Ch;
-//static Ch* Encode(Ch* buffer, unsigned codepoint);
+static Ch* Encode(Ch* buffer, unsigned codepoint);
 };
 template<typename CharType = unsigned>
 struct UTF32
